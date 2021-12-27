@@ -8,10 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
 using Microsoft.Azure.WebPubSub.Common;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -78,79 +77,87 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public static HttpResponseMessage BuildErrorResponse(EventErrorResponse error)
         {
+            return BuildErrorResponse(error.ErrorMessage, error.Code);
+        }
+
+        public static HttpResponseMessage BuildErrorResponse(string errorMessage, WebPubSubErrorCode code = WebPubSubErrorCode.ServerError)
+        {
             HttpResponseMessage result = new();
 
-            result.StatusCode = GetStatusCode(error.Code);
-            result.Content = new StringContent(error.ErrorMessage);
+            result.StatusCode = GetStatusCode(code);
+            result.Content = new StringContent(errorMessage);
             return result;
         }
 
         public static HttpResponseMessage BuildValidResponse(
-            object response, RequestType requestType,
+            WebPubSubEventResponse response, RequestType requestType,
             WebPubSubConnectionContext context)
         {
-            JsonDocument converted = null;
-            string originStr = null;
-            bool needConvert = true;
-            if (response is WebPubSubEventResponse)
+            // check error as top priority.
+            if (response is EventErrorResponse errorResponse)
             {
-                needConvert = false;
-            }
-            else
-            {
-                // JObject or string type, use string to convert between JObject and JsonDocument.
-                originStr = response.ToString();
-                converted = JsonDocument.Parse(originStr);
+                return BuildErrorResponse(errorResponse);
             }
 
+            if (requestType == RequestType.Connect)
+            {
+                if (response is ConnectEventResponse connectResponse)
+                {
+                    var mergedStates = context.UpdateStates(connectResponse.ConnectionStates);
+                    return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
+                }
+                return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
+            }
+            if (requestType == RequestType.User)
+            {
+                if (response is UserEventResponse messageResponse)
+                {
+                    var mergedStates = context.UpdateStates(messageResponse.ConnectionStates);
+                    return BuildUserEventResponse(messageResponse, mergedStates);
+                }
+                return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
+            }
+            // should not hit.
+            throw new ArgumentException($"Invalid request type, {requestType}");
+        }
+
+        public static HttpResponseMessage BuildValidResponse(
+            JToken jResponse, RequestType requestType,
+            WebPubSubConnectionContext context)
+        {
             try
             {
-                // Check error, errorCode is required for json convert, otherwise, ignored.
-                if (needConvert && converted.RootElement.TryGetProperty("code", out var code))
+                JObject response = jResponse is JObject jObj ? jObj : throw new ArgumentException("Response should be a JObject.");
+
+                // check error as top priority.
+                if (response.TryGetValue("code", out var code)
+                    && code.ToObject<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)
                 {
-                    var error = JsonSerializer.Deserialize<EventErrorResponse>(originStr);
+                    var error = response.ToObject<EventErrorResponse>();
                     return BuildErrorResponse(error);
-                }
-                else if (response is EventErrorResponse errorResponse)
-                {
-                    return BuildErrorResponse(errorResponse);
                 }
 
                 if (requestType == RequestType.Connect)
                 {
-                    if (needConvert)
-                    {
-                        var states = GetStatesFromJson(converted, originStr);
-                        var mergedStates = context.UpdateStates(states);
-                        return BuildConnectEventResponse(originStr, mergedStates);
-                    }
-                    else if (response is ConnectEventResponse connectResponse)
-                    {
-                        var mergedStates = context.UpdateStates(connectResponse.States);
-                        return BuildConnectEventResponse(JsonSerializer.Serialize(response), mergedStates);
-                    }
+                    var states = GetStatesFromJson(response);
+                    var mergedStates = context.UpdateStates(states);
+                    var formattedResponse = JsonConvert.SerializeObject(response.ToObject<ConnectEventResponse>());
+                    return BuildConnectEventResponse(formattedResponse, mergedStates);
                 }
                 if (requestType == RequestType.User)
                 {
-                    if (needConvert)
-                    {
-                        var states = GetStatesFromJson(converted, originStr);
-                        var mergedStates = context.UpdateStates(states);
-                        return BuildUserEventResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr), mergedStates);
-                    }
-                    else if (response is UserEventResponse messageResponse)
-                    {
-                        var mergedStates = context.UpdateStates(messageResponse.States);
-                        return BuildUserEventResponse(messageResponse, mergedStates);
-                    }
+                    var states = GetStatesFromJson(response);
+                    var mergedStates = context.UpdateStates(states);
+                    return BuildUserEventResponse(response.ToObject<UserEventResponse>(), mergedStates);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Ignore invalid response.
+                return BuildErrorResponse(new EventErrorResponse(WebPubSubErrorCode.ServerError, ex.Message));
             }
 
-            return null;
+            // should not hit.
+            throw new ArgumentException($"Invalid request type, '{requestType}'.");
         }
 
         public static HttpStatusCode GetStatusCode(WebPubSubErrorCode errorCode) =>
@@ -200,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 dataType = GetDataType(mediaType);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 dataType = WebPubSubDataType.Binary;
                 return false;
@@ -218,23 +225,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        private static Dictionary<string, object> GetStatesFromJson(JsonDocument converted, string originStr)
+        private static Dictionary<string, BinaryData> GetStatesFromJson(JObject response)
         {
-            if (converted.RootElement.TryGetProperty("states", out var val))
+            if (response.TryGetValue("states", out var val))
             {
-                if (val.ValueKind == JsonValueKind.Object)
+                // val should be a JSON object of <key,value> pairs
+                if (val.Type == JTokenType.Object)
                 {
-                    return JsonSerializer.Deserialize<StatesEntity>(originStr).States;
+                    return val.ToObject<IReadOnlyDictionary<string, BinaryData>>()
+                        .ToDictionary(k => k.Key, v => v.Value);
                 }
             }
             // We don't support clear states for JS
-            return new Dictionary<string, object>();
-        }
-
-        private sealed class StatesEntity
-        {
-            [JsonPropertyName("states")]
-            public Dictionary<string, object> States { get; set; }
+            return new Dictionary<string, BinaryData>();
         }
     }
 }

@@ -10,6 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.Linq;
+using System.Text;
 
 namespace Azure.ResourceManager.Core
 {
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => new Location(l));
         }
 
         /// <summary>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => new Location(l));
         }
     }
 }

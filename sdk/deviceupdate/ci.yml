@@ -20,6 +20,7 @@ pr:
   paths:
     include:
     - sdk/deviceupdate/
+    - sdk/resourcemanager/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -29,3 +30,5 @@ extends:
     Artifacts:
     - name: Azure.IoT.DeviceUpdate
       safeName: AzureIoTDeviceUpdate
+    - name: Azure.ResourceManager.DeviceUpdate
+      safeName: AzureResourceManagerDeviceUpdate

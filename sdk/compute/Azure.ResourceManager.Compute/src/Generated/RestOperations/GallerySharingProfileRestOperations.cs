@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class GallerySharingProfileRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,19 +27,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public GallerySharingProfileRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public GallerySharingProfileRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string galleryName, SharingUpdate sharingUpdate)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, SharingUpdate sharingUpdate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,13 +62,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update sharing profile of a gallery. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="sharingUpdate"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="sharingUpdate"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(sharingUpdate));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, galleryName, sharingUpdate);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, sharingUpdate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -99,13 +100,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update sharing profile of a gallery. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="sharingUpdate"/> is null. </exception>
-        public Response Update(string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="sharingUpdate"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(sharingUpdate));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, galleryName, sharingUpdate);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, sharingUpdate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

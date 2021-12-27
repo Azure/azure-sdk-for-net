@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Storage.Tests
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
-        private QueueServiceCollection _queueServiceCollection;
         private QueueService _queueService;
         private StorageQueueCollection _storageQueueCollection;
         public QueueTests(bool async) : base(async)
@@ -27,8 +26,8 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
-            _queueServiceCollection = _storageAccount.GetQueueServices();
-            _queueService = await _queueServiceCollection.GetAsync("default");
+            _queueService = _storageAccount.GetQueueService();
+            _queueService = await _queueService.GetAsync();
             _storageQueueCollection = _queueService.GetStorageQueues();
         }
 
@@ -60,8 +59,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate if successfully created
             StorageQueue queue2 = await _storageQueueCollection.GetAsync(storageQueueName);
             AssertStorageQueueEqual(queue1, queue2);
-            Assert.IsTrue(await _storageQueueCollection.CheckIfExistsAsync(storageQueueName));
-            Assert.IsFalse(await _storageQueueCollection.CheckIfExistsAsync(storageQueueName + "1"));
+            Assert.IsTrue(await _storageQueueCollection.ExistsAsync(storageQueueName));
+            Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName + "1"));
             StorageQueueData queueData = queue2.Data;
             Assert.IsEmpty(queueData.Metadata);
 
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Tests
             await queue1.DeleteAsync();
 
             //validate if successfully deleted
-            Assert.IsFalse(await _storageQueueCollection.CheckIfExistsAsync(storageQueueName));
+            Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName));
             StorageQueue queue3 = await _storageQueueCollection.GetIfExistsAsync(storageQueueName);
             Assert.IsNull(queue3);
         }
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Cors = cors,
             };
-            _queueService = await _queueService.SetServicePropertiesAsync(parameter);
+            _queueService = (await _queueService.CreateOrUpdateAsync(parameter)).Value;
 
             //validate
             Assert.AreEqual(_queueService.Data.Cors.CorsRulesValue.Count, 1);

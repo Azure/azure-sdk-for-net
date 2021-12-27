@@ -35,12 +35,12 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of NoneLinkedTargetIntentResult. </summary>
         /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
         /// <returns> A new <see cref="Conversations.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
-        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidenceScore = default, ConversationResult result = null)
+        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default, ConversationResult result = null)
         {
-            return new NoneLinkedTargetIntentResult(targetKind, apiVersion, confidenceScore, result);
+            return new NoneLinkedTargetIntentResult(targetKind, apiVersion, confidence, result);
         }
 
         /// <summary> Initializes a new instance of ConversationResult. </summary>
@@ -69,11 +69,11 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Initializes a new instance of ConversationIntent. </summary>
         /// <param name="category"> A predicted class. </param>
-        /// <param name="confidenceScore"> The confidence score of the class from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The confidence score of the class from 0.0 to 1.0. </param>
         /// <returns> A new <see cref="Conversations.ConversationIntent"/> instance for mocking. </returns>
-        public static ConversationIntent ConversationIntent(string category = null, float confidenceScore = default)
+        public static ConversationIntent ConversationIntent(string category = null, float confidence = default)
         {
-            return new ConversationIntent(category, confidenceScore);
+            return new ConversationIntent(category, confidence);
         }
 
         /// <summary> Initializes a new instance of ConversationEntity. </summary>
@@ -81,24 +81,24 @@ namespace Azure.AI.Language.Conversations
         /// <param name="text"> The predicted entity text. </param>
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
-        /// <param name="confidenceScore"> The entity confidence score. </param>
+        /// <param name="confidence"> The entity confidence score. </param>
         /// <param name="listKeys"> List of keys. </param>
         /// <returns> A new <see cref="Conversations.ConversationEntity"/> instance for mocking. </returns>
-        public static ConversationEntity ConversationEntity(string category = null, string text = null, int offset = default, int length = default, float confidenceScore = default, IEnumerable<string> listKeys = null)
+        public static ConversationEntity ConversationEntity(string category = null, string text = null, int offset = default, int length = default, float confidence = default, IEnumerable<string> listKeys = null)
         {
             listKeys ??= new List<string>();
 
-            return new ConversationEntity(category, text, offset, length, confidenceScore, listKeys?.ToList());
+            return new ConversationEntity(category, text, offset, length, confidence, listKeys?.ToList());
         }
 
         /// <summary> Initializes a new instance of TargetIntentResult. </summary>
         /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <returns> A new <see cref="Conversations.TargetIntentResult"/> instance for mocking. </returns>
-        public static TargetIntentResult TargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidenceScore = default)
+        public static TargetIntentResult TargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default)
         {
-            return new TargetIntentResult(targetKind, apiVersion, confidenceScore);
+            return new TargetIntentResult(targetKind, apiVersion, confidence);
         }
 
         /// <summary> Initializes a new instance of OrchestratorPrediction. </summary>
@@ -116,23 +116,23 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of ConversationTargetIntentResult. </summary>
         /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
         /// <returns> A new <see cref="Conversations.ConversationTargetIntentResult"/> instance for mocking. </returns>
-        public static ConversationTargetIntentResult ConversationTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidenceScore = default, ConversationResult result = null)
+        public static ConversationTargetIntentResult ConversationTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default, ConversationResult result = null)
         {
-            return new ConversationTargetIntentResult(targetKind, apiVersion, confidenceScore, result);
+            return new ConversationTargetIntentResult(targetKind, apiVersion, confidence, result);
         }
 
         /// <summary> Initializes a new instance of QuestionAnsweringTargetIntentResult. </summary>
         /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The generated answer by a Question Answering KB. </param>
         /// <returns> A new <see cref="Conversations.QuestionAnsweringTargetIntentResult"/> instance for mocking. </returns>
-        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidenceScore = default, KnowledgeBaseAnswers result = null)
+        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default, KnowledgeBaseAnswers result = null)
         {
-            return new QuestionAnsweringTargetIntentResult(targetKind, apiVersion, confidenceScore, result);
+            return new QuestionAnsweringTargetIntentResult(targetKind, apiVersion, confidence, result);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswers. </summary>
@@ -148,19 +148,19 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
-        /// <param name="confidenceScore"> Answer confidence score, value ranges from 0 to 1. </param>
+        /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> ID of the QnA result. </param>
         /// <param name="source"> Source of QnA result. </param>
         /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="answerSpan"> Answer span object of QnA with respect to user&apos;s question. </param>
         /// <returns> A new <see cref="Conversations.KnowledgeBaseAnswer"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidenceScore = null, int? id = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgeBaseAnswerDialog dialog = null, AnswerSpan answerSpan = null)
+        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidence = null, int? id = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgeBaseAnswerDialog dialog = null, AnswerSpan answerSpan = null)
         {
             questions ??= new List<string>();
             metadata ??= new Dictionary<string, string>();
 
-            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidenceScore, id, source, metadata, dialog, answerSpan);
+            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidence, id, source, metadata, dialog, answerSpan);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
@@ -186,13 +186,13 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Initializes a new instance of AnswerSpan. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
-        /// <param name="confidenceScore"> Predicted score of answer span, value ranges from 0 to 1. </param>
+        /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
         /// <param name="length"> The length of the answer span. </param>
         /// <returns> A new <see cref="Conversations.AnswerSpan"/> instance for mocking. </returns>
-        public static AnswerSpan AnswerSpan(string text = null, double? confidenceScore = null, int? offset = null, int? length = null)
+        public static AnswerSpan AnswerSpan(string text = null, double? confidence = null, int? offset = null, int? length = null)
         {
-            return new AnswerSpan(text, confidenceScore, offset, length);
+            return new AnswerSpan(text, confidence, offset, length);
         }
     }
 }

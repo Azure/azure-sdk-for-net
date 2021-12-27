@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
             }).WaitForCompletionAsync();
 
-            Assert.True(await collection.CheckIfExistsAsync(name));
+            Assert.True(await collection.ExistsAsync(name));
 
             var applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
             ValidateCommon(applicationSecurityGroupData, name);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests
             // patch
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateTagsAsync(tags)).Value.Data;
+            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateAsync(tags)).Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(1));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await applicationSecurityGroup.DeleteAsync();
 
-            Assert.False(await collection.CheckIfExistsAsync(name));
+            Assert.False(await collection.ExistsAsync(name));
 
             applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);

@@ -340,13 +340,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (_sendLink?.TryGetOpenedObject(out var _) == true)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await _sendLink.CloseAsync().ConfigureAwait(false);
+                    await _sendLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 if (_managementLink?.TryGetOpenedObject(out var _) == true)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await _managementLink.CloseAsync().ConfigureAwait(false);
+                    await _managementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 _sendLink?.Dispose();

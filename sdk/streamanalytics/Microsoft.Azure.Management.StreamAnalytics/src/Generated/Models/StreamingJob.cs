@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// https://msdn.microsoft.com/en-us/library/system.globalization.culturetypes(v=vs.110).aspx.
         /// Defaults to 'en-US' if none specified.</param>
         /// <param name="compatibilityLevel">Controls certain runtime behaviors
-        /// of the streaming job. Possible values include: '1.0'</param>
+        /// of the streaming job. Possible values include: '1.0', '1.2'</param>
         /// <param name="createdDate">Value is an ISO-8601 formatted UTC
         /// timestamp indicating when the streaming job was created.</param>
         /// <param name="inputs">A list of one or more inputs to the streaming
@@ -125,19 +125,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// resource has changed between requests. You can also use it in the
         /// If-Match or If-None-Match headers for write operations for
         /// optimistic concurrency.</param>
+        /// <param name="jobStorageAccount">The properties that are associated
+        /// with an Azure Storage account with MSI</param>
         /// <param name="contentStoragePolicy">Valid values are
         /// JobStorageAccount and SystemAccount. If set to JobStorageAccount,
         /// this requires the user to also specify jobStorageAccount property.
         /// Possible values include: 'SystemAccount',
         /// 'JobStorageAccount'</param>
-        /// <param name="externals">The storage account where the custom code
-        /// artifacts are located.</param>
         /// <param name="cluster">The cluster which streaming jobs will run
         /// on.</param>
         /// <param name="identity">Describes the system-assigned managed
         /// identity assigned to this job that can be used to authenticate with
         /// inputs and outputs.</param>
-        public StreamingJob(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), StreamingJobSku sku = default(StreamingJobSku), string jobId = default(string), string provisioningState = default(string), string jobState = default(string), string jobType = default(string), string outputStartMode = default(string), System.DateTime? outputStartTime = default(System.DateTime?), System.DateTime? lastOutputEventTime = default(System.DateTime?), string eventsOutOfOrderPolicy = default(string), string outputErrorPolicy = default(string), int? eventsOutOfOrderMaxDelayInSeconds = default(int?), int? eventsLateArrivalMaxDelayInSeconds = default(int?), string dataLocale = default(string), string compatibilityLevel = default(string), System.DateTime? createdDate = default(System.DateTime?), IList<Input> inputs = default(IList<Input>), Transformation transformation = default(Transformation), IList<Output> outputs = default(IList<Output>), IList<Function> functions = default(IList<Function>), string etag = default(string), JobStorageAccount jobStorageAccount = default(JobStorageAccount), string contentStoragePolicy = default(string), External externals = default(External), ClusterInfo cluster = default(ClusterInfo), Identity identity = default(Identity))
+        public StreamingJob(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Sku sku = default(Sku), string jobId = default(string), string provisioningState = default(string), string jobState = default(string), string jobType = default(string), string outputStartMode = default(string), System.DateTime? outputStartTime = default(System.DateTime?), System.DateTime? lastOutputEventTime = default(System.DateTime?), string eventsOutOfOrderPolicy = default(string), string outputErrorPolicy = default(string), int? eventsOutOfOrderMaxDelayInSeconds = default(int?), int? eventsLateArrivalMaxDelayInSeconds = default(int?), string dataLocale = default(string), string compatibilityLevel = default(string), System.DateTime? createdDate = default(System.DateTime?), IList<Input> inputs = default(IList<Input>), Transformation transformation = default(Transformation), IList<Output> outputs = default(IList<Output>), IList<Function> functions = default(IList<Function>), string etag = default(string), JobStorageAccount jobStorageAccount = default(JobStorageAccount), string contentStoragePolicy = default(string), ClusterInfo cluster = default(ClusterInfo), Identity identity = default(Identity))
             : base(id, name, type, tags, location)
         {
             Sku = sku;
@@ -162,7 +162,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             Etag = etag;
             JobStorageAccount = jobStorageAccount;
             ContentStoragePolicy = contentStoragePolicy;
-            Externals = externals;
             Cluster = cluster;
             Identity = identity;
             CustomInit();
@@ -178,7 +177,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// PUT (CreateOrReplace) requests.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
-        public StreamingJobSku Sku { get; set; }
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets a GUID uniquely identifying the streaming job. This GUID is
@@ -282,7 +281,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 
         /// <summary>
         /// Gets or sets controls certain runtime behaviors of the streaming
-        /// job. Possible values include: '1.0'
+        /// job. Possible values include: '1.0', '1.2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.compatibilityLevel")]
         public string CompatibilityLevel { get; set; }
@@ -345,25 +344,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public string Etag { get; private set; }
 
         /// <summary>
+        /// Gets or sets the properties that are associated with an Azure
+        /// Storage account with MSI
         /// </summary>
         [JsonProperty(PropertyName = "properties.jobStorageAccount")]
         public JobStorageAccount JobStorageAccount { get; set; }
 
         /// <summary>
-        /// Gets valid values are JobStorageAccount and SystemAccount. If set
-        /// to JobStorageAccount, this requires the user to also specify
+        /// Gets or sets valid values are JobStorageAccount and SystemAccount.
+        /// If set to JobStorageAccount, this requires the user to also specify
         /// jobStorageAccount property. Possible values include:
         /// 'SystemAccount', 'JobStorageAccount'
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentStoragePolicy")]
-        public string ContentStoragePolicy { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the storage account where the custom code artifacts
-        /// are located.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.externals")]
-        public External Externals { get; set; }
+        public string ContentStoragePolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster which streaming jobs will run on.

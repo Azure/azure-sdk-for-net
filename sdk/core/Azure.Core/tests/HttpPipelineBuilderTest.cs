@@ -110,7 +110,11 @@ namespace Azure.Core.Tests
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             var informationalVersion = typeof(TestOptions).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            informationalVersion = informationalVersion.Substring(0, informationalVersion.IndexOf('+'));
+            var i = informationalVersion.IndexOf('+');
+            if (i > 0)
+            {
+                informationalVersion = informationalVersion.Substring(0, i);
+            }
 
             Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
             StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);

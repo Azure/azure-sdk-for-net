@@ -19,6 +19,7 @@ pr:
   paths:
     include:
     - sdk/machinelearningservices/
+    - sdk/resourcemanager/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

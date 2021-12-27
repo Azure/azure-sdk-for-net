@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// DataTransferDetailsValidationRequest class.
         /// </summary>
         /// <param name="deviceType">Device type. Possible values include:
-        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'</param>
+        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'</param>
         /// <param name="transferType">Type of the transfer. Possible values
         /// include: 'ImportToAzure', 'ExportFromAzure'</param>
         /// <param name="dataExportDetails">List of DataTransfer details to be
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets device type. Possible values include: 'DataBox',
-        /// 'DataBoxDisk', 'DataBoxHeavy'
+        /// 'DataBoxDisk', 'DataBoxHeavy', 'DataBoxCustomerDisk'
         /// </summary>
         [JsonProperty(PropertyName = "deviceType")]
         public SkuName DeviceType { get; set; }

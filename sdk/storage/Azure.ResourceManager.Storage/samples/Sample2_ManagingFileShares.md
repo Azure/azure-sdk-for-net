@@ -50,8 +50,7 @@ StorageAccount storageAccount = accountCreateOperation.Value;
 Then we need to get the file service, which is a singleton resource and the name is "default"
 
 ```C# Snippet:Managing_FileShares_GetFileService
-FileServiceCollection fileServiceCollection = storageAccount.GetFileServices();
-FileService fileService = await fileServiceCollection.GetAsync("default");
+FileService fileService = await storageAccount.GetFileService().GetAsync();
 ```
 
 
@@ -95,7 +94,7 @@ if (fileShare != null)
 {
     Console.WriteLine(fileShare.Id.Name);
 }
-if (await fileShareCollection.CheckIfExistsAsync("bar"))
+if (await fileShareCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("file share 'bar' exists");
 }

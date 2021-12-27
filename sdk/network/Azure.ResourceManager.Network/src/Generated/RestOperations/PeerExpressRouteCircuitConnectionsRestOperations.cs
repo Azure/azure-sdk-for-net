@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Network
 {
     internal partial class PeerExpressRouteCircuitConnectionsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PeerExpressRouteCircuitConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public PeerExpressRouteCircuitConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string circuitName, string peeringName, string connectionName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, string connectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,14 +66,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the specified Peer Express Route Circuit Connection from the specified express route circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public async Task<Response<PeerExpressRouteCircuitConnection>> GetAsync(string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="connectionName"/> is null. </exception>
+        public async Task<Response<PeerExpressRouteCircuitConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -94,31 +96,38 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, circuitName, peeringName, connectionName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, circuitName, peeringName, connectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PeerExpressRouteCircuitConnection value = default;
+                        PeerExpressRouteCircuitConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(document.RootElement);
+                        value = PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PeerExpressRouteCircuitConnectionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets the specified Peer Express Route Circuit Connection from the specified express route circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public Response<PeerExpressRouteCircuitConnection> Get(string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="connectionName"/> is null. </exception>
+        public Response<PeerExpressRouteCircuitConnectionData> Get(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -136,23 +145,25 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, circuitName, peeringName, connectionName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, circuitName, peeringName, connectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PeerExpressRouteCircuitConnection value = default;
+                        PeerExpressRouteCircuitConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(document.RootElement);
+                        value = PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PeerExpressRouteCircuitConnectionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string circuitName, string peeringName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string circuitName, string peeringName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -176,13 +187,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> GetAllAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
+        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -196,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, circuitName, peeringName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, circuitName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -213,13 +229,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public Response<PeerExpressRouteCircuitConnectionListResult> GetAll(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
+        public Response<PeerExpressRouteCircuitConnectionListResult> List(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -233,7 +254,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, circuitName, peeringName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, circuitName, peeringName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -249,7 +270,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string circuitName, string peeringName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string circuitName, string peeringName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -265,16 +286,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
+        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -289,7 +315,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, circuitName, peeringName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, circuitName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -307,16 +333,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public Response<PeerExpressRouteCircuitConnectionListResult> GetAllNextPage(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
+        public Response<PeerExpressRouteCircuitConnectionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -331,7 +362,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, circuitName, peeringName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, circuitName, peeringName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

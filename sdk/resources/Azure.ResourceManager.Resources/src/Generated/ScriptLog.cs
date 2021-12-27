@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,8 +21,14 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a ScriptLog along with the instance operations that can be performed on it. </summary>
     public partial class ScriptLog : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ScriptLog"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeploymentScriptLogsRestOperations _restClient;
+        private readonly DeploymentScriptsRestOperations _deploymentScriptsRestClient;
         private readonly ScriptLogData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class for mocking. </summary>
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class. </summary>
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class. </summary>
@@ -62,7 +67,7 @@ namespace Azure.ResourceManager.Resources
         internal ScriptLog(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -98,7 +103,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.GetLogsDefaultAsync(Id.ResourceGroupName, Id.Name, tail, cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentScriptsRestClient.GetLogsDefaultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ScriptLog(this, response.Value), response.GetRawResponse());
@@ -119,7 +124,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.GetLogsDefault(Id.ResourceGroupName, Id.Name, tail, cancellationToken);
+                var response = _deploymentScriptsRestClient.GetLogsDefault(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScriptLog(this, response.Value), response.GetRawResponse());
@@ -145,41 +150,6 @@ namespace Azure.ResourceManager.Resources
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<ScriptLog>>> GetLogsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ScriptLog.GetLogs");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetLogsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(data => new ScriptLog(this, data)).ToArray() as IReadOnlyList<ScriptLog>, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ScriptLog>> GetLogs(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ScriptLog.GetLogs");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetLogs(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(data => new ScriptLog(this, data)).ToArray() as IReadOnlyList<ScriptLog>, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

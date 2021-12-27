@@ -1,0 +1,496 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ef2b2e3cba43e4a85c27c7c6d0bc880-41f4de9afa6c014e-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-beta.5",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "b714a625cf54c8cb8d84207e9cdb4d3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 07:02:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "96fdd958-7ee5-4086-9dcc-bd8fa3ae95cc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "96fdd958-7ee5-4086-9dcc-bd8fa3ae95cc",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211207T070215Z:96fdd958-7ee5-4086-9dcc-bd8fa3ae95cc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "tagKey1": "tagValue1",
+          "tagKey2": "tagValue2"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-7457?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-beta.5",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "6d8b9e83141bb81cd02776f13fdf8b17",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Dec 2021 07:02:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "452175b2-5753-42f3-b35c-910ce63bf2dc",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "452175b2-5753-42f3-b35c-910ce63bf2dc",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211207T070216Z:452175b2-5753-42f3-b35c-910ce63bf2dc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457",
+        "name": "testRG-7457",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457/providers/Microsoft.Web/serverfarms/testAppService-6455?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "136",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.AppService/1.0.0-alpha.20211207.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "ed15a977f4933caf9fa3e4627747e3c7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "S1",
+          "tier": "STANDARD",
+          "capacity": 1
+        },
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "perSiteScaling": false,
+          "isXenon": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1481",
+        "Content-Type": "application/json",
+        "Date": "Tue, 07 Dec 2021 07:02:25 GMT",
+        "ETag": "\u00221D7EB38630225A0\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "95989afd-800b-4fad-a279-9c9348e095d4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "aa0f7da4-9942-4167-9f43-cf3ba6a7e7b3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211207T070226Z:95989afd-800b-4fad-a279-9c9348e095d4",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457/providers/Microsoft.Web/serverfarms/testAppService-6455",
+        "name": "testAppService-6455",
+        "type": "Microsoft.Web/serverfarms",
+        "kind": "app",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "serverFarmId": 9470,
+          "name": "testAppService-6455",
+          "sku": {
+            "name": "S1",
+            "tier": "Standard",
+            "size": "S1",
+            "family": "S",
+            "capacity": 1
+          },
+          "workerSize": "Default",
+          "workerSizeId": 0,
+          "workerTierName": null,
+          "numberOfWorkers": 1,
+          "currentWorkerSize": "Default",
+          "currentWorkerSizeId": 0,
+          "currentNumberOfWorkers": 1,
+          "status": "Ready",
+          "webSpace": "testRG-7457-EastUSwebspace",
+          "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+          "adminSiteName": null,
+          "hostingEnvironment": null,
+          "hostingEnvironmentProfile": null,
+          "maximumNumberOfWorkers": 0,
+          "planName": "VirtualDedicatedPlan",
+          "adminRuntimeSiteName": null,
+          "computeMode": "Dedicated",
+          "siteMode": null,
+          "geoRegion": "East US",
+          "perSiteScaling": false,
+          "elasticScaleEnabled": false,
+          "maximumElasticWorkerCount": 1,
+          "numberOfSites": 0,
+          "hostingEnvironmentId": null,
+          "isSpot": false,
+          "spotExpirationTime": null,
+          "freeOfferExpirationTime": null,
+          "tags": {},
+          "kind": "app",
+          "resourceGroup": "testRG-7457",
+          "reserved": false,
+          "isXenon": false,
+          "hyperV": false,
+          "mdmId": "waws-prod-blu-287_9470",
+          "targetWorkerCount": 0,
+          "targetWorkerSizeId": 0,
+          "provisioningState": "Succeeded",
+          "webSiteId": null,
+          "existingServerFarmIds": null,
+          "kubeEnvironmentProfile": null,
+          "zoneRedundant": false
+        },
+        "sku": {
+          "name": "S1",
+          "tier": "Standard",
+          "size": "S1",
+          "family": "S",
+          "capacity": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457/providers/Microsoft.Web/serverfarms/testAppService-1123?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "136",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.AppService/1.0.0-alpha.20211207.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "24a4633bf03fdba9317b71385659e092",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "S1",
+          "tier": "STANDARD",
+          "capacity": 1
+        },
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "perSiteScaling": false,
+          "isXenon": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1481",
+        "Content-Type": "application/json",
+        "Date": "Tue, 07 Dec 2021 07:02:31 GMT",
+        "ETag": "\u00221D7EB3866485CF5\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "99dce160-4860-4d72-93dd-d5d94783e304",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "f99cc919-e93c-4660-9440-68fe0dadbc52",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211207T070231Z:99dce160-4860-4d72-93dd-d5d94783e304",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457/providers/Microsoft.Web/serverfarms/testAppService-1123",
+        "name": "testAppService-1123",
+        "type": "Microsoft.Web/serverfarms",
+        "kind": "app",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "serverFarmId": 9471,
+          "name": "testAppService-1123",
+          "sku": {
+            "name": "S1",
+            "tier": "Standard",
+            "size": "S1",
+            "family": "S",
+            "capacity": 1
+          },
+          "workerSize": "Default",
+          "workerSizeId": 0,
+          "workerTierName": null,
+          "numberOfWorkers": 1,
+          "currentWorkerSize": "Default",
+          "currentWorkerSizeId": 0,
+          "currentNumberOfWorkers": 1,
+          "status": "Ready",
+          "webSpace": "testRG-7457-EastUSwebspace",
+          "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+          "adminSiteName": null,
+          "hostingEnvironment": null,
+          "hostingEnvironmentProfile": null,
+          "maximumNumberOfWorkers": 0,
+          "planName": "VirtualDedicatedPlan",
+          "adminRuntimeSiteName": null,
+          "computeMode": "Dedicated",
+          "siteMode": null,
+          "geoRegion": "East US",
+          "perSiteScaling": false,
+          "elasticScaleEnabled": false,
+          "maximumElasticWorkerCount": 1,
+          "numberOfSites": 0,
+          "hostingEnvironmentId": null,
+          "isSpot": false,
+          "spotExpirationTime": null,
+          "freeOfferExpirationTime": null,
+          "tags": {},
+          "kind": "app",
+          "resourceGroup": "testRG-7457",
+          "reserved": false,
+          "isXenon": false,
+          "hyperV": false,
+          "mdmId": "waws-prod-blu-287_9471",
+          "targetWorkerCount": 0,
+          "targetWorkerSizeId": 0,
+          "provisioningState": "Succeeded",
+          "webSiteId": null,
+          "existingServerFarmIds": null,
+          "kubeEnvironmentProfile": null,
+          "zoneRedundant": false
+        },
+        "sku": {
+          "name": "S1",
+          "tier": "Standard",
+          "size": "S1",
+          "family": "S",
+          "capacity": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457/providers/Microsoft.Web/serverfarms?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.AppService/1.0.0-alpha.20211207.1",
+          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "e33cfb4fa23ec5099fc51b8e20bfa82a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2853",
+        "Content-Type": "application/json",
+        "Date": "Tue, 07 Dec 2021 07:02:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "863effda-2f8d-4c17-b079-a3e313de18b5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "5066a20b-1169-4685-88bb-ab1befe579ef",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211207T070232Z:863effda-2f8d-4c17-b079-a3e313de18b5",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457/providers/Microsoft.Web/serverfarms/testAppService-6455",
+            "name": "testAppService-6455",
+            "type": "Microsoft.Web/serverfarms",
+            "kind": "app",
+            "location": "East US",
+            "tags": {},
+            "properties": {
+              "serverFarmId": 9470,
+              "name": "testAppService-6455",
+              "workerSize": "Default",
+              "workerSizeId": 0,
+              "workerTierName": null,
+              "numberOfWorkers": 1,
+              "currentWorkerSize": "Default",
+              "currentWorkerSizeId": 0,
+              "currentNumberOfWorkers": 1,
+              "status": "Ready",
+              "webSpace": "testRG-7457-EastUSwebspace",
+              "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+              "adminSiteName": null,
+              "hostingEnvironment": null,
+              "hostingEnvironmentProfile": null,
+              "maximumNumberOfWorkers": 10,
+              "planName": "VirtualDedicatedPlan",
+              "adminRuntimeSiteName": null,
+              "computeMode": "Dedicated",
+              "siteMode": null,
+              "geoRegion": "East US",
+              "perSiteScaling": false,
+              "elasticScaleEnabled": false,
+              "maximumElasticWorkerCount": 1,
+              "numberOfSites": 0,
+              "hostingEnvironmentId": null,
+              "isSpot": false,
+              "spotExpirationTime": null,
+              "freeOfferExpirationTime": null,
+              "tags": {},
+              "kind": "app",
+              "resourceGroup": "testRG-7457",
+              "reserved": false,
+              "isXenon": false,
+              "hyperV": false,
+              "mdmId": "waws-prod-blu-287_9470",
+              "targetWorkerCount": 0,
+              "targetWorkerSizeId": 0,
+              "provisioningState": "Succeeded",
+              "webSiteId": null,
+              "existingServerFarmIds": null,
+              "kubeEnvironmentProfile": null,
+              "zoneRedundant": false
+            },
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7457/providers/Microsoft.Web/serverfarms/testAppService-1123",
+            "name": "testAppService-1123",
+            "type": "Microsoft.Web/serverfarms",
+            "kind": "app",
+            "location": "East US",
+            "tags": {},
+            "properties": {
+              "serverFarmId": 9471,
+              "name": "testAppService-1123",
+              "workerSize": "Default",
+              "workerSizeId": 0,
+              "workerTierName": null,
+              "numberOfWorkers": 1,
+              "currentWorkerSize": "Default",
+              "currentWorkerSizeId": 0,
+              "currentNumberOfWorkers": 1,
+              "status": "Ready",
+              "webSpace": "testRG-7457-EastUSwebspace",
+              "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+              "adminSiteName": null,
+              "hostingEnvironment": null,
+              "hostingEnvironmentProfile": null,
+              "maximumNumberOfWorkers": 10,
+              "planName": "VirtualDedicatedPlan",
+              "adminRuntimeSiteName": null,
+              "computeMode": "Dedicated",
+              "siteMode": null,
+              "geoRegion": "East US",
+              "perSiteScaling": false,
+              "elasticScaleEnabled": false,
+              "maximumElasticWorkerCount": 1,
+              "numberOfSites": 0,
+              "hostingEnvironmentId": null,
+              "isSpot": false,
+              "spotExpirationTime": null,
+              "freeOfferExpirationTime": null,
+              "tags": {},
+              "kind": "app",
+              "resourceGroup": "testRG-7457",
+              "reserved": false,
+              "isXenon": false,
+              "hyperV": false,
+              "mdmId": "waws-prod-blu-287_9471",
+              "targetWorkerCount": 0,
+              "targetWorkerSizeId": 0,
+              "provisioningState": "Succeeded",
+              "webSiteId": null,
+              "existingServerFarmIds": null,
+              "kubeEnvironmentProfile": null,
+              "zoneRedundant": false
+            },
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            }
+          }
+        ],
+        "nextLink": null,
+        "id": null
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1777430611",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

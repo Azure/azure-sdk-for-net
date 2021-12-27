@@ -46,7 +46,7 @@
           }
         ],
         "timestampColumn": "timestamp",
-        "dataStartFrom": "2021-07-26T19:57:00Z",
+        "dataStartFrom": "2021-07-26T19:57:00.0000000Z",
         "startOffsetInSeconds": 1800,
         "maxConcurrency": 5,
         "minRetryIntervalInSeconds": 80,
@@ -126,7 +126,7 @@
             "dimensionDisplayName": "city"
           }
         ],
-        "dataStartFrom": "2021-07-26T19:57:00Z",
+        "dataStartFrom": "2021-07-26T19:57:00.0000000Z",
         "dataSourceType": "PostgreSql",
         "timestampColumn": "timestamp",
         "startOffsetInSeconds": 1800,

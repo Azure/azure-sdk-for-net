@@ -20,8 +20,8 @@ client libraries.  You can learn about these shared features in the
 
 ## Code Generation
 Please do not edit any of the code in the `/Generated` folders directly.  If
-you need to update a swagger file or change the generator, you can regenerate
-by running the `\sdk\search\generate.ps1` script.
+you need to update code in response to a swagger file change or a code generator update,
+you can regenerate the code by running `dotnet build /t:GenerateCode` in the `src` directory.
 
 ## Testing
 Please ensure all tests pass with any changes and additional tests are added to

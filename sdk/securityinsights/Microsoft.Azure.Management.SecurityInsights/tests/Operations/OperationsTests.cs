@@ -9,35 +9,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.SecurityInsights;
 using Microsoft.Azure.Management.SecurityInsights.Models;
+using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using SecurityInsights.Tests.Helpers;
 using Xunit;
 
-namespace SecurityInsights.Tests
+namespace Microsoft.Azure.Management.SecurityInsights.Tests
 {
     public class OperationsTests : TestBase
     {
         #region Test setup
-
-        public static TestEnvironment TestEnvironment { get; private set; }
-
-        private static SecurityInsightsClient GetSecurityInsightsClient(MockContext context)
-        {
-            if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-            }
-
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
-
-            var SecurityInsightsClient = HttpMockServer.Mode == HttpRecorderMode.Record
-                ? context.GetServiceClient<SecurityInsightsClient>(TestEnvironment, handlers: handler)
-                : context.GetServiceClient<SecurityInsightsClient>(handlers: handler);
-
-            return SecurityInsightsClient;
-        }
 
         #endregion
 
@@ -48,7 +30,7 @@ namespace SecurityInsights.Tests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var Operations = SecurityInsightsClient.Operations.List();
                 ValidateOperations(Operations);
             }

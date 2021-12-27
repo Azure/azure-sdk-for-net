@@ -1,14 +1,35 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (2021-12-27)
 
 ### Features Added
 
+- Added `CreateResourceIdentifier` for each resource class
+- Class `OSFamilyCollection` and `OSVersionCollection` now implement the `IEnumerable<T>` and `IAsyncEnumerable<T>`
+- Class `VirtualMachineExtensionImageCollection` now implements the `IEnumerable<T>`
+
 ### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
+- Constructor of `OSFamilyCollection`, `OSVersionCollection` no longer accept `location` as their first parameter
+- Constructor of `VirtualMachineExtensionImageCollection` no longer accepts `location` and `publisher` as its first two parameters
+- Method `GetOSFamilies` and `GetOSVersions` in `SubscriptionExtensions` now accept an extra parameter `location`
+- Method `GetVirtualMachineExtensionImages` in `SubscriptionExtensions` now accepts two extra parameters `location` and `publisher`
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
 
 ## 1.0.0-beta.3 (2021-10-28)
 
@@ -207,7 +228,7 @@ var nicData = new NetworkInterfaceData()
     Location = location,
     IpConfigurations =
     {
-        new NetworkInterfaceIPConfiguration()
+        new NetworkInterfaceIPConfigurationData()
         {
             Name = "Primary",
             Primary = true,

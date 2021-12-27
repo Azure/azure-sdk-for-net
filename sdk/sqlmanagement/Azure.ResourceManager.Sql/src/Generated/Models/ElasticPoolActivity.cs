@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the activity on an elastic pool. </summary>
-    public partial class ElasticPoolActivity : ProxyResource
+    public partial class ElasticPoolActivity : Resource
     {
         /// <summary> Initializes a new instance of ElasticPoolActivity. </summary>
         public ElasticPoolActivity()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of ElasticPoolActivity. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="endTime"> The time the operation finished (ISO8601 format). </param>
         /// <param name="errorCode"> The error code if available. </param>
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="requestedDatabaseDtuGuarantee"> The requested per database DTU guarantee. </param>
         /// <param name="requestedDatabaseDtuCap"> The requested per database DTU cap. </param>
         /// <param name="requestedDtuGuarantee"> The requested DTU guarantee. </param>
-        internal ElasticPoolActivity(string id, string name, string type, string location, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, int? requestedDatabaseDtuMax, int? requestedDatabaseDtuMin, int? requestedDtu, string requestedElasticPoolName, long? requestedStorageLimitInGB, string elasticPoolName, string serverName, DateTimeOffset? startTime, string state, int? requestedStorageLimitInMB, int? requestedDatabaseDtuGuarantee, int? requestedDatabaseDtuCap, int? requestedDtuGuarantee) : base(id, name, type)
+        internal ElasticPoolActivity(ResourceIdentifier id, string name, ResourceType type, string location, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, int? requestedDatabaseDtuMax, int? requestedDatabaseDtuMin, int? requestedDtu, string requestedElasticPoolName, long? requestedStorageLimitInGB, string elasticPoolName, string serverName, DateTimeOffset? startTime, string state, int? requestedStorageLimitInMB, int? requestedDatabaseDtuGuarantee, int? requestedDatabaseDtuCap, int? requestedDtuGuarantee) : base(id, name, type)
         {
             Location = location;
             EndTime = endTime;

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Tests
         public void SerializationTestType1()
         {
             string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType1.json"));
-            ResourceIdentifier id = Id;
+            ResourceIdentifier id = new ResourceIdentifier(Id);
             Plan plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
-            Sku sku = new Sku("NameForSku", SkuTier.Basic, "SizeForSku", "FamilyForSku", 15464547);
+            Resources.Models.Sku sku = new Resources.Models.Sku("NameForSku", SkuTier.Basic.ToString(), "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, new Dictionary<string, string>(), plan, null, "KindForResource", "ManagedByForResource", sku, null, null, null, null);
 
             var json = JsonHelper.SerializePropertiesToString(data, indented: true) + Environment.NewLine;
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Tests
         public void SerializationTestType2()
         {
             string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType2.json"));
-            ResourceIdentifier id = Id;
+            ResourceIdentifier id = new ResourceIdentifier(Id);
             var plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             var kind = "KindForResource";
             var managedBy = "ManagedByForResource";
-            var sku = new Sku("NameForSku", SkuTier.Basic, "SizeForSku", "FamilyForSku", 15464547);
+            var sku = new Resources.Models.Sku("NameForSku", SkuTier.Basic.ToString(), "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
             GenericResourceData genericResource = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, new Dictionary<string, string>(), plan, null, kind, managedBy, sku, null, null, null, null);
             genericResource.Tags.Add("key1", "value1");
             genericResource.Tags.Add("key2", "value2");
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Tests
         public void InvalidSerializationTest()
         {
             string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{}}}";
-            ResourceIdentifier id = Id;
+            ResourceIdentifier id = new ResourceIdentifier(Id);
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, new Dictionary<string, string>(), null, null, null, null, null, null, null, null, null);
 
             var json = JsonHelper.SerializePropertiesToString(data);

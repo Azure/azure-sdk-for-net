@@ -55,7 +55,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
 {
     Location = resourceGroup.Data.Location,
     IpConfigurations = {
-        new NetworkInterfaceIPConfiguration()
+        new NetworkInterfaceIPConfigurationData()
         {
             Name = "ipConfig",
             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -106,7 +106,7 @@ if (virtualNetwork != null)
     Console.WriteLine(virtualNetwork.Data.Name);
 }
 
-if (await networkInterfaceCollection.CheckIfExistsAsync("bar"))
+if (await networkInterfaceCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("Network interface 'bar' exists.");
 }

@@ -40,9 +40,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected int SkipSamples => 1;
 
-        protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2021-10-01T00:00:00Z");
+        protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2021-10-01T00:00:00.0000000Z");
 
-        protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2021-10-31T00:00:00Z");
+        protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2021-10-31T00:00:00.0000000Z");
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {

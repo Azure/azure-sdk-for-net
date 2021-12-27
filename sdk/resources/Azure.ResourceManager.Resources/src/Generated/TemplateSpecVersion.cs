@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a TemplateSpecVersion along with the instance operations that can be performed on it. </summary>
     public partial class TemplateSpecVersion : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="TemplateSpecVersion"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TemplateSpecVersionsRestOperations _restClient;
+        private readonly TemplateSpecVersionsRestOperations _templateSpecVersionsRestClient;
         private readonly TemplateSpecVersionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersion"/> class for mocking. </summary>
@@ -38,7 +44,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TemplateSpecVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _templateSpecVersionsRestClient = new TemplateSpecVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersion"/> class. </summary>
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.Resources
         internal TemplateSpecVersion(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TemplateSpecVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _templateSpecVersionsRestClient = new TemplateSpecVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersion"/> class. </summary>
@@ -59,7 +65,7 @@ namespace Azure.ResourceManager.Resources
         internal TemplateSpecVersion(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TemplateSpecVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _templateSpecVersionsRestClient = new TemplateSpecVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
@@ -111,7 +117,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _templateSpecVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
@@ -148,7 +154,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new TemplateSpecVersionDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _templateSpecVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new TemplateSpecVersionDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -182,16 +188,17 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+
         /// <summary> Updates Template Spec Version tags with specified values. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TemplateSpecVersion>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<TemplateSpecVersion>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecVersion.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecVersionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,7 +217,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken);
+                var response = _templateSpecVersionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken);
                 return Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

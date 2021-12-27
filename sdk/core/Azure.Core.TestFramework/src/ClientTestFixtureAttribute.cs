@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
@@ -92,7 +94,12 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            var suitePermutations = GeneratePermutations();
+            bool includeSync = !typeInfo.GetCustomAttributes<AsyncOnlyAttribute>(true).Any();
+            bool includeAsync = !typeInfo.GetCustomAttributes<SyncOnlyAttribute>(true).Any();
+
+            Debug.Assert(includeSync || includeAsync);
+
+            var suitePermutations = GeneratePermutations(includeSync, includeAsync);
 
             foreach (var (fixture, isAsync, serviceVersion, parameter) in suitePermutations)
             {
@@ -104,45 +111,43 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private List<(TestFixtureAttribute Suite, bool IsAsync, object ServiceVersion, object Parameter)> GeneratePermutations()
+        private List<(TestFixtureAttribute Suite, bool IsAsync, object ServiceVersion, object Parameter)> GeneratePermutations(bool includeSync, bool includeAsync)
         {
             var result = new List<(TestFixtureAttribute Suite, bool IsAsync, object ServiceVersion, object Parameter)>();
 
-            if (_serviceVersions.Any())
+            void AddResult(object serviceVersion, object parameter)
             {
-                foreach (object serviceVersion in _serviceVersions.Distinct())
+                var parameters = new List<object>() ;
+                parameters.Add(true);
+                if (serviceVersion != null)
                 {
-                    if (_additionalParameters.Any())
-                    {
-                        foreach (var parameter in _additionalParameters)
-                        {
-                            result.Add((new TestFixtureAttribute(false, serviceVersion, parameter), false, serviceVersion, parameter));
-                            result.Add((new TestFixtureAttribute(true, serviceVersion, parameter), true, serviceVersion, parameter));
-                        }
-                    }
-                    else
-                    {
-                        // No additional parameters defined
-                        result.Add((new TestFixtureAttribute(false, serviceVersion), false, serviceVersion, null));
-                        result.Add((new TestFixtureAttribute(true, serviceVersion), true, serviceVersion, null));
-                    }
+                    parameters.Add(serviceVersion);
+                }
+
+                if (parameter != null)
+                {
+                    parameters.Add(parameter);
+                }
+
+                if (includeAsync)
+                {
+                    result.Add((new TestFixtureAttribute(parameters.ToArray()), true, serviceVersion, parameter));
+                }
+
+                if (includeSync)
+                {
+                    parameters[0] = false;
+                    result.Add((new TestFixtureAttribute(parameters.ToArray()), false, serviceVersion, parameter));
                 }
             }
-            else
+
+            var serviceVersions = _serviceVersions.Any() ? _serviceVersions : new object[] { null };
+            var parameters = _additionalParameters.Any() ? _additionalParameters : new object[] { null };
+            foreach (object serviceVersion in serviceVersions.Distinct())
             {
-                if (_additionalParameters.Any())
+                foreach (var parameter in parameters)
                 {
-                    foreach (var parameter in _additionalParameters)
-                    {
-                        result.Add((new TestFixtureAttribute(false, parameter), false, null, parameter));
-                        result.Add((new TestFixtureAttribute(true, parameter), true, null, parameter));
-                    }
-                }
-                else
-                {
-                    // No additional parameters defined
-                    result.Add((new TestFixtureAttribute(false), false, null, null));
-                    result.Add((new TestFixtureAttribute(true), true, null, null));
+                    AddResult(serviceVersion, parameter);
                 }
             }
 
@@ -151,6 +156,11 @@ namespace Azure.Core.TestFramework
 
         private void Process(TestSuite testSuite, object serviceVersion, bool isAsync, object parameter)
         {
+            if (parameter != null)
+            {
+                testSuite.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString());
+            }
+
             var serviceVersionNumber = Convert.ToInt32(serviceVersion);
             ApplyLimits(serviceVersionNumber, testSuite);
 

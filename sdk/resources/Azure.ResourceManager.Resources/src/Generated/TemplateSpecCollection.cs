@@ -20,11 +20,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of TemplateSpec and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of TemplateSpec and their operations over its parent. </summary>
     public partial class TemplateSpecCollection : ArmCollection, IEnumerable<TemplateSpec>, IAsyncEnumerable<TemplateSpec>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TemplateSpecsRestOperations _restClient;
+        private readonly TemplateSpecsRestOperations _templateSpecsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecCollection"/> class for mocking. </summary>
         protected TemplateSpecCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal TemplateSpecCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<TemplateSpec> IEnumerable<TemplateSpec>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<TemplateSpec> IAsyncEnumerable<TemplateSpec>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _templateSpecsRestClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken);
+                var response = _templateSpecsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken);
                 var operation = new TemplateSpecCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -114,7 +100,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken).ConfigureAwait(false);
                 var operation = new TemplateSpecCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,22 +113,23 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a Template Spec with a given name. </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<TemplateSpec> Get(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Get");
             scope.Start();
             try
             {
-                if (templateSpecName == null)
-                {
-                    throw new ArgumentNullException(nameof(templateSpecName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken);
+                var response = _templateSpecsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TemplateSpec(Parent, response.Value), response.GetRawResponse());
@@ -154,22 +141,23 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a Template Spec with a given name. </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<TemplateSpec>> GetAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Get");
             scope.Start();
             try
             {
-                if (templateSpecName == null)
-                {
-                    throw new ArgumentNullException(nameof(templateSpecName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new TemplateSpec(Parent, response.Value), response.GetRawResponse());
@@ -184,19 +172,20 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<TemplateSpec> GetIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (templateSpecName == null)
-                {
-                    throw new ArgumentNullException(nameof(templateSpecName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken);
+                var response = _templateSpecsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<TemplateSpec>(null, response.GetRawResponse())
                     : Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
@@ -211,19 +200,20 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<TemplateSpec>> GetIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (templateSpecName == null)
-                {
-                    throw new ArgumentNullException(nameof(templateSpecName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<TemplateSpec>(null, response.GetRawResponse())
                     : Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
@@ -238,18 +228,19 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        public virtual Response<bool> Exists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.CheckIfExists");
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
             try
             {
-                if (templateSpecName == null)
-                {
-                    throw new ArgumentNullException(nameof(templateSpecName));
-                }
-
                 var response = GetIfExists(templateSpecName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -263,18 +254,19 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.CheckIfExists");
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.ExistsAsync");
             scope.Start();
             try
             {
-                if (templateSpecName == null)
-                {
-                    throw new ArgumentNullException(nameof(templateSpecName));
-                }
-
                 var response = await GetIfExistsAsync(templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -297,7 +289,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
+                    var response = _templateSpecsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +304,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
+                    var response = _templateSpecsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -336,7 +328,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _templateSpecsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -351,7 +343,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _templateSpecsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -409,7 +401,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        IEnumerator<TemplateSpec> IEnumerable<TemplateSpec>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<TemplateSpec> IAsyncEnumerable<TemplateSpec>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, TemplateSpec, TemplateSpecData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TemplateSpec, TemplateSpecData> Construct() { }
     }
 }

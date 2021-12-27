@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a FirewallPolicy along with the instance operations that can be performed on it. </summary>
     public partial class FirewallPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="FirewallPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FirewallPoliciesRestOperations _restClient;
+        private readonly FirewallPoliciesRestOperations _firewallPoliciesRestClient;
         private readonly FirewallPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicy"/> class for mocking. </summary>
@@ -34,12 +40,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "FirewallPolicy"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal FirewallPolicy(ArmResource options, FirewallPolicyData resource) : base(options, resource.Id)
+        internal FirewallPolicy(ArmResource options, FirewallPolicyData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _firewallPoliciesRestClient = new FirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicy"/> class. </summary>
@@ -48,7 +54,7 @@ namespace Azure.ResourceManager.Network
         internal FirewallPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _firewallPoliciesRestClient = new FirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicy"/> class. </summary>
@@ -60,7 +66,7 @@ namespace Azure.ResourceManager.Network
         internal FirewallPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _firewallPoliciesRestClient = new FirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _firewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new FirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _firewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FirewallPolicy(this, response.Value), response.GetRawResponse());
@@ -151,8 +157,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FirewallPolicyDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _firewallPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FirewallPolicyDeleteOperation(_clientDiagnostics, Pipeline, _firewallPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,8 +179,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FirewallPolicyDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _firewallPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new FirewallPolicyDeleteOperation(_clientDiagnostics, Pipeline, _firewallPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,11 +192,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of FirewallPolicyRuleCollectionGroups in the FirewallPolicy. </summary>
+        #region FirewallPolicyRuleCollectionGroup
+
+        /// <summary> Gets a collection of FirewallPolicyRuleCollectionGroups in the FirewallPolicy. </summary>
         /// <returns> An object representing collection of FirewallPolicyRuleCollectionGroups and their operations over a FirewallPolicy. </returns>
         public FirewallPolicyRuleCollectionGroupCollection GetFirewallPolicyRuleCollectionGroups()
         {
             return new FirewallPolicyRuleCollectionGroupCollection(this);
         }
+        #endregion
     }
 }

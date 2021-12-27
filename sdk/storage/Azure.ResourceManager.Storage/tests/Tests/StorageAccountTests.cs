@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Storage.Tests
             AssertStorageAccountEqual(account1, account2);
             StorageAccount account3 = await storageAccountCollection.GetIfExistsAsync(accountName + "1");
             Assert.IsNull(account3);
-            Assert.IsTrue(await storageAccountCollection.CheckIfExistsAsync(accountName));
-            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName + "1"));
+            Assert.IsTrue(await storageAccountCollection.ExistsAsync(accountName));
+            Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName + "1"));
 
             //delete storage account
             await account1.DeleteAsync();
 
             //validate if deleted successfully
-            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName));
+            Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName));
             StorageAccount account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create file share with share quota 5200, which is allowed in large file shares
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileService fileService = await account1.GetFileServices().GetAsync("default");
+            FileService fileService = await account1.GetFileService().GetAsync();
             FileShareCollection shareCollection = fileService.GetFileShares();
             FileShareData shareData = new FileShareData();
             shareData.ShareQuota = 5200;
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task GetDeletedAccounts()
         {
             //get all deleted accounts
-            List<DeletedAccount> deletedAccounts = await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
+            List<DeletedAccountData> deletedAccounts = await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
             Assert.NotNull(deletedAccounts);
         }
 
@@ -1207,8 +1207,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobServiceCollection blobServiceCollection = account.GetBlobServices();
-            BlobService blobService = await blobServiceCollection.GetAsync("default");
+            BlobService blobService = await account.GetBlobService().GetAsync();
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
             BlobContainer container = (await blobContainerCollection.CreateOrUpdateAsync(containerName, new BlobContainerData())).Value;
 
@@ -1290,10 +1289,9 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //Enable LAT
-            BlobServiceCollection blobServiceCollection = account.GetBlobServices();
-            BlobService blobService = await blobServiceCollection.GetAsync("Default");
+            BlobService blobService = await account.GetBlobService().GetAsync();
             blobService.Data.LastAccessTimeTrackingPolicy = new LastAccessTimeTrackingPolicy(true);
-            _ = await blobService.SetServicePropertiesAsync(blobService.Data);
+            _ = await blobService.CreateOrUpdateAsync(blobService.Data);
 
             // create ManagementPolicy to set, the type of policy rule should always be Lifecycle
             List<ManagementPolicyRule> rules = new List<ManagementPolicyRule>();
@@ -1365,7 +1363,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //patch encryption scope
             encryptionScope.Data.State = EncryptionScopeState.Disabled;
-            encryptionScope = await encryptionScope.PatchAsync(encryptionScope.Data);
+            encryptionScope = await encryptionScope.UpdateAsync(encryptionScope.Data);
             Assert.AreEqual(encryptionScope.Data.State, EncryptionScopeState.Disabled);
 
             //get all encryption scopes
