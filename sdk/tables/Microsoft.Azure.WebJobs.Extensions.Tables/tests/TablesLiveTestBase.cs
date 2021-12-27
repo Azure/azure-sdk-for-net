@@ -68,8 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             try
             {
-                await Task.Yield();
-                //await TableClient.DeleteAsync();
+                await TableClient.DeleteAsync();
             }
             catch
             { }
