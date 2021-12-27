@@ -95,7 +95,7 @@ namespace Azure.Communication.CallingServer.Tests
                 var callLocator = new GroupCallLocator(groupId);
 
                 // Play Prompt Audio
-                await PlayAudioOperation(callingServerClient, callLocator).ConfigureAwait(false);
+                await PlayAudioOperation(callingServerClient, callLocator, true).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Cancel Prompt Audio
@@ -307,7 +307,7 @@ namespace Azure.Communication.CallingServer.Tests
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Play Audio To Participant
-                var playAudioResult = await PlayAudioToParticipantOperation(callingServerClient, callLocator, userId).ConfigureAwait(false);
+                var playAudioResult = await PlayAudioToParticipantOperation(callingServerClient, callLocator, userId, true).ConfigureAwait(false);
                 string mediaOperationId = playAudioResult.OperationId;
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
@@ -348,7 +348,7 @@ namespace Azure.Communication.CallingServer.Tests
                 var callLocator = new GroupCallLocator(groupId);
 
                 // Play Prompt Audio
-                var playAudioResult = await PlayAudioOperation(callingServerClient, callLocator).ConfigureAwait(false);
+                var playAudioResult = await PlayAudioOperation(callingServerClient, callLocator, true).ConfigureAwait(false);
                 string mediaOperatioId = playAudioResult.OperationId;
                 await WaitForOperationCompletion().ConfigureAwait(false);
 

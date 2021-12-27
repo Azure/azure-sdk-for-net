@@ -47,6 +47,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         protected const string TARGET_CALL_CONNECTION_ID = "41201300-4316-4094-b8f0-a2238937273b";
 
+        protected const string PLAYAUDIO_OPERATIONCONTEXT = "de346f03-7f8d-41ab-a232-cc5e14990769";
+
+        protected const string PLAYAUDIO_AUDIOFILEID = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c";
+
         protected string GetTargetCallConnectionId()
         {
             return TARGET_CALL_CONNECTION_ID;
@@ -277,13 +281,13 @@ namespace Azure.Communication.CallingServer.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_CreateCallConnectionOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioOperation
-        internal async Task PlayAudioOperation(CallConnection callConnection)
+        internal async Task PlayAudioOperation(CallConnection callConnection, bool playAudioInLoop=false)
         {
             var playAudioOptions = new PlayAudioOptions()
             {
-                OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769",
-                Loop = true,
-                AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c"
+                OperationContext = PLAYAUDIO_OPERATIONCONTEXT,
+                Loop = playAudioInLoop,
+                AudioFileId = PLAYAUDIO_AUDIOFILEID
             };
 
             Console.WriteLine("Performing PlayAudio operation");
@@ -293,7 +297,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(response.Value.Status, CallingOperationStatus.Running);
         }
 
-        internal async Task<PlayAudioResult> PlayAudioOperation(CallingServerClient callingServerClient, CallLocator callLocator)
+        internal async Task<PlayAudioResult> PlayAudioOperation(CallingServerClient callingServerClient, CallLocator callLocator, bool playAudioInLoop = false)
         {
             Console.WriteLine("Performing PlayAudio operation");
 
@@ -302,10 +306,10 @@ namespace Azure.Communication.CallingServer.Tests
                 new Uri(GetAudioFileUrl()),
                 new PlayAudioOptions()
                 {
-                    Loop = true,
-                    AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
-                    CallbackUri = new Uri(TestEnvironment.AppCallbackUrl),
-                    OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769"
+                    OperationContext = PLAYAUDIO_OPERATIONCONTEXT,
+                    Loop = playAudioInLoop,
+                    AudioFileId = PLAYAUDIO_AUDIOFILEID,
+                    CallbackUri = new Uri(TestEnvironment.AppCallbackUrl)
                 }).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, CallingOperationStatus.Running);
@@ -567,13 +571,13 @@ namespace Azure.Communication.CallingServer.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_TransferCallOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioToParticipantOperation
-        internal async Task<PlayAudioResult> PlayAudioToParticipantOperation(CallConnection callConnection, string participantUserId)
+        internal async Task<PlayAudioResult> PlayAudioToParticipantOperation(CallConnection callConnection, string participantUserId, bool playAudioInLoop=false)
         {
             var playAudioOptions = new PlayAudioOptions()
             {
-                OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769",
-                Loop = true,
-                AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
+                OperationContext = PLAYAUDIO_OPERATIONCONTEXT,
+                Loop = playAudioInLoop,
+                AudioFileId = PLAYAUDIO_AUDIOFILEID,
                 CallbackUri = new Uri(TestEnvironment.AppCallbackUrl)
             };
 
@@ -586,13 +590,13 @@ namespace Azure.Communication.CallingServer.Tests
             return response.Value;
         }
 
-        internal async Task<PlayAudioResult> PlayAudioToParticipantOperation(CallingServerClient callingServerClient, CallLocator callLocator, string participantUserId)
+        internal async Task<PlayAudioResult> PlayAudioToParticipantOperation(CallingServerClient callingServerClient, CallLocator callLocator, string participantUserId, bool playAudioInLoop=false)
         {
             var playAudioOptions = new PlayAudioOptions()
             {
-                OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769",
-                Loop = true,
-                AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
+                OperationContext = PLAYAUDIO_OPERATIONCONTEXT,
+                Loop = playAudioInLoop,
+                AudioFileId = PLAYAUDIO_AUDIOFILEID,
                 CallbackUri = new Uri(TestEnvironment.AppCallbackUrl)
             };
 

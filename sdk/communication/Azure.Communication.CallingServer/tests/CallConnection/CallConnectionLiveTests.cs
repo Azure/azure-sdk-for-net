@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer.Tests
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Play Prompt Audio
-                await PlayAudioOperation(callConnection).ConfigureAwait(false);
+                await PlayAudioOperation(callConnection, true).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Cancel Prompt Audio
@@ -350,7 +350,7 @@ namespace Azure.Communication.CallingServer.Tests
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Play Audio To Participant
-                var playAudioResult = await PlayAudioToParticipantOperation(callConnection, userId).ConfigureAwait(false);
+                var playAudioResult = await PlayAudioToParticipantOperation(callConnection, userId, true).ConfigureAwait(false);
                 string mediaOperationId = playAudioResult.OperationId;
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
