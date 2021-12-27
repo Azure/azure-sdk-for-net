@@ -16,11 +16,11 @@ namespace SourceControlConfigurations.Tests.ScenarioTests
         public void CanCreateUpdateDeleteSourceControlConfiguration()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "testcluster",
+                name: "kctestcluster",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
                 resourceGroup: "kubernetesconfiguration"
-                );
+            );
 
             SourceControlConfiguration configuration = new SourceControlConfiguration(
                 name: "netsdktestconfig01a",

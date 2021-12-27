@@ -17,7 +17,7 @@ namespace Extensions.Tests.ScenarioTests
         public void CanCreateUpdateDeleteExtensionInstanceWithoutIdentity()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "testcluster",
+                name: "kctestcluster",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
                 resourceGroup: "kubernetesconfiguration"
@@ -76,7 +76,7 @@ namespace Extensions.Tests.ScenarioTests
         public void CanCreateUpdateDeleteExtensionInstanceWithIdentity()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "testcluster",
+                name: "kctestcluster",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
                 resourceGroup: "kubernetesconfiguration"
