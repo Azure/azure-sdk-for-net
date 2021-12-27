@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Dns
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static ZonesRestOperations GetZonesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static ZonesRestOperations GetZonesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ZonesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new ZonesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        private static DnsResourceReferenceRestOperations GetDnsResourceReferenceRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static DnsResourceReferenceRestOperations GetDnsResourceReferenceRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new DnsResourceReferenceRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new DnsResourceReferenceRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// <summary> Lists the Zones for this <see cref="Subscription" />. </summary>
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Dns
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetZonesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetZonesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<Zone>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetZones");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dns
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.Dns
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetZonesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetZonesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<Zone> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetZones");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(top, cancellationToken: cancellationToken);
+                        var response = restOperations.List(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dns
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, top, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetZoneByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetZonesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(Zone.ResourceType);
             filters.SubstringFilter = filter;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetZoneByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetZonesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(Zone.ResourceType);
             filters.SubstringFilter = filter;
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDnsResourceReferenceRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetByTargetResourcesAsync(parameters, cancellationToken).ConfigureAwait(false);
+                    var restOperations = GetDnsResourceReferenceRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.GetByTargetResourcesAsync(subscription.Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDnsResourceReferenceRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetByTargetResources(parameters, cancellationToken);
+                    var restOperations = GetDnsResourceReferenceRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.GetByTargetResources(subscription.Id.SubscriptionId, parameters, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

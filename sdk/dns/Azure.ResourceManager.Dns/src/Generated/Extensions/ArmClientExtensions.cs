@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Dns
         }
         #endregion
 
-        #region RecordSetCName
-        /// <summary> Gets an object representing a RecordSetCName along with the instance operations that can be performed on it but with no data. </summary>
+        #region RecordSetCname
+        /// <summary> Gets an object representing a RecordSetCname along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecordSetCName" /> object. </returns>
-        public static RecordSetCName GetRecordSetCName(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecordSetCname" /> object. </returns>
+        public static RecordSetCname GetRecordSetCname(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RecordSetCName(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RecordSetCname(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
