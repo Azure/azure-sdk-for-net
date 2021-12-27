@@ -8,22 +8,24 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Data.Tables;
 using Azure.Data.Tables.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
-    [TestFixture(true)]
-    [TestFixture(false)]
-    public class TablesLiveTestBase : LiveTestBase<TablesTestEnvironment>
+    [AsyncOnly]
+    [ClientTestFixture(null, new object[]{ true, false })]
+    public class TablesLiveTestBase : RecordedTestBase<TablesTestEnvironment>
     {
-        private readonly bool _useCosmos;
         private readonly bool _createTable;
         protected const string TableNameExpression = "%Table%";
         protected const string PartitionKey = "PK";
@@ -33,19 +35,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         protected TableServiceClient ServiceClient;
         protected TableClient TableClient;
 
-        protected TablesLiveTestBase(bool useCosmos, bool createTable = true)
+        protected bool UseCosmos { get; }
+
+        protected TablesLiveTestBase(bool isAsync, bool useCosmos, bool createTable = true): base(isAsync: isAsync)
         {
-            _useCosmos = useCosmos;
+            UseCosmos = useCosmos;
             _createTable = createTable;
+            // https://github.com/Azure/azure-sdk-tools/issues/2448
+            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("(batch|changeset)_[\\w\\d-]+", "multipart_boundary"));
         }
 
-        [SetUp]
-        public async Task SetUp()
+        public override async Task StartTestRecordingAsync()
         {
+            await base.StartTestRecordingAsync();
+
             TableName = GetRandomTableName();
 
-            ServiceClient = new TableServiceClient(
-                _useCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString);
+            ServiceClient = InstrumentClient(
+                new TableServiceClient(
+                    UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString,
+                    InstrumentClientOptions(new TableClientOptions())));
 
             TableClient = ServiceClient.GetTableClient(TableName);
             if (_createTable)
@@ -53,6 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 await TableClient.CreateAsync();
             }
         }
+
         [TearDown]
         public async Task TearDown()
         {
@@ -62,6 +72,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
             catch
             { }
+        }
+
+        protected void DefaultConfigure(HostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureAppConfiguration(builder =>
+            {
+                builder.AddInMemoryCollection(new Dictionary<string, string>()
+                {
+                    {"Table", TableName},
+                    {"AzureWebJobsStorage", UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString}
+                });
+            });
         }
 
         protected async Task<T> CallAsync<T>(string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
@@ -89,23 +111,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             var hostBuilder = new HostBuilder();
             hostBuilder.ConfigureDefaultTestHost(builder =>
+            {
+                if (instance != null)
                 {
-                    if (instance != null)
+                    builder.Services.AddSingleton<IJobActivator>(new FakeActivator(instance));
+                    if (Mode != RecordedTestMode.Live)
                     {
-                        builder.Services.AddSingleton<IJobActivator>(new FakeActivator(instance));
+                        builder.Services.AddSingleton<TablesAccountProvider, InstrumentedTableClientProvider>();
+                        builder.Services.AddSingleton<RecordedTestBase>(this);
                     }
-                    builder.AddAzureTables();
-                }, programType)
-                .ConfigureAppConfiguration(builder =>
-                {
-                    builder.AddInMemoryCollection(new Dictionary<string, string>()
-                    {
-                        {"Table", TableName},
-                        {"AzureWebJobsStorage", _useCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString}
-                    });
-                });
+                }
 
-            configure?.Invoke(hostBuilder);
+                builder.AddAzureTables();
+            }, programType);
+
+            (configure ?? DefaultConfigure).Invoke(hostBuilder);
             var host = hostBuilder
                 .Build();
             var jobHost = host.Services.GetService<IJobHost>() as JobHost;
@@ -148,7 +168,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         protected string GetRandomTableName()
         {
-            return "testtable" + _random.Next();
+            return Recording.GenerateAlphaNumericId("testtable");
+        }
+
+        private class InstrumentedTableClientProvider : TablesAccountProvider
+        {
+            private readonly RecordedTestBase _recording;
+
+            public InstrumentedTableClientProvider(RecordedTestBase recording, IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder, ILogger<TableServiceClient> logger) : base(configuration, componentFactory, logForwarder, logger)
+            {
+                _recording = recording;
+            }
+
+            protected override TableClientOptions CreateClientOptions(IConfiguration configuration)
+            {
+                return _recording.InstrumentClientOptions(base.CreateClientOptions(configuration));
+            }
         }
     }
 }

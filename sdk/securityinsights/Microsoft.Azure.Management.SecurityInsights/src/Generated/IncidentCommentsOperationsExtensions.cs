@@ -29,8 +29,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -47,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls. Optional.
             /// </param>
-            public static IPage<IncidentComment> ListByIncident(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, ODataQuery<IncidentComment> odataQuery = default(ODataQuery<IncidentComment>), string skipToken = default(string))
+            public static IPage<IncidentComment> List(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, ODataQuery<IncidentComment> odataQuery = default(ODataQuery<IncidentComment>), string skipToken = default(string))
             {
-                return operations.ListByIncidentAsync(resourceGroupName, workspaceName, incidentId, odataQuery, skipToken).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, incidentId, odataQuery, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -59,8 +58,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -80,9 +78,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IncidentComment>> ListByIncidentAsync(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, ODataQuery<IncidentComment> odataQuery = default(ODataQuery<IncidentComment>), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IncidentComment>> ListAsync(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, ODataQuery<IncidentComment> odataQuery = default(ODataQuery<IncidentComment>), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByIncidentWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, odataQuery, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, odataQuery, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -95,8 +93,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -119,8 +116,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -143,14 +139,13 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
 
             /// <summary>
-            /// Creates the incident comment.
+            /// Creates or updates the incident comment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -164,20 +159,22 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='message'>
             /// The comment message
             /// </param>
-            public static IncidentComment CreateComment(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, string message)
+            /// <param name='etag'>
+            /// Etag of the azure resource
+            /// </param>
+            public static IncidentComment CreateOrUpdate(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, string message, string etag = default(string))
             {
-                return operations.CreateCommentAsync(resourceGroupName, workspaceName, incidentId, incidentCommentId, message).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, incidentId, incidentCommentId, message, etag).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates the incident comment.
+            /// Creates or updates the incident comment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -190,19 +187,71 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// </param>
             /// <param name='message'>
             /// The comment message
+            /// </param>
+            /// <param name='etag'>
+            /// Etag of the azure resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IncidentComment> CreateCommentAsync(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, string message, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IncidentComment> CreateOrUpdateAsync(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, string message, string etag = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateCommentWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, incidentCommentId, message, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, incidentCommentId, message, etag, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
+            /// Delete the incident comment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            /// <param name='incidentCommentId'>
+            /// Incident comment ID
+            /// </param>
+            public static void Delete(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId)
+            {
+                operations.DeleteAsync(resourceGroupName, workspaceName, incidentId, incidentCommentId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete the incident comment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            /// <param name='incidentCommentId'>
+            /// Incident comment ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IIncidentCommentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, incidentCommentId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets all incident comments.
             /// </summary>
             /// <param name='operations'>
@@ -211,9 +260,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IncidentComment> ListByIncidentNext(this IIncidentCommentsOperations operations, string nextPageLink)
+            public static IPage<IncidentComment> ListNext(this IIncidentCommentsOperations operations, string nextPageLink)
             {
-                return operations.ListByIncidentNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -228,9 +277,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IncidentComment>> ListByIncidentNextAsync(this IIncidentCommentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IncidentComment>> ListNextAsync(this IIncidentCommentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByIncidentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

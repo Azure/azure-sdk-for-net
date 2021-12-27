@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             if (frontendIPConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(frontendIPConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             if (frontendIPConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(frontendIPConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.ExistsAsync");
             scope.Start();
             try
             {

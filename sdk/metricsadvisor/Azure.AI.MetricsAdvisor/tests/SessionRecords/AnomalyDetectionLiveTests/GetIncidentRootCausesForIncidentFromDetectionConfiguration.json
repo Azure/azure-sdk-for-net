@@ -17,7 +17,7 @@
         "x-ms-client-request-id": "565e58f2f76341b57d6d19474cf5d419",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022startTime\u0022:\u00222021-10-01T00:00:00Z\u0022,\u0022endTime\u0022:\u00222021-10-31T00:00:00Z\u0022,\u0022filter\u0022:{\u0022dimensionFilter\u0022:[{\u0022dimension\u0022:{\u0022region\u0022:\u0022__SUM__\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}}]}}",
+      "RequestBody": "{\u0022startTime\u0022:\u00222021-10-01T00:00:00.0000000Z\u0022,\u0022endTime\u0022:\u00222021-10-31T00:00:00.0000000Z\u0022,\u0022filter\u0022:{\u0022dimensionFilter\u0022:[{\u0022dimension\u0022:{\u0022region\u0022:\u0022__SUM__\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}}]}}",
       "StatusCode": 200,
       "ResponseHeaders": {
         "apim-request-id": "e6ac851b-382a-46f6-ab5d-529461b027ce",
@@ -33,8 +33,8 @@
         "value": [
           {
             "incidentId": "aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c76f2dc00",
-            "startTime": "2021-10-13T00:00:00Z",
-            "lastTime": "2021-10-13T00:00:00Z",
+            "startTime": "2021-10-13T00:00:00.0000000Z",
+            "lastTime": "2021-10-13T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "region": "__SUM__",
@@ -50,8 +50,8 @@
           },
           {
             "incidentId": "aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c52e65800",
-            "startTime": "2021-10-06T00:00:00Z",
-            "lastTime": "2021-10-06T00:00:00Z",
+            "startTime": "2021-10-06T00:00:00.0000000Z",
+            "lastTime": "2021-10-06T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "region": "__SUM__",

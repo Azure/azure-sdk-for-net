@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate if created successfully
             topic = await _topicCollection.GetIfExistsAsync(topicName);
             Assert.NotNull(topic);
-            Assert.IsTrue(await _topicCollection.CheckIfExistsAsync(topicName));
+            Assert.IsTrue(await _topicCollection.ExistsAsync(topicName));
 
             //delete topic
             await topic.DeleteAsync();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate
             topic = await _topicCollection.GetIfExistsAsync(topicName);
             Assert.Null(topic);
-            Assert.IsFalse(await _topicCollection.CheckIfExistsAsync(topicName));
+            Assert.IsFalse(await _topicCollection.ExistsAsync(topicName));
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 0);
         }

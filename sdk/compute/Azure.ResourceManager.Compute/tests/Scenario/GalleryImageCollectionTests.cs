@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
             var lro = await collection.CreateOrUpdateAsync(name, BasicGalleryImageData);
             GalleryImage image = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(name));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(name + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(name));
+            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]

@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vaultName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vaultName, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.ExistsAsync");
             scope.Start();
             try
             {

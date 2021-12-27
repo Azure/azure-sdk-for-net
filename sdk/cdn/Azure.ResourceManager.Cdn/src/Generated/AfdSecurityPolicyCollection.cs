@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {

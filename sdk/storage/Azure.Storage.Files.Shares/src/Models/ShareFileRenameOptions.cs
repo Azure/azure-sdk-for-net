@@ -47,5 +47,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional file permission to set on the destination file or directory.
         /// </summary>
         public string FilePermission { get; set; }
+
+        /// <summary>
+        /// Optional custom metadata to set on the destination.
+        /// </summary>
+#pragma warning disable CA2227 // Collection properties should be read only
+        public Metadata Metadata { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
     }
 }

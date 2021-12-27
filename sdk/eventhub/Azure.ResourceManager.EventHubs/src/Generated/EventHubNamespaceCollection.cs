@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string namespaceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string namespaceName, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.ExistsAsync");
             scope.Start();
             try
             {

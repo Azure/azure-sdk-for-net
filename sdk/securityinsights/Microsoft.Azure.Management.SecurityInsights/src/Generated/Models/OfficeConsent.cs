@@ -32,18 +32,23 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the OfficeConsent class.
         /// </summary>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tenantId">The tenantId of the Office365 with the
         /// consent.</param>
-        /// <param name="tenantName">The tenant name of the Office365 with the
-        /// consent.</param>
-        public OfficeConsent(string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string tenantName = default(string))
-            : base(id, name, type)
+        /// <param name="consentId">Help to easily cascade among the data
+        /// layers.</param>
+        public OfficeConsent(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string tenantId = default(string), string consentId = default(string))
+            : base(id, name, type, systemData)
         {
             TenantId = tenantId;
-            TenantName = tenantName;
+            ConsentId = consentId;
             CustomInit();
         }
 
@@ -59,10 +64,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string TenantId { get; set; }
 
         /// <summary>
-        /// Gets the tenant name of the Office365 with the consent.
+        /// Gets or sets help to easily cascade among the data layers.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tenantName")]
-        public string TenantName { get; private set; }
+        [JsonProperty(PropertyName = "properties.consentId")]
+        public string ConsentId { get; set; }
 
     }
 }

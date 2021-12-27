@@ -42,14 +42,14 @@ namespace Microsoft.Azure.Management.SecurityInsights
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// API version for the operation
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
-        /// Azure subscription ID
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -71,11 +71,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
 
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
         /// Gets the IAlertRulesOperations.
         /// </summary>
         IAlertRulesOperations AlertRules { get; }
@@ -91,14 +86,59 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IAlertRuleTemplatesOperations AlertRuleTemplates { get; }
 
         /// <summary>
+        /// Gets the IAutomationRulesOperations.
+        /// </summary>
+        IAutomationRulesOperations AutomationRules { get; }
+
+        /// <summary>
         /// Gets the IBookmarksOperations.
         /// </summary>
         IBookmarksOperations Bookmarks { get; }
 
         /// <summary>
-        /// Gets the IDataConnectorsOperations.
+        /// Gets the IBookmarkRelationsOperations.
         /// </summary>
-        IDataConnectorsOperations DataConnectors { get; }
+        IBookmarkRelationsOperations BookmarkRelations { get; }
+
+        /// <summary>
+        /// Gets the IBookmarkOperations.
+        /// </summary>
+        IBookmarkOperations Bookmark { get; }
+
+        /// <summary>
+        /// Gets the IIPGeodataOperations.
+        /// </summary>
+        IIPGeodataOperations IPGeodata { get; }
+
+        /// <summary>
+        /// Gets the IDomainWhoisOperations.
+        /// </summary>
+        IDomainWhoisOperations DomainWhois { get; }
+
+        /// <summary>
+        /// Gets the IEntityQueriesOperations.
+        /// </summary>
+        IEntityQueriesOperations EntityQueries { get; }
+
+        /// <summary>
+        /// Gets the IEntitiesOperations.
+        /// </summary>
+        IEntitiesOperations Entities { get; }
+
+        /// <summary>
+        /// Gets the IEntitiesGetTimelineOperations.
+        /// </summary>
+        IEntitiesGetTimelineOperations EntitiesGetTimeline { get; }
+
+        /// <summary>
+        /// Gets the IEntitiesRelationsOperations.
+        /// </summary>
+        IEntitiesRelationsOperations EntitiesRelations { get; }
+
+        /// <summary>
+        /// Gets the IEntityRelationsOperations.
+        /// </summary>
+        IEntityRelationsOperations EntityRelations { get; }
 
         /// <summary>
         /// Gets the IIncidentsOperations.
@@ -109,6 +149,86 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets the IIncidentCommentsOperations.
         /// </summary>
         IIncidentCommentsOperations IncidentComments { get; }
+
+        /// <summary>
+        /// Gets the IIncidentRelationsOperations.
+        /// </summary>
+        IIncidentRelationsOperations IncidentRelations { get; }
+
+        /// <summary>
+        /// Gets the IMetadataOperations.
+        /// </summary>
+        IMetadataOperations Metadata { get; }
+
+        /// <summary>
+        /// Gets the ISentinelOnboardingStatesOperations.
+        /// </summary>
+        ISentinelOnboardingStatesOperations SentinelOnboardingStates { get; }
+
+        /// <summary>
+        /// Gets the IProductSettingsOperations.
+        /// </summary>
+        IProductSettingsOperations ProductSettings { get; }
+
+        /// <summary>
+        /// Gets the ISourceControlOperations.
+        /// </summary>
+        ISourceControlOperations SourceControl { get; }
+
+        /// <summary>
+        /// Gets the ISourceControlsOperations.
+        /// </summary>
+        ISourceControlsOperations SourceControls { get; }
+
+        /// <summary>
+        /// Gets the IWatchlistsOperations.
+        /// </summary>
+        IWatchlistsOperations Watchlists { get; }
+
+        /// <summary>
+        /// Gets the IWatchlistItemsOperations.
+        /// </summary>
+        IWatchlistItemsOperations WatchlistItems { get; }
+
+        /// <summary>
+        /// Gets the IDataConnectorsOperations.
+        /// </summary>
+        IDataConnectorsOperations DataConnectors { get; }
+
+        /// <summary>
+        /// Gets the IDataConnectorsCheckRequirementsOperations.
+        /// </summary>
+        IDataConnectorsCheckRequirementsOperations DataConnectorsCheckRequirements { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorOperations ThreatIntelligenceIndicator { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorsOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorsOperations ThreatIntelligenceIndicators { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorMetricsOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorMetricsOperations ThreatIntelligenceIndicatorMetrics { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IOfficeConsentsOperations.
+        /// </summary>
+        IOfficeConsentsOperations OfficeConsents { get; }
+
+        /// <summary>
+        /// Gets the IEntityQueryTemplatesOperations.
+        /// </summary>
+        IEntityQueryTemplatesOperations EntityQueryTemplates { get; }
 
     }
 }

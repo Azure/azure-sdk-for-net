@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a AppServiceDomain along with the instance operations that can be performed on it. </summary>
     public partial class AppServiceDomain : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AppServiceDomain"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DomainsRestOperations _domainsRestClient;
         private readonly AppServiceDomainData _data;

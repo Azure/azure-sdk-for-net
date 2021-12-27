@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// </remarks>
     public class DatasetClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        public DatasetClientLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public DatasetClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 

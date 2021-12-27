@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (connectionStringKey == null)
             {
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (connectionStringKey == null)
             {
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.ExistsAsync");
             scope.Start();
             try
             {

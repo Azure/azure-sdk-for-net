@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using NUnit.Framework;
@@ -12,11 +13,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TableEntityLiveTests: TablesLiveTestBase
     {
-        public TableEntityLiveTests(bool useCosmos) : base(useCosmos)
+        public TableEntityLiveTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToExistingTableEntity_Binds()
         {
             // Arrange
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedValue, result[expectedKey]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToExistingPoco_Binds()
         {
             // Arrange
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedValue, result.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfUpdatesPoco_Persists()
         {
             // Arrange
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedValue, entity["Value"]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundToExistingPoco_BindsUsingNativeTableTypes()
         {
             // Arrange
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedValue, result.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfUpdatesPoco_PersistsUsingNativeTableTypes()
         {
             // Arrange
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(expectedValue, entity["Value"]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfUpdatesPartitionKey_Throws()
         {
             // Arrange
@@ -148,7 +149,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 innerException.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfUpdatesRowKey_Throws()
         {
             // Arrange
@@ -168,7 +169,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual("When binding to a table entity, the row key must not be changed.", innerException.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableEntity_IfBoundUsingRouteParameters_Binds()
         {
             // Arrange

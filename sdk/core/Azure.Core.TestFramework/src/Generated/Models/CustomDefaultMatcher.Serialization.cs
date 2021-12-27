@@ -15,8 +15,8 @@ namespace Azure.Core.TestFramework.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("nonDefaultHeaderExclusions");
-            writer.WriteStringValue(NonDefaultHeaderExclusions);
+            writer.WritePropertyName("excludedHeaders");
+            writer.WriteStringValue(ExcludedHeaders);
             writer.WritePropertyName("compareBodies");
             writer.WriteBooleanValue(CompareBodies);
             writer.WriteEndObject();

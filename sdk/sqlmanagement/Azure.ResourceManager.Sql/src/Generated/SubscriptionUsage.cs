@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a SubscriptionUsage along with the instance operations that can be performed on it. </summary>
     public partial class SubscriptionUsage : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SubscriptionUsage"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string usageName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubscriptionUsagesRestOperations _subscriptionUsagesRestClient;
         private readonly SubscriptionUsageData _data;

@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var collection = await GetDiskCollectionAsync();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             var lro = await collection.CreateOrUpdateAsync(diskName, input);
             Disk disk = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(diskName));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(diskName + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(diskName));
+            Assert.IsFalse(await collection.ExistsAsync(diskName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]

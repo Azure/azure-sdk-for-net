@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var container = await GetAppServicePlanCollectionAsync();
             var planName = Recording.GenerateAssetName("testAppService-");
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(planName, input);
             AppServicePlan plan = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(planName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(planName + "1"));
+            Assert.IsTrue(await container.ExistsAsync(planName));
+            Assert.IsFalse(await container.ExistsAsync(planName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
     }
 }

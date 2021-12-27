@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string jitRequestName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string jitRequestName, CancellationToken cancellationToken = default)
         {
             if (jitRequestName == null)
             {
                 throw new ArgumentNullException(nameof(jitRequestName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
             if (jitRequestName == null)
             {
                 throw new ArgumentNullException(nameof(jitRequestName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.ExistsAsync");
             scope.Start();
             try
             {

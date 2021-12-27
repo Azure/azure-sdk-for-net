@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string snapshotId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string snapshotId, CancellationToken cancellationToken = default)
         {
             if (snapshotId == null)
             {
                 throw new ArgumentNullException(nameof(snapshotId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.Exists");
             scope.Start();
             try
             {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
             if (snapshotId == null)
             {
                 throw new ArgumentNullException(nameof(snapshotId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.ExistsAsync");
             scope.Start();
             try
             {

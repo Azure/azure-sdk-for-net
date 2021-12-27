@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a DatabaseBlobAuditingPolicy along with the instance operations that can be performed on it. </summary>
     public partial class DatabaseBlobAuditingPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DatabaseBlobAuditingPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string blobAuditingPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/{blobAuditingPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseBlobAuditingPoliciesRestOperations _databaseBlobAuditingPoliciesRestClient;
         private readonly DatabaseBlobAuditingPolicyData _data;

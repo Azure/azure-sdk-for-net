@@ -38,6 +38,7 @@ In order to interact with the service, you'll need to create an instance of the 
 ### Create a `WebPubSubServiceClient`
 
 ```C# Snippet:WebPubSubAuthenticate
+// Create a WebPubSubServiceClient that will authenticate using a key credential.
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 ```
 
@@ -50,7 +51,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 `WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides 4 methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
 
 > NOTE
-> 
+>
 > Among the 4 methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
 
 ## Examples
@@ -67,7 +68,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-### Map `WebPubSubHub` to endpoint routing.
+### Map `WebPubSubHub` to endpoint routing
 
 The path should match the value configured in the Azure Web PubSub service `EventHandler`. For example, if placeholder is using like `/api/{event}`, then the path set in code should be `/api/{event}` as well.
 
@@ -97,6 +98,7 @@ public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventReque
 ## Troubleshooting
 
 ### Setting up console logging
+
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
 
 ## Next steps

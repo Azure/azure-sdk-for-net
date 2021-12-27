@@ -106,7 +106,7 @@ if (vault != null)
     Console.WriteLine(vault.Data.Name);
 }
 
-if (await vaultCollection.CheckIfExistsAsync("bar"))
+if (await vaultCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("KeyVault 'bar' exists.");
 }

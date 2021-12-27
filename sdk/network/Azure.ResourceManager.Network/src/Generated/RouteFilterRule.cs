@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a RouteFilterRule along with the instance operations that can be performed on it. </summary>
     public partial class RouteFilterRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="RouteFilterRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RouteFilterRulesRestOperations _routeFilterRulesRestClient;
         private readonly RouteFilterRuleData _data;

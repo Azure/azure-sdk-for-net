@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, table.Data.Options.Throughput);
 
-            bool ifExists = await CassandraTableCollection.CheckIfExistsAsync(_tableName);
+            bool ifExists = await CassandraTableCollection.ExistsAsync(_tableName);
             Assert.True(ifExists);
 
             // NOT WORKING API

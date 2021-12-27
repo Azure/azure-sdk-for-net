@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a MaintenanceWindows along with the instance operations that can be performed on it. </summary>
     public partial class MaintenanceWindows : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="MaintenanceWindows"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MaintenanceWindowsRestOperations _maintenanceWindowsRestClient;
         private readonly MaintenanceWindowsData _data;

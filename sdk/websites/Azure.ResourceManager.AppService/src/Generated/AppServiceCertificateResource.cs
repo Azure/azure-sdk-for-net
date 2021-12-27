@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a AppServiceCertificateResource along with the instance operations that can be performed on it. </summary>
     public partial class AppServiceCertificateResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AppServiceCertificateResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AppServiceCertificateOrdersRestOperations _appServiceCertificateOrdersRestClient;
         private readonly AppServiceCertificateResourceData _data;
