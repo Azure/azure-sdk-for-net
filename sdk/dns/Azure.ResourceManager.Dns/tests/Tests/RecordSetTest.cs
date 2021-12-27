@@ -57,7 +57,7 @@ namespace Azure.Management.Dns.Tests
             //CNAME - Update
             RecordSetData recordCNameSetData = new RecordSetData() { TTL = 600 };
             recordCNameSetData.CnameRecord = new CnameRecord("studiostokens.azurewebsites.net");
-            _ = await zone.GetRecordSetCNames().CreateOrUpdateAsync("CName", recordCNameSetData);
+            _ = await zone.GetRecordSetCnames().CreateOrUpdateAsync("CName", recordCNameSetData);
             //MX - Get
             RecordSetData recordMXSetData = new RecordSetData() { TTL = 600 };
             recordMXSetData.MxRecords.Add(new MxRecord(0, "studiostokens.azurewebsites.net"));
@@ -106,7 +106,7 @@ namespace Azure.Management.Dns.Tests
         public async Task Update()
         {
             //CNAME
-            RecordSetCName recordSetCName = await zone.GetRecordSetCNames().GetAsync("CName");
+            RecordSetCname recordSetCName = await zone.GetRecordSetCnames().GetAsync("CName");
             recordSetCName = await recordSetCName.UpdateAsync(new RecordSetData {CnameRecord = new CnameRecord("microsoft.com")});
             Assert.AreEqual("microsoft.com", recordSetCName.Data.CnameRecord.Cname);
             //SRV
