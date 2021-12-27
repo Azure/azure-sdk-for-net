@@ -77,9 +77,9 @@ namespace Azure.Management.Dns.Tests
         [TestCase]
         public async Task CheckIfExists()
         {
-            bool result = await zoneCollection.CheckIfExistsAsync(TestEnvironment.TestDomain);
+            bool result = await zoneCollection.ExistsAsync(TestEnvironment.TestDomain);
             Assert.IsTrue(result);
-            bool falseresult = await zoneCollection.CheckIfExistsAsync(TestEnvironment.TestDomain + "dummy");
+            bool falseresult = await zoneCollection.ExistsAsync(TestEnvironment.TestDomain + "dummy");
             Assert.IsFalse(falseresult);
         }
 

@@ -57,7 +57,7 @@ namespace Azure.Management.Dns.Tests
             //CNAME - CheckIfExists
             RecordSetData recordCnameSetData = new RecordSetData() { TTL = 600 };
             recordCnameSetData.CnameRecord = new CnameRecord("studiostokens.azurewebsites.net");
-            _ = await zone.GetRecordSetCNames().CreateOrUpdateAsync("CNAME", recordCnameSetData);
+            _ = await zone.GetRecordSetCnames().CreateOrUpdateAsync("CNAME", recordCnameSetData);
             //PTR - GetIfExists
             RecordSetData recordPtrSetData = new RecordSetData() { TTL = 600 };
             recordPtrSetData.PtrRecords.Add(new PtrRecord("invaliddummyrecord.test.outlook.com"));
@@ -93,9 +93,9 @@ namespace Azure.Management.Dns.Tests
         [TestCase]
         public async Task CheckIfExists()
         {
-            bool result = await zone.GetRecordSetCNames().CheckIfExistsAsync("CNAME");
+            bool result = await zone.GetRecordSetCnames().ExistsAsync("CNAME");
             Assert.AreEqual(true, result);
-            bool nullResult = await zone.GetRecordSetCNames().CheckIfExistsAsync("CNAME" + "dummy");
+            bool nullResult = await zone.GetRecordSetCnames().ExistsAsync("CNAME" + "dummy");
             Assert.AreEqual(false, nullResult);
         }
         [TestCase]
