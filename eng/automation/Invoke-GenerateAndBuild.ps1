@@ -118,7 +118,7 @@ $sdkPath =  (Join-Path $PSScriptRoot .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
 $packageFolder = New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid
-Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName
+Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $packageFolder[-1]
 
 $outputJson = [PSCustomObject]@{
     packages = @([pscustomobject]@{packageName=''; result='succeeded'; path=@("$packageFolder");packageFolder=@("$packageFolder")})

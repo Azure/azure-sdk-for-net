@@ -83,7 +83,9 @@ function New-DataPlanePackageFolder() {
   if ($packageName -eq "") {
       $packageName = $resourceProvider
   }
+
   $sdkPath = $sdkPath -replace "\\", "/"
+
   $projectFolder="$sdkPath/sdk/$resourceProvider/Azure.$ServiceGrouop.$packageName"
   if (Test-Path -Path $projectFolder) {
     Write-Host "Path exists!"
@@ -99,6 +101,10 @@ function New-DataPlanePackageFolder() {
     New-Item -Path $projectFolder -ItemType Directory
     Set-Location $projectFolder
     dotnet new dataplane --libraryName DeviceUpdate --swagger $inputfile --securityScopes $securityScope --includeCI true --force
+    dotnet sln remove src\Azure.$ServiceGrouop.$packageName.csproj
+    dotnet sln add src\Azure.$ServiceGrouop.$packageName.csproj
+    dotnet sln remove tests\Azure.$ServiceGrouop.$packageName.Tests.csproj
+    dotnet sln add tests\Azure.$ServiceGrouop.$packageName.Tests.csproj
   }
 
   # update the Dataplane target flag
@@ -120,6 +126,7 @@ function Invoke-Generate() {
     param(
         [string]$sdkfolder= ""
     )
+    $sdkfolder = $sdkfolder -replace "\\", "/"
     Set-Location $sdkfolder/src
     dotnet build /t:GenerateCode
 }
