@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `CreateResourceIdentifier` for each resource class
+- Class `RestorableDatabaseAccountCollection` now implements `IEnumerable<T>` and `IAsyncEnumerable<T>`
 
 ### Breaking Changes
 
@@ -12,7 +13,6 @@
 - Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
 - Constructor of `RestorableDatabaseAccountCollection` no longer accepts `location` as its first parameter.
 - Method `GetRestorableDatabaseAccounts` in `SubscriptionExtensions` now accepts an extra parameter `location`.
-- Class `RestorableDatabaseAccountCollection` now implements `IEnumerable<T>` and `IAsyncEnumerable<T>`
 
 ### Bugs Fixed
 

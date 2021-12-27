@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `CreateResourceIdentifier` for each resource class
+- Class `DeletedServerCollection`, `InstanceFailoverGroupCollection`, `SqlTimeZoneCollection`, `ServerTrustGroupCollection`, `SubscriptionUsageCollection`, `ResourceGroupLongTermRetentionBackupCollection`, `SubscriptionLongTermRetentionBackupCollection`, `ResourceGroupLongTermRetentionManagedInstanceBackupCollection` and `SubscriptionLongTermRetentionManagedInstanceBackupCollection` now implements `IEnumerable<T>` and `IAsyncEnumerable<T>`.
 
 ### Breaking Changes
 
@@ -19,7 +20,6 @@
 - Method `GetDeletedServers`, `GetSqlTimeZones` and `GetSubscriptionUsages` now accepts an extra parameter `locationName`.
 - Method `GetSubscriptionLongTermRetentionBackups` now accepts three extra parameters `locationName`, `longTermRetentionServerName` and `longTermRetentionDatabaseName`.
 - Method `GetSubscriptionLongTermRetentionManagedInstanceBackups` now accepts three extra parameters `locationName`, `managedInstanceName` and `databaseName`.
-- Class `DeletedServerCollection`, `InstanceFailoverGroupCollection`, `SqlTimeZoneCollection`, `ServerTrustGroupCollection`, `SubscriptionUsageCollection`, `ResourceGroupLongTermRetentionBackupCollection`, `SubscriptionLongTermRetentionBackupCollection`, `ResourceGroupLongTermRetentionManagedInstanceBackupCollection` and `SubscriptionLongTermRetentionManagedInstanceBackupCollection` now implements `IEnumerable<T>` and `IAsyncEnumerable<T>`.
 
 ### Bugs Fixed
 
