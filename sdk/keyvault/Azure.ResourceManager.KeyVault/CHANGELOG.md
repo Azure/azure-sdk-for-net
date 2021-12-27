@@ -9,7 +9,7 @@
 ### Breaking Changes
 
 - Renamed `CheckIfExists` to `Exists` for each resource class
-- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in SubscriptionExtension
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in SubscriptionExtensions
 
 ### Bugs Fixed
 

@@ -9,7 +9,7 @@
 ### Breaking Changes
 
 - Renamed `CheckIfExists` to `Exists` for each resource class
-- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in SubscriptionExtension
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in SubscriptionExtensions
 - Constructor of `OSFamilyCollection`, `OSVersionCollection` no longer accept `location` as their first parameter
 - Constructor of `VirtualMachineExtensionImageCollection` no longer accepts `location` and `publisher` as its first two parameters
 - Method `GetOSFamilies` and `GetOSVersions` in SubscriptionExtensions now accept an extra parameter `location`
