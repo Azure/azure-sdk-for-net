@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string namespaceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string namespaceName, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.ExistsAsync");
             scope.Start();
             try
             {

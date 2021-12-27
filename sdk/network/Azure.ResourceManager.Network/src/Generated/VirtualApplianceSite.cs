@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a VirtualApplianceSite along with the instance operations that can be performed on it. </summary>
     public partial class VirtualApplianceSite : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualApplianceSite"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/virtualApplianceSites/{siteName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualApplianceSitesRestOperations _virtualApplianceSitesRestClient;
         private readonly VirtualApplianceSiteData _data;

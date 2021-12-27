@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             var collection = await GetVirtualMachineScaleSetCollectionAsync();
             var vmssName = Recording.GenerateAssetName("testVMSS-");
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             var lro = await collection.CreateOrUpdateAsync(vmssName, input);
             VirtualMachineScaleSet vmss = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(vmssName));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(vmssName + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(vmssName));
+            Assert.IsFalse(await collection.ExistsAsync(vmssName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]

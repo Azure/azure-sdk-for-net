@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedInstanceDatabaseSchema along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstanceDatabaseSchema : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseSchema"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedDatabaseSchemasRestOperations _managedDatabaseSchemasRestClient;
         private readonly DatabaseSchemaData _data;

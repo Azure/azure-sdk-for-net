@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A Class representing a ServiceBusTopic along with the instance operations that can be performed on it. </summary>
     public partial class ServiceBusTopic : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceBusTopic"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string topicName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TopicsRestOperations _topicsRestClient;
         private readonly ServiceBusTopicData _data;

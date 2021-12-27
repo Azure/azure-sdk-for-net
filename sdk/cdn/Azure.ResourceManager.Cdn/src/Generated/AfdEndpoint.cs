@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a AfdEndpoint along with the instance operations that can be performed on it. </summary>
     public partial class AfdEndpoint : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AfdEndpoint"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdEndpointsRestOperations _afdEndpointsRestClient;
         private readonly AfdEndpointData _data;

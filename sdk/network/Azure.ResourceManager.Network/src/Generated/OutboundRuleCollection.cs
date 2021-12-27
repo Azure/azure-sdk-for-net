@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string outboundRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             if (outboundRuleName == null)
             {
                 throw new ArgumentNullException(nameof(outboundRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             if (outboundRuleName == null)
             {
                 throw new ArgumentNullException(nameof(outboundRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.ExistsAsync");
             scope.Start();
             try
             {

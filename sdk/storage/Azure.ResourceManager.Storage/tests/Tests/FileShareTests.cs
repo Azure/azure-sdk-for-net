@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsEmpty(shareData.Metadata);
             FileShare share2 = await _fileShareCollection.GetAsync(fileShareName);
             AssertFileShareEqual(share1, share2);
-            Assert.IsTrue(await _fileShareCollection.CheckIfExistsAsync(fileShareName));
-            Assert.IsFalse(await _fileShareCollection.CheckIfExistsAsync(fileShareName + "1"));
+            Assert.IsTrue(await _fileShareCollection.ExistsAsync(fileShareName));
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName + "1"));
 
             //delete file share
             await share1.DeleteAsync();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate if deleted successfully
             FileShare fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
             Assert.IsNull(fileShare3);
-            Assert.IsFalse(await _fileShareCollection.CheckIfExistsAsync(fileShareName));
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
 
         [Test]

@@ -23,10 +23,11 @@ namespace Azure.ResourceManager.Sql
         #region InstanceFailoverGroup
         /// <summary> Gets an object representing a InstanceFailoverGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> Returns a <see cref="InstanceFailoverGroupCollection" /> object. </returns>
-        public static InstanceFailoverGroupCollection GetInstanceFailoverGroups(this ResourceGroup resourceGroup)
+        public static InstanceFailoverGroupCollection GetInstanceFailoverGroups(this ResourceGroup resourceGroup, string locationName)
         {
-            return new InstanceFailoverGroupCollection(resourceGroup);
+            return new InstanceFailoverGroupCollection(resourceGroup, locationName);
         }
         #endregion
 
@@ -43,20 +44,26 @@ namespace Azure.ResourceManager.Sql
         #region ResourceGroupLongTermRetentionBackup
         /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupCollection" /> object. </returns>
-        public static ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this ResourceGroup resourceGroup)
+        public static ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
-            return new ResourceGroupLongTermRetentionBackupCollection(resourceGroup);
+            return new ResourceGroupLongTermRetentionBackupCollection(resourceGroup, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
         #endregion
 
         #region ResourceGroupLongTermRetentionManagedInstanceBackup
         /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
-        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup)
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, string databaseName)
         {
-            return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(resourceGroup);
+            return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(resourceGroup, locationName, managedInstanceName, databaseName);
         }
         #endregion
 
@@ -73,10 +80,11 @@ namespace Azure.ResourceManager.Sql
         #region ServerTrustGroup
         /// <summary> Gets an object representing a ServerTrustGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> Returns a <see cref="ServerTrustGroupCollection" /> object. </returns>
-        public static ServerTrustGroupCollection GetServerTrustGroups(this ResourceGroup resourceGroup)
+        public static ServerTrustGroupCollection GetServerTrustGroups(this ResourceGroup resourceGroup, string locationName)
         {
-            return new ServerTrustGroupCollection(resourceGroup);
+            return new ServerTrustGroupCollection(resourceGroup, locationName);
         }
         #endregion
 

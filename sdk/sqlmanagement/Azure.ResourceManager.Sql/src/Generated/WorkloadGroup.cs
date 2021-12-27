@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a WorkloadGroup along with the instance operations that can be performed on it. </summary>
     public partial class WorkloadGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="WorkloadGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WorkloadGroupsRestOperations _workloadGroupsRestClient;
         private readonly WorkloadGroupData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a PacketCapture along with the instance operations that can be performed on it. </summary>
     public partial class PacketCapture : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PacketCapture"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkWatcherName, string packetCaptureName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PacketCapturesRestOperations _packetCapturesRestClient;
         private readonly PacketCaptureData _data;

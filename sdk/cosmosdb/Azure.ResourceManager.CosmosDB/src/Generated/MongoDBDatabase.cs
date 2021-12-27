@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A Class representing a MongoDBDatabase along with the instance operations that can be performed on it. </summary>
     public partial class MongoDBDatabase : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="MongoDBDatabase"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MongoDBResourcesRestOperations _mongoDBResourcesRestClient;
         private readonly MongoDBDatabaseData _data;

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string databaseId = list.FirstOrDefault().Data.Id.ToString();
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(databaseId));
+            Assert.IsTrue(collection.Exists(databaseId));
 
             // 3.Get
             var getDatabase = await collection.GetAsync(databaseId);

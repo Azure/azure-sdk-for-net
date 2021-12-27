@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string keyspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string keyspaceName, CancellationToken cancellationToken = default)
         {
             if (keyspaceName == null)
             {
                 throw new ArgumentNullException(nameof(keyspaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
             if (keyspaceName == null)
             {
                 throw new ArgumentNullException(nameof(keyspaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _webPubSub = await CreateWebPubSub(webPubSubName);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.True(_webPubSub.GetPrivateEndpointConnections().CheckIfExists(list[0].Data.Name));
-            Assert.False(_webPubSub.GetPrivateEndpointConnections().CheckIfExists(list[0].Data.Name + "01"));
+            Assert.True(_webPubSub.GetPrivateEndpointConnections().Exists(list[0].Data.Name));
+            Assert.False(_webPubSub.GetPrivateEndpointConnections().Exists(list[0].Data.Name + "01"));
         }
 
         [Test]

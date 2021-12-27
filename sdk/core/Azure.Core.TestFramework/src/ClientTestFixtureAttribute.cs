@@ -156,6 +156,11 @@ namespace Azure.Core.TestFramework
 
         private void Process(TestSuite testSuite, object serviceVersion, bool isAsync, object parameter)
         {
+            if (parameter != null)
+            {
+                testSuite.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString());
+            }
+
             var serviceVersionNumber = Convert.ToInt32(serviceVersion);
             ApplyLimits(serviceVersionNumber, testSuite);
 

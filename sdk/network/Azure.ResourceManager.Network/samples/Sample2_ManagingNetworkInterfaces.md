@@ -106,7 +106,7 @@ if (virtualNetwork != null)
     Console.WriteLine(virtualNetwork.Data.Name);
 }
 
-if (await networkInterfaceCollection.CheckIfExistsAsync("bar"))
+if (await networkInterfaceCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("Network interface 'bar' exists.");
 }

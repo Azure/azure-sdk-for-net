@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a CustomIpPrefix along with the instance operations that can be performed on it. </summary>
     public partial class CustomIpPrefix : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="CustomIpPrefix"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customIpPrefixName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CustomIPPrefixesRestOperations _customIPPrefixesRestClient;
         private readonly CustomIpPrefixData _data;

@@ -4,9 +4,16 @@
 
 ### Features Added
 
+- Added `CreateResourceIdenifier` for each resource class
+
 ### Breaking Changes
 
+- Renamed `CheckIfExists` to `Exists` for each resource class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource`
+
 ### Bugs Fixed
+
+- Fixed commments for `FirstPageFunc` of each pagable resource class
 
 ### Other Changes
 

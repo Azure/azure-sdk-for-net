@@ -1,1 +1,2 @@
-Start-AutoRestCodeGeneration -ResourceProvider "recoveryservicesbackup/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "recoveryservicesbackup/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\recoveryservicesbackup\Generated" -ConfigFileTag "package-2021-10" -Namespace "Microsoft.Azure.Management.RecoveryServices.Backup" 
+Start-AutoRestCodeGeneration -ResourceProvider "recoveryservicesbackup/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\recoveryservicesbackupCrossregionRestoe\Generated" -ConfigFileTag "package-passivestamp-2018-12-20" -Namespace "Microsoft.Azure.Management.RecoveryServices.Backup.CrossRegionRestore" -ClearMetadataLog $false

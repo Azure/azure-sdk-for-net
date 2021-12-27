@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (firewallPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(firewallPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (firewallPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(firewallPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {

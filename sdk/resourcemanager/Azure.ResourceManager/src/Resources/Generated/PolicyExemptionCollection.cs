@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policyExemptionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             if (policyExemptionName == null)
             {
                 throw new ArgumentNullException(nameof(policyExemptionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.Exists");
             scope.Start();
             try
             {
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             if (policyExemptionName == null)
             {
                 throw new ArgumentNullException(nameof(policyExemptionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.ExistsAsync");
             scope.Start();
             try
             {

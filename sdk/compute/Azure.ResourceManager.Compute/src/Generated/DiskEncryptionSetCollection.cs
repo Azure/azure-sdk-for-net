@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             if (diskEncryptionSetName == null)
             {
                 throw new ArgumentNullException(nameof(diskEncryptionSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             if (diskEncryptionSetName == null)
             {
                 throw new ArgumentNullException(nameof(diskEncryptionSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.ExistsAsync");
             scope.Start();
             try
             {

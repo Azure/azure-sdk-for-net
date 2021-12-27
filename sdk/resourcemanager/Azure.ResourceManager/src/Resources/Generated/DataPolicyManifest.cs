@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a DataPolicyManifest along with the instance operations that can be performed on it. </summary>
     public partial class DataPolicyManifest : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DataPolicyManifest"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string policyMode)
+        {
+            var resourceId = $"/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DataPolicyManifestsRestOperations _dataPolicyManifestsRestClient;
         private readonly DataPolicyManifestData _data;
