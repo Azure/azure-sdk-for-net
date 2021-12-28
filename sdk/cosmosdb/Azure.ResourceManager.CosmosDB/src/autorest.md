@@ -18,8 +18,6 @@ flatten-payloads: false
 model-namespae: true
 modelerfour:
   lenient-model-deduplication: true
-mgmt-debug:
-  suppress-list-exception: true
 
 no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
 directive:
