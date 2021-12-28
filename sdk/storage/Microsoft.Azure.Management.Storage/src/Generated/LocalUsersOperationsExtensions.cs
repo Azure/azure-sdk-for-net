@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The name of local user. The username must contain lowercase letters and
             /// numbers only. It must be unique only within the storage account.
             /// </param>
-            public static LocalUserProperties RegeneratePassword(this ILocalUsersOperations operations, string resourceGroupName, string accountName, string username)
+            public static LocalUserRegeneratePasswordResult RegeneratePassword(this ILocalUsersOperations operations, string resourceGroupName, string accountName, string username)
             {
                 return operations.RegeneratePasswordAsync(resourceGroupName, accountName, username).GetAwaiter().GetResult();
             }
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LocalUserProperties> RegeneratePasswordAsync(this ILocalUsersOperations operations, string resourceGroupName, string accountName, string username, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocalUserRegeneratePasswordResult> RegeneratePasswordAsync(this ILocalUsersOperations operations, string resourceGroupName, string accountName, string username, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegeneratePasswordWithHttpMessagesAsync(resourceGroupName, accountName, username, null, cancellationToken).ConfigureAwait(false))
                 {

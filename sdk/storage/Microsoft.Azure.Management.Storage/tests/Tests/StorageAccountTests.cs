@@ -2905,7 +2905,7 @@ namespace Storage.Tests
                     new LocalUser(homeDirectory: "/"));
                 Assert.Equal(userName1, user1.Name);
                 Assert.Equal("/", user1.HomeDirectory);
-                Assert.NotNull(user1.SharedKey);
+                //Assert.NotNull(user1.SharedKey);
                 Assert.Null(user1.HasSharedKey);
                 Assert.Null(user1.HasSshKey);
                 Assert.Null(user1.HasSshPassword);
@@ -2927,14 +2927,14 @@ namespace Storage.Tests
                         hasSshPassword: true));
                 Assert.Equal(userName2, user2.Name);
                 Assert.Equal("/dir1/", user2.HomeDirectory);
-                Assert.NotNull(user2.SharedKey);
-                Assert.NotNull(user2.SshPassword);
+                //Assert.NotNull(user2.SharedKey);
+                //Assert.NotNull(user2.SshPassword);
                 Assert.Equal(2, user2.PermissionScopes.Count);
                 Assert.Equal(2, user2.SshAuthorizedKeys.Count);
                 Assert.True(user2.HasSharedKey);
                 Assert.True(user2.HasSshKey);
                 Assert.True(user2.HasSshPassword);
-                string sshPassword1 = user2.SshPassword;
+                //string sshPassword1 = user2.SshPassword;
 
                 // List local user
                 LocalUsers users = storageMgmtClient.LocalUsers.List(rgname, accountName);
@@ -2944,15 +2944,15 @@ namespace Storage.Tests
                 user1 = storageMgmtClient.LocalUsers.Get(rgname, accountName, userName1);
                 Assert.Equal(userName1, user1.Name);
                 Assert.Equal("/", user1.HomeDirectory);
-                Assert.Null(user1.SharedKey);
+                //Assert.Null(user1.SharedKey);
                 Assert.True(user1.HasSharedKey);
                 Assert.False(user1.HasSshKey);
                 Assert.False(user1.HasSshPassword);
                 user2 = storageMgmtClient.LocalUsers.Get(rgname, accountName, userName2);
                 Assert.Equal(userName2, user2.Name);
                 Assert.Equal("/dir1/", user2.HomeDirectory);
-                Assert.Null(user2.SharedKey);
-                Assert.Null(user2.SshPassword);
+                //Assert.Null(user2.SharedKey);
+                //Assert.Null(user2.SshPassword);
                 Assert.Equal(2, user2.PermissionScopes.Count);
                 Assert.Null(user2.SshAuthorizedKeys);
                 Assert.True(user2.HasSharedKey);
@@ -2965,14 +2965,8 @@ namespace Storage.Tests
                 Assert.Equal(2, keys.SshAuthorizedKeys.Count);
 
                 // re-generate sshPassword on local user
-                LocalUserProperties userProperties = storageMgmtClient.LocalUsers.RegeneratePassword(rgname, accountName, userName2);
-                Assert.NotNull(userProperties.SshPassword);
-                Assert.NotEqual(sshPassword1, userProperties.SshPassword);
-                Assert.Equal(2, userProperties.PermissionScopes.Count);
-                Assert.Null(user2.SshAuthorizedKeys);
-                Assert.True(userProperties.HasSharedKey);
-                Assert.True(userProperties.HasSshKey);
-                Assert.True(userProperties.HasSshPassword);
+                LocalUserRegeneratePasswordResult regeneratePasswordResult = storageMgmtClient.LocalUsers.RegeneratePassword(rgname, accountName, userName2);
+                Assert.NotNull(regeneratePasswordResult.SshPassword);
 
                 //Remove Localuser
                 storageMgmtClient.LocalUsers.Delete(rgname, accountName, userName1);
