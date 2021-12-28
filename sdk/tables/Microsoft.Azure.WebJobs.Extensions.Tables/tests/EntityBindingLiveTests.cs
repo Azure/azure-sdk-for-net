@@ -881,6 +881,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new(typeof(double), 1.1d, 2.2d),
             new(typeof(bool), true, false),
             new(typeof(long), long.MinValue, long.MaxValue),
+            new(typeof(ulong), 0, long.MaxValue),
             new(typeof(DateTimeOffset), DateTimeOffsetValue, DateTimeOffsetValue.AddDays(1)),
             new(typeof(DateTime), DateTimeValue, DateTimeValue.AddDays(1), new DateTimeOffset(DateTimeValue), new DateTimeOffset(DateTimeValue.AddDays(1))),
             new(typeof(byte[]), new byte[] { 1, 2 ,3}, new byte[]{ 3, 2, 1}),

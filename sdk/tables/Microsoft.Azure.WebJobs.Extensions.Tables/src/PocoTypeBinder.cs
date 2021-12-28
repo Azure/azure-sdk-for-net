@@ -104,45 +104,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)(object)source.GetBinaryData(key);
             }
-            else if (typeof(T) == typeof(long))
+            else if (typeof(T) == typeof(long) ||
+                     typeof(T) == typeof(long?) ||
+                     typeof(T) == typeof(double?) ||
+                     typeof(T) == typeof(bool) ||
+                     typeof(T) == typeof(bool?) ||
+                     typeof(T) == typeof(Guid) ||
+                     typeof(T) == typeof(Guid?) ||
+                     typeof(T) == typeof(DateTimeOffset) ||
+                     typeof(T) == typeof(DateTimeOffset?) ||
+                     typeof(T) == typeof(string) ||
+                     typeof(T) == typeof(int) ||
+                     typeof(T) == typeof(int?))
             {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(long?))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(double))
-            {
-                value = (T) Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
-            }
-            else if (typeof(T) == typeof(double?))
-            {
-                value = (T)(object) source.GetDouble(key);
-            }
-            else if (typeof(T) == typeof(bool))
-            {
-                value = (T)(object) source.GetBoolean(key);
-            }
-            else if (typeof(T) == typeof(bool?))
-            {
-                value = (T)(object) source.GetBoolean(key);
-            }
-            else if (typeof(T) == typeof(Guid))
-            {
-                value = (T)(object) source.GetGuid(key);
-            }
-            else if (typeof(T) == typeof(Guid?))
-            {
-                value = (T)(object) source.GetGuid(key);
-            }
-            else if (typeof(T) == typeof(DateTimeOffset))
-            {
-                value = (T)(object) source.GetDateTimeOffset(key);
-            }
-            else if (typeof(T) == typeof(DateTimeOffset?))
-            {
-                value = (T)(object) source.GetDateTimeOffset(key);
+                value = (T)propertyValue;
             }
             else if (typeof(T) == typeof(DateTime))
             {
@@ -152,17 +127,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)(object) source.GetDateTime(key);
             }
-            else if (typeof(T) == typeof(string))
+            else if (typeof(T) == typeof(double))
             {
-                value = (T)(object) source.GetString(key);
+                value = (T)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
-            else if (typeof(T) == typeof(int))
+            // SDK encodes ulongs as longs but T1 and T2 extension use string
+            // handle both
+            else if (typeof(T) == typeof(ulong) && propertyValue is long l)
             {
-                value = (T)(object) source.GetInt32(key);
+                value = (T)(object) (ulong) l;
             }
-            else if (typeof(T) == typeof(int?))
+            else if (typeof(T) == typeof(ulong?) && propertyValue is long l2)
             {
-                value = (T)(object) source.GetInt32(key);
+                value = (T)(object) (ulong) l2;
             }
             else if (typeof(T).IsEnum)
             {
