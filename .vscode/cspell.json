@@ -119,7 +119,7 @@
       ]
     },
     {
-      "filename": "**/sdk/connectedvmware/**/*",
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
         "Ctlr",
         "Lsilogic",
