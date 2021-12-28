@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace SourceControlConfigurations.Tests.TestSupport
+namespace Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Tests.TestSupport
 {
     using System;
-    using SourceControlConfigurations.Tests.Helpers;
+    using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Tests.Helpers;
     using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Models;
-    using SourceControlConfigurations.Tests.TestSupport;
 
     /// <summary>
     /// Base class for tests of SourceControlConfiguration resource type

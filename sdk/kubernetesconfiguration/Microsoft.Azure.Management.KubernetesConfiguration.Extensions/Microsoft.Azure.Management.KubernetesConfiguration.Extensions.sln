@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.KubernetesConfiguration.Extensions", "src\Microsoft.Azure.Management.KubernetesConfiguration.Extensions.csproj", "{89B24529-C450-4FD6-BDE3-943BCE24C279}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions.Tests", "tests\Extensions.Tests.csproj", "{662D65BF-1C51-42EF-A976-F7C775942F13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Tests", "tests\Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Tests.csproj", "{662D65BF-1C51-42EF-A976-F7C775942F13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

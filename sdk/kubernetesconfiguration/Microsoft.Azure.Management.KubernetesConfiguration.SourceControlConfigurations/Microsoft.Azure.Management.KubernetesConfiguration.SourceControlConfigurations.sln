@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations", "src\Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.csproj", "{89B24529-C450-4FD6-BDE3-943BCE24C279}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceControlConfigurations.Tests", "tests\SourceControlConfigurations.Tests.csproj", "{21C6E113-ADE8-43D1-8D38-6516A2E0A9E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Tests", "tests\Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Tests.csproj", "{21C6E113-ADE8-43D1-8D38-6516A2E0A9E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
