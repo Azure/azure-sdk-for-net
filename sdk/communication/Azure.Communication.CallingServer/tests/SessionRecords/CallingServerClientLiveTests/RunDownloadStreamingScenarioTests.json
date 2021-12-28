@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://us-storage.asm.skype.com/v1/objects/0-wus-d8-99b867bd0c3f48c32fe2ddc8aa2e4125/content/acsmetadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3ca00a5e5823e54aa2bb27d6d8f7c5f5-9389cba0aedd4c4b-00",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20211216.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d7089f8f28790e97304776ae656dd4ec",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 16 Dec 2021 12:25:33 GMT",
+        "x-ms-host": "acs-app-validations.communication.azure.com",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache",
+          "max-age=0",
+          "s-maxage=0",
+          "private"
+        ],
+        "Content-Length": "837",
+        "Content-Range": "bytes 0-836/837",
+        "Content-Type": "application/octet-stream",
+        "Date": "Thu, 16 Dec 2021 12:25:34 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+      },
+      "ResponseBody": "ew0KICAicmVzb3VyY2VJZCI6ICJlMzMzYTViNS1jMWU0LTQ5ODQtYjc1Mi00NDdiZjkyZDEwYjciLA0KICAiY2FsbElkIjogImJmNDUwYTIzLTc4Y2UtNDExNi04NzhkLTYzNDI1MzFmNWQzMiIsDQogICJjaHVua0RvY3VtZW50SWQiOiAiMC13dXMtZDgtOTliODY3YmQwYzNmNDhjMzJmZTJkZGM4YWEyZTQxMjUiLA0KICAiY2h1bmtJbmRleCI6IDAsDQogICJjaHVua1N0YXJ0VGltZSI6ICIyMDIxLTEyLTE2VDEyOjA2OjQ2LjkxMzU3MTRaIiwNCiAgImNodW5rRHVyYXRpb24iOiA4MDYwLjAsDQogICJwYXVzZVJlc3VtZUludGVydmFscyI6IFtdLA0KICAicmVjb3JkaW5nSW5mbyI6IHsNCiAgICAiY29udGVudFR5cGUiOiAiYXVkaW9WaWRlbyIsDQogICAgImNoYW5uZWxUeXBlIjogIm1peGVkIiwNCiAgICAiZm9ybWF0IjogIm1wNCIsDQogICAgImF1ZGlvQ29uZmlndXJhdGlvbiI6IHsNCiAgICAgICJzYW1wbGVSYXRlIjogMTYwMDAsDQogICAgICAiYml0UmF0ZSI6IDEyODAwMCwNCiAgICAgICJjaGFubmVscyI6IDENCiAgICB9LA0KICAgICJ2aWRlb0NvbmZpZ3VyYXRpb24iOiB7DQogICAgICAibG9uZ2VyU2lkZUxlbmd0aCI6IDE5MjAsDQogICAgICAic2hvcnRlclNpZGVMZW5ndGgiOiAxMDgwLA0KICAgICAgImZyYW1lcmF0ZSI6IDE1LA0KICAgICAgImJpdFJhdGUiOiAxMDAwMDAwDQogICAgfQ0KICB9LA0KICAicGFydGljaXBhbnRzIjogWw0KICAgIHsNCiAgICAgICJwYXJ0aWNpcGFudElkIjogIjg6YWNzOmUzMzNhNWI1LWMxZTQtNDk4NC1iNzUyLTQ0N2JmOTJkMTBiN18wMDAwMDAwZS02MzAwLTlkMzMtMzVmMy0zNDNhMGQwMGE4NjgiDQogICAgfQ0KICBdDQp9"
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acs-app-validations.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "535985627"
+  }
+}

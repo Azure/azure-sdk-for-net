@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -49,7 +50,21 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeUri(string uri)
         {
-            return uri;
+            var recordingEndPointMatch = Regex.Match(uri, @"(recordings/[^/|?]*)");
+            var callConnectionIdMatch = Regex.Match(uri, @"(callConnections/[^/|?]*)");
+
+            if (callConnectionIdMatch.Success && callConnectionIdMatch.Groups.Count > 1)
+            {
+                return uri.Replace(callConnectionIdMatch.Groups[1].Value.Split('/')[1], SanitizeValue);
+            }
+            else if (recordingEndPointMatch.Success && recordingEndPointMatch.Groups.Count > 1)
+            {
+                return uri.Replace(recordingEndPointMatch.Groups[1].Value.Split('/')[1], SanitizeValue);
+            }
+            else
+            {
+                return uri;
+            }
         }
 
         public virtual void SanitizeHeaders(IDictionary<string, string[]> headers)
