@@ -41,16 +41,16 @@ require:
 
 4. Generate
 
-[BEFORE PR MERGED]
-- clone test generation branch at https://github.com/changlong-liu/autorest.csharp/tree/20211009-rebase
-- build autorest.csharp
+[USE autorest]
+- clone autorest.csharp https://github.com/Azure/autorest.csharp
+- build
 - generate with command:
 ~~~
 autorest --use=D:\projects\codegen\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1 D:\projects\codegen\azure-sdk-for-net\sdk\keyvault\Azure.ResourceManager.Keyvault\tests\autorest.tests.md --testmodeler={} --debug
 ~~~
 
 
-[AFTER PR MERGED]
+[or USE dotnet target]
 
 Execute "dotnet build /t:GenerateTest". It will generate test files like below:
 ~~~
@@ -79,53 +79,21 @@ D:.
 
 <div id="prepare-mock-service-host"/>
 
-# Prepare the Mock-service-host
+# Launch the Mock-service-host
 > **_NOTE:_** The mock-service-host use [OpenSSL Toolkit](https://www.openssl.org/) to create certificates for HTTPS channel. So make sure it's available in your computer.
-## Install mock-service-host
-1. Use git to clone this repo to your local workspace.
 
-~~~ shell
-# cd MY_WORKSPACE
-# git clone git@github.com:Azure/azure-sdk-tools.git
-# cd tools/mock-service-host
-# npm install
+The script Launch-MockServiceHost.ps1 can be used to launch the mock-service-host in one step.
+For example:
 ~~~
+// Powershell Administrator Mode:
 
-2 Configure mock-service-host
+// launch mock-service-host for all RPs (take about 3 minutes):
+> pwsh eng\scripts\Launch-MockServiceHost.ps1
 
-The Azrue Rest Api Spec repo is a companion repo of mock-service-host. By default, the mock-service-host download [the public azure swagger repo](https://github.com/Azure/azure-rest-api-specs) to cache folder when it start. You can create file '.env' to ask it to use specific swagger commit.
-
-~~~
-+-- mock-service-host/
-|   +-- cache/                   // swagger repos will be downloaded here in the first start-up of mock-service-host
-|   +-- .env                     // you can create this file, and add configs in it.
+// launch mock-service-host for single RP (take several seconds):
+> pwsh eng\scripts\Launch-MockServiceHost.ps1 -rpName keyvault
 ~~~
 
-Set target swagger files as bellow in .env:
-~~~
-specRetrievalGitUrl=https://github.com/Azure/azure-rest-api-specs
-specRetrievalGitBranch=main
-specRetrievalGitCommitID=xxx
-validationPathsPattern=specification/*/resource-manager/*/**/*.json
-~~~
-
-And you can specify a narrow rule to enable only your own RP's json files to accelerate the loading speed of mock-service-host. For instance:
-~~~
-validationPathsPattern=specification/mediaservices/resource-manager/Microsoft.Media/**/*.json
-~~~
-
-If you want mock-service-host to use local swagger repo existed in your computer, the '.env' file can be like bellow:
-~~~
-specRetrievalMethod=filesystem
-specRetrievalLocalRelativePath=../azure-rest-api-specs
-validationPathsPattern=specification/*/resource-manager/*/**/*.json
-~~~
-
-## Launch
-~~~ shell
-# npm run start
-~~~
-If only one RP is confiured in 'validationPathsPattern', it takes seconds for mock-service-host to load it.
 The mock-service-host is ready after 'validator initialized' is shown.
 ~~~
 D:\projects\codegen\azure-sdk-tools\tools\mock-service-host>npm run start
@@ -151,12 +119,15 @@ Listening https on port: 8445
 }
 2021-12-21T07:54:10.809Z [info]: validator initialized
 ~~~
+> **_NOTE:_** Refer to [README.md](https://github.com/Azure/azure-sdk-tools/tree/main/tools/mock-service-host) for more information about mock-service-host.
 
 
 <div id="execute-mock-test"/>
 
 # Execute Mock Test
 ## Trust the mock-service-host certificate '.ssh/localhost-ca.crt'
+> **_NOTE:_** Don't need this step if once launch mock-service-host with Launch-MockServiceHost.ps1 in Adminstrator Mode.
+
 The mock-service-host use a self-signed certificate to enable HTTPs channel, so need to trust the certificate before execute any mock test.
 Once the mock-service-host is launched, the certificate will be created as 'mock-service-host/.ssh/localhost-ca.crt'. Double click the crt file and follow below to install it.
 
