@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -30,7 +31,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         protected const string TableNameExpression = "%Table%";
         protected const string PartitionKey = "PK";
         protected const string RowKey = "RK";
-        private readonly Random _random = new();
         protected string TableName;
         protected TableServiceClient ServiceClient;
         protected TableClient TableClient;
@@ -49,15 +49,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             await base.StartTestRecordingAsync();
 
-            TableName = GetRandomTableName();
+            // Table creation is somewhat slow, try to reuse existing table when running multiple tests
+
+            if (_createTable)
+            {
+                TableName = Recording.GetVariable("TableName", TableName);
+            }
+
+            bool reusing;
+            if (TableName == null)
+            {
+                TableName = GetRandomTableName();
+                Recording.SetVariable("TableName", TableName);
+                reusing = false;
+            }
+            else
+            {
+                reusing = true;
+            }
 
             ServiceClient = InstrumentClient(
-                new TableServiceClient(
-                    UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString,
-                    InstrumentClientOptions(new TableClientOptions())));
+            new TableServiceClient(
+                UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString,
+                InstrumentClientOptions(new TableClientOptions())));
 
             TableClient = ServiceClient.GetTableClient(TableName);
-            if (_createTable)
+            if (_createTable && !reusing)
             {
                 await TableClient.CreateAsync();
             }
@@ -66,6 +83,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [TearDown]
         public async Task TearDown()
         {
+            using var recording = Recording.DisableRecording();
+            try
+            {
+                var entities = TableClient.QueryAsync<TableEntity>();
+                await foreach (var entity in entities)
+                {
+                    await TableClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
+                }
+            }
+            catch
+            { }
+        }
+
+        [OneTimeTearDown]
+        public async Task OneTimeTearDown()
+        {
+            using var recording = Recording.DisableRecording();
             try
             {
                 await TableClient.DeleteAsync();
@@ -88,17 +122,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         protected async Task<T> CallAsync<T>(string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
         {
-            var instance = Activator.CreateInstance<T>();
-            var (host, jobHost) = CreateHost(typeof(T), configure, instance);
+            return (T)await CallAsync(typeof(T), methodName, arguments, configure);
+        }
+
+        protected async Task<object> CallAsync(Type funcType, string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
+        {
+            var instance = Activator.CreateInstance(funcType);
+            var (host, jobHost) = CreateHost(funcType, configure, instance);
 
             MethodInfo methodInfo;
             if (methodName != null)
             {
-                methodInfo = typeof(T).GetMethod(methodName);
+                methodInfo = funcType.GetMethod(methodName);
             }
             else
             {
-                methodInfo = typeof(T).GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
+                methodInfo = funcType.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
                     .Single(mi => !mi.IsSpecialName);
             }
 

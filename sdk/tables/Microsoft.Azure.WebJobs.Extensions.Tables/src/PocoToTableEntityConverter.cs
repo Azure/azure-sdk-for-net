@@ -2,51 +2,46 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using Azure.Data.Tables;
 using Azure.Monitor.Query;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class PocoToTableEntityConverter<TInput> : IConverter<TInput, TableEntity>
+    internal class PocoToTableEntityConverter<TInput>: IConverter<TInput, TableEntity>
     {
         private readonly TypeBinder<TableEntity>.BoundTypeInfo _info;
 
         public PocoToTableEntityConverter()
         {
             _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
-
-            ConvertsPartitionKey = HasGetter<string>("PartitionKey");
-            ConvertsRowKey = HasGetter<string>("RowKey");
-            ConvertsETag = HasGetter<string>("ETag");
-            HasGetter<DateTimeOffset>("Timestamp");
+            CheckGetter("PartitionKey", PocoTypeBinder.PartitionKeyTypes);
+            CheckGetter("RowKey", PocoTypeBinder.RowKeyTypes);
+            CheckGetter("ETag", PocoTypeBinder.ETagTypes);
+            CheckGetter("Timestamp", PocoTypeBinder.TimestampTypes);
         }
 
-        public bool ConvertsPartitionKey { get; }
-
-        public bool ConvertsRowKey { get; }
-
-        public bool ConvertsETag { get; }
-
         public TableEntity Convert(TInput input)
+        {
+            return Convert(input, null);
+        }
+
+        public TableEntity Convert(TInput input, TableEntity original)
         {
             if (input == null)
             {
                 return null;
             }
 
-            if (input is TableEntity te)
-            {
-                return te;
-            }
-
-            TableEntity result = new TableEntity();
+            TableEntity result = new TableEntity(original);
             _info.Serialize(input, result);
             return result;
         }
 
-        private static bool HasGetter<TProperty>(string propertyName)
+        private static bool CheckGetter(string propertyName, Type[] allowedTypes)
         {
             PropertyInfo property = typeof(TInput).GetProperty(propertyName,
                 BindingFlags.Instance | BindingFlags.Public);
@@ -56,10 +51,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return false;
             }
 
-            if (property.PropertyType != typeof(TProperty))
+            if (!allowedTypes.Contains(property.PropertyType))
             {
                 string message = String.Format(CultureInfo.CurrentCulture,
-                    "If the {0} property is present, it must be a {1}.", propertyName, typeof(TProperty).Name);
+                    "If the {0} property is present, it must be a {1}.", propertyName, string.Join(" or ", (IEnumerable<object>)allowedTypes));
                 throw new InvalidOperationException(message);
             }
 

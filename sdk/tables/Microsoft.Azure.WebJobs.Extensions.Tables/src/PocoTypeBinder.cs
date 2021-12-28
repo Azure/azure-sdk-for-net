@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using System.Reflection;
 using Azure;
 using Azure.Data.Tables;
 using Azure.Monitor.Query;
@@ -11,61 +10,68 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
+    // internal static class TableConstants
+    // {
+    //     public const string ETagKeyName = "odata.etag";
+    //     public const string TimespanKeyName = "Timespan";
+    //     public const string RowKeyKeyName = "RowKey";
+    //     public const string PartitionKeyKeyName = "RowKey";
+    // }
+
     internal class PocoTypeBinder: TypeBinder<TableEntity>
     {
+        public const string ETagKeyName = "odata.etag";
         public static PocoTypeBinder Shared { get; } = new();
+
+        public static Type[] ETagTypes = { typeof(string), typeof(ETag) };
+        public static Type[] RowKeyTypes = { typeof(string) };
+        public static Type[] PartitionKeyTypes = { typeof(string) };
+        public static Type[] TimestampTypes = { typeof(DateTimeOffset), typeof(DateTimeOffset?) };
+
         protected override void Set<T>(TableEntity destination, T value, BoundMemberInfo memberInfo)
         {
-            // TODO: this is not the best place for this check
-            if (memberInfo.MemberInfo is PropertyInfo { GetMethod: { IsPrivate: true } })
+            var key = memberInfo.Name switch
             {
+                nameof(TableEntity.ETag) => ETagKeyName,
+                _ => memberInfo.Name
+            };
+
+            if (value == null)
+            {
+                destination[key] = null;
                 return;
             }
 
-            switch (memberInfo.Name)
+            var type = typeof(T);
+
+            if (type.IsGenericType &&
+                type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                case nameof(TableEntity.ETag):
-                    destination.ETag = new ETag((string)(object)value);
-                    return;
-                case nameof(TableEntity.Timestamp):
-                    destination.Timestamp = (DateTimeOffset)(object)value;
-                    return;
-                case nameof(TableEntity.RowKey):
-                    destination.RowKey = (string)(object)value;
-                    return;
-                case nameof(TableEntity.PartitionKey):
-                    destination.PartitionKey = (string)(object)value;
-                    return;
+                type = type.GetGenericArguments()[0];
             }
 
-            if (typeof(T) == typeof(bool) ||
-                typeof(T) == typeof(bool?) ||
-                typeof(T) == typeof(byte[]) ||
-                typeof(T) == typeof(DateTime) ||
-                typeof(T) == typeof(DateTime?) ||
-                typeof(T) == typeof(DateTimeOffset) ||
-                typeof(T) == typeof(DateTimeOffset?) ||
-                typeof(T) == typeof(double) ||
-                typeof(T) == typeof(double?) ||
-                typeof(T) == typeof(Guid) ||
-                typeof(T) == typeof(Guid?) ||
-                typeof(T) == typeof(int) ||
-                typeof(T) == typeof(int?) ||
-                typeof(T) == typeof(long) ||
-                typeof(T) == typeof(long?) ||
-                typeof(T) == typeof(string))
+            if (type == typeof(bool) ||
+                type == typeof(byte[]) ||
+                type == typeof(DateTimeOffset) ||
+                type == typeof(double) ||
+                type == typeof(Guid) ||
+                type == typeof(int) ||
+                type == typeof(long) ||
+                type == typeof(string))
             {
-                destination[memberInfo.Name] = value;
+                destination[key] = value;
             }
-            else if (typeof(T).IsEnum)
+            else if (type == typeof(DateTime))
             {
-                destination[memberInfo.Name] = value.ToString();
+                destination[key] = new DateTimeOffset((DateTime)(object)value);
+            }
+            else if (type.IsEnum || type == typeof(ETag))
+            {
+                destination[key] = value.ToString();
             }
             else
             {
-                // TODO: this is new. Who handled this before?
-                // TODO: indented?
-                destination[memberInfo.Name] = JsonConvert.SerializeObject(value, Formatting.Indented);
+                destination[key] = JsonConvert.SerializeObject(value, Formatting.Indented);
             }
         }
 
@@ -73,15 +79,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         {
             value = default;
 
-            // TODO: this is not the best place for this check
-            if (memberInfo.MemberInfo is PropertyInfo { SetMethod: { IsPrivate: true } })
-            {
-                return false;
-            }
-
             var key = memberInfo.Name switch
             {
-                nameof(TableEntity.ETag) => "odata.etag",
+                nameof(TableEntity.ETag) => ETagKeyName,
                 _ => memberInfo.Name
             };
 
@@ -183,13 +183,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)Enum.Parse(arguments[0], propertyValue as string );
             }
-            else if (typeof(T) == typeof(ETag))
+            else if (typeof(T) == typeof(ETag) ||
+                     typeof(T) == typeof(ETag?))
             {
                 value = (T)(object) new ETag(source.GetString(key));
             }
-            else if (typeof(T) == typeof(TimeSpan))
+            else
             {
-                // TODO: this is new. Who handled this before?
                 value = JsonConvert.DeserializeObject<T>(source.GetString(key));
             }
 

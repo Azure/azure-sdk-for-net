@@ -14,10 +14,11 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class TableEntityWriter<T> : ICollector<T>, IAsyncCollector<T>, IWatcher
-        where T : ITableEntity
+    internal class TableEntityWriter: IWatcher, ICollector<TableEntity>, IAsyncCollector<TableEntity>
     {
         private readonly TableClient _table;
+        private readonly string _partitionKey;
+        private readonly string _rowKey;
 
         /// <summary>
         /// Max batch size is an azure limitation on how many entries can be in each batch.
@@ -35,18 +36,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private readonly TableParameterLog _log;
         private readonly Stopwatch _watch = new Stopwatch();
 
-        public TableEntityWriter(TableClient table, TableParameterLog log)
+        public TableEntityWriter(TableClient table, string partitionKey, string rowKey)
         {
             _table = table;
-            _log = log;
+            _partitionKey = partitionKey;
+            _rowKey = rowKey;
+            _log = new TableParameterLog();
         }
 
-        public TableEntityWriter(TableClient table)
-            : this(table, new TableParameterLog())
-        {
-        }
-
-        public void Add(T item)
+        public void Add(TableEntity item)
         {
 // TODO
 #pragma warning disable AZC0102
@@ -54,13 +52,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 #pragma warning restore AZC0102
         }
 
-        public async Task AddAsync(T item, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task AddAsync(TableEntity item, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Careful:
             // 1. even with upsert, all rowkeys within a batch must be unique. If they aren't, the previous items
             // will be flushed.
             // 2. Capture at time of Add, in case item is mutated after add.
             // 3. Validate rowkey on the client so we get a nice error instead of the cryptic 400 from auzre.
+            item.PartitionKey ??= _partitionKey;
+            item.RowKey ??= _rowKey;
+
             string partitionKey = item.PartitionKey;
             string rowKey = item.RowKey;
             TableClientHelpers.ValidateAzureTableKeyValue(partitionKey);

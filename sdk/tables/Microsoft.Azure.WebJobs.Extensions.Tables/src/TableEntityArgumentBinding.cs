@@ -10,23 +10,22 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class TableEntityArgumentBinding<TElement> : IArgumentBinding<TableEntityContext>
-        where TElement :class, ITableEntity, new()
+    internal class TableEntityArgumentBinding : IArgumentBinding<TableEntityContext>
     {
-        public Type ValueType => typeof(TElement);
+        public Type ValueType => typeof(TableEntity);
 
         public async Task<IValueProvider> BindAsync(TableEntityContext value, ValueBindingContext context)
         {
             var table = value.Table;
             try
             {
-                var result = await table.GetEntityAsync<TElement>(value.PartitionKey, value.RowKey, cancellationToken: context.CancellationToken).ConfigureAwait(false);
-                return new TableEntityValueBinder(value, result.Value, typeof(TElement));
+                var result = await table.GetEntityAsync<TableEntity>(value.PartitionKey, value.RowKey, cancellationToken: context.CancellationToken).ConfigureAwait(false);
+                return new TableEntityValueBinder(value, result.Value, typeof(TableEntity));
             }
             catch (RequestFailedException e) when
                 (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
             {
-                return new NullEntityValueProvider<TElement>(value);
+                return new NullEntityValueProvider<TableEntity>(value);
             }
         }
     }

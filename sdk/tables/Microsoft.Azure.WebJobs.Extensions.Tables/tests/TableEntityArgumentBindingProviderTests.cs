@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     public class TableEntityArgumentBindingProviderTests
     {
-        private ParameterInfo[] _parameters;
+        private readonly ParameterInfo[] _parameters;
 
         public TableEntityArgumentBindingProviderTests()
         {
@@ -22,28 +22,49 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [Test]
         public void Create_ReturnsNull_IfByRefParameter()
         {
-            // Arrange
-            ITableEntityArgumentBindingProvider product = new TableEntityArgumentBindingProvider();
-            Type parameterType = typeof(SimpleTableEntity).MakeByRefType();
             // Act
-            IArgumentBinding<TableEntityContext> binding = product.TryCreate(_parameters[0]);
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreateTableEntityBinding(_parameters[0]);
             // Assert
             Assert.Null(binding);
         }
 
         [Test]
-        public void Create_ReturnsBinding_IfContainsResolvedGenericParameter()
+        public void Create_ReturnsNull_IfContainsResolvedGenericParameter()
         {
-            // Arrange
-            ITableEntityArgumentBindingProvider product = new TableEntityArgumentBindingProvider();
-            Type parameterType = typeof(GenericClass<int>);
             // Act
-            IArgumentBinding<TableEntityContext> binding = product.TryCreate(_parameters[1]);
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreateTableEntityBinding(_parameters[1]);
+            // Assert
+            Assert.Null(binding);
+        }
+
+        [Test]
+        public void Create_ReturnsNull_IfTableEntitySubclass()
+        {
+            // Act
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreateTableEntityBinding(_parameters[1]);
+            // Assert
+            Assert.Null(binding);
+        }
+
+        [Test]
+        public void Create_ReturnsNotNull_ForTableEntity()
+        {
+            // Act
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreateTableEntityBinding(_parameters[3]);
             // Assert
             Assert.NotNull(binding);
         }
 
-        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<int> generic)
+        [Test]
+        public void Create_ReturnsNotNull_ForITableEntity()
+        {
+            // Act
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreateTableEntityBinding(_parameters[4]);
+            // Assert
+            Assert.NotNull(binding);
+        }
+
+        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<int> generic, SimpleTableEntity p2, TableEntity p3, ITableEntity p4)
         {
         }
 
