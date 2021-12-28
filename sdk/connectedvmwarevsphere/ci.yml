@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: connectedvmwarevsphere
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.connectedvmwarevsphere
+    - name: Azure.ResourceManager.ConnectedVMwarevSphere
       safeName: AzureResourceManagerConnectedVMwarevSphere
