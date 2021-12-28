@@ -17,7 +17,7 @@ This tutorial has following sections:
       - [3. update the solution file if needed](#3-update-the-solution-file-if-needed)
     - [Create the generated client](#create-the-generated-client)
     - [Export Public API](#export-public-api)
-  - [Refine the SDK library package](#refine-the-sdk-library-package)
+  - [Improve the SDK library package](#improve-the-sdk-library-package)
     - [Tests](#tests)
     - [Samples](#samples)
     - [Snippets](#snippets)
@@ -91,7 +91,7 @@ Running the script for a project in `sdk\deviceupdate` would look like this:
 eng\scripts\Export-API.ps1 deviceupdate
 ```
 
-## Refine the SDK library package
+## Improve the SDK library package
 You can continuously work on the first-version shippable package created above to refine, such as add Tests, Samples and refine the Readme.md and Changlog.
 ### Tests
 

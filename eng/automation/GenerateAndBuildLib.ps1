@@ -72,8 +72,7 @@ function Get-InputJsonFileInfo()
 function New-DataPlanePackageFolder() {
   param(
       [string]$resourceProvider,
-      [string]$ServiceGrouop = "DataPlane",
-      [string]$packageName = "",
+      [string]$namespace,
       [string]$sdkPath = "",
       [string]$inputfile = "",
       [string]$securityScope,
@@ -87,7 +86,7 @@ function New-DataPlanePackageFolder() {
 
   $sdkPath = $sdkPath -replace "\\", "/"
 
-  $projectFolder="$sdkPath/sdk/$resourceProvider/Azure.$ServiceGrouop.$packageName"
+  $projectFolder="$sdkPath/sdk/$resourceProvider/$namespace"
   if (Test-Path -Path $projectFolder) {
     Write-Host "Path exists!"
   } else {
@@ -97,15 +96,22 @@ function New-DataPlanePackageFolder() {
         exit 1
     }
     dotnet new -i $sdkPath/eng/templates/Azure.ServiceTemplate.Template
-    $projectFolder="$sdkPath/sdk/$resourceProvider/Azure.$ServiceGrouop.$packageName"
+    $projectFolder="$sdkPath/sdk/$resourceProvider/$namespace"
     Write-Host "Create project folder $projectFolder"
     New-Item -Path $projectFolder -ItemType Directory
     Set-Location $projectFolder
-    dotnet new dataplane --libraryName DeviceUpdate --swagger $inputfile --securityScopes $securityScope --includeCI true --force
-    dotnet sln remove src\Azure.$ServiceGrouop.$packageName.csproj
-    dotnet sln add src\Azure.$ServiceGrouop.$packageName.csproj
-    dotnet sln remove tests\Azure.$ServiceGrouop.$packageName.Tests.csproj
-    dotnet sln add tests\Azure.$ServiceGrouop.$packageName.Tests.csproj
+    $namespaceArray = $namespace.Split(".")
+    if ( $namespaceArray.Count -ne 3) {
+        Write-Error "Error: invalid namespace name."
+        exit 1
+    }
+
+    $libraryName = $namespaceArray[2]
+    dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --includeCI true --force
+    dotnet sln remove src\$namespace.csproj
+    dotnet sln add src\$namespace.csproj
+    dotnet sln remove tests\$namespace.Tests.csproj
+    dotnet sln add tests\$namespace.Tests.csproj
   }
 
   # update the Dataplane target flag
