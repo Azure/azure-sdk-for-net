@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Captures the specified resource group as a template. </summary>
     public partial class ResourceGroupExportTemplateOperation : Operation<ResourceGroupExportResult>, IOperationSource<ResourceGroupExportResult>
     {
-        private readonly OperationOrResponseInternals<ResourceGroupExportResult> _operation;
+        private readonly OperationInternals<ResourceGroupExportResult> _operation;
 
         /// <summary> Initializes a new instance of ResourceGroupExportTemplateOperation for mocking. </summary>
         protected ResourceGroupExportTemplateOperation()
@@ -26,8 +27,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceGroupExportTemplateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupExportTemplateOperation");
+            _operation = new OperationInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupExportTemplateOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -8,15 +8,16 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class TenantListResult
+    internal partial class ResourceGroupListResult
     {
-        internal static TenantListResult DeserializeTenantListResult(JsonElement element)
+        internal static ResourceGroupListResult DeserializeResourceGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TenantData>> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ResourceGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TenantData> array = new List<TenantData>();
+                    List<ResourceGroupData> array = new List<ResourceGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantData.DeserializeTenantIdDescription(item));
+                        array.Add(ResourceGroupData.DeserializeResourceGroupData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TenantListResult(Optional.ToList(value), nextLink);
+            return new ResourceGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

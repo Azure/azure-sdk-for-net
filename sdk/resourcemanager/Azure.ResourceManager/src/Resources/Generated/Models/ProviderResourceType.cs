@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ProviderResourceType
     {
         /// <summary> Initializes a new instance of ProviderResourceType. </summary>
-        public ProviderResourceType()
+        internal ProviderResourceType()
         {
             Locations = new ChangeTrackingList<string>();
             LocationMappings = new ChangeTrackingList<ProviderExtendedLocation>();

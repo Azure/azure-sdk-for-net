@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -22,38 +23,65 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("properties");
                 writer.WriteObjectValue(Properties);
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy");
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
+            writer.WriteEndObject();
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
-        internal static ResourceGroupData DeserializeResourceGroup(JsonElement element)
+        internal static ResourceGroupData DeserializeResourceGroupData(JsonElement element)
         {
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
             Optional<ResourceGroupProperties> properties = default;
-            string location = default;
             Optional<string> managedBy = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
+            Location location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("managedBy"))
+                {
+                    managedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -69,43 +97,8 @@ namespace Azure.ResourceManager.Resources
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("managedBy"))
-                {
-                    managedBy = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
             }
-            return new ResourceGroupData(id.Value, name.Value, type.Value, properties.Value, location, managedBy.Value, Optional.ToDictionary(tags));
+            return new ResourceGroupData(id, name, type, tags, location, properties.Value, managedBy.Value);
         }
     }
 }

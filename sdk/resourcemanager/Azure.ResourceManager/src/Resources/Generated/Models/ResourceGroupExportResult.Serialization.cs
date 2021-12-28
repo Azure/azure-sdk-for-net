@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ResourceGroupExportResult(template.Value, error.Value);
+            return new ResourceGroupExportResult(template.Value, error);
         }
     }
 }

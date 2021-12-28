@@ -3,6 +3,9 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
+# csharpgen:
+#   attach: true
 azure-arm: true
 arm-core: true
 clear-output-folder: true
@@ -88,10 +91,10 @@ output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyDefinitions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policySetDefinitions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
@@ -107,17 +110,33 @@ list-exception:
 request-path-to-resource-data:
   # model of this has id, type and name, but its type has the type of `object` instead of `string`
   /{linkId}: ResourceLink
+  /subscriptions/{subscriptionId}: Subscription
+  /tenants: Tenant
+request-path-is-non-resource:
+  - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
   /{scope}/providers/Microsoft.Resources/links: /{linkId}
+  /subscriptions: /subscriptions/{subscriptionId}
+  /subscriptions/{subscriptionId}/resourcegroups: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
 request-path-to-resource-type:
   /{linkId}: Microsoft.Resources/links
+  /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
+  /tenants: Microsoft.Resources/tenants
+  /subscriptions: Microsoft.Resources/subscriptions
+  /subscriptions/{subscriptionId}/resourcegroups: Microsoft.Resources/resourceGroups
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
     - subscriptions
     - resourceGroups
     - "*"
 operation-groups-to-omit:
-  Deployments;DeploymentOperations;AuthorizationOperations
+  - Deployments
+  - DeploymentOperations
+  - AuthorizationOperations
+  - ResourceCheck
+  - Providers
+  - Resources
+  - Tags
 override-operation-name:
   ResourceLinks_ListAtSourceScope: GetAll
 directive:
@@ -137,10 +156,35 @@ directive:
   - remove-operation: ManagementLocks_ListAtResourceGroupLevel
   - remove-operation: ManagementLocks_ListAtResourceLevel
   - remove-operation: ManagementLocks_ListAtSubscriptionLevel
+  - from: subscriptions.json
+    where: '$.paths["/providers/Microsoft.Resources/operations"].get'
+    transform: >
+      $["operationId"] = "Operations_ListSubscriptionOperations";
+    reason: Rename duplicate operation Id
+  - from: resources.json
+    where: '$.paths["/providers/Microsoft.Resources/operations"].get'
+    transform: >
+      $["operationId"] = "Operations_ListResourcesOperations";
+    reason: Rename duplicate operation Id
+  # - remove-operation: Tenants_List
 #   - remove-operation: ResourceLinks_ListAtSubscription # The filter values are different, so keep this operation.
+  - rename-operation:
+      from: checkResourceName
+      to: ResourceCheck_CheckResourceName
+  - rename-model:
+      from: Location
+      to: LocationExpanded
+  - rename-model:
+      from: TenantIdDescription
+      to: Tenant
+  - remove-model: DeploymentExtendedFilter
+  - remove-model: ResourceProviderOperationDisplayProperties
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
+  - from: resources.json,
+    where: $.definitions.Identity
+    transform: 'return undefined'
   - rename-model:
       from: Identity
       to: PolicyAssignmentIdentity

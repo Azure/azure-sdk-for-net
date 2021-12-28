@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -13,12 +14,23 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
+        #region ResourceGroup
+        /// <summary> Gets an object representing a ResourceGroupCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="ResourceGroupCollection" /> object. </returns>
+        public static ResourceGroupCollection GetResourceGroups(this Subscription subscription)
+        {
+            return new ResourceGroupCollection(subscription);
+        }
+        #endregion
+
         #region SubscriptionPolicyDefinition
         /// <summary> Gets an object representing a SubscriptionPolicyDefinitionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
@@ -39,9 +51,86 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
+        private static ProviderResourceTypesRestOperations GetProviderResourceTypesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        {
+            return new ProviderResourceTypesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+        }
+
         private static ResourceLinksRestOperations GetResourceLinksRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
             return new ResourceLinksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ProviderResourceTypes_List
+        /// <summary> List the resource types for a specified resource provider. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public static async Task<Response<IReadOnlyList<ProviderResourceType>>> GetProviderResourceTypesAsync(this Subscription subscription, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProviderResourceTypes");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetProviderResourceTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ProviderResourceTypes_List
+        /// <summary> List the resource types for a specified resource provider. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public static Response<IReadOnlyList<ProviderResourceType>> GetProviderResourceTypes(this Subscription subscription, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProviderResourceTypes");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetProviderResourceTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.List(subscription.Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken);
+                    return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links

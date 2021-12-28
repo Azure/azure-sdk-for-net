@@ -12,6 +12,28 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
+        #region PolicyAssignment
+        /// <summary> Gets an object representing a PolicyAssignment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
+        public static PolicyAssignment GetPolicyAssignment(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PolicyAssignment(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ResourceGroup
+        /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGroup" /> object. </returns>
+        public static ResourceGroup GetResourceGroup(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroup(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region SubscriptionPolicyDefinition
         /// <summary> Gets an object representing a SubscriptionPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -75,17 +97,6 @@ namespace Azure.ResourceManager.Resources
         public static ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementGroupPolicySetDefinition(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignment along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
-        public static PolicyAssignment GetPolicyAssignment(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PolicyAssignment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
