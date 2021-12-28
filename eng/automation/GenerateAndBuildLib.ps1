@@ -77,7 +77,8 @@ function New-DataPlanePackageFolder() {
       [string]$sdkPath = "",
       [string]$inputfile = "",
       [string]$securityScope,
-      [string]$AUTOREST_CONFIG_FILE = "autorest.md"
+      [string]$AUTOREST_CONFIG_FILE = "autorest.md",
+      [string]$outputJsonFile = "output.json"
   )
 
   if ($packageName -eq "") {
@@ -116,9 +117,23 @@ function New-DataPlanePackageFolder() {
     $inputfile = "input-file: $inputfile"
     $inputfileRex = "input-file *:.*.json"
     $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
-    (Get-Content $file) -replace $inputfileRex, "$inputfile" | Set-Content $file
+    if (Test-Path -Path $file) {
+        (Get-Content $file) -replace $inputfileRex, "$inputfile" | Set-Content $file
+        if ( $? -ne $True) {
+          Write-Error "Failed to update autorest.md. exit code: $?"
+          exit 1
+        }
+    } else {
+        Write-Error "autorest.md doesn't exist."
+        exit 1
+    }
   }
 
+  $outputJson = [PSCustomObject]@{
+    projectFolder = $projectFolder
+  }
+
+  $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
   return $projectFolder
 }
 

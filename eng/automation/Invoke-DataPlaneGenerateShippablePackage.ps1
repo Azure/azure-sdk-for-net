@@ -11,9 +11,22 @@ param (
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
 
 # Generate dataplane library
-$projectFolder = New-DataPlanePackageFolder -resourceProvider $resourceProvider -ServiceGrouop $ServiceGrouop -packageName $packageName -sdkPath $sdkPath -inputfile $inputfile -securityScope $securityScope -AUTOREST_CONFIG_FILE $AUTOREST_CONFIG_FILE
-Invoke-Generate -sdkfolder $projectFolder[-1]
+$outputJsonFile = "package.json"
+New-DataPlanePackageFolder -resourceProvider $resourceProvider -ServiceGrouop $ServiceGrouop -packageName $packageName -sdkPath $sdkPath -inputfile $inputfile -securityScope $securityScope -AUTOREST_CONFIG_FILE $AUTOREST_CONFIG_FILE -outputJsonFile $outputJsonFile
+if ( $? -ne $True) {
+  Write-Error "Failed to create sdk project folder. exit code: $?"
+  exit 1
+}
+$outputJson = Get-Content $outputJsonFile | Out-String | ConvertFrom-Json
+$projectFolder = $outputJson.projectFolder
+Write-Host "projectFolder:$projectFolder"
+Invoke-Generate -sdkfolder $projectFolder
+if ( $? -ne $True) {
+  Write-Error "Failed to create generate sdk."
+  exit 1
+}
 # Generate APIs
 $repoRoot = (Join-Path $PSScriptRoot .. ..)
 Set-Location $repoRoot
-eng\scripts\Export-API.ps1 $resourceProvider
+pwsh eng\scripts\Export-API.ps1 $resourceProvider
+exit 0
