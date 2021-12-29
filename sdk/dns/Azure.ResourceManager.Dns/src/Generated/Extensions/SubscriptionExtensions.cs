@@ -32,25 +32,25 @@ namespace Azure.ResourceManager.Dns
             return new DnsResourceReferenceRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
-        /// <summary> Lists the Zones for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DnsZones for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Zone> GetZonesAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DnsZone> GetZonesAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetZonesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<Zone>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<DnsZone>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetZones");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DnsZone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Dns
                         throw;
                     }
                 }
-                async Task<Page<Zone>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<DnsZone>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetZones");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DnsZone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -78,25 +78,25 @@ namespace Azure.ResourceManager.Dns
             );
         }
 
-        /// <summary> Lists the Zones for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DnsZones for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Zone> GetZones(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<DnsZone> GetZones(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetZonesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<Zone> FirstPageFunc(int? pageSizeHint)
+                Page<DnsZone> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetZones");
                     scope.Start();
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DnsZone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Dns
                         throw;
                     }
                 }
-                Page<Zone> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<DnsZone> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetZones");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Zone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DnsZone(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -124,30 +124,30 @@ namespace Azure.ResourceManager.Dns
             );
         }
 
-        /// <summary> Filters the list of Zones for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of DnsZones for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetZonesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetDnsZonesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Zone.ResourceType);
+            ResourceFilterCollection filters = new(DnsZone.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of Zones for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of DnsZones for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetZonesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetDnsZonesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Zone.ResourceType);
+            ResourceFilterCollection filters = new(DnsZone.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

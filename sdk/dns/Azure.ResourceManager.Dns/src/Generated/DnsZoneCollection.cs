@@ -21,21 +21,21 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing collection of Zone and their operations over its parent. </summary>
-    public partial class ZoneCollection : ArmCollection, IEnumerable<Zone>, IAsyncEnumerable<Zone>
+    /// <summary> A class representing collection of DnsZone and their operations over its parent. </summary>
+    public partial class DnsZoneCollection : ArmCollection, IEnumerable<DnsZone>, IAsyncEnumerable<DnsZone>
 
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ZonesRestOperations _zonesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ZoneCollection"/> class for mocking. </summary>
-        protected ZoneCollection()
+        /// <summary> Initializes a new instance of the <see cref="DnsZoneCollection"/> class for mocking. </summary>
+        protected DnsZoneCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ZoneCollection class. </summary>
+        /// <summary> Initializes a new instance of DnsZoneCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ZoneCollection(ArmResource parent) : base(parent)
+        internal DnsZoneCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _zonesRestClient = new ZonesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ZoneCreateOrUpdateOperation CreateOrUpdate(string zoneName, ZoneData parameters, string ifMatch = null, string ifNoneMatch = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ZoneCreateOrUpdateOperation CreateOrUpdate(string zoneName, DnsZoneData parameters, string ifMatch = null, string ifNoneMatch = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (zoneName == null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dns
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ZoneCreateOrUpdateOperation> CreateOrUpdateAsync(string zoneName, ZoneData parameters, string ifMatch = null, string ifNoneMatch = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ZoneCreateOrUpdateOperation> CreateOrUpdateAsync(string zoneName, DnsZoneData parameters, string ifMatch = null, string ifNoneMatch = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (zoneName == null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Dns
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -122,21 +122,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
-        public virtual Response<Zone> Get(string zoneName, CancellationToken cancellationToken = default)
+        public virtual Response<DnsZone> Get(string zoneName, CancellationToken cancellationToken = default)
         {
             if (zoneName == null)
             {
                 throw new ArgumentNullException(nameof(zoneName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.Get");
             scope.Start();
             try
             {
                 var response = _zonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Zone(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZone(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,21 +149,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
-        public async virtual Task<Response<Zone>> GetAsync(string zoneName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DnsZone>> GetAsync(string zoneName, CancellationToken cancellationToken = default)
         {
             if (zoneName == null)
             {
                 throw new ArgumentNullException(nameof(zoneName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.Get");
             scope.Start();
             try
             {
                 var response = await _zonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Zone(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZone(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,21 +176,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
-        public virtual Response<Zone> GetIfExists(string zoneName, CancellationToken cancellationToken = default)
+        public virtual Response<DnsZone> GetIfExists(string zoneName, CancellationToken cancellationToken = default)
         {
             if (zoneName == null)
             {
                 throw new ArgumentNullException(nameof(zoneName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _zonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<Zone>(null, response.GetRawResponse())
-                    : Response.FromValue(new Zone(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<DnsZone>(null, response.GetRawResponse())
+                    : Response.FromValue(new DnsZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,21 +203,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
-        public async virtual Task<Response<Zone>> GetIfExistsAsync(string zoneName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DnsZone>> GetIfExistsAsync(string zoneName, CancellationToken cancellationToken = default)
         {
             if (zoneName == null)
             {
                 throw new ArgumentNullException(nameof(zoneName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _zonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<Zone>(null, response.GetRawResponse())
-                    : Response.FromValue(new Zone(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<DnsZone>(null, response.GetRawResponse())
+                    : Response.FromValue(new DnsZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Dns
                 throw new ArgumentNullException(nameof(zoneName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.Exists");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.Exists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Dns
                 throw new ArgumentNullException(nameof(zoneName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -279,17 +279,17 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Lists the DNS zones within a resource group. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Zone" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Zone> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DnsZone" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsZone> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<Zone> FirstPageFunc(int? pageSizeHint)
+            Page<DnsZone> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _zonesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Zone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<Zone> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DnsZone> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _zonesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Zone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,17 +318,17 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Lists the DNS zones within a resource group. </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Zone" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Zone> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DnsZone" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsZone> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Zone>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DnsZone>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _zonesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Zone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -336,14 +336,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<Zone>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DnsZone>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _zonesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Zone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsZone(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Dns
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="Zone" /> for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DnsZone" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.Dns
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(Zone.ResourceType);
+                var filters = new ResourceFilterCollection(DnsZone.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> Filters the list of <see cref="Zone" /> for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DnsZone" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ZoneCollection.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DnsZoneCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(Zone.ResourceType);
+                var filters = new ResourceFilterCollection(DnsZone.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<Zone> IEnumerable<Zone>.GetEnumerator()
+        IEnumerator<DnsZone> IEnumerable<DnsZone>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -410,12 +410,12 @@ namespace Azure.ResourceManager.Dns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Zone> IAsyncEnumerable<Zone>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DnsZone> IAsyncEnumerable<DnsZone>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Zone, ZoneData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DnsZone, DnsZoneData> Construct() { }
     }
 }

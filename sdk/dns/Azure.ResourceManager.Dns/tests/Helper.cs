@@ -56,8 +56,8 @@ namespace Azure.Management.Dns.Tests
             return true;
         }
         public static bool AreEqual(
-            Zone first,
-            Zone second,
+            DnsZone first,
+            DnsZone second,
             bool ignoreEtag = false)
         {
             if (!AreEqualPrereq(first.Data, second.Data))

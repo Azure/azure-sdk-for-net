@@ -18,7 +18,20 @@ Install-Package Azure.ResourceManager.dns -Version 1.0.0-preview.1
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with resources, only one top-level `ArmClient` has to be created.
+
+To authenticate to Azure and create an `ArmClient`, do the following:
+
+```C# Snippet:Readme_AuthClient
+using Azure.Identity;
+using Azure.ResourceManager;
+
+// Code omitted for brevity
+
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+```
+
+Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 
@@ -34,9 +47,66 @@ Documentation is available to help you learn how to use this package
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+### Create a DNS zone
 
+Before creating a DNS zone, we need to have a resource group.
+
+```C# Snippet:Readme_GetResourceGroupCollection
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With the collection, we can create a new resource group with an specific name
+string rgName = "myRgName";
+Location location = Location.WestUS2;
+ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroup resourceGroup = lro.Value;
+```
+
+```C# Snippet:Managing_DNS_Zone_CreateADNSZone
+DnsZoneCollection zoneCollection = resourceGroup.GetDnsZones();
+string dnsZoneName = "test.domain";
+DnsZoneData input = new DnsZoneData("global");
+ZoneCreateOrUpdateOperation zlro = await zoneCollection.CreateOrUpdateAsync(dnsZoneName, input);
+DnsZone zone = zlro.Value;
+```
+
+### Update a DNS zone
+
+```C# Snippet:Readme_GetResourceGroupCollection
+// First, initialize the ArmClient and get the default subscription
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// Now we get a ResourceGroup collection for that subscription
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
+// With the collection, we can create a new resource group with an specific name
+string rgName = "myRgName";
+ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
+DnsZoneCollection zoneCollection = resourceGroup.GetDnsZones();
+string dnsZoneName = "test.domain";
+DnsZone zone = await zoneCollection.GetAsync(dnsZoneName);
+var zoneUpdate = new ZoneUpdateOptions();
+zoneUpdate.Tags.Add("tag1", "value1");
+DnsZone updatedDnsZone = await zone.UpdateAsync(zoneUpdate);
+```
+
+### Delete a DNS zone
+
+```C# Snippet:Readme_GetResourceGroupCollection
+// First, initialize the ArmClient and get the default subscription
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// Now we get a ResourceGroup collection for that subscription
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
+// With the collection, we can create a new resource group with an specific name
+string rgName = "myRgName";
+ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
+DnsZoneCollection zoneCollection = resourceGroup.GetDnsZones();
+string dnsZoneName = "test.domain";
+DnsZone zone = await zoneCollection.GetAsync(dnsZoneName);
+await zone.DeleteAsync();
+```
 ## Troubleshooting
 
 -   File an issue via [Github

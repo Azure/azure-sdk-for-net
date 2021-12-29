@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class ZoneData : IUtf8JsonSerializable
+    public partial class DnsZoneData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static ZoneData DeserializeZoneData(JsonElement element)
+        internal static DnsZoneData DeserializeDnsZoneData(JsonElement element)
         {
             Optional<string> etag = default;
             IDictionary<string, string> tags = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new ZoneData(id, name, type, tags, location, etag.Value, Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
+            return new DnsZoneData(id, name, type, tags, location, etag.Value, Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
         }
     }
 }

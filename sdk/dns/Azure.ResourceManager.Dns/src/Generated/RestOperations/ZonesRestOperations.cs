@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, ZoneData parameters, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, DnsZoneData parameters, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ZoneData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, ZoneData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DnsZoneData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsZoneData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                 case 201:
                     {
-                        ZoneData value = default;
+                        DnsZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ZoneData.DeserializeZoneData(document.RootElement);
+                        value = DnsZoneData.DeserializeDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<ZoneData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string zoneName, ZoneData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<DnsZoneData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string zoneName, DnsZoneData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                 case 201:
                     {
-                        ZoneData value = default;
+                        DnsZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ZoneData.DeserializeZoneData(document.RootElement);
+                        value = DnsZoneData.DeserializeDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="zoneName"/> is null. </exception>
-        public async Task<Response<ZoneData>> GetAsync(string subscriptionId, string resourceGroupName, string zoneName, CancellationToken cancellationToken = default)
+        public async Task<Response<DnsZoneData>> GetAsync(string subscriptionId, string resourceGroupName, string zoneName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -304,13 +304,13 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        ZoneData value = default;
+                        DnsZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ZoneData.DeserializeZoneData(document.RootElement);
+                        value = DnsZoneData.DeserializeDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ZoneData)null, message.Response);
+                    return Response.FromValue((DnsZoneData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="zoneName"/> is null. </exception>
-        public Response<ZoneData> Get(string subscriptionId, string resourceGroupName, string zoneName, CancellationToken cancellationToken = default)
+        public Response<DnsZoneData> Get(string subscriptionId, string resourceGroupName, string zoneName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        ZoneData value = default;
+                        DnsZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ZoneData.DeserializeZoneData(document.RootElement);
+                        value = DnsZoneData.DeserializeDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ZoneData)null, message.Response);
+                    return Response.FromValue((DnsZoneData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, ZoneUpdate parameters, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, ZoneUpdateOptions parameters, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ZoneData>> UpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, ZoneUpdate parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DnsZoneData>> UpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, ZoneUpdateOptions parameters, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -416,9 +416,9 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        ZoneData value = default;
+                        DnsZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ZoneData.DeserializeZoneData(document.RootElement);
+                        value = DnsZoneData.DeserializeDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<ZoneData> Update(string subscriptionId, string resourceGroupName, string zoneName, ZoneUpdate parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<DnsZoneData> Update(string subscriptionId, string resourceGroupName, string zoneName, ZoneUpdateOptions parameters, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -459,9 +459,9 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        ZoneData value = default;
+                        DnsZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ZoneData.DeserializeZoneData(document.RootElement);
+                        value = DnsZoneData.DeserializeDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
