@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Identity;
@@ -186,6 +187,71 @@ namespace Azure.Core.Extensions.Tests
             var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
 
             Assert.Null(clientId);
+        }
+
+        [Test]
+        public void CreatesAzureCliCredentials()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "azurecli"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<AzureCliCredential>(credential);
+            var azureCliCredential = (AzureCliCredential)credential;
+
+            var tenantId = (string)typeof(AzureCliCredential).GetField("_tenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(azureCliCredential);
+            Assert.AreEqual("ConfigurationTenantId", tenantId);
+        }
+
+        [Test]
+        public void CreatesInteractiveBrowserCredentials()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "interactivebrowser"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<InteractiveBrowserCredential>(credential);
+            var defaultAzureCredential = (InteractiveBrowserCredential)credential;
+
+            var tenantId = (string)typeof(InteractiveBrowserCredential).GetField("_tenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(defaultAzureCredential);
+            Assert.AreEqual("ConfigurationTenantId", tenantId);
+            Assert.AreEqual("ConfigurationClientId", defaultAzureCredential.ClientId);
+        }
+
+        [Test]
+        public void CreatesVisualStudioCredentials()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "visualstudio")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<DefaultAzureCredential>(credential);
+            var defaultAzureCredential = (DefaultAzureCredential)credential;
+
+            // DefaultAzureCredentials builds up an array of TokenCredential. Check this for expected types.
+            var sources = ((TokenCredential[])typeof(DefaultAzureCredential)
+                .GetField("_sources", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(defaultAzureCredential))
+                .Where(x => x != null)
+                .ToArray();
+
+            Assert.AreEqual(2, sources.Length);
+
+            var sourceTypes = sources.Select(x => x.GetType());
+            CollectionAssert.AreEquivalent(new[]
+            {
+                typeof(VisualStudioCredential),
+                typeof(VisualStudioCodeCredential)
+            }, sourceTypes);
         }
 
         [Test]

@@ -98,6 +98,33 @@ namespace Microsoft.Extensions.Azure
                 return new ManagedIdentityCredential(clientId);
             }
 
+            if (string.Equals(credentialType, "visualstudio", StringComparison.OrdinalIgnoreCase))
+            {
+                // visual studio covers multiple token providers (VisualStudioCredentials & VisualStudioCodeCredentials)
+                // rely on DefaultAzureCredentialOptions and it's factory to build both.
+                var credentialOptions = CopyTokenCredentialOptions<DefaultAzureCredentialOptions>(identityClientOptions);
+                ExcludeAllCredentialProviders(credentialOptions);
+
+                credentialOptions.VisualStudioTenantId = tenantId;
+                credentialOptions.VisualStudioCodeTenantId = tenantId;
+                credentialOptions.ExcludeVisualStudioCredential = false;
+                credentialOptions.ExcludeVisualStudioCodeCredential = false;
+                return new DefaultAzureCredential(credentialOptions);
+            }
+
+            if (string.Equals(credentialType, "azurecli", StringComparison.OrdinalIgnoreCase))
+            {
+                var credentialOptions = CopyTokenCredentialOptions<AzureCliCredentialOptions>(identityClientOptions);
+                credentialOptions.TenantId = tenantId;
+
+                return new AzureCliCredential(credentialOptions);
+            }
+
+            if (string.Equals(credentialType, "interactivebrowser", StringComparison.OrdinalIgnoreCase))
+            {
+                return new InteractiveBrowserCredential(tenantId, clientId, identityClientOptions);
+            }
+
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(clientSecret))
@@ -376,6 +403,56 @@ namespace Microsoft.Extensions.Azure
         private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(Type type)
         {
             return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).OrderByDescending(c => c.GetParameters().Length);
+        }
+
+        internal static T CopyTokenCredentialOptions<T>(TokenCredentialOptions tokenCredentialOptions) where T : TokenCredentialOptions
+        {
+            if (tokenCredentialOptions is T tokenCredentialOptionsAsT)
+            {
+                return tokenCredentialOptionsAsT;
+            }
+
+            var result = (T)Activator.CreateInstance(typeof(T));
+            if (tokenCredentialOptions == null)
+            {
+                return result;
+            }
+
+            // include non-public, shared properties can be marked internal.
+            var sourceProperties = tokenCredentialOptions.GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                .Where(x => x.CanRead && x.CanWrite)
+                .ToList();
+
+            Type resultType = typeof(T);
+            foreach (var property in sourceProperties)
+            {
+                var targetProperty = resultType.GetProperty(property.Name, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                if (targetProperty == null || targetProperty.PropertyType != property.PropertyType || false == targetProperty.CanWrite)
+                {
+                    continue;
+                }
+
+                var value = property.GetValue(tokenCredentialOptions);
+                targetProperty.SetValue(result, value);
+            }
+
+            return result;
+        }
+
+        private static void ExcludeAllCredentialProviders(DefaultAzureCredentialOptions credential)
+        {
+            // new credential providers could be added in the future - use reflection to exclude all.
+            var properties = typeof(DefaultAzureCredentialOptions)
+                .GetProperties()
+                .Where(x => x.CanWrite && x.DeclaringType == typeof(DefaultAzureCredentialOptions) &&
+                    x.PropertyType == typeof(bool) && x.Name.StartsWith("Exclude", StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
+
+            foreach (var property in properties)
+            {
+                property.SetValue(credential, true);
+            }
         }
     }
 }

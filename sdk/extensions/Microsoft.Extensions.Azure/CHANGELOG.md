@@ -2,6 +2,10 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
+- The ability to use `AzureCliCredential` from the configuration using the `"credential": "azurecli"`
+- The ability to use `InteractiveBrowserCredential` from the configuration using the `"credential": "interactivebrowser"`
+- The ability to use `VisualStudioCredential` and `VisualStudioCodeCredential` from the configuration using the `"credential": "visualstudio"`
+
 ### Features Added
 
 ### Breaking Changes
