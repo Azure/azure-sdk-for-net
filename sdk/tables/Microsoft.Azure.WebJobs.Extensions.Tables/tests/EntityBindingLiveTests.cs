@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure;
@@ -27,9 +28,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanBindToNonExistingEntity(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanBindToNonExistingEntityProgram<>)})]
+        public async Task CanBindToNonExistingEntity(string entityType)
         {
             // Act & Assert
             await CallAsync<CanBindToNonExistingEntityProgram<int>>(entityType);
@@ -64,9 +64,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanBindToExistingEntity(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanBindToExistingEntityProgram<>)})]
+        public async Task CanBindToExistingEntity(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
             {
@@ -123,10 +122,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanBindToExistingEntityUsingExpressions(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType
-            )
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanBindToExistingEntityUsingExpressionsProgram<>)})]
+        public async Task CanBindToExistingEntityUsingExpressions(string entityType)
         {
             AllowedTypesWithValue values = AllowedTypedWithValues.First();
             // Arrange
@@ -183,9 +180,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanAddEntity(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(AddEntityProgram<>)})]
+        public async Task CanAddEntity(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
             {
@@ -267,9 +263,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanAddEntityWithIdsInAttribute(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityWithIdsInAttributeProgram<>)})]
+        public async Task CanAddEntityWithIdsInAttribute(string entityType)
         {
             var values = AllowedTypedWithValues.First();
             // Act
@@ -337,9 +332,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanAddEntityUsingCollector(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityUsingCollectorProgram<>)})]
+        public async Task CanAddEntityUsingCollector(string entityType)
         {
             var values = AllowedTypedWithValues.First();
             // Act
@@ -451,9 +445,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanAddEntityUsingAsyncCollector(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityUsingAsyncCollectorProgram<>)})]
+        public async Task CanAddEntityUsingAsyncCollector(string entityType)
         {
             var values = AllowedTypedWithValues.First();
             // Act
@@ -561,9 +554,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task CanUpdateProperty(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdateEntityValueProgram<>)})]
+        public async Task CanUpdateProperty(string entityType)
         {
             foreach (var values in AllowedTypedWithValuesAndNullables)
             {
@@ -625,9 +617,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task SkipsUpdateWithNoChanges(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(NoEntityUpdateProgram<>)})]
+        public async Task SkipsUpdateWithNoChanges(string entityType)
         {
             foreach (var values in AllowedTypedWithValuesAndNullables)
             {
@@ -699,9 +690,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task UpdatingPropertyInParallelThrows(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdatingPropertyInParallelThrowsProgram<>)})]
+        public async Task UpdatingPropertyInParallelThrows(string entityType)
         {
             AllowedTypesWithValue values = AllowedTypedWithValues.First();
             // Arrange
@@ -799,9 +789,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task UpdatingPartitionKeyThrows(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdatingPartitionKeyThrowsProgram<>)})]
+        public async Task UpdatingPartitionKeyThrows(string entityType)
         {
             // Arrange
             await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey));
@@ -848,17 +837,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task UpdatingRowKeyThrows(
-            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
-            string entityType)
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdatingRowKeyThrowsProgram<>)})]
+        public async Task UpdatingRowKeyThrows(string entityType)
         {
             // Arrange
             await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey));
 
             // Act
-            var functionException = Assert.ThrowsAsync<FunctionInvocationException>(async () => await CallAsync(
-                typeof(UpdatingRowKeyThrowsProgram<string>),
-                entityType));
+            var functionException = Assert.ThrowsAsync<FunctionInvocationException>(
+                async () => await CallAsync<UpdatingRowKeyThrowsProgram<string>>(entityType));
 
             Exception exception = functionException.InnerException;
 
@@ -957,6 +944,55 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task InsertOverBatchLimit()
+        {
+            await CallAsync<InsertOverBatchLimitProgram>();
+
+            var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
+            Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Count);
+            Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Select(e=> e.RowKey).Distinct().Count());
+            Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Select(e=> (int)e["Value"]).Distinct().Count());
+        }
+
+        private class InsertOverBatchLimitProgram
+        {
+            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector)
+            {
+                for (int i = 0; i < TableEntityWriter.MaxBatchSize * 4; i++)
+                {
+                    await collector.AddAsync(new TableEntity(PartitionKey, i.ToString())
+                    {
+                        ["Value"] = i
+                    });
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task InsertOverPartitionLimit()
+        {
+            await CallAsync<InsertOverPartitionLimitProgram>();
+            var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
+            Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Count);
+            Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e=> e.RowKey).Distinct().Count());
+            Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e=> (int)e["Value"]).Distinct().Count());
+        }
+
+        private class InsertOverPartitionLimitProgram
+        {
+            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector)
+            {
+                for (int i = 0; i < TableEntityWriter.MaxPartitionWidth + 10; i++)
+                {
+                    await collector.AddAsync(new TableEntity(i.ToString(), i.ToString())
+                    {
+                        ["Value"] = i
+                    });
+                }
+            }
+        }
+
         public static IEnumerable<AllowedTypesWithValue> AllowedTypedWithValuesAndNullables
         {
             get
@@ -997,6 +1033,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 "{\r\n  \"Value\": \"1\"\r\n}", "{\r\n  \"Value\": \"2\"\r\n}"),
             new(typeof(ulong), 0UL, (ulong)long.MaxValue, "0", "9223372036854775807"),
         };
+
+        public static IEnumerable<string> MethodsOf(Type type)
+        {
+            return type.GetMethods(BindingFlags.Public |
+                                   BindingFlags.DeclaredOnly |
+                                   BindingFlags.Static |
+                                   BindingFlags.Instance)
+                .Select(n => n.Name);
+        }
 
         public struct AllowedTypesWithValue
         {

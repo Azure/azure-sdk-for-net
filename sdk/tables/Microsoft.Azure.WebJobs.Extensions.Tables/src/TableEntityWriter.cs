@@ -46,7 +46,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public void Add(TableEntity item)
         {
-// TODO
 #pragma warning disable AZC0102
             AddAsync(item, CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
@@ -80,7 +79,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 _map[partitionKey] = partition;
             }
 
-            var itemCopy = Copy(item);
             if (partition.ContainsKey(rowKey))
             {
                 // Replacing item forces a flush to ensure correct eTag behaviour.
@@ -91,17 +89,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
 
             _log.EntitiesWritten++;
-            if (String.IsNullOrEmpty(itemCopy.ETag.ToString()))
+            if (item.ETag == default)
             {
-                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.Add, itemCopy));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.Add, item));
             }
-            else if (itemCopy.ETag.Equals("*"))
+            else if (item.ETag.Equals("*"))
             {
-                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpsertReplace, itemCopy));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpsertReplace, item));
             }
             else
             {
-                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpdateReplace, itemCopy, itemCopy.ETag));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpdateReplace, item, item.ETag));
             }
 
             if (partition.Count >= MaxBatchSize)
@@ -109,21 +107,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 await FlushPartitionAsync(partition, cancellationToken).ConfigureAwait(false);
                 _map.Remove(partitionKey);
             }
-        }
-
-        private static ITableEntity Copy(ITableEntity item)
-        {
-            // TODO: do we need the deep copy?.
-            // var props = TableEntityValueBinder.DeepClone(item.WriteEntity(null));
-            // TableEntity copy = new TableEntity(item.PartitionKey, item.RowKey)
-            // {
-            //     ETag = item.ETag,
-            // };
-
-            // BUG: How do we copy arbitrary ITableEntity ?
-            // return copy;
-
-            return item;
         }
 
         public virtual async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
