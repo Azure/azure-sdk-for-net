@@ -41,6 +41,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsAnomaly, result.Value.IsAnomaly);
             Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
             Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.Severity, result.Value.Severity);
         }
 
         [Test]
@@ -61,6 +62,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             Assert.AreEqual(12, result.Value.Period);
             Assert.AreEqual(49, result.Value.SuggestedWindow);
             Assert.AreEqual(40.47829008465612F, result.Value.UpperMargin);
+            Assert.AreEqual(0.0f, result.Value.Severity);
         }
 
         [Test]

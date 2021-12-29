@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.IO;
@@ -55,6 +56,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     Console.WriteLine(String.Format("Result summary: {0}", result.Summary));
                     Console.WriteLine(String.Format("Result length: {0}", result.Results.Count));
                 }
+
+                //detect last
+                await detectLastAsync(client, model_id).ConfigureAwait(false);
 
                 // export model
                 await exportAsync(client, model_id).ConfigureAwait(false);
@@ -207,6 +211,45 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 }
             }
             return count;
+        }
+        #endregion
+
+        #region Snippet:DetectLastMultivariateAnomaly
+        private async Task<LastDetectionResult> detectLastAsync(AnomalyDetectorClient client, Guid model_id)
+        {
+            try
+            {
+                Console.WriteLine("Start detect...");
+                Response<Model> get_response = await client.GetMultivariateModelAsync(model_id).ConfigureAwait(false);
+
+                List<VariableValues> variables = new List<VariableValues>();
+                variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
+                variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
+
+                LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 2);
+                Response<LastDetectionResult> response = await client.LastDetectAnomalyAsync(model_id, lastDetectionRequest).ConfigureAwait(false);
+                if (response.GetRawResponse().Status == 200)
+                {
+                    foreach (AnomalyState state in response.Value.Results)
+                    {
+                        Console.WriteLine(String.Format("timestamp: {}, isAnomaly: {}, score: {}.", state.Timestamp, state.Value.IsAnomaly, state.Value.Score));
+                    }
+                }
+                else
+                {
+                    foreach (AnomalyState state in response.Value.Results)
+                    {
+                        Console.WriteLine(String.Format("timestamp: {}, errors: {}.", state.Timestamp, state.Errors[0].Message));
+                    }
+                }
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+                throw new Exception(ex.Message);
+            }
         }
         #endregion
     }
