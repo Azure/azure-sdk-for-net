@@ -30,10 +30,10 @@ namespace Azure.Communication.CallingServer.Tests
         protected const string GROUP_IDENTIFIER = "0000000e-77a5-b543-92fd-8b3a0d00f9a5";
 
         // Random Gen Guid
-        protected const string USER_IDENTIFIER = "0000000e-7616-5525-fa5d-573a0d0064d8";
+        protected const string USER_IDENTIFIER = "0000000e-9f82-b5db-eef0-8b3a0d000839";
 
         // Random Gen Guid
-        protected const string ANOTHER_USER_IDENTIFIER = "0000000e-7616-8017-fa5d-573a0d0064da";
+        protected const string ANOTHER_USER_IDENTIFIER = "0000000e-9fea-6366-defd-8b3a0d00f792";
 
         protected const string DOWNLOAD_END_POINT = "https://us-storage.asm.skype.com/v1/objects/0-wus-d8-99b867bd0c3f48c32fe2ddc8aa2e4125/content/acsmetadata";
 
@@ -500,27 +500,29 @@ namespace Azure.Communication.CallingServer.Tests
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_GetCall
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_HoldParticipant
-        internal async Task HoldParticipant(CallConnection callConnection, string participantUserId)
+        #region Snippet:Azure_Communication_ServerCalling_Tests_RemoveParticipantFromDefaultAudioGroupOperation
+        internal async Task RemoveParticipantFromDefaultAudioGroupOperation(CallConnection callConnection, string participantUserId)
         {
-            Console.WriteLine("Performing hold participant to hold a participant");
+            Console.WriteLine("Performing remove participant from default audio group operation");
 
-            var response = await callConnection.HoldParticipantMeetingAudioAsync(new CommunicationUserIdentifier(participantUserId)).ConfigureAwait(false);
+            var response = await callConnection.RemoveParticipantFromDefaultAudioGroupAsync(new CommunicationUserIdentifier(participantUserId)).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.Status);
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_HoldParticipant
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_RemoveParticipantFromDefaultAudioGroupOperation
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_ResumeParticipant
-        internal async Task ResumeParticipant(CallConnection callConnection, string participantUserId)
+        #region Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantToDefaultAudioGroupOperation
+        internal async Task<Response> AddParticipantToDefaultAudioGroupOperation(CallConnection callConnection, string participantUserId)
         {
-            Console.WriteLine("Performing resume participant to resume a participant");
+            Console.WriteLine("Performing add participant to default audio group operation");
 
-            var response = await callConnection.ResumeParticipantMeetingAudioAsync(new CommunicationUserIdentifier(participantUserId)).ConfigureAwait(false);
+            var response = await callConnection.AddParticipantToDefaultAudioGroupAsync(new CommunicationUserIdentifier(participantUserId)).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.Status);
+
+            return response;
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_ResumeParticipant
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantToDefaultAudioGroupOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_KeepAlive
         internal async Task KeepAlive(CallConnection callConnection)
@@ -686,53 +688,53 @@ namespace Azure.Communication.CallingServer.Tests
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_RedirectCallOperation
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_CreateAudioRoutingGroupOperation
-        internal async Task<CreateAudioRoutingGroupResult> CreateAudioRoutingGroupOperation(CallConnection callConnection, List<CommunicationUserIdentifier> participantUserId)
+        #region Snippet:Azure_Communication_ServerCalling_Tests_CreateAudioGroupOperation
+        internal async Task<CreateAudioGroupResult> CreateAudioGroupOperation(CallConnection callConnection, List<CommunicationUserIdentifier> participantUserId)
         {
-            Console.WriteLine("Performing Create Audio Routing Group operation");
+            Console.WriteLine("Performing Create Audio Group operation");
 
-            var response = await callConnection.CreateAudioRoutingGroupAsync(AudioRoutingMode.Multicast, participantUserId).ConfigureAwait(false);
+            var response = await callConnection.CreateAudioGroupAsync(AudioRoutingMode.Multicast, participantUserId).ConfigureAwait(false);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.Value.ToString()));
 
             return response.Value;
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_CreateAudioRoutingGroupOperation
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_CreateAudioGroupOperation
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_GetAudioRoutingGroupOperation
-        internal async Task<AudioRoutingGroupResult> GetAudioRoutingGroupOperation(CallConnection callConnection, string audioRoutingGroupId)
+        #region Snippet:Azure_Communication_ServerCalling_Tests_GetAudioGroupOperation
+        internal async Task<AudioGroupResult> GetAudioGroupOperation(CallConnection callConnection, string audioRoutingGroupId)
         {
-            Console.WriteLine("Performing Get Audio Routing Group operation");
+            Console.WriteLine("Performing Get Audio Group operation");
 
-            var response = await callConnection.GetAudioRoutingGroupsAsync(audioRoutingGroupId).ConfigureAwait(false);
+            var response = await callConnection.GetAudioGroupsAsync(audioRoutingGroupId).ConfigureAwait(false);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.Value.ToString()));
 
             return response.Value;
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_GetAudioRoutingGroupOperation
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_GetAudioGroupOperation
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_UpdateAudioRoutingGroupOperation
-        internal async Task UpdateAudioRoutingGroupOperation(CallConnection callConnection, string audioRoutingGroupId, List<CommunicationUserIdentifier> participantUserId)
+        #region Snippet:Azure_Communication_ServerCalling_Tests_UpdateAudioGroupOperation
+        internal async Task UpdateAudioGroupOperation(CallConnection callConnection, string audioRoutingGroupId, List<CommunicationUserIdentifier> participantUserId)
         {
-            Console.WriteLine("Performing Update Audio Routing Group operation");
+            Console.WriteLine("Performing Update Audio Group operation");
 
-            var response = await callConnection.UpdateAudioRoutingGroupAsync(audioRoutingGroupId, participantUserId).ConfigureAwait(false);
+            var response = await callConnection.UpdateAudioGroupAsync(audioRoutingGroupId, participantUserId).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.Status);
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_UpdateAudioRoutingGroupOperation
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_UpdateAudioGroupOperation
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_DeleteAudioRoutingGroupOperation
-        internal async Task DeleteAudioRoutingGroupOperation(CallConnection callConnection, string audioRoutingGroupId)
+        #region Snippet:Azure_Communication_ServerCalling_Tests_DeleteAudioGroupOperation
+        internal async Task DeleteAudioGroupOperation(CallConnection callConnection, string audioRoutingGroupId)
         {
-            Console.WriteLine("Performing Delete Audio Routing Group operation");
+            Console.WriteLine("Performing Delete Audio Group operation");
 
-            var response = await callConnection.DeleteAudioRoutingGroupAsync(audioRoutingGroupId).ConfigureAwait(false);
+            var response = await callConnection.DeleteAudioGroupAsync(audioRoutingGroupId).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.Status);
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_DeleteAudioRoutingGroupOperation
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_DeleteAudioGroupOperation
         #endregion Api operation functions
 
         #region Support functions
