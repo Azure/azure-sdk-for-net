@@ -73,7 +73,6 @@ namespace Azure.Storage.DataMovement.Blobs
             _options = options;
             //ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
-            internalString = "hello";
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadToAsync(_destinationLocalPath, transferOptions:_options.TransferOptions, progressHandler:_options.ProgressHandler, cancellationToken: CancellationToken);
+            return _sourceBlobClient.DownloadToAsync(_destinationLocalPath, transferOptions:_options.TransferOptions, cancellationToken: CancellationToken);
         }
     }
 }

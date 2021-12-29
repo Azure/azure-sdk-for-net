@@ -8,13 +8,13 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
 
-namespace Azure.Storage.DataMovement.Blobs
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// TODO; descriptions and comments for this entire class
     /// TODO: Add possible options bag for copy transfer
     /// </summary>
-    internal class BlobLocalCopyTransferJob : StorageTransferJob
+    internal class BlobServiceCopyTransferJob : StorageTransferJob
     {
         internal BlobBaseClient _destinationBlobClient;
 
@@ -24,33 +24,38 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public BlobBaseClient sourceBlobClient => _sourceBlobClient;
 
+        public readonly ServiceCopyMethod _copyMethod;
+
+        internal BlobCopyFromUriOptions _copyFromUriOptions;
         /// <summary>
-        /// The <see cref="BlobSyncCopyOptions"/>.
+        /// Gets the <see cref="BlobCopyFromUriOptions"/>.
         /// </summary>
-        internal BlobSyncCopyOptions _copyOptions;
-        /// <summary>
-        /// Gets the <see cref="BlobSyncCopyOptions"/>.
-        /// </summary>
-        public BlobSyncCopyOptions copyOptions => _copyOptions;
+        public BlobCopyFromUriOptions CopyFromUriOptions => _copyFromUriOptions;
 
         /// <summary>
         /// Creates Single Copy Transfer Job
         ///
         /// TODO: better description and param descriptions.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourceClient"></param>
         /// <param name="destinationClient"></param>
-        /// <param name="copyOptions"></param>
+        /// <param name="copyMethod"></param>
+        /// <param name="copyFromUriOptions"></param>
         /// <param name="cancellationToken"></param>
-        public BlobLocalCopyTransferJob(
+        public BlobServiceCopyTransferJob(
+            string jobId,
             BlobBaseClient sourceClient,
             BlobBaseClient destinationClient,
-            BlobSyncCopyOptions copyOptions,
+            ServiceCopyMethod copyMethod,
+            BlobCopyFromUriOptions copyFromUriOptions,
             CancellationToken cancellationToken)
+            : base(jobId)
         {
             _sourceBlobClient = sourceClient;
             _destinationBlobClient = destinationClient;
-            _copyOptions = copyOptions;
+            _copyMethod = copyMethod;
+            _copyFromUriOptions = copyFromUriOptions;
             CancellationToken = cancellationToken;
         }
 
@@ -60,8 +65,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task to perform the Upload operation.</returns>
         public override Task StartTransferTaskAsync()
         {
-            // TODO: implement download the blob and store it and upload to the destination.
-            return Task.CompletedTask;
+            // TODO: add other Copymethod Options
+            // for now only do CopyMethod.ServiceSideAsyncCopy as a stub
+            return destinationBlobClient.StartCopyFromUriAsync(sourceBlobClient.Uri, cancellationToken: CancellationToken);
         }
     }
 }

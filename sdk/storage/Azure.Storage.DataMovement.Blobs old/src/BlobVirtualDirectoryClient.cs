@@ -14,6 +14,8 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.Cryptography;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
@@ -113,14 +115,14 @@ namespace Azure.Storage.DataMovement.Blobs
         internal virtual BlobContainerClient ContainerClient => _containerClient;
 
         /// <summary>
-        /// A <see cref="BlockBlobClient"/> associated with the path.
+        /// A <see cref="BlobClient"/> associated with the path.
         /// </summary>
-        internal readonly BlockBlobClient _blockBlobClient;
+        internal readonly BlobClient _blobClient;
 
         /// <summary>
         /// A <see cref="BlockBlobClient"/> associated with the path.
         /// </summary>
-        internal virtual BlockBlobClient BlobClient => _blockBlobClient;
+        internal virtual BlobClient BlobClient => _blobClient;
 
         #region ctors
         /// <summary>
@@ -129,6 +131,50 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         protected BlobVirtualDirectoryClient()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class for the same account as the <see cref="BlobServiceClient"/>.
+        /// The new <see cref="BlobVirtualDirectoryClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobServiceClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
+        /// <param name="containerName">The name of the container containing the Blob Virtual Directory</param>
+        /// <param name="directoryPath">The full directory path of the Blob Virtual Directory</param>
+        public BlobVirtualDirectoryClient(
+            BlobServiceClient client,
+            string containerName,
+            string directoryPath)
+        {
+            _directoryPath = directoryPath;
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobContainerName = containerName,
+                BlobName = directoryPath
+            };
+            _uri = blobUriBuilder.ToUri();
+            _containerClient = client.GetBlobContainerClient(containerName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class for container associated with the <see cref="BlobContainerClient"/>.
+        /// The new <see cref="BlobVirtualDirectoryClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
+        /// <param name="directoryPath">The full directory path of the Blob Virtual Directory</param>
+        public BlobVirtualDirectoryClient(BlobContainerClient client, string directoryPath)
+        {
+            _directoryPath = directoryPath;
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobName = directoryPath
+            };
+            _uri = blobUriBuilder.ToUri();
+            // TODO: clone client
+            _containerClient = client;
         }
 
         /// <summary>
@@ -201,7 +247,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 encryptionScope: options.EncryptionScope);
 
             _containerClient = new BlobContainerClient(connectionString, blobContainerName, options);
-            _blockBlobClient = new BlockBlobClient(connectionString, blobContainerName, blobDirectoryPath, options);
+            _blobClient = new BlobClient(connectionString, blobContainerName, blobDirectoryPath, options);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -225,7 +271,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobVirtualDirectoryClient(Uri blobDirectoryUri, BlobClientOptions options = default)
             : this(blobDirectoryUri, (HttpPipelinePolicy)null, options, null)
         {
-            _blockBlobClient = new BlockBlobClient(blobDirectoryUri, options);
+            _blobClient = new BlobClient(blobDirectoryUri, options);
             // TODO: change URI to not have directory path appended
             _containerClient = new BlobContainerClient(blobDirectoryUri, options);
         }
@@ -251,7 +297,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobVirtualDirectoryClient(Uri blobDirectoryUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : this(blobDirectoryUri, credential.AsPolicy(), options, credential)
         {
-            _blockBlobClient = new BlockBlobClient(blobDirectoryUri, credential, options);
+            _blobClient = new BlobClient(blobDirectoryUri, credential, options);
             // TODO: change URI to not have directory path appended
             _containerClient = new BlobContainerClient(blobDirectoryUri, credential, options);
         }
@@ -281,7 +327,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobVirtualDirectoryClient(Uri blobDirectoryUri, AzureSasCredential credential, BlobClientOptions options = default)
             : this(blobDirectoryUri, credential.AsPolicy<BlobUriBuilder>(blobDirectoryUri), options, null)
         {
-            _blockBlobClient = new BlockBlobClient(blobDirectoryUri, credential, options);
+            _blobClient = new BlobClient(blobDirectoryUri, credential, options);
             // TODO: change URI to not have directory path appended
             _containerClient = new BlobContainerClient(blobDirectoryUri, credential, options);
         }
@@ -308,7 +354,7 @@ namespace Azure.Storage.DataMovement.Blobs
             : this(blobDirectoryUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(blobDirectoryUri);
-            _blockBlobClient = new BlockBlobClient(blobDirectoryUri, credential, options);
+            _blobClient = new BlobClient(blobDirectoryUri, credential, options);
             // TODO: change URI to not have directory path appended
             _containerClient = new BlobContainerClient(blobDirectoryUri, credential, options);
         }
@@ -384,7 +430,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             _clientConfiguration = clientConfiguration;
-            _blockBlobClient = new BlockBlobClient(blobDirectoryUri, clientOptions);
+            _blobClient = new BlobClient(blobDirectoryUri, clientOptions);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -425,7 +471,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 };
 
                 // TODO: replace with a proper clone of the _containerClient internal
-                _parentBlobContainerClient = _blockBlobClient.GetParentBlobContainerClient();
+                _parentBlobContainerClient = _blobClient.GetParentBlobContainerClient();
             }
 
             return _parentBlobContainerClient;
@@ -631,11 +677,11 @@ namespace Azure.Storage.DataMovement.Blobs
                             // Replace backward slashes meant to be directory name separators
                             string blobName = path.FullName.Substring(fullPath.Length + 1);
                             blobName = blobName.Replace(@"\", "/");
-                            BlockBlobClient blobClient = ContainerClient.GetBlockBlobClient(DirectoryPath + blobName);
+                            BlobClient blobClient = ContainerClient.GetBlobClient(DirectoryPath + blobName);
 
                             throttler.AddTask(async () =>
                             {
-                                responses.Add(blobClient.UploadAsync(
+                                responses.Add(await blobClient.UploadAsync(
                                        path.FullName.ToString(),
                                        overwrite,
                                        cancellationToken)
@@ -886,16 +932,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     BlobContainerClient containerClient = GetParentBlobContainerClient();
 
-                    Pageable<BlobItem> blobs;
-                    if (async)
-                    {
-                        blobs = await GetBlobsAsync(cancellationToken: cancellationToken);
-                    }
-                    else
-                    {
-                        blobs = GetBlobs(cancellationToken: cancellationToken);
-                    }
-
                     BlobRequestConditions conditions = new BlobRequestConditions()
                     {
                         IfModifiedSince = options.DirectoryRequestConditions.IfModifiedSince ?? null,
@@ -908,24 +944,54 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     List<Response> responses = new List<Response>();
 
-                    foreach (BlobItem blob in blobs)
+                    if (async)
                     {
-                        BlobBaseClient client = containerClient.GetBlobBaseClient(blob.Name);
-                        string downloadPath = Path.Combine(fullPath, blob.Name.Substring(DirectoryPath.Length + 1));
-
-                        throttler.AddTask(async () =>
+                        await foreach (Page<BlobItem> page in GetBlobsAsync(cancellationToken: cancellationToken).AsPages().ConfigureAwait(false))
                         {
-                            Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
-                            using (Stream destination = File.Create(downloadPath))
+                            foreach (BlobItem blob in page.Values)
                             {
-                                responses.Add(await client.DownloadToAsync(
-                                    destination,
-                                    conditions,
-                                    options.TransferOptions,
-                                    cancellationToken)
-                                    .ConfigureAwait(false));
+                                BlobBaseClient client = containerClient.GetBlobBaseClient(blob.Name);
+                                string downloadPath = Path.Combine(fullPath, blob.Name.Substring(DirectoryPath.Length + 1));
+
+                                throttler.AddTask(async () =>
+                                {
+                                    Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
+                                    using (Stream destination = File.Create(downloadPath))
+                                    {
+                                        responses.Add(await client.DownloadToAsync(
+                                            destination,
+                                            conditions,
+                                            options.TransferOptions,
+                                            cancellationToken)
+                                            .ConfigureAwait(false));
+                                    }
+                                });
                             }
-                        });
+                        }
+                    }
+                    else
+                    {
+                        Pageable<BlobItem> blobs = GetBlobs(cancellationToken: cancellationToken);
+
+                        foreach (BlobItem blob in blobs)
+                        {
+                            BlobBaseClient client = containerClient.GetBlobBaseClient(blob.Name);
+                            string downloadPath = Path.Combine(fullPath, blob.Name.Substring(DirectoryPath.Length + 1));
+
+                            throttler.AddTask(async () =>
+                            {
+                                Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
+                                using (Stream destination = File.Create(downloadPath))
+                                {
+                                    responses.Add(await client.DownloadToAsync(
+                                        destination,
+                                        conditions,
+                                        options.TransferOptions,
+                                        cancellationToken)
+                                        .ConfigureAwait(false));
+                                }
+                            });
+                        }
                     }
 
                     if (async)
@@ -1204,5 +1270,42 @@ namespace Azure.Storage.DataMovement.Blobs
             return GetParentBlobContainerClient().GetBlobsByHierarchyAsync(traits, states, delimiter, prefix, cancellationToken);
         }
         #endregion GetBlobsByHierarchy
+    }
+
+    /// <summary>
+    /// Add easy to discover methods to <see cref="BlobServiceClient"/> for
+    /// creating <see cref="BlobVirtualDirectoryClient"/> instances.
+    /// </summary>
+    public static partial class SpecializedBlobExtensions
+    {
+        /// <summary>
+        /// Create a new <see cref="BlobVirtualDirectoryClient"/> object for the same
+        /// account as the <see cref="BlobServiceClient"/>.  The new
+        /// <see cref="BlobVirtualDirectoryClient"/> uses the same request policy pipeline
+        /// as the <see cref="BlobServiceClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
+        /// <param name="containerName">The name of the container containing the Blob Virtual Directory</param>
+        /// <param name="directoryPath">The full directory path of the Blob Virtual Directory</param>
+        /// <returns>A new <see cref="BlobVirtualDirectoryClient"/> instance.</returns>
+        public static BlobVirtualDirectoryClient GetBlobVirtualDirectoryClient(
+            this BlobServiceClient client,
+            string containerName,
+            string directoryPath)
+                => new BlobVirtualDirectoryClient(client, containerName, directoryPath);
+
+    /// <summary>
+    /// Create a new <see cref="BlobVirtualDirectoryClient"/> object for the
+    /// container associated with the  <see cref="BlobContainerClient"/>.  The new
+    /// <see cref="BlobVirtualDirectoryClient"/> uses the same request policy pipeline
+    /// as the <see cref="BlobContainerClient"/>.
+    /// </summary>
+    /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
+    /// <param name="directoryPath">The full directory path of the Blob Virtual Directory</param>
+    /// <returns>A new <see cref="BlobVirtualDirectoryClient"/> instance.</returns>
+    public static BlobVirtualDirectoryClient GetBlobVirtualDirectoryClient(
+        this BlobContainerClient client,
+        string directoryPath)
+            => new BlobVirtualDirectoryClient(client, directoryPath);
     }
 }

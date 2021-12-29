@@ -41,19 +41,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The <see cref="BlobDirectoryDownloadOptions"/>.
         /// </summary>
-        protected internal BlobDirectoryDownloadOptions Options;
-
-        /// <summary>
-        /// Stores the source of each transfer item
-        /// </summary>
-#pragma warning disable CA1823 // Avoid unused private fields
-        private Queue<Uri> _sourceTransferItems;
-#pragma warning restore CA1823 // Avoid unused private fields
-
-        /// <summary>
-        /// Stores the source of each transfer item
-        /// </summary>
-        protected internal Queue<Uri> SourceTransferItems;
+        protected internal BlobDirectoryDownloadOptions Options => _options;
 
         /// <summary>
         /// Creates Download Transfer Job

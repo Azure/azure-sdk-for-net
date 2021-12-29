@@ -36,11 +36,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         public BlobDirectoryCopyFromUriOptions CopyFromUriOptions => _copyFromUriOptions;
 
-        // this is if we decide to prescan everything instead of
-        // scanning right before upload/downloading
-        internal Queue<Uri> localTransferItems;
-        internal Queue<Uri> sourceTransferItems;
-
         /// <summary>
         /// Creates Service Copy Directory Transfer Job
         ///

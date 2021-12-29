@@ -18,7 +18,7 @@ using Azure.Storage.DataMovement;
 using Azure.Core;
 using Azure.Identity;
 
-namespace Azure.Storage.Blobs.Samples
+namespace Azure.Storage.DataMovement.Blobs.Samples
 {
     /// <summary>
     /// Basic Azure Blob Storage samples
@@ -562,5 +562,8 @@ namespace Azure.Storage.Blobs.Samples
                 await container.DeleteIfExistsAsync();
             }
         }
+
+        //TODO: scenario. To get back file or directory handle and remove read only attributes on the folder
+        // then resume the directory transfer
     }
 }

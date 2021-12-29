@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -45,10 +45,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// If this value is not defined it is defaulted false.
         /// </summary>
         public bool Overwrite => _overwrite;
-
-        // this is if we decide to prescan everything instead of
-        // scanning right before upload/downloading
-        internal Queue<string> localTransferItems;
 
         /// <summary>
         /// Creates Upload Transfer Job.

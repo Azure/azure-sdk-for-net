@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <RequiredTargetFrameworks>netstandard2.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Blobs client library samples</AssemblyTitle>
     <IsPackable>false</IsPackable>
@@ -27,6 +28,7 @@
     <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="..\..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
