@@ -1475,10 +1475,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacksOnPrem
         /// <summary> Lists the ApplicationStackResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Subscription subscription, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Subscription subscription, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1524,10 +1524,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacksOnPrem
         /// <summary> Lists the ApplicationStackResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this Subscription subscription, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this Subscription subscription, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {

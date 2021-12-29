@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="code"> Code string to exchange for Github Access token. </param>
         /// <param name="state"> State string used for verification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="state"/> is null. </exception>
-        public AppserviceGithubTokenRequest(string code, string state)
+        internal AppserviceGithubTokenRequest(string code, string state)
         {
             if (code == null)
             {
