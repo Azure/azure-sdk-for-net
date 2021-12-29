@@ -33,8 +33,17 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: RecordSetTxt
 # Add nullable annotations
 directive:
-  from: swagger-document
-  where: $.definitions.ZoneProperties
-  transform: >
-    $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.ZoneProperties
+    transform: >
+      $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
+# Rename models
+  - from: swagger-document
+    where: $.definitions.Zone
+    transform: >
+      $["x-ms-client-name"] = "DnsZone";
+  - from: swagger-document
+    where: $.definitions.ZoneUpdate
+    transform: >
+      $["x-ms-client-name"] = "ZoneUpdateOptions";
 ```

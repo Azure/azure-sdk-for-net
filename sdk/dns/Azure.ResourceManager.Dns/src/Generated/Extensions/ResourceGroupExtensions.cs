@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Dns
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Zone
-        /// <summary> Gets an object representing a ZoneCollection along with the instance operations that can be performed on it. </summary>
+        #region DnsZone
+        /// <summary> Gets an object representing a DnsZoneCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ZoneCollection" /> object. </returns>
-        public static ZoneCollection GetZones(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DnsZoneCollection" /> object. </returns>
+        public static DnsZoneCollection GetDnsZones(this ResourceGroup resourceGroup)
         {
-            return new ZoneCollection(resourceGroup);
+            return new DnsZoneCollection(resourceGroup);
         }
         #endregion
     }

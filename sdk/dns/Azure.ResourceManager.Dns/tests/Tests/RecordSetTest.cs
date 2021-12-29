@@ -16,7 +16,7 @@ namespace Azure.Management.Dns.Tests
     public class RecordSetTest : DnsManagementClientBase
     {
         private string location;
-        private Zone zone;
+        private DnsZone zone;
 
         public RecordSetTest(bool isAsync)
             : base(isAsync)
@@ -34,8 +34,8 @@ namespace Azure.Management.Dns.Tests
             await Helper.TryRegisterResourceGroupAsync(resourceGroupCollection, this.location, resourceGroupName);
             //Create Zone
             var resourceGroup = (await resourceGroupCollection.GetAsync(resourceGroupName)).Value;
-            var zoneCollection = resourceGroup.GetZones();
-            zone = await (await zoneCollection.CreateOrUpdateAsync(TestEnvironment.TestDomain, new ZoneData("global"))).WaitForCompletionAsync();
+            var zoneCollection = resourceGroup.GetDnsZones();
+            zone = await (await zoneCollection.CreateOrUpdateAsync(TestEnvironment.TestDomain, new DnsZoneData("global"))).WaitForCompletionAsync();
             RecordSetACollection recordSetACollection = zone.GetRecordSetAs();
             //Add Records
             //A - Get

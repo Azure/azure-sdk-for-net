@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Zone.ResourceType;
+        protected override ResourceType ValidResourceType => DnsZone.ResourceType;
 
         // Collection level operations.
 

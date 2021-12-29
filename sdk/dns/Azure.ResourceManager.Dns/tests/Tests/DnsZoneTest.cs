@@ -14,14 +14,14 @@ using System.Collections.Generic;
 
 namespace Azure.Management.Dns.Tests
 {
-    public class ZoneTest : DnsManagementClientBase
+    public class DnsZoneTest : DnsManagementClientBase
     {
         private string location;
         private string resourceGroupName;
-        private Zone zone;
-        private ZoneCollection zoneCollection;
+        private DnsZone zone;
+        private DnsZoneCollection zoneCollection;
 
-        public ZoneTest(bool isAsync)
+        public DnsZoneTest(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
             location = "West US";
@@ -37,8 +37,8 @@ namespace Azure.Management.Dns.Tests
             await Helper.TryRegisterResourceGroupAsync(resourceGroupCollection, this.location, this.resourceGroupName);
             //Create Zone
             var resourceGroup = (await resourceGroupCollection.GetAsync(this.resourceGroupName)).Value;
-            zoneCollection = resourceGroup.GetZones();
-            zone = await (await zoneCollection.CreateOrUpdateAsync(TestEnvironment.TestDomain, new ZoneData("global"))).WaitForCompletionAsync();
+            zoneCollection = resourceGroup.GetDnsZones();
+            zone = await (await zoneCollection.CreateOrUpdateAsync(TestEnvironment.TestDomain, new DnsZoneData("global"))).WaitForCompletionAsync();
             //Add records
             //A
             RecordSetData recordASetData = new RecordSetData() { TTL = 600 };
@@ -55,7 +55,7 @@ namespace Azure.Management.Dns.Tests
         [TestCase]
         public async Task Get()
         {
-            Zone getzone = await zone.GetAsync();
+            DnsZone getzone = await zone.GetAsync();
             Assert.AreEqual(TestEnvironment.TestDomain, getzone.Data.Name);
             Assert.AreEqual(1, zone.GetRecordSetAs().GetAllAsync().ToEnumerableAsync().Result.Count);
         }
@@ -63,7 +63,7 @@ namespace Azure.Management.Dns.Tests
         [TestCase]
         public async Task Update()
         {
-            var zoneUpdate = new ZoneUpdate();
+            var zoneUpdate = new ZoneUpdateOptions();
             zoneUpdate.Tags.Add("tag1", "value1");
             zone = await zone.UpdateAsync(zoneUpdate);
             Assert.AreEqual("value1", zone.Data.Tags["tag1"]);
@@ -73,7 +73,7 @@ namespace Azure.Management.Dns.Tests
         public async Task Delete()
         {
             string dummyDomain = "DeleteTest.domain";
-            Zone deleteZone = await (await zoneCollection.CreateOrUpdateAsync(dummyDomain, new ZoneData("global"))).WaitForCompletionAsync();
+            DnsZone deleteZone = await (await zoneCollection.CreateOrUpdateAsync(dummyDomain, new DnsZoneData("global"))).WaitForCompletionAsync();
             Response result = (await deleteZone.DeleteAsync()).WaitForCompletionResponseAsync().Result;
             Assert.AreEqual(200, result.Status);
         }

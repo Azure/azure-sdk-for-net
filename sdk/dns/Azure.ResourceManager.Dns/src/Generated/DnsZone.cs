@@ -19,10 +19,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A Class representing a Zone along with the instance operations that can be performed on it. </summary>
-    public partial class Zone : ArmResource
+    /// <summary> A Class representing a DnsZone along with the instance operations that can be performed on it. </summary>
+    public partial class DnsZone : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="Zone"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DnsZone"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}";
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Dns
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ZonesRestOperations _zonesRestClient;
         private readonly RecordSetsRestOperations _recordSetsRestClient;
-        private readonly ZoneData _data;
+        private readonly DnsZoneData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="Zone"/> class for mocking. </summary>
-        protected Zone()
+        /// <summary> Initializes a new instance of the <see cref="DnsZone"/> class for mocking. </summary>
+        protected DnsZone()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "Zone"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DnsZone"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Zone(ArmResource options, ZoneData resource) : base(options, resource.Id)
+        internal DnsZone(ArmResource options, DnsZoneData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -50,23 +50,23 @@ namespace Azure.ResourceManager.Dns
             _recordSetsRestClient = new RecordSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Zone"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsZone"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Zone(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DnsZone(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _zonesRestClient = new ZonesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _recordSetsRestClient = new RecordSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Zone"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsZone"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Zone(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal DnsZone(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _zonesRestClient = new ZonesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ZoneData Data
+        public virtual DnsZoneData Data
         {
             get
             {
@@ -96,16 +96,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Zone>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DnsZone>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Zone.Get");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.Get");
             scope.Start();
             try
             {
                 var response = await _zonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Zone(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Zone> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DnsZone> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Zone.Get");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.Get");
             scope.Start();
             try
             {
                 var response = _zonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Zone(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ZoneDeleteOperation> DeleteAsync(string ifMatch = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Zone.Delete");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.Delete");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ZoneDeleteOperation Delete(string ifMatch = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Zone.Delete");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.Delete");
             scope.Start();
             try
             {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Dns
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<Zone>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DnsZone>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.AddTag");
             scope.Start();
             try
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Dns
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _zonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Zone(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.Dns
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<Zone> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DnsZone> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.AddTag");
             scope.Start();
             try
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Dns
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _zonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Zone(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Dns
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<Zone>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DnsZone>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
                 throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.SetTags");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Dns
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _zonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Zone(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.Dns
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<Zone> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DnsZone> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
                 throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.SetTags");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Dns
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _zonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Zone(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -316,14 +316,14 @@ namespace Azure.ResourceManager.Dns
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<Zone>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DnsZone>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.RemoveTag");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Dns
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _zonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Zone(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -344,14 +344,14 @@ namespace Azure.ResourceManager.Dns
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<Zone> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DnsZone> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.RemoveTag");
             scope.Start();
             try
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Dns
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _zonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Zone(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -373,19 +373,19 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<Zone>> UpdateAsync(ZoneUpdate parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DnsZone>> UpdateAsync(ZoneUpdateOptions parameters, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.Update");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.Update");
             scope.Start();
             try
             {
                 var response = await _zonesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Zone(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -399,19 +399,19 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<Zone> Update(ZoneUpdate parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DnsZone> Update(ZoneUpdateOptions parameters, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Zone.Update");
+            using var scope = _clientDiagnostics.CreateScope("DnsZone.Update");
             scope.Start();
             try
             {
                 var response = _zonesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, ifMatch, cancellationToken);
-                return Response.FromValue(new Zone(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Dns
         {
             async Task<Page<RecordSetData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetRecordSets");
                 scope.Start();
                 try
                 {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Dns
             }
             async Task<Page<RecordSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetRecordSets");
                 scope.Start();
                 try
                 {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Dns
         {
             Page<RecordSetData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetRecordSets");
                 scope.Start();
                 try
                 {
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Dns
             }
             Page<RecordSetData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetRecordSets");
                 scope.Start();
                 try
                 {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Dns
         {
             async Task<Page<RecordSetData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetAllRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetAllRecordSets");
                 scope.Start();
                 try
                 {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Dns
             }
             async Task<Page<RecordSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetAllRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetAllRecordSets");
                 scope.Start();
                 try
                 {
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Dns
         {
             Page<RecordSetData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetAllRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetAllRecordSets");
                 scope.Start();
                 try
                 {
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Dns
             }
             Page<RecordSetData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Zone.GetAllRecordSets");
+                using var scope = _clientDiagnostics.CreateScope("DnsZone.GetAllRecordSets");
                 scope.Start();
                 try
                 {
@@ -582,8 +582,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetA
 
-        /// <summary> Gets a collection of RecordSetAs in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetAs and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetAs in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetAs and their operations over a DnsZone. </returns>
         public RecordSetACollection GetRecordSetAs()
         {
             return new RecordSetACollection(this);
@@ -592,8 +592,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetAaaa
 
-        /// <summary> Gets a collection of RecordSetAaaas in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetAaaas and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetAaaas in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetAaaas and their operations over a DnsZone. </returns>
         public RecordSetAaaaCollection GetRecordSetAaaas()
         {
             return new RecordSetAaaaCollection(this);
@@ -602,8 +602,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetCaa
 
-        /// <summary> Gets a collection of RecordSetCaas in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetCaas and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetCaas in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetCaas and their operations over a DnsZone. </returns>
         public RecordSetCaaCollection GetRecordSetCaas()
         {
             return new RecordSetCaaCollection(this);
@@ -612,8 +612,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetCname
 
-        /// <summary> Gets a collection of RecordSetCnames in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetCnames and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetCnames in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetCnames and their operations over a DnsZone. </returns>
         public RecordSetCnameCollection GetRecordSetCnames()
         {
             return new RecordSetCnameCollection(this);
@@ -622,8 +622,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetMx
 
-        /// <summary> Gets a collection of RecordSetMxes in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetMxes and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetMxes in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetMxes and their operations over a DnsZone. </returns>
         public RecordSetMxCollection GetRecordSetMxes()
         {
             return new RecordSetMxCollection(this);
@@ -632,8 +632,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetNs
 
-        /// <summary> Gets a collection of RecordSetNs in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetNs and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetNs in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetNs and their operations over a DnsZone. </returns>
         public RecordSetNsCollection GetRecordSetNs()
         {
             return new RecordSetNsCollection(this);
@@ -642,8 +642,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetPtr
 
-        /// <summary> Gets a collection of RecordSetPtrs in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetPtrs and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetPtrs in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetPtrs and their operations over a DnsZone. </returns>
         public RecordSetPtrCollection GetRecordSetPtrs()
         {
             return new RecordSetPtrCollection(this);
@@ -652,8 +652,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetSoa
 
-        /// <summary> Gets a collection of RecordSetSoas in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetSoas and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetSoas in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetSoas and their operations over a DnsZone. </returns>
         public RecordSetSoaCollection GetRecordSetSoas()
         {
             return new RecordSetSoaCollection(this);
@@ -662,8 +662,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetSrv
 
-        /// <summary> Gets a collection of RecordSetSrvs in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetSrvs and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetSrvs in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetSrvs and their operations over a DnsZone. </returns>
         public RecordSetSrvCollection GetRecordSetSrvs()
         {
             return new RecordSetSrvCollection(this);
@@ -672,8 +672,8 @@ namespace Azure.ResourceManager.Dns
 
         #region RecordSetTxt
 
-        /// <summary> Gets a collection of RecordSetTxts in the Zone. </summary>
-        /// <returns> An object representing collection of RecordSetTxts and their operations over a Zone. </returns>
+        /// <summary> Gets a collection of RecordSetTxts in the DnsZone. </summary>
+        /// <returns> An object representing collection of RecordSetTxts and their operations over a DnsZone. </returns>
         public RecordSetTxtCollection GetRecordSetTxts()
         {
             return new RecordSetTxtCollection(this);
