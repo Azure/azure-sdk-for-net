@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>netstandard2.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Blobs client library samples</AssemblyTitle>
     <IsPackable>false</IsPackable>
