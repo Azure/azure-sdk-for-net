@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             var replacementNewline = Environment.NewLine
                 .Replace("\r", "\\r")
                 .Replace("\n", "\\n");
-            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("\\r\\n", replacementNewline));
+            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("\\\\r\\\\n", replacementNewline));
         }
 
         [RecordedTest]
