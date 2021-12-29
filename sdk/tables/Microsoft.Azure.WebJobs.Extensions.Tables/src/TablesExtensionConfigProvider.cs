@@ -42,11 +42,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 throw new ArgumentNullException(nameof(context));
             }
 
-            // rules for single entity.
-            var original = new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager);
-
-            var builder = new JObjectBuilder(this);
-
             var binding = context.AddBindingRule<TableAttribute>();
 
             binding
@@ -67,12 +62,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding.WhenIsNull(RowKeyProperty)
                 .SetPostResolveHook(ToParameterDescriptorForCollector)
-                .BindToInput<TableClient>(builder);
+                .BindToInput<TableClient>(CreateTableClient);
 
-            binding.BindToCollector<TableEntity>(BuildFromTableAttribute);
+            binding.BindToCollector<TableEntity>(CreateTableWriter);
 
-            binding.Bind(original);
-            binding.BindToInput<JArray>(builder);
+            binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
+            binding.BindToInput<JArray>(CreateJArray);
         }
 
         // Get the storage table from the attribute.
@@ -106,11 +101,64 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return nameResolver.ResolveWholeString(name);
         }
 
-        private IAsyncCollector<TableEntity> BuildFromTableAttribute(TableAttribute attribute)
+        private IAsyncCollector<TableEntity> CreateTableWriter(TableAttribute attribute)
         {
             var table = GetTable(attribute);
 
             return new TableEntityWriter(table, attribute.PartitionKey, attribute.RowKey);
+        }
+
+        private async Task<TableClient> CreateTableClient(TableAttribute attribute, CancellationToken cancellationToken)
+        {
+            var table = GetTable(attribute);
+            await table.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
+
+            return table;
+        }
+
+        // Used as an alternative to binding to IQueryable.
+        private async Task<JArray> CreateJArray(TableAttribute attribute, CancellationToken cancellation)
+        {
+            var table = GetTable(attribute);
+
+            string filter = attribute.Filter;
+            if (!string.IsNullOrEmpty(attribute.PartitionKey))
+            {
+                var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
+                if (!string.IsNullOrEmpty(attribute.Filter))
+                {
+                    filter = $"{partitionKeyPredicate} and {attribute.Filter}";
+                }
+                else
+                {
+                    filter = partitionKeyPredicate;
+                }
+            }
+
+            int? maxPerPage = null;
+            if (attribute.Take > 0)
+            {
+                maxPerPage = attribute.Take;
+            }
+
+            int countRemaining = attribute.Take;
+
+            JArray entityArray = new JArray();
+            var entities = table.QueryAsync<TableEntity>(
+                filter: filter,
+                maxPerPage: maxPerPage,
+                cancellationToken: cancellation).ConfigureAwait(false);
+
+            await foreach (var entity in entities)
+            {
+                countRemaining--;
+                entityArray.Add(ConvertEntityToJObject(entity));
+                if (countRemaining == 0)
+                {
+                    break;
+                }
+            }
+            return entityArray;
         }
 
         private static JObject ConvertEntityToJObject(TableEntity tableEntity)
@@ -146,73 +194,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
 
             return tableEntity;
-        }
-
-        // Provide some common builder rules.
-        private class JObjectBuilder :
-            IAsyncConverter<TableAttribute, TableClient>,
-            IAsyncConverter<TableAttribute, JArray>
-        {
-            private readonly TablesExtensionConfigProvider _bindingProvider;
-
-            public JObjectBuilder(TablesExtensionConfigProvider bindingProvider)
-            {
-                _bindingProvider = bindingProvider;
-            }
-
-            async Task<TableClient> IAsyncConverter<TableAttribute, TableClient>.ConvertAsync(TableAttribute attribute, CancellationToken cancellation)
-            {
-                var table = _bindingProvider.GetTable(attribute);
-                await table.CreateIfNotExistsAsync(CancellationToken.None).ConfigureAwait(false);
-
-                return table;
-            }
-
-            // Build a JArray.
-            // Used as an alternative to binding to IQueryable.
-            async Task<JArray> IAsyncConverter<TableAttribute, JArray>.ConvertAsync(TableAttribute attribute, CancellationToken cancellation)
-            {
-                var table = _bindingProvider.GetTable(attribute);
-
-                string filter = attribute.Filter;
-                if (!string.IsNullOrEmpty(attribute.PartitionKey))
-                {
-                    var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
-                    if (!string.IsNullOrEmpty(attribute.Filter))
-                    {
-                        filter = $"{partitionKeyPredicate} and {attribute.Filter}";
-                    }
-                    else
-                    {
-                        filter = partitionKeyPredicate;
-                    }
-                }
-
-                int? maxPerPage = null;
-                if (attribute.Take > 0)
-                {
-                    maxPerPage = attribute.Take;
-                }
-
-                int countRemaining = attribute.Take;
-
-                JArray entityArray = new JArray();
-                var entities = table.QueryAsync<TableEntity>(
-                    filter: filter,
-                    maxPerPage: maxPerPage,
-                    cancellationToken: cancellation).ConfigureAwait(false);
-
-                await foreach (var entity in entities)
-                {
-                    countRemaining--;
-                    entityArray.Add(ConvertEntityToJObject(entity));
-                    if (countRemaining == 0)
-                    {
-                        break;
-                    }
-                }
-                return entityArray;
-            }
         }
     }
 }

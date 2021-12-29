@@ -10,10 +10,11 @@ using Azure.Data.Tables;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class TableEntityToPocoConverter<TOutput> : IConverter<TableEntity, TOutput> where TOutput : new()
+    internal class TableEntityToPocoConverter<TOutput> : IConverter<TableEntity, TOutput>
     {
         public TableEntityToPocoConverter()
         {
+            TableClientHelpers.VerifyDefaultConstructor(typeof(TOutput));
             CheckSetter("PartitionKey", PocoTypeBinder.PartitionKeyTypes);
             CheckSetter("RowKey", PocoTypeBinder.RowKeyTypes);
             CheckSetter("Timestamp", PocoTypeBinder.TimestampTypes);

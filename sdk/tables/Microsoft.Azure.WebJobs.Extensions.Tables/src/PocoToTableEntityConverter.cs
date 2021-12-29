@@ -26,29 +26,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public TableEntity Convert(TInput input)
         {
-            return Convert(input, null);
-        }
-
-        public TableEntity Convert(TInput input, TableEntity original)
-        {
             if (input == null)
             {
                 return null;
             }
 
-            TableEntity result = new TableEntity(original);
+            TableEntity result = new TableEntity();
             _info.Serialize(input, result);
             return result;
         }
 
-        private static bool CheckGetter(string propertyName, Type[] allowedTypes)
+        private static void CheckGetter(string propertyName, Type[] allowedTypes)
         {
             PropertyInfo property = typeof(TInput).GetProperty(propertyName,
                 BindingFlags.Instance | BindingFlags.Public);
 
             if (property == null || !property.CanRead || !property.HasPublicGetMethod())
             {
-                return false;
+                return;
             }
 
             if (!allowedTypes.Contains(property.PropertyType))
@@ -64,8 +59,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     "If the {0} property is present, it must not be an indexer.", propertyName);
                 throw new InvalidOperationException(message);
             }
-
-            return true;
         }
     }
 }

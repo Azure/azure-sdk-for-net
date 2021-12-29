@@ -11,7 +11,6 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class PocoEntityArgumentBinding<TElement> : IArgumentBinding<TableEntityContext>
-        where TElement : new()
     {
         private readonly FuncAsyncConverter _pocoToEntityConverter;
         private readonly FuncAsyncConverter _entityToPocoConverter;

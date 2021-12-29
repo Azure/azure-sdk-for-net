@@ -54,9 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             string rowKey = Resolve(tableAttribute.RowKey);
             IBindableTableEntityPath path = BindableTableEntityPath.Create(tableName, partitionKey, rowKey);
             path.ValidateContractCompatibility(context.BindingDataContract);
-            IArgumentBinding<TableEntityContext> argumentBinding =
-                TryCreateTableEntityBinding(parameter) ??
-                TryCreatePocoBinding(parameter, _converterManager);
+            IArgumentBinding<TableEntityContext> argumentBinding = TryCreatePocoBinding(parameter, _converterManager);
 
             if (argumentBinding == null)
             {
@@ -76,16 +74,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return _nameResolver == null ? name : _nameResolver.ResolveWholeString(name);
         }
 
-        public static IArgumentBinding<TableEntityContext> TryCreateTableEntityBinding(ParameterInfo parameter)
-        {
-            if (parameter.ParameterType == typeof(ITableEntity) || parameter.ParameterType == typeof(TableEntity))
-            {
-                return new TableEntityArgumentBinding();
-            }
-
-            return null;
-        }
-
         public static IArgumentBinding<TableEntityContext> TryCreatePocoBinding(ParameterInfo parameter, IConverterManager converterManager)
         {
             if (parameter.ParameterType.IsByRef)
@@ -97,8 +85,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 return null;
             }
-
-            TableClientHelpers.VerifyDefaultConstructor(parameter.ParameterType);
 
             var pocoToEntityConverter = converterManager.GetConverter<TableAttribute>(parameter.ParameterType, typeof(TableEntity));
             var entityToPocoConverter = converterManager.GetConverter<TableAttribute>(typeof(TableEntity), parameter.ParameterType);

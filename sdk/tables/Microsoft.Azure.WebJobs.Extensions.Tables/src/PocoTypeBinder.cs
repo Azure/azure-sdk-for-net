@@ -10,14 +10,6 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    // internal static class TableConstants
-    // {
-    //     public const string ETagKeyName = "odata.etag";
-    //     public const string TimespanKeyName = "Timespan";
-    //     public const string RowKeyKeyName = "RowKey";
-    //     public const string PartitionKeyKeyName = "RowKey";
-    // }
-
     internal class PocoTypeBinder: TypeBinder<TableEntity>
     {
         public const string ETagKeyName = "odata.etag";

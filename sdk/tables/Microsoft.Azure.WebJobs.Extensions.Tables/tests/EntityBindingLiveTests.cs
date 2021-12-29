@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
@@ -25,6 +26,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         public EntityBindingLiveTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
         {
+            // Some recordings contain windows newlines inside string values,
+            // replace them with current platform newline
+            var replacementNewline = Environment.NewLine
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n");
+            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("\\r\\n", replacementNewline));
         }
 
         [RecordedTest]
@@ -1024,13 +1031,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new(typeof(DateTime), DateTimeValue, DateTimeValue.AddDays(1), new DateTimeOffset(DateTimeValue), new DateTimeOffset(DateTimeValue.AddDays(1))),
             new(typeof(byte[]), new byte[] { 1, 2 ,3}, new byte[]{ 3, 2, 1}),
             new(typeof(string[]), new string[] { "hello", "world" },new string[]{ "updated" },
-                "[\r\n  \"hello\",\r\n  \"world\"\r\n]", "[\r\n  \"updated\"\r\n]"
+                $"[{Environment.NewLine}  \"hello\",{Environment.NewLine}  \"world\"{Environment.NewLine}]",
+                $"[{Environment.NewLine}  \"updated\"{Environment.NewLine}]"
             ),
             new(typeof(ConsoleColor), ConsoleColor.Black, ConsoleColor.Gray, "Black", "Gray"),
             new(typeof(TimeSpan), TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10), "\"00:00:05\"", "\"00:00:10\""),
             new(typeof(ETag), new ETag("A"), new ETag("B"), "A", "B"),
             new(typeof(InnerPoco), new InnerPoco() { Value = "1" }, new InnerPoco() { Value = "2" },
-                "{\r\n  \"Value\": \"1\"\r\n}", "{\r\n  \"Value\": \"2\"\r\n}"),
+                $"{{{Environment.NewLine}  \"Value\": \"1\"{Environment.NewLine}}}",
+                $"{{{Environment.NewLine}  \"Value\": \"2\"{Environment.NewLine}}}"),
             new(typeof(ulong), 0UL, (ulong)long.MaxValue, "0", "9223372036854775807"),
         };
 
