@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         { }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestoreSampleAsync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
