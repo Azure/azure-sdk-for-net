@@ -954,6 +954,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task InsertOverBatchLimit()
         {
             if (UseCosmos)
@@ -1032,7 +1033,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new(typeof(string), "Foo", "Bar"),
             new(typeof(int), 1, 2),
             new(typeof(Guid), Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e9f"),  Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e0f")),
-            new(typeof(double), 1.3d, 2.2d),
+            new(typeof(double), 1.3d, 2.5d),
             new(typeof(bool), true, false),
             new(typeof(long), long.MinValue, long.MaxValue),
             new(typeof(DateTimeOffset), DateTimeOffsetValue, DateTimeOffsetValue.AddDays(1)),
