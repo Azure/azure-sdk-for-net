@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer.Tests
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Play Prompt Audio
-                await PlayAudioOperation(callConnection).ConfigureAwait(false);
+                await PlayAudioOperation(callConnection, true).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 // Cancel Prompt Audio
@@ -250,8 +250,8 @@ namespace Azure.Communication.CallingServer.Tests
 
             try
             {
-               // Establish a Call
-               var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
+                // Establish a Call
+                var callConnection = await CreateCallConnectionOperation(client).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 string targetCallConnectionId = GetTargetCallConnectionId();
@@ -300,7 +300,7 @@ namespace Azure.Communication.CallingServer.Tests
                 Assert.AreEqual(getCallConnection.CallConnectionId, callConnection.CallConnectionId);
 
                 // Play Audio To Participant
-                var playAudioResult = await PlayAudioToParticipantOperation(callConnection, userId).ConfigureAwait(false);
+                var playAudioResult = await PlayAudioToParticipantOperation(callConnection, userId, true).ConfigureAwait(false);
                 string mediaOperationId = playAudioResult.OperationId;
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
