@@ -26,18 +26,18 @@ if (-Not $mockServerFolder) {
     $mockServerFolder = Join-Path $env:TEMP "mock-service-host"
 }
 $sshFolder = Join-Path $mockServerFolder "node_modules" "@azure-tools" "mock-service-host" ".ssh"
+
+New-Item -ItemType Directory -Force -Path $mockServerFolder | Out-Null
+if (-Not (Test-Path -Path $mockServerFolder -PathType Container))
+{
+    Write-Host "##[error]Failed to create folder $mockServerFolder" -ForegroundColor Red
+    exit $LASTEXITCODE
+}
 Push-Location $mockServerFolder
 Write-Host "Will install and launch mock-service-host at $mockServerFolder" -ForegroundColor Green
 
 function PrepareMockServer()
 {
-    New-Item -ItemType Directory -Force -Path $mockServerFolder | Out-Null
-    if (-Not (Test-Path -Path $mockServerFolder -PathType Container))
-    {
-        Write-Host "##[error]Failed to create folder $mockServerFolder" -ForegroundColor Red
-        exit $LASTEXITCODE
-    }
-
     # backup existing certificates
     if (Test-Path $tmpBackupFolder) {
         Remove-Item $tmpBackupFolder -Recurse -Force
