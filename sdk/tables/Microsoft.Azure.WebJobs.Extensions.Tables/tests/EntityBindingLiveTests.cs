@@ -66,25 +66,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [RecordedTest]
         public async Task CanBindToExistingEntity(
             [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType,
-            [ValueSource(nameof(AllowedTypedWithValues))]
-            AllowedTypesWithValue values)
+            string entityType)
         {
-            // Arrange
-            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
+            foreach (var values in AllowedTypedWithValues)
             {
-                ["Value"] = values.Value1Base
-            });
-
-            // Act & Assert
-            await CallAsync(
-                typeof(CanBindToExistingEntityProgram<>).MakeGenericType(values.Type),
-                entityType,
-                arguments: new
+                // Arrange
+                await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
                 {
-                    original = values.Value1Base,
-                    originalTyped = values.Value1
+                    ["Value"] = values.Value1Base
                 });
+
+                // Act & Assert
+                await CallAsync(
+                    typeof(CanBindToExistingEntityProgram<>).MakeGenericType(values.Type),
+                    entityType,
+                    arguments: new
+                    {
+                        original = values.Value1Base,
+                        originalTyped = values.Value1
+                    });
+                await ClearTableAsync();
+            }
         }
 
         private class CanBindToExistingEntityProgram<T>
@@ -183,24 +185,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [RecordedTest]
         public async Task CanAddEntity(
             [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject", "ITableEntity")]
-            string entityType,
-            [ValueSource(nameof(AllowedTypedWithValues))]
-            AllowedTypesWithValue values)
+            string entityType)
         {
-            // Act
-            await CallAsync(
-                typeof(AddEntityProgram<>).MakeGenericType(values.Type),
-                entityType,
-                arguments: new
-                {
-                    original = values.Value1Base,
-                    originalTyped = values.Value1,
-                });
+            foreach (var values in AllowedTypedWithValues)
+            {
+                // Act
+                await CallAsync(
+                    typeof(AddEntityProgram<>).MakeGenericType(values.Type),
+                    entityType,
+                    arguments: new
+                    {
+                        original = values.Value1Base,
+                        originalTyped = values.Value1,
+                    });
 
-            // Assert
-            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
-            Assert.AreEqual(values.Value1Base, entity["Value"]);
+                // Assert
+                TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+                Assert.NotNull(entity);
+                Assert.AreEqual(values.Value1Base, entity["Value"]);
+
+                await ClearTableAsync();
+            }
         }
 
         private class AddEntityProgram<T>
@@ -490,7 +495,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 });
             }
 
-            [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static async Task TableEntity([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector, object original, object another)
             {
                 await collector.AddAsync(new TableEntity
@@ -507,7 +511,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 });
             }
 
-            [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static async Task ITableEntity([Table(TableNameExpression)] IAsyncCollector<ITableEntity> collector, object original, object another)
             {
                 await collector.AddAsync(new TableEntity
@@ -524,7 +527,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 });
             }
 
-            [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static async Task PocoTableEntity([Table(TableNameExpression)] IAsyncCollector<PocoTableEntity<T>> collector, T originalTyped, T anotherTyped)
             {
                 await collector.AddAsync(new PocoTableEntity<T>()
@@ -541,7 +543,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 });
             }
 
-            [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static async Task JObject([Table(TableNameExpression)] IAsyncCollector<JObject> collector, object original, object another)
             {
                 await collector.AddAsync(new JObject()
@@ -562,32 +563,34 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [RecordedTest]
         public async Task CanUpdateProperty(
             [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
-            string entityType,
-            [ValueSource(nameof(AllowedTypedWithValuesAndNullables))]
-            AllowedTypesWithValue values)
+            string entityType)
         {
-            // Arrange
-            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
+            foreach (var values in AllowedTypedWithValuesAndNullables)
             {
-                ["Value"] = values.Value1Base
-            });
-
-            // Act
-            await CallAsync(
-                typeof(UpdateEntityValueProgram<>).MakeGenericType(values.Type),
-                entityType,
-                arguments: new
+                // Arrange
+                await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
                 {
-                    original = values.Value1Base,
-                    expected = values.Value2Base,
-                    originalTyped = values.Value1,
-                    expectedTyped = values.Value2
+                    ["Value"] = values.Value1Base
                 });
 
-            // Assert
-            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
-            Assert.AreEqual(values.Value2Base, entity["Value"]);
+                // Act
+                await CallAsync(
+                    typeof(UpdateEntityValueProgram<>).MakeGenericType(values.Type),
+                    entityType,
+                    arguments: new
+                    {
+                        original = values.Value1Base,
+                        expected = values.Value2Base,
+                        originalTyped = values.Value1,
+                        expectedTyped = values.Value2
+                    });
+
+                // Assert
+                TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+                Assert.NotNull(entity);
+                Assert.AreEqual(values.Value2Base, entity["Value"]);
+                await ClearTableAsync();
+            }
         }
 
         private class UpdateEntityValueProgram<T>
@@ -624,33 +627,35 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [RecordedTest]
         public async Task SkipsUpdateWithNoChanges(
             [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
-            string entityType,
-            [ValueSource(nameof(AllowedTypedWithValuesAndNullables))]
-            AllowedTypesWithValue values)
+            string entityType)
         {
-            // Arrange
-            await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+            foreach (var values in AllowedTypedWithValuesAndNullables)
             {
-                ["Value"] = values.Value1Base
-            }, TableUpdateMode.Replace);
-
-            // Act
-            await CallAsync(
-                typeof(NoEntityUpdateProgram<>).MakeGenericType(values.Type),
-                entityType,
-                arguments: new
+                // Arrange
+                await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
                 {
-                    original = values.Value1Base,
-                    expected = values.Value2Base,
-                    originalTyped = values.Value1,
-                    expectedTyped = values.Value2,
-                    client = TableClient
-                });
+                    ["Value"] = values.Value1Base
+                }, TableUpdateMode.Replace);
 
-            // Assert
-            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.NotNull(entity);
-            Assert.AreEqual(values.Value2Base, entity["Value"]);
+                // Act
+                await CallAsync(
+                    typeof(NoEntityUpdateProgram<>).MakeGenericType(values.Type),
+                    entityType,
+                    arguments: new
+                    {
+                        original = values.Value1Base,
+                        expected = values.Value2Base,
+                        originalTyped = values.Value1,
+                        expectedTyped = values.Value2,
+                        client = TableClient
+                    });
+
+                // Assert
+                TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+                Assert.NotNull(entity);
+                Assert.AreEqual(values.Value2Base, entity["Value"]);
+                await ClearTableAsync();
+            }
         }
 
         // Invalidate the entity ETag so the Replace call fails if we try to update the entity
@@ -694,7 +699,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        public async Task UpdatingPropertyInParallelCausesException(
+        public async Task UpdatingPropertyInParallelThrows(
             [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
             string entityType)
         {
@@ -707,7 +712,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             // Act
             var exception = Assert.ThrowsAsync<FunctionInvocationException>(async () => await CallAsync(
-                typeof(UpdatingPropertyInParallelCausesExceptionProgram<>).MakeGenericType(values.Type),
+                typeof(UpdatingPropertyInParallelThrowsProgram<>).MakeGenericType(values.Type),
                 entityType,
                 arguments: new
                 {
@@ -738,7 +743,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.That(invalidOperationException.Message, Contains.Substring("UpdateConditionNotSatisfied").Or.Contains("Precondition Failed"));
         }
 
-        private class UpdatingPropertyInParallelCausesExceptionProgram<T>
+        private class UpdatingPropertyInParallelThrowsProgram<T>
         {
             public static async Task CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, TableClient client, T originalTyped, T expectedTyped, object expected)
             {
@@ -790,6 +795,104 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 }, TableUpdateMode.Replace);
 
                 entity.Value = expectedTyped;
+            }
+        }
+
+        [RecordedTest]
+        public async Task UpdatingPartitionKeyThrows(
+            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
+            string entityType)
+        {
+            // Arrange
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey));
+
+            // Act
+            var functionException = Assert.ThrowsAsync<FunctionInvocationException>(async () => await CallAsync(
+                typeof(UpdatingPartitionKeyThrowsProgram<string>),
+                entityType));
+
+            Exception exception = functionException.InnerException;
+
+            // Assert
+            Assert.NotNull(exception);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Error while handling parameter entity after function returned:", exception.Message);
+            Exception innerException = exception.InnerException;
+            Assert.NotNull(innerException);
+            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.AreEqual("When binding to a table entity, the partition key must not be changed.",
+                innerException.Message);
+        }
+
+        private class UpdatingPartitionKeyThrowsProgram<T>
+        {
+            public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity)
+            {
+                entity.PartitionKey = "NEWPK";
+            }
+
+            public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity)
+            {
+                entity["PartitionKey"] = "NEWPK";
+            }
+
+            public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] JObject entity)
+            {
+                entity["PartitionKey"] = "NEWPK";
+            }
+
+            public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity)
+            {
+                entity.PartitionKey = "NEWPK";
+            }
+        }
+
+        [RecordedTest]
+        public async Task UpdatingRowKeyThrows(
+            [Values("CustomTableEntity", "TableEntity", "PocoTableEntity", "JObject")]
+            string entityType)
+        {
+            // Arrange
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey));
+
+            // Act
+            var functionException = Assert.ThrowsAsync<FunctionInvocationException>(async () => await CallAsync(
+                typeof(UpdatingRowKeyThrowsProgram<string>),
+                entityType));
+
+            Exception exception = functionException.InnerException;
+
+            // Assert
+            Assert.NotNull(exception);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Error while handling parameter entity after function returned:", exception.Message);
+            Exception innerException = exception.InnerException;
+            Assert.NotNull(innerException);
+            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.AreEqual("When binding to a table entity, the row key must not be changed.",
+                innerException.Message);
+        }
+
+        private class UpdatingRowKeyThrowsProgram<T>
+        {
+            public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity)
+            {
+                entity.RowKey = "NEWPK";
+            }
+
+            public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity)
+            {
+                entity["RowKey"] = "NEWPK";
+            }
+
+            public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] JObject entity)
+            {
+                entity["RowKey"] = "NEWPK";
+            }
+
+            public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity)
+            {
+                entity.RowKey = "NEWPK";
             }
         }
 
@@ -878,10 +981,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new(typeof(string), "Foo", "Bar"),
             new(typeof(int), 1, 2),
             new(typeof(Guid), Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e9f"),  Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e0f")),
-            new(typeof(double), 1.1d, 2.2d),
+            new(typeof(double), 1.3d, 2.2d),
             new(typeof(bool), true, false),
             new(typeof(long), long.MinValue, long.MaxValue),
-            new(typeof(ulong), 0, long.MaxValue),
             new(typeof(DateTimeOffset), DateTimeOffsetValue, DateTimeOffsetValue.AddDays(1)),
             new(typeof(DateTime), DateTimeValue, DateTimeValue.AddDays(1), new DateTimeOffset(DateTimeValue), new DateTimeOffset(DateTimeValue.AddDays(1))),
             new(typeof(byte[]), new byte[] { 1, 2 ,3}, new byte[]{ 3, 2, 1}),
@@ -893,6 +995,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new(typeof(ETag), new ETag("A"), new ETag("B"), "A", "B"),
             new(typeof(InnerPoco), new InnerPoco() { Value = "1" }, new InnerPoco() { Value = "2" },
                 "{\r\n  \"Value\": \"1\"\r\n}", "{\r\n  \"Value\": \"2\"\r\n}"),
+            new(typeof(ulong), 0UL, (ulong)long.MaxValue, "0", "9223372036854775807"),
         };
 
         public struct AllowedTypesWithValue

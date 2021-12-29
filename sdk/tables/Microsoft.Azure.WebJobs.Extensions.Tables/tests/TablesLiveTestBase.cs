@@ -49,57 +49,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             await base.StartTestRecordingAsync();
 
-            // Table creation is somewhat slow, try to reuse existing table when running multiple tests
-
-            if (_createTable)
-            {
-                TableName = Recording.GetVariable("TableName", TableName);
-            }
-
-            bool reusing;
-            if (TableName == null)
-            {
-                TableName = GetRandomTableName();
-                Recording.SetVariable("TableName", TableName);
-                reusing = false;
-            }
-            else
-            {
-                reusing = true;
-            }
-
+            TableName = GetRandomTableName();
             ServiceClient = InstrumentClient(
             new TableServiceClient(
                 UseCosmos ? TestEnvironment.CosmosConnectionString : TestEnvironment.StorageConnectionString,
                 InstrumentClientOptions(new TableClientOptions())));
 
             TableClient = ServiceClient.GetTableClient(TableName);
-            if (_createTable && !reusing)
+            if (_createTable)
             {
                 await TableClient.CreateAsync();
+            }
+        }
+
+        protected async Task ClearTableAsync()
+        {
+            var entities = TableClient.QueryAsync<TableEntity>();
+            await foreach (var entity in entities)
+            {
+                await TableClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
             }
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            using var recording = Recording.DisableRecording();
-            try
-            {
-                var entities = TableClient.QueryAsync<TableEntity>();
-                await foreach (var entity in entities)
-                {
-                    await TableClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
-                }
-            }
-            catch
-            { }
-        }
-
-        [OneTimeTearDown]
-        public async Task OneTimeTearDown()
-        {
-            using var recording = Recording.DisableRecording();
             try
             {
                 await TableClient.DeleteAsync();

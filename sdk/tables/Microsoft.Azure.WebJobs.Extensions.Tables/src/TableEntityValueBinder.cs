@@ -41,16 +41,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         public Task SetValueAsync(object value, CancellationToken cancellationToken)
         {
             // Not ByRef, so can ignore value argument.
-            if (_value.PartitionKey != _entityContext.PartitionKey || _value.RowKey != _entityContext.RowKey)
+            var entity = (TableEntity)value;
+            if (entity.PartitionKey != _entityContext.PartitionKey)
             {
                 throw new InvalidOperationException(
-                    "When binding to a table entity, the partition key and row key must not be changed.");
+                    "When binding to a table entity, the partition key must not be changed.");
+            }
+
+            if (entity.RowKey != _entityContext.RowKey)
+            {
+                throw new InvalidOperationException(
+                    "When binding to a table entity, the row key must not be changed.");
             }
 
             if (HasChanged)
             {
                 var table = _entityContext.Table;
-                return table.UpdateEntityAsync(_value, _value.ETag, TableUpdateMode.Replace, cancellationToken: cancellationToken);
+                return table.UpdateEntityAsync(entity, entity.ETag, TableUpdateMode.Replace, cancellationToken: cancellationToken);
             }
 
             return Task.FromResult(0);
