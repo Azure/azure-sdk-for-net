@@ -282,6 +282,7 @@ namespace Compute.Tests
                 string applicationName = ComputeManagementTestUtilities.GenerateName("psTestSourceApplication");
                 string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
                 string galleryApplicationName = ComputeManagementTestUtilities.GenerateName(GalleryApplicationNamePrefix);
+                string galleryApplicationVersionName = "1.0.0";
 
                 try
                 {
@@ -300,7 +301,6 @@ namespace Compute.Tests
                     Trace.TraceInformation(string.Format("Created the gallery application: {0} in gallery: {1}", galleryApplicationName,
                         galleryName));
 
-                    string galleryApplicationVersionName = "1.0.0";
                     GalleryApplicationVersion inputApplicationVersion = GetTestInputGalleryApplicationVersion(applicationMediaLink);
                     m_CrpClient.GalleryApplicationVersions.CreateOrUpdate(rgName, galleryName, galleryApplicationName,
                         galleryApplicationVersionName, inputApplicationVersion);
@@ -332,6 +332,7 @@ namespace Compute.Tests
                     m_CrpClient.GalleryApplicationVersions.Delete(rgName, galleryName, galleryApplicationName, galleryApplicationVersionName);
                     Trace.TraceInformation(string.Format("Deleted the gallery application version: {0} in gallery application: {1}",
                         galleryApplicationVersionName, galleryApplicationName));
+                    ComputeManagementTestUtilities.WaitSeconds(300);
 
                     m_CrpClient.GalleryApplications.Delete(rgName, galleryName, galleryApplicationName);
                     Trace.TraceInformation("Deleted the gallery application.");
