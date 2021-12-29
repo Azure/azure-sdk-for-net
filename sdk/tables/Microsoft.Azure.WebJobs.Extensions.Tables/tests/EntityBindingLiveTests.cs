@@ -28,15 +28,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Some recordings contain windows newlines inside string values,
             // replace them with current platform newline
-
-            var replacementNewLine = Environment.NewLine
-                .Replace("\r", "\\\\r")
-                .Replace("\n", "\\\\n");
-
-            Sanitizer.BodyRegexSanitizers.Add(
-                new BodyRegexSanitizer(
-                    replacementNewLine,
-                    "\\r\\n"));
+            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                @"(?<!\\r)(?<break>\\n)",
+                @"\r\n")
+            {
+                GroupForReplace = "break"
+            });
         }
 
         [RecordedTest]
