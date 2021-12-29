@@ -1,7 +1,14 @@
 # Release History
 
-## 3.0.0-preview.4 (Unreleased)
+## 3.0.0-preview.4 (2021-12-20)
 
+- Introduced the new API `LastDetectAnomaly`
+- Added 2 new optional properties: `ImputeMode` & `ImputeFixedValue` to the `DetectRequest` object.
+- Added 1 new optional property: `Severity` to the `EntireDetectResponse` & `LastDetectResponse` objects.
+- Removed the optional property `Errors` from the `VariableState` object.
+- Refactored the optional property `Contributors` to `Interpretation` from the `AnomalyValue` object.
+- Removed the `AnomalyContributor` & `AnomalyDetectorExportModelHeaders` objects.
+- Modified the `FillNAMethod` object into an extensible enum.
 
 ## 3.0.0-preview.3 (2021-04-15)
 
