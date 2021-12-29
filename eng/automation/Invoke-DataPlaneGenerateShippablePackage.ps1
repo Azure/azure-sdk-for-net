@@ -28,5 +28,5 @@ if ( $? -ne $True) {
 # Generate APIs
 $repoRoot = (Join-Path $PSScriptRoot .. ..)
 Set-Location $repoRoot
-pwsh eng\scripts\Export-API.ps1 $resourceProvider
+pwsh eng\scripts\Export-API.ps1 $service
 exit 0

@@ -71,7 +71,7 @@ function Get-InputJsonFileInfo()
 }
 function New-DataPlanePackageFolder() {
   param(
-      [string]$resourceProvider,
+      [string]$service,
       [string]$ServiceGrouop = "DataPlane",
       [string]$packageName = "",
       [string]$sdkPath = "",
@@ -81,10 +81,10 @@ function New-DataPlanePackageFolder() {
   )
 
   if ($packageName -eq "") {
-      $packageName = $resourceProvider
+      $packageName = $service
   }
   $sdkPath = $sdkPath -replace "\\", "/"
-  $projectFolder="$sdkPath/sdk/$resourceProvider/Azure.$ServiceGrouop.$packageName"
+  $projectFolder="$sdkPath/sdk/$service/Azure.$ServiceGrouop.$packageName"
   if (Test-Path -Path $projectFolder) {
     Write-Host "Path exists!"
   } else {
@@ -94,7 +94,7 @@ function New-DataPlanePackageFolder() {
         exit 1
     }
     dotnet new -i $sdkPath/eng/templates/Azure.ServiceTemplate.Template
-    $projectFolder="$sdkPath/sdk/$resourceProvider/Azure.$ServiceGrouop.$packageName"
+    $projectFolder="$sdkPath/sdk/$service/Azure.$ServiceGrouop.$packageName"
     Write-Host "Create project folder $projectFolder"
     New-Item -Path $projectFolder -ItemType Directory
     Set-Location $projectFolder
