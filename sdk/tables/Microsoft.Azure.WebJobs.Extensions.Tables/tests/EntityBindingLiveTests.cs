@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression)]
             public static CustomTableEntity<T> CustomTableEntity(T originalTyped)
             {
-                return new CustomTableEntity<T>()
+                return new CustomTableEntity<T>
                 {
                     Value = originalTyped,
                     PartitionKey = PartitionKey,
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression)]
             public static PocoTableEntity<T> PocoTableEntity(T originalTyped)
             {
-                return new PocoTableEntity<T>()
+                return new PocoTableEntity<T>
                 {
                     Value = originalTyped,
                     PartitionKey = PartitionKey,
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression)]
             public static JObject JObject(object original)
             {
-                return new JObject()
+                return new JObject
                 {
                     ["Value"] = JToken.FromObject(original),
                     ["PartitionKey"] = PartitionKey,
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static CustomTableEntity<T> CustomTableEntity(T originalTyped)
             {
-                return new CustomTableEntity<T>()
+                return new CustomTableEntity<T>
                 {
                     Value = originalTyped
                 };
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static PocoTableEntity<T> PocoTableEntity(T originalTyped)
             {
-                return new PocoTableEntity<T>()
+                return new PocoTableEntity<T>
                 {
                     Value = originalTyped
                 };
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static JObject JObject(object original)
             {
-                return new JObject()
+                return new JObject
                 {
                     ["Value"] = JToken.FromObject(original)
                 };
@@ -373,13 +373,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static void CustomTableEntity([Table(TableNameExpression)] ICollector<CustomTableEntity<T>> collector, T originalTyped, T anotherTyped)
             {
-                collector.Add(new CustomTableEntity<T>()
+                collector.Add(new CustomTableEntity<T>
                 {
                     Value = originalTyped,
                     PartitionKey = PartitionKey,
                     RowKey = RowKey
                 });
-                collector.Add(new CustomTableEntity<T>()
+                collector.Add(new CustomTableEntity<T>
                 {
                     Value = anotherTyped,
                     PartitionKey = PartitionKey,
@@ -424,13 +424,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static void PocoTableEntity([Table(TableNameExpression)] ICollector<PocoTableEntity<T>> collector, T originalTyped, T anotherTyped)
             {
-                collector.Add(new PocoTableEntity<T>()
+                collector.Add(new PocoTableEntity<T>
                 {
                     Value = originalTyped,
                     PartitionKey = PartitionKey,
                     RowKey = RowKey
                 });
-                collector.Add(new PocoTableEntity<T>()
+                collector.Add(new PocoTableEntity<T>
                 {
                     Value = anotherTyped,
                     PartitionKey = PartitionKey,
@@ -441,13 +441,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             [return: Table(TableNameExpression, PartitionKey, RowKey)]
             public static void JObject([Table(TableNameExpression)] ICollector<JObject> collector, object original, object another)
             {
-                collector.Add(new JObject()
+                collector.Add(new JObject
                 {
                     ["Value"] = JToken.FromObject(original),
                     ["PartitionKey"] = PartitionKey,
                     ["RowKey"] = RowKey
                 });
-                collector.Add(new JObject()
+                collector.Add(new JObject
                 {
                     ["Value"] = JToken.FromObject(another),
                     ["PartitionKey"] = PartitionKey,
@@ -486,13 +486,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public static async Task CustomTableEntity([Table(TableNameExpression)] IAsyncCollector<CustomTableEntity<T>> collector, T originalTyped, T anotherTyped)
             {
-                await collector.AddAsync(new CustomTableEntity<T>()
+                await collector.AddAsync(new CustomTableEntity<T>
                 {
                     Value = originalTyped,
                     PartitionKey = PartitionKey,
                     RowKey = RowKey
                 });
-                await collector.AddAsync(new CustomTableEntity<T>()
+                await collector.AddAsync(new CustomTableEntity<T>
                 {
                     Value = anotherTyped,
                     PartitionKey = PartitionKey,
@@ -534,13 +534,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public static async Task PocoTableEntity([Table(TableNameExpression)] IAsyncCollector<PocoTableEntity<T>> collector, T originalTyped, T anotherTyped)
             {
-                await collector.AddAsync(new PocoTableEntity<T>()
+                await collector.AddAsync(new PocoTableEntity<T>
                 {
                     Value = originalTyped,
                     PartitionKey = PartitionKey,
                     RowKey = RowKey
                 });
-                await collector.AddAsync(new PocoTableEntity<T>()
+                await collector.AddAsync(new PocoTableEntity<T>
                 {
                     Value = anotherTyped,
                     PartitionKey = PartitionKey,
@@ -550,13 +550,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             public static async Task JObject([Table(TableNameExpression)] IAsyncCollector<JObject> collector, object original, object another)
             {
-                await collector.AddAsync(new JObject()
+                await collector.AddAsync(new JObject
                 {
                     ["Value"] = JToken.FromObject(original),
                     ["PartitionKey"] = PartitionKey,
                     ["RowKey"] = RowKey
                 });
-                await collector.AddAsync(new JObject()
+                await collector.AddAsync(new JObject
                 {
                     ["Value"] = JToken.FromObject(another),
                     ["PartitionKey"] = PartitionKey,
@@ -1024,7 +1024,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     }
 
                     yield return value;
-                    yield return new AllowedTypesWithValue(type, value.Value1, null, value.Value1Base, null);
+                    yield return new AllowedTypesWithValue(type, value.Value1, null, value.Value1Base);
                     yield return new AllowedTypesWithValue(type, null, value.Value2, null, value.Value2Base);
                 }
             }
@@ -1041,16 +1041,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             new(typeof(DateTimeOffset), DateTimeOffsetValue, DateTimeOffsetValue.AddDays(1)),
             new(typeof(DateTime), DateTimeValue, DateTimeValue.AddDays(1), new DateTimeOffset(DateTimeValue), new DateTimeOffset(DateTimeValue.AddDays(1))),
             new(typeof(byte[]), new byte[] { 1, 2 ,3}, new byte[]{ 3, 2, 1}),
-            new(typeof(string[]), new string[] { "hello", "world" },new string[]{ "updated" },
-                $"[{Environment.NewLine}  \"hello\",{Environment.NewLine}  \"world\"{Environment.NewLine}]",
-                $"[{Environment.NewLine}  \"updated\"{Environment.NewLine}]"
+            new(typeof(string[]), new[] { "hello", "world" },new[]{ "updated" },
+                "[\r\n  \"hello\",\r\n  \"world\"\r\n]",
+                "[\r\n  \"updated\"\r\n]"
             ),
             new(typeof(ConsoleColor), ConsoleColor.Black, ConsoleColor.Gray, "Black", "Gray"),
             new(typeof(TimeSpan), TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10), "\"00:00:05\"", "\"00:00:10\""),
             new(typeof(ETag), new ETag("A"), new ETag("B"), "A", "B"),
-            new(typeof(InnerPoco), new InnerPoco() { Value = "1" }, new InnerPoco() { Value = "2" },
-                $"{{{Environment.NewLine}  \"Value\": \"1\"{Environment.NewLine}}}",
-                $"{{{Environment.NewLine}  \"Value\": \"2\"{Environment.NewLine}}}"),
+            new(typeof(InnerPoco), new InnerPoco { Value = "1" }, new InnerPoco { Value = "2" },
+                "{\r\n  \"Value\": \"1\"\r\n}",
+                "{\r\n  \"Value\": \"2\"\r\n}"),
             new(typeof(ulong), 0UL, (ulong)long.MaxValue, "0", "9223372036854775807"),
         };
 
@@ -1117,7 +1117,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 if (ReferenceEquals(null, obj)) return false;
                 if (ReferenceEquals(this, obj)) return true;
-                if (obj.GetType() != this.GetType()) return false;
+                if (obj.GetType() != GetType()) return false;
                 return Equals((InnerPoco)obj);
             }
 
