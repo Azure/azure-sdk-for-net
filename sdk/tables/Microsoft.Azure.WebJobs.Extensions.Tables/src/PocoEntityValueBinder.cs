@@ -36,9 +36,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public IWatcher Watcher => this;
 
-        public Task<object> GetValueAsync()
+        public async Task<object> GetValueAsync()
         {
-            return _entityToPocoConverter(_originalEntity, null, _valueBindingContext);
+            var conversionResult = await _entityToPocoConverter(_originalEntity, null, _valueBindingContext).ConfigureAwait(false);
+            // When bound to TableEntity the _entityToPocoConverter will no-op
+            // when it happens make a copy of entity so the change tracking still works
+            if (ReferenceEquals(conversionResult, _originalEntity))
+            {
+                return new TableEntity(_originalEntity);
+            }
+
+            return conversionResult;
         }
 
         public async Task SetValueAsync(object value, CancellationToken cancellationToken)

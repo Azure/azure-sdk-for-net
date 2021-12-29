@@ -28,10 +28,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Some recordings contain windows newlines inside string values,
             // replace them with current platform newline
-            var replacementNewline = Environment.NewLine
-                .Replace("\r", "\\r")
-                .Replace("\n", "\\n");
-            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("\\\\r\\\\n", replacementNewline));
+
+            var replacementNewLine = Environment.NewLine
+                .Replace("\r", "\\\\r")
+                .Replace("\n", "\\\\n");
+
+            Sanitizer.BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    replacementNewLine,
+                    "\\r\\n"));
         }
 
         [RecordedTest]
@@ -954,6 +959,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [RecordedTest]
         public async Task InsertOverBatchLimit()
         {
+            if (UseCosmos)
+            {
+                Assert.Ignore("Hits the rate limit");
+            }
+
             await CallAsync<InsertOverBatchLimitProgram>();
 
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
@@ -977,6 +987,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task InsertOverPartitionLimit()
         {
             await CallAsync<InsertOverPartitionLimitProgram>();
