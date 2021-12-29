@@ -217,16 +217,16 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         #region Snippet:DetectLastMultivariateAnomaly
         private async Task<LastDetectionResult> detectLastAsync(AnomalyDetectorClient client, Guid model_id)
         {
+            Console.WriteLine("Start detect...");
+
+            List<VariableValues> variables = new List<VariableValues>();
+            variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
+            variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
+
+            LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 2);
+
             try
             {
-                Console.WriteLine("Start detect...");
-                Response<Model> get_response = await client.GetMultivariateModelAsync(model_id).ConfigureAwait(false);
-
-                List<VariableValues> variables = new List<VariableValues>();
-                variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
-                variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
-
-                LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 2);
                 Response<LastDetectionResult> response = await client.LastDetectAnomalyAsync(model_id, lastDetectionRequest).ConfigureAwait(false);
                 if (response.GetRawResponse().Status == 200)
                 {
@@ -235,15 +235,13 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                         Console.WriteLine(String.Format("timestamp: {}, isAnomaly: {}, score: {}.", state.Timestamp, state.Value.IsAnomaly, state.Value.Score));
                     }
                 }
-                else
-                {
-                    foreach (AnomalyState state in response.Value.Results)
-                    {
-                        Console.WriteLine(String.Format("timestamp: {}, errors: {}.", state.Timestamp, state.Errors[0].Message));
-                    }
-                }
 
                 return response;
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(String.Format("last detection failed: ", ex.Message));
+                throw new Exception(ex.Message);
             }
             catch (Exception ex)
             {
