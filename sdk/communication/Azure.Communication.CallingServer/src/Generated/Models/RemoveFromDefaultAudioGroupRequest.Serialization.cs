@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class ResumeMeetingAudioRequest : IUtf8JsonSerializable
+    internal partial class RemoveFromDefaultAudioGroupRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

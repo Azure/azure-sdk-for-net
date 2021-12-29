@@ -15,8 +15,10 @@ namespace Azure.Communication.CallingServer
         internal static PlayAudioResultEvent DeserializePlayAudioResultEvent(JsonElement element)
         {
             Optional<CallingOperationResultDetails> resultDetails = default;
+            Optional<string> operationId = default;
             Optional<string> operationContext = default;
             CallingOperationStatus status = default;
+            Optional<CallLocatorModel> callLocator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resultDetails"))
@@ -29,6 +31,11 @@ namespace Azure.Communication.CallingServer
                     resultDetails = CallingOperationResultDetails.DeserializeCallingOperationResultDetails(property.Value);
                     continue;
                 }
+                if (property.NameEquals("operationId"))
+                {
+                    operationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
@@ -39,8 +46,18 @@ namespace Azure.Communication.CallingServer
                     status = new CallingOperationStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("callLocator"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callLocator = CallLocatorModel.DeserializeCallLocatorModel(property.Value);
+                    continue;
+                }
             }
-            return new PlayAudioResultEvent(resultDetails.Value, operationContext.Value, status);
+            return new PlayAudioResultEvent(resultDetails.Value, operationId.Value, operationContext.Value, status, callLocator.Value);
         }
     }
 }

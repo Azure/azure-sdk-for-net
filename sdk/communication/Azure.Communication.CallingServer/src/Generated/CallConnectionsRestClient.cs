@@ -40,7 +40,7 @@ namespace Azure.Communication.CallingServer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetAudioRoutingGroupsRequest(string callConnectionId, string audioRoutingGroupId)
+        internal HttpMessage CreateGetAudioGroupsRequest(string callConnectionId, string audioGroupId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,39 +49,39 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/audioRoutingGroups/", false);
-            uri.AppendPath(audioRoutingGroupId, true);
+            uri.AppendPath("/audioGroups/", false);
+            uri.AppendPath(audioGroupId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get audio routing groups from a call. </summary>
+        /// <summary> Get audio groups from a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
+        /// <param name="audioGroupId"> The audio group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioRoutingGroupId"/> is null. </exception>
-        public async Task<Response<AudioRoutingGroupResultInternal>> GetAudioRoutingGroupsAsync(string callConnectionId, string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioGroupId"/> is null. </exception>
+        public async Task<Response<AudioGroupResultInternal>> GetAudioGroupsAsync(string callConnectionId, string audioGroupId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (audioRoutingGroupId == null)
+            if (audioGroupId == null)
             {
-                throw new ArgumentNullException(nameof(audioRoutingGroupId));
+                throw new ArgumentNullException(nameof(audioGroupId));
             }
 
-            using var message = CreateGetAudioRoutingGroupsRequest(callConnectionId, audioRoutingGroupId);
+            using var message = CreateGetAudioGroupsRequest(callConnectionId, audioGroupId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AudioRoutingGroupResultInternal value = default;
+                        AudioGroupResultInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AudioRoutingGroupResultInternal.DeserializeAudioRoutingGroupResultInternal(document.RootElement);
+                        value = AudioGroupResultInternal.DeserializeAudioGroupResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,31 +89,31 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get audio routing groups from a call. </summary>
+        /// <summary> Get audio groups from a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
+        /// <param name="audioGroupId"> The audio group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioRoutingGroupId"/> is null. </exception>
-        public Response<AudioRoutingGroupResultInternal> GetAudioRoutingGroups(string callConnectionId, string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioGroupId"/> is null. </exception>
+        public Response<AudioGroupResultInternal> GetAudioGroups(string callConnectionId, string audioGroupId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (audioRoutingGroupId == null)
+            if (audioGroupId == null)
             {
-                throw new ArgumentNullException(nameof(audioRoutingGroupId));
+                throw new ArgumentNullException(nameof(audioGroupId));
             }
 
-            using var message = CreateGetAudioRoutingGroupsRequest(callConnectionId, audioRoutingGroupId);
+            using var message = CreateGetAudioGroupsRequest(callConnectionId, audioGroupId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AudioRoutingGroupResultInternal value = default;
+                        AudioGroupResultInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AudioRoutingGroupResultInternal.DeserializeAudioRoutingGroupResultInternal(document.RootElement);
+                        value = AudioGroupResultInternal.DeserializeAudioGroupResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -121,7 +121,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateDeleteAudioRoutingGroupRequest(string callConnectionId, string audioRoutingGroupId)
+        internal HttpMessage CreateDeleteAudioGroupRequest(string callConnectionId, string audioGroupId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,31 +130,31 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/audioRoutingGroups/", false);
-            uri.AppendPath(audioRoutingGroupId, true);
+            uri.AppendPath("/audioGroups/", false);
+            uri.AppendPath(audioGroupId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Delete audio routing group from a call. </summary>
+        /// <summary> Delete audio group from a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
+        /// <param name="audioGroupId"> The audio group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioRoutingGroupId"/> is null. </exception>
-        public async Task<Response> DeleteAudioRoutingGroupAsync(string callConnectionId, string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioGroupId"/> is null. </exception>
+        public async Task<Response> DeleteAudioGroupAsync(string callConnectionId, string audioGroupId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (audioRoutingGroupId == null)
+            if (audioGroupId == null)
             {
-                throw new ArgumentNullException(nameof(audioRoutingGroupId));
+                throw new ArgumentNullException(nameof(audioGroupId));
             }
 
-            using var message = CreateDeleteAudioRoutingGroupRequest(callConnectionId, audioRoutingGroupId);
+            using var message = CreateDeleteAudioGroupRequest(callConnectionId, audioGroupId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -165,23 +165,23 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Delete audio routing group from a call. </summary>
+        /// <summary> Delete audio group from a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
+        /// <param name="audioGroupId"> The audio group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioRoutingGroupId"/> is null. </exception>
-        public Response DeleteAudioRoutingGroup(string callConnectionId, string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioGroupId"/> is null. </exception>
+        public Response DeleteAudioGroup(string callConnectionId, string audioGroupId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (audioRoutingGroupId == null)
+            if (audioGroupId == null)
             {
-                throw new ArgumentNullException(nameof(audioRoutingGroupId));
+                throw new ArgumentNullException(nameof(audioGroupId));
             }
 
-            using var message = CreateDeleteAudioRoutingGroupRequest(callConnectionId, audioRoutingGroupId);
+            using var message = CreateDeleteAudioGroupRequest(callConnectionId, audioGroupId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -192,7 +192,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateUpdateAudioRoutingGroupRequest(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifierModel> targets)
+        internal HttpMessage CreateUpdateAudioGroupRequest(string callConnectionId, string audioGroupId, IEnumerable<CommunicationIdentifierModel> targets)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -201,41 +201,41 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/audioRoutingGroups/", false);
-            uri.AppendPath(audioRoutingGroupId, true);
+            uri.AppendPath("/audioGroups/", false);
+            uri.AppendPath(audioGroupId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new UpdateAudioRoutingGroupRequest(targets.ToList());
+            var model = new UpdateAudioGroupRequest(targets.ToList());
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Update audio routing group. </summary>
+        /// <summary> Update audio group. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
-        /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
+        /// <param name="audioGroupId"> The audio group id. </param>
+        /// <param name="targets"> The target identities that would be receivers in the audio group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="audioRoutingGroupId"/>, or <paramref name="targets"/> is null. </exception>
-        public async Task<Response> UpdateAudioRoutingGroupAsync(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="audioGroupId"/>, or <paramref name="targets"/> is null. </exception>
+        public async Task<Response> UpdateAudioGroupAsync(string callConnectionId, string audioGroupId, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (audioRoutingGroupId == null)
+            if (audioGroupId == null)
             {
-                throw new ArgumentNullException(nameof(audioRoutingGroupId));
+                throw new ArgumentNullException(nameof(audioGroupId));
             }
             if (targets == null)
             {
                 throw new ArgumentNullException(nameof(targets));
             }
 
-            using var message = CreateUpdateAudioRoutingGroupRequest(callConnectionId, audioRoutingGroupId, targets);
+            using var message = CreateUpdateAudioGroupRequest(callConnectionId, audioGroupId, targets);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -246,28 +246,28 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Update audio routing group. </summary>
+        /// <summary> Update audio group. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
-        /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
+        /// <param name="audioGroupId"> The audio group id. </param>
+        /// <param name="targets"> The target identities that would be receivers in the audio group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="audioRoutingGroupId"/>, or <paramref name="targets"/> is null. </exception>
-        public Response UpdateAudioRoutingGroup(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="audioGroupId"/>, or <paramref name="targets"/> is null. </exception>
+        public Response UpdateAudioGroup(string callConnectionId, string audioGroupId, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (audioRoutingGroupId == null)
+            if (audioGroupId == null)
             {
-                throw new ArgumentNullException(nameof(audioRoutingGroupId));
+                throw new ArgumentNullException(nameof(audioGroupId));
             }
             if (targets == null)
             {
                 throw new ArgumentNullException(nameof(targets));
             }
 
-            using var message = CreateUpdateAudioRoutingGroupRequest(callConnectionId, audioRoutingGroupId, targets);
+            using var message = CreateUpdateAudioGroupRequest(callConnectionId, audioGroupId, targets);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1000,7 +1000,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateCreateAudioRoutingGroupRequest(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets)
+        internal HttpMessage CreateCreateAudioGroupRequest(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1009,25 +1009,25 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/:createAudioRoutingGroup", false);
+            uri.AppendPath("/:createAudioGroup", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new AudioRoutingGroupRequestInternal(audioRoutingMode, targets.ToList());
+            var model = new AudioGroupRequestInternal(audioRoutingMode, targets.ToList());
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Create audio routing group in a call. </summary>
+        /// <summary> Create audio group in a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="audioRoutingMode"> The audio routing mode. </param>
-        /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
+        /// <param name="targets"> The target identities that would be receivers in the audio group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targets"/> is null. </exception>
-        public async Task<Response<CreateAudioRoutingGroupResult>> CreateAudioRoutingGroupAsync(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateAudioGroupResult>> CreateAudioGroupAsync(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1038,15 +1038,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(targets));
             }
 
-            using var message = CreateCreateAudioRoutingGroupRequest(callConnectionId, audioRoutingMode, targets);
+            using var message = CreateCreateAudioGroupRequest(callConnectionId, audioRoutingMode, targets);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 201:
                     {
-                        CreateAudioRoutingGroupResult value = default;
+                        CreateAudioGroupResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateAudioRoutingGroupResult.DeserializeCreateAudioRoutingGroupResult(document.RootElement);
+                        value = CreateAudioGroupResult.DeserializeCreateAudioGroupResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1054,13 +1054,13 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Create audio routing group in a call. </summary>
+        /// <summary> Create audio group in a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="audioRoutingMode"> The audio routing mode. </param>
-        /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
+        /// <param name="targets"> The target identities that would be receivers in the audio group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targets"/> is null. </exception>
-        public Response<CreateAudioRoutingGroupResult> CreateAudioRoutingGroup(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
+        public Response<CreateAudioGroupResult> CreateAudioGroup(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1071,15 +1071,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(targets));
             }
 
-            using var message = CreateCreateAudioRoutingGroupRequest(callConnectionId, audioRoutingMode, targets);
+            using var message = CreateCreateAudioGroupRequest(callConnectionId, audioRoutingMode, targets);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 201:
                     {
-                        CreateAudioRoutingGroupResult value = default;
+                        CreateAudioGroupResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateAudioRoutingGroupResult.DeserializeCreateAudioRoutingGroupResult(document.RootElement);
+                        value = CreateAudioGroupResult.DeserializeCreateAudioGroupResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1780,7 +1780,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateHoldParticipantMeetingAudioRequest(string callConnectionId, CommunicationIdentifierModel identifier)
+        internal HttpMessage CreateRemoveParticipantFromDefaultAudioGroupRequest(string callConnectionId, CommunicationIdentifierModel identifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1789,24 +1789,24 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/participants:holdMeetingAudio", false);
+            uri.AppendPath("/participants:removeFromDefaultAudioGroup", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new HoldMeetingAudioRequest(identifier);
+            var model = new RemoveFromDefaultAudioGroupRequest(identifier);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Hold meeting audio of a participant in the call. </summary>
+        /// <summary> Remove a participant from default audio group. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response> HoldParticipantMeetingAudioAsync(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveParticipantFromDefaultAudioGroupAsync(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1817,7 +1817,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateHoldParticipantMeetingAudioRequest(callConnectionId, identifier);
+            using var message = CreateRemoveParticipantFromDefaultAudioGroupRequest(callConnectionId, identifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1828,12 +1828,12 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Hold meeting audio of a participant in the call. </summary>
+        /// <summary> Remove a participant from default audio group. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public Response HoldParticipantMeetingAudio(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public Response RemoveParticipantFromDefaultAudioGroup(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1844,7 +1844,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateHoldParticipantMeetingAudioRequest(callConnectionId, identifier);
+            using var message = CreateRemoveParticipantFromDefaultAudioGroupRequest(callConnectionId, identifier);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1855,7 +1855,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateResumeParticipantMeetingAudioRequest(string callConnectionId, CommunicationIdentifierModel identifier)
+        internal HttpMessage CreateAddParticipantToDefaultAudioGroupRequest(string callConnectionId, CommunicationIdentifierModel identifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1864,24 +1864,24 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/participants:resumeMeetingAudio", false);
+            uri.AppendPath("/participants:addToDefaultAudioGroup", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new ResumeMeetingAudioRequest(identifier);
+            var model = new AddToDefaultAudioGroupRequest(identifier);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Resume meeting audio of a participant in the call. </summary>
+        /// <summary> Add a participant to default audio group. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response> ResumeParticipantMeetingAudioAsync(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public async Task<Response> AddParticipantToDefaultAudioGroupAsync(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1892,7 +1892,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateResumeParticipantMeetingAudioRequest(callConnectionId, identifier);
+            using var message = CreateAddParticipantToDefaultAudioGroupRequest(callConnectionId, identifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1903,12 +1903,12 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Resume meeting audio of a participant in the call. </summary>
+        /// <summary> Add a participant to default audio group. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public Response ResumeParticipantMeetingAudio(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public Response AddParticipantToDefaultAudioGroup(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1919,7 +1919,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateResumeParticipantMeetingAudioRequest(callConnectionId, identifier);
+            using var message = CreateAddParticipantToDefaultAudioGroupRequest(callConnectionId, identifier);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

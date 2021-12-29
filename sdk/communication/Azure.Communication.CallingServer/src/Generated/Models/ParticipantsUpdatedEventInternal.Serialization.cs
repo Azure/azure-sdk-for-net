@@ -17,12 +17,23 @@ namespace Azure.Communication.CallingServer
         internal static ParticipantsUpdatedEventInternal DeserializeParticipantsUpdatedEventInternal(JsonElement element)
         {
             Optional<string> callConnectionId = default;
+            Optional<CallLocatorModel> callLocator = default;
             Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
                 {
                     callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("callLocator"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callLocator = CallLocatorModel.DeserializeCallLocatorModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("participants"))
@@ -41,7 +52,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new ParticipantsUpdatedEventInternal(callConnectionId.Value, Optional.ToList(participants));
+            return new ParticipantsUpdatedEventInternal(callConnectionId.Value, callLocator.Value, Optional.ToList(participants));
         }
     }
 }

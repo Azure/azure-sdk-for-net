@@ -822,17 +822,17 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Hold Participant Meeting Audio. </summary>
+        /// <summary> Remove Participant from Default Audio Group. </summary>
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> HoldParticipantMeetingAudioAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveParticipantFromDefaultAudioGroupAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HoldParticipantMeetingAudio)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipantFromDefaultAudioGroup)}");
             scope.Start();
             try
             {
-                return await RestClient.HoldParticipantMeetingAudioAsync(
+                return await RestClient.RemoveParticipantFromDefaultAudioGroupAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken
@@ -845,17 +845,17 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Hold Participant Meeting Audio. </summary>
+        /// <summary> Remove Participant from Default Audio Group. </summary>
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response HoldParticipantMeetingAudio(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response RemoveParticipantFromDefaultAudioGroup(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HoldParticipantMeetingAudio)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipantFromDefaultAudioGroup)}");
             scope.Start();
             try
             {
-                return RestClient.HoldParticipantMeetingAudio(
+                return RestClient.RemoveParticipantFromDefaultAudioGroup(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken);
@@ -867,17 +867,17 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Resume Participant Meeting Audio. </summary>
+        /// <summary>Add a participant to default audio group.</summary>
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> ResumeParticipantMeetingAudioAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddParticipantToDefaultAudioGroupAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(ResumeParticipantMeetingAudio)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipantToDefaultAudioGroup)}");
             scope.Start();
             try
             {
-                return await RestClient.ResumeParticipantMeetingAudioAsync(
+                return await RestClient.AddParticipantToDefaultAudioGroupAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken
@@ -890,17 +890,17 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Resume Participant Meeting Audio. </summary>
+        /// <summary> Add a participant to default audio group. </summary>
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response ResumeParticipantMeetingAudio(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response AddParticipantToDefaultAudioGroup(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(ResumeParticipantMeetingAudio)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipantToDefaultAudioGroup)}");
             scope.Start();
             try
             {
-                return RestClient.ResumeParticipantMeetingAudio(
+                return RestClient.AddParticipantToDefaultAudioGroup(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken);
@@ -917,9 +917,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CreateAudioRoutingGroupResult>> CreateAudioRoutingGroupAsync(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateAudioGroupResult>> CreateAudioGroupAsync(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioRoutingGroup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioGroup)}");
             scope.Start();
             try
             {
@@ -932,7 +932,7 @@ namespace Azure.Communication.CallingServer
                     }
                 }
 
-                return await RestClient.CreateAudioRoutingGroupAsync(
+                return await RestClient.CreateAudioGroupAsync(
                                         callConnectionId: CallConnectionId,
                                         audioRoutingMode: audioRoutingMode,
                                         targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -951,9 +951,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CreateAudioRoutingGroupResult> CreateAudioRoutingGroup(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
+        public virtual Response<CreateAudioGroupResult> CreateAudioGroup(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioRoutingGroup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioGroup)}");
             scope.Start();
             try
             {
@@ -966,7 +966,7 @@ namespace Azure.Communication.CallingServer
                     }
                 }
 
-                return RestClient.CreateAudioRoutingGroup(
+                return RestClient.CreateAudioGroup(
                                         callConnectionId: CallConnectionId,
                                         audioRoutingMode: audioRoutingMode,
                                         targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -981,19 +981,19 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Update the targets in an existing audio routing group. </summary>
-        /// <param name="audioRoutingGroupId"> The identifier of the Audio Routing Group. </param>
+        /// <param name="audioGroupId"> The identifier of the Audio Routing Group. </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> UpdateAudioRoutingGroupAsync(string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAudioGroupAsync(string audioGroupId, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UpdateAudioRoutingGroup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UpdateAudioGroup)}");
             scope.Start();
             try
             {
-                return await RestClient.UpdateAudioRoutingGroupAsync(
+                return await RestClient.UpdateAudioGroupAsync(
                                         callConnectionId: CallConnectionId,
-                                        audioRoutingGroupId: audioRoutingGroupId,
+                                        audioGroupId: audioGroupId,
                                         targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
@@ -1006,19 +1006,19 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Update the targets in an existing audio routing group. </summary>
-        /// <param name="audioRoutingGroupId"> The identifier of the Audio Routing Group. </param>
+        /// <param name="audioGroupId"> The identifier of the Audio Routing Group. </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response UpdateAudioRoutingGroup(string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
+        public virtual Response UpdateAudioGroup(string audioGroupId, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UpdateAudioRoutingGroup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UpdateAudioGroup)}");
             scope.Start();
             try
             {
-                return RestClient.UpdateAudioRoutingGroup(
+                return RestClient.UpdateAudioGroup(
                                         callConnectionId: CallConnectionId,
-                                        audioRoutingGroupId: audioRoutingGroupId,
+                                        audioGroupId: audioGroupId,
                                         targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                                         cancellationToken: cancellationToken
                                         );
@@ -1031,22 +1031,22 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Create an audio routing group with the targets. </summary>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
+        /// <param name="audioGroupId"> The audio routing group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<AudioRoutingGroupResult>> GetAudioRoutingGroupsAsync(string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AudioGroupResult>> GetAudioGroupsAsync(string audioGroupId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetAudioRoutingGroups)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetAudioGroups)}");
             scope.Start();
             try
             {
-                Response<AudioRoutingGroupResultInternal> audioRoutingGroupResultInternal = await RestClient.GetAudioRoutingGroupsAsync(
+                Response<AudioGroupResultInternal> audioGroupResultInternal = await RestClient.GetAudioGroupsAsync(
                                         callConnectionId: CallConnectionId,
-                                        audioRoutingGroupId: audioRoutingGroupId,
+                                        audioGroupId: audioGroupId,
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
 
-                return Response.FromValue(new AudioRoutingGroupResult(audioRoutingGroupResultInternal.Value), audioRoutingGroupResultInternal.GetRawResponse());
+                return Response.FromValue(new AudioGroupResult(audioGroupResultInternal.Value), audioGroupResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1056,22 +1056,22 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Create an audio routing group with the targets. </summary>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
+        /// <param name="audioGroupId"> The audio routing group id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<AudioRoutingGroupResult> GetAudioRoutingGroups(string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        public virtual Response<AudioGroupResult> GetAudioGroups(string audioGroupId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetAudioRoutingGroups)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetAudioGroups)}");
             scope.Start();
             try
             {
-                Response<AudioRoutingGroupResultInternal> audioRoutingGroupResultInternal = RestClient.GetAudioRoutingGroups(
+                Response<AudioGroupResultInternal> audioGroupResultInternal = RestClient.GetAudioGroups(
                     callConnectionId: CallConnectionId,
-                    audioRoutingGroupId: audioRoutingGroupId,
+                    audioGroupId: audioGroupId,
                     cancellationToken: cancellationToken
                     );
 
-                return Response.FromValue(new AudioRoutingGroupResult(audioRoutingGroupResultInternal.Value), audioRoutingGroupResultInternal.GetRawResponse());
+                return Response.FromValue(new AudioGroupResult(audioGroupResultInternal.Value), audioGroupResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1081,18 +1081,18 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Delete an existing audio routing group. </summary>
-        /// <param name="audioRoutingGroupId"> The identifier of the Audio Routing Group. </param>
+        /// <param name="audioGroupId"> The identifier of the Audio Routing Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> DeleteAudioRoutingGroupAsync(string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAudioGroupAsync(string audioGroupId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(DeleteAudioRoutingGroup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(DeleteAudioGroup)}");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAudioRoutingGroupAsync(
+                return await RestClient.DeleteAudioGroupAsync(
                                         callConnectionId: CallConnectionId,
-                                        audioRoutingGroupId: audioRoutingGroupId,
+                                        audioGroupId: audioGroupId,
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
             }
@@ -1104,18 +1104,18 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Delete an existing audio routing group. </summary>
-        /// <param name="audioRoutingGroupId"> The identifier of the Audio Routing Group. </param>
+        /// <param name="audioGroupId"> The identifier of the Audio Routing Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response DeleteAudioRoutingGroup(string audioRoutingGroupId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteAudioGroup(string audioGroupId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(DeleteAudioRoutingGroup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(DeleteAudioGroup)}");
             scope.Start();
             try
             {
-                return RestClient.DeleteAudioRoutingGroup(
+                return RestClient.DeleteAudioGroup(
                                         callConnectionId: CallConnectionId,
-                                        audioRoutingGroupId: audioRoutingGroupId,
+                                        audioGroupId: audioGroupId,
                                         cancellationToken: cancellationToken
                                         );
             }

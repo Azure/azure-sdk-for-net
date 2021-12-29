@@ -45,12 +45,12 @@ namespace Azure.Communication.CallingServer
             return new TransferCallResult(operationId, status, operationContext, resultDetails);
         }
 
-        /// <summary> Initializes a new instance of CreateAudioRoutingGroupResult. </summary>
-        /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
-        /// <returns> A new <see cref="CallingServer.CreateAudioRoutingGroupResult"/> instance for mocking. </returns>
-        public static CreateAudioRoutingGroupResult CreateAudioRoutingGroupResult(string audioRoutingGroupId = null)
+        /// <summary> Initializes a new instance of CreateAudioGroupResult. </summary>
+        /// <param name="audioGroupId"> The audio group id. </param>
+        /// <returns> A new <see cref="CallingServer.CreateAudioGroupResult"/> instance for mocking. </returns>
+        public static CreateAudioGroupResult CreateAudioGroupResult(string audioGroupId = null)
         {
-            return new CreateAudioRoutingGroupResult(audioRoutingGroupId);
+            return new CreateAudioGroupResult(audioGroupId);
         }
 
         /// <summary> Initializes a new instance of AddParticipantResult. </summary>
@@ -111,31 +111,36 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
         /// <param name="resultDetails"> The result details. </param>
+        /// <param name="operationId"> The operation id. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
+        /// <param name="callLocator"> The server call locator. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantResultEvent"/> instance for mocking. </returns>
-        public static AddParticipantResultEvent AddParticipantResultEvent(CallingOperationResultDetails resultDetails = null, string operationContext = null, CallingOperationStatus status = default)
+        public static AddParticipantResultEvent AddParticipantResultEvent(CallingOperationResultDetails resultDetails = null, string operationId = null, string operationContext = null, CallingOperationStatus status = default, CallLocatorModel callLocator = null)
         {
-            return new AddParticipantResultEvent(resultDetails, operationContext, status);
+            return new AddParticipantResultEvent(resultDetails, operationId, operationContext, status, callLocator);
         }
 
         /// <summary> Initializes a new instance of PlayAudioResultEvent. </summary>
         /// <param name="resultDetails"> The result details. </param>
+        /// <param name="operationId"> The operation id. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
+        /// <param name="callLocator"> The server call locator. </param>
         /// <returns> A new <see cref="CallingServer.PlayAudioResultEvent"/> instance for mocking. </returns>
-        public static PlayAudioResultEvent PlayAudioResultEvent(CallingOperationResultDetails resultDetails = null, string operationContext = null, CallingOperationStatus status = default)
+        public static PlayAudioResultEvent PlayAudioResultEvent(CallingOperationResultDetails resultDetails = null, string operationId = null, string operationContext = null, CallingOperationStatus status = default, CallLocatorModel callLocator = null)
         {
-            return new PlayAudioResultEvent(resultDetails, operationContext, status);
+            return new PlayAudioResultEvent(resultDetails, operationId, operationContext, status, callLocator);
         }
 
         /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
         /// <param name="toneInfo"> The tone info. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callLocator"> The server call locator. </param>
         /// <returns> A new <see cref="CallingServer.ToneReceivedEvent"/> instance for mocking. </returns>
-        public static ToneReceivedEvent ToneReceivedEvent(ToneInfo toneInfo = null, string callConnectionId = null)
+        public static ToneReceivedEvent ToneReceivedEvent(ToneInfo toneInfo = null, string callConnectionId = null, CallLocatorModel callLocator = null)
         {
-            return new ToneReceivedEvent(toneInfo, callConnectionId);
+            return new ToneReceivedEvent(toneInfo, callConnectionId, callLocator);
         }
 
         /// <summary> Initializes a new instance of ToneInfo. </summary>

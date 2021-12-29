@@ -10,13 +10,13 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The request payload for resuming meeting audio for a participant. </summary>
-    internal partial class ResumeMeetingAudioRequest
+    /// <summary> The request payload for adding a participant to default audio group. </summary>
+    internal partial class AddToDefaultAudioGroupRequest
     {
-        /// <summary> Initializes a new instance of ResumeMeetingAudioRequest. </summary>
+        /// <summary> Initializes a new instance of AddToDefaultAudioGroupRequest. </summary>
         /// <param name="identifier"> The identifier of the participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public ResumeMeetingAudioRequest(CommunicationIdentifierModel identifier)
+        public AddToDefaultAudioGroupRequest(CommunicationIdentifierModel identifier)
         {
             if (identifier == null)
             {

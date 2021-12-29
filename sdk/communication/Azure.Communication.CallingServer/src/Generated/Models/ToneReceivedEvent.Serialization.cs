@@ -17,6 +17,7 @@ namespace Azure.Communication.CallingServer
         {
             ToneInfo toneInfo = default;
             Optional<string> callConnectionId = default;
+            Optional<CallLocatorModel> callLocator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toneInfo"))
@@ -29,8 +30,18 @@ namespace Azure.Communication.CallingServer
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("callLocator"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callLocator = CallLocatorModel.DeserializeCallLocatorModel(property.Value);
+                    continue;
+                }
             }
-            return new ToneReceivedEvent(toneInfo, callConnectionId.Value);
+            return new ToneReceivedEvent(toneInfo, callConnectionId.Value, callLocator.Value);
         }
     }
 }

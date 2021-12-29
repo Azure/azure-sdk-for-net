@@ -22,6 +22,7 @@ namespace Azure.Communication.CallingServer.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string UnknownValue = "unknown";
         private const string ConnectingValue = "connecting";
         private const string ConnectedValue = "connected";
         private const string TransferringValue = "transferring";
@@ -29,6 +30,8 @@ namespace Azure.Communication.CallingServer.Models
         private const string DisconnectingValue = "disconnecting";
         private const string DisconnectedValue = "disconnected";
 
+        /// <summary> unknown. </summary>
+        public static CallConnectionState Unknown { get; } = new CallConnectionState(UnknownValue);
         /// <summary> connecting. </summary>
         public static CallConnectionState Connecting { get; } = new CallConnectionState(ConnectingValue);
         /// <summary> connected. </summary>

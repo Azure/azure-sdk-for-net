@@ -29,15 +29,19 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
         /// <param name="toneInfo"> The tone info. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
-        internal ToneReceivedEvent(ToneInfo toneInfo, string callConnectionId)
+        /// <param name="callLocator"> The server call locator. </param>
+        internal ToneReceivedEvent(ToneInfo toneInfo, string callConnectionId, CallLocatorModel callLocator)
         {
             ToneInfo = toneInfo;
             CallConnectionId = callConnectionId;
+            CallLocator = callLocator;
         }
 
         /// <summary> The tone info. </summary>
         public ToneInfo ToneInfo { get; }
         /// <summary> The call connection id. </summary>
         public string CallConnectionId { get; }
+        /// <summary> The server call locator. </summary>
+        public CallLocatorModel CallLocator { get; }
     }
 }

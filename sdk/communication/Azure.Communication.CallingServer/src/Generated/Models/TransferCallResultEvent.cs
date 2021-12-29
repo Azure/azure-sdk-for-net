@@ -19,9 +19,13 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The result details. </summary>
         public CallingOperationResultDetails ResultDetails { get; }
+        /// <summary> The operation id. </summary>
+        public string OperationId { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; }
         /// <summary> The status of the operation. </summary>
         public CallingOperationStatus Status { get; }
+        /// <summary> The server call locator. </summary>
+        public CallLocatorModel CallLocator { get; }
     }
 }

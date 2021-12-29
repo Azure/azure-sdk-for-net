@@ -7,14 +7,14 @@ namespace Azure.Communication.CallingServer.Models
     using System.Linq;
 
     /// <summary> The call connection properties. </summary>
-    public class AudioRoutingGroupResult
+    public class AudioGroupResult
     {
         /// <summary> Initializes a new instance of AudioRoutingGroupResult. </summary>
-        /// <param name="audioRoutingGroupResultInternal">The audio routing group result internal.</param>
-        internal AudioRoutingGroupResult(AudioRoutingGroupResultInternal audioRoutingGroupResultInternal)
+        /// <param name="audioGroupResultInternal">The audio routing group result internal.</param>
+        internal AudioGroupResult(AudioGroupResultInternal audioGroupResultInternal)
         {
-            AudioRoutingMode = audioRoutingGroupResultInternal.AudioRoutingMode;
-            Targets = audioRoutingGroupResultInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t));
+            AudioRoutingMode = audioGroupResultInternal.AudioRoutingMode;
+            Targets = audioGroupResultInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t));
         }
 
         /// <summary> The audio routing mode. </summary>

@@ -22,15 +22,19 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callLocator"> The server call locator. </param>
         /// <param name="participants"> The list of participants. </param>
-        internal ParticipantsUpdatedEventInternal(string callConnectionId, IReadOnlyList<CallParticipantInternal> participants)
+        internal ParticipantsUpdatedEventInternal(string callConnectionId, CallLocatorModel callLocator, IReadOnlyList<CallParticipantInternal> participants)
         {
             CallConnectionId = callConnectionId;
+            CallLocator = callLocator;
             Participants = participants;
         }
 
         /// <summary> The call connection id. </summary>
         public string CallConnectionId { get; }
+        /// <summary> The server call locator. </summary>
+        public CallLocatorModel CallLocator { get; }
         /// <summary> The list of participants. </summary>
         public IReadOnlyList<CallParticipantInternal> Participants { get; }
     }

@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer.Models
 {
-    [CodeGenModel("AudioRoutingGroupRequest")]
-    internal partial class AudioRoutingGroupRequestInternal
+    [CodeGenModel("AudioGroupResult")]
+    internal partial class AudioGroupResultInternal
     {
     }
 }

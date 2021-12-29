@@ -12,13 +12,13 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The update audio routing group request. </summary>
-    internal partial class UpdateAudioRoutingGroupRequest
+    /// <summary> The update audio group request. </summary>
+    internal partial class UpdateAudioGroupRequest
     {
-        /// <summary> Initializes a new instance of UpdateAudioRoutingGroupRequest. </summary>
-        /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
+        /// <summary> Initializes a new instance of UpdateAudioGroupRequest. </summary>
+        /// <param name="targets"> The target identities that would be receivers in the audio group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/> is null. </exception>
-        public UpdateAudioRoutingGroupRequest(IEnumerable<CommunicationIdentifierModel> targets)
+        public UpdateAudioGroupRequest(IEnumerable<CommunicationIdentifierModel> targets)
         {
             if (targets == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallingServer
             Targets = targets.ToList();
         }
 
-        /// <summary> The target identities that would be receivers in the audio routing group. </summary>
+        /// <summary> The target identities that would be receivers in the audio group. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
     }
 }

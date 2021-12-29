@@ -121,11 +121,11 @@ namespace Azure.Communication.CallingServer.Tests
                                                     "\"isMuted\": false" +
                                                 "}";
 
-        private const string CreateAudioRoutingGroupResultPayload = "{" +
-                                                                "\"audioRoutingGroupId\": \"dummyAudioRoutingGroupId\"" +
+        private const string CreateAudioGroupResultPayload = "{" +
+                                                                "\"audioRoutingGroupId\": \"dummyAudioGroupId\"" +
                                                             "}";
 
-        private const string GetAudioRoutingGroupsResultPayload = "{" +
+        private const string GetAudioGroupsResultPayload = "{" +
                                                                 "\"targets\": [" +
                                                                    "{" +
                                                                         "\"rawId\": \"dummyRawId\"," +
@@ -946,263 +946,263 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public async Task HoldParticipantMeetingAudioAsync_Passes(string callConnectionId, string participantUserId)
+        public async Task RemoveParticipantFromDefaultAudioGroupAsync_Passes(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var response = await callConnection.HoldParticipantMeetingAudioAsync(participant).ConfigureAwait(false);
+            var response = await callConnection.RemoveParticipantFromDefaultAudioGroupAsync(participant).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void HoldParticipantMeetingAudio_Passes(string callConnectionId, string participantUserId)
+        public void RemoveParticipantFromDefaultAudioGroup_Passes(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var response = callConnection.HoldParticipantMeetingAudio(participant);
+            var response = callConnection.RemoveParticipantFromDefaultAudioGroup(participant);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void HoldParticipantMeetingAudioAsync_Failed(string callConnectionId, string participantUserId)
+        public void RemoveParticipantFromDefaultAudioGroupAsync_Failed(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(404);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.HoldParticipantMeetingAudioAsync(participant).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantFromDefaultAudioGroupAsync(participant).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void HoldParticipantMeetingAudio_Failed(string callConnectionId, string participantUserId)
+        public void RemoveParticipantFromDefaultAudioGroup_Failed(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(404);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.HoldParticipantMeetingAudio(participant));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipantFromDefaultAudioGroup(participant));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public async Task ResumeParticipantMeetingAudioAsync_Passes(string callConnectionId, string participantUserId)
+        public async Task AddParticipantToDefaultAudioGroupAsync_Passes(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var response = await callConnection.ResumeParticipantMeetingAudioAsync(participant).ConfigureAwait(false);
+            var response = await callConnection.AddParticipantToDefaultAudioGroupAsync(participant).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void ResumeParticipantMeetingAudio_Passes(string callConnectionId, string participantUserId)
+        public void AddParticipantToDefaultAudioGroup_Passes(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var response = callConnection.ResumeParticipantMeetingAudio(participant);
+            var response = callConnection.AddParticipantToDefaultAudioGroup(participant);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void ResumeParticipantMeetingAudioAsync_Failed(string callConnectionId, string participantUserId)
+        public void AddParticipantToDefaultAudioGroupAsync_Failed(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(404);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.ResumeParticipantMeetingAudioAsync(participant).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantToDefaultAudioGroupAsync(participant).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void ResumeParticipantMeetingAudio_Failed(string callConnectionId, string participantUserId)
+        public void AddParticipantToDefaultAudioGroup_Failed(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(404);
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.ResumeParticipantMeetingAudio(participant));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipantToDefaultAudioGroup(participant));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_CreateAudioRoutingGroup))]
-        public async Task CreateAudioRoutingGroupAsync_Passes(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_CreateAudioGroup))]
+        public async Task CreateAudioGroupAsync_Passes(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
         {
-            var callConnection = CreateMockCallConnection(201, CreateAudioRoutingGroupResultPayload, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(201, CreateAudioGroupResultPayload, callConnectionId: callConnectionId);
 
-            var result = await callConnection.CreateAudioRoutingGroupAsync(audioRoutingMode, targets).ConfigureAwait(false);
-            Assert.IsNotEmpty(result.Value.AudioRoutingGroupId);
+            var result = await callConnection.CreateAudioGroupAsync(audioRoutingMode, targets).ConfigureAwait(false);
+            Assert.IsNotEmpty(result.Value.AudioGroupId);
         }
 
-        [TestCaseSource(nameof(TestData_CreateAudioRoutingGroup))]
-        public void CreateAudioRoutingGroup_Passes(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_CreateAudioGroup))]
+        public void CreateAudioGroup_Passes(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
         {
-            var callConnection = CreateMockCallConnection(201, CreateAudioRoutingGroupResultPayload, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(201, CreateAudioGroupResultPayload, callConnectionId: callConnectionId);
 
-            var result = callConnection.CreateAudioRoutingGroup(audioRoutingMode, targets);
-            Assert.IsNotEmpty(result.Value.AudioRoutingGroupId);
+            var result = callConnection.CreateAudioGroup(audioRoutingMode, targets);
+            Assert.IsNotEmpty(result.Value.AudioGroupId);
         }
 
-        [TestCaseSource(nameof(TestData_CreateAudioRoutingGroup))]
-        public void CreateAudioRoutingGroupAsync_Failed(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_CreateAudioGroup))]
+        public void CreateAudioGroupAsync_Failed(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.CreateAudioRoutingGroupAsync(audioRoutingMode, targets).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.CreateAudioGroupAsync(audioRoutingMode, targets).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_CreateAudioRoutingGroup))]
-        public void CreateAudioRoutingGroup_Failed(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_CreateAudioGroup))]
+        public void CreateAudioGroup_Failed(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.CreateAudioRoutingGroup(audioRoutingMode, targets));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.CreateAudioGroup(audioRoutingMode, targets));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_CreateAudioRoutingGroup))]
-        public void CreateAudioRoutingGroupAsync_FailedWithMode(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_CreateAudioGroup))]
+        public void CreateAudioGroupAsync_FailedWithMode(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(404);
             audioRoutingMode = AudioRoutingMode.OneToOne;
-            ArgumentOutOfRangeException? ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await callConnection.CreateAudioRoutingGroupAsync(audioRoutingMode, targets).ConfigureAwait(false));
+            ArgumentOutOfRangeException? ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await callConnection.CreateAudioGroupAsync(audioRoutingMode, targets).ConfigureAwait(false));
             Assert.NotNull(ex);
         }
 
-        [TestCaseSource(nameof(TestData_CreateAudioRoutingGroup))]
-        public void CreateAudioRoutingGroup_FailedWithMode(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_CreateAudioGroup))]
+        public void CreateAudioGroup_FailedWithMode(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(404);
             audioRoutingMode = AudioRoutingMode.OneToOne;
-            ArgumentOutOfRangeException? ex = Assert.Throws<ArgumentOutOfRangeException>(() => callConnection.CreateAudioRoutingGroup(audioRoutingMode, targets));
+            ArgumentOutOfRangeException? ex = Assert.Throws<ArgumentOutOfRangeException>(() => callConnection.CreateAudioGroup(audioRoutingMode, targets));
             Assert.NotNull(ex);
         }
 
-        [TestCaseSource(nameof(TestData_UpdateAudioRoutingGroup))]
-        public async Task UpdateAudioRoutingGroupAsync_Passes(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_UpdateAudioGroup))]
+        public async Task UpdateAudioGroupAsync_Passes(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
-            var response = await callConnection.UpdateAudioRoutingGroupAsync(audioRoutingGroupId, targets).ConfigureAwait(false);
+            var response = await callConnection.UpdateAudioGroupAsync(audioRoutingGroupId, targets).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
-        [TestCaseSource(nameof(TestData_UpdateAudioRoutingGroup))]
-        public void UpdateAudioRoutingGroup_Passes(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_UpdateAudioGroup))]
+        public void UpdateAudioGroup_Passes(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
-            var response = callConnection.UpdateAudioRoutingGroup(audioRoutingGroupId, targets);
+            var response = callConnection.UpdateAudioGroup(audioRoutingGroupId, targets);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
-        [TestCaseSource(nameof(TestData_UpdateAudioRoutingGroup))]
-        public void UpdateAudioRoutingGroupAsync_Failed(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_UpdateAudioGroup))]
+        public void UpdateAudioGroupAsync_Failed(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.UpdateAudioRoutingGroupAsync(audioRoutingGroupId, targets).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.UpdateAudioGroupAsync(audioRoutingGroupId, targets).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_UpdateAudioRoutingGroup))]
-        public void UpdateAudioRoutingGroup_Failed(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
+        [TestCaseSource(nameof(TestData_UpdateAudioGroup))]
+        public void UpdateAudioGroup_Failed(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifier> targets)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.UpdateAudioRoutingGroup(audioRoutingGroupId, targets));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.UpdateAudioGroup(audioRoutingGroupId, targets));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
-        public async Task GetAudioRoutingGroupsAsync_Passes(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_GetAudioGroups))]
+        public async Task GetAudioGroupsAsync_Passes(string callConnectionId, string audioRoutingGroupId)
         {
-            var callConnection = CreateMockCallConnection(200, GetAudioRoutingGroupsResultPayload, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(200, GetAudioGroupsResultPayload, callConnectionId: callConnectionId);
 
-            var result = await callConnection.GetAudioRoutingGroupsAsync(audioRoutingGroupId).ConfigureAwait(false);
-            VerifyGetAudioRoutingGroupsResult(result);
+            var result = await callConnection.GetAudioGroupsAsync(audioRoutingGroupId).ConfigureAwait(false);
+            VerifyGetAudioGroupsResult(result);
         }
 
-        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
-        public void GetAudioRoutingGroups_Passes(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_GetAudioGroups))]
+        public void GetAudioGroups_Passes(string callConnectionId, string audioRoutingGroupId)
         {
-            var callConnection = CreateMockCallConnection(200, GetAudioRoutingGroupsResultPayload, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(200, GetAudioGroupsResultPayload, callConnectionId: callConnectionId);
 
-            var result = callConnection.GetAudioRoutingGroups(audioRoutingGroupId);
-            VerifyGetAudioRoutingGroupsResult(result);
+            var result = callConnection.GetAudioGroups(audioRoutingGroupId);
+            VerifyGetAudioGroupsResult(result);
         }
 
-        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
-        public void GetAudioRoutingGroupsAsync_Failed(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_GetAudioGroups))]
+        public void GetAudioGroupsAsync_Failed(string callConnectionId, string audioRoutingGroupId)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetAudioRoutingGroupsAsync(audioRoutingGroupId).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetAudioGroupsAsync(audioRoutingGroupId).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_GetAudioRoutingGroups))]
-        public void GetAudioRoutingGroups_Failed(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_GetAudioGroups))]
+        public void GetAudioGroups_Failed(string callConnectionId, string audioRoutingGroupId)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetAudioRoutingGroups(audioRoutingGroupId));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetAudioGroups(audioRoutingGroupId));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
-        public async Task DeleteAudioRoutingGroupAsync_Passes(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_DeleteAudioGroup))]
+        public async Task DeleteAudioGroupAsync_Passes(string callConnectionId, string audioRoutingGroupId)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
-            var response = await callConnection.DeleteAudioRoutingGroupAsync(audioRoutingGroupId).ConfigureAwait(false);
+            var response = await callConnection.DeleteAudioGroupAsync(audioRoutingGroupId).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
-        [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
-        public void DeleteAudioRoutingGroup_Passes(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_DeleteAudioGroup))]
+        public void DeleteAudioGroup_Passes(string callConnectionId, string audioRoutingGroupId)
         {
             var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
 
-            var response = callConnection.DeleteAudioRoutingGroup(audioRoutingGroupId);
+            var response = callConnection.DeleteAudioGroup(audioRoutingGroupId);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
-        [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
-        public void DeleteAudioRoutingGroupAsync_Failed(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_DeleteAudioGroup))]
+        public void DeleteAudioGroupAsync_Failed(string callConnectionId, string audioRoutingGroupId)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.DeleteAudioRoutingGroupAsync(audioRoutingGroupId).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.DeleteAudioGroupAsync(audioRoutingGroupId).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_DeleteAudioRoutingGroup))]
-        public void DeleteAudioRoutingGroup_Failed(string callConnectionId, string audioRoutingGroupId)
+        [TestCaseSource(nameof(TestData_DeleteAudioGroup))]
+        public void DeleteAudioGroup_Failed(string callConnectionId, string audioRoutingGroupId)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.DeleteAudioRoutingGroup(audioRoutingGroupId));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.DeleteAudioGroup(audioRoutingGroupId));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -1249,7 +1249,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.True(result[1].Identifier is PhoneNumberIdentifier);
         }
 
-        private void VerifyGetAudioRoutingGroupsResult(AudioRoutingGroupResult result)
+        private void VerifyGetAudioGroupsResult(AudioGroupResult result)
         {
             Assert.NotNull(result);
             Assert.AreEqual(AudioRoutingMode.OneToOne, result.AudioRoutingMode);
@@ -1366,7 +1366,7 @@ namespace Azure.Communication.CallingServer.Tests
             };
         }
 
-        private static IEnumerable<object?[]> TestData_CreateAudioRoutingGroup()
+        private static IEnumerable<object?[]> TestData_CreateAudioGroup()
         {
             return new[]
             {
@@ -1383,14 +1383,14 @@ namespace Azure.Communication.CallingServer.Tests
             };
         }
 
-        private static IEnumerable<object?[]> TestData_UpdateAudioRoutingGroup()
+        private static IEnumerable<object?[]> TestData_UpdateAudioGroup()
         {
             return new[]
             {
                 new object?[]
                 {
                     "d09038e7-38f7-4aa1-9c5c-4bb07a65aa17",
-                    "dummyAudioRoutingGroupId",
+                    "dummyAudioGroupId",
                     new CommunicationIdentifier[]
                     {
                         new CommunicationUserIdentifier("8:acs:resource_target"),
@@ -1400,26 +1400,26 @@ namespace Azure.Communication.CallingServer.Tests
             };
         }
 
-        private static IEnumerable<object?[]> TestData_GetAudioRoutingGroups()
+        private static IEnumerable<object?[]> TestData_GetAudioGroups()
         {
             return new[]
             {
                 new object?[]
                 {
                     "d09038e7-38f7-4aa1-9c5c-4bb07a65aa17",
-                    "dummyAudioRoutingGroupId",
+                    "dummyAudioGroupId",
                 },
             };
         }
 
-        private static IEnumerable<object?[]> TestData_DeleteAudioRoutingGroup()
+        private static IEnumerable<object?[]> TestData_DeleteAudioGroup()
         {
             return new[]
             {
                 new object?[]
                 {
                     "d09038e7-38f7-4aa1-9c5c-4bb07a65aa17",
-                    "dummyAudioRoutingGroupId",
+                    "dummyAudioGroupId",
                 },
             };
         }

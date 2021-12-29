@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
-using Azure.Communication.CallingServer;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
-    /// <summary> The audio routing group request. </summary>
-    internal partial class AudioRoutingGroupRequestInternal
+    /// <summary> The audio group request. </summary>
+    internal partial class AudioGroupRequestInternal
     {
-        /// <summary> Initializes a new instance of AudioRoutingGroupRequestInternal. </summary>
+        /// <summary> Initializes a new instance of AudioGroupRequestInternal. </summary>
         /// <param name="audioRoutingMode"> The audio routing mode. </param>
-        /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
+        /// <param name="targets"> The target identities that would be receivers in the audio group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/> is null. </exception>
-        public AudioRoutingGroupRequestInternal(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets)
+        public AudioGroupRequestInternal(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets)
         {
             if (targets == null)
             {
@@ -33,7 +32,7 @@ namespace Azure.Communication.CallingServer.Models
 
         /// <summary> The audio routing mode. </summary>
         public AudioRoutingMode AudioRoutingMode { get; }
-        /// <summary> The target identities that would be receivers in the audio routing group. </summary>
+        /// <summary> The target identities that would be receivers in the audio group. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
     }
 }
