@@ -92,6 +92,10 @@ namespace Microsoft.Extensions.Azure
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
+            if (!bool.TryParse(configuration["clientCertificateSendCertificateChain"], out bool certificateSendCertificateChain))
+            {
+                certificateSendCertificateChain = false;
+            }
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
@@ -130,7 +134,9 @@ namespace Microsoft.Extensions.Azure
                     throw new InvalidOperationException($"Unable to find a certificate with thumbprint '{certificate}'");
                 }
 
-                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0], identityClientOptions);
+                var clientCertificateCredentialOptions = CopyTokenCredentialOptions<ClientCertificateCredentialOptions>(identityClientOptions);
+                clientCertificateCredentialOptions.SendCertificateChain = certificateSendCertificateChain;
+                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0], clientCertificateCredentialOptions);
                 store.Close();
 
                 return credential;
@@ -376,6 +382,41 @@ namespace Microsoft.Extensions.Azure
         private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(Type type)
         {
             return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).OrderByDescending(c => c.GetParameters().Length);
+        }
+
+        internal static T CopyTokenCredentialOptions<T>(TokenCredentialOptions tokenCredentialOptions) where T : TokenCredentialOptions
+        {
+            if (tokenCredentialOptions is T tokenCredentialOptionsAsT)
+            {
+                return tokenCredentialOptionsAsT;
+            }
+
+            var result = (T)Activator.CreateInstance(typeof(T));
+            if (tokenCredentialOptions == null)
+            {
+                return result;
+            }
+
+            // include non-public, shared properties can be marked internal.
+            var sourceProperties = tokenCredentialOptions.GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                .Where(x => x.CanRead && x.CanWrite)
+                .ToList();
+
+            Type resultType = typeof(T);
+            foreach (var property in sourceProperties)
+            {
+                var targetProperty = resultType.GetProperty(property.Name, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                if (targetProperty == null || targetProperty.PropertyType != property.PropertyType || false == targetProperty.CanWrite)
+                {
+                    continue;
+                }
+
+                var value = property.GetValue(tokenCredentialOptions);
+                targetProperty.SetValue(result, value);
+            }
+
+            return result;
         }
     }
 }

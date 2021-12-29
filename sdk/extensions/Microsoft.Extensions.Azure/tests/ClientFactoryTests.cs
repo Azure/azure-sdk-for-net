@@ -103,10 +103,10 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Theory]
-        [TestCase("currentUser", StoreLocation.CurrentUser, "my", StoreName.My)]
-        [TestCase("localMachine", StoreLocation.LocalMachine, "root", StoreName.Root)]
-        [TestCase(null, StoreLocation.CurrentUser, null, StoreName.My)]
-        public void CreatesCertificateCredentials(string storeLocation, StoreLocation expectedStore, string storeName, StoreName expectedName)
+        [TestCase("currentUser", StoreLocation.CurrentUser, "my", StoreName.My, false)]
+        [TestCase("localMachine", StoreLocation.LocalMachine, "root", StoreName.Root, true)]
+        [TestCase(null, StoreLocation.CurrentUser, null, StoreName.My, true)]
+        public void CreatesCertificateCredentials(string storeLocation, StoreLocation expectedStore, string storeName, StoreName expectedName, bool sendX5CHeader)
         {
             var localCert = new X509Store(expectedName, expectedStore);
             localCert.Open(OpenFlags.ReadOnly);
@@ -118,6 +118,7 @@ namespace Azure.Core.Extensions.Tests
                 new KeyValuePair<string, string>("clientCertificate", someLocalCert),
                 new KeyValuePair<string, string>("clientCertificateStoreLocation", storeLocation),
                 new KeyValuePair<string, string>("clientCertificateStoreName", storeName),
+                new KeyValuePair<string, string>("clientCertificateSendCertificateChain", sendX5CHeader.ToString()),
                 new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId")
             );
 
@@ -130,6 +131,7 @@ namespace Azure.Core.Extensions.Tests
             // TODO: Reenable when Azure.Identity version is updated
             // Assert.AreEqual(someLocalCert, clientCertificateCredential.ClientCertificate.Thumbprint);
             Assert.AreEqual("ConfigurationTenantId", clientCertificateCredential.TenantId);
+            Assert.AreEqual(sendX5CHeader, clientCertificateCredential.Client._includeX5CClaimHeader);
         }
 
         [Test]
@@ -249,6 +251,49 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("http://localhost/", client.Uri.ToString());
             Assert.AreSame(clientOptions, client.Options);
             Assert.AreEqual("key", client.AzureSasCredential.Signature);
+        }
+
+        [Test]
+        public void CopyTokenCredentialOptionsAppliesSharedPropertiesperties()
+        {
+            var originalCredential = new TokenCredentialOptions
+            {
+                AuthorityHost = new Uri("https://login.microsoftonline.com"),
+                IsLoggingPIIEnabled = true,
+            };
+
+            var copy = ClientFactory.CopyTokenCredentialOptions<ClientCertificateCredentialOptions>(originalCredential);
+
+            Assert.AreNotSame(originalCredential, copy);
+            Assert.AreEqual(originalCredential.AuthorityHost, copy.AuthorityHost);
+            Assert.AreEqual(originalCredential.IsLoggingPIIEnabled, copy.IsLoggingPIIEnabled);
+        }
+
+        [Test]
+        public void CopyTokenCredentialOptionsOnlyAppliesSharedProperties()
+        {
+            // ManagedIdentityClientId doesn't exist in ClientCertificateCredentialOptions
+            var originalCredential = new AzureApplicationCredentialOptions
+            {
+                AuthorityHost = new Uri("https://login.microsoftonline.com"),
+                IsLoggingPIIEnabled = true,
+                ManagedIdentityClientId = "SomeManagedIdentityClientId",
+            };
+
+            var copy = ClientFactory.CopyTokenCredentialOptions<ClientCertificateCredentialOptions>(originalCredential);
+
+            Assert.AreNotSame(originalCredential, copy);
+            Assert.AreEqual(originalCredential.AuthorityHost, copy.AuthorityHost);
+            Assert.AreEqual(originalCredential.IsLoggingPIIEnabled, copy.IsLoggingPIIEnabled);
+        }
+
+        [Test]
+        public void CopyTokenCredentialOptionsReturnsArgumentIfCorrectType()
+        {
+            var originalCredential = new ClientCertificateCredentialOptions();
+            var copy = ClientFactory.CopyTokenCredentialOptions<ClientCertificateCredentialOptions>(originalCredential);
+
+            Assert.AreSame(originalCredential, copy);
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)

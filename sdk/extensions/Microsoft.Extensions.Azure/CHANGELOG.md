@@ -2,6 +2,8 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
+- The ability to include the certificate chain when using certificate-based authentication, using '"clientCertificateSendCertificateChain": true' 
+
 ### Features Added
 
 ### Breaking Changes
