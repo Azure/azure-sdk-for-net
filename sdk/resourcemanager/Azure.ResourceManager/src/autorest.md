@@ -6,6 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 # csharpgen:
 #   attach: true
+# save-inputs: true
 azure-arm: true
 arm-core: true
 clear-output-folder: true
@@ -99,7 +100,7 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
-    # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 model-namespace: false
 public-clients: false
@@ -111,17 +112,21 @@ request-path-to-resource-data:
   # model of this has id, type and name, but its type has the type of `object` instead of `string`
   /{linkId}: ResourceLink
   /subscriptions/{subscriptionId}: Subscription
-  /tenants: Tenant
+  /: Tenant
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
   /{scope}/providers/Microsoft.Resources/links: /{linkId}
   /subscriptions: /subscriptions/{subscriptionId}
   /subscriptions/{subscriptionId}/resourcegroups: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+  /tenants: /
+  /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
+  # /subscriptions/{subscriptionId}: /
 request-path-to-resource-type:
   /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
   /tenants: Microsoft.Resources/tenants
+  /: Microsoft.Resources/tenants
   /subscriptions: Microsoft.Resources/subscriptions
   /subscriptions/{subscriptionId}/resourcegroups: Microsoft.Resources/resourceGroups
 request-path-to-scope-resource-types:
@@ -166,7 +171,6 @@ directive:
     transform: >
       $["operationId"] = "Operations_ListResourcesOperations";
     reason: Rename duplicate operation Id
-  # - remove-operation: Tenants_List
 #   - remove-operation: ResourceLinks_ListAtSubscription # The filter values are different, so keep this operation.
   - rename-operation:
       from: checkResourceName
@@ -179,6 +183,37 @@ directive:
       to: Tenant
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
+  - from: subscriptions.json
+    where: $.paths
+    transform: >
+      $["/"] = {
+        "get": {
+          "tags": [
+            "Tenants"
+          ],
+          "operationId": "Tenants_Get",
+          "description": "Gets details about the default tenant.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/ApiVersionParameter"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Returns information about the tenant.",
+              "schema": {
+                "$ref": "#/definitions/Tenant"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      }
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"

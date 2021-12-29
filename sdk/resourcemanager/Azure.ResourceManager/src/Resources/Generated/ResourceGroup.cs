@@ -431,60 +431,6 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/exportTemplate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
-        /// OperationId: ResourceGroups_ExportTemplate
-        /// <summary> Captures the specified resource group as a template. </summary>
-        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </param>
-        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ResourceGroupExportTemplateOperation> ExportTemplateAsync(IEnumerable<string> resources = null, string options = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
-            scope.Start();
-            try
-            {
-                var response = await _resourceGroupsRestClient.ExportTemplateAsync(Id.SubscriptionId, Id.ResourceGroupName, resources, options, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, resources, options).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/exportTemplate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
-        /// OperationId: ResourceGroups_ExportTemplate
-        /// <summary> Captures the specified resource group as a template. </summary>
-        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </param>
-        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceGroupExportTemplateOperation ExportTemplate(IEnumerable<string> resources = null, string options = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
-            scope.Start();
-            try
-            {
-                var response = _resourceGroupsRestClient.ExportTemplate(Id.SubscriptionId, Id.ResourceGroupName, resources, options, cancellationToken);
-                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, resources, options).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: ResourceGroups_CheckExistence

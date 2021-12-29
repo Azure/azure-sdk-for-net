@@ -5,49 +5,118 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        #region TenantPolicyDefinition
-        /// <summary> Gets an object representing a TenantPolicyDefinitionCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="TenantPolicyDefinitionCollection" /> object. </returns>
-        public static TenantPolicyDefinitionCollection GetTenantPolicyDefinitions(this Tenant tenant)
+        private static TenantsRestOperations GetTenantsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new TenantPolicyDefinitionCollection(tenant);
+            return new TenantsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
-        #endregion
 
-        #region TenantPolicySetDefinition
-        /// <summary> Gets an object representing a TenantPolicySetDefinitionCollection along with the instance operations that can be performed on it. </summary>
+        /// RequestPath: /tenants
+        /// ContextualPath: /
+        /// OperationId: Tenants_List
+        /// <summary> Lists the TenantData for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="TenantPolicySetDefinitionCollection" /> object. </returns>
-        public static TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions(this Tenant tenant)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<TenantData> GetTenantsAsync(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return new TenantPolicySetDefinitionCollection(tenant);
+            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetTenantsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                async Task<Page<TenantData>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetTenants");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                async Task<Page<TenantData>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetTenants");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
         }
-        #endregion
 
-        #region DataPolicyManifest
-        /// <summary> Gets an object representing a DataPolicyManifestCollection along with the instance operations that can be performed on it. </summary>
+        /// RequestPath: /tenants
+        /// ContextualPath: /
+        /// OperationId: Tenants_List
+        /// <summary> Lists the TenantData for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DataPolicyManifestCollection" /> object. </returns>
-        public static DataPolicyManifestCollection GetDataPolicyManifests(this Tenant tenant)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<TenantData> GetTenants(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return new DataPolicyManifestCollection(tenant);
+            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetTenantsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                Page<TenantData> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetTenants");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.List(cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                Page<TenantData> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetTenants");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
         }
-        #endregion
-
-        #region ResourceLink
-        /// <summary> Gets an object representing a ResourceLinkCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ResourceLinkCollection" /> object. </returns>
-        public static ResourceLinkCollection GetResourceLinks(this Tenant tenant)
-        {
-            return new ResourceLinkCollection(tenant);
-        }
-        #endregion
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
@@ -30,9 +31,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="endpoint"> server parameter. </param>
         public TenantsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            endpoint ??= new Uri("https://management.azure.com");
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.Resources
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/tenants", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2021-01-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
