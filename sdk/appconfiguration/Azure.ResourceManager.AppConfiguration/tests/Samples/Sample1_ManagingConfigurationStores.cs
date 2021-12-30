@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 #endregion Snippet:Manage_ConfigurationStores_Namespaces
 
-namespace Azure.ResourceManager.KeyVault.Tests.Samples
+namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
 {
     public class Sample1_ManagingConfigurationStores
     {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         {
             #region Snippet:Managing_ConfigurationStores_CreateAConfigurationStore
             string configurationStoreName = ("myApp");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Models.Sku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
                 Console.WriteLine(configurationStore.Data.Name);
             }
 
-            if (await configurationStoreCollection.CheckIfExistsAsync("myApp"))
+            if (await configurationStoreCollection.ExistsAsync("myApp"))
             {
                 Console.WriteLine("ConfigurationStore 'myApp' exists.");
             }

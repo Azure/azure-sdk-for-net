@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A Class representing a SqlUserDefinedFunction along with the instance operations that can be performed on it. </summary>
     public partial class SqlUserDefinedFunction : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SqlUserDefinedFunction"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SqlResourcesRestOperations _sqlResourcesRestClient;
         private readonly SqlUserDefinedFunctionData _data;

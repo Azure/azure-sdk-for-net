@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             var collection = await GetDedicatedHostGroupCollectionAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             var lro = await collection.CreateOrUpdateAsync(groupName, input);
             var group = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(groupName));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(groupName + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(groupName));
+            Assert.IsFalse(await collection.ExistsAsync(groupName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]

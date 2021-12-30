@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a Profile along with the instance operations that can be performed on it. </summary>
     public partial class Profile : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="Profile"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ProfilesRestOperations _profilesRestClient;
         private readonly AfdProfilesRestOperations _afdProfilesRestClient;

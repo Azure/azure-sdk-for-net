@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a NatGateway along with the instance operations that can be performed on it. </summary>
     public partial class NatGateway : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NatGateway"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string natGatewayName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NatGatewaysRestOperations _natGatewaysRestClient;
         private readonly NatGatewayData _data;

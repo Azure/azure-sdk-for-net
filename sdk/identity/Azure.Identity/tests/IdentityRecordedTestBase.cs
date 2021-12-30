@@ -29,6 +29,9 @@ namespace Azure.Identity.Tests
             // x-ms-PKeyAuth is only added on MAC and Linux so recordings made on windows will fail on these platforms and vice-versa
             // ignoring this header as CI must run on all platforms
             Matcher.LegacyExcludedHeaders.Add("x-ms-PKeyAuth");
+            Matcher.LegacyExcludedHeaders.Add("x-client-current-telemetry");
+            Matcher.LegacyExcludedHeaders.Add("x-client-last-telemetry");
+            Matcher.LegacyExcludedHeaders.Add("x-anchormailbox");
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
     }

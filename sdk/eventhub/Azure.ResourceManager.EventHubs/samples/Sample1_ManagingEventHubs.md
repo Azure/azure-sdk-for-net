@@ -70,7 +70,7 @@ if (eventHub != null)
 {
     Console.WriteLine("eventHub 'foo' exists");
 }
-if (await eventHubCollection.CheckIfExistsAsync("bar"))
+if (await eventHubCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("eventHub 'bar' exists");
 }

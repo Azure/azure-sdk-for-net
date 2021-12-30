@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         protected ArmClient Client { get; private set; }
 
         protected DeviceUpdateManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode, useLegacyTransport: true)
+        : base(isAsync, mode)
         {
         }
 
         protected DeviceUpdateManagementTestBase(bool isAsync)
-            : base(isAsync, useLegacyTransport: true)
+            : base(isAsync)
         {
         }
 

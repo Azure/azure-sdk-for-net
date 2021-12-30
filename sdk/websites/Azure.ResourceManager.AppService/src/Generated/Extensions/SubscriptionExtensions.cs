@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetAppServiceCertificateOrderByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetAppServiceCertificateOrdersAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServiceCertificateOrder.ResourceType);
             filters.SubstringFilter = filter;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetAppServiceCertificateOrderByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetAppServiceCertificateOrdersAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServiceCertificateOrder.ResourceType);
             filters.SubstringFilter = filter;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetAppServiceDomainByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetAppServiceDomainsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServiceDomain.ResourceType);
             filters.SubstringFilter = filter;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetAppServiceDomainByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetAppServiceDomainsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServiceDomain.ResourceType);
             filters.SubstringFilter = filter;
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetAppServiceEnvironmentByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetAppServiceEnvironmentsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServiceEnvironment.ResourceType);
             filters.SubstringFilter = filter;
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetAppServiceEnvironmentByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetAppServiceEnvironmentsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServiceEnvironment.ResourceType);
             filters.SubstringFilter = filter;
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetAppServicePlanByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetAppServicePlansAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServicePlan.ResourceType);
             filters.SubstringFilter = filter;
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetAppServicePlanByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetAppServicePlansAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(AppServicePlan.ResourceType);
             filters.SubstringFilter = filter;
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetCertificateByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetCertificatesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(Certificate.ResourceType);
             filters.SubstringFilter = filter;
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetCertificateByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetCertificatesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(Certificate.ResourceType);
             filters.SubstringFilter = filter;
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DeletedWebApps_ListByLocation
-        /// <summary> Lists the DeletedSiteDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedSiteData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DeletedWebApps_ListByLocation
-        /// <summary> Lists the DeletedSiteDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedSiteData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetDeletedSiteByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetDeletedSitesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DeletedSite.ResourceType);
             filters.SubstringFilter = filter;
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetDeletedSiteByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetDeletedSitesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DeletedSite.ResourceType);
             filters.SubstringFilter = filter;
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetKubeEnvironmentByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetKubeEnvironmentsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(KubeEnvironment.ResourceType);
             filters.SubstringFilter = filter;
@@ -1463,7 +1463,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetKubeEnvironmentByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetKubeEnvironmentsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(KubeEnvironment.ResourceType);
             filters.SubstringFilter = filter;
@@ -1475,10 +1475,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacksOnPrem
         /// <summary> Lists the ApplicationStackResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Subscription subscription, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Subscription subscription, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1524,10 +1524,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacksOnPrem
         /// <summary> Lists the ApplicationStackResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this Subscription subscription, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this Subscription subscription, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1797,11 +1797,11 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ResourceHealthMetadata_List
-        /// <summary> Lists the ResourceHealthMetadataDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ResourceHealthMetadataData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataData> GetResourceHealthMetadatasAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1809,7 +1809,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {
@@ -1824,7 +1824,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {
@@ -1845,11 +1845,11 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ResourceHealthMetadata_List
-        /// <summary> Lists the ResourceHealthMetadataDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ResourceHealthMetadataData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataData> GetResourceHealthMetadatas(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {
@@ -2227,7 +2227,7 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListSiteIdentifiersAssignedToHostName
-        /// <summary> Lists the IdentifierDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the IdentifierData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2282,7 +2282,7 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListSiteIdentifiersAssignedToHostName
-        /// <summary> Lists the IdentifierDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the IdentifierData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2739,7 +2739,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetStaticSiteARMResourceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetStaticSiteARMResourcesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(StaticSiteARMResource.ResourceType);
             filters.SubstringFilter = filter;
@@ -2753,7 +2753,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetStaticSiteARMResourceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetStaticSiteARMResourcesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(StaticSiteARMResource.ResourceType);
             filters.SubstringFilter = filter;

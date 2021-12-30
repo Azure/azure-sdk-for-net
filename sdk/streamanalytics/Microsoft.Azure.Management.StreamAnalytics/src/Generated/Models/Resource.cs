@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The base resource definition
+    /// </summary>
     public partial class Resource : IResource
     {
         /// <summary>

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a NetworkVirtualApplianceSku along with the instance operations that can be performed on it. </summary>
     public partial class NetworkVirtualApplianceSku : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NetworkVirtualApplianceSku"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string skuName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualApplianceSkusRestOperations _virtualApplianceSkusRestClient;
         private readonly NetworkVirtualApplianceSkuData _data;

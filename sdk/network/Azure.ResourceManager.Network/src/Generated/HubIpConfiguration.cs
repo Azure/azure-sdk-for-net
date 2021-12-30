@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a HubIpConfiguration along with the instance operations that can be performed on it. </summary>
     public partial class HubIpConfiguration : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="HubIpConfiguration"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualHubIpConfigurationRestOperations _virtualHubIpConfigurationRestClient;
         private readonly HubIpConfigurationData _data;

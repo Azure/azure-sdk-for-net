@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// Action for alert rule.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ActionResponse : Resource
+    public partial class ActionResponse : ResourceWithEtag
     {
         /// <summary>
         /// Initializes a new instance of the ActionResponse class.
@@ -34,16 +34,20 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="logicAppResourceId">Logic App Resource Id,
         /// /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
-        /// <param name="etag">Etag of the action.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        /// <param name="etag">Etag of the azure resource</param>
         /// <param name="workflowId">The name of the logic app's
         /// workflow.</param>
-        public ActionResponse(string logicAppResourceId, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string workflowId = default(string))
-            : base(id, name, type)
+        public ActionResponse(string logicAppResourceId, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string workflowId = default(string))
+            : base(id, name, type, systemData, etag)
         {
-            Etag = etag;
             LogicAppResourceId = logicAppResourceId;
             WorkflowId = workflowId;
             CustomInit();
@@ -53,12 +57,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets etag of the action.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
 
         /// <summary>
         /// Gets or sets logic App Resource Id,

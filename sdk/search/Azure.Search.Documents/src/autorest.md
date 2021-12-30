@@ -1,20 +1,18 @@
 # Azure.Search.Documents Code Generation
 
-Run `/sdk/search/generate.ps1` to generate code.
+Run `dotnet build /t:GenerateCode` in the `src` directory to generate SDK code.
+
+See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blob/fe0bf0e7e84a406ec2102c194ea05ccd5011a141/sdk/search/CONTRIBUTING.md) for more details.
 
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
 ## Swagger Source(s)
-AutoRest doesn't play nicely with multiple remote swagger files.  It will
-however merge two local swagger files together automagically.  At some point,
-we should merge the Service and Index swagger files together but for now we
-copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/b8d48bca1298614fdf7734c26e21a88adf5375d9/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/b8d48bca1298614fdf7734c26e21a88adf5375d9/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
 modelerfour:
     seal-single-value-enum-by-default: true
 ```

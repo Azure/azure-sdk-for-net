@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a ApplicationDefinition along with the instance operations that can be performed on it. </summary>
     public partial class ApplicationDefinition : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ApplicationDefinition"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApplicationDefinitionsRestOperations _applicationDefinitionsRestClient;
         private readonly ApplicationDefinitionData _data;

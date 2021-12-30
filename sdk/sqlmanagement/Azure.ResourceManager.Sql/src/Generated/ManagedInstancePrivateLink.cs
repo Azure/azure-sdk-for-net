@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedInstancePrivateLink along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstancePrivateLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedInstancePrivateLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string groupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/privateLinkResources/{groupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedInstancePrivateLinkResourcesRestOperations _managedInstancePrivateLinkResourcesRestClient;
         private readonly ManagedInstancePrivateLinkData _data;

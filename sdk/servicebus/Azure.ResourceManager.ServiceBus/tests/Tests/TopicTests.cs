@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [SetUp]
         public async Task CreateNamespaceAndGetTopicCollection()
         {
+            IgnoreTestInLiveMode();
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
@@ -37,26 +38,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _topicCollection = serviceBusNamespace.GetServiceBusTopics();
         }
 
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
-                List<ServiceBusNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (ServiceBusNamespace serviceBusNamespace in namespaceList)
-                {
-                    await serviceBusNamespace.DeleteAsync();
-                }
-                _resourceGroup = null;
-            }
-        }
-
         [Test]
         [RecordedTest]
         public async Task CreateDeleteTopic()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
@@ -66,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate if created successfully
             topic = await _topicCollection.GetIfExistsAsync(topicName);
             Assert.NotNull(topic);
-            Assert.IsTrue(await _topicCollection.CheckIfExistsAsync(topicName));
+            Assert.IsTrue(await _topicCollection.ExistsAsync(topicName));
 
             //delete topic
             await topic.DeleteAsync();
@@ -74,13 +60,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate
             topic = await _topicCollection.GetIfExistsAsync(topicName);
             Assert.Null(topic);
-            Assert.IsFalse(await _topicCollection.CheckIfExistsAsync(topicName));
+            Assert.IsFalse(await _topicCollection.ExistsAsync(topicName));
         }
 
         [Test]
         [RecordedTest]
         public async Task GetAllTopics()
         {
+            IgnoreTestInLiveMode();
             //create ten queues
             for (int i = 0; i < 10; i++)
             {
@@ -99,6 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task UpdateTopic()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
@@ -115,6 +103,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task TopicCreateGetUpdateDeleteAuthorizationRule()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
@@ -161,7 +150,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 0);
         }
@@ -170,6 +159,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task TopicAuthorizationRuleRegenerateKey()
         {
+            IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;

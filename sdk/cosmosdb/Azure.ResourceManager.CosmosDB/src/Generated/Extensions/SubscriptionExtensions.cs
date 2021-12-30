@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.CosmosDB
         #region RestorableDatabaseAccount
         /// <summary> Gets an object representing a RestorableDatabaseAccountCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <returns> Returns a <see cref="RestorableDatabaseAccountCollection" /> object. </returns>
-        public static RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts(this Subscription subscription)
+        public static RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts(this Subscription subscription, string location)
         {
-            return new RestorableDatabaseAccountCollection(subscription);
+            return new RestorableDatabaseAccountCollection(subscription, location);
         }
         #endregion
 
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetDatabaseAccountByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetDatabaseAccountsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DatabaseAccount.ResourceType);
             filters.SubstringFilter = filter;
@@ -122,14 +123,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetDatabaseAccountByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetDatabaseAccountsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DatabaseAccount.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the RestorableDatabaseAccountDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the RestorableDatabaseAccountData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
 
-        /// <summary> Lists the RestorableDatabaseAccountDatas for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the RestorableDatabaseAccountData for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetRestorableDatabaseAccountByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetRestorableDatabaseAccountsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(RestorableDatabaseAccount.ResourceType);
             filters.SubstringFilter = filter;
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetRestorableDatabaseAccountByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetRestorableDatabaseAccountsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(RestorableDatabaseAccount.ResourceType);
             filters.SubstringFilter = filter;

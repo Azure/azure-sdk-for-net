@@ -43,7 +43,6 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
@@ -117,6 +116,18 @@
       "words": [
         "apim",
         "nigiri"
+      ]
+    },
+    {
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
+      "words": [
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse"
       ]
     },
     {
@@ -233,6 +244,35 @@
         "Rehydrated",
         "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "adla",
+        "adls",
+        "byoa",
+        "distcp",
+        "eloqua",
+        "exfiltration",
+        "fqdns",
+        "hana",
+        "hcatalog",
+        "hdfs",
+        "informix",
+        "magento",
+        "netezza",
+        "oozie",
+        "responsys",
+        "sasl",
+        "ssis",
+        "ssisdb",
+        "sybase",
+        "sybase",
+        "teradata",
+        "usql",
+        "vertica",
+        "xero"
       ]
     },
     {

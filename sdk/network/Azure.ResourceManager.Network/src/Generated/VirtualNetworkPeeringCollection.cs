@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkPeeringName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkPeeringName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.ExistsAsync");
             scope.Start();
             try
             {

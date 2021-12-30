@@ -52,13 +52,13 @@ namespace Azure.Template.Generated
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
         }
 
         /// <summary> Create or update resource. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -82,7 +82,7 @@ namespace Azure.Template.Generated
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -94,7 +94,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Create or update resource. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -118,7 +118,7 @@ namespace Azure.Template.Generated
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Delete resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string resourceId, RequestContext context = null)
@@ -140,7 +140,7 @@ namespace Azure.Template.Generated
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(resourceId);
+                using HttpMessage message = CreateDeleteRequest(resourceId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -152,7 +152,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Delete resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
 #pragma warning disable AZC0002
         public virtual Response Delete(string resourceId, RequestContext context = null)
@@ -162,7 +162,7 @@ namespace Azure.Template.Generated
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(resourceId);
+                using HttpMessage message = CreateDeleteRequest(resourceId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -174,7 +174,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Retrieves information about the resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -193,7 +193,7 @@ namespace Azure.Template.Generated
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetResourceRequest(resourceId);
+                using HttpMessage message = CreateGetResourceRequest(resourceId, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -205,7 +205,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Retrieves information about the resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -224,7 +224,7 @@ namespace Azure.Template.Generated
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetResourceRequest(resourceId);
+                using HttpMessage message = CreateGetResourceRequest(resourceId, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -235,7 +235,7 @@ namespace Azure.Template.Generated
         }
 
         /// <summary> Retrieves the list of resources. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -260,8 +260,8 @@ namespace Azure.Template.Generated
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetResourcesRequest()
-                        : CreateGetResourcesNextPageRequest(nextLink);
+                        ? CreateGetResourcesRequest(context)
+                        : CreateGetResourcesNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -270,7 +270,7 @@ namespace Azure.Template.Generated
         }
 
         /// <summary> Retrieves the list of resources. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -295,8 +295,8 @@ namespace Azure.Template.Generated
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetResourcesRequest()
-                        : CreateGetResourcesNextPageRequest(nextLink);
+                        ? CreateGetResourcesRequest(context)
+                        : CreateGetResourcesNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -304,9 +304,9 @@ namespace Azure.Template.Generated
             }
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content)
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -320,9 +320,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateGetResourcesRequest()
+        internal HttpMessage CreateGetResourcesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -334,9 +334,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceId)
+        internal HttpMessage CreateDeleteRequest(string resourceId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -348,9 +348,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateGetResourceRequest(string resourceId)
+        internal HttpMessage CreateGetResourceRequest(string resourceId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -363,9 +363,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateGetResourcesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetResourcesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             if (linkConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(linkConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             if (linkConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(linkConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Ext
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure.Samples", "Microsoft.Extensions.Azure\samples\Microsoft.Extensions.Azure.Samples.csproj", "{D131D37E-9E4E-4511-BBB1-28F9DC8C76CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -243,6 +245,18 @@ Global
 		{D131D37E-9E4E-4511-BBB1-28F9DC8C76CC}.Release|x64.Build.0 = Release|Any CPU
 		{D131D37E-9E4E-4511-BBB1-28F9DC8C76CC}.Release|x86.ActiveCfg = Release|Any CPU
 		{D131D37E-9E4E-4511-BBB1-28F9DC8C76CC}.Release|x86.Build.0 = Release|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Debug|x64.Build.0 = Debug|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Debug|x86.Build.0 = Debug|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Release|x64.ActiveCfg = Release|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Release|x64.Build.0 = Release|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0D83FD0-44E7-4F8E-939F-8D8FDB2CCBAD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

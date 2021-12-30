@@ -31,6 +31,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubAuthenticate
+            // Create a WebPubSubServiceClient that will authenticate using a key credential.
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
             #endregion
         }

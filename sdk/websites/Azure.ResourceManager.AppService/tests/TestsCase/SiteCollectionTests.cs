@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var container = await GetSiteCollectionAsync();
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(siteName, input);
             WebSite site = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(siteName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(siteName + "1"));
+            Assert.IsTrue(await container.ExistsAsync(siteName));
+            Assert.IsFalse(await container.ExistsAsync(siteName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
     }
 }

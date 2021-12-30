@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task Teardown()
         {
-            if (await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName))
+            if (await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName))
             {
                 AzureFirewall firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
                 await firewall.DeleteAsync();
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Name = "fwpip",
                 PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
-                Subnet = new WritableSubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
+                Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
             });
             var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(_firewallName, firewallData)).WaitForCompletionAsync();
             return firewallLro.Value;
@@ -135,11 +136,11 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             await CreateFirewallAsync();
-            Assert.True(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName));
-            Assert.False(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName + "0"));
+            Assert.True(await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName));
+            Assert.False(await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName + "0"));
         }
 
         [Test]

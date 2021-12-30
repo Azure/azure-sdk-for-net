@@ -17,8 +17,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2020-10-01T00:00:00Z",
-        "endTime": "2020-10-31T00:00:00Z",
+        "startTime": "2020-10-01T00:00:00.0000000Z",
+        "endTime": "2020-10-31T00:00:00.0000000Z",
         "dimensionName": "city"
       },
       "StatusCode": 200,

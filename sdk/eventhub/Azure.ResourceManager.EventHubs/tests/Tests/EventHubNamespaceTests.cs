@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate if created successfully
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
-            Assert.IsTrue(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
             VerifyNamespaceProperties(eventHubNamespace, true);
 
             //delete namespace
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate if deleted successfully
             eventHubNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
             Assert.IsNull(eventHubNamespace);
-            Assert.IsFalse(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 1);
             Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //set network rule set
             string subscriptionId = DefaultSubscription.Id.ToString();
-            string subnetId1 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1";
-            string subnetId2 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2";
-            string subnetId3 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3";
+            ResourceIdentifier subnetId1 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1");
+            ResourceIdentifier subnetId2 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2");
+            ResourceIdentifier subnetId3 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3");
             NetworkRuleSetData parameter = new NetworkRuleSetData()
             {
                 DefaultAction = DefaultAction.Deny,

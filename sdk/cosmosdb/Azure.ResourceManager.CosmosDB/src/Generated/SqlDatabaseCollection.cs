@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string databaseName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlDatabaseCollection.ExistsAsync");
             scope.Start();
             try
             {

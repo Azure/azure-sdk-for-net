@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a AppServicePlan along with the instance operations that can be performed on it. </summary>
     public partial class AppServicePlan : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AppServicePlan"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AppServicePlansRestOperations _appServicePlansRestClient;
         private readonly AppServicePlanData _data;
@@ -702,11 +708,11 @@ namespace Azure.ResourceManager.AppService
 
         #region HybridConnectionLimits
 
-        /// <summary> Gets a collection of HybridConnectionLimits in the AppServicePlan. </summary>
-        /// <returns> An object representing collection of HybridConnectionLimits and their operations over a AppServicePlan. </returns>
-        public HybridConnectionLimitsCollection GetHybridConnectionLimits()
+        /// <summary> Gets an object representing a HybridConnectionLimits along with the instance operations that can be performed on it in the AppServicePlan. </summary>
+        /// <returns> Returns a <see cref="HybridConnectionLimits" /> object. </returns>
+        public HybridConnectionLimits GetHybridConnectionLimits()
         {
-            return new HybridConnectionLimitsCollection(this);
+            return new HybridConnectionLimits(this, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
         #endregion
 

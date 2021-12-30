@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate if successfully created
             StorageQueue queue2 = await _storageQueueCollection.GetAsync(storageQueueName);
             AssertStorageQueueEqual(queue1, queue2);
-            Assert.IsTrue(await _storageQueueCollection.CheckIfExistsAsync(storageQueueName));
-            Assert.IsFalse(await _storageQueueCollection.CheckIfExistsAsync(storageQueueName + "1"));
+            Assert.IsTrue(await _storageQueueCollection.ExistsAsync(storageQueueName));
+            Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName + "1"));
             StorageQueueData queueData = queue2.Data;
             Assert.IsEmpty(queueData.Metadata);
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Tests
             await queue1.DeleteAsync();
 
             //validate if successfully deleted
-            Assert.IsFalse(await _storageQueueCollection.CheckIfExistsAsync(storageQueueName));
+            Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName));
             StorageQueue queue3 = await _storageQueueCollection.GetIfExistsAsync(storageQueueName);
             Assert.IsNull(queue3);
         }

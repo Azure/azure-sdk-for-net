@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteInstance along with the instance operations that can be performed on it. </summary>
     public partial class SiteInstance : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteInstance"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly WebSiteInstanceStatusData _data;
@@ -147,11 +153,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteInstanceExtension
 
-        /// <summary> Gets a collection of SiteInstanceExtensions in the SiteInstance. </summary>
-        /// <returns> An object representing collection of SiteInstanceExtensions and their operations over a SiteInstance. </returns>
-        public SiteInstanceExtensionCollection GetSiteInstanceExtensions()
+        /// <summary> Gets an object representing a SiteInstanceExtension along with the instance operations that can be performed on it in the SiteInstance. </summary>
+        /// <returns> Returns a <see cref="SiteInstanceExtension" /> object. </returns>
+        public SiteInstanceExtension GetSiteInstanceExtension()
         {
-            return new SiteInstanceExtensionCollection(this);
+            return new SiteInstanceExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
         #endregion
 

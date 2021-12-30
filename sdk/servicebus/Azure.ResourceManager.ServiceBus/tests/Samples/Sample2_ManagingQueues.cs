@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             {
                 Console.WriteLine("queue 'foo' exists");
             }
-            if (await serviceBusQueueCollection.CheckIfExistsAsync("bar"))
+            if (await serviceBusQueueCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("queue 'bar' exists");
             }

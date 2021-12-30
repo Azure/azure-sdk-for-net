@@ -40,11 +40,18 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
     $cluster = RunOrExitOnFailure az aks list -g $clusterGroup --subscription $subscription -o json
     $clusterName = ($cluster | ConvertFrom-Json).name
 
+    $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json
+    $defaultNamespace = $kubeContext.contexts.Where({ $_.name -eq $clusterName }).context.namespace
+
     RunOrExitOnFailure az aks get-credentials `
         -n "$clusterName" `
         -g "$clusterGroup" `
         --subscription "$subscription" `
         --overwrite-existing
+
+    if ($defaultNamespace) {
+        RunOrExitOnFailure kubectl config set-context $clusterName --namespace $defaultNamespace
+    }
 
     if ($pushImages) {
         $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
@@ -63,7 +70,7 @@ function DeployStressTests(
     [string]$deployId = 'local',
     [switch]$login,
     [string]$subscription = '',
-    [switch]$ci
+    [switch]$CI
 ) {
     if ($environment -eq 'test') {
         if ($clusterGroup -or $subscription) {
@@ -89,19 +96,25 @@ function DeployStressTests(
         if (!$clusterGroup -or !$subscription) {
             throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not test or prod."
         }
-        Login $subscription $clusterGroup $pushImages
+        Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
     }
 
     RunOrExitOnFailure helm repo add stress-test-charts https://stresstestcharts.blob.core.windows.net/helm/
     Run helm repo update
     if ($LASTEXITCODE) { return $LASTEXITCODE }
 
-    $pkgs = FindStressPackages $searchDirectory $filters $CI
+    $pkgs = FindStressPackages -directory $searchDirectory -filters $filters -CI:$CI
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
         Write-Host "Deploying stress test at '$($pkg.Directory)'"
-        DeployStressPackage $pkg $deployId $environment $repository $pushImages $login
+        DeployStressPackage `
+            -pkg $pkg `
+            -deployId $deployId `
+            -environment $environment `
+            -repositoryBase $repository `
+            -pushImages:$pushImages `
+            -login:$login
     }
 
     Write-Host "Releases deployed by $deployId"

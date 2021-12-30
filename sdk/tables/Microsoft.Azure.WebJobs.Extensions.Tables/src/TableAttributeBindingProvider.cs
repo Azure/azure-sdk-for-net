@@ -1,32 +1,31 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
-using Newtonsoft.Json.Linq;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+using Microsoft.Azure.WebJobs.Host;
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class TableAttributeBindingProvider : IBindingProvider
     {
         private readonly ITableEntityArgumentBindingProvider _entityBindingProvider;
         private readonly INameResolver _nameResolver;
-        private readonly StorageAccountProvider _accountProvider;
-        public TableAttributeBindingProvider(INameResolver nameResolver, StorageAccountProvider accountProvider)
+        private readonly TablesAccountProvider _accountProvider;
+
+        public TableAttributeBindingProvider(INameResolver nameResolver, TablesAccountProvider accountProvider)
         {
             _nameResolver = nameResolver;
             _accountProvider = accountProvider ?? throw new ArgumentNullException(nameof(accountProvider));
             _entityBindingProvider =
                 new CompositeEntityArgumentBindingProvider(
-                new TableEntityArgumentBindingProvider(),
-                new PocoEntityArgumentBindingProvider()); // Supports all types; must come after other providers
+                    new TableEntityArgumentBindingProvider(),
+                    new PocoEntityArgumentBindingProvider()); // Supports all types; must come after other providers
         }
+
         private IBinding TryCreate(BindingProviderContext context)
         {
             ParameterInfo parameter = context.Parameter;
@@ -35,11 +34,9 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 return null;
             }
+
             string tableName = Resolve(tableAttribute.TableName);
             var account = _accountProvider.Get(tableAttribute.Connection, _nameResolver);
-            // requires storage account with table support
-            // account.AssertTypeOneOf(StorageAccountType.GeneralPurpose); $$$
-            CloudTableClient client = account.CreateCloudTableClient();
             bool bindsToEntireTable = tableAttribute.RowKey == null;
             IBinding binding;
             if (bindsToEntireTable)
@@ -59,20 +56,25 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                 {
                     throw new InvalidOperationException("Can't bind Table entity to type '" + parameter.ParameterType + "'.");
                 }
-                binding = new TableEntityBinding(parameter.Name, argumentBinding, client, path);
+
+                binding = new TableEntityBinding(parameter.Name, argumentBinding, account, path);
             }
+
             return binding;
         }
+
         public Task<IBinding> TryCreateAsync(BindingProviderContext context)
         {
             return Task.Run(() => TryCreate(context));
         }
+
         private string Resolve(string name)
         {
             if (_nameResolver == null)
             {
                 return name;
             }
+
             return _nameResolver.ResolveWholeString(name);
         }
     }

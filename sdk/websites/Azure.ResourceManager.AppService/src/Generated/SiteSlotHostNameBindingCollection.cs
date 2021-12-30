@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string hostName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string hostName, CancellationToken cancellationToken = default)
         {
             if (hostName == null)
             {
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
             if (hostName == null)
             {
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.ExistsAsync");
             scope.Start();
             try
             {

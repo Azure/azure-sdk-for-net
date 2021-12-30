@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
-namespace Microsoft.Azure.WebJobs.Host.Tables
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class CompositeEntityArgumentBindingProvider : ITableEntityArgumentBindingProvider
     {

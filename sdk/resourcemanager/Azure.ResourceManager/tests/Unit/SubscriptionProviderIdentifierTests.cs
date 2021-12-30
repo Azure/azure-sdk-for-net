@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = x;
+            ResourceIdentifier z = new ResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = x;
+            ResourceIdentifier z = new ResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = x;
+            ResourceIdentifier z = new ResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
