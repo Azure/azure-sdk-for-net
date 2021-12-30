@@ -39,7 +39,7 @@ The default transport type is `Transient` mode. You should add the following ent
     "AzureSignalRServiceTransportType":"Persistent"
 }
 ```
->Notes for switching from `Transient` mode to `Persistent` mode on **Azure Functions runtime V3**:
+> Notes for switching from `Transient` mode to `Persistent` mode on **Azure Functions runtime v3**:
 >
 > Under `Transient` mode, the `Newtonsoft.Json` library is used to serialize arguments of hub methods. However, under `Persistent` mode, the `System.Text.Json` library is used as default on Azure Functions runtime v3. `System.Text.Json` has some key differences in default behavior with `Newtonsoft.Json`. If you want to use `Newtonsoft.Json` under `Persistent` mode, you can add the configuration item `"Azure:SignalR:HubProtocol": "NewtonsoftJson"` in the `local.settings.json` file or `Azure__SignalR__HubProtocol=NewtonsoftJson` in the Azure portal.
 
@@ -84,9 +84,10 @@ Here's an example to configure Azure Identity for a SignalR endpoint named "Endp
   }
 }
 ```
+
 The `serviceUri` is required. Other items, such as `clientId` and `clientSecret`, are optional depending upon which credentials you want to use.
 
-For more information, see [Common properties for identity-based connections](https://docs.microsoft.com/azure/azure-functions/functions-reference?tabs=azurewebjobsstorage#common-properties-for-identity-based-connections). Note that you should replace `<CONNECTION_NAME_PREFIX>` there with `Azure__SignalR__Endpoints__<EndpointName>`.
+For more information, see [Common properties for Identity-based connections](https://docs.microsoft.com/azure/azure-functions/functions-reference?tabs=azurewebjobsstorage#common-properties-for-identity-based-connections). Note that you should replace `<CONNECTION_NAME_PREFIX>` there with `Azure__SignalR__Endpoints__<EndpointName>`.
 
     
 ## Routing
@@ -125,7 +126,7 @@ namespace SimpleChatV3
 
 #### Customize routing in other languages
 
-For non-.NET languages, we support specifying target endpoints in each request. You will use new binding types to get endpoint information.
+For non-.NET languages, we support specifying target endpoints in each request. You'll use new binding types to get endpoint information.
 
 ##### Client routing
 The `SignalRConnectionInfo` binding selects one endpoint according the default routing rule. If you want to customize routing rule, you should use `SignalRNegotiation` binding instead of `SignalRConnectionInfo` binding.
