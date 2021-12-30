@@ -18,8 +18,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
+            /// <summary> Service version "2021-03-07". </summary>
+            V2021_03_07 = 1,
             /// <summary> Service version "2022-01-11-preview". </summary>
-            V2022_01_11_preview = 1,
+            V2022_01_11_preview = 2,
         }
 
         internal string Version { get; }
@@ -29,6 +31,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             Version = version switch
             {
+                ServiceVersion.V2021_03_07 => "2021-03-07",
                 ServiceVersion.V2022_01_11_preview => "2022-01-11-preview",
                 _ => throw new NotSupportedException()
             };

@@ -93,7 +93,8 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2022_01_11_preview) { }
         public enum ServiceVersion
         {
-            V2022_01_11_preview = 1,
+            V2021_03_07 = 1,
+            V2022_01_11_preview = 2,
         }
     }
     public partial class PhoneNumberSearchOptions
