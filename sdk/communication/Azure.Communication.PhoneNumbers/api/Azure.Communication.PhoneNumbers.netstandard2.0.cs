@@ -90,11 +90,10 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class PhoneNumbersClientOptions : Azure.Core.ClientOptions
     {
-        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2022_01_11_PREVIEW_2) { }
+        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2022_01_11_preview) { }
         public enum ServiceVersion
         {
-            V2021_03_07 = 1,
-            V2022_01_11_PREVIEW_2 = 2,
+            V2022_01_11_preview = 1,
         }
     }
     public partial class PhoneNumberSearchOptions
