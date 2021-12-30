@@ -49,7 +49,7 @@ namespace BatchClientIntegrationTests
                     containerClient.CreateIfNotExists();
                     string sasUri = BlobUtilities.GetWriteableSasUri(containerClient, storageAccount);
 
-                    CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
+                    CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation { PoolId = poolFixture.PoolId });
                     createJob.Commit();
 
                     const string blobPrefix = "foo/bar";
@@ -70,15 +70,15 @@ namespace BatchClientIntegrationTests
 
                     batchCli.JobOperations.AddTask(jobId, unboundTask);
 
-                    var tasks = batchCli.JobOperations.ListTasks(jobId);
+                    IPagedEnumerable<CloudTask> tasks = batchCli.JobOperations.ListTasks(jobId);
 
-                    var monitor = batchCli.Utilities.CreateTaskStateMonitor();
+                    TaskStateMonitor monitor = batchCli.Utilities.CreateTaskStateMonitor();
                     monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(1));
 
                     // Ensure that the correct files got uploaded
-                    var blobs = containerClient.GetAllBlobs();
+                    List<BlobItem> blobs = containerClient.GetAllBlobs();
                     Assert.Equal(4, blobs.Count()); //There are 4 .txt files created, stdout, stderr, fileuploadout, and fileuploaderr
-                    foreach (var blob in blobs)
+                    foreach (BlobItem blob in blobs)
                     {
                         Assert.StartsWith(blobPrefix, blob.Name);
                         Assert.Equal("test-type", blob.Properties.ContentType); // Ensure test Upload header was applied to blob.
@@ -106,24 +106,21 @@ namespace BatchClientIntegrationTests
 
                 try
                 {
-                    var job = client.JobOperations.CreateJob(jobId, new PoolInformation()
-                    {
-                        PoolId = poolFixture.PoolId
-                    });
+                    CloudJob job = client.JobOperations.CreateJob(jobId, new PoolInformation { PoolId = poolFixture.PoolId });
                     job.Commit();
 
-                    var newTask = new CloudTask("a", "cat /etc/centos-release")
+                    CloudTask newTask = new CloudTask("a", "cat /etc/centos-release")
                     {
                         ContainerSettings = new TaskContainerSettings("centos")
                     };
                     client.JobOperations.AddTask(jobId, newTask);
 
-                    var tasks = client.JobOperations.ListTasks(jobId);
+                    IPagedEnumerable<CloudTask> tasks = client.JobOperations.ListTasks(jobId);
 
-                    var monitor = client.Utilities.CreateTaskStateMonitor();
+                    TaskStateMonitor monitor = client.Utilities.CreateTaskStateMonitor();
                     monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(7));
 
-                    var task = tasks.Single();
+                    CloudTask task = tasks.Single();
                     task.Refresh();
 
                     Assert.Equal("ContainerPoolNotSupported", task.ExecutionInformation.FailureInformation.Code);
