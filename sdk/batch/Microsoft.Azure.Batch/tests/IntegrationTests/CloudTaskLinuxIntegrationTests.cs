@@ -16,6 +16,7 @@ namespace BatchClientIntegrationTests
     using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
     using Azure.Storage.Blobs;
     using System.Threading.Tasks;
+    using Azure.Storage.Blobs.Models;
 
     [Collection("SharedLinuxPoolCollection")]
     public class CloudTaskLinuxIntegrationTests
@@ -54,7 +55,10 @@ namespace BatchClientIntegrationTests
                     const string blobPrefix = "foo/bar";
                     const string taskId = "simpletask";
 
-                    OutputFileDestination destination = new OutputFileDestination(new OutputFileBlobContainerDestination(sasUri, blobPrefix));
+                    OutputFileBlobContainerDestination containerDestination = new OutputFileBlobContainerDestination(sasUri, blobPrefix);
+                    containerDestination.UploadHeaders = new List<HttpHeader> { new HttpHeader("x-ms-blob-content-type", "test-type") };
+
+                    OutputFileDestination destination = new OutputFileDestination(containerDestination);
                     OutputFileUploadOptions uploadOptions = new OutputFileUploadOptions(uploadCondition: OutputFileUploadCondition.TaskCompletion);
                     CloudTask unboundTask = new CloudTask(taskId, "echo test")
                     {
@@ -77,6 +81,7 @@ namespace BatchClientIntegrationTests
                     foreach (var blob in blobs)
                     {
                         Assert.StartsWith(blobPrefix, blob.Name);
+                        Assert.Equal("test-type", blob.Properties.ContentType); // Ensure test Upload header was applied to blob.
                     }
                 }
                 finally
