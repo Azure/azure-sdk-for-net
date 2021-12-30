@@ -25,10 +25,8 @@ To authenticate to Azure and create an `ArmClient`, do the following:
 ```C# Snippet:Readme_AuthClient
 using Azure.Identity;
 using Azure.ResourceManager;
-
-// Code omitted for brevity
-
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            // Code omitted for brevity
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
 Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
@@ -50,8 +48,7 @@ Documentation is available to help you learn how to use this package
 ### Create a DNS zone
 
 Before creating a DNS zone, we need to have a resource group.
-
-```C# Snippet:Readme_GetResourceGroupCollection
+```C# Snippet:Readme_CreateResourceGroupCollection
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
@@ -62,7 +59,16 @@ ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsyn
 ResourceGroup resourceGroup = lro.Value;
 ```
 
-```C# Snippet:Managing_DNS_Zone_CreateADNSZone
+```C# Snippet:Managing_DNSZones_CreateADNSZone
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
+// With the collection, we can create a new resource group with an specific name
+string rgName = "myRgName";
+Location location = Location.WestUS2;
+ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroup resourceGroup = lro.Value;
 DnsZoneCollection zoneCollection = resourceGroup.GetDnsZones();
 string dnsZoneName = "test.domain";
 DnsZoneData input = new DnsZoneData("global");
@@ -72,7 +78,7 @@ DnsZone zone = zlro.Value;
 
 ### Update a DNS zone
 
-```C# Snippet:Readme_GetResourceGroupCollection
+```C# Snippet:Managing_DNSZones_UpdateADNSZone
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup collection for that subscription
@@ -92,7 +98,7 @@ DnsZone updatedDnsZone = await zone.UpdateAsync(zoneUpdate);
 
 ### Delete a DNS zone
 
-```C# Snippet:Readme_GetResourceGroupCollection
+```C# Snippet:Managing_DNSZones_DeleteADNSZone
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup collection for that subscription
@@ -107,6 +113,7 @@ string dnsZoneName = "test.domain";
 DnsZone zone = await zoneCollection.GetAsync(dnsZoneName);
 await zone.DeleteAsync();
 ```
+
 ## Troubleshooting
 
 -   File an issue via [Github
@@ -118,6 +125,10 @@ await zone.DeleteAsync();
 
 ## Next steps
 
+### More sample code
+- [Managing DNS Zones](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dns/Azure.ResourceManager.Dns/samples/Sample1_ManagingDNSZones.md)
+- [Managing DNS Records](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dns/Azure.ResourceManager.Dns/samples/Sample2_ManagingDNSRecords.md)
+### Additional Documentation
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
 
 ## Contributing
