@@ -7,6 +7,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdCustomDomainData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string customDomainName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdCustomDomainDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdCustomDomainDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomain> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -22,10 +23,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdCustomDomainCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdCustomDomainCreateOperation CreateOrUpdate(string customDomainName, Azure.ResourceManager.Cdn.AfdCustomDomainData customDomain, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdCustomDomainCreateOperation> CreateOrUpdateAsync(string customDomainName, Azure.ResourceManager.Cdn.AfdCustomDomainData customDomain, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomain> Get(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdCustomDomain> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdCustomDomain> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Cdn
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpoint> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdEndpoint>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdEndpointDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdEndpointDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpoint> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -80,10 +82,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdEndpointCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdEndpointCreateOperation CreateOrUpdate(string endpointName, Azure.ResourceManager.Cdn.AfdEndpointData endpointInput, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdEndpointCreateOperation> CreateOrUpdateAsync(string endpointName, Azure.ResourceManager.Cdn.AfdEndpointData endpointInput, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpoint> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdEndpoint> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdEndpoint> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -110,6 +112,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdOriginData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdOriginDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdOriginDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOrigin> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -123,10 +126,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdOriginCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdOriginCreateOperation CreateOrUpdate(string originName, Azure.ResourceManager.Cdn.AfdOriginData origin, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdOriginCreateOperation> CreateOrUpdateAsync(string originName, Azure.ResourceManager.Cdn.AfdOriginData origin, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOrigin> Get(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdOrigin> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdOrigin> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -159,6 +162,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdOriginGroupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdOriginGroupDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdOriginGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroup> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -175,10 +179,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdOriginGroupCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdOriginGroupCreateOperation CreateOrUpdate(string originGroupName, Azure.ResourceManager.Cdn.AfdOriginGroupData originGroup, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdOriginGroupCreateOperation> CreateOrUpdateAsync(string originGroupName, Azure.ResourceManager.Cdn.AfdOriginGroupData originGroup, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroup> Get(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdOriginGroup> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdOriginGroup> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -207,6 +211,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdRouteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdRouteDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdRouteDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRoute> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -220,10 +225,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdRouteCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdRouteCreateOperation CreateOrUpdate(string routeName, Azure.ResourceManager.Cdn.AfdRouteData route, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdRouteCreateOperation> CreateOrUpdateAsync(string routeName, Azure.ResourceManager.Cdn.AfdRouteData route, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRoute> Get(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdRoute> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdRoute> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -259,6 +264,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdRuleData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdRuleDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdRuleDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRule> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -272,10 +278,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdRuleCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdRuleCreateOperation CreateOrUpdate(string ruleName, Azure.ResourceManager.Cdn.AfdRuleData rule, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdRuleCreateOperation> CreateOrUpdateAsync(string ruleName, Azure.ResourceManager.Cdn.AfdRuleData rule, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRule> Get(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdRule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdRule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -303,6 +309,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdRuleSetData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdRuleSetDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdRuleSetDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSet> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -317,10 +324,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdRuleSetCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdRuleSetCreateOperation CreateOrUpdate(string ruleSetName, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdRuleSetCreateOperation> CreateOrUpdateAsync(string ruleSetName, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSet> Get(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdRuleSet> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdRuleSet> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -344,6 +351,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdSecretData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string secretName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdSecretDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdSecretDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecret> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -355,10 +363,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdSecretCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdSecretCreateOperation CreateOrUpdate(string secretName, Azure.ResourceManager.Cdn.AfdSecretData secret, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdSecretCreateOperation> CreateOrUpdateAsync(string secretName, Azure.ResourceManager.Cdn.AfdSecretData secret, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecret> Get(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdSecret> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdSecret> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -383,6 +391,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.AfdSecurityPolicyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdSecurityPolicyDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdSecurityPolicyDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicy> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -396,10 +405,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected AfdSecurityPolicyCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.AfdSecurityPolicyCreateOperation CreateOrUpdate(string securityPolicyName, Azure.ResourceManager.Cdn.AfdSecurityPolicyData securityPolicy, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.AfdSecurityPolicyCreateOperation> CreateOrUpdateAsync(string securityPolicyName, Azure.ResourceManager.Cdn.AfdSecurityPolicyData securityPolicy, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicy> Get(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdSecurityPolicy> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdSecurityPolicy> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -442,6 +451,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.CdnCustomDomainData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnCustomDomainDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnCustomDomainDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnCustomDomainDisableCustomHttpsOperation DisableCustomHttps(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -457,10 +467,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected CdnCustomDomainCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnCustomDomainCreateOperation CreateOrUpdate(string customDomainName, Azure.ResourceManager.Cdn.Models.CustomDomainOptions customDomainProperties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnCustomDomainCreateOperation> CreateOrUpdateAsync(string customDomainName, Azure.ResourceManager.Cdn.Models.CustomDomainOptions customDomainProperties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnCustomDomain> Get(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnCustomDomain> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnCustomDomain> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -490,6 +500,7 @@ namespace Azure.ResourceManager.Cdn
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnEndpoint> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnEndpoint>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnEndpointDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnEndpointDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnEndpoint> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -522,10 +533,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected CdnEndpointCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnEndpointCreateOperation CreateOrUpdate(string endpointName, Azure.ResourceManager.Cdn.CdnEndpointData endpointInput, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnEndpointCreateOperation> CreateOrUpdateAsync(string endpointName, Azure.ResourceManager.Cdn.CdnEndpointData endpointInput, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnEndpoint> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnEndpoint> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnEndpoint> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -566,6 +577,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.CdnOriginData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string originName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnOriginDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnOriginDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnOrigin> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -579,10 +591,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected CdnOriginCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnOriginCreateOperation CreateOrUpdate(string originName, Azure.ResourceManager.Cdn.CdnOriginData origin, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnOriginCreateOperation> CreateOrUpdateAsync(string originName, Azure.ResourceManager.Cdn.CdnOriginData origin, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnOrigin> Get(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnOrigin> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnOrigin> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -618,6 +630,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.Cdn.CdnOriginGroupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string originGroupName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnOriginGroupDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnOriginGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnOriginGroup> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -631,10 +644,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected CdnOriginGroupCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.CdnOriginGroupCreateOperation CreateOrUpdate(string originGroupName, Azure.ResourceManager.Cdn.CdnOriginGroupData originGroup, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.CdnOriginGroupCreateOperation> CreateOrUpdateAsync(string originGroupName, Azure.ResourceManager.Cdn.CdnOriginGroupData originGroup, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnOriginGroup> Get(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnOriginGroup> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnOriginGroup> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -664,6 +677,7 @@ namespace Azure.ResourceManager.Cdn
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicy> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicy>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.PolicyDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.PolicyDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicy> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -681,10 +695,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected CdnWebApplicationFirewallPolicyCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.PolicyCreateOrUpdateOperation CreateOrUpdate(string policyName, Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.PolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string policyName, Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicy, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicy> Get(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicy> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -719,6 +733,7 @@ namespace Azure.ResourceManager.Cdn
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Profile> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Profile>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.ProfileDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.ProfileDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.SsoUri> GenerateSsoUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -763,10 +778,10 @@ namespace Azure.ResourceManager.Cdn
     {
         protected ProfileCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.Models.ProfileCreateOperation CreateOrUpdate(string profileName, Azure.ResourceManager.Cdn.ProfileData profile, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Cdn.Models.ProfileCreateOperation> CreateOrUpdateAsync(string profileName, Azure.ResourceManager.Cdn.ProfileData profile, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Profile> Get(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Profile> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -798,9 +813,9 @@ namespace Azure.ResourceManager.Cdn
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Cdn.Models.CheckNameAvailabilityInput checkNameAvailabilityInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetProfileByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetProfileByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Cdn.Profile> GetProfiles(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetProfilesAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetProfilesAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Profile> GetProfilesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Cdn.Models.ResourceUsage> GetResourceUsages(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ResourceUsage> GetResourceUsagesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

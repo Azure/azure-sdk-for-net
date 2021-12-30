@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a DscpConfiguration along with the instance operations that can be performed on it. </summary>
     public partial class DscpConfiguration : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DscpConfiguration"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dscpConfigurationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DscpConfigurationRestOperations _dscpConfigurationRestClient;
         private readonly DscpConfigurationData _data;

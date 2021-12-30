@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/current";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelsRestClient;
         private readonly SensitivityLabelData _data;

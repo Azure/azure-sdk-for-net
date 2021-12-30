@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a NetworkInterfaceTapConfiguration along with the instance operations that can be performed on it. </summary>
     public partial class NetworkInterfaceTapConfiguration : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceTapConfiguration"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkInterfaceName, string tapConfigurationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NetworkInterfaceTapConfigurationsRestOperations _networkInterfaceTapConfigurationsRestClient;
         private readonly NetworkInterfaceTapConfigurationData _data;

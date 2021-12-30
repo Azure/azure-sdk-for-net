@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             var collection = await GetDedicatedHostCollectionAsync();
             var hostName = Recording.GenerateAssetName("testHost-");
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
             var lro = await collection.CreateOrUpdateAsync(hostName, input);
             DedicatedHost host = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(hostName));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(hostName + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(hostName));
+            Assert.IsFalse(await collection.ExistsAsync(hostName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]

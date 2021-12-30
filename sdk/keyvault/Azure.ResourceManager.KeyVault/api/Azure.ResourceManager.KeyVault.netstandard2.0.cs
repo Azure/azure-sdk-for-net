@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.KeyVault.DeletedManagedHsmData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.DeletedManagedHsm> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.DeletedManagedHsm>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -27,8 +28,8 @@ namespace Azure.ResourceManager.KeyVault
     {
         protected DeletedManagedHsmCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.DeletedManagedHsm> Get(string location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.KeyVault.DeletedVaultData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string vaultName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.DeletedVault> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.DeletedVault>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -59,8 +61,8 @@ namespace Azure.ResourceManager.KeyVault
     {
         protected DeletedVaultCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string location, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string location, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string location, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string location, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.DeletedVault> Get(string location, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -80,6 +82,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.KeyVault.ManagedHsmData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.ManagedHsmDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.ManagedHsmDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.ManagedHsm> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -96,10 +99,10 @@ namespace Azure.ResourceManager.KeyVault
     {
         protected ManagedHsmCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.ManagedHsmCreateOrUpdateOperation CreateOrUpdate(string name, Azure.ResourceManager.KeyVault.ManagedHsmData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.ManagedHsmCreateOrUpdateOperation> CreateOrUpdateAsync(string name, Azure.ResourceManager.KeyVault.ManagedHsmData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.ManagedHsm> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.ManagedHsm> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -124,6 +127,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpointConnectionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpointConnectionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnection> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -135,10 +139,10 @@ namespace Azure.ResourceManager.KeyVault
     {
         protected MhsmPrivateEndpointConnectionCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpointConnectionPutOperation CreateOrUpdate(string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionData properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpointConnectionPutOperation> CreateOrUpdateAsync(string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionData properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnection> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnection> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnection> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -164,6 +168,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.KeyVault.PrivateEndpointConnectionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.PrivateEndpointConnection> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -175,10 +180,10 @@ namespace Azure.ResourceManager.KeyVault
     {
         protected PrivateEndpointConnectionCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionPutOperation CreateOrUpdate(string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.PrivateEndpointConnectionData properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionPutOperation> CreateOrUpdateAsync(string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.PrivateEndpointConnectionData properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.PrivateEndpointConnection> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.PrivateEndpointConnection> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.PrivateEndpointConnection> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -206,23 +211,23 @@ namespace Azure.ResourceManager.KeyVault
     {
         public static Azure.Response<Azure.ResourceManager.KeyVault.Models.CheckNameAvailabilityResult> CheckNameAvailabilityVault(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.KeyVault.Models.VaultCheckNameAvailabilityParameters vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityVaultAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.KeyVault.Models.VaultCheckNameAvailabilityParameters vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedManagedHsmByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedManagedHsmByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.KeyVault.DeletedManagedHsmCollection GetDeletedManagedHsms(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.KeyVault.DeletedManagedHsmData> GetDeletedManagedHsms(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedManagedHsmsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedManagedHsmsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.KeyVault.DeletedManagedHsmData> GetDeletedManagedHsmsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedVaultByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedVaultByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.KeyVault.DeletedVaultCollection GetDeletedVaults(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.KeyVault.DeletedVaultData> GetDeletedVaults(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedVaultsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetDeletedVaultsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.KeyVault.DeletedVaultData> GetDeletedVaultsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetManagedHsmByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetManagedHsmByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.KeyVault.ManagedHsm> GetManagedHsms(this Azure.ResourceManager.Resources.Subscription subscription, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetManagedHsmsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetManagedHsmsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.KeyVault.ManagedHsm> GetManagedHsmsAsync(this Azure.ResourceManager.Resources.Subscription subscription, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetVaultByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetVaultByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.KeyVault.Vault> GetVaults(this Azure.ResourceManager.Resources.Subscription subscription, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetVaultsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetVaultsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.KeyVault.Vault> GetVaultsAsync(this Azure.ResourceManager.Resources.Subscription subscription, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class Vault : Azure.ResourceManager.Core.ArmResource
@@ -232,6 +237,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.KeyVault.VaultData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.VaultDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.VaultDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Vault> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -250,10 +256,10 @@ namespace Azure.ResourceManager.KeyVault
     {
         protected VaultCollection() { }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.VaultCreateOrUpdateOperation CreateOrUpdate(string vaultName, Azure.ResourceManager.KeyVault.Models.VaultCreateOrUpdateParameters parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.VaultCreateOrUpdateOperation> CreateOrUpdateAsync(string vaultName, Azure.ResourceManager.KeyVault.Models.VaultCreateOrUpdateParameters parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Vault> Get(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.Vault> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a TenantPolicyDefinition along with the instance operations that can be performed on it. </summary>
     public partial class TenantPolicyDefinition : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="TenantPolicyDefinition"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string policyDefinitionName)
+        {
+            var resourceId = $"/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyDefinitionsRestOperations _policyDefinitionsRestClient;
         private readonly PolicyDefinitionData _data;

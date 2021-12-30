@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, keyspace.Data.Options.Throughput);
 
-            bool ifExists = await CassandraKeyspaceCollection.CheckIfExistsAsync(_keyspaceName);
+            bool ifExists = await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName);
             Assert.True(ifExists);
 
             // NOT WORKING API

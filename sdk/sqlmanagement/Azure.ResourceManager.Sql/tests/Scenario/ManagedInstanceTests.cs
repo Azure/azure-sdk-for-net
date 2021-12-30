@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual("westus2", managedInstance.Data.Location.ToString());
 
             // 2.CheckIfExist
-            Assert.IsTrue(_resourceGroup.GetManagedInstances().CheckIfExists(managedInstanceName));
-            Assert.IsFalse(_resourceGroup.GetManagedInstances().CheckIfExists(managedInstanceName + "0"));
+            Assert.IsTrue(_resourceGroup.GetManagedInstances().Exists(managedInstanceName));
+            Assert.IsFalse(_resourceGroup.GetManagedInstances().Exists(managedInstanceName + "0"));
 
             // 3.Get
             var getManagedInstance = await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName);

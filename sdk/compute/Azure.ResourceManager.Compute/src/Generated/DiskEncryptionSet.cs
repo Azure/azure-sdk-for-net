@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a DiskEncryptionSet along with the instance operations that can be performed on it. </summary>
     public partial class DiskEncryptionSet : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DiskEncryptionSet"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskEncryptionSetName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiskEncryptionSetsRestOperations _diskEncryptionSetsRestClient;
         private readonly DiskEncryptionSetData _data;

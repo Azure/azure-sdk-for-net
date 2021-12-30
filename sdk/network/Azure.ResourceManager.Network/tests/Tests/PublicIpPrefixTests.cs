@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
                 }
             }).WaitForCompletionAsync();
 
-            Assert.True(await container.CheckIfExistsAsync(name));
+            Assert.True(await container.ExistsAsync(name));
 
             var prefixData = prefix.Data;
             ValidateCommon(prefixData, name);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await prefix.DeleteAsync();
 
-            Assert.False(await container.CheckIfExistsAsync(name));
+            Assert.False(await container.ExistsAsync(name));
 
             prefixes = await container.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(prefixes);

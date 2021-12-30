@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
-            bool ifExists = await SqlContainerCollection.CheckIfExistsAsync(_containerName);
+            bool ifExists = await SqlContainerCollection.ExistsAsync(_containerName);
             Assert.True(ifExists);
 
             // NOT WORKING API

@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (loadBalancerName == null)
             {
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (loadBalancerName == null)
             {
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.ExistsAsync");
             scope.Start();
             try
             {

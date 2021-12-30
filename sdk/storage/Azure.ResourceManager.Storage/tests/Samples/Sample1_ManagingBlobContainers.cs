@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             {
                 Console.WriteLine(blobContainer.Id.Name);
             }
-            if (await blobContainerCollection.CheckIfExistsAsync("bar"))
+            if (await blobContainerCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("blob container 'bar' exists");
             }

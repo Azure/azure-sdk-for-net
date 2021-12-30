@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.ExistsAsync");
             scope.Start();
             try
             {

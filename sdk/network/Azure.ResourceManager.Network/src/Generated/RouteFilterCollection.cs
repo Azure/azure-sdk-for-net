@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (routeFilterName == null)
             {
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (routeFilterName == null)
             {
                 throw new ArgumentNullException(nameof(routeFilterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterCollection.ExistsAsync");
             scope.Start();
             try
             {

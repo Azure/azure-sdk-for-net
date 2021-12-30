@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a StorageQueue along with the instance operations that can be performed on it. </summary>
     public partial class StorageQueue : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="StorageQueue"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string queueName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly QueueRestOperations _queueRestClient;
         private readonly StorageQueueData _data;

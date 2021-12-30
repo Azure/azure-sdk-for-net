@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteVirtualNetworkConnectionGateway along with the instance operations that can be performed on it. </summary>
     public partial class SiteVirtualNetworkConnectionGateway : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteVirtualNetworkConnectionGateway"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly VnetGatewayData _data;

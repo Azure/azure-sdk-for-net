@@ -63,8 +63,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
             else
             {
-                // TODO: this is new. Who handled this before?
-                // TODO: indented?
                 destination[memberInfo.Name] = JsonConvert.SerializeObject(value, Formatting.Indented);
             }
         }
@@ -109,14 +107,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 value = (T)(object) source.GetInt64(key);
             }
             else if (typeof(T) == typeof(long?))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(ulong))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(ulong?))
             {
                 value = (T)(object) source.GetInt64(key);
             }
@@ -187,9 +177,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)(object) new ETag(source.GetString(key));
             }
-            else if (typeof(T) == typeof(TimeSpan))
+            else
             {
-                // TODO: this is new. Who handled this before?
                 value = JsonConvert.DeserializeObject<T>(source.GetString(key));
             }
 

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a DeploymentScript along with the instance operations that can be performed on it. </summary>
     public partial class DeploymentScript : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DeploymentScript"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeploymentScriptsRestOperations _deploymentScriptsRestClient;
         private readonly DeploymentScriptData _data;

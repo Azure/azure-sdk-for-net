@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a Route along with the instance operations that can be performed on it. </summary>
     public partial class Route : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="Route"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string routeTableName, string routeName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes/{routeName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RoutesRestOperations _routesRestClient;
         private readonly RouteData _data;

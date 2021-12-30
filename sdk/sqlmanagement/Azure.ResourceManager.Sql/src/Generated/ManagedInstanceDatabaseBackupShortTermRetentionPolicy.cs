@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedInstanceDatabaseBackupShortTermRetentionPolicy along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstanceDatabaseBackupShortTermRetentionPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string policyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedBackupShortTermRetentionPoliciesRestOperations _managedBackupShortTermRetentionPoliciesRestClient;
         private readonly ManagedBackupShortTermRetentionPolicyData _data;

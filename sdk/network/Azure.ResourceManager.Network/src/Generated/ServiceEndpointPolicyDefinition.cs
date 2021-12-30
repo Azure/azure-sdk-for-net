@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ServiceEndpointPolicyDefinition along with the instance operations that can be performed on it. </summary>
     public partial class ServiceEndpointPolicyDefinition : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceEndpointPolicyDefinition"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServiceEndpointPolicyDefinitionsRestOperations _serviceEndpointPolicyDefinitionsRestClient;
         private readonly ServiceEndpointPolicyDefinitionData _data;

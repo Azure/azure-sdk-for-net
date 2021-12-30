@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A Class representing a ServiceBusRule along with the instance operations that can be performed on it. </summary>
     public partial class ServiceBusRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceBusRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RulesRestOperations _rulesRestClient;
         private readonly ServiceBusRuleData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a StaticSiteCustomDomainOverviewARMResource along with the instance operations that can be performed on it. </summary>
     public partial class StaticSiteCustomDomainOverviewARMResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="StaticSiteCustomDomainOverviewARMResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string domainName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly StaticSitesRestOperations _staticSitesRestClient;
         private readonly StaticSiteCustomDomainOverviewARMResourceData _data;

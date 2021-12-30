@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a VpnSite along with the instance operations that can be performed on it. </summary>
     public partial class VpnSite : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VpnSite"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vpnSiteName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VpnSitesRestOperations _vpnSitesRestClient;
         private readonly VpnSiteData _data;

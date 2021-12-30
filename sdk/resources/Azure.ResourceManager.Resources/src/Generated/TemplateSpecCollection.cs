@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (templateSpecName == null)
             {
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (templateSpecName == null)
             {
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.ExistsAsync");
             scope.Start();
             try
             {

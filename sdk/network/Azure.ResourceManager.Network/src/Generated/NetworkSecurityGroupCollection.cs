@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkSecurityGroupName == null)
             {
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkSecurityGroupName == null)
             {
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.ExistsAsync");
             scope.Start();
             try
             {
