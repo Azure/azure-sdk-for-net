@@ -191,4 +191,5 @@ namespace Azure.ResourceManager.Resources
     //         return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
     //     }
     // }
+    }
 }

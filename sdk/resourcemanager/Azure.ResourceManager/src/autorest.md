@@ -18,6 +18,7 @@ mgmt-debug:
 batch:
   - tag: package-common-type
   - tag: package-resources
+  - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -227,4 +228,30 @@ directive:
     where: $.paths..parameters[?(@.name === "scope")]
     transform: >
       $["x-ms-skip-url-encoding"] = true
+```
+
+### Tag: package-management
+
+These settings apply only when `--tag=package-management` is specified on the command line.
+
+``` yaml $(tag) == 'package-management'
+output-folder: $(this-folder)/ManagementGroup/Generated
+namespace: Azure.ResourceManager.Management
+title: ManagementClient
+input-file:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/94a37114e8f4067410b52d3b1c75aa6e09180658/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
+model-namespace: false
+public-clients: false
+head-as-boolean: false
+list-exception:
+  - /providers/Microsoft.Management/managementGroups/{groupId} # the list method returns a different schema.
+request-path-to-parent:
+  /providers/Microsoft.Management/managementGroups: /providers/Microsoft.Management/managementGroups/{groupId}
+operation-groups-to-omit:
+  - ManagementCheck
+directive:
+  - remove-operation: PolicyAssignments_DeleteById
+  - rename-operation:
+      from: CheckNameAvailability
+      to: ManagementCheck_CheckNameAvailability
 ```

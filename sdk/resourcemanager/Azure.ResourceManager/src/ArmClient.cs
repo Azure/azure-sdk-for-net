@@ -160,7 +160,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the resourcegroup. </returns>
         public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
-            return new ResourceGroup(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new ResourceGroup(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
 
         /// <summary>
