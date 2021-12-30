@@ -12,14 +12,16 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
 
     /// <summary>
-    /// Defines values for SuppressionType.
+    /// Defines values for DaysOfWeek.
     /// </summary>
-    public static class SuppressionType
+    public static class DaysOfWeek
     {
-        public const string Always = "Always";
-        public const string Once = "Once";
-        public const string Daily = "Daily";
-        public const string Weekly = "Weekly";
-        public const string Monthly = "Monthly";
+        public const string Sunday = "Sunday";
+        public const string Monday = "Monday";
+        public const string Tuesday = "Tuesday";
+        public const string Wednesday = "Wednesday";
+        public const string Thursday = "Thursday";
+        public const string Friday = "Friday";
+        public const string Saturday = "Saturday";
     }
 }

@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// <param name="nextLink">The URI to fetch the next page of alerts.
         /// Call ListNext() with this URI to fetch the next page
         /// alerts.</param>
-        public SmartGroup(string id = default(string), string type = default(string), string name = default(string), int? alertsCount = default(int?), string smartGroupState = default(string), string severity = default(string), System.DateTime? startDateTime = default(System.DateTime?), System.DateTime? lastModifiedDateTime = default(System.DateTime?), string lastModifiedUserName = default(string), IList<SmartGroupAggregatedProperty> resources = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> resourceTypes = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> resourceGroups = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> monitorServices = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> monitorConditions = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> alertStates = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> alertSeverities = default(IList<SmartGroupAggregatedProperty>), string nextLink = default(string))
+        public SmartGroup(string id = default(string), string type = default(string), string name = default(string), long? alertsCount = default(long?), string smartGroupState = default(string), string severity = default(string), System.DateTime? startDateTime = default(System.DateTime?), System.DateTime? lastModifiedDateTime = default(System.DateTime?), string lastModifiedUserName = default(string), IList<SmartGroupAggregatedProperty> resources = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> resourceTypes = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> resourceGroups = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> monitorServices = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> monitorConditions = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> alertStates = default(IList<SmartGroupAggregatedProperty>), IList<SmartGroupAggregatedProperty> alertSeverities = default(IList<SmartGroupAggregatedProperty>), string nextLink = default(string))
             : base(id, type, name)
         {
             AlertsCount = alertsCount;
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// Gets or sets total number of alerts in smart group
         /// </summary>
         [JsonProperty(PropertyName = "properties.alertsCount")]
-        public int? AlertsCount { get; set; }
+        public long? AlertsCount { get; set; }
 
         /// <summary>
         /// Gets smart group state. Possible values include: 'New',

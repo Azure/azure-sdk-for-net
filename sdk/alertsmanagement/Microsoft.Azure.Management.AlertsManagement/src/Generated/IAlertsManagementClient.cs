@@ -46,11 +46,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// client API version
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -70,6 +65,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
 
 
         /// <summary>
+        /// Gets the IAlertProcessingRulesOperations.
+        /// </summary>
+        IAlertProcessingRulesOperations AlertProcessingRules { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
@@ -83,11 +83,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// Gets the ISmartGroupsOperations.
         /// </summary>
         ISmartGroupsOperations SmartGroups { get; }
-
-        /// <summary>
-        /// Gets the IActionRulesOperations.
-        /// </summary>
-        IActionRulesOperations ActionRules { get; }
 
     }
 }

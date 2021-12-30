@@ -14,25 +14,25 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for ListByResourceGroup operation.
+    /// Defines headers for ListBySubscription operation.
     /// </summary>
-    public partial class ActionRulesListByResourceGroupHeaders
+    public partial class AlertProcessingRulesListBySubscriptionHeaders
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ActionRulesListByResourceGroupHeaders class.
+        /// AlertProcessingRulesListBySubscriptionHeaders class.
         /// </summary>
-        public ActionRulesListByResourceGroupHeaders()
+        public AlertProcessingRulesListBySubscriptionHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ActionRulesListByResourceGroupHeaders class.
+        /// AlertProcessingRulesListBySubscriptionHeaders class.
         /// </summary>
         /// <param name="xMsRequestId">Service generated Request ID.</param>
-        public ActionRulesListByResourceGroupHeaders(string xMsRequestId = default(string))
+        public AlertProcessingRulesListBySubscriptionHeaders(string xMsRequestId = default(string))
         {
             XMsRequestId = xMsRequestId;
             CustomInit();

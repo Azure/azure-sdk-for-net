@@ -14,25 +14,27 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for Update operation.
+    /// Daily recurrence object.
     /// </summary>
-    public partial class ActionRulesUpdateHeaders
+    [Newtonsoft.Json.JsonObject("Daily")]
+    public partial class DailyRecurrence : Recurrence
     {
         /// <summary>
-        /// Initializes a new instance of the ActionRulesUpdateHeaders class.
+        /// Initializes a new instance of the DailyRecurrence class.
         /// </summary>
-        public ActionRulesUpdateHeaders()
+        public DailyRecurrence()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActionRulesUpdateHeaders class.
+        /// Initializes a new instance of the DailyRecurrence class.
         /// </summary>
-        /// <param name="xMsRequestId">Service generated Request ID.</param>
-        public ActionRulesUpdateHeaders(string xMsRequestId = default(string))
+        /// <param name="startTime">Start time for recurrence.</param>
+        /// <param name="endTime">End time for recurrence.</param>
+        public DailyRecurrence(string startTime = default(string), string endTime = default(string))
+            : base(startTime, endTime)
         {
-            XMsRequestId = xMsRequestId;
             CustomInit();
         }
 
@@ -40,12 +42,6 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets service generated Request ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "x-ms-request-id")]
-        public string XMsRequestId { get; set; }
 
     }
 }

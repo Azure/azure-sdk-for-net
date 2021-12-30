@@ -13,10 +13,12 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Data contract for patch
+    /// Data contract for patch.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PatchObject
@@ -32,12 +34,12 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// <summary>
         /// Initializes a new instance of the PatchObject class.
         /// </summary>
-        /// <param name="status">Indicates if the given action rule is enabled
-        /// or disabled. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="tags">tags to be updated</param>
-        public PatchObject(string status = default(string), object tags = default(object))
+        /// <param name="enabled">Indicates if the given alert processing rule
+        /// is enabled or disabled.</param>
+        /// <param name="tags">Tags to be updated.</param>
+        public PatchObject(bool? enabled = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Status = status;
+            Enabled = enabled;
             Tags = tags;
             CustomInit();
         }
@@ -48,17 +50,17 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets indicates if the given action rule is enabled or
-        /// disabled. Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets indicates if the given alert processing rule is
+        /// enabled or disabled.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
+        [JsonProperty(PropertyName = "properties.enabled")]
+        public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets tags to be updated
+        /// Gets or sets tags to be updated.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public object Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

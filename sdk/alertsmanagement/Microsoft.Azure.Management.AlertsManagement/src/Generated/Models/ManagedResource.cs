@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// An azure managed resource object
+    /// An azure managed resource object.
     /// </summary>
     public partial class ManagedResource : Resource
     {

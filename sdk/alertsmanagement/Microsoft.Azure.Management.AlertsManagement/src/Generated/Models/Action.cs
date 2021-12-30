@@ -10,13 +10,26 @@
 
 namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
+    using System.Linq;
 
     /// <summary>
-    /// Defines values for ActionRuleStatus.
+    /// Action to be applied.
     /// </summary>
-    public static class ActionRuleStatus
+    public partial class Action
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        /// <summary>
+        /// Initializes a new instance of the Action class.
+        /// </summary>
+        public Action()
+        {
+            CustomInit();
+        }
+
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
     }
 }

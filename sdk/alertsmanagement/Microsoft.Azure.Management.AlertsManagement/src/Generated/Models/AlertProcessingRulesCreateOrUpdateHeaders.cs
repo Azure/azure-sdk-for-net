@@ -14,23 +14,25 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for Delete operation.
+    /// Defines headers for CreateOrUpdate operation.
     /// </summary>
-    public partial class ActionRulesDeleteHeaders
+    public partial class AlertProcessingRulesCreateOrUpdateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the ActionRulesDeleteHeaders class.
+        /// Initializes a new instance of the
+        /// AlertProcessingRulesCreateOrUpdateHeaders class.
         /// </summary>
-        public ActionRulesDeleteHeaders()
+        public AlertProcessingRulesCreateOrUpdateHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActionRulesDeleteHeaders class.
+        /// Initializes a new instance of the
+        /// AlertProcessingRulesCreateOrUpdateHeaders class.
         /// </summary>
         /// <param name="xMsRequestId">Service generated Request ID.</param>
-        public ActionRulesDeleteHeaders(string xMsRequestId = default(string))
+        public AlertProcessingRulesCreateOrUpdateHeaders(string xMsRequestId = default(string))
         {
             XMsRequestId = xMsRequestId;
             CustomInit();
