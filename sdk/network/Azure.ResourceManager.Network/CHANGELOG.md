@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0-beta.5 (2021-12-27)
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.5 (2021-12-28)
 
 ### Features Added
 
@@ -8,8 +18,8 @@
 
 ### Breaking Changes
 
-- Renamed `CheckIfExists` to `Exists` for each resource class
-- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource`
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource` in `SubscriptionExtensions`
 
 ### Bugs Fixed
 
