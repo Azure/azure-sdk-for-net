@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
         {
             CustomLocations = new CustomLocationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-03-15-preview";
+            ApiVersion = "2021-08-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

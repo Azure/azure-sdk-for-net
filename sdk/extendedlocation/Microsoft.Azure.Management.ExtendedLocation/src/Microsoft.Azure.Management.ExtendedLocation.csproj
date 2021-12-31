@@ -6,11 +6,11 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.ExtendedLocation</PackageId>
     <Description>Provides Microsoft Azure ExtendedLocation operations.</Description>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0</Version>
     <AssemblyTitle>Microsoft Azure Management ExtendedLocation Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.ExtendedLocationn</AssemblyName>
-    <PackageTags>ExtendedLocation;</PackageTags>
-    <PackageReleaseNotes>Release official public api version 2021-03-15-preview</PackageReleaseNotes>
+    <PackageTags>ExtendedLocation;2021-08-15</PackageTags>
+    <PackageReleaseNotes>Release official public api version 2021-08-15</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
