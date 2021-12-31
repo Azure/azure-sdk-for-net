@@ -6,13 +6,15 @@ Run `dotnet build /t:GenerateCode` to generate code.
 use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 # csharpgen:
 #   attach: true
-# save-inputs: true
 azure-arm: true
 arm-core: true
 clear-output-folder: true
 modelerfour:
   lenient-model-deduplication: true
 skip-csproj: true
+model-namespace: false
+public-clients: false
+head-as-boolean: false
 mgmt-debug:
   show-request-path: true
 batch:
@@ -103,26 +105,22 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
-model-namespace: false
-public-clients: false
-head-as-boolean: false
-payload-flattening-threshold: 2
 list-exception:
   - /{linkId}
 request-path-to-resource-data:
-  # model of this has id, type and name, but its type has the type of `object` instead of `string`
+  # model of ResourceLink has id, type and name, but its type has the type of `object` instead of `string`
   /{linkId}: ResourceLink
+  # subscription does not have name and type
   /subscriptions/{subscriptionId}: Subscription
+  # tenant does not have name and type
   /: Tenant
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
   /{scope}/providers/Microsoft.Resources/links: /{linkId}
   /subscriptions: /subscriptions/{subscriptionId}
-  /subscriptions/{subscriptionId}/resourcegroups: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
-  # /subscriptions/{subscriptionId}: /
 request-path-to-resource-type:
   /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
@@ -240,9 +238,6 @@ namespace: Azure.ResourceManager.Management
 title: ManagementClient
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/94a37114e8f4067410b52d3b1c75aa6e09180658/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
-model-namespace: false
-public-clients: false
-head-as-boolean: false
 list-exception:
   - /providers/Microsoft.Management/managementGroups/{groupId} # the list method returns a different schema.
 request-path-to-parent:
@@ -250,7 +245,6 @@ request-path-to-parent:
 operation-groups-to-omit:
   - ManagementCheck
 directive:
-  - remove-operation: PolicyAssignments_DeleteById
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementCheck_CheckNameAvailability

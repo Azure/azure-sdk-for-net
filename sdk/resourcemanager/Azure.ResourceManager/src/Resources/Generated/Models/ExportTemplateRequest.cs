@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Export resource group template request parameters. </summary>
-    internal partial class ExportTemplateRequest
+    public partial class ExportTemplateRequest
     {
         /// <summary> Initializes a new instance of ExportTemplateRequest. </summary>
         public ExportTemplateRequest()

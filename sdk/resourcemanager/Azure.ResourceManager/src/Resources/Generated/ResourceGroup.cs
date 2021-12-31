@@ -435,18 +435,23 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: ResourceGroups_ExportTemplate
         /// <summary> Captures the specified resource group as a template. </summary>
-        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </param>
-        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </param>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ResourceGroupExportTemplateOperation> ExportTemplateAsync(IEnumerable<string> resources = null, string options = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<ResourceGroupExportTemplateOperation> ExportTemplateAsync(ExportTemplateRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.ExportTemplateAsync(Id.SubscriptionId, Id.ResourceGroupName, resources, options, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, resources, options).Request, response);
+                var response = await _resourceGroupsRestClient.ExportTemplateAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -462,18 +467,23 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: ResourceGroups_ExportTemplate
         /// <summary> Captures the specified resource group as a template. </summary>
-        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </param>
-        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </param>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceGroupExportTemplateOperation ExportTemplate(IEnumerable<string> resources = null, string options = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual ResourceGroupExportTemplateOperation ExportTemplate(ExportTemplateRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.ExportTemplate(Id.SubscriptionId, Id.ResourceGroupName, resources, options, cancellationToken);
-                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, resources, options).Request, response);
+                var response = _resourceGroupsRestClient.ExportTemplate(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string linkId, ResourceLinkProperties properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string linkId, ResourceLinkData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -111,12 +111,8 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new ResourceLinkData()
-            {
-                Properties = properties
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -124,17 +120,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Creates or updates a resource link between the specified resources. </summary>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
-        /// <param name="properties"> Properties for resource link. </param>
+        /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public async Task<Response<ResourceLinkData>> CreateOrUpdateAsync(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<ResourceLinkData>> CreateOrUpdateAsync(string linkId, ResourceLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
                 throw new ArgumentNullException(nameof(linkId));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateCreateOrUpdateRequest(linkId, properties);
+            using var message = CreateCreateOrUpdateRequest(linkId, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -153,17 +153,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Creates or updates a resource link between the specified resources. </summary>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
-        /// <param name="properties"> Properties for resource link. </param>
+        /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public Response<ResourceLinkData> CreateOrUpdate(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
+        public Response<ResourceLinkData> CreateOrUpdate(string linkId, ResourceLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
                 throw new ArgumentNullException(nameof(linkId));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateCreateOrUpdateRequest(linkId, properties);
+            using var message = CreateCreateOrUpdateRequest(linkId, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

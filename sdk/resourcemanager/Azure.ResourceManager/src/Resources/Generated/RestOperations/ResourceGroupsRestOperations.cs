@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -472,7 +471,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, IEnumerable<string> resources, string options)
+        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -488,20 +487,8 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            ExportTemplateRequest exportTemplateRequest = new ExportTemplateRequest()
-            {
-                Options = options
-            };
-            if (resources != null)
-            {
-                foreach (var value in resources)
-                {
-                    exportTemplateRequest.Resources.Add(value);
-                }
-            }
-            var model = exportTemplateRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -510,11 +497,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </param>
-        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </param>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, IEnumerable<string> resources = null, string options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -524,8 +510,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, resources, options);
+            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -540,11 +530,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </param>
-        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </param>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response ExportTemplate(string subscriptionId, string resourceGroupName, IEnumerable<string> resources = null, string options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -554,8 +543,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, resources, options);
+            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
