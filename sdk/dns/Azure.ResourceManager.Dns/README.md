@@ -25,8 +25,7 @@ To authenticate to Azure and create an `ArmClient`, do the following:
 ```C# Snippet:Readme_AuthClient
 using Azure.Identity;
 using Azure.ResourceManager;
-            // Code omitted for brevity
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
 Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
