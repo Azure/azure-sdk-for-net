@@ -44,3 +44,6 @@ $dotnet = Join-Path $RepoRoot ".dotnet"
 if (Test-Path $installScript) {
     Remove-Item $installScript
 }
+$env:DOTNET_ROOT = '$dotnet'
+$env:Path = '$env:Path;$env:DOTNET_ROOT'
+dotnet --list-sdks
