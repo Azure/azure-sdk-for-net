@@ -18,8 +18,7 @@ namespace Azure.ResourceManager.Dns.Tests.Samples
         public void ClientAuth()
         {
 #endif
-            // Code omitted for brevity
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 #endregion Snippet:Readme_AuthClient
         }
 

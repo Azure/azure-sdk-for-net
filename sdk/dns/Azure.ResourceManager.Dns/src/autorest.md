@@ -12,10 +12,6 @@ skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
 
-# temp
-list-exception:
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
-
 override-operation-name:
   RecordSets_ListByDnsZone: GetRecordSets
   RecordSets_ListAllByDnsZone: GetAllRecordSets
