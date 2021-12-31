@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -19,6 +20,16 @@ namespace Azure.ResourceManager.Resources
         public static PolicyAssignmentCollection GetPolicyAssignments(this ArmResource armResource)
         {
             return new PolicyAssignmentCollection(armResource);
+        }
+        #endregion
+
+        #region TagResource
+        /// <summary> Gets an object representing a TagResource along with the instance operations that can be performed on it. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="TagResource" /> object. </returns>
+        public static TagResource GetTagResource(this ArmResource armResource)
+        {
+            return new TagResource(armResource, new ResourceIdentifier(armResource.Id + "/providers/Microsoft.Resources/tags/default"));
         }
         #endregion
 

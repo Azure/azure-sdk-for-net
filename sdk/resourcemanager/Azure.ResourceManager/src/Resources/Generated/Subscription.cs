@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubscriptionsRestOperations _subscriptionsRestClient;
         private readonly ProviderResourceTypesRestOperations _providerResourceTypesRestClient;
+        private readonly TagsRestOperations _tagsRestClient;
         private readonly ResourceLinksRestOperations _resourceLinksRestClient;
         private readonly SubscriptionData _data;
 
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
@@ -73,6 +76,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
@@ -215,6 +219,332 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_DeleteValue
+        /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="tagValue"> The value of the tag to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
+        public async virtual Task<Response> DeletePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+            if (tagValue == null)
+            {
+                throw new ArgumentNullException(nameof(tagValue));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
+            scope.Start();
+            try
+            {
+                var response = await _tagsRestClient.DeleteValueAsync(Id.SubscriptionId, tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_DeleteValue
+        /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="tagValue"> The value of the tag to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
+        public virtual Response DeletePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+            if (tagValue == null)
+            {
+                throw new ArgumentNullException(nameof(tagValue));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
+            scope.Start();
+            try
+            {
+                var response = _tagsRestClient.DeleteValue(Id.SubscriptionId, tagName, tagValue, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_CreateOrUpdateValue
+        /// <summary> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="tagValue"> The value of the tag to create. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
+        public async virtual Task<Response<PredefinedTagValue>> CreateOrUpdatePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+            if (tagValue == null)
+            {
+                throw new ArgumentNullException(nameof(tagValue));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
+            scope.Start();
+            try
+            {
+                var response = await _tagsRestClient.CreateOrUpdateValueAsync(Id.SubscriptionId, tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_CreateOrUpdateValue
+        /// <summary> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="tagValue"> The value of the tag to create. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
+        public virtual Response<PredefinedTagValue> CreateOrUpdatePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+            if (tagValue == null)
+            {
+                throw new ArgumentNullException(nameof(tagValue));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
+            scope.Start();
+            try
+            {
+                var response = _tagsRestClient.CreateOrUpdateValue(Id.SubscriptionId, tagName, tagValue, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_CreateOrUpdate
+        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <param name="tagName"> The name of the tag to create. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
+        public async virtual Task<Response<Models.PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
+            scope.Start();
+            try
+            {
+                var response = await _tagsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, tagName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_CreateOrUpdate
+        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <param name="tagName"> The name of the tag to create. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
+        public virtual Response<Models.PredefinedTag> CreateOrUpdatePredefinedTag(string tagName, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
+            scope.Start();
+            try
+            {
+                var response = _tagsRestClient.CreateOrUpdate(Id.SubscriptionId, tagName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_Delete
+        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
+        public async virtual Task<Response> DeletePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
+            scope.Start();
+            try
+            {
+                var response = await _tagsRestClient.DeleteAsync(Id.SubscriptionId, tagName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_Delete
+        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
+        public virtual Response DeletePredefinedTag(string tagName, CancellationToken cancellationToken = default)
+        {
+            if (tagName == null)
+            {
+                throw new ArgumentNullException(nameof(tagName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
+            scope.Start();
+            try
+            {
+                var response = _tagsRestClient.Delete(Id.SubscriptionId, tagName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_List
+        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Models.PredefinedTag> GetAllPredefinedTagsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Models.PredefinedTag>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                scope.Start();
+                try
+                {
+                    var response = await _tagsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<Models.PredefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                scope.Start();
+                try
+                {
+                    var response = await _tagsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/tagNames
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Tags_List
+        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Models.PredefinedTag> GetAllPredefinedTags(CancellationToken cancellationToken = default)
+        {
+            Page<Models.PredefinedTag> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                scope.Start();
+                try
+                {
+                    var response = _tagsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<Models.PredefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                scope.Start();
+                try
+                {
+                    var response = _tagsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links

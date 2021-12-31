@@ -114,6 +114,8 @@ request-path-to-resource-data:
   /subscriptions/{subscriptionId}: Subscription
   # tenant does not have name and type
   /: Tenant
+#   /subscriptions/{subscriptionId}/tagNames/{tagName}: PredefinedTag # TODO: this should be a non-resource
+#   /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}: PredefinedTagValue
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -128,6 +130,7 @@ request-path-to-resource-type:
   /: Microsoft.Resources/tenants
   /subscriptions: Microsoft.Resources/subscriptions
   /subscriptions/{subscriptionId}/resourcegroups: Microsoft.Resources/resourceGroups
+#   /subscriptions/{subscriptionId}/tagNames/{tagName}: Microsoft.Resources/tagNames
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
     - subscriptions
@@ -140,9 +143,13 @@ operation-groups-to-omit:
   - ResourceCheck
   - Providers
   - Resources
-  - Tags
 override-operation-name:
   ResourceLinks_ListAtSourceScope: GetAll
+  Tags_List: GetAllPredefinedTags
+  Tags_DeleteValue: DeletePredefinedTagValue
+  Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
+  Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
+  Tags_Delete: DeletePredefinedTag
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -180,6 +187,27 @@ directive:
   - rename-model:
       from: TenantIdDescription
       to: Tenant
+  - rename-model:
+      from: Tags
+      to: Tag
+  - rename-model:
+      from: TagsResource
+      to: TagResource
+  - rename-model:
+      from: TagsPatchResource
+      to: TagPatchResource
+  - rename-model:
+      from: TagCount
+      to: PredefinedTagCount
+  - rename-model:
+      from: TagValue
+      to: PredefinedTagValue
+  - rename-model:
+      from: TagDetails
+      to: PredefinedTag
+  - rename-model:
+      from: TagsListResult
+      to: PredefinedTagsListResult
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json

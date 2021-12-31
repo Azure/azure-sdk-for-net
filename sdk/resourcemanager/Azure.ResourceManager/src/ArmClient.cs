@@ -194,16 +194,6 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Gets a PredefinedTag operations object.
-        /// </summary>
-        /// <param name="id"> The id of the PredefinedTag. </param>
-        /// <returns> Resource operations of the PredefinedTag. </returns>
-        public virtual PredefinedTag GetPreDefinedTag(ResourceIdentifier id)
-        {
-            return new PredefinedTag(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
-        }
-
-        /// <summary>
         /// Gets the default subscription.
         /// </summary>
         /// <returns> Resource operations of the Subscription. </returns>
