@@ -18,7 +18,7 @@ echo $1
 cat > $1 << EOF
 {
   "envs": {
-    "PATH": "$PATH:$DOTNET_ROOT",
+    "PATH": "$DOTNET_ROOT:$PATH",
     "DOTNET_ROOT": "$DOTNET_ROOT"
   }
 }

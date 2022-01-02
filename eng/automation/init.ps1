@@ -45,5 +45,5 @@ if (Test-Path $installScript) {
     Remove-Item $installScript
 }
 $env:DOTNET_ROOT = '$dotnet'
-$env:Path = '$env:Path;$env:DOTNET_ROOT'
+$env:Path = '$env:DOTNET_ROOT;$env:Path'
 dotnet --list-sdks

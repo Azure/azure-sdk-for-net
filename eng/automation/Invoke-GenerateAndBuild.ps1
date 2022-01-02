@@ -125,18 +125,18 @@ $sdkPath =  (Join-Path $PSScriptRoot .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
 
-$outputJsonFile = "newPackageOutput.json"
-New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid -outputJsonFile $outputJsonFile
+$newpackageoutput = "newPackageOutput.json"
+New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid -outputJsonFile $newpackageoutput
 if ( $? -ne $True) {
   Write-Error "Failed to create sdk project folder. exit code: $?"
   exit 1
 }
-$outputJson = Get-Content $outputJsonFile | Out-String | ConvertFrom-Json
-$projectFolder = $outputJson.projectFolder
+$newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
+$projectFolder = $newpackageoutputJson.projectFolder
 Write-Host "projectFolder:$projectFolder"
-Remove-Item $outputJsonFile
+Remove-Item $newpackageoutput
 
-Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName
+Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $projectFolder
 
 $outputJson = [PSCustomObject]@{
     packages = @([pscustomobject]@{packageName='$packageName'; result='succeeded'; path=@("$projectFolder");packageFolder="$projectFolder"})
