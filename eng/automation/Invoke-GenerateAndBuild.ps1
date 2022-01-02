@@ -44,7 +44,8 @@ function New-PackageFolder() {
       [string]$packageName = "",
       [string]$sdkPath = "",
       [string]$commitid = "",
-      [string]$AUTOREST_CONFIG_FILE = "autorest.md"
+      [string]$AUTOREST_CONFIG_FILE = "autorest.md",
+      [string]$outputJsonFile = "newPacakgeOutput.json"
   )
 
   $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.*"
@@ -75,6 +76,12 @@ function New-PackageFolder() {
     $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
     (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
   }
+
+  $outputJson = [PSCustomObject]@{
+    projectFolder = $projectFolder
+  }
+
+  $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
 
   return $projectFolder
 }
@@ -117,10 +124,21 @@ $packageName = Get-ResourceProviderFromReadme $readmeFile
 $sdkPath =  (Join-Path $PSScriptRoot .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
-$packageFolder = New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid
+
+$outputJsonFile = "newPackageOutput.json"
+New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid -outputJsonFile $outputJsonFile
+if ( $? -ne $True) {
+  Write-Error "Failed to create sdk project folder. exit code: $?"
+  exit 1
+}
+$outputJson = Get-Content $outputJsonFile | Out-String | ConvertFrom-Json
+$projectFolder = $outputJson.projectFolder
+Write-Host "projectFolder:$projectFolder"
+Remove-Item $outputJsonFile
+
 Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName
 
 $outputJson = [PSCustomObject]@{
-    packages = @([pscustomobject]@{packageName=''; result='succeeded'; path=@("$packageFolder");packageFolder=@("$packageFolder")})
+    packages = @([pscustomobject]@{packageName='$packageName'; result='succeeded'; path=@("$projectFolder");packageFolder="$projectFolder"})
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
