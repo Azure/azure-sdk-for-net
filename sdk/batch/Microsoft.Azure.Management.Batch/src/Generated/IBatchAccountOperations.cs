@@ -271,6 +271,61 @@ namespace Microsoft.Azure.Management.Batch
         /// </exception>
         Task<AzureOperationResponse<BatchAccountKeys>> GetKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets information about the detectors available for a given Batch
+        /// account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the Batch account.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Batch account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<DetectorResponse>>> ListDetectorsWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets information about the given detector for a given Batch
+        /// account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the Batch account.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Batch account.
+        /// </param>
+        /// <param name='detectorId'>
+        /// The name of the detector.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DetectorResponse>> GetDetectorWithHttpMessagesAsync(string resourceGroupName, string accountName, string detectorId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the endpoints that a Batch Compute Node under this Batch
         /// Account may call as part of Batch service administration. If you
         /// are deploying a Pool inside of a virtual network that you specify,
@@ -405,6 +460,29 @@ namespace Microsoft.Azure.Management.Batch
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<BatchAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets information about the detectors available for a given Batch
+        /// account.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<DetectorResponse>>> ListDetectorsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the endpoints that a Batch Compute Node under this Batch
         /// Account may call as part of Batch service administration. If you
