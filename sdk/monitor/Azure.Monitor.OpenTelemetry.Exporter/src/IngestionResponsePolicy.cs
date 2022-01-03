@@ -27,9 +27,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             int itemsAccepted;
 
-            if (message.TryGetProperty("TelemetryItemCount", out var telemetryItems))
+            if (message.TryGetProperty("TelemetryItemCount", out var telemetryItemCount))
             {
-                itemsAccepted = ParseResponse(message, (int)telemetryItems);
+                itemsAccepted = ParseResponse(message, (int)telemetryItemCount);
             }
             else
             {
@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             message.SetProperty("ItemsAccepted", itemsAccepted);
         }
 
-        internal static int ParseResponse(HttpMessage message, int telemetryItems)
+        internal static int ParseResponse(HttpMessage message, int telemetryItemCount)
         {
             var httpStatus = message?.Response?.Status;
             int itemsAccepted = 0;
@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             switch (httpStatus)
             {
                 case ResponseStatusCodes.Success:
-                    itemsAccepted = telemetryItems == 0 ? GetItemsAccepted(message) : telemetryItems;
+                    itemsAccepted = telemetryItemCount == 0 ? GetItemsAccepted(message) : telemetryItemCount;
                     break;
                 case ResponseStatusCodes.PartialSuccess:
                     // Parse retry-after header
