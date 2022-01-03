@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineScaleSetData(Location location) : base(location)
+        public VirtualMachineScaleSetData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
         /// <param name="scaleInPolicy"> Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in. </param>
         /// <param name="orchestrationMode"> Specifies the orchestration mode for the virtual machine scale set. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Models.Plan plan, ResourceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode) : base(id, name, type, tags, location)
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, Models.Plan plan, ResourceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Plan = plan;

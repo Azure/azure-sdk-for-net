@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="properties"></param>
         internal RoleInstanceData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type)
         {
-            Location = location;
+            AzureLocation = location;
             Tags = tags;
             Sku = sku;
             Properties = properties;
         }
 
         /// <summary> Resource Location. </summary>
-        public string Location { get; }
+        public string AzureLocation { get; }
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Gets the sku. </summary>

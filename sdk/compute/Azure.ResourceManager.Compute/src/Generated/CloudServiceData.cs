@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of CloudServiceData. </summary>
         /// <param name="location"> The location. </param>
-        public CloudServiceData(Location location) : base(location)
+        public CloudServiceData(AzureLocation location) : base(location)
         {
         }
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Cloud service properties. </param>
-        internal CloudServiceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CloudServiceProperties properties) : base(id, name, type, tags, location)
+        internal CloudServiceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, CloudServiceProperties properties) : base(id, name, type, tags, location)
         {
             Properties = properties;
         }

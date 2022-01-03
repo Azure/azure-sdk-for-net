@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
@@ -28,13 +29,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="properties"></param>
         internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType type, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, type)
         {
-            Location = location;
+            AzureLocation = location;
             Sku = sku;
             Properties = properties;
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public string AzureLocation { get; }
         /// <summary> Describes the cloud service role sku. </summary>
         public CloudServiceRoleSku Sku { get; }
         /// <summary> Gets the properties. </summary>

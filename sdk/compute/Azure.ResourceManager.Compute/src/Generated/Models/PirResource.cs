@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Compute.Models
         internal PirResource(string name, string location)
         {
             Name = name;
-            Location = location;
+            AzureLocation = location;
         }
 
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public string AzureLocation { get; }
     }
 }

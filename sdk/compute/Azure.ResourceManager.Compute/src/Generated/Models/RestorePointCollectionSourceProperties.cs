@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of RestorePointCollectionSourceProperties. </summary>
-        /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
+        /// <param name="location"> AzureLocation of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
         internal RestorePointCollectionSourceProperties(string location, string id)
         {
-            Location = location;
+            AzureLocation = location;
             Id = id;
         }
 
-        /// <summary> Location of the source resource used to create this restore point collection. </summary>
-        public string Location { get; }
+        /// <summary> AzureLocation of the source resource used to create this restore point collection. </summary>
+        public string AzureLocation { get; }
         /// <summary> Resource Id of the source resource used to create this restore point collection. </summary>
         public string Id { get; set; }
     }

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
         internal static GalleryImageData DeserializeGalleryImageData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

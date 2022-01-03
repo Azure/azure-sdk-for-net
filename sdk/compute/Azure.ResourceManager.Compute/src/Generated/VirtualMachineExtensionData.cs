@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineExtensionData(Location location) : base(location)
+        public VirtualMachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine extension instance view. </param>
-        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView) : base(id, name, type, tags, location)
+        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView) : base(id, name, type, tags, location)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;

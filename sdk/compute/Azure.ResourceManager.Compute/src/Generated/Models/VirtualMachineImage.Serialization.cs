@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
+            writer.WriteStringValue(AzureLocation);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
             Optional<IReadOnlyList<string>> zones = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

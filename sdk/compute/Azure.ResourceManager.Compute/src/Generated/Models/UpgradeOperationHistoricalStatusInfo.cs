@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Properties = properties;
             Type = type;
-            Location = location;
+            AzureLocation = location;
         }
 
         /// <summary> Information about the properties of the upgrade operation. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public string AzureLocation { get; }
     }
 }

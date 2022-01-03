@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of GalleryImageData. </summary>
         /// <param name="location"> The location. </param>
-        public GalleryImageData(Location location) : base(location)
+        public GalleryImageData(AzureLocation location) : base(location)
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="features"> A list of gallery image features. </param>
-        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryImagePropertiesProvisioningState? provisioningState, IList<GalleryImageFeature> features) : base(id, name, type, tags, location)
+        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryImagePropertiesProvisioningState? provisioningState, IList<GalleryImageFeature> features) : base(id, name, type, tags, location)
         {
             Description = description;
             Eula = eula;

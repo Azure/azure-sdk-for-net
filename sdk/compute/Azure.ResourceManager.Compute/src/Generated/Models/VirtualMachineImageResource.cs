@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
-            Location = location;
+            AzureLocation = location;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineImageResource(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id)
         {
             Name = name;
-            Location = location;
+            AzureLocation = location;
             Tags = tags;
             ExtendedLocation = extendedLocation;
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> The supported Azure location of the resource. </summary>
-        public string Location { get; set; }
+        public string AzureLocation { get; set; }
         /// <summary> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The extended location of the Virtual Machine. </summary>

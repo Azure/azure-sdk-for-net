@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
         /// <param name="location"> The location. </param>
-        public GalleryImageVersionData(Location location) : base(location)
+        public GalleryImageVersionData(AzureLocation location) : base(location)
         {
         }
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, GalleryImageVersionPublishingProfile publishingProfile, GalleryImageVersionPropertiesProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, ReplicationStatus replicationStatus) : base(id, name, type, tags, location)
+        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryImageVersionPropertiesProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, ReplicationStatus replicationStatus) : base(id, name, type, tags, location)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;

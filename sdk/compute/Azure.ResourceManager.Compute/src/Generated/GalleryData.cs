@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of GalleryData. </summary>
         /// <param name="location"> The location. </param>
-        public GalleryData(Location location) : base(location)
+        public GalleryData(AzureLocation location) : base(location)
         {
         }
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="identifier"> Describes the gallery unique name. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
-        internal GalleryData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile) : base(id, name, type, tags, location)
+        internal GalleryData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile) : base(id, name, type, tags, location)
         {
             Description = description;
             Identifier = identifier;

@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
-        /// <param name="location"> Location of the SKU. </param>
+        /// <param name="location"> AzureLocation of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails)
         {
-            Location = location;
+            AzureLocation = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
         }
 
-        /// <summary> Location of the SKU. </summary>
-        public string Location { get; }
+        /// <summary> AzureLocation of the SKU. </summary>
+        public string AzureLocation { get; }
         /// <summary> List of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="properties"> OS version properties. </param>
         internal OSVersionData(ResourceIdentifier id, string name, ResourceType type, string location, OSVersionProperties properties) : base(id, name, type)
         {
-            Location = location;
+            AzureLocation = location;
             Properties = properties;
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public string AzureLocation { get; }
         /// <summary> OS version properties. </summary>
         public OSVersionProperties Properties { get; }
     }

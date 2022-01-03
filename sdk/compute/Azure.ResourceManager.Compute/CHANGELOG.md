@@ -113,7 +113,7 @@ var ipAddress = new PublicIPAddress()
 {
     PublicIPAddressVersion = IPVersion.IPv4,
     PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
-    Location = location,
+    AzureLocation = location,
 };
 
 ipAddress = await networkClient
@@ -122,7 +122,7 @@ ipAddress = await networkClient
 // Create VNet
 var vnet = new VirtualNetwork()
 {
-    Location = location,
+    AzureLocation = location,
     AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
     Subnets = new List<Subnet>()
     {
@@ -140,7 +140,7 @@ vnet = await networkClient.VirtualNetworks
 // Create Network interface
 var nic = new NetworkInterface()
 {
-    Location = location,
+    AzureLocation = location,
     IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
     {
         new NetworkInterfaceIPConfiguration()
@@ -218,7 +218,7 @@ AvailabilitySet availabilitySet = asetOperation.Value;
 // Create VNet
 var vnetData = new VirtualNetworkData()
 {
-    Location = location,
+    AzureLocation = location,
     AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16" } },
     Subnets =
     {
@@ -235,7 +235,7 @@ VirtualNetwork vnet = vnetOperation.Value;
 // Create Network interface
 var nicData = new NetworkInterfaceData()
 {
-    Location = location,
+    AzureLocation = location,
     IpConfigurations =
     {
         new NetworkInterfaceIPConfigurationData()
@@ -285,7 +285,7 @@ Before upgrade:
 ```C#
 var vmExtension = new VirtualMachineExtension
             {
-                Location = "westus",
+                AzureLocation = "westus",
                 Tags = new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
                 Publisher = "Microsoft.Compute",
                 VirtualMachineExtensionType = "VMAccessAgent",
