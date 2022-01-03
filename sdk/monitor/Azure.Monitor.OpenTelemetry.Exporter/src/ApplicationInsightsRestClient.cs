@@ -38,7 +38,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 // Send to Storage
                 var requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                // todo: lease for fixed period
                 storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
             }
@@ -64,7 +63,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 // Send to storage
                 var requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                // todo: lease for fixed period
                 storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
             }
