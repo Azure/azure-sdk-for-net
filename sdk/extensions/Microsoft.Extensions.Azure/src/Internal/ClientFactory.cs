@@ -100,8 +100,8 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "visualstudio", StringComparison.OrdinalIgnoreCase))
             {
-                // visual studio covers multiple token providers (VisualStudioCredentials & VisualStudioCodeCredentials)
-                // rely on DefaultAzureCredentialOptions and it's factory to build both.
+                // Visual Studio covers multiple token providers (VisualStudioCredentials & VisualStudioCodeCredentials)
+                // rely on DefaultAzureCredentialOptions and its factory to build both.
                 var credentialOptions = CopyTokenCredentialOptions<DefaultAzureCredentialOptions>(identityClientOptions);
                 ExcludeAllCredentialProviders(credentialOptions);
 
