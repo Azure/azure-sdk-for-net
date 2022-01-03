@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string collectionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string collectionName, CancellationToken cancellationToken = default)
         {
             if (collectionName == null)
             {
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string collectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string collectionName, CancellationToken cancellationToken = default)
         {
             if (collectionName == null)
             {
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.ExistsAsync");
             scope.Start();
             try
             {

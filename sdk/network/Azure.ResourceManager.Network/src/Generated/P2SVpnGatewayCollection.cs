@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string gatewayName, CancellationToken cancellationToken = default)
         {
             if (gatewayName == null)
             {
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             if (gatewayName == null)
             {
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.ExistsAsync");
             scope.Start();
             try
             {

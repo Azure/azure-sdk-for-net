@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //delete the cluster
             await cluster.DeleteAsync();
-            Assert.IsFalse(await clusterCollection.CheckIfExistsAsync(clusterName));
+            Assert.IsFalse(await clusterCollection.ExistsAsync(clusterName));
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
 
-            bool ifExists = await DatabaseAccountCollection.CheckIfExistsAsync(_databaseAccountName);
+            bool ifExists = await DatabaseAccountCollection.ExistsAsync(_databaseAccountName);
             Assert.AreEqual(true, ifExists);
 
             DatabaseAccount account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);

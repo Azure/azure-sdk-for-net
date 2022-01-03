@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceName == null)
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceName == null)
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -44,13 +44,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             return invalidCharacters.ToArray();
         }
-
-        public static bool ImplementsITableEntity(Type entityType)
-        {
-            Debug.Assert(entityType != null);
-            return entityType.GetInterfaces().Any(t => t == typeof(ITableEntity));
-        }
-
         public static void VerifyDefaultConstructor(Type entityType)
         {
             if (!entityType.IsValueType && entityType.GetConstructor(Type.EmptyTypes) == null)

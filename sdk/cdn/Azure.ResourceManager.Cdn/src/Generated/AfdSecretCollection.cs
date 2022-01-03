@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string secretName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
         {
             if (secretName == null)
             {
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
             if (secretName == null)
             {
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.ExistsAsync");
             scope.Start();
             try
             {

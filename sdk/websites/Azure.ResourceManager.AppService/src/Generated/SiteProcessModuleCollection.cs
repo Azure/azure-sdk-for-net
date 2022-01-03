@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string baseAddress, CancellationToken cancellationToken = default)
         {
             if (baseAddress == null)
             {
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessModuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteProcessModuleCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             if (baseAddress == null)
             {
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessModuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteProcessModuleCollection.ExistsAsync");
             scope.Start();
             try
             {
