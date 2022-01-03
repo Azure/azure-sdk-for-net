@@ -130,24 +130,28 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5)
 # NewServicePrincipalWrapper creates an object from an AAD graph or Microsoft Graph service principal object type.
 # This is necessary to work around breaking changes introduced in Az version 7.0.0:
 # https://azure.microsoft.com/en-us/updates/update-your-apps-to-use-microsoft-graph-before-30-june-2022/
-function NewServicePrincipalWrapper($servicePrincipal)
+function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGroup, [string]$displayName)
 {
+    $servicePrincipal = Retry {
+        New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+    }
     $spPassword = ""
-    if ($servicePrincipal.GetType().Name -eq 'MicrosoftGraphServicePrincipal') {
-        Write-Host "Creating password for service principal via MS Graph API"
+    $appId = ""
+    if (Get-Member -Name "Secret" -InputObject $servicePrincipal -MemberType property) {
+        Write-Verbose "Using legacy PSADServicePrincipal object type from AAD graph API"
+        # Secret property exists on PSADServicePrincipal type from AAD graph in Az # module versions < 7.0.0
+        $spPassword = $servicePrincipal.Secret
+        $appId = $servicePrincipal.ApplicationId
+    } else {
+        Write-Verbose "Creating password for service principal via MS Graph API"
         # Microsoft graph objects (Az version >= 7.0.0) do not provision a secret # on creation so it must be added separately.
         # Submitting a password credential object without specifying a password will result in one being generated on the server side.
         $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
         $password.DisplayName = "Password for $displayName"
         $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal }
         $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
-    } else {
-        # Secret property exists on PSADServicePrincipal type from AAD graph in Az # module versions < 7.0.0
-        $spPassword = $servicePrincipal.Secret
+        $appId = $servicePrincipal.AppId
     }
-
-    # MicrosoftGraphServicePrincipal objects have AppId, AAD graph objects have ApplicationId
-    $appId = $servicePrincipal.AppId ? $servicePrincipal.AppId : $servicePrincipal.ApplicationId
 
     return @{
         AppId = $appId
@@ -569,11 +573,7 @@ try {
                 $displayName = "$($baseName)$suffix.test-resources.azure.sdk"
             }
 
-
-            $servicePrincipal = Retry {
-                New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
-            }
-            $servicePrincipalWrapper = NewServicePrincipalWrapper $servicePrincipal
+            $servicePrincipalWrapper = NewServicePrincipalWrapper -subscription $SubscriptionId -resourceGroup $ResourceGroupName -displayName $DisplayName
 
             $global:AzureTestPrincipal = $servicePrincipalWrapper
             $global:AzureTestSubscription = $SubscriptionId
