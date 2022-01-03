@@ -7,7 +7,6 @@ using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
-using OpenTelemetry.Extensions.Storage;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 
@@ -19,7 +18,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// </summary>
     internal static class AzureMonitorConverter
     {
-        public static LocalFileStorage storage = new LocalFileStorage(@"C:\Users\vibankwa\source\repos\TestOfflineStorageOTel\temp");
         private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
         {
             [TelemetryType.Request] = "RequestData",
