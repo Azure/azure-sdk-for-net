@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry.Extensions.Storage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -16,9 +18,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
         /// </summary>
         /// <param name="body">The list of telemetry events to track.</param>
+        /// <param name="storage">Storage object</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns></returns>
-        internal async Task<int> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        internal async Task<int> InternalTrackAsync(IEnumerable<TelemetryItem> body, IPersistentStorage storage, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -26,8 +29,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             using var message = CreateTrackRequest(body);
-            message.SetProperty("TelemetryItems", body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            message.SetProperty("TelemetryItemCount", body.Count());
+            try
+            {
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Send to Storage
+                var requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
+                // todo: lease for fixed period
+                storage.CreateBlob(requestContent, HttpPipelineHelper.minimum_retry_interval);
+                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+            }
 
             return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
         }
@@ -36,12 +50,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// This operation sends a blob from persistent storage that will be monitored by Azure Monitor.
         /// </summary>
         /// <param name="body">Content of blob to track.</param>
+        /// <param name="storage">Storage object</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns></returns>
-        internal async Task<int> InternalTrackAsync(ReadOnlyMemory<byte> body, CancellationToken cancellationToken = default)
+        internal async Task<int> InternalTrackAsync(ReadOnlyMemory<byte> body, IPersistentStorage storage, CancellationToken cancellationToken = default)
         {
             using var message = CreateTrackRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Send to storage
+                var requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
+                // todo: lease for fixed period
+                storage.CreateBlob(requestContent, HttpPipelineHelper.minimum_retry_interval);
+                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+            }
 
             return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
         }

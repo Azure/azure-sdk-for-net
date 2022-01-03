@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
-
+using System.IO;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -48,6 +49,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             V2020_09_15_Preview = 1,
         }
 
-        public string StorageFolder { get; set; }
+        public string StorageFolder { get; set; } = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "telemetry")).FullName;
     }
 }

@@ -15,5 +15,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Sent telemetry and return the number of items Accepted.
         /// </summary>
         ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Sends telemetry from storage.
+        /// </summary>
+        ValueTask TransmitFromStorage(bool async, CancellationToken cancellationToken);
     }
 }

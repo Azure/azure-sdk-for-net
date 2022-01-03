@@ -23,11 +23,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
 
+        internal IPersistentStorage storage;
+
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
+            storage = new LocalFileStorage(options.StorageFolder);
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
             options.Retry.MaxRetries = 0;
-            options.AddPolicy(new IngestionResponsePolicy(), HttpPipelinePosition.PerCall);
+
+            options.AddPolicy(new IngestionResponsePolicy(storage), HttpPipelinePosition.PerCall);
 
             applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
@@ -41,28 +45,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             int itemsAccepted = 0;
 
-            try
+            if (async)
             {
-                if (async)
-                {
-                    itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
-                }
+                itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, storage, cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            else
             {
-                if (ex?.InnerException?.InnerException?.Source == "System.Net.Http")
-                {
-                    // TODO: Network issue. Send Telemetry Items To Storage
-                }
-
-                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, storage, cancellationToken).Result;
             }
 
             return itemsAccepted;
+        }
+
+        public async ValueTask TransmitFromStorage(bool async, CancellationToken cancellationToken)
+        {
+            foreach (var blob in storage.GetBlobs())
+            {
+                // todo: time to lease?
+                blob.Lease(10000);
+                var batch = blob.Read();
+                int itemsAccepted = 0;
+                if (batch != null)
+                {
+                    if (async)
+                    {
+                        itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(batch, storage, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(batch, storage, cancellationToken).Result;
+                    }
+
+                    // Delete the blob here
+                    // as new one will be created in case of failure
+                    blob.Delete();
+                    if (itemsAccepted != 0)
+                    {
+                        // log successfull transmit from storage.
+                    }
+                    else
+                    {
+                        // log unsuccessfull attempt
+                    }
+                }
+            }
         }
     }
 }
