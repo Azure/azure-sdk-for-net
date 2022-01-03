@@ -23,9 +23,32 @@ namespace Azure.Monitor.Query.Models
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>
-        public static MetricsQueryResult MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
+        public static MetricsQueryResult MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IEnumerable<MetricResult> metrics)
         {
-            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics);
+            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics.ToArray());
+        }
+
+        /// <summary>
+        /// make a metric result
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="localizedName"></param>
+        /// <param name="unit"></param>
+        /// <param name="timeSeries"></param>
+        /// <returns></returns>
+        public static MetricResult MetricResult(string id, string resourceType, string localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
+        {
+            return new MetricResult(id, resourceType, new LocalizableString(localizedName), unit, timeSeries);
+        }
+
+        /// <summary>
+        /// hh
+        /// </summary>
+        /// <returns></returns>
+        public static MetricTimeSeriesElement MetricTimeSeriesElement()
+        {
+            return new MetricTimeSeriesElement();
         }
 
         /// <summary> Enables the user to create an instance of a <see cref="LogsQueryResult"/>. </summary>
@@ -33,12 +56,12 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, BinaryData statistics, BinaryData visualization, BinaryData error)
+        public static LogsQueryResult LogsQueryResult(IEnumerable<LogsTable> allTables, BinaryData statistics, BinaryData visualization, BinaryData error)
         {
             JsonElement statisticsJson = statistics.ToObjectFromJson<JsonElement>();
             JsonElement visualizationJson = visualization.ToObjectFromJson<JsonElement>();
             JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
-            return new LogsQueryResult(allTables, statisticsJson, visualizationJson, errorJson);
+            return new LogsQueryResult(allTables.ToArray(), statisticsJson, visualizationJson, errorJson);
         }
 
         /// <summary> Enables the user to create an instance of a <see cref="LogsTableRow"/>. </summary>

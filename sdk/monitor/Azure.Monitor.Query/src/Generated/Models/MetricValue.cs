@@ -26,7 +26,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="maximum"> the greatest value in the time range. </param>
         /// <param name="total"> the sum of all of the values in the time range. </param>
         /// <param name="count"> the number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
-        internal MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count)
+        public MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count)
         {
             TimeStamp = timeStamp;
             Average = average;
