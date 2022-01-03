@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Data.Tables;
@@ -74,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     "When binding to a table entity, the row key must not be changed.");
             }
 
-            if (TableEntityValueBinder.HasChanges(_originalEntity, entity))
+            if (HasChanges(_originalEntity, entity))
             {
                 await _entityContext.Table.UpdateEntityAsync(entity, entity.ETag, TableUpdateMode.Replace, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -83,6 +84,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         public string ToInvokeString()
         {
             return _entityContext.ToInvokeString();
+        }
+
+        internal static bool HasChanges(TableEntity originalProperties, TableEntity currentProperties)
+        {
+            var allKeys = new HashSet<string>();
+            allKeys.UnionWith(originalProperties.Keys);
+            allKeys.UnionWith(currentProperties.Keys);
+            // Ignore timestamp in matching
+            allKeys.Remove("Timestamp");
+
+            foreach (string key in allKeys)
+            {
+                originalProperties.TryGetValue(key, out var originalValue);
+                currentProperties.TryGetValue(key, out var newValue);
+                if (originalValue == null)
+                {
+                    if (newValue != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                if (!originalValue.Equals(newValue))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public ParameterLog GetStatus()
