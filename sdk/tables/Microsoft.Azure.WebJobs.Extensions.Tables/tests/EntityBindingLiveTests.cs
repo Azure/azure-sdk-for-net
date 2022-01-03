@@ -662,7 +662,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdateEntityValueProgram<>)})]
         public async Task CanUpdateProperty(string entityType)
         {
-            foreach (var values in AllowedTypedWithValuesAndNullables)
+            foreach (var values in AllowedTypedWithValues)
             {
                 // Arrange
                 await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -686,6 +686,80 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
                 Assert.NotNull(entity);
                 Assert.AreEqual(values.Value2Base, entity["Value"]);
+            }
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdateEntityValueProgram<>)})]
+        public async Task CanUpdatePropertyFromNull(string entityType)
+        {
+            foreach (var values in AllowedTypedWithValues)
+            {
+                // Arrange
+                await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+                {
+                    ["Value"] = null
+                }, TableUpdateMode.Replace);
+
+                // Act
+                var type = values.Type;
+                if (type.IsValueType)
+                {
+                    type = typeof(Nullable<>).MakeGenericType(type);
+                }
+
+                await CallAsync(
+                    typeof(UpdateEntityValueProgram<>).MakeGenericType(type),
+                    entityType,
+                    arguments: new
+                    {
+                        original = (object)null,
+                        expected = values.Value2Base,
+                        originalTyped = (object)null,
+                        expectedTyped = values.Value2
+                    });
+
+                // Assert
+                TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+                Assert.NotNull(entity);
+                Assert.AreEqual(values.Value2Base, entity["Value"]);
+            }
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdateEntityValueProgram<>)})]
+        public async Task CanUpdatePropertyToNull(string entityType)
+        {
+            foreach (var values in AllowedTypedWithValues)
+            {
+                // Arrange
+                await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+                {
+                    ["Value"] = values.Value1Base
+                }, TableUpdateMode.Replace);
+
+                // Act
+                var type = values.Type;
+                if (type.IsValueType)
+                {
+                    type = typeof(Nullable<>).MakeGenericType(type);
+                }
+
+                await CallAsync(
+                    typeof(UpdateEntityValueProgram<>).MakeGenericType(type),
+                    entityType,
+                    arguments: new
+                    {
+                        original = values.Value1Base,
+                        expected = (object)null,
+                        originalTyped = values.Value1,
+                        expectedTyped = (object)null,
+                    });
+
+                // Assert
+                TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+                Assert.NotNull(entity);
+                Assert.AreEqual(null, entity["Value"]);
             }
         }
 
@@ -724,7 +798,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [TestCaseSource(nameof(MethodsOf), new object[] {typeof(NoEntityUpdateProgram<>)})]
         public async Task SkipsUpdateWithNoChanges(string entityType)
         {
-            foreach (var values in AllowedTypedWithValuesAndNullables)
+            foreach (var values in AllowedTypedWithValues)
             {
                 // Arrange
                 var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
@@ -735,15 +809,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 // Act
                 await CallAsync(
                     typeof(NoEntityUpdateProgram<>).MakeGenericType(values.Type),
-                    entityType,
-                    arguments: new
-                    {
-                        original = values.Value1Base,
-                        expected = values.Value2Base,
-                        originalTyped = values.Value1,
-                        expectedTyped = values.Value2,
-                        client = TableClient
-                    });
+                    entityType);
+
+                // Assert
+                TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+                Assert.NotNull(entity);
+                Assert.AreEqual(response.Headers.ETag, entity.ETag);
+            }
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(NoEntityUpdateProgram<>)})]
+        public async Task SkipsUpdateWithNoChangesNull(string entityType)
+        {
+            foreach (var values in AllowedTypedWithValues)
+            {
+                // Arrange
+                var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+                {
+                    ["Value"] = null
+                }, TableUpdateMode.Replace);
+
+                // Act
+                var type = values.Type;
+                if (type.IsValueType)
+                {
+                    type = typeof(Nullable<>).MakeGenericType(type);
+                }
+                await CallAsync(
+                    typeof(NoEntityUpdateProgram<>).MakeGenericType(type),
+                    entityType);
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
@@ -755,22 +850,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         // Invalidate the entity ETag so the Replace call fails if we try to update the entity
         private class NoEntityUpdateProgram<T>
         {
-            public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, TableClient client, object expected)
+            public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity)
             {
                 Assert.NotNull(entity);
             }
 
-            public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object expected)
+            public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity)
             {
                 Assert.NotNull(entity);
             }
 
-            public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object expected)
+            public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity)
             {
                 Assert.NotNull(entity);
             }
 
-            public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity, TableClient client, object expected)
+            public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity)
             {
                 Assert.NotNull(entity);
             }
@@ -1106,7 +1201,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [LiveOnly]
+        [LiveOnly(alwaysRunLocally: true)]
         public async Task InsertOverBatchLimit()
         {
             if (UseCosmos)
@@ -1157,25 +1252,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     {
                         ["Value"] = i
                     });
-                }
-            }
-        }
-
-        public IEnumerable<AllowedTypesWithValue> AllowedTypedWithValuesAndNullables
-        {
-            get
-            {
-                foreach (var value in AllowedTypedWithValues)
-                {
-                    var type = value.Type;
-                    if (value.Type.IsValueType)
-                    {
-                        type = typeof(Nullable<>).MakeGenericType(type);
-                    }
-
-                    yield return value;
-                    yield return new AllowedTypesWithValue(type, value.Value1, null, value.Value1Base);
-                    yield return new AllowedTypesWithValue(type, null, value.Value2, null, value.Value2Base);
                 }
             }
         }
