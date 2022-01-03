@@ -2,57 +2,57 @@ namespace Azure.ResourceManager.Compute
 {
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.Compute.AvailabilitySet GetAvailabilitySet(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.CloudService GetCloudService(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.CloudServiceRole GetCloudServiceRole(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.DedicatedHost GetDedicatedHost(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.DedicatedHostGroup GetDedicatedHostGroup(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Disk GetDisk(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.DiskAccess GetDiskAccess(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.DiskEncryptionSet GetDiskEncryptionSet(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.DiskRestorePoint GetDiskRestorePoint(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Gallery GetGallery(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.GalleryApplication GetGalleryApplication(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.GalleryApplicationVersion GetGalleryApplicationVersion(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.GalleryImage GetGalleryImage(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.GalleryImageVersion GetGalleryImageVersion(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Image GetImage(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.OSFamily GetOSFamily(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.OSVersion GetOSVersion(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.ProximityPlacementGroup GetProximityPlacementGroup(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.RestorePoint GetRestorePoint(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.RestorePointGroup GetRestorePointGroup(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.RoleInstance GetRoleInstance(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Snapshot GetSnapshot(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.SshPublicKey GetSshPublicKey(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachine GetVirtualMachine(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineExtension GetVirtualMachineExtension(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineExtensionImage GetVirtualMachineExtensionImage(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineRunCommand GetVirtualMachineRunCommand(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSet GetVirtualMachineScaleSet(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension GetVirtualMachineScaleSetExtension(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand GetVirtualMachineScaleSetVirtualMachineRunCommand(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVM GetVirtualMachineScaleSetVM(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtension GetVirtualMachineScaleSetVMExtension(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.AvailabilitySet GetAvailabilitySet(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.CloudService GetCloudService(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.CloudServiceRole GetCloudServiceRole(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.DedicatedHost GetDedicatedHost(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.DedicatedHostGroup GetDedicatedHostGroup(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.Disk GetDisk(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.DiskAccess GetDiskAccess(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.DiskEncryptionSet GetDiskEncryptionSet(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.DiskRestorePoint GetDiskRestorePoint(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.Gallery GetGallery(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.GalleryApplication GetGalleryApplication(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.GalleryApplicationVersion GetGalleryApplicationVersion(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.GalleryImage GetGalleryImage(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.GalleryImageVersion GetGalleryImageVersion(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.Image GetImage(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.OSFamily GetOSFamily(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.OSVersion GetOSVersion(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.ProximityPlacementGroup GetProximityPlacementGroup(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.RestorePoint GetRestorePoint(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.RestorePointGroup GetRestorePointGroup(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.RoleInstance GetRoleInstance(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.Snapshot GetSnapshot(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.SshPublicKey GetSshPublicKey(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachine GetVirtualMachine(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineExtension GetVirtualMachineExtension(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineExtensionImage GetVirtualMachineExtensionImage(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineRunCommand GetVirtualMachineRunCommand(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSet GetVirtualMachineScaleSet(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension GetVirtualMachineScaleSetExtension(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand GetVirtualMachineScaleSetVirtualMachineRunCommand(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVM GetVirtualMachineScaleSetVM(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtension GetVirtualMachineScaleSetVMExtension(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class AvailabilitySet : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected AvailabilitySet() { }
         public virtual Azure.ResourceManager.Compute.AvailabilitySetData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string availabilitySetName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string availabilitySetName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.AvailabilitySetDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.AvailabilitySetDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineSize> GetAvailableSizes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineSize> GetAvailableSizesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
     public partial class AvailabilitySetCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.AvailabilitySet>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.AvailabilitySet>, System.Collections.IEnumerable
     {
         protected AvailabilitySetCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.AvailabilitySetCreateOrUpdateOperation CreateOrUpdate(string availabilitySetName, Azure.ResourceManager.Compute.AvailabilitySetData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.AvailabilitySetCreateOrUpdateOperation> CreateOrUpdateAsync(string availabilitySetName, Azure.ResourceManager.Compute.AvailabilitySetData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class AvailabilitySetData : Azure.ResourceManager.Models.TrackedResource
     {
-        public AvailabilitySetData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public AvailabilitySetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.WritableSubResource ProximityPlacementGroup { get { throw null; } set { } }
@@ -94,22 +94,22 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class CloudService : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected CloudService() { }
         public virtual Azure.ResourceManager.Compute.CloudServiceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudService> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudService>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.CloudServiceDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.CloudServiceDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.CloudServiceDeleteInstancesOperation DeleteInstances(Azure.ResourceManager.Compute.Models.RoleInstances parameters = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.CloudServiceDeleteInstancesOperation> DeleteInstancesAsync(Azure.ResourceManager.Compute.Models.RoleInstances parameters = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudService> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudService>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.CloudServiceRoleCollection GetCloudServiceRoles() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView> GetInstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudServiceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CloudService>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudService>, System.Collections.IEnumerable
     {
         protected CloudServiceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.CloudServiceCreateOrUpdateOperation CreateOrUpdate(string cloudServiceName, Azure.ResourceManager.Compute.CloudServiceData parameters = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.CloudServiceCreateOrUpdateOperation> CreateOrUpdateAsync(string cloudServiceName, Azure.ResourceManager.Compute.CloudServiceData parameters = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string cloudServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -159,26 +159,26 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class CloudServiceData : Azure.ResourceManager.Models.TrackedResource
     {
-        public CloudServiceData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public CloudServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.CloudServiceProperties Properties { get { throw null; } set { } }
     }
     public partial class CloudServiceRole : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected CloudServiceRole() { }
         public virtual Azure.ResourceManager.Compute.CloudServiceRoleData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceRole> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudServiceRole>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CloudServiceRoleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CloudServiceRole>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudServiceRole>, System.Collections.IEnumerable
     {
         protected CloudServiceRoleCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> Exists(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceRole> Get(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -194,26 +194,26 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudServiceRoleData : Azure.ResourceManager.Models.Resource
     {
         internal CloudServiceRoleData() { }
-        public string Location { get { throw null; } }
+        public string AzureLocation { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CloudServiceRoleProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CloudServiceRoleSku Sku { get { throw null; } }
     }
     public partial class DedicatedHost : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected DedicatedHost() { }
         public virtual Azure.ResourceManager.Compute.DedicatedHostData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHost> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHost>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostGroupName, string hostName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostGroupName, string hostName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DedicatedHostDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DedicatedHostDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHost> Get(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHost>> GetAsync(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHost> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHost>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHost> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DedicatedHostCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DedicatedHost>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DedicatedHost>, System.Collections.IEnumerable
     {
         protected DedicatedHostCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.DedicatedHostCreateOrUpdateOperation CreateOrUpdate(string hostName, Azure.ResourceManager.Compute.DedicatedHostData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DedicatedHostCreateOrUpdateOperation> CreateOrUpdateAsync(string hostName, Azure.ResourceManager.Compute.DedicatedHostData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string hostName, Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostData : Azure.ResourceManager.Models.TrackedResource
     {
-        public DedicatedHostData(Azure.ResourceManager.Resources.Models.Location location, Azure.ResourceManager.Compute.Models.Sku sku) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public DedicatedHostData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AutoReplaceOnFailure { get { throw null; } set { } }
         public string HostId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView InstanceView { get { throw null; } }
@@ -254,20 +254,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostGroup : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected DedicatedHostGroup() { }
         public virtual Azure.ResourceManager.Compute.DedicatedHostGroupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostGroupName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostGroupName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DedicatedHostGroupDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DedicatedHostGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup> Get(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup>> GetAsync(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.DedicatedHostCollection GetDedicatedHosts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DedicatedHostGroupCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DedicatedHostGroup>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DedicatedHostGroup>, System.Collections.IEnumerable
     {
         protected DedicatedHostGroupCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.DedicatedHostGroupCreateOrUpdateOperation CreateOrUpdate(string hostGroupName, Azure.ResourceManager.Compute.DedicatedHostGroupData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DedicatedHostGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string hostGroupName, Azure.ResourceManager.Compute.DedicatedHostGroupData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string hostGroupName, Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostGroupData : Azure.ResourceManager.Models.TrackedResource
     {
-        public DedicatedHostGroupData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public DedicatedHostGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Hosts { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DedicatedHostGroupInstanceView InstanceView { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
@@ -307,20 +307,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class Disk : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected Disk() { }
         public virtual Azure.ResourceManager.Compute.DiskData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Disk> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Disk>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DiskDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Disk> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Disk>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DiskGrantAccessOperation GrantAccess(Azure.ResourceManager.Compute.Models.GrantAccessData grantAccessData, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskGrantAccessOperation> GrantAccessAsync(Azure.ResourceManager.Compute.Models.GrantAccessData grantAccessData, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Disk> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -334,20 +334,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskAccess : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected DiskAccess() { }
         public virtual Azure.ResourceManager.Compute.DiskAccessData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskAccess> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskAccess>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DiskAccessDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskAccessDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskAccess> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskAccess>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.PrivateLinkResource>> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.PrivateLinkResource>>> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskAccessCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DiskAccess>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DiskAccess>, System.Collections.IEnumerable
     {
         protected DiskAccessCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.DiskAccessCreateOrUpdateOperation CreateOrUpdate(string diskAccessName, Azure.ResourceManager.Compute.DiskAccessData diskAccess, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskAccessCreateOrUpdateOperation> CreateOrUpdateAsync(string diskAccessName, Azure.ResourceManager.Compute.DiskAccessData diskAccess, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string diskAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskAccessData : Azure.ResourceManager.Models.TrackedResource
     {
-        public DiskAccessData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public DiskAccessData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Disk>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Disk>, System.Collections.IEnumerable
     {
         protected DiskCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.DiskCreateOrUpdateOperation CreateOrUpdate(string diskName, Azure.ResourceManager.Compute.DiskData disk, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskCreateOrUpdateOperation> CreateOrUpdateAsync(string diskName, Azure.ResourceManager.Compute.DiskData disk, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskData : Azure.ResourceManager.Models.TrackedResource
     {
-        public DiskData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public DiskData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? BurstingEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CreationData CreationData { get { throw null; } set { } }
         public string DiskAccessId { get { throw null; } set { } }
@@ -441,22 +441,22 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskEncryptionSet : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected DiskEncryptionSet() { }
         public virtual Azure.ResourceManager.Compute.DiskEncryptionSetData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskEncryptionSetName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskEncryptionSetName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DiskEncryptionSetDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskEncryptionSetDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> GetAssociatedResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetAssociatedResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskEncryptionSetCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DiskEncryptionSet>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DiskEncryptionSet>, System.Collections.IEnumerable
     {
         protected DiskEncryptionSetCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.DiskEncryptionSetCreateOrUpdateOperation CreateOrUpdate(string diskEncryptionSetName, Azure.ResourceManager.Compute.DiskEncryptionSetData diskEncryptionSet, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskEncryptionSetCreateOrUpdateOperation> CreateOrUpdateAsync(string diskEncryptionSetName, Azure.ResourceManager.Compute.DiskEncryptionSetData diskEncryptionSet, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskEncryptionSetData : Azure.ResourceManager.Models.TrackedResource
     {
-        public DiskEncryptionSetData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public DiskEncryptionSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet ActiveKey { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskEncryptionSetType? EncryptionType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EncryptionSetIdentity Identity { get { throw null; } set { } }
@@ -497,16 +497,16 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskRestorePoint : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected DiskRestorePoint() { }
         public virtual Azure.ResourceManager.Compute.DiskRestorePointData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskRestorePoint> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskRestorePoint>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DiskRestorePointGrantAccessOperation GrantAccess(Azure.ResourceManager.Compute.Models.GrantAccessData grantAccessData, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskRestorePointGrantAccessOperation> GrantAccessAsync(Azure.ResourceManager.Compute.Models.GrantAccessData grantAccessData, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DiskRestorePointRevokeAccessOperation RevokeAccess(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskRestorePointCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DiskRestorePoint>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DiskRestorePoint>, System.Collections.IEnumerable
     {
         protected DiskRestorePointCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> Exists(string diskRestorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string diskRestorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskRestorePoint> Get(string diskRestorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -543,20 +543,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class Gallery : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected Gallery() { }
         public virtual Azure.ResourceManager.Compute.GalleryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Gallery> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Gallery>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.GalleryDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Gallery> Get(Azure.ResourceManager.Compute.Models.SelectPermissions? select = default(Azure.ResourceManager.Compute.Models.SelectPermissions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Gallery>> GetAsync(Azure.ResourceManager.Compute.Models.SelectPermissions? select = default(Azure.ResourceManager.Compute.Models.SelectPermissions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.GalleryApplicationCollection GetGalleryApplications() { throw null; }
         public Azure.ResourceManager.Compute.GalleryImageCollection GetGalleryImages() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Gallery> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -570,20 +570,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplication : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected GalleryApplication() { }
         public virtual Azure.ResourceManager.Compute.GalleryApplicationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplication> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplication>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.GalleryApplicationDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryApplicationDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplication> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplication>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.GalleryApplicationVersionCollection GetGalleryApplicationVersions() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplication> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplication>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryApplicationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryApplication>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryApplication>, System.Collections.IEnumerable
     {
         protected GalleryApplicationCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.GalleryApplicationCreateOrUpdateOperation CreateOrUpdate(string galleryApplicationName, Azure.ResourceManager.Compute.GalleryApplicationData galleryApplication, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryApplicationCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryApplicationName, Azure.ResourceManager.Compute.GalleryApplicationData galleryApplication, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationData : Azure.ResourceManager.Models.TrackedResource
     {
-        public GalleryApplicationData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public GalleryApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
@@ -622,20 +622,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationVersion : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected GalleryApplicationVersion() { }
         public virtual Azure.ResourceManager.Compute.GalleryApplicationVersionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.GalleryApplicationVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryApplicationVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion> Get(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion>> GetAsync(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryApplicationVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryApplicationVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryApplicationVersion>, System.Collections.IEnumerable
     {
         protected GalleryApplicationVersionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.GalleryApplicationVersionCreateOrUpdateOperation CreateOrUpdate(string galleryApplicationVersionName, Azure.ResourceManager.Compute.GalleryApplicationVersionData galleryApplicationVersion, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryApplicationVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryApplicationVersionName, Azure.ResourceManager.Compute.GalleryApplicationVersionData galleryApplicationVersion, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string galleryApplicationVersionName, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationVersionData : Azure.ResourceManager.Models.TrackedResource
     {
-        public GalleryApplicationVersionData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public GalleryApplicationVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Gallery>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Gallery>, System.Collections.IEnumerable
     {
         protected GalleryCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.GalleryCreateOrUpdateOperation CreateOrUpdate(string galleryName, Azure.ResourceManager.Compute.GalleryData gallery, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryName, Azure.ResourceManager.Compute.GalleryData gallery, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string galleryName, Azure.ResourceManager.Compute.Models.SelectPermissions? select = default(Azure.ResourceManager.Compute.Models.SelectPermissions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryData : Azure.ResourceManager.Models.TrackedResource
     {
-        public GalleryData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public GalleryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryIdentifier Identifier { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryPropertiesProvisioningState? ProvisioningState { get { throw null; } }
@@ -698,20 +698,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImage : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected GalleryImage() { }
         public virtual Azure.ResourceManager.Compute.GalleryImageData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImage> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImage>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.GalleryImageDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryImageDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImage> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImage>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.GalleryImageVersionCollection GetGalleryImageVersions() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImage> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImage>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryImageCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryImage>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryImage>, System.Collections.IEnumerable
     {
         protected GalleryImageCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.GalleryImageCreateOrUpdateOperation CreateOrUpdate(string galleryImageName, Azure.ResourceManager.Compute.GalleryImageData galleryImage, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryImageCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryImageName, Azure.ResourceManager.Compute.GalleryImageData galleryImage, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageData : Azure.ResourceManager.Models.TrackedResource
     {
-        public GalleryImageData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public GalleryImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.Disallowed Disallowed { get { throw null; } set { } }
         public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
@@ -758,20 +758,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageVersion : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected GalleryImageVersion() { }
         public virtual Azure.ResourceManager.Compute.GalleryImageVersionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.GalleryImageVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryImageVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion> Get(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion>> GetAsync(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryImageVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryImageVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryImageVersion>, System.Collections.IEnumerable
     {
         protected GalleryImageVersionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.GalleryImageVersionCreateOrUpdateOperation CreateOrUpdate(string galleryImageVersionName, Azure.ResourceManager.Compute.GalleryImageVersionData galleryImageVersion, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.GalleryImageVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryImageVersionName, Azure.ResourceManager.Compute.GalleryImageVersionData galleryImageVersion, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string galleryImageVersionName, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageVersionData : Azure.ResourceManager.Models.TrackedResource
     {
-        public GalleryImageVersionData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public GalleryImageVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
@@ -807,20 +807,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class Image : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected Image() { }
         public virtual Azure.ResourceManager.Compute.ImageData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Image> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Image>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.ImageDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.ImageDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Image> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Image>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Image> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Image>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Image> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.Compute
     public partial class ImageCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Image>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Image>, System.Collections.IEnumerable
     {
         protected ImageCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.ImageCreateOrUpdateOperation CreateOrUpdate(string imageName, Azure.ResourceManager.Compute.ImageData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.ImageCreateOrUpdateOperation> CreateOrUpdateAsync(string imageName, Azure.ResourceManager.Compute.ImageData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string imageName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ImageData : Azure.ResourceManager.Models.TrackedResource
     {
-        public ImageData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public ImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -859,21 +859,21 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class OSFamily : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected OSFamily() { }
         public virtual Azure.ResourceManager.Compute.OSFamilyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osFamilyName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osFamilyName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.OSFamily> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.OSFamily>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OSFamilyCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.OSFamily>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.OSFamily>, System.Collections.IEnumerable
     {
         protected OSFamilyCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> Exists(string osFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string osFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.OSFamily> Get(string osFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -891,26 +891,26 @@ namespace Azure.ResourceManager.Compute
     public partial class OSFamilyData : Azure.ResourceManager.Models.Resource
     {
         internal OSFamilyData() { }
-        public string Location { get { throw null; } }
+        public string AzureLocation { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OSFamilyProperties Properties { get { throw null; } }
     }
     public partial class OSVersion : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected OSVersion() { }
         public virtual Azure.ResourceManager.Compute.OSVersionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osVersionName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osVersionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.OSVersion> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.OSVersion>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OSVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.OSVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.OSVersion>, System.Collections.IEnumerable
     {
         protected OSVersionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> Exists(string osVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string osVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.OSVersion> Get(string osVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -928,28 +928,28 @@ namespace Azure.ResourceManager.Compute
     public partial class OSVersionData : Azure.ResourceManager.Models.Resource
     {
         internal OSVersionData() { }
-        public string Location { get { throw null; } }
+        public string AzureLocation { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OSVersionProperties Properties { get { throw null; } }
     }
     public partial class PrivateEndpointConnection : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateEndpointConnection() { }
         public virtual Azure.ResourceManager.Compute.PrivateEndpointConnectionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName, string privateEndpointConnectionName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName, string privateEndpointConnectionName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.DiskAccessDeleteAPrivateEndpointConnectionOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskAccessDeleteAPrivateEndpointConnectionOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.PrivateEndpointConnection> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.PrivateEndpointConnection>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.PrivateEndpointConnection>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.PrivateEndpointConnection>, System.Collections.IEnumerable
     {
         protected PrivateEndpointConnectionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.DiskAccessUpdateAPrivateEndpointConnectionOperation CreateOrUpdate(string privateEndpointConnectionName, Azure.ResourceManager.Compute.PrivateEndpointConnectionData privateEndpointConnection, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.DiskAccessUpdateAPrivateEndpointConnectionOperation> CreateOrUpdateAsync(string privateEndpointConnectionName, Azure.ResourceManager.Compute.PrivateEndpointConnectionData privateEndpointConnection, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -973,20 +973,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ProximityPlacementGroup : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected ProximityPlacementGroup() { }
         public virtual Azure.ResourceManager.Compute.ProximityPlacementGroupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.ProximityPlacementGroup> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.ProximityPlacementGroup>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string proximityPlacementGroupName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string proximityPlacementGroupName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.ProximityPlacementGroupDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.ProximityPlacementGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.ProximityPlacementGroup> Get(string includeColocationStatus = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.ProximityPlacementGroup>> GetAsync(string includeColocationStatus = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.ProximityPlacementGroup> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.ProximityPlacementGroup>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.ProximityPlacementGroup> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.Compute
     public partial class ProximityPlacementGroupCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.ProximityPlacementGroup>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.ProximityPlacementGroup>, System.Collections.IEnumerable
     {
         protected ProximityPlacementGroupCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.ProximityPlacementGroupCreateOrUpdateOperation CreateOrUpdate(string proximityPlacementGroupName, Azure.ResourceManager.Compute.ProximityPlacementGroupData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.ProximityPlacementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string proximityPlacementGroupName, Azure.ResourceManager.Compute.ProximityPlacementGroupData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string proximityPlacementGroupName, string includeColocationStatus = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ProximityPlacementGroupData : Azure.ResourceManager.Models.TrackedResource
     {
-        public ProximityPlacementGroupData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public ProximityPlacementGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> AvailabilitySets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus ColocationStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType? ProximityPlacementGroupType { get { throw null; } set { } }
@@ -1042,24 +1042,24 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class RestorePoint : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected RestorePoint() { }
         public virtual Azure.ResourceManager.Compute.RestorePointData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.RestorePointDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.RestorePointDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePoint> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePoint>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.DiskRestorePointCollection GetDiskRestorePoints() { throw null; }
     }
     public partial class RestorePointCollection : Azure.ResourceManager.Core.ArmCollection
     {
         protected RestorePointCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.RestorePointCreateOperation CreateOrUpdate(string restorePointName, Azure.ResourceManager.Compute.RestorePointData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.RestorePointCreateOperation> CreateOrUpdateAsync(string restorePointName, Azure.ResourceManager.Compute.RestorePointData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string restorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1080,20 +1080,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class RestorePointGroup : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected RestorePointGroup() { }
         public virtual Azure.ResourceManager.Compute.RestorePointGroupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.RestorePointCollectionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.RestorePointCollectionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup> Get(Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions? expand = default(Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup>> GetAsync(Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions? expand = default(Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.RestorePointCollection GetRestorePoints() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.Compute
     public partial class RestorePointGroupCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.RestorePointGroup>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.RestorePointGroup>, System.Collections.IEnumerable
     {
         protected RestorePointGroupCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.RestorePointCollectionCreateOrUpdateOperation CreateOrUpdate(string restorePointCollectionName, Azure.ResourceManager.Compute.RestorePointGroupData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.RestorePointCollectionCreateOrUpdateOperation> CreateOrUpdateAsync(string restorePointCollectionName, Azure.ResourceManager.Compute.RestorePointGroupData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string restorePointCollectionName, Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions? expand = default(Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class RestorePointGroupData : Azure.ResourceManager.Models.TrackedResource
     {
-        public RestorePointGroupData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public RestorePointGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ProvisioningState { get { throw null; } }
         public string RestorePointCollectionId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.RestorePointData> RestorePoints { get { throw null; } }
@@ -1132,18 +1132,18 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class RoleInstance : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected RoleInstance() { }
         public virtual Azure.ResourceManager.Compute.RoleInstanceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.CloudServiceRoleInstanceDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.CloudServiceRoleInstanceDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.RoleInstance> Get(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RoleInstance>> GetAsync(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.RoleInstanceView> GetInstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.RoleInstanceView>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> GetRemoteDesktopFile(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.Compute
     public partial class RoleInstanceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.RoleInstance>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.RoleInstance>, System.Collections.IEnumerable
     {
         protected RoleInstanceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> Exists(string roleInstanceName, Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string roleInstanceName, Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.RoleInstance> Get(string roleInstanceName, Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1174,27 +1174,27 @@ namespace Azure.ResourceManager.Compute
     public partial class RoleInstanceData : Azure.ResourceManager.Models.Resource
     {
         internal RoleInstanceData() { }
-        public string Location { get { throw null; } }
+        public string AzureLocation { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RoleInstanceProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceSku Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class Snapshot : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected Snapshot() { }
         public virtual Azure.ResourceManager.Compute.SnapshotData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Snapshot> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Snapshot>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string snapshotName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string snapshotName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.SnapshotDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.SnapshotDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Snapshot> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Snapshot>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.SnapshotGrantAccessOperation GrantAccess(Azure.ResourceManager.Compute.Models.GrantAccessData grantAccessData, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.SnapshotGrantAccessOperation> GrantAccessAsync(Azure.ResourceManager.Compute.Models.GrantAccessData grantAccessData, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Snapshot> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Compute
     public partial class SnapshotCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Snapshot>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Snapshot>, System.Collections.IEnumerable
     {
         protected SnapshotCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.SnapshotCreateOrUpdateOperation CreateOrUpdate(string snapshotName, Azure.ResourceManager.Compute.SnapshotData snapshot, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.SnapshotCreateOrUpdateOperation> CreateOrUpdateAsync(string snapshotName, Azure.ResourceManager.Compute.SnapshotData snapshot, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SnapshotData : Azure.ResourceManager.Models.TrackedResource
     {
-        public SnapshotData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public SnapshotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.CreationData CreationData { get { throw null; } set { } }
         public string DiskAccessId { get { throw null; } set { } }
         public long? DiskSizeBytes { get { throw null; } }
@@ -1251,22 +1251,22 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SshPublicKey : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected SshPublicKey() { }
         public virtual Azure.ResourceManager.Compute.SshPublicKeyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.SshPublicKey> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.SshPublicKey>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sshPublicKeyName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sshPublicKeyName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.SshPublicKeyDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.SshPublicKeyDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.SshPublicKey> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.SshPublicKey>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.SshPublicKey> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.SshPublicKey>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.SshPublicKey> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1277,7 +1277,7 @@ namespace Azure.ResourceManager.Compute
     public partial class SshPublicKeyCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.SshPublicKey>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.SshPublicKey>, System.Collections.IEnumerable
     {
         protected SshPublicKeyCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.SshPublicKeyCreateOperation CreateOrUpdate(string sshPublicKeyName, Azure.ResourceManager.Compute.SshPublicKeyData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.SshPublicKeyCreateOperation> CreateOrUpdateAsync(string sshPublicKeyName, Azure.ResourceManager.Compute.SshPublicKeyData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string sshPublicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SshPublicKeyData : Azure.ResourceManager.Models.TrackedResource
     {
-        public SshPublicKeyData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public SshPublicKeyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string PublicKey { get { throw null; } set { } }
     }
     public static partial class SubscriptionExtensions
@@ -1413,11 +1413,11 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachine : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachine() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachine> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachine>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineAssessPatchesOperation AssessPatches(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineCaptureOperation> CaptureAsync(Azure.ResourceManager.Compute.Models.VirtualMachineCaptureParameters parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineConvertToManagedDisksOperation ConvertToManagedDisks(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineConvertToManagedDisksOperation> ConvertToManagedDisksAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineDeallocateOperation Deallocate(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineDeallocateOperation> DeallocateAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineDeleteOperation Delete(bool? forceDeletion = default(bool?), bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1435,8 +1435,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response> GeneralizeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachine> Get(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachine>> GetAsync(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineSize> GetAvailableSizes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineSize> GetAvailableSizesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.VirtualMachineExtensionCollection GetVirtualMachineExtensions() { throw null; }
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachine>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachine>, System.Collections.IEnumerable
     {
         protected VirtualMachineCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineCreateOrUpdateOperation CreateOrUpdate(string vmName, Azure.ResourceManager.Compute.VirtualMachineData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineCreateOrUpdateOperation> CreateOrUpdateAsync(string vmName, Azure.ResourceManager.Compute.VirtualMachineData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string vmName, Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineData : Azure.ResourceManager.Models.TrackedResource
     {
-        public VirtualMachineData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public VirtualMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.WritableSubResource AvailabilitySet { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BillingProfile BillingProfile { get { throw null; } set { } }
@@ -1526,20 +1526,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtension : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineExtension() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineExtensionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineExtensionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtension>, System.Collections.IEnumerable
     {
         protected VirtualMachineExtensionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineExtensionCreateOrUpdateOperation CreateOrUpdate(string vmExtensionName, Azure.ResourceManager.Compute.VirtualMachineExtensionData extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(string vmExtensionName, Azure.ResourceManager.Compute.VirtualMachineExtensionData extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionData : Azure.ResourceManager.Models.TrackedResource
     {
-        public VirtualMachineExtensionData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public VirtualMachineExtensionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
@@ -1580,18 +1580,18 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionImage : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineExtensionImage() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineExtensionImageData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string publisherName, string type, string version) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string publisherName, string type, string version) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineExtensionImageCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionImage>, System.Collections.IEnumerable
     {
         protected VirtualMachineExtensionImageCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> Exists(string type, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string type, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtensionImage> Get(string type, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1618,7 +1618,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionImageData : Azure.ResourceManager.Models.TrackedResource
     {
-        public VirtualMachineExtensionImageData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public VirtualMachineExtensionImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ComputeRole { get { throw null; } set { } }
         public string HandlerSchema { get { throw null; } set { } }
         public string OperatingSystem { get { throw null; } set { } }
@@ -1627,20 +1627,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineRunCommand : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineRunCommand() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineRunCommandData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineRunCommand> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineRunCommand>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string runCommandName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string runCommandName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineRunCommand> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineRunCommand>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineRunCommand> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineRunCommand>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineRunCommand> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineRunCommandCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineRunCommand>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineRunCommand>, System.Collections.IEnumerable
     {
         protected VirtualMachineRunCommandCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandCreateOrUpdateOperation CreateOrUpdate(string runCommandName, Azure.ResourceManager.Compute.VirtualMachineRunCommandData runCommand, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandCreateOrUpdateOperation> CreateOrUpdateAsync(string runCommandName, Azure.ResourceManager.Compute.VirtualMachineRunCommandData runCommand, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string runCommandName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineRunCommandData : Azure.ResourceManager.Models.TrackedResource
     {
-        public VirtualMachineRunCommandData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public VirtualMachineRunCommandData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AsyncExecution { get { throw null; } set { } }
         public string ErrorBlobUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandInstanceView InstanceView { get { throw null; } }
@@ -1683,18 +1683,18 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSet : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineScaleSet() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetRollingUpgradeCancelOperation CancelVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetRollingUpgradeCancelOperation> CancelVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ConvertToSinglePlacementGroup(Azure.ResourceManager.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ConvertToSinglePlacementGroupAsync(Azure.ResourceManager.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetDeallocateOperation Deallocate(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetDeallocateOperation> DeallocateAsync(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetDeleteOperation Delete(bool? forceDeletion = default(bool?), bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1705,8 +1705,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> Get(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVMScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVMScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> GetAsync(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVMScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVMScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetInstanceView> GetInstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1748,7 +1748,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSet>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSet>, System.Collections.IEnumerable
     {
         protected VirtualMachineScaleSetCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetCreateOrUpdateOperation CreateOrUpdate(string vmScaleSetName, Azure.ResourceManager.Compute.VirtualMachineScaleSetData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetCreateOrUpdateOperation> CreateOrUpdateAsync(string vmScaleSetName, Azure.ResourceManager.Compute.VirtualMachineScaleSetData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVMScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVMScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1767,7 +1767,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetData : Azure.ResourceManager.Models.TrackedResource
     {
-        public VirtualMachineScaleSetData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public VirtualMachineScaleSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
         public bool? DoNotRunExtensionsOnOverprovisionedVMs { get { throw null; } set { } }
@@ -1791,25 +1791,25 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetExtension : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineScaleSetExtension() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string vmssExtensionName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string vmssExtensionName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionUpdateOperation Update(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionUpdate extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionUpdateOperation> UpdateAsync(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionUpdate extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>, System.Collections.IEnumerable
     {
         protected VirtualMachineScaleSetExtensionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionCreateOrUpdateOperation CreateOrUpdate(string vmssExtensionName, Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(string vmssExtensionName, Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string vmssExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1842,19 +1842,19 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgrade : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineScaleSetRollingUpgrade() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgradeData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1862,7 +1862,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgradeData : Azure.ResourceManager.Models.TrackedResource
     {
-        public VirtualMachineScaleSetRollingUpgradeData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public VirtualMachineScaleSetRollingUpgradeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradePolicy Policy { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeProgressInfo Progress { get { throw null; } }
@@ -1870,20 +1870,20 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVirtualMachineRunCommand : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineScaleSetVirtualMachineRunCommand() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineRunCommandData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMRunCommandDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMRunCommandDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1894,7 +1894,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetVirtualMachineRunCommandCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommand>, System.Collections.IEnumerable
     {
         protected VirtualMachineScaleSetVirtualMachineRunCommandCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMRunCommandCreateOrUpdateOperation CreateOrUpdate(string runCommandName, Azure.ResourceManager.Compute.VirtualMachineRunCommandData runCommand, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMRunCommandCreateOrUpdateOperation> CreateOrUpdateAsync(string runCommandName, Azure.ResourceManager.Compute.VirtualMachineRunCommandData runCommand, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string runCommandName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1911,22 +1911,22 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVM : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineScaleSetVM() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetVMData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVM> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVM>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMDeallocateOperation Deallocate(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMDeallocateOperation> DeallocateAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMDeleteOperation Delete(bool? forceDeletion = default(bool?), bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMDeleteOperation> DeleteAsync(bool? forceDeletion = default(bool?), bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVM> Get(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVM>> GetAsync(Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMInstanceView> GetInstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMInstanceView>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.ResourceManager.Compute.VirtualMachineScaleSetVirtualMachineRunCommandCollection GetVirtualMachineScaleSetVirtualMachineRunCommands() { throw null; }
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetVMCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVM>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVM>, System.Collections.IEnumerable
     {
         protected VirtualMachineScaleSetVMCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMUpdateOperation CreateOrUpdate(string instanceId, Azure.ResourceManager.Compute.VirtualMachineScaleSetVMData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMUpdateOperation> CreateOrUpdateAsync(string instanceId, Azure.ResourceManager.Compute.VirtualMachineScaleSetVMData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string instanceId, Azure.ResourceManager.Compute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1976,7 +1976,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMData : Azure.ResourceManager.Models.TrackedResource
     {
-        public VirtualMachineScaleSetVMData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public VirtualMachineScaleSetVMData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.WritableSubResource AvailabilitySet { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiagnosticsProfile DiagnosticsProfile { get { throw null; } set { } }
@@ -2002,25 +2002,25 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMExtension : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualMachineScaleSetVMExtension() { }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtensionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public static Azure.ResourceManager.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtension> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtension>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionUpdateOperation Update(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionUpdate extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionUpdateOperation> UpdateAsync(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionUpdate extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetVMExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtension>, System.Collections.IEnumerable
     {
         protected VirtualMachineScaleSetVMExtensionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionCreateOrUpdateOperation CreateOrUpdate(string vmExtensionName, Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtensionData extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(string vmExtensionName, Azure.ResourceManager.Compute.VirtualMachineScaleSetVMExtensionData extensionParameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4477,7 +4477,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class PirResource
     {
         internal PirResource() { }
-        public string Location { get { throw null; } }
+        public string AzureLocation { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class PirSharedGalleryResource : Azure.ResourceManager.Compute.Models.PirResource
@@ -4832,7 +4832,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ResourceSkuLocationInfo
     {
         internal ResourceSkuLocationInfo() { }
-        public string Location { get { throw null; } }
+        public string AzureLocation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
@@ -4910,8 +4910,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointCollectionSourceProperties
     {
         public RestorePointCollectionSourceProperties() { }
+        public string AzureLocation { get { throw null; } }
         public string Id { get { throw null; } set { } }
-        public string Location { get { throw null; } }
     }
     public partial class RestorePointCollectionUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
@@ -4961,10 +4961,10 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointSourceMetadata
     {
         internal RestorePointSourceMetadata() { }
+        public string AzureLocation { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiagnosticsProfile DiagnosticsProfile { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HardwareProfile HardwareProfile { get { throw null; } }
         public string LicenseType { get { throw null; } }
-        public string Location { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OSProfile OsProfile { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RestorePointSourceVMStorageProfile StorageProfile { get { throw null; } }
@@ -5559,7 +5559,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class UpgradeOperationHistoricalStatusInfo
     {
         internal UpgradeOperationHistoricalStatusInfo() { }
-        public string Location { get { throw null; } }
+        public string AzureLocation { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfoProperties Properties { get { throw null; } }
         public string Type { get { throw null; } }
     }
@@ -5863,8 +5863,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineImageResource : Azure.ResourceManager.Compute.Models.SubResource
     {
         public VirtualMachineImageResource(string name, string location) { }
+        public string AzureLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }

@@ -188,6 +188,7 @@ await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, 
 
 After upgrade:
 ```C# Snippet:Changelog_New
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
@@ -199,7 +200,7 @@ using System.Linq;
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 
-var location = Location.WestUS;
+var location = AzureLocation.WestUS;
 // Create ResourceGroup
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
@@ -218,7 +219,7 @@ AvailabilitySet availabilitySet = asetOperation.Value;
 // Create VNet
 var vnetData = new VirtualNetworkData()
 {
-    AzureLocation = location,
+    Location = location,
     AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16" } },
     Subnets =
     {
@@ -235,7 +236,7 @@ VirtualNetwork vnet = vnetOperation.Value;
 // Create Network interface
 var nicData = new NetworkInterfaceData()
 {
-    AzureLocation = location,
+    Location = location,
     IpConfigurations =
     {
         new NetworkInterfaceIPConfigurationData()
@@ -301,7 +302,7 @@ var vmExtension = new VirtualMachineExtension
 
 After upgrade:
 ```C# Snippet:Changelog_CreateVMExtension
-var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",
