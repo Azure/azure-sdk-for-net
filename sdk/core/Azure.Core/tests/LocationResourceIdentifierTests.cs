@@ -1,9 +1,11 @@
-﻿using System;
-using Azure.ResourceManager.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Tests
+namespace Azure.Core.Tests
 {
     public class LocationResourceIdentifierTests : ResourceIdentifierTests
     {
@@ -139,7 +141,7 @@ namespace Azure.ResourceManager.Tests
             Assert.NotNull(id1.SubscriptionId);
             Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
             Assert.IsTrue(id1.Location.HasValue);
-            Assert.AreEqual(Location.WestUS2, id1.Location);
+            Assert.AreEqual(AzureLocation.WestUS2, id1.Location);
             Assert.Null(id1.ResourceGroupName);
             ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
             Assert.NotNull(id1.Parent);

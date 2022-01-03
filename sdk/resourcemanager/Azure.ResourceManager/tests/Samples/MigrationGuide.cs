@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             string rgName = "QuickStartRG";
 
             ResourceGroupData rgData = new ResourceGroupData(location);

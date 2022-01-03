@@ -1,9 +1,10 @@
-﻿using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
-using NUnit.Framework;
-using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace Azure.ResourceManager.Tests
+using System;
+using NUnit.Framework;
+
+namespace Azure.Core.Tests
 {
     [Parallelizable]
     public class LocationTests
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase("A B C 5", "abc5", "A B C 5")]
         public void ConvertFromDisplayName(string input, string expectedName, string expectedDisplayName)
         {
-            Location loc = input;
+            AzureLocation loc = input;
             Assert.AreEqual(expectedName, loc.Name);
             Assert.AreEqual(expectedDisplayName, loc.DisplayName);
         }
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase("", "", null)]
         public void NameTypeIsName(string location, string expectedName, string expectedDisplayName)
         {
-            Location loc = location;
+            AzureLocation loc = location;
             Assert.AreEqual(expectedName, loc.Name);
             Assert.AreEqual(expectedDisplayName, loc.DisplayName);
         }
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase("a-b-c-5")]
         public void NameTypeIsCanonical(string location)
         {
-            Location loc = location;
+            AzureLocation loc = location;
             Assert.AreEqual(location, loc.Name);
             Assert.IsNull(loc.DisplayName);
         }
@@ -68,24 +69,24 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "West US", "W3$t U$")]
         public void EqualsToLocation(bool expected, string left, string right)
         {
-            Location loc1 = left;
-            Location loc2 = right;
+            AzureLocation loc1 = left;
+            AzureLocation loc2 = right;
             Assert.AreEqual(expected, loc1.Equals(loc2));
-            if(right != null)
+            if (right != null)
                 Assert.AreEqual(expected, loc1.GetHashCode() == loc2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2.GetHashCode()})");
         }
 
         [Test]
         public void NullNameInCtor()
         {
-            Assert.Throws<ArgumentNullException>(() => { new Location(null, null); });
-            Assert.DoesNotThrow(() => { new Location("test", null); });
+            Assert.Throws<ArgumentNullException>(() => { new AzureLocation(null, null); });
+            Assert.DoesNotThrow(() => { new AzureLocation("test", null); });
         }
 
         [Test]
         public void EqualsToObject()
         {
-            Location loc = Location.WestUS2;
+            AzureLocation loc = AzureLocation.WestUS2;
 
             object intLoc = 5;
             Assert.IsFalse(loc.Equals(intLoc));
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Tests
             object sameLoc = loc;
             Assert.IsTrue(loc.Equals(sameLoc));
 
-            object loc2 = Location.EastUS2;
+            object loc2 = AzureLocation.EastUS2;
             Assert.IsFalse(loc.Equals(loc2));
         }
 
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "West Us", "W3$t U$")]
         public void EqualsToString(bool expected, string left, string right)
         {
-            Location location = left;
+            AzureLocation location = left;
             Assert.AreEqual(expected, location.Equals(right));
         }
 
@@ -129,11 +130,11 @@ namespace Azure.ResourceManager.Tests
         {
             if (name == null)
             {
-                Assert.Throws<ArgumentNullException>(()=> { Location location = name; });
+                Assert.Throws<ArgumentNullException>(()=> { AzureLocation location = name; });
             }
             else
             {
-                Location location = name;
+                AzureLocation location = name;
                 string strLocation = location;
                 Assert.AreEqual(expectedName, strLocation);
                 Assert.AreEqual(expectedDisplayName, location.DisplayName);
@@ -145,8 +146,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(true, "WESTUS2", "WESTUS2")]
         public void EqualOperator(bool expected, string string1, string string2)
         {
-            Location loc1 = string1;
-            Location loc2 = string2;
+            AzureLocation loc1 = string1;
+            AzureLocation loc2 = string2;
             Assert.AreEqual(expected, loc1 == loc2);
         }
 
@@ -155,8 +156,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "WESTUS2", "WESTUS2")]
         public void NotEqualOperator(bool expected, string string1, string string2)
         {
-            Location loc1 = string1;
-            Location loc2 = string2;
+            AzureLocation loc1 = string1;
+            AzureLocation loc2 = string2;
             Assert.AreEqual(expected, loc1 != loc2);
         }
     }

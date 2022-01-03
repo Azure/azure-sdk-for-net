@@ -1,7 +1,9 @@
-using NUnit.Framework;
-using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace Azure.ResourceManager.Tests
+using NUnit.Framework;
+
+namespace Azure.Core.Tests
 {
     [Parallelizable]
     public class SubscriptionProviderIdentifierTests : ResourceIdentifierTests

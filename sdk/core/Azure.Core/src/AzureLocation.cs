@@ -6,231 +6,231 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.Core
 {
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public readonly struct Location : IEquatable<Location>
+    public readonly struct AzureLocation : IEquatable<AzureLocation>
     {
         private const char Space = ' ';
 
-        private static Dictionary<string, Location> PublicCloudLocations { get; } = new Dictionary<string, Location>();
+        private static Dictionary<string, AzureLocation> PublicCloudLocations { get; } = new Dictionary<string, AzureLocation>();
 
         #region Public Cloud Locations
 
         /// <summary>
         /// Public cloud location for East Asia.
         /// </summary>
-        public static Location EastAsia { get; } = CreateStaticReference("eastasia", "East Asia");
+        public static AzureLocation EastAsia { get; } = CreateStaticReference("eastasia", "East Asia");
 
         /// <summary>
         /// Public cloud location for Southeast Asia.
         /// </summary>
-        public static Location SoutheastAsia { get; } = CreateStaticReference("southeastasia", "Southeast Asia");
+        public static AzureLocation SoutheastAsia { get; } = CreateStaticReference("southeastasia", "Southeast Asia");
 
         /// <summary>
         /// Public cloud location for Central US.
         /// </summary>
-        public static Location CentralUS { get; } = CreateStaticReference("centralus", "Central US");
+        public static AzureLocation CentralUS { get; } = CreateStaticReference("centralus", "Central US");
 
         /// <summary>
         /// Public cloud location for East US.
         /// </summary>
-        public static Location EastUS { get; } = CreateStaticReference("eastus", "East US");
+        public static AzureLocation EastUS { get; } = CreateStaticReference("eastus", "East US");
 
         /// <summary>
         /// Public cloud location for East US 2.
         /// </summary>
-        public static Location EastUS2 { get; } = CreateStaticReference("eastus2", "East US 2");
+        public static AzureLocation EastUS2 { get; } = CreateStaticReference("eastus2", "East US 2");
 
         /// <summary>
         /// Public cloud location for West US.
         /// </summary>
-        public static Location WestUS { get; } = CreateStaticReference("westus", "West US");
+        public static AzureLocation WestUS { get; } = CreateStaticReference("westus", "West US");
 
         /// <summary>
         /// Public cloud location for North Central US.
         /// </summary>
-        public static Location NorthCentralUS { get; } = CreateStaticReference("northcentralus", "North Central US");
+        public static AzureLocation NorthCentralUS { get; } = CreateStaticReference("northcentralus", "North Central US");
 
         /// <summary>
         /// Public cloud location for South Central US.
         /// </summary>
-        public static Location SouthCentralUS { get; } = CreateStaticReference("southcentralus", "South Central US");
+        public static AzureLocation SouthCentralUS { get; } = CreateStaticReference("southcentralus", "South Central US");
 
         /// <summary>
         /// Public cloud location for North Europe.
         /// </summary>
-        public static Location NorthEurope { get; } = CreateStaticReference("northeurope", "North Europe");
+        public static AzureLocation NorthEurope { get; } = CreateStaticReference("northeurope", "North Europe");
 
         /// <summary>
         /// Public cloud location for West Europe.
         /// </summary>
-        public static Location WestEurope { get; } = CreateStaticReference("westeurope", "West Europe");
+        public static AzureLocation WestEurope { get; } = CreateStaticReference("westeurope", "West Europe");
 
         /// <summary>
         /// Public cloud location for Japan West.
         /// </summary>
-        public static Location JapanWest { get; } = CreateStaticReference("japanwest", "Japan West");
+        public static AzureLocation JapanWest { get; } = CreateStaticReference("japanwest", "Japan West");
 
         /// <summary>
         /// Public cloud location for Japan East.
         /// </summary>
-        public static Location JapanEast { get; } = CreateStaticReference("japaneast", "Japan East");
+        public static AzureLocation JapanEast { get; } = CreateStaticReference("japaneast", "Japan East");
 
         /// <summary>
         /// Public cloud location for Brazil South.
         /// </summary>
-        public static Location BrazilSouth { get; } = CreateStaticReference("brazilsouth", "Brazil South");
+        public static AzureLocation BrazilSouth { get; } = CreateStaticReference("brazilsouth", "Brazil South");
 
         /// <summary>
         /// Public cloud location for Australia East.
         /// </summary>
-        public static Location AustraliaEast { get; } = CreateStaticReference("australiaeast", "Australia East");
+        public static AzureLocation AustraliaEast { get; } = CreateStaticReference("australiaeast", "Australia East");
 
         /// <summary>
         /// Public cloud location for Australia Southeast.
         /// </summary>
-        public static Location AustraliaSoutheast { get; } = CreateStaticReference("australiasoutheast", "Australia Southeast");
+        public static AzureLocation AustraliaSoutheast { get; } = CreateStaticReference("australiasoutheast", "Australia Southeast");
 
         /// <summary>
         /// Public cloud location for South India.
         /// </summary>
-        public static Location SouthIndia { get; } = CreateStaticReference("southindia", "South India");
+        public static AzureLocation SouthIndia { get; } = CreateStaticReference("southindia", "South India");
 
         /// <summary>
         /// Public cloud location for Central India.
         /// </summary>
-        public static Location CentralIndia { get; } = CreateStaticReference("centralindia", "Central India");
+        public static AzureLocation CentralIndia { get; } = CreateStaticReference("centralindia", "Central India");
 
         /// <summary>
         /// Public cloud location for West India.
         /// </summary>
-        public static Location WestIndia { get; } = CreateStaticReference("westindia", "West India");
+        public static AzureLocation WestIndia { get; } = CreateStaticReference("westindia", "West India");
 
         /// <summary>
         /// Public cloud location for Canada Central.
         /// </summary>
-        public static Location CanadaCentral { get; } = CreateStaticReference("canadacentral", "Canada Central");
+        public static AzureLocation CanadaCentral { get; } = CreateStaticReference("canadacentral", "Canada Central");
 
         /// <summary>
         /// Public cloud location for Canada East.
         /// </summary>
-        public static Location CanadaEast { get; } = CreateStaticReference("canadaeast", "Canada East");
+        public static AzureLocation CanadaEast { get; } = CreateStaticReference("canadaeast", "Canada East");
 
         /// <summary>
         /// Public cloud location for UK South.
         /// </summary>
-        public static Location UKSouth { get; } = CreateStaticReference("uksouth", "UK South");
+        public static AzureLocation UKSouth { get; } = CreateStaticReference("uksouth", "UK South");
 
         /// <summary>
         /// Public cloud location for UK West.
         /// </summary>
-        public static Location UKWest { get; } = CreateStaticReference("ukwest", "UK West");
+        public static AzureLocation UKWest { get; } = CreateStaticReference("ukwest", "UK West");
 
         /// <summary>
         /// Public cloud location for West Central US.
         /// </summary>
-        public static Location WestCentralUS { get; } = CreateStaticReference("westcentralus", "West Central US");
+        public static AzureLocation WestCentralUS { get; } = CreateStaticReference("westcentralus", "West Central US");
 
         /// <summary>
         /// Public cloud location for West US 2.
         /// </summary>
-        public static Location WestUS2 { get; } = CreateStaticReference("westus2", "West US 2");
+        public static AzureLocation WestUS2 { get; } = CreateStaticReference("westus2", "West US 2");
 
         /// <summary>
         /// Public cloud location for Korea Central.
         /// </summary>
-        public static Location KoreaCentral { get; } = CreateStaticReference("koreacentral", "Korea Central");
+        public static AzureLocation KoreaCentral { get; } = CreateStaticReference("koreacentral", "Korea Central");
 
         /// <summary>
         /// Public cloud location for Korea South.
         /// </summary>
-        public static Location KoreaSouth { get; } = CreateStaticReference("koreasouth", "Korea South");
+        public static AzureLocation KoreaSouth { get; } = CreateStaticReference("koreasouth", "Korea South");
 
         /// <summary>
         /// Public cloud location for France Central.
         /// </summary>
-        public static Location FranceCentral { get; } = CreateStaticReference("francecentral", "France Central");
+        public static AzureLocation FranceCentral { get; } = CreateStaticReference("francecentral", "France Central");
 
         /// <summary>
         /// Public cloud location for France South.
         /// </summary>
-        public static Location FranceSouth { get; } = CreateStaticReference("francesouth", "France South");
+        public static AzureLocation FranceSouth { get; } = CreateStaticReference("francesouth", "France South");
 
         /// <summary>
         /// Public cloud location for Australia Central.
         /// </summary>
-        public static Location AustraliaCentral { get; } = CreateStaticReference("australiacentral", "Australia Central");
+        public static AzureLocation AustraliaCentral { get; } = CreateStaticReference("australiacentral", "Australia Central");
 
         /// <summary>
         /// Public cloud location for Australia Central 2.
         /// </summary>
-        public static Location AustraliaCentral2 { get; } = CreateStaticReference("australiacentral2", "Australia Central 2");
+        public static AzureLocation AustraliaCentral2 { get; } = CreateStaticReference("australiacentral2", "Australia Central 2");
 
         /// <summary>
         /// Public cloud location for UAE Central.
         /// </summary>
-        public static Location UAECentral { get; } = CreateStaticReference("uaecentral", "UAE Central");
+        public static AzureLocation UAECentral { get; } = CreateStaticReference("uaecentral", "UAE Central");
 
         /// <summary>
         /// Public cloud location for UAE North.
         /// </summary>
-        public static Location UAENorth { get; } = CreateStaticReference("uaenorth", "UAE North");
+        public static AzureLocation UAENorth { get; } = CreateStaticReference("uaenorth", "UAE North");
 
         /// <summary>
         /// Public cloud location for South Africa North.
         /// </summary>
-        public static Location SouthAfricaNorth { get; } = CreateStaticReference("southafricanorth", "South Africa North");
+        public static AzureLocation SouthAfricaNorth { get; } = CreateStaticReference("southafricanorth", "South Africa North");
 
         /// <summary>
         /// Public cloud location for South Africa West.
         /// </summary>
-        public static Location SouthAfricaWest { get; } = CreateStaticReference("southafricawest", "South Africa West");
+        public static AzureLocation SouthAfricaWest { get; } = CreateStaticReference("southafricawest", "South Africa West");
 
         /// <summary>
         /// Public cloud location for Switzerland North.
         /// </summary>
-        public static Location SwitzerlandNorth { get; } = CreateStaticReference("switzerlandnorth", "Switzerland North");
+        public static AzureLocation SwitzerlandNorth { get; } = CreateStaticReference("switzerlandnorth", "Switzerland North");
 
         /// <summary>
         /// Public cloud location for Switzerland West.
         /// </summary>
-        public static Location SwitzerlandWest { get; } = CreateStaticReference("switzerlandwest", "Switzerland West");
+        public static AzureLocation SwitzerlandWest { get; } = CreateStaticReference("switzerlandwest", "Switzerland West");
 
         /// <summary>
         /// Public cloud location for Germany North.
         /// </summary>
-        public static Location GermanyNorth { get; } = CreateStaticReference("germanynorth", "Germany North");
+        public static AzureLocation GermanyNorth { get; } = CreateStaticReference("germanynorth", "Germany North");
 
         /// <summary>
         /// Public cloud location for Germany West Central.
         /// </summary>
-        public static Location GermanyWestCentral { get; } = CreateStaticReference("germanywestcentral", "Germany West Central");
+        public static AzureLocation GermanyWestCentral { get; } = CreateStaticReference("germanywestcentral", "Germany West Central");
 
         /// <summary>
         /// Public cloud location for Norway West.
         /// </summary>
-        public static Location NorwayWest { get; } = CreateStaticReference("norwaywest", "Norway West");
+        public static AzureLocation NorwayWest { get; } = CreateStaticReference("norwaywest", "Norway West");
 
         /// <summary>
         /// Public cloud location for Brazil Southeast.
         /// </summary>
-        public static Location BrazilSoutheast { get; } = CreateStaticReference("brazilsoutheast", "Brazil Southeast");
+        public static AzureLocation BrazilSoutheast { get; } = CreateStaticReference("brazilsoutheast", "Brazil Southeast");
 
         #endregion
 
         /// <summary> Initializes a new instance of Location. </summary>
         /// <param name="location"> The location name or the display name. </param>
-        public Location(string location)
+        public AzureLocation(string location)
         {
             if (ReferenceEquals(location, null))
                 throw new ArgumentNullException(nameof(location));
 
             Name = GetNameFromDisplayName(location, out bool wasConverted);
             var lookUp = wasConverted ? Name : location.ToLowerInvariant();
-            if (PublicCloudLocations.TryGetValue(lookUp, out Location loc))
+            if (PublicCloudLocations.TryGetValue(lookUp, out AzureLocation loc))
             {
                 Name = loc.Name;
                 DisplayName = loc.DisplayName;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Location. </summary>
         /// <param name="name"> The location name. </param>
         /// <param name="displayName"> The display name of the location. </param>
-        public Location(string name, string displayName)
+        public AzureLocation(string name, string displayName)
         {
             if (ReferenceEquals(name, null))
                 throw new ArgumentNullException(nameof(name));
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Gets a location display name consisting of titlecase words or alphanumeric characters separated by whitespaces, e.g. "West US".
         /// </summary>
-        public string DisplayName { get; }
+        public string? DisplayName { get; }
 
-        private static Location CreateStaticReference(string name, string displayName)
+        private static AzureLocation CreateStaticReference(string name, string displayName)
         {
-            Location location = new Location(name, displayName);
+            AzureLocation location = new AzureLocation(name, displayName);
             PublicCloudLocations.Add(name, location);
             return location;
         }
@@ -300,49 +300,49 @@ namespace Azure.ResourceManager.Resources.Models
         /// Creates a new location implicitly from a string.
         /// </summary>
         /// <param name="other"> String to be assigned in the Name form. </param>
-        public static implicit operator Location(string other)
+        public static implicit operator AzureLocation(string other)
         {
             if (!ReferenceEquals(other, null))
             {
-                Location value;
+                AzureLocation value;
                 if (PublicCloudLocations.TryGetValue(other, out value))
                 {
                     return value;
                 }
             }
 
-            return new Location(other);
+            return new AzureLocation(other!);
         }
 
         /// <summary>
         /// Detects if a location object is equal to another location instance or a string representing the location name.
         /// </summary>
-        /// <param name="other"> Location object or name as a string. </param>
+        /// <param name="other"> AzureLocation object or name as a string. </param>
         /// <returns> True or false. </returns>
-        public bool Equals(Location other)
+        public bool Equals(AzureLocation other)
         {
             return Name == other.Name;
         }
 
         /// <summary>
-        /// Creates a string implicitly from a Location object.
+        /// Creates a string implicitly from a AzureLocation object.
         /// </summary>
-        /// <param name="other"> Location object to be assigned. </param>
-        public static implicit operator string(Location other)
+        /// <param name="other"> AzureLocation object to be assigned. </param>
+        public static implicit operator string(AzureLocation other)
         {
             return other.ToString();
         }
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(obj, null))
+            if (obj is null)
             {
                 return false;
             }
 
-            if (obj is not Location other)
+            if (obj is not AzureLocation other)
                 return false;
 
             return Equals(other);
@@ -356,23 +356,23 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Compares this <see cref="Location"/> instance with another object and determines if they are equals.
+        /// Compares this <see cref="AzureLocation"/> instance with another object and determines if they are equals.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if they are equal, otherwise false. </returns>
-        public static bool operator ==(Location left, Location right)
+        public static bool operator ==(AzureLocation left, AzureLocation right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Compares this <see cref="Location"/> instance with another object and determines if they are equals.
+        /// Compares this <see cref="AzureLocation"/> instance with another object and determines if they are equals.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if they are not equal, otherwise false. </returns>
-        public static bool operator !=(Location left, Location right)
+        public static bool operator !=(AzureLocation left, AzureLocation right)
         {
             return !left.Equals(right);
         }

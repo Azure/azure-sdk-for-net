@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedBy"> Who the resource group is managed by. </param>
         /// <returns> A builder with <see cref="ResourceGroup"/> and <see cref="ResourceGroupData"/>. </returns>
         /// <exception cref="ArgumentNullException"> Location cannot be null. </exception>
-        internal ResourceGroupBuilder Construct(Location location, IDictionary<string, string> tags = default, string managedBy = default)
+        internal ResourceGroupBuilder Construct(AzureLocation location, IDictionary<string, string> tags = default, string managedBy = default)
         {
             var model = new ResourceGroupData(location);
             if (!(tags is null))

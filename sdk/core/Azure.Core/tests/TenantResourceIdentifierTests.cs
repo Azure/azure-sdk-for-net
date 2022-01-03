@@ -1,8 +1,10 @@
-﻿using System;
-using Azure.ResourceManager.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Tests
+namespace Azure.Core.Tests
 {
     public class TenantResourceIdentifierTests : ResourceIdentifierTests
     {

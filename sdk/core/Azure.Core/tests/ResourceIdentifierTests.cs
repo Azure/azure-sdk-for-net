@@ -1,22 +1,32 @@
-﻿using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Core;
-using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
-namespace Azure.ResourceManager.Tests
+namespace Azure.Core.Tests
 {
     [Parallelizable]
     public class ResourceIdentifierTests
     {
-        const string TrackedResourceId =
+        private const string TrackedResourceId =
             "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm";
-        const string ChildResourceId =
+        private const string ChildResourceId =
             "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/vortualNetworks/myNet/subnets/mySubnet";
-        const string ResourceGroupResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg";
-        const string LocationResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/locations/MyLocation";
-        const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
-        const string TenantResourceId = "/providers/Microsoft.Billing/billingAccounts/3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31";
+        private const string ResourceGroupResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg";
+        private const string LocationResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/locations/MyLocation";
+        private const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
+        private const string TenantResourceId = "/providers/Microsoft.Billing/billingAccounts/3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31";
+
+        [Test]
+        public void VerifyRootResource()
+        {
+            var root = ResourceIdentifier.Root;
+            Assert.IsNull(root.Parent);
+            Assert.AreEqual(root.ResourceType, Tenant.ResourceType);
+        }
 
         [Test]
         public void Sort()
@@ -269,7 +279,6 @@ namespace Azure.ResourceManager.Tests
             ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
             if (a != null)
                 Assert.AreEqual(expected, a.CompareTo(b));
-
         }
 
         [TestCase(TrackedResourceId, TrackedResourceId, 0)]
