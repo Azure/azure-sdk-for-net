@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task GlobalSetUp()
         {
             Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("IpGroupRG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("IpGroupRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _ipGroupName = SessionRecording.GenerateAssetName("IpGroupRG-");
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var container = _resourceGroup.GetIpGroups();
             var data = new IpGroupData();
-            data.Location = Location.WestUS2;
+            data.Location = AzureLocation.WestUS2;
             var ipGroup = await container.CreateOrUpdateAsync(ipGroupName, data);
             return ipGroup;
         }

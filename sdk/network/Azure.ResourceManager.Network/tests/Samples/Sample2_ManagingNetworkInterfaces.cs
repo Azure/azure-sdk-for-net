@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
         }
     }
