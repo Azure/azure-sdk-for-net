@@ -8,6 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.Core;
 
 namespace Azure.Core.Tests
 {

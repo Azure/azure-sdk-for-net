@@ -1,12 +1,14 @@
-﻿using System;
-using Azure.ResourceManager.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Tests
+namespace Azure.Core.Tests
 {
     public class SubscriptionResourceIdentifierTests : ResourceIdentifierTests
     {
-        const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
+        private const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
 
         [Test]
         public void CanParseSubscriptions()

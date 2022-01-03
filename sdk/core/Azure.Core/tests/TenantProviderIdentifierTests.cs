@@ -1,6 +1,9 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Tests
+namespace Azure.Core.Tests
 {
     [Parallelizable]
     public class TenantProviderIdentifierTests : ResourceIdentifierTests
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.Tests
                 Assert.AreEqual(resourceProviderID, y);
                 Assert.AreEqual(resourceProviderID, y);
             }
-
         }
     }
 }

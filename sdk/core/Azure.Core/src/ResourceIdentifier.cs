@@ -6,27 +6,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager
+namespace Azure.Core
 {
     /// <summary>
     /// An Azure Resource Manager resource identifier.
     /// </summary>
     public sealed class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
+        private static ResourceType TenantResourceType = new ResourceType("Microsoft.Resources/tenants");
+        private static ResourceType SubscriptionResourceType = new ResourceType("Microsoft.Resources/subscriptions");
+        private static ResourceType ResourceGroupResourceType = new ResourceType("Microsoft.Resources/resourceGroups");
+        private static ResourceType ProviderResourceType = new ResourceType("Microsoft.Resources/providers");
         private const string RootStringValue = "/";
         private const string ProvidersKey = "providers";
         private const string SubscriptionsKey = "subscriptions";
         private const string LocationsKey = "locations";
         private const string ResourceGroupsLowerKey = "resourcegroups";
 
+        private string? _stringValue;
+
         /// <summary>
         /// The root of the resource hierarchy.
         /// </summary>
-        public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, Tenant.ResourceType, string.Empty);
+        public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, TenantResourceType, string.Empty);
 
         /// <summary>
         /// For internal use only.
@@ -34,9 +37,14 @@ namespace Azure.ResourceManager
         /// <param name="parent"> The parent resource for this resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="name"> The name of the resource. </param>
-        internal ResourceIdentifier(ResourceIdentifier parent, ResourceType resourceType, string name)
+        internal ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, string name)
         {
             Init(parent, resourceType, name, true);
+            ResourceType = resourceType;
+            Name = name;
+            Parent = parent ?? Root;
+            if (parent is null)
+                _stringValue = RootStringValue;
         }
 
         /// <summary>
@@ -47,11 +55,18 @@ namespace Azure.ResourceManager
         {
             var id = Create(resourceId);
             Init(id.Parent, id.ResourceType, id.Name, id.IsChild);
+            ResourceType = id.ResourceType;
+            Name = id.Name;
+            Parent = id.Parent;
         }
 
         private ResourceIdentifier(ResourceIdentifier parent, string resourceTypeName, string resourceName)
         {
-            Init(parent, ChooseResourceType(resourceTypeName, parent), resourceName, true);
+            ResourceType resourceType = ChooseResourceType(resourceTypeName, parent);
+            Init(parent, resourceType, resourceName, true);
+            ResourceType = resourceType;
+            Name = resourceName;
+            Parent = parent;
         }
 
         /// <summary>
@@ -63,12 +78,16 @@ namespace Azure.ResourceManager
         /// <param name="resourceName"> The name of the extension resource. </param>
         internal ResourceIdentifier(ResourceIdentifier parent, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            Init(parent, new ResourceType(providerNamespace, resourceTypeName), resourceName, false);
+            ResourceType resourceType = new ResourceType(providerNamespace, resourceTypeName);
+            Init(parent, resourceType, resourceName, false);
+            ResourceType = resourceType;
+            Name = resourceName;
+            Parent = parent;
         }
 
-        private void Init(ResourceIdentifier parent, ResourceType resourceType, string name, bool isChild)
+        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string name, bool isChild)
         {
-            if (parent != null)
+            if (parent is not null)
             {
                 Provider = parent.Provider;
                 SubscriptionId = parent.SubscriptionId;
@@ -76,36 +95,31 @@ namespace Azure.ResourceManager
                 ResourceGroupName = parent.ResourceGroupName;
             }
 
-            if (resourceType == Subscription.ResourceType)
+            if (resourceType == SubscriptionResourceType)
             {
-                Guid output;
-                if (!Guid.TryParse(name, out output))
+                if (!Guid.TryParse(name, out _))
                     throw new ArgumentOutOfRangeException(nameof(name), $"The GUID for subscription is invalid {name}.");
                 SubscriptionId = name;
             }
 
-            if (resourceType.LastType == LocationsKey)
+            if (resourceType.GetLastType() == LocationsKey)
                 Location = name;
 
-            if (resourceType == ResourceGroup.ResourceType)
+            if (resourceType == ResourceGroupResourceType)
                 ResourceGroupName = name;
 
-            if (resourceType == Resources.Provider.ResourceType)
+            if (resourceType == ProviderResourceType)
                 Provider = name;
 
-            Parent = parent ?? Root;
             IsChild = isChild;
-            ResourceType = resourceType;
-            Name = name;
-            _stringValue = parent == null ? RootStringValue : null;
         }
 
         private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
         {
-            ResourceGroupsLowerKey => ResourceGroup.ResourceType,
+            ResourceGroupsLowerKey => ResourceGroupResourceType,
             //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
-            SubscriptionsKey when parent.ResourceType==Tenant.ResourceType => Subscription.ResourceType,
-            _ => new ResourceType(parent.ResourceType, resourceTypeName)
+            SubscriptionsKey when parent.ResourceType == TenantResourceType => SubscriptionResourceType,
+            _ => parent.ResourceType.AppendChild(resourceTypeName)
         };
 
         private static ResourceIdentifier Create(string resourceId)
@@ -141,7 +155,7 @@ namespace Azure.ResourceManager
                     throw new ArgumentOutOfRangeException(nameof(parts), $"The ResourceIdentifier is missing the key for {lowerFirstPart}.");
 
                 //resourceGroup must contain either child or provider resource type
-                if (parent.ResourceType == ResourceGroup.ResourceType)
+                if (parent.ResourceType == ResourceGroupResourceType)
                     throw new ArgumentOutOfRangeException(nameof(parts), $"Expected {ProvidersKey} path segment after {ResourceGroupsLowerKey}.");
 
                 return new ResourceIdentifier(parent, parts[0], string.Empty);
@@ -150,50 +164,25 @@ namespace Azure.ResourceManager
             if (lowerFirstPart == ProvidersKey && (parts.Count == 2 || parts[2].ToLowerInvariant() == ProvidersKey))
             {
                 //provider resource can only be on a tenant or a subscription parent
-                if (parent.ResourceType != Subscription.ResourceType && parent.ResourceType != Tenant.ResourceType)
+                if (parent.ResourceType != SubscriptionResourceType && parent.ResourceType != TenantResourceType)
                     throw new ArgumentOutOfRangeException(nameof(parts), $"Provider resource can only come after the root or {SubscriptionsKey}.");
 
-                return AppendNext(new ResourceIdentifier(parent, Resources.Provider.ResourceType, parts[1]), parts.Trim(2));
+                return AppendNext(new ResourceIdentifier(parent, ProviderResourceType, parts[1]), Trim(parts, 2));
             }
 
             if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return AppendNext(new ResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
+                return AppendNext(new ResourceIdentifier(parent, parts[1], parts[2], parts[3]), Trim(parts, 4));
 
             if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return AppendNext(new ResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
+                return AppendNext(new ResourceIdentifier(parent, parts[0], parts[1]), Trim(parts, 2));
 
             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
         }
 
-        private object lockObject = new object();
-        private string _stringValue;
-
         /// <summary>
         /// Cache the string representation of this resource, so traversal only needs to occur once.
         /// </summary>
-        internal string StringValue
-        {
-            get
-            {
-                lock (lockObject)
-                {
-                    if (_stringValue is null)
-                    {
-                        _stringValue = ToResourceString();
-                    }
-
-                    return _stringValue;
-                }
-            }
-
-            set
-            {
-                lock (lockObject)
-                {
-                    _stringValue = value;
-                }
-            }
-        }
+        internal string StringValue => _stringValue ??= ToResourceString();
 
         /// <summary>
         /// The resource type of the resource.
@@ -218,32 +207,32 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the subscription id if it exists otherwise null.
         /// </summary>
-        public string SubscriptionId { get; private set; }
+        public string? SubscriptionId { get; private set; }
 
         /// <summary>
         /// Gets the provider namespace if it exists otherwise null.
         /// </summary>
-        public string Provider { get; private set; }
+        public string? Provider { get; private set; }
 
         /// <summary>
         /// Gets the location if it exists otherwise null.
         /// </summary>
-        public Location? Location { get; private set; }
+        public AzureLocation? Location { get; private set; }
 
         /// <summary>
         /// The name of the resource group if it exists otherwise null.
         /// </summary>
-        public string ResourceGroupName { get; private set; }
+        public string? ResourceGroupName { get; private set; }
 
         private string ToResourceString()
         {
-            if (Parent == null)
+            if (Parent is null)
                 return string.Empty;
 
             StringBuilder builder = new StringBuilder(Parent.ToResourceString());
             if (IsChild)
             {
-                builder.Append($"/{ResourceType.LastType}");
+                builder.Append($"/{ResourceType.GetLastType()}");
                 if (!string.IsNullOrWhiteSpace(Name))
                     builder.Append($"/{Name}");
             }
@@ -269,7 +258,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="other"> The resource identifier to compare to. </param>
         /// <returns>True if the resource identifiers are equivalent, otherwise false. </returns>
-        public bool Equals(ResourceIdentifier other)
+        public bool Equals(ResourceIdentifier? other)
         {
             if (other is null)
                 return false;
@@ -283,7 +272,7 @@ namespace Azure.ResourceManager
         /// <returns> 0 if the resource identifiers are equivalent, -1 if this resource identifier
         /// should be ordered before the given resource identifier, 1 if this resource identifier
         /// should be ordered after the given resource identifier. </returns>
-        public int CompareTo(ResourceIdentifier other)
+        public int CompareTo(ResourceIdentifier? other)
         {
             if (other is null)
                 return 1;
@@ -292,13 +281,13 @@ namespace Azure.ResourceManager
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            ResourceIdentifier resourceObj = obj as ResourceIdentifier;
-            if (!(resourceObj is null))
+            ResourceIdentifier? resourceObj = obj as ResourceIdentifier;
+            if (resourceObj is not null)
                 return resourceObj.Equals(this);
-            string stringObj = obj as string;
-            if (!(stringObj is null))
+            string? stringObj = obj as string;
+            if (stringObj is not null)
                 return Equals(new ResourceIdentifier(stringObj));
             return false;
         }
@@ -314,34 +303,34 @@ namespace Azure.ResourceManager
         /// Convert a resource identifier to a string.
         /// </summary>
         /// <param name="id"> The resource identifier. </param>
-        public static implicit operator string(ResourceIdentifier id) => id?.ToString();
+        public static implicit operator string?(ResourceIdentifier id) => id?.ToString();
 
         /// <summary>
         /// Operator overloading for '=='.
         /// </summary>
-        /// <param name="id1"> Left ResourceIdentifier object to compare. </param>
-        /// <param name="id2"> Right ResourceIdentifier object to compare. </param>
+        /// <param name="left"> Left ResourceIdentifier object to compare. </param>
+        /// <param name="right"> Right ResourceIdentifier object to compare. </param>
         /// <returns></returns>
-        public static bool operator ==(ResourceIdentifier id1, ResourceIdentifier id2)
+        public static bool operator ==(ResourceIdentifier left, ResourceIdentifier right)
         {
-            if (ReferenceEquals(id1, null))
-                return ReferenceEquals(id2, null);
+            if (left is null)
+                return right is null;
 
-            return id1.Equals(id2);
+            return left.Equals(right);
         }
 
         /// <summary>
         /// Operator overloading for '!='.
         /// </summary>
-        /// <param name="id1"> Left ResourceIdentifier object to compare. </param>
-        /// <param name="id2"> Right ResourceIdentifier object to compare. </param>
+        /// <param name="left"> Left ResourceIdentifier object to compare. </param>
+        /// <param name="right"> Right ResourceIdentifier object to compare. </param>
         /// <returns></returns>
-        public static bool operator !=(ResourceIdentifier id1, ResourceIdentifier id2)
+        public static bool operator !=(ResourceIdentifier left, ResourceIdentifier right)
         {
-            if (ReferenceEquals(id1, null))
-                return !ReferenceEquals(id2, null);
+            if (left is null)
+                return right is not null;
 
-            return !id1.Equals(id2);
+            return !left.Equals(right);
         }
 
         /// <summary>
@@ -352,7 +341,7 @@ namespace Azure.ResourceManager
         /// <returns> True if the left object is less than the right. </returns>
         public static bool operator <(ResourceIdentifier left, ResourceIdentifier right)
         {
-            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+            return left is null ? right is not null : left.CompareTo(right) < 0;
         }
 
         /// <summary>
@@ -363,7 +352,7 @@ namespace Azure.ResourceManager
         /// <returns> True if the left object is less than or equal to the right. </returns>
         public static bool operator <=(ResourceIdentifier left, ResourceIdentifier right)
         {
-            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+            return left is null || left.CompareTo(right) <= 0;
         }
 
         /// <summary>
@@ -374,7 +363,7 @@ namespace Azure.ResourceManager
         /// <returns> True if the left object is greater than the right. </returns>
         public static bool operator >(ResourceIdentifier left, ResourceIdentifier right)
         {
-            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+            return left is not null && left.CompareTo(right) > 0;
         }
 
         /// <summary>
@@ -385,7 +374,65 @@ namespace Azure.ResourceManager
         /// <returns> True if the left object is greater than or equal to the right. </returns>
         public static bool operator >=(ResourceIdentifier left, ResourceIdentifier right)
         {
-            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
+            return left is null ? right is null : left.CompareTo(right) >= 0;
+        }
+
+        private static List<string> Trim(List<string> list, int numberToTrim)
+        {
+            if (numberToTrim < 0 || numberToTrim > list.Count)
+                throw new ArgumentOutOfRangeException(nameof(numberToTrim));
+            list.RemoveRange(0, numberToTrim);
+            return list;
+        }
+
+        /// <summary>
+        /// Add a provider resource to an existing resource id.
+        /// </summary>
+        /// <param name="providerNamespace"> The provider namespace of the added resource. </param>
+        /// <param name="resourceType"> The simple type of the added resource, without slashes (/),
+        /// for example, 'virtualMachines'. </param>
+        /// <param name="resourceName"> The name of the resource.</param>
+        /// <returns> The combined resource id. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier AppendProviderResource(string providerNamespace, string resourceType, string resourceName)
+        {
+            ValidateProviderResourceParameters(providerNamespace, resourceType, resourceName);
+            return new ResourceIdentifier(this, providerNamespace, resourceType, resourceName);
+        }
+
+        /// <summary>
+        /// Add a provider resource to an existing resource id.
+        /// </summary>
+        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/),
+        /// for example, 'subnets'. </param>
+        /// <param name="childResourceName"> The name of the resource. </param>
+        /// <returns> The combined resource id. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier AppendChildResource(string childResourceType, string childResourceName)
+        {
+            ValidateChildResourceParameters(childResourceType, childResourceName);
+            return new ResourceIdentifier(this, childResourceType, childResourceName);
+        }
+
+        private static void ValidateProviderResourceParameters(string providerNamespace, string resourceType, string resourceName)
+        {
+            ValidatePathSegment(providerNamespace, nameof(providerNamespace));
+            ValidatePathSegment(resourceType, nameof(resourceType));
+            ValidatePathSegment(resourceName, nameof(resourceName));
+        }
+
+        private static void ValidateChildResourceParameters(string childResourceType, string childResourceName)
+        {
+            ValidatePathSegment(childResourceType, nameof(childResourceType));
+            ValidatePathSegment(childResourceName, nameof(childResourceName));
+        }
+
+        private static void ValidatePathSegment(string segment, string parameterName)
+        {
+            if (string.IsNullOrWhiteSpace(segment))
+                throw new ArgumentNullException(parameterName);
+            if (segment.Contains("/"))
+                throw new ArgumentOutOfRangeException(parameterName, $"{parameterName} must be a single path segment");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Management.Models;
