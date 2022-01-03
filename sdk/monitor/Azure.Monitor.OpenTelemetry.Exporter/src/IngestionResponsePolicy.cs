@@ -80,12 +80,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case ResponseStatusCodes.GatewayTimeout:
                     // Send Messages To Storage
                     requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                    storage.CreateBlob(requestContent, HttpPipelineHelper.minimum_retry_interval);
+                    storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
                     break;
                 case null: // UnknownNetworkError
                     // No HttpMessage. Send TelemetryItems To Storage
                     requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                    storage.CreateBlob(requestContent, HttpPipelineHelper.minimum_retry_interval);
+                    storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
                     break;
                 default:
                     // Log Non-Retriable Status and don't retry or store;

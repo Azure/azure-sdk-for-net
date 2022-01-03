@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private const string RetryAfterHeaderName = "Retry-After";
 
-        internal const int minimum_retry_interval = 6000;
+        internal const int MinimumRetryInterval = 6000;
 
         internal static byte[] GetRequestContent(RequestContent content)
         {
@@ -40,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
-            return minimum_retry_interval;
+            return MinimumRetryInterval;
         }
 
         internal static string GetPartialContentFromBreeze(TrackResponse response, string content)
