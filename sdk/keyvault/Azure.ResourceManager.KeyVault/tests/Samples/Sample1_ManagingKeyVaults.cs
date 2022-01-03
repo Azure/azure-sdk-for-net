@@ -3,6 +3,7 @@
 #region Snippet:Manage_KeyVaults_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
 
-            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS, VaultProperties);
+            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
 
             var rawVault = await vaultCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
             Vault vault = await rawVault.WaitForCompletionAsync();
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
