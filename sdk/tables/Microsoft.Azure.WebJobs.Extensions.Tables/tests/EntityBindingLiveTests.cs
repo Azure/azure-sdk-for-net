@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
@@ -26,14 +25,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         public EntityBindingLiveTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
         {
-            // Some recordings contain windows newlines inside string values,
-            // replace them with current platform newline
-            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
-                @"(?<!\\r)(?<break>\\n)",
-                @"\r\n")
-            {
-                GroupForReplace = "break"
-            });
         }
 
         [RecordedTest]
@@ -1009,7 +1000,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        public static IEnumerable<AllowedTypesWithValue> AllowedTypedWithValuesAndNullables
+        public IEnumerable<AllowedTypesWithValue> AllowedTypedWithValuesAndNullables
         {
             get
             {
@@ -1028,29 +1019,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        public static IEnumerable<AllowedTypesWithValue> AllowedTypedWithValues { get; } = new AllowedTypesWithValue[]
+        public IEnumerable<AllowedTypesWithValue> AllowedTypedWithValues
         {
-            new(typeof(string), "Foo", "Bar"),
-            new(typeof(int), 1, 2),
-            new(typeof(Guid), Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e9f"),  Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e0f")),
-            new(typeof(double), 1.3d, 2.5d),
-            new(typeof(bool), true, false),
-            new(typeof(long), long.MinValue, long.MaxValue),
-            new(typeof(DateTimeOffset), DateTimeOffsetValue, DateTimeOffsetValue.AddDays(1)),
-            new(typeof(DateTime), DateTimeValue, DateTimeValue.AddDays(1), new DateTimeOffset(DateTimeValue), new DateTimeOffset(DateTimeValue.AddDays(1))),
-            new(typeof(byte[]), new byte[] { 1, 2 ,3}, new byte[]{ 3, 2, 1}),
-            new(typeof(string[]), new[] { "hello", "world" },new[]{ "updated" },
-                "[\r\n  \"hello\",\r\n  \"world\"\r\n]",
-                "[\r\n  \"updated\"\r\n]"
-            ),
-            new(typeof(ConsoleColor), ConsoleColor.Black, ConsoleColor.Gray, "Black", "Gray"),
-            new(typeof(TimeSpan), TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10), "\"00:00:05\"", "\"00:00:10\""),
-            new(typeof(ETag), new ETag("A"), new ETag("B"), "A", "B"),
-            new(typeof(InnerPoco), new InnerPoco { Value = "1" }, new InnerPoco { Value = "2" },
-                "{\r\n  \"Value\": \"1\"\r\n}",
-                "{\r\n  \"Value\": \"2\"\r\n}"),
-            new(typeof(ulong), 0UL, (ulong)long.MaxValue, "0", "9223372036854775807"),
-        };
+            get
+            {
+                yield return new(typeof(string), "Foo", "Bar");
+                yield return new(typeof(int), 1, 2);
+                yield return new(typeof(Guid), Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e9f"), Guid.Parse("81a130d2-502f-4cf1-a376-63edeb000e0f"));
+                yield return new(typeof(double), 1.3d, 2.5d);
+                yield return new(typeof(bool), true, false);
+                yield return new(typeof(long), long.MinValue, long.MaxValue);
+                yield return new(typeof(DateTimeOffset), DateTimeOffsetValue, DateTimeOffsetValue.AddDays(1));
+                yield return new(typeof(DateTime), DateTimeValue, DateTimeValue.AddDays(1), new DateTimeOffset(DateTimeValue), new DateTimeOffset(DateTimeValue.AddDays(1)));
+                yield return new(typeof(byte[]), new byte[] { 1, 2, 3 }, new byte[] { 3, 2, 1 });
+                yield return new(typeof(ConsoleColor), ConsoleColor.Black, ConsoleColor.Gray, "Black", "Gray");
+                yield return new(typeof(TimeSpan), TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10), "\"00:00:05\"", "\"00:00:10\"");
+                yield return new(typeof(ETag), new ETag("A"), new ETag("B"), "A", "B");
+                yield return new(typeof(ulong), 0UL, (ulong)long.MaxValue, "0", "9223372036854775807");
+
+                // Skip playing back tests with newlines on non windows
+                if (Mode == RecordedTestMode.Playback && Environment.NewLine != "\r\n")
+                {
+                    yield break;
+                }
+
+                yield return new(typeof(string[]), new[] { "hello", "world" }, new[] { "updated" },
+                    "[\r\n  \"hello\",\r\n  \"world\"\r\n]",
+                    "[\r\n  \"updated\"\r\n]"
+                );
+
+                yield return new(typeof(InnerPoco), new InnerPoco { Value = "1" }, new InnerPoco { Value = "2" },
+                    "{\r\n  \"Value\": \"1\"\r\n}",
+                    "{\r\n  \"Value\": \"2\"\r\n}");
+            }
+        }
 
         public static IEnumerable<string> MethodsOf(Type type)
         {
