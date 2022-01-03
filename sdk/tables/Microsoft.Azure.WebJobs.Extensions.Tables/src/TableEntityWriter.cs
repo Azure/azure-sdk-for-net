@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
 
             _log.EntitiesWritten++;
-            if (item.ETag == default)
+            if (string.IsNullOrEmpty(item.ETag.ToString()))
             {
                 partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.Add, item));
             }

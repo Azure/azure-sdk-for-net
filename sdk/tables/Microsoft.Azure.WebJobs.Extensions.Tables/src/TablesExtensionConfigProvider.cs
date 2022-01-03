@@ -125,9 +125,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             if (!string.IsNullOrEmpty(attribute.PartitionKey))
             {
                 var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
-                if (!string.IsNullOrEmpty(attribute.Filter))
+                if (!string.IsNullOrEmpty(filter))
                 {
-                    filter = $"{partitionKeyPredicate} and {attribute.Filter}";
+                    filter = $"{partitionKeyPredicate} and {filter}";
                 }
                 else
                 {
@@ -183,13 +183,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             TableEntity tableEntity = new TableEntity();
             foreach (JProperty property in entity.Properties())
             {
+                var key = property.Name;
+                if (key == nameof(TableEntity.ETag))
+                {
+                    key = PocoTypeBinder.ETagKeyName;
+                }
+
                 if (property.Value is JValue value)
                 {
-                    tableEntity[property.Name] = value.Value;
+                    tableEntity[key] = value.Value;
                 }
                 else
                 {
-                    tableEntity[property.Name] = property.Value.ToString();
+                    tableEntity[key] = property.Value.ToString();
                 }
             }
 

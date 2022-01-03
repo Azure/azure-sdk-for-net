@@ -18,10 +18,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         public PocoToTableEntityConverter()
         {
             _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
-            CheckGetter("PartitionKey", PocoTypeBinder.PartitionKeyTypes);
-            CheckGetter("RowKey", PocoTypeBinder.RowKeyTypes);
-            CheckGetter("ETag", PocoTypeBinder.ETagTypes);
-            CheckGetter("Timestamp", PocoTypeBinder.TimestampTypes);
+            ValidateGetter("PartitionKey", PocoTypeBinder.PartitionKeyTypes);
+            ValidateGetter("RowKey", PocoTypeBinder.RowKeyTypes);
+            ValidateGetter("ETag", PocoTypeBinder.ETagTypes);
+            ValidateGetter("Timestamp", PocoTypeBinder.TimestampTypes);
         }
 
         public TableEntity Convert(TInput input)
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return result;
         }
 
-        private static void CheckGetter(string propertyName, Type[] allowedTypes)
+        private static void ValidateGetter(string propertyName, Type[] allowedTypes)
         {
             PropertyInfo property = typeof(TInput).GetProperty(propertyName,
                 BindingFlags.Instance | BindingFlags.Public);

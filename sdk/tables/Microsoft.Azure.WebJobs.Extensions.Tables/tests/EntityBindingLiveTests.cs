@@ -263,6 +263,111 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(AddEntityProgram<>)})]
+        public async Task CanAddEntityThrowsWhenEntityExists(string entityType)
+        {
+            var values = AllowedTypedWithValues.First();
+
+            // Arrange
+            await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+            {
+                ["Value"] = values.Value1Base
+            }, TableUpdateMode.Replace);
+
+            // Act
+            var exception = Assert.ThrowsAsync<FunctionInvocationException>(async () => await CallAsync(
+                typeof(AddEntityProgram<>).MakeGenericType(values.Type),
+                entityType,
+                arguments: new
+                {
+                    original = values.Value2Base,
+                    originalTyped = values.Value2,
+                }));
+
+            // Assert
+            StringAssert.Contains("The specified entity already exists", exception.ToString());
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityWithOverwriteProgram<>)})]
+        public async Task CanAddEntityWithOverwrite(string entityType)
+        {
+            var values = AllowedTypedWithValues.First();
+
+            // Arrange
+            await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+            {
+                ["Value"] = values.Value1Base
+            }, TableUpdateMode.Replace);
+
+            // Act
+            await CallAsync(
+                typeof(CanAddEntityWithOverwriteProgram<>).MakeGenericType(values.Type),
+                entityType,
+                arguments: new
+                {
+                    original = values.Value2Base,
+                    originalTyped = values.Value2,
+                });
+
+            // Assert
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+            Assert.NotNull(entity);
+            Assert.AreEqual(values.Value2Base, entity["Value"]);
+        }
+
+        private class CanAddEntityWithOverwriteProgram<T>
+        {
+            [return: Table(TableNameExpression)]
+            public static CustomTableEntity<T> CustomTableEntity(T originalTyped)
+            {
+                return new CustomTableEntity<T>
+                {
+                    Value = originalTyped,
+                    PartitionKey = PartitionKey,
+                    RowKey = RowKey,
+                    ETag = new ETag("*")
+                };
+            }
+
+            [return: Table(TableNameExpression)]
+            public static TableEntity TableEntity(object original)
+            {
+                return new TableEntity
+                {
+                    ["Value"] = original,
+                    PartitionKey = PartitionKey,
+                    RowKey = RowKey,
+                    ETag = new ETag("*")
+                };
+            }
+
+            [return: Table(TableNameExpression)]
+            public static ITableEntity ITableEntity(object original)
+            {
+                return new TableEntity
+                {
+                    ["Value"] = original,
+                    PartitionKey = PartitionKey,
+                    RowKey = RowKey,
+                    ETag = new ETag("*")
+                };
+            }
+
+            [return: Table(TableNameExpression)]
+            public static JObject JObject(object original)
+            {
+                return new JObject
+                {
+                    ["Value"] = JToken.FromObject(original),
+                    ["PartitionKey"] = PartitionKey,
+                    ["RowKey"] = RowKey,
+                    ["ETag"] = "*"
+                };
+            }
+        }
+
+        [RecordedTest]
         [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityWithIdsInAttributeProgram<>)})]
         public async Task CanAddEntityWithIdsInAttribute(string entityType)
         {
@@ -560,10 +665,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             foreach (var values in AllowedTypedWithValuesAndNullables)
             {
                 // Arrange
-                await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
+                await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
                 {
                     ["Value"] = values.Value1Base
-                });
+                }, TableUpdateMode.Replace);
 
                 // Act
                 await CallAsync(
@@ -581,7 +686,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
                 Assert.NotNull(entity);
                 Assert.AreEqual(values.Value2Base, entity["Value"]);
-                await ClearTableAsync();
             }
         }
 
@@ -623,7 +727,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             foreach (var values in AllowedTypedWithValuesAndNullables)
             {
                 // Arrange
-                await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+                var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
                 {
                     ["Value"] = values.Value1Base
                 }, TableUpdateMode.Replace);
@@ -644,48 +748,105 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
                 Assert.NotNull(entity);
-                Assert.AreEqual(values.Value2Base, entity["Value"]);
-                await ClearTableAsync();
+                Assert.AreEqual(response.Headers.ETag, entity.ETag);
             }
         }
 
         // Invalidate the entity ETag so the Replace call fails if we try to update the entity
         private class NoEntityUpdateProgram<T>
         {
-            public static async Task CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, TableClient client, object expected)
+            public static void CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, TableClient client, object expected)
             {
                 Assert.NotNull(entity);
-                await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
-                {
-                    ["Value"] = expected
-                }, TableUpdateMode.Replace);
             }
 
-            public static async Task TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object expected)
+            public static void TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object expected)
             {
                 Assert.NotNull(entity);
-                await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
-                {
-                    ["Value"] = expected
-                }, TableUpdateMode.Replace);
             }
 
-            public static async Task JObject([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object expected)
+            public static void JObject([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object expected)
             {
                 Assert.NotNull(entity);
-                await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
-                {
-                    ["Value"] = expected
-                }, TableUpdateMode.Replace);
             }
 
-            public static async Task PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity, TableClient client, object expected)
+            public static void PocoTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<T> entity, TableClient client, object expected)
             {
                 Assert.NotNull(entity);
+            }
+        }
+
+        [RecordedTest]
+        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanOverwriteBySettingAnEtagProgram<>)})]
+        public async Task CanOverwriteBySettingAnEtag(string entityType)
+        {
+            AllowedTypesWithValue values = AllowedTypedWithValues.First();
+            // Arrange
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey)
+            {
+                ["Value"] = values.Value1Base
+            });
+
+            // Act
+            await CallAsync(typeof(CanOverwriteBySettingAnEtagProgram<>).MakeGenericType(values.Type),
+                entityType,
+                arguments: new
+                {
+                    client = TableClient,
+                    original = values.Value1Base,
+                    expected = values.Value2Base,
+                    originalTyped = values.Value1,
+                    expectedTyped = values.Value2
+                });
+
+            // Assert
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+            Assert.NotNull(entity);
+            Assert.AreEqual(values.Value2Base, entity["Value"]);
+        }
+
+        private class CanOverwriteBySettingAnEtagProgram<T>
+        {
+            public static async Task CustomTableEntity([Table(TableNameExpression, PartitionKey, RowKey)] CustomTableEntity<T> entity, TableClient client, T originalTyped, T expectedTyped, object expected)
+            {
+                Assert.NotNull(entity);
+                Assert.AreEqual(originalTyped, entity.Value);
+
                 await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
                 {
-                    ["Value"] = expected
+                    ["Value"] = ""
                 }, TableUpdateMode.Replace);
+
+                entity.Value = expectedTyped;
+                entity.ETag = new ETag("*");
+            }
+
+            public static async Task TableEntity([Table(TableNameExpression, PartitionKey, RowKey)] TableEntity entity, TableClient client, object original, object expected)
+            {
+                Assert.NotNull(entity);
+                Assert.AreEqual(original, entity["Value"]);
+
+                await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+                {
+                    ["Value"] = ""
+                }, TableUpdateMode.Replace);
+
+                entity["Value"] = expected;
+                entity.ETag = new ETag("*");
+            }
+
+            public static async Task JObject([Table(TableNameExpression, PartitionKey, RowKey)] JObject entity, TableClient client, object original, object expected)
+            {
+                Assert.NotNull(entity);
+                Assert.AreEqual(JsonConvert.SerializeObject(original), JsonConvert.SerializeObject(entity["Value"]));
+
+                await client.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+                {
+                    ["Value"] = ""
+                }, TableUpdateMode.Replace);
+
+                entity["Value"] = expected == null ? JValue.CreateNull() : JToken.FromObject(expected);
+                entity["ETag"] = "*";
             }
         }
 

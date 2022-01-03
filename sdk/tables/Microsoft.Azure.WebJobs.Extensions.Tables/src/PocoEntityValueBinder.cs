@@ -87,6 +87,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public ParameterLog GetStatus()
         {
+            // TODO: check if we still need the log feature and fix
+            // To take entity changes into account
             return new TableParameterLog { EntitiesWritten = 1 };
         }
     }
