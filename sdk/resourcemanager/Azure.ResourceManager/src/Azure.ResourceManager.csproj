@@ -10,6 +10,7 @@
     <PackageTags>azure;management;resource</PackageTags>
     <NoWarn>$(NoWarn);CA2214</NoWarn>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
