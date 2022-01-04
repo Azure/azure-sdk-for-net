@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         /// <summary> Initializes a new instance of MachineExtensionData. </summary>
         /// <param name="location"> The location. </param>
-        public MachineExtensionData(Location location) : base(location)
+        public MachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine extension instance view. </param>
-        internal MachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SystemData systemData, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string provisioningState, MachineExtensionPropertiesInstanceView instanceView) : base(id, name, type, tags, location)
+        internal MachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SystemData systemData, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string provisioningState, MachineExtensionPropertiesInstanceView instanceView) : base(id, name, type, tags, location)
         {
             SystemData = systemData;
             ForceUpdateTag = forceUpdateTag;

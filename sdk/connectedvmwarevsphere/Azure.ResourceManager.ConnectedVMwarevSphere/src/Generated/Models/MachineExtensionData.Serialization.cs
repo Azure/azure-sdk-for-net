@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

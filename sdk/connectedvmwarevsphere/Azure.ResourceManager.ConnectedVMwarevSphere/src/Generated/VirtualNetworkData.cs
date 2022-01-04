@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualNetworkData(Location location) : base(location)
+        public VirtualNetworkData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CheckNameAvailabilityRequest extendedLocation, SystemData systemData, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, tags, location)
+        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, CheckNameAvailabilityRequest extendedLocation, SystemData systemData, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SystemData = systemData;
