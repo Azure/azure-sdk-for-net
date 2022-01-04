@@ -213,7 +213,7 @@
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="4.0.1" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
-    <PackageReference Update="Microsoft.CSharp" Version="4.7" />
+    <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
