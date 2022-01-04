@@ -28,7 +28,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the Colletion, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
@@ -56,7 +56,7 @@ List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
 {
     new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
 };
-WebPubSubData data = new WebPubSubData(Location.WestUS2)
+WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
 {
     Sku = new WebPubSubSku("Standard_S1"),
     LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
