@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of ElasticPoolData. </summary>
         /// <param name="location"> The location. </param>
-        public ElasticPoolData(Location location) : base(location)
+        public ElasticPoolData(AzureLocation location) : base(location)
         {
         }
 
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="zoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
-        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, string kind, ElasticPoolState? state, DateTimeOffset? creationDate, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType, string maintenanceConfigurationId) : base(id, name, type, tags, location)
+        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, ElasticPoolState? state, DateTimeOffset? creationDate, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType, string maintenanceConfigurationId) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Kind = kind;

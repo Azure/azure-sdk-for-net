@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseData. </summary>
         /// <param name="location"> The location. </param>
-        public RestorableDroppedManagedDatabaseData(Location location) : base(location)
+        public RestorableDroppedManagedDatabaseData(AzureLocation location) : base(location)
         {
         }
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="creationDate"> The creation date of the database (ISO8601 format). </param>
         /// <param name="deletionDate"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreDate"> The earliest restore date of the database (ISO8601 format). </param>
-        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string databaseName, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate) : base(id, name, type, tags, location)
+        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate) : base(id, name, type, tags, location)
         {
             DatabaseName = databaseName;
             CreationDate = creationDate;

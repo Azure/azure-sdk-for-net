@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of SqlDatabaseData. </summary>
         /// <param name="location"> The location. </param>
-        public SqlDatabaseData(Location location) : base(location)
+        public SqlDatabaseData(AzureLocation location) : base(location)
         {
         }
 
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </param>
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
         /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationDate, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionDate, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreDate, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, Models.Sku currentSku, int? autoPauseDelay, CurrentBackupStorageRedundancy? currentBackupStorageRedundancy, RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedDate, DateTimeOffset? resumedDate, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled) : base(id, name, type, tags, location)
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationDate, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionDate, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreDate, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, Models.Sku currentSku, int? autoPauseDelay, CurrentBackupStorageRedundancy? currentBackupStorageRedundancy, RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedDate, DateTimeOffset? resumedDate, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Kind = kind;

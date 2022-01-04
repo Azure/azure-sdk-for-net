@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         {
             Optional<Models.Sku> sku = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

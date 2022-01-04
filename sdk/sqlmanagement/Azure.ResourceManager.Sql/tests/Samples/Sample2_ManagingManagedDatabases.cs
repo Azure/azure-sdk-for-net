@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 
             this.resourceGroup = resourceGroup;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             //1. create NetworkSecurityGroup
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
             };
             string networkSecurityGroupName = "myNetworkSecurityGroup";
             var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             //2. create Route table
             RouteTableData routeTableData = new RouteTableData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
             };
             string routeTableName = "myRouteTable";
             var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             //3. create vnet(subnet binding NetworkSecurityGroup and RouteTable)
             var vnetData = new VirtualNetworkData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.10.0.0/16", }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 
             //4. create ManagedInstance
-            ManagedInstanceData data = new ManagedInstanceData(Location.WestUS2)
+            ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
             {
                 AdministratorLogin = "myAdministratorLogin",
                 AdministratorLoginPassword = "abcdef123456789*",
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_CreateAManagedDatabases
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            ManagedDatabaseData data = new ManagedDatabaseData(Location.WestUS2)
+            ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2)
             {
             };
             string databaseName = "myDatabase";

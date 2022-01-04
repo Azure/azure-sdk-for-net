@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedDatabaseData(Location location) : base(location)
+        public ManagedDatabaseData(AzureLocation location) : base(location)
         {
         }
 
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
         /// <param name="autoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? creationDate, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, string defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, string storageContainerUri, string sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, string recoverableDatabaseId, string longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, type, tags, location)
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? creationDate, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, string defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, string storageContainerUri, string sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, string recoverableDatabaseId, string longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, type, tags, location)
         {
             Collation = collation;
             Status = status;

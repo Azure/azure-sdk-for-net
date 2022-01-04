@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -59,8 +60,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string vnetName2 = Recording.GenerateAssetName("vnet-");
             Task[] tasks = new Task[]
             {
-                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, Location.WestUS2, _resourceGroup),
-                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, Location.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, AzureLocation.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
             string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName1)).Value.Data.Id.ToString();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task ServerTrustGroupsApiTests()
         {
             // 1.CreateOrUpdate
-            string locationName = Location.WestUS2.ToString();
+            string locationName = AzureLocation.WestUS2.ToString();
             string serverTrustGroupName = Recording.GenerateAssetName("trust-group-");
             var serverTrustGroup = await CreateServerTrustGroup(locationName, serverTrustGroupName);
             Assert.IsNotNull(serverTrustGroup.Data);
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            string locationName = Location.WestUS2.ToString();
+            string locationName = AzureLocation.WestUS2.ToString();
             string serverTrustGroupName = Recording.GenerateAssetName("trust-group-");
             var serverTrustGroup = await CreateServerTrustGroup(locationName, serverTrustGroupName);
             Assert.IsNotNull(serverTrustGroup.Data);

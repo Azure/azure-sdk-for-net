@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <param name="location"></param>
         /// <param name="resourceGroup"></param>
         /// <returns></returns>
-        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,string networkSecurityGroupName, string routeTableName , string vnetName , Location location, ResourceGroup resourceGroup)
+        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,string networkSecurityGroupName, string routeTableName , string vnetName , AzureLocation location, ResourceGroup resourceGroup)
         {
             //1. create NetworkSecurityGroup
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <param name="resourceGroup"></param>
         /// <param name=""></param>
         /// <returns></returns>
-        protected async Task<PrivateEndpoint> CreateDefaultPrivateEndpoint(ManagedInstance managedInstance,VirtualNetwork vnet, Location location, ResourceGroup resourceGroup)
+        protected async Task<PrivateEndpoint> CreateDefaultPrivateEndpoint(ManagedInstance managedInstance,VirtualNetwork vnet, AzureLocation location, ResourceGroup resourceGroup)
         {
             // Add new subnet
             SubnetData subnetData = new SubnetData()

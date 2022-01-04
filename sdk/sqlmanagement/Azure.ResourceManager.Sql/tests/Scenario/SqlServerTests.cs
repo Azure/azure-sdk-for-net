@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         private async Task<SqlServer> CreateOrUpdateSqlServer(string sqlServerName)
         {
-            SqlServerData data = new SqlServerData(Location.WestUS2)
+            SqlServerData data = new SqlServerData(AzureLocation.WestUS2)
             {
                 AdministratorLogin = "Admin-" + sqlServerName,
                 AdministratorLoginPassword = CreateGeneralPassword(),

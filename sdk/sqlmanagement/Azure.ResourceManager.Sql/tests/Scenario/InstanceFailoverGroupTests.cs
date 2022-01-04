@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
             await StopSessionRecordingAsync();
@@ -52,8 +53,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string vnetName2 = Recording.GenerateAssetName("vnet-");
             Task[] tasks = new Task[]
             {
-                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, Location.WestUS2, _resourceGroup),
-                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, Location.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, AzureLocation.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
             string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             // 1.CreateOrUpdate
             string instanceFailoverGroupName = Recording.GenerateAssetName("InstanceFailoverGroup-");
-            string locationName = Location.WestUS2.ToString();
+            string locationName = AzureLocation.WestUS2.ToString();
             var instanceFailoverGroup = await CreateInstanceFailoverGroup(locationName, instanceFailoverGroupName);
             Assert.IsNotNull(instanceFailoverGroup.Data);
             Assert.AreEqual(instanceFailoverGroupName, instanceFailoverGroup.Data.Name);

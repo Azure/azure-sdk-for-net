@@ -32,7 +32,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
@@ -45,7 +45,7 @@ Now that we have the resource group created, we can manage the managed instance 
 //1. create NetworkSecurityGroup
 NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
 {
-    Location = Location.WestUS2,
+    Location = AzureLocation.WestUS2,
 };
 string networkSecurityGroupName = "myNetworkSecurityGroup";
 var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
@@ -53,7 +53,7 @@ var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().Create
 //2. create Route table
 RouteTableData routeTableData = new RouteTableData()
 {
-    Location = Location.WestUS2,
+    Location = AzureLocation.WestUS2,
 };
 string routeTableName = "myRouteTable";
 var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
@@ -61,7 +61,7 @@ var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeT
 //3. create vnet(subnet binding NetworkSecurityGroup and RouteTable)
 var vnetData = new VirtualNetworkData()
 {
-    Location = Location.WestUS2,
+    Location = AzureLocation.WestUS2,
     AddressSpace = new AddressSpace()
     {
         AddressPrefixes = { "10.10.0.0/16", }
@@ -86,7 +86,7 @@ var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName
 string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 
 //4. create ManagedInstance
-ManagedInstanceData data = new ManagedInstanceData(Location.WestUS2)
+ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
 {
     AdministratorLogin = "myAdministratorLogin",
     AdministratorLoginPassword = "abcdef123456789*",

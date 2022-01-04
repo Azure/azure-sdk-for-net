@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedInstanceData(Location location) : base(location)
+        public ManagedInstanceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the server. </param>
-        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.ResourceIdentity identity, Models.Sku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, StorageAccountType? storageAccountType, bool? zoneRedundant, string primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators) : base(id, name, type, tags, location)
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.ResourceIdentity identity, Models.Sku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, StorageAccountType? storageAccountType, bool? zoneRedundant, string primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators) : base(id, name, type, tags, location)
         {
             Identity = identity;
             Sku = sku;

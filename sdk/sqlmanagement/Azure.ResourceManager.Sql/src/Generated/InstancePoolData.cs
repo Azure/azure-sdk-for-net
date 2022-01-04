@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of InstancePoolData. </summary>
         /// <param name="location"> The location. </param>
-        public InstancePoolData(Location location) : base(location)
+        public InstancePoolData(AzureLocation location) : base(location)
         {
         }
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
         /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
         /// <param name="licenseType"> The license type. Possible values are &apos;LicenseIncluded&apos; (price for SQL license is included) and &apos;BasePrice&apos; (without SQL license price). </param>
-        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, string subnetId, int? vCores, InstancePoolLicenseType? licenseType) : base(id, name, type, tags, location)
+        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string subnetId, int? vCores, InstancePoolLicenseType? licenseType) : base(id, name, type, tags, location)
         {
             Sku = sku;
             SubnetId = subnetId;

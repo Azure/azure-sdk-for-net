@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of JobAgentData. </summary>
         /// <param name="location"> The location. </param>
-        public JobAgentData(Location location) : base(location)
+        public JobAgentData(AzureLocation location) : base(location)
         {
         }
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="databaseId"> Resource ID of the database to store job metadata in. </param>
         /// <param name="state"> The state of the job agent. </param>
-        internal JobAgentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, string databaseId, JobAgentState? state) : base(id, name, type, tags, location)
+        internal JobAgentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string databaseId, JobAgentState? state) : base(id, name, type, tags, location)
         {
             Sku = sku;
             DatabaseId = databaseId;
