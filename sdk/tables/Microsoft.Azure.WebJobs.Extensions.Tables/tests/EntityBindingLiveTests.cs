@@ -1281,13 +1281,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 }
 
                 yield return new(typeof(string[]), new[] { "hello", "world" }, new[] { "updated" },
-                    "[\r\n  \"hello\",\r\n  \"world\"\r\n]",
-                    "[\r\n  \"updated\"\r\n]"
+                    $"[{Environment.NewLine}  \"hello\",{Environment.NewLine}  \"world\"{Environment.NewLine}]",
+                    $"[{Environment.NewLine}  \"updated\"{Environment.NewLine}]"
                 );
 
                 yield return new(typeof(InnerPoco), new InnerPoco { Value = "1" }, new InnerPoco { Value = "2" },
-                    "{\r\n  \"Value\": \"1\"\r\n}",
-                    "{\r\n  \"Value\": \"2\"\r\n}");
+                    $"{{{Environment.NewLine}  \"Value\": \"1\"{Environment.NewLine}}}",
+                    $"{{{Environment.NewLine}  \"Value\": \"2\"{Environment.NewLine}}}");
             }
         }
 
