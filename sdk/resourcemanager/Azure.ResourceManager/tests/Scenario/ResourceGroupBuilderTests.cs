@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Tests
 {

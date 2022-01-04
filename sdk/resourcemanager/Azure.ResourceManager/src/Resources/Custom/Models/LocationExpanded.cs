@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// Convert LocationExpanded into a Location object.
         /// </summary>
         /// <param name="location"> The location to convert. </param>
-        public static implicit operator AzureLocation(LocationExpanded location)
+        public static implicit operator Location(LocationExpanded location)
         {
-            return new AzureLocation(location.Name, location.DisplayName);
+            return new Location(location.Name, location.DisplayName);
         }
     }
 }

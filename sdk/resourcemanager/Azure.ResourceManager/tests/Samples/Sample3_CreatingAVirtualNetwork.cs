@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;

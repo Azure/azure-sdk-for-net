@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Azure.ResourceManager.Core;
+﻿using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Tests
 {

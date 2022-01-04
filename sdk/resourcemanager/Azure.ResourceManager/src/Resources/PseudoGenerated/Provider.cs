@@ -8,7 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using System.Xml.Linq;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 

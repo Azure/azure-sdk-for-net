@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Tests
                 Assert.IsNotNull(loc.SubscriptionId);
                 Assert.IsNotNull(loc.RegionalDisplayName);
 
-                AzureLocation locStruct = loc;
+                Location locStruct = loc;
 
                 Assert.AreEqual(loc.Name, locStruct.Name);
                 Assert.AreEqual(loc.DisplayName, locStruct.DisplayName);
