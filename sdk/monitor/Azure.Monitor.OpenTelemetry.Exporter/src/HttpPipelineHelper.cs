@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private const string RetryAfterHeaderName = "Retry-After";
 
-        internal const int MinimumRetryInterval = 6000;
+        internal const int MinimumRetryInterval = 60000;
 
         internal static byte[] GetRequestContent(RequestContent content)
         {
@@ -69,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         }
                         else
                         {
-                            partialContent += Environment.NewLine + contentArray[(int)error.Index];
+                            partialContent += '\n' + contentArray[(int)error.Index];
                         }
                     }
                 }
