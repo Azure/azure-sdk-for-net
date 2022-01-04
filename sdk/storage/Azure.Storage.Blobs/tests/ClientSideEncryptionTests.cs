@@ -307,6 +307,37 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task UploadAsync_OverwritesDeliberately_BinaryData()
+        {
+            var plaintext = GetRandomBuffer(Constants.KB);
+            var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blobName = GetNewBlobName();
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+
+                // upload with encryption
+                await blob.UploadAsync(BinaryData.FromBytes(plaintext), cancellationToken: s_cancellationToken);
+
+                // overwrite with encryption
+                plaintext = GetRandomBuffer(Constants.KB);
+                await blob.UploadAsync(BinaryData.FromBytes(plaintext), cancellationToken: s_cancellationToken, overwrite: true);
+
+                var encryptedData = await DownloadBypassDecryption(blob);
+                byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
+
+                // compare data
+                Assert.AreEqual(expectedEncryptedData, encryptedData);
+            }
+        }
+
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(4)]
