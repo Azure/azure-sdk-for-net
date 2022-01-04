@@ -1,0 +1,395 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWQzNDBlZjItZGVhNC00MWVkLTliMTktYjMyMjc3ZTY0ZjNiL3Jlc291cmNlR3JvdXBzL2t1YmVybmV0ZXNjb25maWd1cmF0aW9uL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlcy9jb25uZWN0ZWRDbHVzdGVycy9rY3Rlc3RjbHVzdGVyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlc0NvbmZpZ3VyYXRpb24vc291cmNlQ29udHJvbENvbmZpZ3VyYXRpb25zP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2937157e-0408-47df-8602-42889491efbc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurationClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-Preview, 2020-07-01-Preview, 2020-10-01-Preview, 2021-03-01, 2021-05-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "1d38084a-6020-4d9a-83c8-af3c3b9fbb70"
+        ],
+        "x-ms-correlation-request-id": [
+          "1d38084a-6020-4d9a-83c8-af3c3b9fbb70"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20220104T201042Z:1d38084a-6020-4d9a-83c8-af3c3b9fbb70"
+        ],
+        "Date": [
+          "Tue, 04 Jan 2022 20:10:42 GMT"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWQzNDBlZjItZGVhNC00MWVkLTliMTktYjMyMjc3ZTY0ZjNiL3Jlc291cmNlR3JvdXBzL2t1YmVybmV0ZXNjb25maWd1cmF0aW9uL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlcy9jb25uZWN0ZWRDbHVzdGVycy9rY3Rlc3RjbHVzdGVyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlc0NvbmZpZ3VyYXRpb24vc291cmNlQ29udHJvbENvbmZpZ3VyYXRpb25zP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9930a7a1-50a6-4289-864d-7dd056cd982a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurationClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-Preview, 2020-07-01-Preview, 2020-10-01-Preview, 2021-03-01, 2021-05-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "bdeec04e-c657-4c3e-ae20-8f3d2cd20295"
+        ],
+        "x-ms-correlation-request-id": [
+          "bdeec04e-c657-4c3e-ae20-8f3d2cd20295"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20220104T201045Z:bdeec04e-c657-4c3e-ae20-8f3d2cd20295"
+        ],
+        "Date": [
+          "Tue, 04 Jan 2022 20:10:45 GMT"
+        ],
+        "Content-Length": [
+          "1267"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/netsdktestconfig01a\",\r\n      \"name\": \"netsdktestconfig01a\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/sourceControlConfigurations\",\r\n      \"properties\": {\r\n        \"operatorNamespace\": \"netsdktestconfig01a-opns\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"complianceStatus\": {\r\n          \"complianceState\": \"Pending\",\r\n          \"lastConfigApplied\": \"0001-01-01T00:00:00-08:00\",\r\n          \"message\": \"{\\\"OperatorMessage\\\":null,\\\"ClusterState\\\":null}\",\r\n          \"messageLevel\": \"Information\"\r\n        },\r\n        \"enableHelmOperator\": true,\r\n        \"helmOperatorProperties\": {\r\n          \"chartVersion\": \"1.2.0\",\r\n          \"chartValues\": \"--set helm.versions=v3\"\r\n        },\r\n        \"repositoryUrl\": \"git://github.com/anubhav929/flux-get-started\",\r\n        \"operatorInstanceName\": \"netsdktestconfig01a-opin\",\r\n        \"operatorType\": \"Flux\",\r\n        \"operatorScope\": \"namespace\",\r\n        \"operatorParams\": \"--git-readonly\",\r\n        \"sshKnownHostsContents\": null,\r\n        \"configurationProtectedSettings\": {},\r\n        \"repositoryPublicKey\": \"\"\r\n      },\r\n      \"systemData\": {\r\n        \"createdBy\": null,\r\n        \"createdByType\": null,\r\n        \"createdAt\": \"2022-01-04T12:10:43.6600642-08:00\",\r\n        \"lastModifiedBy\": null,\r\n        \"lastModifiedByType\": null,\r\n        \"lastModifiedAt\": \"2022-01-04T12:10:43.6600642-08:00\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWQzNDBlZjItZGVhNC00MWVkLTliMTktYjMyMjc3ZTY0ZjNiL3Jlc291cmNlR3JvdXBzL2t1YmVybmV0ZXNjb25maWd1cmF0aW9uL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlcy9jb25uZWN0ZWRDbHVzdGVycy9rY3Rlc3RjbHVzdGVyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlc0NvbmZpZ3VyYXRpb24vc291cmNlQ29udHJvbENvbmZpZ3VyYXRpb25zP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4635a138-080f-4bcb-bf6d-b181be6a5ea9"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurationClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-Preview, 2020-07-01-Preview, 2020-10-01-Preview, 2021-03-01, 2021-05-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "07011092-67da-4806-938d-9fb796fc145d"
+        ],
+        "x-ms-correlation-request-id": [
+          "07011092-67da-4806-938d-9fb796fc145d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20220104T201046Z:07011092-67da-4806-938d-9fb796fc145d"
+        ],
+        "Date": [
+          "Tue, 04 Jan 2022 20:10:46 GMT"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/netsdktestconfig01a?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWQzNDBlZjItZGVhNC00MWVkLTliMTktYjMyMjc3ZTY0ZjNiL3Jlc291cmNlR3JvdXBzL2t1YmVybmV0ZXNjb25maWd1cmF0aW9uL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlcy9jb25uZWN0ZWRDbHVzdGVycy9rY3Rlc3RjbHVzdGVyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlc0NvbmZpZ3VyYXRpb24vc291cmNlQ29udHJvbENvbmZpZ3VyYXRpb25zL25ldHNka3Rlc3Rjb25maWcwMWE/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"repositoryUrl\": \"git://github.com/anubhav929/flux-get-started\",\r\n    \"operatorNamespace\": \"netsdktestconfig01a-opns\",\r\n    \"operatorInstanceName\": \"netsdktestconfig01a-opin\",\r\n    \"operatorParams\": \"--git-readonly\",\r\n    \"configurationProtectedSettings\": {\r\n      \"dummyArg\": \"ZHVtbXlQYXJhbQ==\"\r\n    },\r\n    \"operatorScope\": \"namespace\",\r\n    \"enableHelmOperator\": true,\r\n    \"helmOperatorProperties\": {\r\n      \"chartVersion\": \"1.2.0\",\r\n      \"chartValues\": \"--set helm.versions=v3\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dfe51cdd-c183-4a1e-98f2-e9ba0d6cf856"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurationClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "524"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "file:///subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/netsdktestconfig01a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-Preview, 2020-07-01-Preview, 2020-10-01-Preview, 2021-03-01, 2021-05-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "13a721ec-61b7-4a89-b3e5-7aaeeb02a078"
+        ],
+        "x-ms-correlation-request-id": [
+          "13a721ec-61b7-4a89-b3e5-7aaeeb02a078"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20220104T201043Z:13a721ec-61b7-4a89-b3e5-7aaeeb02a078"
+        ],
+        "Date": [
+          "Tue, 04 Jan 2022 20:10:43 GMT"
+        ],
+        "Content-Length": [
+          "1239"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/netsdktestconfig01a\",\r\n  \"name\": \"netsdktestconfig01a\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/sourceControlConfigurations\",\r\n  \"properties\": {\r\n    \"operatorNamespace\": \"netsdktestconfig01a-opns\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"complianceStatus\": {\r\n      \"complianceState\": \"Pending\",\r\n      \"lastConfigApplied\": \"0001-01-01T00:00:00-08:00\",\r\n      \"message\": \"{\\\"OperatorMessage\\\":null,\\\"ClusterState\\\":null}\",\r\n      \"messageLevel\": \"Information\"\r\n    },\r\n    \"enableHelmOperator\": true,\r\n    \"helmOperatorProperties\": {\r\n      \"chartVersion\": \"1.2.0\",\r\n      \"chartValues\": \"--set helm.versions=v3\"\r\n    },\r\n    \"repositoryUrl\": \"git://github.com/anubhav929/flux-get-started\",\r\n    \"operatorInstanceName\": \"netsdktestconfig01a-opin\",\r\n    \"operatorType\": \"Flux\",\r\n    \"operatorScope\": \"namespace\",\r\n    \"operatorParams\": \"--git-readonly\",\r\n    \"sshKnownHostsContents\": null,\r\n    \"configurationProtectedSettings\": {},\r\n    \"repositoryPublicKey\": \"\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": null,\r\n    \"createdByType\": null,\r\n    \"createdAt\": \"2022-01-04T12:10:43.6600642-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedByType\": null,\r\n    \"lastModifiedAt\": \"2022-01-04T12:10:43.6600642-08:00\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/netsdktestconfig01a?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWQzNDBlZjItZGVhNC00MWVkLTliMTktYjMyMjc3ZTY0ZjNiL3Jlc291cmNlR3JvdXBzL2t1YmVybmV0ZXNjb25maWd1cmF0aW9uL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlcy9jb25uZWN0ZWRDbHVzdGVycy9rY3Rlc3RjbHVzdGVyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlc0NvbmZpZ3VyYXRpb24vc291cmNlQ29udHJvbENvbmZpZ3VyYXRpb25zL25ldHNka3Rlc3Rjb25maWcwMWE/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "49f760e2-7248-4192-a180-dc5b53a0fdfd"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurationClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-Preview, 2020-07-01-Preview, 2020-10-01-Preview, 2021-03-01, 2021-05-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "ea568bf9-688f-413d-b34b-26aac0a916a8"
+        ],
+        "x-ms-correlation-request-id": [
+          "ea568bf9-688f-413d-b34b-26aac0a916a8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20220104T201044Z:ea568bf9-688f-413d-b34b-26aac0a916a8"
+        ],
+        "Date": [
+          "Tue, 04 Jan 2022 20:10:44 GMT"
+        ],
+        "Content-Length": [
+          "1239"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/netsdktestconfig01a\",\r\n  \"name\": \"netsdktestconfig01a\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/sourceControlConfigurations\",\r\n  \"properties\": {\r\n    \"operatorNamespace\": \"netsdktestconfig01a-opns\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"complianceStatus\": {\r\n      \"complianceState\": \"Pending\",\r\n      \"lastConfigApplied\": \"0001-01-01T00:00:00-08:00\",\r\n      \"message\": \"{\\\"OperatorMessage\\\":null,\\\"ClusterState\\\":null}\",\r\n      \"messageLevel\": \"Information\"\r\n    },\r\n    \"enableHelmOperator\": true,\r\n    \"helmOperatorProperties\": {\r\n      \"chartVersion\": \"1.2.0\",\r\n      \"chartValues\": \"--set helm.versions=v3\"\r\n    },\r\n    \"repositoryUrl\": \"git://github.com/anubhav929/flux-get-started\",\r\n    \"operatorInstanceName\": \"netsdktestconfig01a-opin\",\r\n    \"operatorType\": \"Flux\",\r\n    \"operatorScope\": \"namespace\",\r\n    \"operatorParams\": \"--git-readonly\",\r\n    \"sshKnownHostsContents\": null,\r\n    \"configurationProtectedSettings\": {},\r\n    \"repositoryPublicKey\": \"\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": null,\r\n    \"createdByType\": null,\r\n    \"createdAt\": \"2022-01-04T12:10:43.6600642-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedByType\": null,\r\n    \"lastModifiedAt\": \"2022-01-04T12:10:43.6600642-08:00\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/netsdktestconfig01a?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWQzNDBlZjItZGVhNC00MWVkLTliMTktYjMyMjc3ZTY0ZjNiL3Jlc291cmNlR3JvdXBzL2t1YmVybmV0ZXNjb25maWd1cmF0aW9uL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlcy9jb25uZWN0ZWRDbHVzdGVycy9rY3Rlc3RjbHVzdGVyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3ViZXJuZXRlc0NvbmZpZ3VyYXRpb24vc291cmNlQ29udHJvbENvbmZpZ3VyYXRpb25zL25ldHNka3Rlc3Rjb25maWcwMWE/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0b4583a3-46c0-4839-bb93-60bf1c8d3e36"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurationClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-Preview, 2020-07-01-Preview, 2020-10-01-Preview, 2021-03-01, 2021-05-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "845aca83-ccfb-450a-b37c-0f6e9a4cc871"
+        ],
+        "x-ms-correlation-request-id": [
+          "845aca83-ccfb-450a-b37c-0f6e9a4cc871"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20220104T201045Z:845aca83-ccfb-450a-b37c-0f6e9a4cc871"
+        ],
+        "Date": [
+          "Tue, 04 Jan 2022 20:10:45 GMT"
+        ],
+        "Content-Length": [
+          "152"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"content\": null,\r\n  \"statusCode\": 200,\r\n  \"headers\": [],\r\n  \"version\": \"1.1\",\r\n  \"reasonPhrase\": \"OK\",\r\n  \"trailingHeaders\": [],\r\n  \"requestMessage\": null,\r\n  \"isSuccessStatusCode\": true\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9d340ef2-dea4-41ed-9b19-b32277e64f3b"
+  }
+}

@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "df44c0e9-064c-4b7c-b7f7-358769ceeff6"
+          "88e6993e-b4f9-49c9-a6be-53aaa40ccfb8"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11995"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -39,16 +39,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "3d19c2e5-58de-4dd5-89d7-d989894dc231"
+          "84194cf6-5791-4392-89e3-dba4e3c6befd"
         ],
         "x-ms-correlation-request-id": [
-          "3d19c2e5-58de-4dd5-89d7-d989894dc231"
+          "84194cf6-5791-4392-89e3-dba4e3c6befd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20211228T051121Z:3d19c2e5-58de-4dd5-89d7-d989894dc231"
+          "CENTRALUS:20220104T203251Z:84194cf6-5791-4392-89e3-dba4e3c6befd"
         ],
         "Date": [
-          "Tue, 28 Dec 2021 05:11:20 GMT"
+          "Tue, 04 Jan 2022 20:32:50 GMT"
         ],
         "Content-Length": [
           "28"
@@ -70,7 +70,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b3ae9859-632e-427b-80da-67c44c81d1a8"
+          "f2b1a9c2-2c3e-411a-9e63-03a828dba752"
         ],
         "Accept-Language": [
           "en-US"
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11993"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -102,19 +102,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "02890b60-9e10-4d0f-b88b-040734ac0f29"
+          "68834970-dc95-4e21-8703-18a4f9fdcf5e"
         ],
         "x-ms-correlation-request-id": [
-          "02890b60-9e10-4d0f-b88b-040734ac0f29"
+          "68834970-dc95-4e21-8703-18a4f9fdcf5e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20211228T051125Z:02890b60-9e10-4d0f-b88b-040734ac0f29"
+          "CENTRALUS:20220104T203254Z:68834970-dc95-4e21-8703-18a4f9fdcf5e"
         ],
         "Date": [
-          "Tue, 28 Dec 2021 05:11:24 GMT"
+          "Tue, 04 Jan 2022 20:32:54 GMT"
         ],
         "Content-Length": [
-          "894"
+          "892"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,7 +123,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n      \"name\": \"openservicemesh\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.openservicemesh\",\r\n        \"autoUpgradeMinorVersion\": false,\r\n        \"releaseTrain\": \"staging\",\r\n        \"version\": \"0.1.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": \"arc-osm-system\"\r\n          }\r\n        },\r\n        \"provisioningState\": \"Creating\",\r\n        \"installState\": \"Unknown\",\r\n        \"configurationSettings\": {},\r\n        \"configurationProtectedSettings\": {},\r\n        \"statuses\": [],\r\n        \"aksAssignedIdentity\": null\r\n      },\r\n      \"systemData\": {\r\n        \"createdBy\": null,\r\n        \"createdByType\": null,\r\n        \"createdAt\": \"2021-12-27T21:11:23.4501071-08:00\",\r\n        \"lastModifiedBy\": null,\r\n        \"lastModifiedByType\": null,\r\n        \"lastModifiedAt\": \"2021-12-27T21:11:23.4501071-08:00\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n      \"name\": \"openservicemesh\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.openservicemesh\",\r\n        \"autoUpgradeMinorVersion\": false,\r\n        \"releaseTrain\": \"staging\",\r\n        \"version\": \"0.1.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": \"arc-osm-system\"\r\n          }\r\n        },\r\n        \"provisioningState\": \"Creating\",\r\n        \"installState\": \"Unknown\",\r\n        \"configurationSettings\": {},\r\n        \"configurationProtectedSettings\": {},\r\n        \"statuses\": [],\r\n        \"aksAssignedIdentity\": null\r\n      },\r\n      \"systemData\": {\r\n        \"createdBy\": null,\r\n        \"createdByType\": null,\r\n        \"createdAt\": \"2022-01-04T12:32:53.081787-08:00\",\r\n        \"lastModifiedBy\": null,\r\n        \"lastModifiedByType\": null,\r\n        \"lastModifiedAt\": \"2022-01-04T12:32:53.081787-08:00\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -133,7 +133,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "475d694c-625f-489c-877a-b54db562f991"
+          "eebcc31d-72f8-4b00-b0ee-33d3436d9c54"
         ],
         "Accept-Language": [
           "en-US"
@@ -153,7 +153,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11992"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -165,16 +165,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "7f917f6d-ed54-4eb1-8283-f229bb313466"
+          "6ef4eff4-401c-4d45-b4b6-f00ba85ec611"
         ],
         "x-ms-correlation-request-id": [
-          "7f917f6d-ed54-4eb1-8283-f229bb313466"
+          "6ef4eff4-401c-4d45-b4b6-f00ba85ec611"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20211228T051126Z:7f917f6d-ed54-4eb1-8283-f229bb313466"
+          "CENTRALUS:20220104T203255Z:6ef4eff4-401c-4d45-b4b6-f00ba85ec611"
         ],
         "Date": [
-          "Tue, 28 Dec 2021 05:11:25 GMT"
+          "Tue, 04 Jan 2022 20:32:55 GMT"
         ],
         "Content-Length": [
           "28"
@@ -196,7 +196,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e8c37ee2-9312-4648-b3bf-272c1a7c6ddf"
+          "f41aa48f-49fc-44db-b382-b59f347d310d"
         ],
         "Accept-Language": [
           "en-US"
@@ -225,13 +225,13 @@
           "https://eastus2euap.rp.kubernetesconfiguration.azure.com/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/ConnectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/ConnectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh/operations/8483a22b-dce8-4db3-8159-014787570f0d?api-Version=2021-09-01"
+          "https://management.azure.com/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/ConnectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh/operations/0e0b9080-8de7-4a36-83bd-0f45d81e33ca?api-Version=2021-09-01"
         ],
         "api-supported-versions": [
           "2020-07-01-Preview, 2021-05-01-preview, 2021-09-01"
@@ -240,19 +240,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "dc2ee249-d578-49af-b44b-31a2bfa4ad61"
+          "3956ac3b-ee64-48c8-9f39-561872b97e1e"
         ],
         "x-ms-correlation-request-id": [
-          "dc2ee249-d578-49af-b44b-31a2bfa4ad61"
+          "3956ac3b-ee64-48c8-9f39-561872b97e1e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20211228T051123Z:dc2ee249-d578-49af-b44b-31a2bfa4ad61"
+          "CENTRALUS:20220104T203253Z:3956ac3b-ee64-48c8-9f39-561872b97e1e"
         ],
         "Date": [
-          "Tue, 28 Dec 2021 05:11:22 GMT"
+          "Tue, 04 Jan 2022 20:32:52 GMT"
         ],
         "Content-Length": [
-          "866"
+          "864"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -261,7 +261,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Creating\",\r\n    \"installState\": \"Unknown\",\r\n    \"configurationSettings\": {},\r\n    \"configurationProtectedSettings\": {},\r\n    \"statuses\": [],\r\n    \"aksAssignedIdentity\": null\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": null,\r\n    \"createdByType\": null,\r\n    \"createdAt\": \"2021-12-27T21:11:23.4501071-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedByType\": null,\r\n    \"lastModifiedAt\": \"2021-12-27T21:11:23.4501071-08:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Creating\",\r\n    \"installState\": \"Unknown\",\r\n    \"configurationSettings\": {},\r\n    \"configurationProtectedSettings\": {},\r\n    \"statuses\": [],\r\n    \"aksAssignedIdentity\": null\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": null,\r\n    \"createdByType\": null,\r\n    \"createdAt\": \"2022-01-04T12:32:53.081787-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedByType\": null,\r\n    \"lastModifiedAt\": \"2022-01-04T12:32:53.081787-08:00\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -271,7 +271,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a01944d6-f1e6-4dc2-9c83-11f9fccfd9d2"
+          "918ccf72-1aae-4077-9168-c91901cbc053"
         ],
         "Accept-Language": [
           "en-US"
@@ -291,7 +291,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11994"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -303,19 +303,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "79612c3d-f504-4d5a-8c91-860ecb999467"
+          "61654861-b81f-4057-99ff-75174989c0a6"
         ],
         "x-ms-correlation-request-id": [
-          "79612c3d-f504-4d5a-8c91-860ecb999467"
+          "61654861-b81f-4057-99ff-75174989c0a6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20211228T051124Z:79612c3d-f504-4d5a-8c91-860ecb999467"
+          "CENTRALUS:20220104T203253Z:61654861-b81f-4057-99ff-75174989c0a6"
         ],
         "Date": [
-          "Tue, 28 Dec 2021 05:11:23 GMT"
+          "Tue, 04 Jan 2022 20:32:53 GMT"
         ],
         "Content-Length": [
-          "866"
+          "864"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -324,7 +324,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Creating\",\r\n    \"installState\": \"Unknown\",\r\n    \"configurationSettings\": {},\r\n    \"configurationProtectedSettings\": {},\r\n    \"statuses\": [],\r\n    \"aksAssignedIdentity\": null\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": null,\r\n    \"createdByType\": null,\r\n    \"createdAt\": \"2021-12-27T21:11:23.4501071-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedByType\": null,\r\n    \"lastModifiedAt\": \"2021-12-27T21:11:23.4501071-08:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9d340ef2-dea4-41ed-9b19-b32277e64f3b/resourceGroups/kubernetesconfiguration/providers/Microsoft.Kubernetes/connectedClusters/kctestcluster/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Creating\",\r\n    \"installState\": \"Unknown\",\r\n    \"configurationSettings\": {},\r\n    \"configurationProtectedSettings\": {},\r\n    \"statuses\": [],\r\n    \"aksAssignedIdentity\": null\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": null,\r\n    \"createdByType\": null,\r\n    \"createdAt\": \"2022-01-04T12:32:53.081787-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedByType\": null,\r\n    \"lastModifiedAt\": \"2022-01-04T12:32:53.081787-08:00\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -334,7 +334,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "33020dad-7bb7-43de-b55c-0a35be78049b"
+          "10c021c6-6c31-4af6-8bb1-d8c2fcb5d333"
         ],
         "Accept-Language": [
           "en-US"
@@ -354,7 +354,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "14998"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -366,16 +366,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "661a423a-5ad0-469e-80fc-b021fa4e8d3f"
+          "cc364cbc-12b4-4955-aba9-1726682c689b"
         ],
         "x-ms-correlation-request-id": [
-          "661a423a-5ad0-469e-80fc-b021fa4e8d3f"
+          "cc364cbc-12b4-4955-aba9-1726682c689b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20211228T051125Z:661a423a-5ad0-469e-80fc-b021fa4e8d3f"
+          "CENTRALUS:20220104T203255Z:cc364cbc-12b4-4955-aba9-1726682c689b"
         ],
         "Date": [
-          "Tue, 28 Dec 2021 05:11:24 GMT"
+          "Tue, 04 Jan 2022 20:32:54 GMT"
         ],
         "Content-Length": [
           "152"

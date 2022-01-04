@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
+namespace Microsoft.Azure.Management.KubernetesConfiguration
 {
   using System;
   using System.Collections.Generic;
@@ -19,16 +19,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("KubernetesConfiguration", "Extensions", "2021-09-01"),
-                new Tuple<string, string, string>("KubernetesConfiguration", "OperationStatus", "2021-09-01"),
-                new Tuple<string, string, string>("KubernetesConfiguration", "Operations", "2021-09-01"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "Operations", "2021-03-01"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "SourceControlConfigurations", "2021-03-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/kubernetesconfiguration/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.KubernetesConfiguration.Extensions --tag=package-2021-09 --csharp.output-folder=C:\\asdk\\sdk\\kubernetesconfiguration\\Microsoft.Azure.Management.KubernetesConfiguration.Extensions\\src\\Generated";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/kubernetesconfiguration/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.KubernetesConfiguration --tag=package-2021-03 --csharp-sdks-folder=C:\\asdk\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
       public static readonly String GithubCommidId = "fc59c63a825be4d9d5da3b5bd90ba62c22b7401f";

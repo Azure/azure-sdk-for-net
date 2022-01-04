@@ -1,13 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
-    <PackageId>KubernetesConfiguration.Extensions.Tests</PackageId>
-    <AssemblyName>KubernetesConfiguration.Extensions.Tests</AssemblyName>
+    <PackageId>KubernetesConfiguration.Tests</PackageId>
+    <AssemblyName>KubernetesConfiguration.Tests</AssemblyName>
     <Version>1.0.0</Version>
+    <Description>Test Project for Automation tests</Description>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.Azure.Management.KubernetesConfiguration.Extensions.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.KubernetesConfiguration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
