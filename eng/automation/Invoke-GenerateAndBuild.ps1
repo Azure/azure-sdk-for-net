@@ -45,7 +45,8 @@ function New-PackageFolder() {
       [string]$sdkPath = "",
       [string]$commitid = "",
       [string]$readme = "",
-      [string]$AUTOREST_CONFIG_FILE = "autorest.md"
+      [string]$AUTOREST_CONFIG_FILE = "autorest.md",
+      [string]$outputJsonFile = "newPacakgeOutput.json"
   )
 
   $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.*"
@@ -82,6 +83,12 @@ function New-PackageFolder() {
     $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
     (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
   }
+
+  $outputJson = [PSCustomObject]@{
+    projectFolder = $projectFolder
+  }
+
+  $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
 
   return $projectFolder
 }
@@ -124,10 +131,21 @@ $packageName = Get-ResourceProviderFromReadme $readmeFile
 $sdkPath =  (Join-Path $PSScriptRoot .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
-$packageFolder = New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid -readme $readmeFile
-Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName
+
+$newpackageoutput = "newPackageOutput.json"
+New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid -readme $readmeFile -outputJsonFile $newpackageoutput
+if ( $? -ne $True) {
+  Write-Error "Failed to create sdk project folder. exit code: $?"
+  exit 1
+}
+$newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
+$projectFolder = $newpackageoutputJson.projectFolder
+Write-Host "projectFolder:$projectFolder"
+Remove-Item $newpackageoutput
+
+Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $projectFolder
 
 $outputJson = [PSCustomObject]@{
-    packages = @([pscustomobject]@{packageName=''; result='succeeded'; path=@("$packageFolder");packageFolder=@("$packageFolder")})
+    packages = @([pscustomobject]@{packageName='$projectFolder'; result='succeeded'; path=@("$projectFolder");packageFolder="$projectFolder"})
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile

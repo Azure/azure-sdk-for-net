@@ -10,7 +10,7 @@
     },
     "generateAndBuild": {
         "generateAndBuildScript": {
-            "path": "./eng/automation/Invoke-GenerateAndBuild.ps1",
+            "path": "./eng/automation/generate-and-build.sh",
             "logPrefix": "[DotNet-Generate]",
             "stderr":{
                 "storeLogByFilter": "[error|Error|Exception]"
@@ -19,7 +19,7 @@
     },
     "mockTest": {
         "mockTestScript": {
-            "path": "./eng/automation/Invoke-MockTest.ps1",
+            "path": "./eng/automation/mock-test.sh",
             "logPrefix": "[GO-MockTest]",
             "stderr":{
                 "storeLogByFilter": "[error|Error|Exception]"
