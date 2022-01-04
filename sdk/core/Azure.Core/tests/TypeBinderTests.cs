@@ -97,6 +97,31 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("42", dictionary["StringReadOnlyField"]);
         }
 
+        [Test]
+        public void IgnoresPrivatesSetters()
+        {
+            var model = new TestBinder().Deserialize<ModelClass>(new Dictionary<string, object>()
+            {
+                { "PropertyWithPrivateSetter", "modified value" },
+                { "PrivateField", "modified value" },
+                { "PrivateProperty", "modified value" },
+            });
+
+            Assert.AreEqual(model.PropertyWithPrivateSetter, "private value");
+            Assert.AreEqual(model.GetPrivateField(), "private value");
+            Assert.AreEqual(model.GetPrivateProperty(), "private value");
+        }
+
+        [Test]
+        public void IgnoresPrivatesFieldsAndProperties()
+        {
+            var dictionary = new Dictionary<string, object>();
+
+            new TestBinder().Serialize(new ModelClass(), dictionary);
+            Assert.False(dictionary.ContainsKey("PrivateField"));
+            Assert.False(dictionary.ContainsKey("PrivateProperty"));
+        }
+
 #pragma warning disable 414
 #pragma warning disable 649
         private class ModelClass
@@ -118,6 +143,14 @@ namespace Azure.Monitor.Query.Tests
 
             [DataMember(Name = "renamed_property")]
             public string RenamedProperty { get; set; } = "renamed property";
+
+            public string PropertyWithPrivateSetter { get; private set; } = "private value";
+
+            private string PrivateField = "private value";
+            private string PrivateProperty => "private value";
+
+            public string GetPrivateField() => PrivateField;
+            public string GetPrivateProperty() => PrivateProperty;
         }
 
         private struct ModelStruct
