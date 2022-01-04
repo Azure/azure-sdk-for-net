@@ -13,7 +13,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     public class ServiceEndpoint
     {
-        private readonly ValidationOptions _validationOptions = new();
+        private static readonly ValidationOptions _validationOptions = new();
+
+        internal CredentialKind CredentialKind { get; }
+
+        internal ValidationOptions ValidationOptions = _validationOptions;
+
+        internal string ConnectionString { get; }
+
+        internal string AccessKey { get; }
+
+        internal TokenCredential TokenCredential { get; }
+
+        internal AzureKeyCredential AzureKeyCredential { get; }
 
         /// <summary>
         /// The uri of service endpoint.
@@ -69,17 +81,5 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
             _validationOptions.Add(endpoint);
         }
-
-        internal CredentialKind CredentialKind { get; }
-
-        internal ValidationOptions GetValidationOptions() => _validationOptions;
-
-        internal string ConnectionString { get; }
-
-        internal string AccessKey { get; }
-
-        internal TokenCredential TokenCredential { get; }
-
-        internal AzureKeyCredential AzureKeyCredential { get; }
     }
 }

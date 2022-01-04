@@ -48,9 +48,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Add a default option to avoid null, inbound traffic validation will always succeed.
             // And customer will not be able to `AddWebPubSubServiceClient`.
-            services.Configure<WebPubSubOptions>(o => o = new());
-
-            return services.AddWebPubSubCore();
+            return services.AddWebPubSub(o => o = new());
         }
 
         /// <summary>
