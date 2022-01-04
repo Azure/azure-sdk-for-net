@@ -50,13 +50,13 @@ namespace Azure.Core.Pipeline
         /// <param name="options">The customer provided client options object.</param>
         /// <param name="perCallPolicies">Client provided per-call policies.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
-        /// <param name="defaultTransportOptions">The customer provided transport options which will be applied to the default transport.</param>
+        /// <param name="transportOptions">The customer provided transport options which will be applied to the default transport. Note: If a custom transport has been supplied via the <paramref name="options"/>, these <paramref name="transportOptions"/> will be ignored.</param>
         /// <param name="responseClassifier">The client provided response classifier.</param>
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
-        public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions defaultTransportOptions, ResponseClassifier? responseClassifier)
+        public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions transportOptions, ResponseClassifier? responseClassifier)
         {
-            Argument.AssertNotNull(defaultTransportOptions, nameof(defaultTransportOptions));
-            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, defaultTransportOptions, responseClassifier);
+            Argument.AssertNotNull(transportOptions, nameof(transportOptions));
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, transportOptions, responseClassifier);
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
 

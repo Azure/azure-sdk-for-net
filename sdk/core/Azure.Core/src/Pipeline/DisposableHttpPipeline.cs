@@ -31,11 +31,11 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Disposes the underlying transport if it is owned internally. If the underlying transport was created externally, nothing is disposed.
+        /// Disposes the underlying transport if it was created via the Build method on <see cref="HttpPipelineBuilder"/>. If the underlying transport was supplied as a custom transport on <see cref="ClientOptions"/>, nothing is disposed.
         /// <remarks>
-        /// The behavior of ignoring disposal when the transport is not owned is to account for scenarios in which the supplied transport is created
-        /// externally and potentially shared across clients. In this case, it is possible to dispose of a transport still in use by other clients.
-        /// When the transport is created internally, it can properly determine if a shared instance is in use.
+        /// The behavior of ignoring disposal when the transport was created via the Build method on <see cref="HttpPipelineBuilder"/> is to account for scenarios
+        /// in which the supplied transport is created externally and potentially shared across clients. In this case, it is possible to dispose of a transport
+        /// still in use by other clients. When the transport is created internally, it can properly determine if a shared instance is in use.
         /// </remarks>
         /// </summary>
         public void Dispose()
