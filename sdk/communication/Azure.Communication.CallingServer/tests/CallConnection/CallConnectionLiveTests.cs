@@ -202,9 +202,7 @@ namespace Azure.Communication.CallingServer.Tests
                 await RemoveParticipantFromDefaultAudioGroupOperation(callConnection, userId).ConfigureAwait(false);
 
                 // Add Participant To Default Audio Group
-                var addParticipantToDefaultAudioGroupResult = await AddParticipantToDefaultAudioGroupOperation(callConnection, userId).ConfigureAwait(false);
-                Assert.NotNull(addParticipantToDefaultAudioGroupResult);
-                await WaitForOperationCompletion().ConfigureAwait(false);
+                await AddParticipantToDefaultAudioGroupOperation(callConnection, userId).ConfigureAwait(false);
 
                 // Remove Participant
                 await RemoveParticipantOperation(callConnection, userId).ConfigureAwait(false);
