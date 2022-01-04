@@ -44,6 +44,7 @@ function New-PackageFolder() {
       [string]$packageName = "",
       [string]$sdkPath = "",
       [string]$commitid = "",
+      [string]$readme = "",
       [string]$AUTOREST_CONFIG_FILE = "autorest.md"
   )
 
@@ -71,6 +72,12 @@ function New-PackageFolder() {
     $rp = $swaggerInfo[1]
     $permalinks = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/specification/$rp/resource-manager/readme.md"
     $requirefile = "require: $permalinks"
+    $rquirefileRex = "require *:.*.md"
+    $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
+    (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
+  } elseif ($readme -ne "") {
+    Write-Host "Updating required file in autorest.md file."
+    $requirefile = "require: $readme"
     $rquirefileRex = "require *:.*.md"
     $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
     (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
@@ -117,7 +124,7 @@ $packageName = Get-ResourceProviderFromReadme $readmeFile
 $sdkPath =  (Join-Path $PSScriptRoot .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
-$packageFolder = New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid
+$packageFolder = New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid -readme $readmeFile
 Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName
 
 $outputJson = [PSCustomObject]@{
