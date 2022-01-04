@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 5.1.0
+###  Feature Additions
+- Support UAMI M2
+- Add connectionProperties in GoogleAdWordsLinkedService
+
 ## Version 5.0.0
 ###  Feature Additions
 ### Breaking Changes

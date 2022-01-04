@@ -2680,6 +2680,25 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string GoogleAdWordsConnectionPropertiesLinkedService = @"
+{
+	name: ""GoogleAdWordsLinkedService"",
+	properties: {
+		type: ""GoogleAdWords"",
+		typeProperties: {
+			connectionProperties: {
+				clientCustomerID: ""fakeClientCustomerID"",
+				developerToken: {
+					type: ""SecureString"",
+					value: ""some secret""
+				}
+			}
+		}
+	}
+}
+";
+
+        [JsonSample]
         public const string NetezzaLinkedService = @"
 {
     name: ""NetezzaLinkedService"",
