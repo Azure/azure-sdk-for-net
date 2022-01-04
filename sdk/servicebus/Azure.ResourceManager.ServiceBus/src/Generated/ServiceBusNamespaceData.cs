@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus
     {
         /// <summary> Initializes a new instance of ServiceBusNamespaceData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceBusNamespaceData(Location location) : base(location)
+        public ServiceBusNamespaceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ServiceBusSku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string metricId, bool? zoneRedundant, Models.EncryptionProperties encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
+        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string metricId, bool? zoneRedundant, Models.EncryptionProperties encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;

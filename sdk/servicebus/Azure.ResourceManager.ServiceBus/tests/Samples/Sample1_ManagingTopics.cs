@@ -9,6 +9,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #endregion
             #region Snippet:Managing_ServiceBusTopics_CreateResourceGroup
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion

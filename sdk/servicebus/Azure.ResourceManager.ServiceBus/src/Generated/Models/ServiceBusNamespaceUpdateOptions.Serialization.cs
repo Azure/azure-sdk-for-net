@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<ServiceBusSku> sku = default;
             Optional<Identity> identity = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

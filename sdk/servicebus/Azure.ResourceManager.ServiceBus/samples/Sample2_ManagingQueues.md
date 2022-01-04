@@ -6,6 +6,7 @@ Namespaces for this example:
 
 ```C# Snippet:Managing_ServiceBusNamespaces_Namespaces
 using System;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
@@ -24,7 +25,7 @@ This is a scoped operations object, and any operations you perform will be done 
 
 ```C# Snippet:Managing_ServiceBusQueues_CreateResourceGroup
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
