@@ -83,8 +83,8 @@ using Azure.Monitor.Query;
 using Azure.Identity;
 
 // code omitted for brevity
-
-var client = new LogsQueryClient(new DefaultAzureCredential());
+var credential = new ClientSecretCredential("<domainId or tenantId>", "<clientId>", "<clientSecret>");
+var client = new LogsQueryClient(credential);
 ```
 
 ### Send a single query request
