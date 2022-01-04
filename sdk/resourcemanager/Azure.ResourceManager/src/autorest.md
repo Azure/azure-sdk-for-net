@@ -72,6 +72,18 @@ directive:
     where: $.definitions.*.properties[?(@.enum)]
     transform: >
       $["x-accessibility"] = "public"
+  - from: types.json
+    where: $.definitions['CheckNameAvailabilityRequest']
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = false;
+      $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-usage"] = "model,input";
+  - from: types.json
+    where: $.definitions['CheckNameAvailabilityResponse']
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = false;
+      $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-usage"] = "model,output";
 # Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
   - from: types.json
     where: $.definitions.systemData.properties.*

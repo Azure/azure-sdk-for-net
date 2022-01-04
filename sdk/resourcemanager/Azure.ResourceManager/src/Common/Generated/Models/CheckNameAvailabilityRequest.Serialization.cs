@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -32,31 +31,6 @@ namespace Azure.ResourceManager.Models
             writer.WriteEndObject();
         }
 
-        internal static CheckNameAvailabilityRequest DeserializeCheckNameAvailabilityRequest(JsonElement element)
-        {
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    type = (ResourceType)property.Value.GetString();
-                    continue;
-                }
-            }
-            return new CheckNameAvailabilityRequest(name.Value, type);
-        }
-
         internal partial class CheckNameAvailabilityRequestConverter : JsonConverter<CheckNameAvailabilityRequest>
         {
             public override void Write(Utf8JsonWriter writer, CheckNameAvailabilityRequest model, JsonSerializerOptions options)
@@ -65,8 +39,7 @@ namespace Azure.ResourceManager.Models
             }
             public override CheckNameAvailabilityRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeCheckNameAvailabilityRequest(document.RootElement);
+                throw new NotImplementedException();
             }
         }
     }

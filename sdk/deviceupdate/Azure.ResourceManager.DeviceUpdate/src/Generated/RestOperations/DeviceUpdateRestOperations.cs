@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.DeviceUpdate.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         CheckNameAvailabilityResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = JsonSerializer.Deserialize<CheckNameAvailabilityResponse>(document.RootElement.ToString());
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         CheckNameAvailabilityResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = JsonSerializer.Deserialize<CheckNameAvailabilityResponse>(document.RootElement.ToString());
                         return Response.FromValue(value, message.Response);
                     }
                 default:

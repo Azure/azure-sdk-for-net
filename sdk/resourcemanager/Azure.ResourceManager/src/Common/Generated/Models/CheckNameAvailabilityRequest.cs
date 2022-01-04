@@ -11,23 +11,13 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Models
 {
     /// <summary> The check availability request body. </summary>
-    [PropertyReferenceType]
+    [TypeReferenceType]
     public partial class CheckNameAvailabilityRequest
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityRequest. </summary>
         [InitializationConstructor]
         public CheckNameAvailabilityRequest()
         {
-        }
-
-        /// <summary> Initializes a new instance of CheckNameAvailabilityRequest. </summary>
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="type"> The resource type. </param>
-        [SerializationConstructor]
-        internal CheckNameAvailabilityRequest(string name, ResourceType type)
-        {
-            Name = name;
-            Type = type;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
