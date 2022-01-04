@@ -10,16 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class RegenerateKeyParameters : IUtf8JsonSerializable
+    public partial class LinkNotificationHubOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyType))
-            {
-                writer.WritePropertyName("keyType");
-                writer.WriteStringValue(KeyType.Value.ToSerialString());
-            }
+            writer.WritePropertyName("resourceId");
+            writer.WriteStringValue(ResourceId);
+            writer.WritePropertyName("connectionString");
+            writer.WriteStringValue(ConnectionString);
             writer.WriteEndObject();
         }
     }

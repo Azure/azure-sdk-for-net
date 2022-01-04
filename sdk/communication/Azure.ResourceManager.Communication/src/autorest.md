@@ -15,4 +15,14 @@ directive:
   - rename-model:
       from: CommunicationServiceResource
       to: CommunicationService
+  - rename-model:
+      from: RegenerateKeyParameters
+      to: RegenerateKeyOptions
+  - rename-model:
+      from: NameAvailabilityParameters
+      to: NameAvailabilityOptions
+  - rename-model:
+      from: LinkNotificationHubParameters
+      to: LinkNotificationHubOptions
+
 ```

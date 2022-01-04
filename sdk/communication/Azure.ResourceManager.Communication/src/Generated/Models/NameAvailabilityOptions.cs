@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
-    public partial class NameAvailabilityParameters
+    public partial class NameAvailabilityOptions
     {
-        /// <summary> Initializes a new instance of NameAvailabilityParameters. </summary>
+        /// <summary> Initializes a new instance of NameAvailabilityOptions. </summary>
         /// <param name="type"> The resource type. Should be always &quot;Microsoft.Communication/CommunicationServices&quot;. </param>
         /// <param name="name"> The CommunicationService name to validate. e.g.&quot;my-CommunicationService-name-here&quot;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="name"/> is null. </exception>
-        public NameAvailabilityParameters(string type, string name)
+        public NameAvailabilityOptions(string type, string name)
         {
             if (type == null)
             {

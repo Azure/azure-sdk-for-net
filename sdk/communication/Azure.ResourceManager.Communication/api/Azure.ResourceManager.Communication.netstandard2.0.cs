@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Communication
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.Models.LinkedNotificationHub> LinkNotificationHub(Azure.ResourceManager.Communication.Models.LinkNotificationHubParameters linkNotificationHubParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.LinkedNotificationHub>> LinkNotificationHubAsync(Azure.ResourceManager.Communication.Models.LinkNotificationHubParameters linkNotificationHubParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys> RegenerateKey(Azure.ResourceManager.Communication.Models.RegenerateKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys>> RegenerateKeyAsync(Azure.ResourceManager.Communication.Models.RegenerateKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.Models.LinkedNotificationHub> LinkNotificationHub(Azure.ResourceManager.Communication.Models.LinkNotificationHubOptions linkNotificationHubParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.LinkedNotificationHub>> LinkNotificationHubAsync(Azure.ResourceManager.Communication.Models.LinkNotificationHubOptions linkNotificationHubParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys> RegenerateKey(Azure.ResourceManager.Communication.Models.RegenerateKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys>> RegenerateKeyAsync(Azure.ResourceManager.Communication.Models.RegenerateKeyOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> Update(Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> UpdateAsync(Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Communication
     }
     public static partial class SubscriptionExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability> CheckNameAvailabilityCommunicationService(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityParameters nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability>> CheckNameAvailabilityCommunicationServiceAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityParameters nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability> CheckNameAvailabilityCommunicationService(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityOptions nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability>> CheckNameAvailabilityCommunicationServiceAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityOptions nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Communication.CommunicationService> GetCommunicationServices(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetCommunicationServicesAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetCommunicationServicesAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Communication.Models
         internal LinkedNotificationHub() { }
         public string ResourceId { get { throw null; } }
     }
-    public partial class LinkNotificationHubParameters
+    public partial class LinkNotificationHubOptions
     {
-        public LinkNotificationHubParameters(string resourceId, string connectionString) { }
+        public LinkNotificationHubOptions(string resourceId, string connectionString) { }
         public string ConnectionString { get { throw null; } }
         public string ResourceId { get { throw null; } }
     }
@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.Communication.Models
         public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
     }
-    public partial class NameAvailabilityParameters
+    public partial class NameAvailabilityOptions
     {
-        public NameAvailabilityParameters(string type, string name) { }
+        public NameAvailabilityOptions(string type, string name) { }
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }
     }
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static bool operator !=(Azure.ResourceManager.Communication.Models.ProvisioningState left, Azure.ResourceManager.Communication.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RegenerateKeyParameters
+    public partial class RegenerateKeyOptions
     {
-        public RegenerateKeyParameters() { }
+        public RegenerateKeyOptions() { }
         public Azure.ResourceManager.Communication.Models.KeyType? KeyType { get { throw null; } set { } }
     }
     public partial class TaggedResource

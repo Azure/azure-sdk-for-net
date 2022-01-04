@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Communication
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, NameAvailabilityParameters nameAvailabilityParameters)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, NameAvailabilityOptions nameAvailabilityParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<NameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<NameAvailability> CheckNameAvailability(string subscriptionId, NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public Response<NameAvailability> CheckNameAvailability(string subscriptionId, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateLinkNotificationHubRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters)
+        internal HttpMessage CreateLinkNotificationHubRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubOptions linkNotificationHubParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubOptions linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response<LinkedNotificationHub> LinkNotificationHub(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubParameters linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
+        public Response<LinkedNotificationHub> LinkNotificationHub(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubOptions linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyOptions parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<CommunicationServiceKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        public Response<CommunicationServiceKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

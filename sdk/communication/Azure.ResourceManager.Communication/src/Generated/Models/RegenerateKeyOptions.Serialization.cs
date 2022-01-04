@@ -10,15 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class NameAvailabilityParameters : IUtf8JsonSerializable
+    public partial class RegenerateKeyOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(KeyType))
+            {
+                writer.WritePropertyName("keyType");
+                writer.WriteStringValue(KeyType.Value.ToSerialString());
+            }
             writer.WriteEndObject();
         }
     }

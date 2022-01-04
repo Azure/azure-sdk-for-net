@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<NameAvailability>> CheckNameAvailabilityCommunicationServiceAsync(this Subscription subscription, NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailability>> CheckNameAvailabilityCommunicationServiceAsync(this Subscription subscription, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<NameAvailability> CheckNameAvailabilityCommunicationService(this Subscription subscription, NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public static Response<NameAvailability> CheckNameAvailabilityCommunicationService(this Subscription subscription, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
