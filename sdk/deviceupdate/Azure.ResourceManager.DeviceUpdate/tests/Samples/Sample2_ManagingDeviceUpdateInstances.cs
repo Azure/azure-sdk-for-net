@@ -4,6 +4,7 @@
 #region Snippet:Manage_Instances_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -25,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             #region Snippet:Managing_Instances_CreateAnInstance
             // Create a new account
             string accountName = "myAccount";
-            DeviceUpdateAccountData input1 = new DeviceUpdateAccountData(Location.WestUS2);
+            DeviceUpdateAccountData input1 = new DeviceUpdateAccountData(AzureLocation.WestUS2);
             DeviceUpdateAccountCreateOperation lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input1);
             DeviceUpdateAccount account = lro1.Value;
             // Get the instance collection from the specific account and create an instance
             string instanceName = "myInstance";
-            DeviceUpdateInstanceData input2 = new DeviceUpdateInstanceData(Location.WestUS2);
+            DeviceUpdateInstanceData input2 = new DeviceUpdateInstanceData(AzureLocation.WestUS2);
             input2.IotHubs.Add(new IotHubSettings("/subscriptions/.../resourceGroups/.../providers/Microsoft.Devices/IotHubs/..."));
             DeviceUpdateInstanceCreateOperation lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(instanceName, input2);
             DeviceUpdateInstance instance = lro2.Value;
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
 
