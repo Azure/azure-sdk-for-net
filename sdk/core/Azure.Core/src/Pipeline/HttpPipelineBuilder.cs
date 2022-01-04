@@ -40,11 +40,11 @@ namespace Azure.Core.Pipeline
             ResponseClassifier? responseClassifier)
         {
             var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, responseClassifier);
-            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies.ToArray(), result.Classifier);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/>, client provided per call policies, and the supplied <see cref="HttpPipelineTransportOptions"/>.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>
         /// <param name="perCallPolicies">Client provided per-call policies.</param>
@@ -55,10 +55,10 @@ namespace Azure.Core.Pipeline
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions defaultTransportOptions, ResponseClassifier? responseClassifier)
         {
             var result = BuildInternal(options, perCallPolicies, perRetryPolicies, defaultTransportOptions, responseClassifier);
-            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies.ToArray(), result.Classifier);
+            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
         }
 
-        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, List<HttpPipelinePolicy> Policies) BuildInternal(
+        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies) BuildInternal(
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
@@ -165,7 +165,7 @@ namespace Azure.Core.Pipeline
 
             responseClassifier ??= ResponseClassifier.Shared;
 
-            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies);
+            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray());
         }
 
         // internal for testing
