@@ -2,32 +2,27 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using Azure.Data.Tables;
 using Azure.Monitor.Query;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class PocoToTableEntityConverter<TInput> : IConverter<TInput, TableEntity>
+    internal class PocoToTableEntityConverter<TInput>: IConverter<TInput, TableEntity>
     {
         private readonly TypeBinder<TableEntity>.BoundTypeInfo _info;
 
         public PocoToTableEntityConverter()
         {
             _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
-
-            ConvertsPartitionKey = HasGetter<string>("PartitionKey");
-            ConvertsRowKey = HasGetter<string>("RowKey");
-            ConvertsETag = HasGetter<string>("ETag");
-            HasGetter<DateTimeOffset>("Timestamp");
+            ValidateGetter("PartitionKey", PocoTypeBinder.PartitionKeyTypes);
+            ValidateGetter("RowKey", PocoTypeBinder.RowKeyTypes);
+            ValidateGetter("ETag", PocoTypeBinder.ETagTypes);
+            ValidateGetter("Timestamp", PocoTypeBinder.TimestampTypes);
         }
-
-        public bool ConvertsPartitionKey { get; }
-
-        public bool ConvertsRowKey { get; }
-
-        public bool ConvertsETag { get; }
 
         public TableEntity Convert(TInput input)
         {
@@ -36,30 +31,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
-            if (input is TableEntity te)
-            {
-                return te;
-            }
-
             TableEntity result = new TableEntity();
             _info.Serialize(input, result);
             return result;
         }
 
-        private static bool HasGetter<TProperty>(string propertyName)
+        private static void ValidateGetter(string propertyName, Type[] allowedTypes)
         {
             PropertyInfo property = typeof(TInput).GetProperty(propertyName,
                 BindingFlags.Instance | BindingFlags.Public);
 
             if (property == null || !property.CanRead || !property.HasPublicGetMethod())
             {
-                return false;
+                return;
             }
 
-            if (property.PropertyType != typeof(TProperty))
+            if (!allowedTypes.Contains(property.PropertyType))
             {
                 string message = String.Format(CultureInfo.CurrentCulture,
-                    "If the {0} property is present, it must be a {1}.", propertyName, typeof(TProperty).Name);
+                    "If the {0} property is present, it must be a {1}.", propertyName, string.Join(" or ", (IEnumerable<object>)allowedTypes));
                 throw new InvalidOperationException(message);
             }
 
@@ -69,8 +59,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     "If the {0} property is present, it must not be an indexer.", propertyName);
                 throw new InvalidOperationException(message);
             }
-
-            return true;
         }
     }
 }

@@ -8,26 +8,11 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Github access token for Appservice CLI github integration. </summary>
-    public partial class AppServiceGithubToken
+    internal partial class AppServiceGithubToken
     {
         /// <summary> Initializes a new instance of AppServiceGithubToken. </summary>
         internal AppServiceGithubToken()
         {
-        }
-
-        /// <summary> Initializes a new instance of AppServiceGithubToken. </summary>
-        /// <param name="accessToken"> Github access token for Appservice CLI github integration. </param>
-        /// <param name="scope"> Scope of the github access token. </param>
-        /// <param name="tokenType"> token type. </param>
-        /// <param name="gotToken"> True if valid github token received, False otherwise. </param>
-        /// <param name="errorMessage"> Error message if unable to get token. </param>
-        internal AppServiceGithubToken(string accessToken, string scope, string tokenType, bool? gotToken, string errorMessage)
-        {
-            AccessToken = accessToken;
-            Scope = scope;
-            TokenType = tokenType;
-            GotToken = gotToken;
-            ErrorMessage = errorMessage;
         }
 
         /// <summary> Github access token for Appservice CLI github integration. </summary>

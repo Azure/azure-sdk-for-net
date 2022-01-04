@@ -26,50 +26,59 @@ namespace Azure.ResourceManager.Sql
         #region DeletedServer
         /// <summary> Gets an object representing a DeletedServerCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> Returns a <see cref="DeletedServerCollection" /> object. </returns>
-        public static DeletedServerCollection GetDeletedServers(this Subscription subscription)
+        public static DeletedServerCollection GetDeletedServers(this Subscription subscription, string locationName)
         {
-            return new DeletedServerCollection(subscription);
+            return new DeletedServerCollection(subscription, locationName);
         }
         #endregion
 
         #region SubscriptionLongTermRetentionBackup
         /// <summary> Gets an object representing a SubscriptionLongTermRetentionBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupCollection" /> object. </returns>
-        public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this Subscription subscription)
+        public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
-            return new SubscriptionLongTermRetentionBackupCollection(subscription);
+            return new SubscriptionLongTermRetentionBackupCollection(subscription, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
         #endregion
 
         #region SubscriptionLongTermRetentionManagedInstanceBackup
         /// <summary> Gets an object representing a SubscriptionLongTermRetentionManagedInstanceBackupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupCollection" /> object. </returns>
-        public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this Subscription subscription)
+        public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this Subscription subscription, string locationName, string managedInstanceName, string databaseName)
         {
-            return new SubscriptionLongTermRetentionManagedInstanceBackupCollection(subscription);
+            return new SubscriptionLongTermRetentionManagedInstanceBackupCollection(subscription, locationName, managedInstanceName, databaseName);
         }
         #endregion
 
         #region SubscriptionUsage
         /// <summary> Gets an object representing a SubscriptionUsageCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> Returns a <see cref="SubscriptionUsageCollection" /> object. </returns>
-        public static SubscriptionUsageCollection GetSubscriptionUsages(this Subscription subscription)
+        public static SubscriptionUsageCollection GetSubscriptionUsages(this Subscription subscription, string locationName)
         {
-            return new SubscriptionUsageCollection(subscription);
+            return new SubscriptionUsageCollection(subscription, locationName);
         }
         #endregion
 
         #region SqlTimeZone
         /// <summary> Gets an object representing a SqlTimeZoneCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The String to use. </param>
         /// <returns> Returns a <see cref="SqlTimeZoneCollection" /> object. </returns>
-        public static SqlTimeZoneCollection GetSqlTimeZones(this Subscription subscription)
+        public static SqlTimeZoneCollection GetSqlTimeZones(this Subscription subscription, string locationName)
         {
-            return new SqlTimeZoneCollection(subscription);
+            return new SqlTimeZoneCollection(subscription, locationName);
         }
         #endregion
 

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put route filter rule
-            Operation<RouteFilterRule> ruleOperation = InstrumentOperation(await filter.GetRouteFilterRules().CreateOrUpdateAsync(ruleName, rule));
+            Operation<RouteFilterRule> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(ruleName, rule);
             Response<RouteFilterRule> ruleResponse = await ruleOperation.WaitForCompletionAsync();
             return ruleResponse;
         }

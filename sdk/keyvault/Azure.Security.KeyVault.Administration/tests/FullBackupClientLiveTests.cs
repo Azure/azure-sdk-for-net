@@ -18,6 +18,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public TimeSpan Timeout => TimeSpan.FromMinutes(5);
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestore()
         {
             var source = new CancellationTokenSource(Timeout);
@@ -52,6 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         [RecordedTest]
         [LiveOnly]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestoreMultiPartFolderName()
         {
             var source = new CancellationTokenSource(Timeout);

@@ -127,6 +127,42 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5)
     }
 }
 
+# NewServicePrincipalWrapper creates an object from an AAD graph or Microsoft Graph service principal object type.
+# This is necessary to work around breaking changes introduced in Az version 7.0.0:
+# https://azure.microsoft.com/en-us/updates/update-your-apps-to-use-microsoft-graph-before-30-june-2022/
+function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGroup, [string]$displayName)
+{
+    $servicePrincipal = Retry {
+        New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+    }
+    $spPassword = ""
+    $appId = ""
+    if (Get-Member -Name "Secret" -InputObject $servicePrincipal -MemberType property) {
+        Write-Verbose "Using legacy PSADServicePrincipal object type from AAD graph API"
+        # Secret property exists on PSADServicePrincipal type from AAD graph in Az # module versions < 7.0.0
+        $spPassword = $servicePrincipal.Secret
+        $appId = $servicePrincipal.ApplicationId
+    } else {
+        Write-Verbose "Creating password for service principal via MS Graph API"
+        # Microsoft graph objects (Az version >= 7.0.0) do not provision a secret # on creation so it must be added separately.
+        # Submitting a password credential object without specifying a password will result in one being generated on the server side.
+        $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
+        $password.DisplayName = "Password for $displayName"
+        $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal }
+        $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
+        $appId = $servicePrincipal.AppId
+    }
+
+    return @{
+        AppId = $appId
+        ApplicationId = $appId
+        # This is the ObjectId/OID but most return objects use .Id so keep it consistent to prevent confusion
+        Id = $servicePrincipal.Id
+        DisplayName = $servicePrincipal.DisplayName
+        Secret = $spPassword
+    }
+}
+
 function LoadCloudConfig([string] $env)
 {
     $configPath = "$PSScriptRoot/clouds/$env.json"
@@ -522,8 +558,8 @@ try {
     # If no test application ID was specified during an interactive session, create a new service principal.
     if (!$CI -and !$TestApplicationId) {
         # Cache the created service principal in this session for frequent reuse.
-        $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.ApplicationId) -and $AzureTestSubscription -eq $SubscriptionId) {
-            Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.ApplicationId)'"
+        $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.AppId) -and $AzureTestSubscription -eq $SubscriptionId) {
+            Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.AppId)'"
             $AzureTestPrincipal
         } else {
             Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
@@ -537,19 +573,17 @@ try {
                 $displayName = "$($baseName)$suffix.test-resources.azure.sdk"
             }
 
-            $servicePrincipal = Retry {
-                New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
-            }
+            $servicePrincipalWrapper = NewServicePrincipalWrapper -subscription $SubscriptionId -resourceGroup $ResourceGroupName -displayName $DisplayName
 
-            $global:AzureTestPrincipal = $servicePrincipal
+            $global:AzureTestPrincipal = $servicePrincipalWrapper
             $global:AzureTestSubscription = $SubscriptionId
 
-            Log "Created service principal '$($AzureTestPrincipal.ApplicationId)'"
-            $AzureTestPrincipal
+            Log "Created service principal. AppId: '$($AzureTestPrincipal.AppId)' ObjectId: '$($AzureTestPrincipal.Id)'"
+            $servicePrincipalWrapper
             $resourceGroupRoleAssigned = $true
         }
 
-        $TestApplicationId = $servicePrincipal.ApplicationId
+        $TestApplicationId = $servicePrincipal.AppId
         $TestApplicationOid = $servicePrincipal.Id
         $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText)
     }
@@ -886,7 +920,7 @@ Bicep templates, test-resources.bicep.env.
 
 .PARAMETER SuppressVsoCommands
 By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
-commands that cause them to be redacted. For CI environments that don't support this (like 
+commands that cause them to be redacted. For CI environments that don't support this (like
 stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
 
 .EXAMPLE
