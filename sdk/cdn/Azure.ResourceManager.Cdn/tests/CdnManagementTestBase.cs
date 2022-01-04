@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgNamePrefix)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(Location.WestUS);
+            ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
             return lro.Value;
         }

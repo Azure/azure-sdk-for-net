@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {

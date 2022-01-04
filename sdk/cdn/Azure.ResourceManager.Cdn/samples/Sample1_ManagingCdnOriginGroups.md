@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_OriginGroups_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +26,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
@@ -37,12 +38,12 @@ Now that we have the resource group created, we can manage the cdn origin group 
 ```C# Snippet:Managing_OriginGroups_CreateAnOriginGroup
 // Create a new cdn profile
 string profileName = "myProfile";
-var input1 = new ProfileData(Location.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
+var input1 = new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
 ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(profileName, input1);
 Profile profile = lro1.Value;
 // Get the cdn endpoint collection from the specific profile and create an endpoint
 string endpointName = "myEndpoint";
-var input2 = new CdnEndpointData(Location.WestUS)
+var input2 = new CdnEndpointData(AzureLocation.WestUS)
 {
     IsHttpAllowed = true,
     IsHttpsAllowed = true,
