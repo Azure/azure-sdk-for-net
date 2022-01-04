@@ -2,8 +2,8 @@
 
 ## Version 5.1.0
 ###  Feature Additions
-- Support UAMI M2
-- Add connectionProperties in GoogleAdWordsLinkedService
+- Added support UAMI M2
+- Added connectionProperties in GoogleAdWordsLinkedService
 
 ## Version 5.0.0
 ###  Feature Additions
