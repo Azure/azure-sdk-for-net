@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
-            var data = new GenericResourceData(AzureLocation.WestUS2);
+            var data = new GenericResourceData(Location.WestUS2);
             data.Sku = new Resources.Models.Sku()
             {
                 Name = "Aligned"
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgName)
         {
-            ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
+            ResourceGroupData input = new ResourceGroupData(Location.WestUS);
             ResourceGroupCreateOrUpdateOperation lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
             return lro.Value;
         }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Tests
 
         private GenericResourceData ConstructGenericVirtualNetworkData()
         {
-            var virtualNetwork = new GenericResourceData(AzureLocation.WestUS2)
+            var virtualNetwork = new GenericResourceData(Location.WestUS2)
             {
                 Properties = new JsonObject()
                 {

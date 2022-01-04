@@ -16,7 +16,7 @@ namespace Azure.Core.Tests
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
+        protected override Azure.ResourceManager.ResourceType ValidResourceType => Azure.ResourceManager.ResourceIdentifier.Root.ResourceType;
 
         public virtual TestResource GetAnotherOperations()
         {

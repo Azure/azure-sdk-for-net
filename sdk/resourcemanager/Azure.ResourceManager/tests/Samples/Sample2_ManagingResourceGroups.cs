@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            AzureLocation location = AzureLocation.WestUS2;
+            Location location = Location.WestUS2;
             ResourceGroupData rgData = new ResourceGroupData(location);
             ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup resourceGroup = operation.Value;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Tests.Samples
             ResourceGroup rg = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
             if (rg == null)
             {
-                AzureLocation location = AzureLocation.WestUS2;
+                Location location = Location.WestUS2;
                 ResourceGroupData rgData = new ResourceGroupData(location);
                 _ = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Tests.Samples
             ResourceGroup rg = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
             if (rg == null)
             {
-                AzureLocation location = AzureLocation.WestUS2;
+                Location location = Location.WestUS2;
                 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
                 ResourceGroupData rgData = new ResourceGroupData(location);
                 _ = await rgCollection.CreateOrUpdateAsync(rgName, rgData);

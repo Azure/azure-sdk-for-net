@@ -39,6 +39,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 
 // Code omitted for brevity
 

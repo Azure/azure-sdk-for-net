@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             {
                 Subscription subscription = await Client.GetDefaultSubscriptionAsync();
                 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-                ResourceGroupBuilder rgBuilder = rgCollection.Construct(AzureLocation.WestUS2);
+                ResourceGroupBuilder rgBuilder = rgCollection.Construct(Location.WestUS2);
                 await rgBuilder.CreateOrUpdateAsync(value);
             });
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestStartCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate { await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(value, false); });
+            Assert.ThrowsAsync<ArgumentException>(async delegate { await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value, false); });
         }
     }
 }

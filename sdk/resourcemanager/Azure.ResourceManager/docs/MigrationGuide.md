@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;

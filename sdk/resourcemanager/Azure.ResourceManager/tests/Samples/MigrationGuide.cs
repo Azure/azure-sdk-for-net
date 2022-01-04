@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
-            AzureLocation location = AzureLocation.WestUS2;
+            Location location = Location.WestUS2;
             string rgName = "QuickStartRG";
 
             ResourceGroupData rgData = new ResourceGroupData(location);

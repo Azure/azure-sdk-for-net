@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
         {
             var root = ResourceIdentifier.Root;
             Assert.IsNull(root.Parent);
-            Assert.AreEqual(root.ResourceType, Tenant.ResourceType);
+            Assert.AreEqual(root.ResourceType, Tenant.ResourceType.ToString());
         }
 
         [Test]

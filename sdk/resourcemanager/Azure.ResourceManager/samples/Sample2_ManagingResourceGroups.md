@@ -4,6 +4,7 @@ For this example, you need the following namespaces:
 ```C# Snippet:Managing_Resource_Groups_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;

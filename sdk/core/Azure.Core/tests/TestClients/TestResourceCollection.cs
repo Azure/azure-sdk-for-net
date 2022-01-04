@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
-        protected override ResourceType ValidResourceType => "MyFake.Namespace/testResource";
+        protected override Azure.ResourceManager.ResourceType ValidResourceType => "MyFake.Namespace/testResource";
 
         public virtual Pageable<TestResource> GetAll(int pages = 1, CancellationToken cancellation = default)
         {

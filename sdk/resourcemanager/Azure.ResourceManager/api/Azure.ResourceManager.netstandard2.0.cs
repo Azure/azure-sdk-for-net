@@ -1645,7 +1645,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } }
         public string RegionalDisplayName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-        public static implicit operator Azure.ResourceManager.Resources.Models.Location (Azure.ResourceManager.Resources.Models.LocationExpanded location) { throw null; }
+        public static implicit operator Azure.Core.AzureLocation (Azure.ResourceManager.Resources.Models.LocationExpanded location) { throw null; }
     }
     public partial class LocationMetadata
     {

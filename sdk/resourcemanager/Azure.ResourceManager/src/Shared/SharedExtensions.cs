@@ -53,6 +53,16 @@ namespace Azure.ResourceManager.Core
             return dest;
         }
 
+        public static List<T> Trim<T>(this List<T> list, int numberToTrim)
+        {
+            if (list is null)
+                throw new ArgumentNullException(nameof(list));
+            if (numberToTrim < 0 || numberToTrim > list.Count)
+                throw new ArgumentOutOfRangeException(nameof(numberToTrim));
+            list.RemoveRange(0, numberToTrim);
+            return list;
+        }
+
         public static async Task<TSource?> FirstOrDefaultAsync<TSource>(
             this AsyncPageable<TSource> source,
             Func<TSource, bool> predicate,
