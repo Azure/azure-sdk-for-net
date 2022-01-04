@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// A wrapper type for <see cref="HttpPipeline"/> that exposes a Dispose method for disposal of the underlying <see cref="HttpPipelineTransport"/>.
+    /// An implementation of <see cref="HttpPipeline"/> that may contain resources that require disposal.
     /// </summary>
     public sealed class DisposableHttpPipeline : HttpPipeline, IDisposable
     {
