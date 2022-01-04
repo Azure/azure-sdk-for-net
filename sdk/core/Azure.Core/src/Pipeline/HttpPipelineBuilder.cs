@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
@@ -56,10 +57,10 @@ namespace Azure.Core.Pipeline
         {
             Argument.AssertNotNull(defaultTransportOptions, nameof(defaultTransportOptions));
             var result = BuildInternal(options, perCallPolicies, perRetryPolicies, defaultTransportOptions, responseClassifier);
-            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
+            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
 
-        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies) BuildInternal(
+        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned) BuildInternal(
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
@@ -146,6 +147,8 @@ namespace Azure.Core.Pipeline
 
             // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
             HttpPipelineTransport transport = options.Transport;
+            bool isTransportInternallyCreated = false;
+
             if (defaultTransportOptions != null)
             {
                 if (options.IsCustomTransportSet)
@@ -159,6 +162,7 @@ namespace Azure.Core.Pipeline
                 else
                 {
                     transport = HttpPipelineTransport.Create(defaultTransportOptions);
+                    isTransportInternallyCreated = true;
                 }
             }
 
@@ -166,7 +170,7 @@ namespace Azure.Core.Pipeline
 
             responseClassifier ??= ResponseClassifier.Shared;
 
-            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray());
+            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated);
         }
 
         // internal for testing
