@@ -66,11 +66,10 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
-AzureLocation azureLocation = AzureLocation.WestUS2;
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 string rgName = "QuickStartRG";
 
-ResourceGroupData rgData = new ResourceGroupData(azureLocation);
+ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = rgCreateLro.Value;
 ```
