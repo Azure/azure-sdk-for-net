@@ -74,6 +74,25 @@ steps:
       condition: ne('${{parameters.TestsConventionOptions}}','')
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
+    - script: >
+        $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
+        --organization https://dev.azure.com/azure-sdk
+        --project internal
+        --prefix ${{parameters.Prefix}}
+        --devopspath "\${{parameters.Prefix}}"
+        --path $(System.DefaultWorkingDirectory)/sdk
+        --endpoint Azure
+        --repository ${{parameters.Repository}}
+        --convention weekly
+        --agentpool Hosted
+        --branch refs/heads/$(DefaultBranch)
+        --patvar PATVAR
+        --debug
+        ${{parameters.TestsConventionOptions}}
+      displayName: Create Weekly (Multi-Cloud) Live Test pipelines for public repository
+      condition: ne('${{parameters.TestsConventionOptions}}','')
+      env:
+        PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
 
   # This covers our -pr repositories.
   - ${{ if endsWith(parameters.Repository, '-pr')}}:
