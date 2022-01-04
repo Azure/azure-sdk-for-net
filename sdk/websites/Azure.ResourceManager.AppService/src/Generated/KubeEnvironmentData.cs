@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
         /// <param name="location"> The location. </param>
-        public KubeEnvironmentData(Location location) : base(location)
+        public KubeEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         /// supported
         /// </param>
         /// <param name="aksResourceID"></param>
-        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, tags, location, kind)
+        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, tags, location, kind)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
         /// <param name="location"> The location. </param>
-        public AppServiceEnvironmentData(Location location) : base(location)
+        public AppServiceEnvironmentData(AzureLocation location) : base(location)
         {
             ClusterSettings = new ChangeTrackingList<NameValuePair>();
             UserWhitelistedIpRanges = new ChangeTrackingList<string>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, type, tags, location, kind)
+        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, type, tags, location, kind)
         {
             ProvisioningState = provisioningState;
             Status = status;

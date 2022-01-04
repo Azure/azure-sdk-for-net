@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             Assert.AreEqual(plan1.ExtendedLocation, plan2.ExtendedLocation);
         }
 
-        public static AppServicePlanData GetBasicAppServicePlanData(Location location)
+        public static AppServicePlanData GetBasicAppServicePlanData(AzureLocation location)
         {
             var data = new AppServicePlanData(location)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             Assert.AreEqual(site1.EnabledHostNames, site2.EnabledHostNames);
         }
 
-        public static WebSiteData GetBasicSiteData(Location location)//, string description = null)
+        public static WebSiteData GetBasicSiteData(AzureLocation location)//, string description = null)
         {
             var data = new WebSiteData(location)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             Assert.AreEqual(site1.EnabledHostNames, site2.EnabledHostNames);
         }
 
-        public static WebSiteData GetBasicSiteSlotData(Location location, string description = null)
+        public static WebSiteData GetBasicSiteSlotData(AzureLocation location, string description = null)
         {
             var data = new WebSiteData(location)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             //AssertTrackedResource(site1, site2);
             Assert.AreEqual(site1.AppSettings, site2.AppSettings);
         }
-        public static SiteConfigData GetBasicSiteConfigResourceData(Location location, string description = null)
+        public static SiteConfigData GetBasicSiteConfigResourceData(AzureLocation location, string description = null)
         {
             /*IDictionary<string, IList<string>> header = new ChangeTrackingDictionary<string, IList<string>>();
             IList<string> ipAddress = new List<string>();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             Assert.AreEqual(ssrd1.Kind, ssrd2.Kind);
         }
 
-        public static StaticSiteARMResourceData GetBasicStaticSiteARMResourceData(Location location)
+        public static StaticSiteARMResourceData GetBasicStaticSiteARMResourceData(AzureLocation location)
         {
             var data = new StaticSiteARMResourceData(location)
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             Assert.AreEqual(certificate1.CanonicalName, certificate2.CanonicalName);
         }
 
-        public static CertificateData GetBasicCertificateData(Location location)
+        public static CertificateData GetBasicCertificateData(AzureLocation location)
         {
             var data = new CertificateData(location)
             {

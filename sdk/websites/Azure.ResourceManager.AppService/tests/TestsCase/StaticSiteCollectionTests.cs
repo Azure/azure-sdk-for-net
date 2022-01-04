@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
@@ -12,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 {
     public class StaticSiteCollectionTests : AppServiceTestBase
     {
-        protected Location StaticSiteLocation => Location.EastUS2;
+        protected AzureLocation StaticSiteLocation => AzureLocation.EastUS2;
         public StaticSiteCollectionTests(bool isAsync)
            : base(isAsync)
         {

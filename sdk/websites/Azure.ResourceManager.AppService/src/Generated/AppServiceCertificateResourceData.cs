@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of AppServiceCertificateResourceData. </summary>
         /// <param name="location"> The location. </param>
-        public AppServiceCertificateResourceData(Location location) : base(location)
+        public AppServiceCertificateResourceData(AzureLocation location) : base(location)
         {
         }
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        internal AppServiceCertificateResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState) : base(id, name, type, tags, location, kind)
+        internal AppServiceCertificateResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState) : base(id, name, type, tags, location, kind)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;

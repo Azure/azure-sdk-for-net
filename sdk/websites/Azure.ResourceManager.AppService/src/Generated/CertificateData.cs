@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of CertificateData. </summary>
         /// <param name="location"> The location. </param>
-        public CertificateData(Location location) : base(location)
+        public CertificateData(AzureLocation location) : base(location)
         {
             HostNames = new ChangeTrackingList<string>();
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
-        internal CertificateData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueDate, DateTimeOffset? expirationDate, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod) : base(id, name, type, tags, location, kind)
+        internal CertificateData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueDate, DateTimeOffset? expirationDate, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod) : base(id, name, type, tags, location, kind)
         {
             Password = password;
             FriendlyName = friendlyName;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of AppServiceCertificateOrderData. </summary>
         /// <param name="location"> The location. </param>
-        public AppServiceCertificateOrderData(Location location) : base(location)
+        public AppServiceCertificateOrderData(AzureLocation location) : base(location)
         {
             Certificates = new ChangeTrackingDictionary<string, AppServiceCertificate>();
             AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
         /// <param name="nextAutoRenewalTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
-        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, IDictionary<string, AppServiceCertificate> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? autoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceTime, DateTimeOffset? expirationTime, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStamp, CertificateOrderContact contact) : base(id, name, type, tags, location, kind)
+        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, IDictionary<string, AppServiceCertificate> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? autoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceTime, DateTimeOffset? expirationTime, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStamp, CertificateOrderContact contact) : base(id, name, type, tags, location, kind)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;

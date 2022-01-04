@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
         /// <param name="location"> The location. </param>
-        public AppServiceDomainData(Location location) : base(location)
+        public AppServiceDomainData(AzureLocation location) : base(location)
         {
             NameServers = new ChangeTrackingList<string>();
             ManagedHostNames = new ChangeTrackingList<HostName>();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
-        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? privacy, DateTimeOffset? createdTime, DateTimeOffset? expirationTime, DateTimeOffset? lastRenewedTime, bool? autoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode) : base(id, name, type, tags, location, kind)
+        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? privacy, DateTimeOffset? createdTime, DateTimeOffset? expirationTime, DateTimeOffset? lastRenewedTime, bool? autoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode) : base(id, name, type, tags, location, kind)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
