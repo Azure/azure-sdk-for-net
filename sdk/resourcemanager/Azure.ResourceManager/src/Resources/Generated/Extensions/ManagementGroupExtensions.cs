@@ -5,6 +5,13 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
@@ -31,5 +38,80 @@ namespace Azure.ResourceManager.Resources
             return new ManagementGroupPolicySetDefinitionCollection(managementGroup);
         }
         #endregion
+
+        private static ProvidersRestOperations GetProvidersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        {
+            return new ProvidersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+        }
+
+        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/providers/{resourceProviderNamespace}/register
+        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
+        /// OperationId: Providers_RegisterAtManagementGroupScope
+        /// <summary> Registers a management group with a resource provider. </summary>
+        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public static async Task<Response> RegisterAtManagementGroupScopeProviderAsync(this ManagementGroup managementGroup, string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+
+            return await managementGroup.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("ManagementGroupExtensions.RegisterAtManagementGroupScopeProvider");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetProvidersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.RegisterAtManagementGroupScopeAsync(managementGroup.Id.Name, resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/providers/{resourceProviderNamespace}/register
+        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
+        /// OperationId: Providers_RegisterAtManagementGroupScope
+        /// <summary> Registers a management group with a resource provider. </summary>
+        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public static Response RegisterAtManagementGroupScopeProvider(this ManagementGroup managementGroup, string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+
+            return managementGroup.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("ManagementGroupExtensions.RegisterAtManagementGroupScopeProvider");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetProvidersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.RegisterAtManagementGroupScope(managementGroup.Id.Name, resourceProviderNamespace, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
     }
 }

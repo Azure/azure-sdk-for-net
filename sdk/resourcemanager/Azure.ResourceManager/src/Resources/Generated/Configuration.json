@@ -1,0 +1,74 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.Resources",
+  "LibraryName": null,
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Generator.Shared",
+    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "RequestPathIsNonResource": [
+    "/subscriptions/{subscriptionId}/locations"
+  ],
+  "NoPropertyTypeReplacement": [
+    "ProviderData",
+    "Provider"
+  ],
+  "ListException": [
+    "/{linkId}"
+  ],
+  "OperationGroupsToOmit": [
+    "Deployments",
+    "DeploymentOperations",
+    "AuthorizationOperations",
+    "ResourceCheck",
+    "Resources"
+  ],
+  "RequestPathToParent": {
+    "/{scope}/providers/Microsoft.Resources/links": "/{linkId}",
+    "/subscriptions": "/subscriptions/{subscriptionId}",
+    "/tenants": "/",
+    "/subscriptions/{subscriptionId}/locations": "/subscriptions/{subscriptionId}",
+    "/subscriptions/{subscriptionId}/providers": "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}",
+    "/providers": "/providers/{resourceProviderNamespace}",
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}": "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}"
+  },
+  "RequestPathToResourceData": {
+    "/{linkId}": "ResourceLink",
+    "/subscriptions/{subscriptionId}": "Subscription",
+    "/": "Tenant",
+    "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}": "Provider",
+    "/providers/{resourceProviderNamespace}": "Provider"
+  },
+  "RequestPathToResourceType": {
+    "/{linkId}": "Microsoft.Resources/links",
+    "/subscriptions/{subscriptionId}/locations": "Microsoft.Resources/locations",
+    "/tenants": "Microsoft.Resources/tenants",
+    "/": "Microsoft.Resources/tenants",
+    "/subscriptions": "Microsoft.Resources/subscriptions",
+    "/subscriptions/{subscriptionId}/resourcegroups": "Microsoft.Resources/resourceGroups",
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}": "Microsoft.Resources/features",
+    "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}": "Microsoft.Resources/providers",
+    "/providers/{resourceProviderNamespace}": "Microsoft.Resources/providers"
+  },
+  "RequestPathToScopeResourceTypes": {
+    "/{scope}/providers/Microsoft.Authorization/locks/{lockName}": [
+      "subscriptions",
+      "resourceGroups",
+      "*"
+    ]
+  },
+  "OverrideOperationName": {
+    "ResourceLinks_ListAtSourceScope": "GetAll",
+    "Tags_List": "GetAllPredefinedTags",
+    "Tags_DeleteValue": "DeletePredefinedTagValue",
+    "Tags_CreateOrUpdateValue": "CreateOrUpdatePredefinedTagValue",
+    "Tags_CreateOrUpdate": "CreateOrUpdatePredefinedTag",
+    "Tags_Delete": "DeletePredefinedTag"
+  },
+  "MgmtDebug": {
+    "ShowRequestPath": true
+  },
+  "ArmCore": true
+}

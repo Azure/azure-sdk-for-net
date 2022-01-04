@@ -23,6 +23,28 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
+        #region SubscriptionProvider
+        /// <summary> Gets an object representing a SubscriptionProvider along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionProvider" /> object. </returns>
+        public static SubscriptionProvider GetSubscriptionProvider(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionProvider(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region TenantProvider
+        /// <summary> Gets an object representing a TenantProvider along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantProvider" /> object. </returns>
+        public static TenantProvider GetTenantProvider(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TenantProvider(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region ResourceGroup
         /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -174,6 +196,17 @@ namespace Azure.ResourceManager.Resources
         public static Tenant GetTenant(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Tenant(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region Feature
+        /// <summary> Gets an object representing a Feature along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="Feature" /> object. </returns>
+        public static Feature GetFeature(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Feature(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

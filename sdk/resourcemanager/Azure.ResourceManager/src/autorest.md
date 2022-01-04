@@ -104,7 +104,7 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
-    # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
   - /{linkId}
 request-path-to-resource-data:
@@ -116,6 +116,8 @@ request-path-to-resource-data:
   /: Tenant
 #   /subscriptions/{subscriptionId}/tagNames/{tagName}: PredefinedTag # TODO: this should be a non-resource
 #   /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}: PredefinedTagValue
+  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
+  /providers/{resourceProviderNamespace}: Provider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -123,6 +125,9 @@ request-path-to-parent:
   /subscriptions: /subscriptions/{subscriptionId}
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
+  /subscriptions/{subscriptionId}/providers: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+  /providers: /providers/{resourceProviderNamespace}
+  /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
 request-path-to-resource-type:
   /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
@@ -130,7 +135,10 @@ request-path-to-resource-type:
   /: Microsoft.Resources/tenants
   /subscriptions: Microsoft.Resources/subscriptions
   /subscriptions/{subscriptionId}/resourcegroups: Microsoft.Resources/resourceGroups
+  /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: Microsoft.Resources/features
 #   /subscriptions/{subscriptionId}/tagNames/{tagName}: Microsoft.Resources/tagNames
+  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Microsoft.Resources/providers
+  /providers/{resourceProviderNamespace}: Microsoft.Resources/providers
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
     - subscriptions
@@ -141,7 +149,6 @@ operation-groups-to-omit:
   - DeploymentOperations
   - AuthorizationOperations
   - ResourceCheck
-  - Providers
   - Resources
 override-operation-name:
   ResourceLinks_ListAtSourceScope: GetAll
@@ -150,6 +157,7 @@ override-operation-name:
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
   Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
   Tags_Delete: DeletePredefinedTag
+no-property-type-replacement: ProviderData;Provider
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -171,12 +179,17 @@ directive:
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
     transform: >
       $["operationId"] = "Operations_ListSubscriptionOperations";
-    reason: Rename duplicate operation Id
+    reason: Rename duplicate operation Id.
   - from: resources.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
     transform: >
       $["operationId"] = "Operations_ListResourcesOperations";
-    reason: Rename duplicate operation Id
+    reason: Rename duplicate operation Id.
+  - from: features.json
+    where: '$.paths["/providers/Microsoft.Features/operations"].get'
+    transform: >
+      $["operationId"] = "Operations_ListFeaturesOperations";
+    reason: Add operation group so that we can omit related models by the operation group.
 #   - remove-operation: ResourceLinks_ListAtSubscription # The filter values are different, so keep this operation.
   - rename-operation:
       from: checkResourceName
@@ -208,6 +221,9 @@ directive:
   - rename-model:
       from: TagsListResult
       to: PredefinedTagsListResult
+  - rename-model:
+      from: FeatureResult
+      to: Feature
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json

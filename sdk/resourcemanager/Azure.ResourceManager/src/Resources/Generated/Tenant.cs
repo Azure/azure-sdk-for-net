@@ -62,6 +62,16 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        #region TenantProvider
+
+        /// <summary> Gets a collection of TenantProviders in the Tenant. </summary>
+        /// <returns> An object representing collection of TenantProviders and their operations over a Tenant. </returns>
+        public TenantProviderCollection GetTenantProviders()
+        {
+            return new TenantProviderCollection(this);
+        }
+        #endregion
+
         #region TenantPolicyDefinition
 
         /// <summary> Gets a collection of TenantPolicyDefinitions in the Tenant. </summary>

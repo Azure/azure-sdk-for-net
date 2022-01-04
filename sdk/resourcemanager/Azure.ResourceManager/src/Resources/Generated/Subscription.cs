@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Resources
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubscriptionsRestOperations _subscriptionsRestClient;
-        private readonly ProviderResourceTypesRestOperations _providerResourceTypesRestClient;
         private readonly TagsRestOperations _tagsRestClient;
         private readonly ResourceLinksRestOperations _resourceLinksRestClient;
+        private readonly FeaturesRestOperations _featuresRestClient;
         private readonly SubscriptionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class for mocking. </summary>
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -161,64 +161,6 @@ namespace Azure.ResourceManager.Resources
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ProviderResourceTypes_List
-        /// <summary> List the resource types for a specified resource provider. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async virtual Task<Response<IReadOnlyList<ProviderResourceType>>> GetProviderResourceTypesAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Subscription.GetProviderResourceTypes");
-            scope.Start();
-            try
-            {
-                var response = await _providerResourceTypesRestClient.ListAsync(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ProviderResourceTypes_List
-        /// <summary> List the resource types for a specified resource provider. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<IReadOnlyList<ProviderResourceType>> GetProviderResourceTypes(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Subscription.GetProviderResourceTypes");
-            scope.Start();
-            try
-            {
-                var response = _providerResourceTypesRestClient.List(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
@@ -684,6 +626,98 @@ namespace Azure.ResourceManager.Resources
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/features
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Features_ListAll
+        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FeatureData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FeatureData> GetFeaturesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<FeatureData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await _featuresRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<FeatureData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await _featuresRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/features
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Features_ListAll
+        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FeatureData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FeatureData> GetFeatures(CancellationToken cancellationToken = default)
+        {
+            Page<FeatureData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                scope.Start();
+                try
+                {
+                    var response = _featuresRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<FeatureData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                scope.Start();
+                try
+                {
+                    var response = _featuresRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        #region SubscriptionProvider
+
+        /// <summary> Gets a collection of SubscriptionProviders in the Subscription. </summary>
+        /// <returns> An object representing collection of SubscriptionProviders and their operations over a Subscription. </returns>
+        public SubscriptionProviderCollection GetSubscriptionProviders()
+        {
+            return new SubscriptionProviderCollection(this);
+        }
+        #endregion
 
         #region ResourceGroup
 
