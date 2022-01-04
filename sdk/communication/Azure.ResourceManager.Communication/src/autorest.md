@@ -24,8 +24,5 @@ directive:
   - rename-model:
       from: LinkNotificationHubParameters
       to: LinkNotificationHubOptions
-  # Remove [TaggedResource]
-  - from: swagger-document
-    where: $.definitions.TaggedResource
-    transform: $ = {}
+
 ```
