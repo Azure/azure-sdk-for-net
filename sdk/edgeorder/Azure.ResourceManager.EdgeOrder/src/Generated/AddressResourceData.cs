@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Models;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The location. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public AddressResourceData(Location location, ContactDetails contactDetails) : base(location)
+        public AddressResourceData(AzureLocation location, ContactDetails contactDetails) : base(location)
         {
             if (contactDetails == null)
             {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
-        internal AddressResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SystemData systemData, ShippingAddress shippingAddress, ContactDetails contactDetails, AddressValidationStatus? addressValidationStatus) : base(id, name, type, tags, location)
+        internal AddressResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SystemData systemData, ShippingAddress shippingAddress, ContactDetails contactDetails, AddressValidationStatus? addressValidationStatus) : base(id, name, type, tags, location)
         {
             SystemData = systemData;
             ShippingAddress = shippingAddress;
