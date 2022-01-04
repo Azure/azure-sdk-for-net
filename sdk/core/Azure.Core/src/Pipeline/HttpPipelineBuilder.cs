@@ -39,19 +39,31 @@ namespace Azure.Core.Pipeline
             HttpPipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier)
         {
-            return Build(options, perCallPolicies, perRetryPolicies, responseClassifier, null);
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, responseClassifier);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies.ToArray(), result.Classifier);
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>
         /// <param name="perCallPolicies">Client provided per-call policies.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
-        /// <param name="responseClassifier">The client provided response classifier.</param>
         /// <param name="defaultTransportOptions">The customer provided transport options which will be applied to the default transport.</param>
-        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier? responseClassifier, HttpPipelineTransportOptions? defaultTransportOptions)
+        /// <param name="responseClassifier">The client provided response classifier.</param>
+        /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
+        public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions defaultTransportOptions, ResponseClassifier? responseClassifier)
+        {
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, defaultTransportOptions, responseClassifier);
+            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies.ToArray(), result.Classifier);
+        }
+
+        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, List<HttpPipelinePolicy> Policies) BuildInternal(
+            ClientOptions options,
+            HttpPipelinePolicy[] perCallPolicies,
+            HttpPipelinePolicy[] perRetryPolicies,
+            HttpPipelineTransportOptions? defaultTransportOptions,
+            ResponseClassifier? responseClassifier)
         {
             if (perCallPolicies == null)
             {
@@ -133,7 +145,6 @@ namespace Azure.Core.Pipeline
 
             // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
             HttpPipelineTransport transport = options.Transport;
-            bool disposablePipeline = false;
             if (defaultTransportOptions != null)
             {
                 if (options.IsCustomTransportSet)
@@ -154,20 +165,7 @@ namespace Azure.Core.Pipeline
 
             responseClassifier ??= ResponseClassifier.Shared;
 
-            if (disposablePipeline)
-            {
-                return new DisposableHttpPipeline(transport,
-                    perCallIndex,
-                    perRetryIndex,
-                    policies.ToArray(),
-                    responseClassifier);
-            }
-
-            return new HttpPipeline(transport,
-                perCallIndex,
-                perRetryIndex,
-                policies.ToArray(),
-                responseClassifier);
+            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies);
         }
 
         // internal for testing
