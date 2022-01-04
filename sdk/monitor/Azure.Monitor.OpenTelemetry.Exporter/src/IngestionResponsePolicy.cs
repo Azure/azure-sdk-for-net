@@ -15,10 +15,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class IngestionResponsePolicy : HttpPipelineSynchronousPolicy
     {
-        internal static IPersistentStorage storage;
+        private IPersistentStorage storage;
+
         public IngestionResponsePolicy(IPersistentStorage persistentStorage)
         {
-            storage = persistentStorage;
+            this.storage = persistentStorage;
         }
 
         public override void OnReceivedResponse(HttpMessage message)
@@ -29,17 +30,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (message.TryGetProperty("TelemetryItemCount", out var telemetryItemCount))
             {
-                itemsAccepted = ParseResponse(message, (int)telemetryItemCount);
+                itemsAccepted = this.ParseResponse(message, (int)telemetryItemCount);
             }
             else
             {
-                itemsAccepted = ParseResponse(message, 0);
+                itemsAccepted = this.ParseResponse(message, 0);
             }
 
             message.SetProperty("ItemsAccepted", itemsAccepted);
         }
 
-        internal static int ParseResponse(HttpMessage message, int telemetryItemCount)
+        internal int ParseResponse(HttpMessage message, int telemetryItemCount)
         {
             var httpStatus = message?.Response?.Status;
             int itemsAccepted = 0;
@@ -61,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
                         var partialContent = HttpPipelineHelper.GetPartialContentFromBreeze(response, Encoding.UTF8.GetString(requestContent));
                         retryInterval = HttpPipelineHelper.GetRetryInterval(message);
-                        storage.CreateBlob(Encoding.UTF8.GetBytes(partialContent), retryInterval);
+                        this.storage.CreateBlob(Encoding.UTF8.GetBytes(partialContent), retryInterval);
                         itemsAccepted = response.ItemsAccepted.GetValueOrDefault();
                     }
                     break;
@@ -72,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Send Messages To Storage
                     retryInterval = HttpPipelineHelper.GetRetryInterval(message);
                     requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                    storage.CreateBlob(requestContent, retryInterval);
+                    this.storage.CreateBlob(requestContent, retryInterval);
                     break;
                 case ResponseStatusCodes.InternalServerError:
                 case ResponseStatusCodes.BadGateway:
@@ -80,12 +81,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case ResponseStatusCodes.GatewayTimeout:
                     // Send Messages To Storage
                     requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                    storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
+                    this.storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
                     break;
                 case null: // UnknownNetworkError
                     // No HttpMessage. Send TelemetryItems To Storage
                     requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                    storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
+                    this.storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
                     break;
                 default:
                     // Log Non-Retriable Status and don't retry or store;
