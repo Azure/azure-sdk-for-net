@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.Communication
         public string NotificationHubId { get { throw null; } }
         public Azure.ResourceManager.Communication.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Version { get { throw null; } }
     }
     public static partial class ResourceGroupExtensions
@@ -240,10 +239,5 @@ namespace Azure.ResourceManager.Communication.Models
     {
         public RegenerateKeyOptions() { }
         public Azure.ResourceManager.Communication.Models.KeyType? KeyType { get { throw null; } set { } }
-    }
-    public partial class TaggedResource
-    {
-        public TaggedResource() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }

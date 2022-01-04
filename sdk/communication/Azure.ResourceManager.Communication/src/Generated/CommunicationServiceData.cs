@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
@@ -19,7 +17,6 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
         public CommunicationServiceData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
@@ -34,8 +31,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="location"> The Azure location where the CommunicationService is running. </param>
-        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type)
+        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location) : base(id, name, type)
         {
             SystemData = systemData;
             ProvisioningState = provisioningState;
@@ -45,7 +41,6 @@ namespace Azure.ResourceManager.Communication
             Version = version;
             ImmutableResourceId = immutableResourceId;
             Location = location;
-            Tags = tags;
         }
 
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
@@ -64,7 +59,5 @@ namespace Azure.ResourceManager.Communication
         public string ImmutableResourceId { get; }
         /// <summary> The Azure location where the CommunicationService is running. </summary>
         public string Location { get; set; }
-        /// <summary> Tags of the service which is a list of key value pairs that describe the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }
