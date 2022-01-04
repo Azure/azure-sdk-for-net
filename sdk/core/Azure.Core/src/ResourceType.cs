@@ -17,7 +17,7 @@ namespace Azure.Core
         /// <summary>
         /// The resource type for the root of the resource hierarchy.
         /// </summary>
-        public static readonly ResourceType Root = new ResourceType(string.Empty, string.Empty);
+        public static ResourceType Root { get; } = new ResourceType(string.Empty, string.Empty);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
@@ -122,7 +122,7 @@ namespace Azure.Core
         /// <returns> True if they are equals, otherwise false. </returns>
         public bool Equals(ResourceType other)
         {
-            return string.Equals(ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals(ToString(), other.ToString(), StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
@@ -153,7 +153,7 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return ToString().ToLower(CultureInfo.InvariantCulture).GetHashCode();
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(ToString());
         }
     }
 }
