@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 param (
-  [string]$inputJsonFile,
-  [string]$outputJsonFile
+  [string]$inputJsonFile="generateInput.json",
+  [string]$outputJsonFile="output.json"
 )
 
 function Get-SwaggerInfo()
@@ -10,13 +10,15 @@ function Get-SwaggerInfo()
         [string]$dir,
         [string]$AUTOREST_CONFIG_FILE = "autorest.md"
     )
-    Set-Location $dir
+    # Set-Location $dir
+    Push-Location $dir
     $swaggerInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/blob\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     $rawSwaggerInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     $swaggerNoCommitRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(blob\/)?(?<branch>.*)\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     try
     {
         $content = Get-Content .\$AUTOREST_CONFIG_FILE -Raw
+        Pop-Location
         if ($content -match $swaggerInfoRegex)
         {
             return $matches["org"], $matches["specName"], $matches["commitID"]
@@ -61,8 +63,10 @@ function New-PackageFolder() {
     $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName"
     Write-Host "Create project folder $projectFolder"
     New-Item -Path $projectFolder -ItemType Directory
-    Set-Location $projectFolder
+    # Set-Location $projectFolder
+    Push-Location $projectFolder
     dotnet new azuremgmt --provider $packageName --includeCI true --force
+    Pop-Location
   }
 
   # update the readme url if needed.
@@ -87,8 +91,11 @@ function New-PackageFolder() {
     Write-Output "autorest.md:$readmefilestr"
   }
 
+  $path=$projectFolder
+  $path=$path.Replace($sdkPath + "/", "")
   $outputJson = [PSCustomObject]@{
     projectFolder = $projectFolder
+    path = $path
   }
 
   $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
@@ -101,8 +108,11 @@ function Invoke-Generate() {
         [string]$swaggerPath = "",
         [string]$sdkfolder= ""
     )
-    Set-Location $sdkfolder/src
+    # Set-Location $sdkfolder/src
+    Push-Location $sdkfolder/src
     dotnet build /t:GenerateCode
+    Pop-Location
+
 }
 
 function Get-ResourceProviderFromReadme($readmeFile) {
@@ -143,12 +153,13 @@ if ( $? -ne $True) {
 }
 $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
 $projectFolder = $newpackageoutputJson.projectFolder
+$path = $newpackageoutputJson.path
 Write-Host "projectFolder:$projectFolder"
 Remove-Item $newpackageoutput
 
 Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $projectFolder
 
 $outputJson = [PSCustomObject]@{
-    packages = @([pscustomobject]@{packageName='$projectFolder'; result='succeeded'; path=@("$projectFolder");packageFolder="$projectFolder"})
+    packages = @([pscustomobject]@{packageName="$packageName"; result='succeeded'; path=@("$path");packageFolder="$path"})
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
