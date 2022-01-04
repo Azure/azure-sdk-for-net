@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a userDefinedFunction. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public SqlUserDefinedFunctionCreateUpdateOptions(Location location, SqlUserDefinedFunctionResource resource) : base(location)
+        public SqlUserDefinedFunctionCreateUpdateOptions(AzureLocation location, SqlUserDefinedFunctionResource resource) : base(location)
         {
             if (resource == null)
             {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a userDefinedFunction. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal SqlUserDefinedFunctionCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SqlUserDefinedFunctionResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
+        internal SqlUserDefinedFunctionCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SqlUserDefinedFunctionResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
         {
             Resource = resource;
             Options = options;

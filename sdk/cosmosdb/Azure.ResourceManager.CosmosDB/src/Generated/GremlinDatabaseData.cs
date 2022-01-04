@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         /// <summary> Initializes a new instance of GremlinDatabaseData. </summary>
         /// <param name="location"> The location. </param>
-        public GremlinDatabaseData(Location location) : base(location)
+        public GremlinDatabaseData(AzureLocation location) : base(location)
         {
         }
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, GremlinDatabasePropertiesResource resource, GremlinDatabasePropertiesOptions options) : base(id, name, type, tags, location)
+        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, GremlinDatabasePropertiesResource resource, GremlinDatabasePropertiesOptions options) : base(id, name, type, tags, location)
         {
             Resource = resource;
             Options = options;

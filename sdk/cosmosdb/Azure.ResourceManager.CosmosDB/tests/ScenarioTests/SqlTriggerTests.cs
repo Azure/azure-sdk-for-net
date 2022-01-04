@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             SqlTriggerCreateUpdateOptions updateOptions = new SqlTriggerCreateUpdateOptions(trigger.Id, _triggerName, trigger.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS, trigger.Data.Resource, new CreateUpdateOptions());
-            updateOptions = new SqlTriggerCreateUpdateOptions(Resources.Models.Location.WestUS, new SqlTriggerResource(_triggerName)
+                AzureLocation.WestUS, trigger.Data.Resource, new CreateUpdateOptions());
+            updateOptions = new SqlTriggerCreateUpdateOptions(AzureLocation.WestUS, new SqlTriggerResource(_triggerName)
             {
                 TriggerOperation = TriggerOperation.Create,
                 TriggerType = TriggerType.Post,
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<SqlTrigger> CreateSqlTrigger(AutoscaleSettings autoscale)
         {
             _triggerName = Recording.GenerateAssetName("sql-trigger-");
-            SqlTriggerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateUpdateOptions(Resources.Models.Location.WestUS,
+            SqlTriggerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateUpdateOptions(AzureLocation.WestUS,
                 new SqlTriggerResource(_triggerName)
                 {
                     TriggerOperation = TriggerOperation.All,

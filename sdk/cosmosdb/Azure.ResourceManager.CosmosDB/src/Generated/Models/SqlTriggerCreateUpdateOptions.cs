@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public SqlTriggerCreateUpdateOptions(Location location, SqlTriggerResource resource) : base(location)
+        public SqlTriggerCreateUpdateOptions(AzureLocation location, SqlTriggerResource resource) : base(location)
         {
             if (resource == null)
             {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a trigger. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal SqlTriggerCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SqlTriggerResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
+        internal SqlTriggerCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SqlTriggerResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
         {
             Resource = resource;
             Options = options;

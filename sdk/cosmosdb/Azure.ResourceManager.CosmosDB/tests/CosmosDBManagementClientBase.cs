@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task CommonGlobalSetup()
         {
             var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName($"dbaccount-"),
-                new ResourceGroupData(Resources.Models.Location.WestUS2));
+                new ResourceGroupData(AzureLocation.WestUS2));
             _resourceGroupIdentifier = rgLro.Value.Id;
         }
 
@@ -55,10 +56,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<DatabaseAccountLocation>()
             {
-                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createParameters = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS2, locations)
+            var createParameters = new DatabaseAccountCreateUpdateOptions(AzureLocation.WestUS2, locations)
             {
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         /// <summary> Initializes a new instance of ThroughputSettingsData. </summary>
         /// <param name="location"> The location. </param>
-        public ThroughputSettingsData(Location location) : base(location)
+        public ThroughputSettingsData(AzureLocation location) : base(location)
         {
         }
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
-        internal ThroughputSettingsData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ThroughputSettingsPropertiesResource resource) : base(id, name, type, tags, location)
+        internal ThroughputSettingsData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsPropertiesResource resource) : base(id, name, type, tags, location)
         {
             Resource = resource;
         }

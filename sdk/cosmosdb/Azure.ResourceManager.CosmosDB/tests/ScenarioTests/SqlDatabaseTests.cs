@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             SqlDatabaseCreateUpdateOptions updateOptions = new SqlDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+                AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
             database = await (await SqlDatabaseContainer.CreateOrUpdateAsync(_databaseName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_databaseName, database.Data.Resource.Id);
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountSqlDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS,
+            DatabaseAccountSqlDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<SqlDatabase> CreateSqlDatabase(string name, AutoscaleSettings autoscale, SqlDatabaseCollection collection)
         {
-            SqlDatabaseCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlDatabaseCreateUpdateOptions(Resources.Models.Location.WestUS,
+            SqlDatabaseCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlDatabaseCreateUpdateOptions(AzureLocation.WestUS,
                 new SqlDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

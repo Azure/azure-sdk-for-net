@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             TableCreateUpdateOptions updateOptions = new TableCreateUpdateOptions(table.Id, _databaseName, table.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS, table.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+                AzureLocation.WestUS, table.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
             table = await (await TableCollection.CreateOrUpdateAsync(_databaseName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_databaseName, table.Data.Resource.Id);
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS,
+            DatabaseAccountTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CosmosTable> CreateTable(string name, AutoscaleSettings autoscale, CosmosTableCollection collection)
         {
-            TableCreateUpdateOptions mongoDBDatabaseCreateUpdateOptions = new TableCreateUpdateOptions(Resources.Models.Location.WestUS,
+            TableCreateUpdateOptions mongoDBDatabaseCreateUpdateOptions = new TableCreateUpdateOptions(AzureLocation.WestUS,
                 new TableResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

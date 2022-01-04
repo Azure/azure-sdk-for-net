@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<DatabaseAccountKind> kind = default;
             Optional<ResourceIdentity> identity = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

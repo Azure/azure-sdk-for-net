@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
-        public DatabaseAccountCreateUpdateOptions(Location location, IEnumerable<DatabaseAccountLocation> locations) : base(location)
+        public DatabaseAccountCreateUpdateOptions(AzureLocation location, IEnumerable<DatabaseAccountLocation> locations) : base(location)
         {
             if (locations == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        internal DatabaseAccountCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, DatabaseAccountKind? kind, ResourceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountLocation> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<DatabaseAccountCapability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CreateMode? createMode, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, RestoreParameters restoreParameters) : base(id, name, type, tags, location)
+        internal DatabaseAccountCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ResourceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountLocation> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<DatabaseAccountCapability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CreateMode? createMode, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, RestoreParameters restoreParameters) : base(id, name, type, tags, location)
         {
             Kind = kind;
             Identity = identity;
