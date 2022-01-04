@@ -270,7 +270,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;

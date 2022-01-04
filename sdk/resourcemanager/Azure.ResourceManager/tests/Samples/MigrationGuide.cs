@@ -4,10 +4,10 @@ using System.Linq;
 using Azure.Identity;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
+//using Azure.ResourceManager.Compute;
+//using Azure.ResourceManager.Compute.Models;
+//using Azure.ResourceManager.Network;
+//using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 #endregion
@@ -40,72 +40,72 @@ namespace Azure.ResourceManager.Tests.Samples
             #endregion
 
             #region Snippet:Create_AvailabilitySet
-            string vmName = "quickstartvm";
-            AvailabilitySetData aSetData = new AvailabilitySetData(location);
-            AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData);
-            AvailabilitySet aset = asetCreateLro.Value;
-            string asetId = aset.Id;
+            //string vmName = "quickstartvm";
+            //AvailabilitySetData aSetData = new AvailabilitySetData(location);
+            //AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData);
+            //AvailabilitySet aset = asetCreateLro.Value;
+            //string asetId = aset.Id;
             #endregion
 
             #region Snippet:Create_Vnet_and_Subnet
-            string vnetName = "MYVM" + "_vnet";
-            string subnetName = "mySubnet";
-            AddressSpace addressSpace = new AddressSpace();
-            addressSpace.AddressPrefixes.Add("10.0.0.0/16");
+            //string vnetName = "MYVM" + "_vnet";
+            //string subnetName = "mySubnet";
+            //AddressSpace addressSpace = new AddressSpace();
+            //addressSpace.AddressPrefixes.Add("10.0.0.0/16");
 
-            VirtualNetworkData vnetData = new VirtualNetworkData()
-            {
-                AddressSpace = addressSpace,
-                Subnets =
-                {
-                    new SubnetData()
-                    {
-                        Name = subnetName,
-                        AddressPrefix = "10.0.0.0/24"
-                    }
-                }
-            };
-            VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
-            VirtualNetwork vnet = vnetCreateLro.Value;
+            //VirtualNetworkData vnetData = new VirtualNetworkData()
+            //{
+            //    AddressSpace = addressSpace,
+            //    Subnets =
+            //    {
+            //        new SubnetData()
+            //        {
+            //            Name = subnetName,
+            //            AddressPrefix = "10.0.0.0/24"
+            //        }
+            //    }
+            //};
+            //VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+            //VirtualNetwork vnet = vnetCreateLro.Value;
             #endregion
 
             #region Snippet:Create_NetworkSecurityGroup
-            string nsgName = vmName + "_nsg";
-            NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
-            NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
-            NetworkSecurityGroup nsg = nsgCreateLro.Value;
+            //string nsgName = vmName + "_nsg";
+            //NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
+            //NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
+            //NetworkSecurityGroup nsg = nsgCreateLro.Value;
             #endregion
 
             #region Snippet:Create_NetworkInterface
-            string nicName = vmName + "_nic";
-            NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
-            {
-                Name = "Primary",
-                Primary = true,
-                Subnet = new SubnetData() { Id = vnet.Data.Subnets.First().Id },
-                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-            };
+            //string nicName = vmName + "_nic";
+            //NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
+            //{
+            //    Name = "Primary",
+            //    Primary = true,
+            //    Subnet = new SubnetData() { Id = vnet.Data.Subnets.First().Id },
+            //    PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+            //};
 
-            NetworkInterfaceData nicData = new NetworkInterfaceData();
-            nicData.Location = location;
-            nicData.IpConfigurations.Add(nicIPConfig);
-            NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(nicName, nicData);
-            NetworkInterface nic = nicCreateLro.Value;
+            //NetworkInterfaceData nicData = new NetworkInterfaceData();
+            //nicData.Location = location;
+            //nicData.IpConfigurations.Add(nicIPConfig);
+            //NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(nicName, nicData);
+            //NetworkInterface nic = nicCreateLro.Value;
             #endregion
 
             #region Snippet:Create_VirtualMachine
-            VirtualMachineData vmData = new VirtualMachineData(location);
-            vmData.OsProfile.AdminUsername = "admin-username";
-            vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
-            vmData.OsProfile.ComputerName = "computer-name";
-            vmData.AvailabilitySet = new WritableSubResource();
-            vmData.AvailabilitySet.Id = aset.Id;
-            NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
-            nicReference.Id = nic.Id;
-            vmData.NetworkProfile.NetworkInterfaces.Add(nicReference);
+            //VirtualMachineData vmData = new VirtualMachineData(location);
+            //vmData.OsProfile.AdminUsername = "admin-username";
+            //vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
+            //vmData.OsProfile.ComputerName = "computer-name";
+            //vmData.AvailabilitySet = new WritableSubResource();
+            //vmData.AvailabilitySet.Id = aset.Id;
+            //NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
+            //nicReference.Id = nic.Id;
+            //vmData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
-            VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
-            Console.WriteLine("VM ID: " + vm.Id);
+            //VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
+            //Console.WriteLine("VM ID: " + vm.Id);
             #endregion
         }
     }

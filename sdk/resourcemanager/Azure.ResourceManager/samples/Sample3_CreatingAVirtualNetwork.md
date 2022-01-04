@@ -23,7 +23,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 string rgName = "myResourceGroup";
-ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
+ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
 ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
