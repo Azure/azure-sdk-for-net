@@ -59,7 +59,10 @@ In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
 ```csharp
 using Microsoft.Azure.OperationalInsights;
+using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
+	
+// code omitted for brevity
 
 var adSettings = new ActiveDirectoryServiceSettings
 	{
@@ -79,6 +82,8 @@ In `Azure.Monitor.Query` v1.0.x:
 using Azure.Monitor.Query;
 using Azure.Identity;
 
+// code omitted for brevity
+
 var client = new LogsQueryClient(new DefaultAzureCredential());
 ```
 
@@ -87,8 +92,11 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
 ```csharp
-QueryResults queryResults = client.Query("AzureActivity | top 10 by TimeGenerated");
-HttpOperationResponse httpResponse = await client.QueryWithHttpMessagesAsync($"endtoendlogs_CL | where Message == '{testIdentifierEntries}'");
+using Microsoft.Azure.OperationalInsights.Models;
+	
+// code omitted for brevity
+	
+QueryResults response = await client.QueryAsync("AzureActivity | top 10 by TimeGenerated");
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
@@ -97,6 +105,12 @@ In `Azure.Monitor.Query` v1.0.x:
 - The `timespan` attribute is now required, which helped to avoid querying over the entire data set.
 
 ```csharp
+using Azure;
+using Azure.Monitor.Query;
+using Azure.Monitor.Query.Models;
+	
+// code omitted for brevity
+	
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 	workspaceId,
 	"AzureActivity | top 10 by TimeGenerated",
@@ -108,14 +122,22 @@ Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
 ```csharp
+using Microsoft.Azure.OperationalInsights;
+using Microsoft.Azure.OperationalInsights.Models;
+	
+// code omitted for brevity
+
 var client = new OperationalInsightsDataClient(credentials);
-var tables = client.Query("AzureActivity | top 10 by TimeGenerated").Tables;
-foreach (var table in tables)
+QueryResults response = await client.QueryAsync("AzureActivity | top 10 by TimeGenerated");
+IList<Table> tables = response.Tables;
+	
+foreach (Table table in tables)
 {
-    var rows = table.Rows;
-    foreach (var row in rows)
-    {
-        foreach (var element in row)
+	IList<IList<string>> rows = table.Rows;
+	                
+	foreach (IList<string> row in rows)
+	{
+	    foreach (string element in row)
         {
             Console.WriteLine(element);
         }
@@ -126,12 +148,18 @@ foreach (var table in tables)
 In `Azure.Monitor.Query` v1.0.x:
 
 ```csharp
-var results = await client.QueryWorkspaceAsync(
+using Azure;
+using Azure.Monitor.Query;
+using Azure.Monitor.Query.Models;
+	
+// code omitted for brevity
+	
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 	workspaceId,
 	"AzureActivity | top 10 by TimeGenerated",
 	new QueryTimeRange(TimeSpan.FromDays(1)));
-LogsTable resultTable = results.Value.Table;
-IReadOnlyList<LogsTableRow> rows = resultTable.Rows;
+LogsTable table = response.Value.Table;
+IReadOnlyList<LogsTableRow> rows = table.Rows;
 foreach (LogsTableRow row in rows)
 {
     Console.WriteLine(row.GetString(0)); // Access a particular element with index
