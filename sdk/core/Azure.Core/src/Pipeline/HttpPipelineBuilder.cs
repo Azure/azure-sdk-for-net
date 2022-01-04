@@ -54,6 +54,7 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions defaultTransportOptions, ResponseClassifier? responseClassifier)
         {
+            Argument.AssertNotNull(defaultTransportOptions, nameof(defaultTransportOptions));
             var result = BuildInternal(options, perCallPolicies, perRetryPolicies, defaultTransportOptions, responseClassifier);
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
         }
