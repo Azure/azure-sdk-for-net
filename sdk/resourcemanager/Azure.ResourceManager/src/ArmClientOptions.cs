@@ -21,10 +21,17 @@ namespace Azure.ResourceManager
         /// </summary>
         public string Scope { get; set; } = "https://management.core.windows.net/.default";
 
+        internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+
         /// <summary>
-        /// Dictionary of ResourceType to version overrides.
+        /// Sets the api version to use for a given resource type.
         /// </summary>
-        public Dictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+        /// <param name="resourceType"> The resource type to set the version for. </param>
+        /// <param name="apiVersion"> The api version to use. </param>
+        public void SetApiVersion(ResourceType resourceType, string apiVersion)
+        {
+            ResourceApiVersionOverrides[resourceType] = apiVersion;
+        }
 
         internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
         internal ConcurrentDictionary<string,string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();
@@ -46,7 +53,7 @@ namespace Azure.ResourceManager
             return copy;
         }
 
-        private static void CopyApiVersions(ArmClientOptions copy, Dictionary<ResourceType, string> source)
+        private static void CopyApiVersions(ArmClientOptions copy, IDictionary<ResourceType, string> source)
         {
             foreach (var resourceType in source)
             {

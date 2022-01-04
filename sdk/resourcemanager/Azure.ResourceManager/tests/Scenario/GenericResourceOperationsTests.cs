@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             ResourceGroup rg = rgOp.Value;
             ArmClientOptions options = new ArmClientOptions();
-            options.ResourceApiVersionOverrides[rg.Id.ResourceType] = "1500-10-10";
+            options.SetApiVersion(rg.Id.ResourceType, "1500-10-10");
             var client = GetArmClient(options);
             var genericResourceOperations = client.GetGenericResource(rg.Id);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());

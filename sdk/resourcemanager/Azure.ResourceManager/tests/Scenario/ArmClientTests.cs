@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupVersionTracker tracker2 = new ResourceGroupVersionTracker();
             ArmClientOptions options1 = new ArmClientOptions();
             string versionOverride = "2021-01-01";
-            options1.ResourceApiVersionOverrides.Add(ResourceGroup.ResourceType, versionOverride);
+            options1.SetApiVersion(ResourceGroup.ResourceType, versionOverride);
             ArmClientOptions options2 = new ArmClientOptions();
             options1.AddPolicy(tracker1, HttpPipelinePosition.PerCall);
             options2.AddPolicy(tracker2, HttpPipelinePosition.PerCall);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Tests
 
             string expectedVersion = "myVersion";
             var computeResourceType = new ResourceType("Microsoft.Compute/virtualMachines");
-            options.ResourceApiVersionOverrides.Add(computeResourceType, expectedVersion);
+            options.SetApiVersion(computeResourceType, expectedVersion);
 
             var client = GetArmClient(options);
             var subscription = await client.GetDefaultSubscriptionAsync();

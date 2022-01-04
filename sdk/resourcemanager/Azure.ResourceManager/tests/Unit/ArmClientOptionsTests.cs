@@ -7,9 +7,17 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
-    public class ArmClientOptionsTests : ResourceManagerTestBase
+    public class ArmClientOptionsTests
     {
-        public ArmClientOptionsTests(bool isAsync) : base(isAsync) { }
+        [Test]
+        public void DoubleAddOverride()
+        {
+            var vmType = new ResourceType("Microsoft.Compute/virtualMachines");
+            var options = new ArmClientOptions();
+            options.SetApiVersion(vmType, "foo");
+            options.SetApiVersion(vmType, "bar");
+            Assert.AreEqual("bar", options.ResourceApiVersionOverrides[vmType]);
+        }
 
         [TestCase]
         public void ValidateClone()

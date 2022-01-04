@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreNotEqual(versionY, fakeVersion);
             Assert.AreNotEqual(versionX, fakeVersion);
 
-            x.ResourceApiVersionOverrides[ResourceGroup.ResourceType] = fakeVersion;
+            x.SetApiVersion(ResourceGroup.ResourceType, fakeVersion);
             clientX = GetArmClient(x);
             subX = await clientX.GetDefaultSubscriptionAsync();
             Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
