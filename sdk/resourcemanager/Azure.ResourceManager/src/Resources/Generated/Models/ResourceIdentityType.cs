@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,
-        /// <summary> None. </summary>
-        None,
         /// <summary> UserAssigned. </summary>
         UserAssigned,
         /// <summary> SystemAssigned, UserAssigned. </summary>
-        SystemAssignedUserAssigned
+        SystemAssignedUserAssigned,
+        /// <summary> None. </summary>
+        None
     }
 }

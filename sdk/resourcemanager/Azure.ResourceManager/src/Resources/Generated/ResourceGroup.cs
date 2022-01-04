@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Resources
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourceGroupsRestOperations _resourceGroupsRestClient;
+        private readonly ResourcesRestOperations _resourcesRestClient;
         private readonly ResourceGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroup"/> class for mocking. </summary>
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroup"/> class. </summary>
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroup"/> class. </summary>
@@ -66,6 +69,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -423,6 +427,746 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
                 return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_ListByResourceGroup
+        /// <summary> Get all the resources for a resource group. </summary>
+        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;The properties you can use for eq (equals) or ne (not equals) are: location, resourceType, name, resourceGroup, identity, identity/principalId, plan, plan/publisher, plan/product, plan/name, plan/version, and plan/promotionCode.&lt;br&gt;&lt;br&gt;For example, to filter by a resource type, use: $filter=resourceType eq &apos;Microsoft.Network/virtualNetworks&apos;&lt;br&gt;&lt;br&gt;You can use substringof(value, property) in the filter. The properties you can use for substring are: name and resourceGroup.&lt;br&gt;&lt;br&gt;For example, to get all resources with &apos;demo&apos; anywhere in the name, use: $filter=substringof(&apos;demo&apos;, name)&lt;br&gt;&lt;br&gt;You can link more than one substringof together by adding and/or operators.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. When you filter by a tag name and value, the tags for each resource are not returned in the results.&lt;br&gt;&lt;br&gt;You can use some properties together when filtering. The combinations you can use are: substringof and/or resourceType, plan and plan/publisher and plan/name, identity and identity/principalId. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
+        /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GenericResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GenericResourceData> GetResourcesAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<GenericResourceData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetResources");
+                scope.Start();
+                try
+                {
+                    var response = await _resourcesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<GenericResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetResources");
+                scope.Start();
+                try
+                {
+                    var response = await _resourcesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_ListByResourceGroup
+        /// <summary> Get all the resources for a resource group. </summary>
+        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;The properties you can use for eq (equals) or ne (not equals) are: location, resourceType, name, resourceGroup, identity, identity/principalId, plan, plan/publisher, plan/product, plan/name, plan/version, and plan/promotionCode.&lt;br&gt;&lt;br&gt;For example, to filter by a resource type, use: $filter=resourceType eq &apos;Microsoft.Network/virtualNetworks&apos;&lt;br&gt;&lt;br&gt;You can use substringof(value, property) in the filter. The properties you can use for substring are: name and resourceGroup.&lt;br&gt;&lt;br&gt;For example, to get all resources with &apos;demo&apos; anywhere in the name, use: $filter=substringof(&apos;demo&apos;, name)&lt;br&gt;&lt;br&gt;You can link more than one substringof together by adding and/or operators.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. When you filter by a tag name and value, the tags for each resource are not returned in the results.&lt;br&gt;&lt;br&gt;You can use some properties together when filtering. The combinations you can use are: substringof and/or resourceType, plan and plan/publisher and plan/name, identity and identity/principalId. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
+        /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GenericResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GenericResourceData> GetResources(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<GenericResourceData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetResources");
+                scope.Start();
+                try
+                {
+                    var response = _resourcesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<GenericResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetResources");
+                scope.Start();
+                try
+                {
+                    var response = _resourcesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_MoveResources
+        /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
+        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<ResourceMoveResourcesOperation> MoveResourcesResourceAsync(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.MoveResourcesResource");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.MoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_MoveResources
+        /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
+        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual ResourceMoveResourcesOperation MoveResourcesResource(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.MoveResourcesResource");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.MoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                var operation = new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_ValidateMoveResources
+        /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
+        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<ResourceValidateMoveResourcesOperation> ValidateMoveResourcesResourceAsync(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResourcesResource");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.ValidateMoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_ValidateMoveResources
+        /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
+        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual ResourceValidateMoveResourcesOperation ValidateMoveResourcesResource(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResourcesResource");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.ValidateMoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                var operation = new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_CheckExistence
+        /// <summary> Checks whether a resource exists. </summary>
+        /// <param name="resourceProviderNamespace"> The resource provider of the resource to check. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceName"> The name of the resource to check whether it exists. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="apiVersion"/> is null. </exception>
+        public async virtual Task<Response> CheckExistenceResourceAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.CheckExistenceResource");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.CheckExistenceAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_CheckExistence
+        /// <summary> Checks whether a resource exists. </summary>
+        /// <param name="resourceProviderNamespace"> The resource provider of the resource to check. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceName"> The name of the resource to check whether it exists. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="apiVersion"/> is null. </exception>
+        public virtual Response CheckExistenceResource(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.CheckExistenceResource");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.CheckExistence(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_Delete
+        /// <summary> Deletes a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceName"> The name of the resource to delete. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="apiVersion"/> is null. </exception>
+        public async virtual Task<ResourceDeleteOperation> DeleteResourceAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.DeleteResource");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceDeleteOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_Delete
+        /// <summary> Deletes a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceName"> The name of the resource to delete. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="apiVersion"/> is null. </exception>
+        public virtual ResourceDeleteOperation DeleteResource(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.DeleteResource");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken);
+                var operation = new ResourceDeleteOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_CreateOrUpdate
+        /// <summary> Creates a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource to create. </param>
+        /// <param name="resourceName"> The name of the resource to create. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="parameters"> Parameters for creating or updating the resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<ResourceCreateOrUpdateOperation> CreateOrUpdateResourceAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.CreateOrUpdateResource");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_CreateOrUpdate
+        /// <summary> Creates a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource to create. </param>
+        /// <param name="resourceName"> The name of the resource to create. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="parameters"> Parameters for creating or updating the resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual ResourceCreateOrUpdateOperation CreateOrUpdateResource(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.CreateOrUpdateResource");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, cancellationToken);
+                var operation = new ResourceCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_Update
+        /// <summary> Updates a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource to update. </param>
+        /// <param name="resourceName"> The name of the resource to update. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="parameters"> Parameters for updating the resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<ResourceUpdateOperation> UpdateResourceAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.UpdateResource");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceUpdateOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_Update
+        /// <summary> Updates a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource to update. </param>
+        /// <param name="resourceName"> The name of the resource to update. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="parameters"> Parameters for updating the resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual ResourceUpdateOperation UpdateResource(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.UpdateResource");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, cancellationToken);
+                var operation = new ResourceUpdateOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_Get
+        /// <summary> Gets a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="apiVersion"/> is null. </exception>
+        public async virtual Task<Response<GenericResourceData>> GetResourceAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetResource");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// OperationId: Resources_Get
+        /// <summary> Gets a resource. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="apiVersion"/> is null. </exception>
+        public virtual Response<GenericResourceData> GetResource(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(parentResourcePath));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetResource");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

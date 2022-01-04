@@ -72,6 +72,16 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
+        #region GenericResource
+
+        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
+        /// <returns> An object representing collection of GenericResources and their operations over a Tenant. </returns>
+        public GenericResourceCollection GetGenericResources()
+        {
+            return new GenericResourceCollection(this);
+        }
+        #endregion
+
         #region TenantPolicyDefinition
 
         /// <summary> Gets a collection of TenantPolicyDefinitions in the Tenant. </summary>

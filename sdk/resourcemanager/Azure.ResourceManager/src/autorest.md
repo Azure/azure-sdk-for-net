@@ -107,6 +107,7 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
   - /{linkId}
+  - /{resourceId}
 request-path-to-resource-data:
   # model of ResourceLink has id, type and name, but its type has the type of `object` instead of `string`
   /{linkId}: ResourceLink
@@ -136,6 +137,7 @@ request-path-to-resource-type:
   /subscriptions: Microsoft.Resources/subscriptions
   /subscriptions/{subscriptionId}/resourcegroups: Microsoft.Resources/resourceGroups
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: Microsoft.Resources/features
+  /{resourceId}: Microsoft.Resources/resources
 #   /subscriptions/{subscriptionId}/tagNames/{tagName}: Microsoft.Resources/tagNames
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Microsoft.Resources/providers
   /providers/{resourceProviderNamespace}: Microsoft.Resources/providers
@@ -149,7 +151,6 @@ operation-groups-to-omit:
   - DeploymentOperations
   - AuthorizationOperations
   - ResourceCheck
-  - Resources
 override-operation-name:
   ResourceLinks_ListAtSourceScope: GetAll
   Tags_List: GetAllPredefinedTags
@@ -175,6 +176,7 @@ directive:
   - remove-operation: ManagementLocks_ListAtResourceGroupLevel
   - remove-operation: ManagementLocks_ListAtResourceLevel
   - remove-operation: ManagementLocks_ListAtSubscriptionLevel
+  - remove-operation: Resources_CheckExistenceById
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
     transform: >
@@ -224,6 +226,9 @@ directive:
   - rename-model:
       from: FeatureResult
       to: Feature
+  - rename-model:
+      from: Resource
+      to: TrackedResourceExtended
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json
@@ -270,6 +275,18 @@ directive:
     where: $.paths..parameters[?(@.name === "scope")]
     transform: >
       $["x-ms-skip-url-encoding"] = true
+  # Rename GenericResourceExpanded to GenericResource and use it as the schema for both single resource operation and collection operation.
+  - from: resources.json
+    where: $.definitions.ResourceListResult.properties.value.items["$ref"]
+    transform: >
+      $ = "#/definitions/GenericResource"
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $.GenericResource.properties["createdTime"] = $.GenericResourceExpanded.properties["createdTime"];
+      $.GenericResource.properties["changedTime"] = $.GenericResourceExpanded.properties["changedTime"];
+      $.GenericResource.properties["provisioningState"] = $.GenericResourceExpanded.properties["provisioningState"];
+      delete $.GenericResourceExpanded;
 ```
 
 ### Tag: package-management
