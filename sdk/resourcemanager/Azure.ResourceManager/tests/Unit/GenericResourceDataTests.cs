@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Tests
             JsonElement element = JsonDocument.Parse(json).RootElement;
             GenericResourceData data = GenericResourceData.DeserializeGenericResource(element);
             Assert.AreEqual("account1", data.Name);
-            Assert.AreEqual(Location.EastUS, data.Location);
+            Assert.AreEqual(AzureLocation.EastUS, data.Location);
             Assert.AreEqual("PromotionCodeForPlan", data.Plan.PromotionCode);
         }
 
