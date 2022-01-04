@@ -77,11 +77,14 @@ function New-PackageFolder() {
     $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
     (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
   } elseif ($readme -ne "") {
-    Write-Host "Updating required file in autorest.md file."
+    Write-Host "Updating required file $readme in autorest.md file."
     $requirefile = "require: $readme"
     $rquirefileRex = "require *:.*.md"
     $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
     (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
+
+    $readmefilestr = Get-Content $file
+    Write-Output "autorest.md:$readmefilestr"
   }
 
   $outputJson = [PSCustomObject]@{
