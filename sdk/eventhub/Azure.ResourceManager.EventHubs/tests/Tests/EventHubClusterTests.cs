@@ -11,6 +11,7 @@ using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string clusterName = Recording.GenerateAssetName("cluster");
             EventHubClusterCollection clusterCollection = _resourceGroup.GetEventHubClusters();
-            EventHubClusterData parameter = new EventHubClusterData(Location.EastUS2);
+            EventHubClusterData parameter = new EventHubClusterData(AzureLocation.EastUS2);
             EventHubCluster cluster = (await clusterCollection.CreateOrUpdateAsync(clusterName, parameter)).Value;
             Assert.NotNull(cluster);
             Assert.AreEqual(cluster.Data.Name, clusterName);

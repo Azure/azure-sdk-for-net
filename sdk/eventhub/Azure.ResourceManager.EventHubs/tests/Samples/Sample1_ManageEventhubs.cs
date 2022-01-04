@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #endregion
             #region Snippet:Managing_EventHubs_CreateResourceGroup
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         /// <summary> Initializes a new instance of EventHubClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public EventHubClusterData(Location location) : base(location)
+        public EventHubClusterData(AzureLocation location) : base(location)
         {
         }
 
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="updatedAt"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
-        internal EventHubClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ClusterSku sku, SystemData systemData, string createdAt, string updatedAt, string metricId, string status) : base(id, name, type, tags, location)
+        internal EventHubClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ClusterSku sku, SystemData systemData, string createdAt, string updatedAt, string metricId, string status) : base(id, name, type, tags, location)
         {
             Sku = sku;
             SystemData = systemData;

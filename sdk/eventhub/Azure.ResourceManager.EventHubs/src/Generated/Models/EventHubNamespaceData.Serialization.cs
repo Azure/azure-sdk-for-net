@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<ResourceIdentity> identity = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
