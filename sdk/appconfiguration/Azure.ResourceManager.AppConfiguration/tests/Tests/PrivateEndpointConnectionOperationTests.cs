@@ -13,6 +13,7 @@ using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
 
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<Resources.Models.Location> locations =  await Connection.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locations =  await Connection.GetAvailableLocationsAsync();
 
             Assert.IsTrue(locations.Count() >= 1);
         }

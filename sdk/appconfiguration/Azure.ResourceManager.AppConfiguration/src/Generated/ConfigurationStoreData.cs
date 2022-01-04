@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ConfigurationStoreData(Location location, Models.Sku sku) : base(location)
+        public ConfigurationStoreData(AzureLocation location, Models.Sku sku) : base(location)
         {
             if (sku == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="encryption"> The encryption settings of the configuration store. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceIdentity identity, Models.Sku sku, ProvisioningState? provisioningState, DateTimeOffset? creationDate, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, tags, location)
+        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ResourceIdentity identity, Models.Sku sku, ProvisioningState? provisioningState, DateTimeOffset? creationDate, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, tags, location)
         {
             Identity = identity;
             Sku = sku;
