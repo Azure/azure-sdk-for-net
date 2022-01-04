@@ -13,7 +13,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Indicates whether this instance was constructed internally. This information is used to determine if Dispose(true) is required to dispose of the Transport.
         /// </summary>
-        internal bool isTransportOwnedInternally;
+        private bool isTransportOwnedInternally;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
