@@ -83,7 +83,7 @@ namespace Microsoft.Extensions.Azure
             throw new InvalidOperationException(BuildErrorMessage(configuration, clientType, optionsType));
         }
 
-        internal static TokenCredential CreateCredential(IConfiguration configuration)
+        internal static TokenCredential CreateCredential(IConfiguration configuration, TokenCredentialOptions identityClientOptions = null)
         {
             var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
@@ -102,7 +102,7 @@ namespace Microsoft.Extensions.Azure
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(clientSecret))
             {
-                return new ClientSecretCredential(tenantId, clientId, clientSecret);
+                return new ClientSecretCredential(tenantId, clientId, clientSecret, identityClientOptions);
             }
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
@@ -130,7 +130,7 @@ namespace Microsoft.Extensions.Azure
                     throw new InvalidOperationException($"Unable to find a certificate with thumbprint '{certificate}'");
                 }
 
-                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0]);
+                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0], identityClientOptions);
                 store.Close();
 
                 return credential;
