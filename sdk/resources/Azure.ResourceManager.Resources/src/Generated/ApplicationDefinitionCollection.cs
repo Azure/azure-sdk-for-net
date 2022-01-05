@@ -409,6 +409,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ApplicationDefinition, ApplicationDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ApplicationDefinition, ApplicationDefinitionData> Construct() { }
     }
 }

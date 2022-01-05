@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AppServiceDomain, AppServiceDomainData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AppServiceDomain, AppServiceDomainData> Construct() { }
     }
 }

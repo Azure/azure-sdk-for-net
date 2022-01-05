@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources.Models;
 
