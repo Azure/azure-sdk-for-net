@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var wpsOptions = serviceProvider.GetRequiredService<IOptions<WebPubSubOptions>>().Value;
 
             Assert.NotNull(wpsOptions);
-            Assert.True(wpsOptions.ServiceEndpoint.ValidationOptions.ContainsHost(testHost));
+            Assert.True(wpsOptions.ValidationOptions.IsValidOrigin(new List<string> { testHost }));
 
             var serviceClient = serviceProvider.GetRequiredService<WebPubSubServiceClient<TestHub>>();
             Assert.NotNull(serviceClient);

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _handler = handler ?? throw new ArgumentNullException(nameof(handler));
-            _options = options.Value;
+            _options = options.Value ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -38,27 +38,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
 
             // Handle Abuse Protection
-            if (context.Request.IsPreflightRequest(out var requestHosts))
+            if (context.Request.IsPreflightRequest(out var requestOrigins))
             {
-                var validationOptions = _options?.ServiceEndpoint?.ValidationOptions;
+                var validationOptions = _options.ValidationOptions;
                 Log.ReceivedAbuseProtectionRequest(_logger);
-                var isValid = false;
-                if (validationOptions == null || !validationOptions.ContainsHost())
-                {
-                    isValid = true;
-                }
-                else
-                {
-                    foreach (var item in requestHosts)
-                    {
-                        if (validationOptions.ContainsHost(item))
-                        {
-                            isValid = true;
-                            break;
-                        }
-                    }
-                }
-                if (isValid)
+                if (validationOptions.IsValidOrigin(requestOrigins))
                 {
                     context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                 }

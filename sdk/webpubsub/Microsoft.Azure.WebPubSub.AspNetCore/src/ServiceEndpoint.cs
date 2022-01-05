@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Messaging.WebPubSub;
@@ -13,11 +14,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     public class ServiceEndpoint
     {
-        private static readonly ValidationOptions _validationOptions = new();
+        private const string EndpointPropertyName = "Endpoint";
+        private const string AccessKeyPropertyName = "AccessKey";
+        private const string PortPropertyName = "Port";
+        private static readonly char[] KeyValueSeparator = { '=' };
+        private static readonly char[] PropertySeparator = { ';' };
 
         internal CredentialKind CredentialKind { get; }
-
-        internal ValidationOptions ValidationOptions = _validationOptions;
 
         internal string ConnectionString { get; }
 
@@ -48,8 +51,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             CredentialKind = CredentialKind.ConnectionString;
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
-            (Endpoint, AccessKey) = ValidationOptions.ParseConnectionString(connectionString);
-            _validationOptions.Add(connectionString);
+            (Endpoint, AccessKey) = ParseConnectionString(connectionString);
         }
 
         /// <summary>
@@ -64,7 +66,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             TokenCredential = credential ?? throw new ArgumentNullException(nameof(credential));
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
-            _validationOptions.Add(endpoint);
         }
 
         /// <summary>
@@ -79,7 +80,62 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             AzureKeyCredential = credential ?? throw new ArgumentNullException(nameof(credential));
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
-            _validationOptions.Add(endpoint);
+        }
+
+        internal static (Uri Endpoint, string AccessKey) ParseConnectionString(string connectionString)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+
+            var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
+
+            var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var property in properties)
+            {
+                var kvp = property.Split(KeyValueSeparator, 2);
+                if (kvp.Length != 2)
+                    continue;
+
+                var key = kvp[0].Trim();
+                if (dict.ContainsKey(key))
+                {
+                    throw new ArgumentException($"Duplicate properties found in connection string: {key}.");
+                }
+
+                dict.Add(key, kvp[1].Trim());
+            }
+
+            if (!dict.TryGetValue(EndpointPropertyName, out var endpoint))
+            {
+                throw new ArgumentException($"Required property not found in connection string: {EndpointPropertyName}.");
+            }
+            endpoint = endpoint.TrimEnd('/');
+
+            // AccessKey is optional when connection string is disabled.
+            dict.TryGetValue(AccessKeyPropertyName, out var accessKey);
+
+            int? port = null;
+            if (dict.TryGetValue(PortPropertyName, out var rawPort))
+            {
+                if (int.TryParse(rawPort, out var portValue) && portValue > 0 && portValue <= 0xFFFF)
+                {
+                    port = portValue;
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid Port value: {rawPort}");
+                }
+            }
+
+            var uriBuilder = new UriBuilder(endpoint);
+            if (port.HasValue)
+            {
+                uriBuilder.Port = port.Value;
+            }
+
+            return (uriBuilder.Uri, accessKey);
         }
     }
 }

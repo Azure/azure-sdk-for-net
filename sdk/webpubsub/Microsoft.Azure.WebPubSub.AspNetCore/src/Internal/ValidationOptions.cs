@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -13,127 +15,83 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     internal class ValidationOptions
     {
-        private const string EndpointPropertyName = "Endpoint";
-        private const string AccessKeyPropertyName = "AccessKey";
-        private const string PortPropertyName = "Port";
-        private static readonly char[] KeyValueSeparator = { '=' };
-        private static readonly char[] PropertySeparator = { ';' };
         private readonly Dictionary<string, string> _hostKeyMappings = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
-        /// Init the ValidationOptions based on a set of allowed connection strings.
+        /// Create a default ValidationOptions.
         /// </summary>
-        /// <param name="connectionStrings">The upstream connection strings for validation.</param>
-        public ValidationOptions(params string[] connectionStrings)
-        {
-            foreach (var item in connectionStrings)
-            {
-                if (string.IsNullOrEmpty(item))
-                {
-                    continue;
-                }
-                (Uri host, string accessKey) = ParseConnectionString(item);
-                _hostKeyMappings.Add(host.Host, accessKey);
-            }
-        }
+        public ValidationOptions()
+        { }
 
         /// <summary>
-        /// Init the ValidationOptions based on a set of allowed connection strings.
+        /// Init the ValidatoinOptions based on ServiceEndpoint Endpoint and AccessKey.
         /// </summary>
-        /// <param name="connectionStrings">The upstream connection strings for validation.</param>
-        public ValidationOptions(IEnumerable<string> connectionStrings)
-            : this(connectionStrings.ToArray())
+        /// <param name="endpoint"></param>
+        public ValidationOptions(ServiceEndpoint endpoint)
         {
+            _hostKeyMappings.Add(endpoint.Endpoint.Host, endpoint.AccessKey);
         }
 
-        /// <summary>
-        /// Method to add a upstream connection string to current validation options.
-        /// </summary>
-        /// <param name="connectionString">The upstream connection strings for validation.</param>
-        public void Add(string connectionString)
+        public bool IsValidSignature(WebPubSubConnectionContext context)
         {
-            if (string.IsNullOrEmpty(connectionString))
+            // no options skip validation.
+            if (_hostKeyMappings.Count == 0)
             {
-                throw new ArgumentNullException(nameof(connectionString));
+                return true;
             }
 
-            (Uri host, string accessKey) = ParseConnectionString(connectionString);
-            _hostKeyMappings.Add(host.Host, accessKey);
-        }
-
-        public void Add(Uri endpoint)
-        {
-            _hostKeyMappings.Add(endpoint.Host, null);
-        }
-
-        internal bool ContainsHost(string host = null)
-        {
-            if (host == null)
+            // TODO: considering add cache to improve.
+            if (_hostKeyMappings.TryGetValue(context.Origin, out var accessKey))
             {
-                return _hostKeyMappings.Count > 0;
-            }
-            return _hostKeyMappings.ContainsKey(host);
-        }
-
-        internal bool TryGetKey(string host, out string accessKey)
-        {
-            return _hostKeyMappings.TryGetValue(host, out accessKey);
-        }
-
-        internal static (Uri Endpoint, string AccessKey) ParseConnectionString(string connectionString)
-        {
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-
-            var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
-
-            var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var property in properties)
-            {
-                var kvp = property.Split(KeyValueSeparator, 2);
-                if (kvp.Length != 2)
-                    continue;
-
-                var key = kvp[0].Trim();
-                if (dict.ContainsKey(key))
+                // server side disable signature checks.
+                if (string.IsNullOrEmpty(accessKey))
                 {
-                    throw new ArgumentException($"Duplicate properties found in connection string: {key}.");
+                    return true;
                 }
 
-                dict.Add(key, kvp[1].Trim());
-            }
-
-            if (!dict.TryGetValue(EndpointPropertyName, out var endpoint))
-            {
-                throw new ArgumentException($"Required property not found in connection string: {EndpointPropertyName}.");
-            }
-            endpoint = endpoint.TrimEnd('/');
-
-            // AccessKey is optional when connection string is disabled.
-            dict.TryGetValue(AccessKeyPropertyName, out var accessKey);
-
-            int? port = null;
-            if (dict.TryGetValue(PortPropertyName, out var rawPort))
-            {
-                if (int.TryParse(rawPort, out var portValue) && portValue > 0 && portValue <= 0xFFFF)
+                var signatures = ToHeaderList(context.Signature);
+                if (signatures == null)
                 {
-                    port = portValue;
+                    return false;
                 }
-                else
+                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
+                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(context.ConnectionId));
+                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
+                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
                 {
-                    throw new ArgumentException($"Invalid Port value: {rawPort}");
+                    return true;
                 }
             }
+            return false;
+        }
 
-            var uriBuilder = new UriBuilder(endpoint);
-            if (port.HasValue)
+        public bool IsValidOrigin(IEnumerable<string> requestOrigins)
+        {
+            if (_hostKeyMappings.Count == 0)
             {
-                uriBuilder.Port = port.Value;
+                return true;
+            }
+            else
+            {
+                foreach (var item in requestOrigins)
+                {
+                    if (_hostKeyMappings.ContainsKey(item))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static IReadOnlyList<string> ToHeaderList(string signatures)
+        {
+            if (string.IsNullOrEmpty(signatures))
+            {
+                return default;
             }
 
-            return (uriBuilder.Uri, accessKey);
+            return signatures.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <param name="configure">A callback to configure the <see cref="WebPubSubOptions"/>.</param>
-        /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
+        /// <returns>The same instance of the <see cref="IWebPubSubServerBuilder"/>.</returns>
         public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure)
         {
             if (services == null)
@@ -29,7 +30,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(configure));
             }
 
-            services.Configure(configure);
+            services.Configure(configure)
+                .PostConfigure<WebPubSubOptions>(o => BuildValidationOptions(o));
 
             return services.AddWebPubSubCore();
         }
@@ -38,7 +40,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Adds the minimum essential Azure Web PubSub services to the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
-        /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
+        /// <returns>The same instance of the <see cref="IWebPubSubServerBuilder"/>.</returns>
         public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services)
         {
             if (services == null)
@@ -47,7 +49,7 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             // Add a default option to avoid null, inbound traffic validation will always succeed.
-            // And customer will not be able to `AddWebPubSubServiceClient`.
+            // And customer will not be able to `AddWebPubSubServiceClient` in this case.
             return services.AddWebPubSub(o => o = new());
         }
 
@@ -75,6 +77,20 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var builder = new WebPubSubServerBuilder(services);
             return builder;
+        }
+
+        private static ValidationOptions BuildValidationOptions(WebPubSubOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            if (options.ServiceEndpoint == null)
+            {
+                return new();
+            }
+            return new(options.ServiceEndpoint);
         }
     }
 }

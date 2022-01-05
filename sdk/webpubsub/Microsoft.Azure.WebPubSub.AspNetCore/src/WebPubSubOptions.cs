@@ -12,5 +12,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// A service endpoint represents the Web PubSub service.
         /// </summary>
         public ServiceEndpoint ServiceEndpoint { get; set; }
+
+        internal ValidationOptions ValidationOptions { get; set; }
     }
 }

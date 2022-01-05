@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options, ILogger<ServiceRequestHandlerAdapter> logger)
         {
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
-            _options = options.Value;
+            _options = options.Value ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             try
             {
-                var validationOptions = _options?.ServiceEndpoint?.ValidationOptions;
+                var validationOptions = _options.ValidationOptions;
                 var serviceRequest = await request.ReadWebPubSubEventAsync(validationOptions, context.RequestAborted).ConfigureAwait(false);
                 Log.StartToHandleRequest(_logger, serviceRequest.ConnectionContext);
 
