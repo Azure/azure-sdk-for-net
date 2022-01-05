@@ -196,10 +196,11 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.Linq;
+using Azure.Core;
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 
-var location = Location.WestUS;
+var location = AzureLocation.WestUS;
 // Create ResourceGroup
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
@@ -301,7 +302,7 @@ var vmExtension = new VirtualMachineExtension
 
 After upgrade:
 ```C# Snippet:Changelog_CreateVMExtension
-var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",
