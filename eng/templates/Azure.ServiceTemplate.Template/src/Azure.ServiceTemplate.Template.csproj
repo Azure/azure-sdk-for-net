@@ -5,7 +5,7 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);419;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);419;AZC0012;AZC0016</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>

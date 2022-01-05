@@ -86,10 +86,6 @@ function New-DataPlanePackageFolder() {
 
     $libraryName = $namespaceArray[-1]
     dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --includeCI true --force
-    dotnet sln remove src\$namespace.csproj
-    dotnet sln add src\$namespace.csproj
-    dotnet sln remove tests\$namespace.Tests.csproj
-    dotnet sln add tests\$namespace.Tests.csproj
   }
 
   $outputJson = [PSCustomObject]@{
