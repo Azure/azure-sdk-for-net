@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations;
-    using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Models;
+    using Microsoft.Azure.Management.KubernetesConfiguration;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Models;
 
     /// <summary>
     /// Base class for tests of SourceControlConfiguration resource type

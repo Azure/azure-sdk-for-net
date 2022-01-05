@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
+namespace Microsoft.Azure.Management.KubernetesConfiguration
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ExtensionsOperations operations.
+    /// SourceControlConfigurationsOperations operations.
     /// </summary>
-    internal partial class ExtensionsOperations : IServiceOperations<SourceControlConfigurationClient>, IExtensionsOperations
+    internal partial class SourceControlConfigurationsOperations : IServiceOperations<SourceControlConfigurationClient>, ISourceControlConfigurationsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ExtensionsOperations class.
+        /// Initializes a new instance of the SourceControlConfigurationsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ExtensionsOperations(SourceControlConfigurationClient client)
+        internal SourceControlConfigurationsOperations(SourceControlConfigurationClient client)
         {
             if (client == null)
             {
@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         public SourceControlConfigurationClient Client { get; private set; }
 
         /// <summary>
-        /// Create a new Kubernetes Cluster Extension.
+        /// Gets details of the Source Control Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group.
         /// </param>
         /// <param name='clusterRp'>
         /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
@@ -69,46 +69,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='extensionName'>
-        /// Name of the Extension.
-        /// </param>
-        /// <param name='extension'>
-        /// Properties necessary to Create an Extension.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<Extension>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, Extension extension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<Extension> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, extension, customHeaders, cancellationToken).ConfigureAwait(false);
-            return _response;
-        }
-
-        /// <summary>
-        /// Gets Kubernetes Cluster Extension.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
-        /// </param>
-        /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the kubernetes cluster.
-        /// </param>
-        /// <param name='extensionName'>
-        /// Name of the Extension.
+        /// <param name='sourceControlConfigurationName'>
+        /// Name of the Source Control Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -131,7 +93,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Extension>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControlConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -153,9 +115,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            if (extensionName == null)
+            if (sourceControlConfigurationName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "extensionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
             }
             if (Client.ApiVersion == null)
             {
@@ -172,19 +134,19 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("extensionName", extensionName);
+                tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{extensionName}", System.Uri.EscapeDataString(extensionName));
+            _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -278,7 +240,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Extension>();
+            var _result = new AzureOperationResponse<SourceControlConfiguration>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -291,7 +253,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Extension>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlConfiguration>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -311,11 +273,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         }
 
         /// <summary>
-        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to
-        /// Uninstall the extension from the cluster.
+        /// Create a new Kubernetes Source Control Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group.
         /// </param>
         /// <param name='clusterRp'>
         /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
@@ -330,82 +291,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='extensionName'>
-        /// Name of the Extension.
+        /// <param name='sourceControlConfigurationName'>
+        /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='forceDelete'>
-        /// Delete the extension resource in Azure - not the normal asynchronous
-        /// delete.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, forceDelete, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Patch an existing Kubernetes Cluster Extension.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
-        /// </param>
-        /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the kubernetes cluster.
-        /// </param>
-        /// <param name='extensionName'>
-        /// Name of the Extension.
-        /// </param>
-        /// <param name='patchExtension'>
-        /// Properties to Patch in an existing Extension.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<Extension>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, PatchExtension patchExtension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<Extension> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, patchExtension, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// List all Extensions in the cluster.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
-        /// </param>
-        /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the kubernetes cluster.
+        /// <param name='sourceControlConfiguration'>
+        /// Properties necessary to Create KubernetesConfiguration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -428,7 +318,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Extension>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControlConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfiguration sourceControlConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -450,9 +340,17 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (sourceControlConfiguration == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfiguration");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -465,247 +363,20 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
+                tracingParameters.Add("sourceControlConfiguration", sourceControlConfiguration);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Extension>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Extension>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Create a new Kubernetes Cluster Extension.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
-        /// </param>
-        /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the kubernetes cluster.
-        /// </param>
-        /// <param name='extensionName'>
-        /// Name of the Extension.
-        /// </param>
-        /// <param name='extension'>
-        /// Properties necessary to Create an Extension.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<Extension>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, Extension extension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (clusterRp == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterRp");
-            }
-            if (clusterResourceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterResourceName");
-            }
-            if (clusterName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
-            }
-            if (extensionName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "extensionName");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (extension == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "extension");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("clusterRp", clusterRp);
-                tracingParameters.Add("clusterResourceName", clusterResourceName);
-                tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("extensionName", extensionName);
-                tracingParameters.Add("extension", extension);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{extensionName}", System.Uri.EscapeDataString(extensionName));
+            _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -749,9 +420,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
 
             // Serialize Request
             string _requestContent = null;
-            if(extension != null)
+            if(sourceControlConfiguration != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(extension, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(sourceControlConfiguration, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -805,7 +476,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Extension>();
+            var _result = new AzureOperationResponse<SourceControlConfiguration>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -818,7 +489,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Extension>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlConfiguration>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -836,7 +507,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Extension>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlConfiguration>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -856,11 +527,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         }
 
         /// <summary>
-        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to
-        /// Uninstall the extension from the cluster.
+        /// This will delete the YAML file used to set up the Source control
+        /// configuration, thus stopping future sync from the source repo.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group.
         /// </param>
         /// <param name='clusterRp'>
         /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
@@ -875,12 +546,40 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='extensionName'>
-        /// Name of the Extension.
+        /// <param name='sourceControlConfigurationName'>
+        /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='forceDelete'>
-        /// Delete the extension resource in Azure - not the normal asynchronous
-        /// delete.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all Source Control Configurations.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
+        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
+        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - either managedClusters (for AKS
+        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
+        /// include: 'managedClusters', 'connectedClusters'
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -891,6 +590,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -900,7 +602,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -922,9 +624,223 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            if (extensionName == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "extensionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterRp", clusterRp);
+                tracingParameters.Add("clusterResourceName", clusterResourceName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<SourceControlConfiguration>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SourceControlConfiguration>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// This will delete the YAML file used to set up the Source control
+        /// configuration, thus stopping future sync from the source repo.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
+        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
+        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - either managedClusters (for AKS
+        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
+        /// include: 'managedClusters', 'connectedClusters'
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='sourceControlConfigurationName'>
+        /// Name of the Source Control Configuration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (clusterRp == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterRp");
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterResourceName");
+            }
+            if (clusterName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
+            }
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
             }
             if (Client.ApiVersion == null)
             {
@@ -941,28 +857,23 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("extensionName", extensionName);
-                tracingParameters.Add("forceDelete", forceDelete);
+                tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{extensionName}", System.Uri.EscapeDataString(extensionName));
+            _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (forceDelete != null)
-            {
-                _queryParameters.Add(string.Format("forceDelete={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(forceDelete, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1022,7 +933,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1067,243 +978,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         }
 
         /// <summary>
-        /// Patch an existing Kubernetes Cluster Extension.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
-        /// </param>
-        /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the kubernetes cluster.
-        /// </param>
-        /// <param name='extensionName'>
-        /// Name of the Extension.
-        /// </param>
-        /// <param name='patchExtension'>
-        /// Properties to Patch in an existing Extension.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<Extension>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, PatchExtension patchExtension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (clusterRp == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterRp");
-            }
-            if (clusterResourceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterResourceName");
-            }
-            if (clusterName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
-            }
-            if (extensionName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "extensionName");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (patchExtension == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "patchExtension");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("clusterRp", clusterRp);
-                tracingParameters.Add("clusterResourceName", clusterResourceName);
-                tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("extensionName", extensionName);
-                tracingParameters.Add("patchExtension", patchExtension);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{extensionName}", System.Uri.EscapeDataString(extensionName));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(patchExtension != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(patchExtension, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 202)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Extension>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 202)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Extension>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// List all Extensions in the cluster.
+        /// List all Source Control Configurations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1329,7 +1004,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Extension>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1438,7 +1113,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Extension>>();
+            var _result = new AzureOperationResponse<IPage<SourceControlConfiguration>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1451,7 +1126,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Extension>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SourceControlConfiguration>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
