@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "Subscription"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Subscription(ArmResource options, SubscriptionData resource) : base(options, new ResourceIdentifier(resource.Id))
+        internal Subscription(ArmResource options, SubscriptionData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -156,7 +156,17 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -164,7 +174,17 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resources
@@ -176,11 +196,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GenericResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResourceData> GetResourcesAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResourceData> GetGenericResourcesAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<GenericResourceData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResources");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -195,7 +215,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResources");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -220,11 +240,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GenericResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResourceData> GetResources(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResourceData> GetGenericResources(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<GenericResourceData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResources");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -239,7 +259,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResources");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -801,13 +821,13 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region SubscriptionProvider
+        #region Provider
 
-        /// <summary> Gets a collection of SubscriptionProviders in the Subscription. </summary>
-        /// <returns> An object representing collection of SubscriptionProviders and their operations over a Subscription. </returns>
-        public SubscriptionProviderCollection GetSubscriptionProviders()
+        /// <summary> Gets a collection of Providers in the Subscription. </summary>
+        /// <returns> An object representing collection of Providers and their operations over a Subscription. </returns>
+        public ProviderCollection GetProviders()
         {
-            return new SubscriptionProviderCollection(this);
+            return new ProviderCollection(this);
         }
         #endregion
 

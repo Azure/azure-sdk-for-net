@@ -14,28 +14,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the Provider data model. </summary>
     public partial class ProviderData
     {
-        /// <summary> Initializes a new instance of ProviderData. </summary>
-        internal ProviderData()
-        {
-            ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
-        }
-
-        /// <summary> Initializes a new instance of ProviderData. </summary>
-        /// <param name="id"> The provider ID. </param>
-        /// <param name="namespace"> The namespace of the resource provider. </param>
-        /// <param name="registrationState"> The registration state of the resource provider. </param>
-        /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
-        /// <param name="resourceTypes"> The collection of provider resource types. </param>
-        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
-        internal ProviderData(string id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState)
-        {
-            Id = id;
-            Namespace = @namespace;
-            RegistrationState = registrationState;
-            RegistrationPolicy = registrationPolicy;
-            ResourceTypes = resourceTypes;
-            ProviderAuthorizationConsentState = providerAuthorizationConsentState;
-        }
 
         /// <summary> The provider ID. </summary>
         public string Id { get; }

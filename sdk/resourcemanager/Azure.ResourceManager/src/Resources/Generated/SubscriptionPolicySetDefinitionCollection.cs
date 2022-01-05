@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicySetDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionCollection"/> class class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SubscriptionPolicySetDefinitionCollection(ArmResource parent) : base(parent)
         {

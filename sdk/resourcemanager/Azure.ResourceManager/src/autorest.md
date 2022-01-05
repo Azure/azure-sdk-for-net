@@ -18,9 +18,9 @@ head-as-boolean: false
 mgmt-debug:
   show-request-path: true
 batch:
-  - tag: package-common-type
+#   - tag: package-common-type
   - tag: package-resources
-  - tag: package-management
+#   - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -118,7 +118,6 @@ request-path-to-resource-data:
 #   /subscriptions/{subscriptionId}/tagNames/{tagName}: PredefinedTag # TODO: this should be a non-resource
 #   /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}: PredefinedTagValue
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
-  /providers/{resourceProviderNamespace}: Provider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -127,7 +126,6 @@ request-path-to-parent:
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
   /subscriptions/{subscriptionId}/providers: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-  /providers: /providers/{resourceProviderNamespace}
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
 request-path-to-resource-type:
   /{linkId}: Microsoft.Resources/links
@@ -140,7 +138,6 @@ request-path-to-resource-type:
   /{resourceId}: Microsoft.Resources/resources
 #   /subscriptions/{subscriptionId}/tagNames/{tagName}: Microsoft.Resources/tagNames
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Microsoft.Resources/providers
-  /providers/{resourceProviderNamespace}: Microsoft.Resources/providers
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
     - subscriptions
@@ -158,6 +155,12 @@ override-operation-name:
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
   Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
   Tags_Delete: DeletePredefinedTag
+  Providers_ListAtTenantScope: GetTenantProviders
+  Providers_GetAtTenantScope: GetTenantProvider
+  Resources_MoveResources: MoveResources
+  Resources_ValidateMoveResources: ValidateMoveResources
+  Resources_List: GetGenericResources
+  Resources_ListByResourceGroup: GetGenericResources
 no-property-type-replacement: ProviderData;Provider
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
@@ -176,7 +179,13 @@ directive:
   - remove-operation: ManagementLocks_ListAtResourceGroupLevel
   - remove-operation: ManagementLocks_ListAtResourceLevel
   - remove-operation: ManagementLocks_ListAtSubscriptionLevel
+  - remove-operation: ResourceGroups_CheckExistence
   - remove-operation: Resources_CheckExistenceById
+  - remove-operation: Resources_CheckExistence
+  - remove-operation: Resources_CreateOrUpdate
+  - remove-operation: Resources_Update
+  - remove-operation: Resources_Get
+  - remove-operation: Resources_Delete
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
     transform: >
@@ -262,6 +271,7 @@ directive:
           }
         }
       }
+    reason: add a fake tenant get operation so that we can generate a tenant where all the Get[TenantResources] operations can be autogen in it. The get operation will be removed with codegen suppress attributes.
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
@@ -287,6 +297,10 @@ directive:
       $.GenericResource.properties["changedTime"] = $.GenericResourceExpanded.properties["changedTime"];
       $.GenericResource.properties["provisioningState"] = $.GenericResourceExpanded.properties["provisioningState"];
       delete $.GenericResourceExpanded;
+#   - from: resources.json
+#     where: $.definitions['Provider']
+#     transform: >
+#       $["x-ms-mgmt-propertyReferenceType"] = true # not supported with ResourceData yet, use custom code first
 ```
 
 ### Tag: package-management

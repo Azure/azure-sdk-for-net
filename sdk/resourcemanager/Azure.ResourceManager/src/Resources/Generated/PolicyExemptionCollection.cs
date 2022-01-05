@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyExemptionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyExemptionCollection"/> class class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PolicyExemptionCollection(ArmResource parent) : base(parent)
         {

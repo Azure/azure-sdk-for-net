@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </param>
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
-        internal SubscriptionData(string id, string subscriptionId, string displayName, string tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags)
+        internal SubscriptionData(ResourceIdentifier id, string subscriptionId, string displayName, string tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags)
         {
             Id = id;
             SubscriptionId = subscriptionId;
@@ -43,9 +44,6 @@ namespace Azure.ResourceManager.Resources
             ManagedByTenants = managedByTenants;
             Tags = tags;
         }
-
-        /// <summary> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </summary>
-        public string Id { get; }
         /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }
         /// <summary> The subscription display name. </summary>

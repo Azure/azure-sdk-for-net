@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of TenantPolicySetDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinitionCollection"/> class class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TenantPolicySetDefinitionCollection(ArmResource parent) : base(parent)
         {

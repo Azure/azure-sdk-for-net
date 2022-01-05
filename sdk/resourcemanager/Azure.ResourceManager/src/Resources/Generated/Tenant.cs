@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TenantsRestOperations _tenantsRestClient;
+        private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Tenant"/> class for mocking. </summary>
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,15 +64,149 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        #region TenantProvider
-
-        /// <summary> Gets a collection of TenantProviders in the Tenant. </summary>
-        /// <returns> An object representing collection of TenantProviders and their operations over a Tenant. </returns>
-        public TenantProviderCollection GetTenantProviders()
+        /// RequestPath: /providers
+        /// ContextualPath: /
+        /// OperationId: Providers_ListAtTenantScope
+        /// <summary> Gets all resource providers for the tenant. </summary>
+        /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ProviderData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProviderData> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return new TenantProviderCollection(this);
+            async Task<Page<ProviderData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                scope.Start();
+                try
+                {
+                    var response = await _providersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ProviderData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                scope.Start();
+                try
+                {
+                    var response = await _providersRestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
-        #endregion
+
+        /// RequestPath: /providers
+        /// ContextualPath: /
+        /// OperationId: Providers_ListAtTenantScope
+        /// <summary> Gets all resource providers for the tenant. </summary>
+        /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProviderData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProviderData> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Page<ProviderData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                scope.Start();
+                try
+                {
+                    var response = _providersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ProviderData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                scope.Start();
+                try
+                {
+                    var response = _providersRestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /providers/{resourceProviderNamespace}
+        /// ContextualPath: /
+        /// OperationId: Providers_GetAtTenantScope
+        /// <summary> Gets the specified resource provider at the tenant level. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public async virtual Task<Response<ProviderData>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            scope.Start();
+            try
+            {
+                var response = await _providersRestClient.GetAtTenantScopeAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /providers/{resourceProviderNamespace}
+        /// ContextualPath: /
+        /// OperationId: Providers_GetAtTenantScope
+        /// <summary> Gets the specified resource provider at the tenant level. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual Response<ProviderData> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            scope.Start();
+            try
+            {
+                var response = _providersRestClient.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         #region GenericResource
 

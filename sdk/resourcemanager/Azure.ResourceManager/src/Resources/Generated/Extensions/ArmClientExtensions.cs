@@ -23,25 +23,14 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        #region SubscriptionProvider
-        /// <summary> Gets an object representing a SubscriptionProvider along with the instance operations that can be performed on it but with no data. </summary>
+        #region Provider
+        /// <summary> Gets an object representing a Provider along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionProvider" /> object. </returns>
-        public static SubscriptionProvider GetSubscriptionProvider(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="Provider" /> object. </returns>
+        public static Provider GetProvider(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionProvider(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region TenantProvider
-        /// <summary> Gets an object representing a TenantProvider along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantProvider" /> object. </returns>
-        public static TenantProvider GetTenantProvider(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TenantProvider(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Provider(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -196,17 +185,6 @@ namespace Azure.ResourceManager.Resources
         public static Subscription GetSubscription(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Subscription(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region Tenant
-        /// <summary> Gets an object representing a Tenant along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Tenant" /> object. </returns>
-        public static Tenant GetTenant(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Tenant(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

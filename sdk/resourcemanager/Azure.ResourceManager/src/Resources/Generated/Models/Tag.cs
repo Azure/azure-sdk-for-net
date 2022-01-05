@@ -16,17 +16,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Tag. </summary>
         public Tag()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            TagsValue = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Tag. </summary>
-        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        internal Tag(IDictionary<string, string> tags)
+        /// <param name="tagsValue"> Dictionary of &lt;string&gt;. </param>
+        internal Tag(IDictionary<string, string> tagsValue)
         {
-            Tags = tags;
+            TagsValue = tagsValue;
         }
-
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of GenericResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GenericResourceCollection"/> class class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GenericResourceCollection(ArmResource parent) : base(parent)
         {

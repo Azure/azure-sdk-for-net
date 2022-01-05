@@ -18,10 +18,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a SubscriptionProvider along with the instance operations that can be performed on it. </summary>
-    public partial class SubscriptionProvider : ArmResource
+    /// <summary> A Class representing a Provider along with the instance operations that can be performed on it. </summary>
+    public partial class Provider : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionProvider"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="Provider"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.Resources
         private readonly ProviderResourceTypesRestOperations _providerResourceTypesRestClient;
         private readonly ProviderData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionProvider"/> class for mocking. </summary>
-        protected SubscriptionProvider()
+        /// <summary> Initializes a new instance of the <see cref="Provider"/> class for mocking. </summary>
+        protected Provider()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionProvider"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "Provider"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SubscriptionProvider(ArmResource options, ProviderData resource) : base(options, new ResourceIdentifier(resource.Id))
+        internal Provider(ArmResource options, ProviderData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
@@ -49,23 +49,23 @@ namespace Azure.ResourceManager.Resources
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionProvider"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="Provider"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionProvider(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Provider(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionProvider"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="Provider"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionProvider(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal Provider(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the specified resource provider. </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SubscriptionProvider>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Provider>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.Get");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Get");
             scope.Start();
             try
             {
-                var response = await _providersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceType.Namespace, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _providersRestClient.GetAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionProvider(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,53 +123,16 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the specified resource provider. </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionProvider> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<Provider> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.Get");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Get");
             scope.Start();
             try
             {
-                var response = _providersRestClient.Get(Id.SubscriptionId, Id.ResourceType.Namespace, expand, cancellationToken);
+                var response = _providersRestClient.Get(Id.SubscriptionId, Id.Provider, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionProvider(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_Unregister
-        /// <summary> Unregisters a subscription from a resource provider. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SubscriptionProvider>> UnregisterAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.Unregister");
-            scope.Start();
-            try
-            {
-                var response = await _providersRestClient.UnregisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionProvider(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,14 +146,35 @@ namespace Azure.ResourceManager.Resources
         /// OperationId: Providers_Unregister
         /// <summary> Unregisters a subscription from a resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionProvider> Unregister(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Provider>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.Unregister");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Unregister");
             scope.Start();
             try
             {
-                var response = _providersRestClient.Unregister(Id.SubscriptionId, Id.ResourceType.Namespace, cancellationToken);
-                return Response.FromValue(new SubscriptionProvider(this, response.Value), response.GetRawResponse());
+                var response = await _providersRestClient.UnregisterAsync(Id.SubscriptionId, Id.Provider, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// OperationId: Providers_Unregister
+        /// <summary> Unregisters a subscription from a resource provider. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Provider> Unregister(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Provider.Unregister");
+            scope.Start();
+            try
+            {
+                var response = _providersRestClient.Unregister(Id.SubscriptionId, Id.Provider, cancellationToken);
+                return Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,11 +190,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<IReadOnlyList<ProviderPermission>>> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.ProviderPermissions");
+            using var scope = _clientDiagnostics.CreateScope("Provider.ProviderPermissions");
             scope.Start();
             try
             {
-                var response = await _providersRestClient.ProviderPermissionsAsync(Id.SubscriptionId, Id.ResourceType.Namespace, cancellationToken).ConfigureAwait(false);
+                var response = await _providersRestClient.ProviderPermissionsAsync(Id.SubscriptionId, Id.Provider, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -227,11 +211,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IReadOnlyList<ProviderPermission>> ProviderPermissions(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.ProviderPermissions");
+            using var scope = _clientDiagnostics.CreateScope("Provider.ProviderPermissions");
             scope.Start();
             try
             {
-                var response = _providersRestClient.ProviderPermissions(Id.SubscriptionId, Id.ResourceType.Namespace, cancellationToken);
+                var response = _providersRestClient.ProviderPermissions(Id.SubscriptionId, Id.Provider, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,14 +231,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SubscriptionProvider>> RegisterAsync(ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Provider>> RegisterAsync(ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.Register");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Register");
             scope.Start();
             try
             {
-                var response = await _providersRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, properties, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionProvider(this, response.Value), response.GetRawResponse());
+                var response = await _providersRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, properties, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,14 +253,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionProvider> Register(ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
+        public virtual Response<Provider> Register(ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.Register");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Register");
             scope.Start();
             try
             {
-                var response = _providersRestClient.Register(Id.SubscriptionId, Id.ResourceType.Namespace, properties, cancellationToken);
-                return Response.FromValue(new SubscriptionProvider(this, response.Value), response.GetRawResponse());
+                var response = _providersRestClient.Register(Id.SubscriptionId, Id.Provider, properties, cancellationToken);
+                return Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -293,11 +277,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<IReadOnlyList<ProviderResourceType>>> GetProviderResourceTypesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.GetProviderResourceTypes");
+            using var scope = _clientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
             scope.Start();
             try
             {
-                var response = await _providerResourceTypesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceType.Namespace, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _providerResourceTypesRestClient.ListAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,11 +299,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IReadOnlyList<ProviderResourceType>> GetProviderResourceTypes(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionProvider.GetProviderResourceTypes");
+            using var scope = _clientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
             scope.Start();
             try
             {
-                var response = _providerResourceTypesRestClient.List(Id.SubscriptionId, Id.ResourceType.Namespace, expand, cancellationToken);
+                var response = _providerResourceTypesRestClient.List(Id.SubscriptionId, Id.Provider, expand, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -331,8 +315,8 @@ namespace Azure.ResourceManager.Resources
 
         #region Feature
 
-        /// <summary> Gets a collection of Features in the SubscriptionProvider. </summary>
-        /// <returns> An object representing collection of Features and their operations over a SubscriptionProvider. </returns>
+        /// <summary> Gets a collection of Features in the Provider. </summary>
+        /// <returns> An object representing collection of Features and their operations over a Provider. </returns>
         public FeatureCollection GetFeatures()
         {
             return new FeatureCollection(this);

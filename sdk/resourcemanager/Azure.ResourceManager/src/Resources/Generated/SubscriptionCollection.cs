@@ -31,14 +31,6 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SubscriptionCollection(ArmResource parent) : base(parent)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Tenant.ResourceType;
 

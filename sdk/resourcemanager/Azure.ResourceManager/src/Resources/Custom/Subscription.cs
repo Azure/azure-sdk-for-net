@@ -19,20 +19,6 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class Subscription : ArmResource
     {
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Subscription"/> class.
-        /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subscription(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext,  id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            // _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
         /// <summary>
         /// Provides a way to reuse the protected client context.
         /// </summary>

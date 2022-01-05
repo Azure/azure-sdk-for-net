@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.Resources
         internal TenantCollection(ClientContext clientContext)
             : base(clientContext)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
     }
 }

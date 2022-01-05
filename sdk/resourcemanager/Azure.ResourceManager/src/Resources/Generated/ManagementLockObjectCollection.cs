@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementLockObjectCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementLockObjectCollection"/> class class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagementLockObjectCollection(ArmResource parent) : base(parent)
         {
