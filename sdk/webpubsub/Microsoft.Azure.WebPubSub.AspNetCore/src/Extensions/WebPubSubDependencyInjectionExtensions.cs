@@ -3,7 +3,6 @@
 
 using System;
 using Microsoft.Azure.WebPubSub.AspNetCore;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -31,7 +30,8 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             services.Configure(configure)
-                .PostConfigure<WebPubSubOptions>(o => BuildValidationOptions(o));
+                // overwrite to attach inner request validator based on all endpoints.
+                .Configure<WebPubSubOptions>(o => AttachValidator(o));
 
             return services.AddWebPubSubCore();
         }
@@ -79,7 +79,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder;
         }
 
-        private static ValidationOptions BuildValidationOptions(WebPubSubOptions options)
+        private static WebPubSubOptions AttachValidator(WebPubSubOptions options)
         {
             if (options == null)
             {
@@ -88,9 +88,13 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (options.ServiceEndpoint == null)
             {
-                return new();
+                options.RequestValidator = new();
             }
-            return new(options.ServiceEndpoint);
+            else
+            {
+                options.RequestValidator = new RequestValidator(options.ServiceEndpoint);
+            }
+            return options;
         }
     }
 }

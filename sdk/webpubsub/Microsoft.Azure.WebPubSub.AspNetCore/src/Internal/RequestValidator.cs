@@ -11,23 +11,23 @@ using Microsoft.Azure.WebPubSub.Common;
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     /// <summary>
-    /// Validation options when using Web PubSub service.
+    /// Validator for Abuse Protection and Request Signature when using Web PubSub service.
     /// </summary>
-    internal class ValidationOptions
+    internal class RequestValidator
     {
         private readonly Dictionary<string, string> _hostKeyMappings = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Create a default ValidationOptions.
         /// </summary>
-        public ValidationOptions()
+        public RequestValidator()
         { }
 
         /// <summary>
         /// Init the ValidatoinOptions based on ServiceEndpoint Endpoint and AccessKey.
         /// </summary>
         /// <param name="endpoint"></param>
-        public ValidationOptions(ServiceEndpoint endpoint)
+        public RequestValidator(ServiceEndpoint endpoint)
         {
             _hostKeyMappings.Add(endpoint.Endpoint.Host, endpoint.AccessKey);
         }

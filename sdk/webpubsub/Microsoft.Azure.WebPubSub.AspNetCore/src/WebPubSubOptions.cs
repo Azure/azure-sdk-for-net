@@ -13,6 +13,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// </summary>
         public ServiceEndpoint ServiceEndpoint { get; set; }
 
-        internal ValidationOptions ValidationOptions { get; set; }
+        internal RequestValidator RequestValidator { get; set; }
     }
 }

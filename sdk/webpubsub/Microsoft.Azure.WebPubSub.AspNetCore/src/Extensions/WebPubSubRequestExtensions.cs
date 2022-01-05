@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -30,8 +29,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="request">Upstream HttpRequest.</param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
-        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, ValidationOptions options, CancellationToken cancellationToken = default)
+        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/>.</returns>
+        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, RequestValidator options, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -94,14 +93,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        internal static bool IsPreflightRequest(this HttpRequest request, out List<string> requestOrigins)
+        internal static bool IsPreflightRequest(this HttpRequest request, out IReadOnlyList<string> requestOrigins)
         {
             if (HttpMethods.IsOptions(request.Method))
             {
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Count > 0)
                 {
-                    requestOrigins = requestOrigin.ToList();
+                    requestOrigins = requestOrigin;
                     return true;
                 }
             }
