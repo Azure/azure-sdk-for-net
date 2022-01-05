@@ -12,8 +12,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -316,6 +316,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ExpressRouteConnection, ExpressRouteConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRouteConnection, ExpressRouteConnectionData> Construct() { }
     }
 }

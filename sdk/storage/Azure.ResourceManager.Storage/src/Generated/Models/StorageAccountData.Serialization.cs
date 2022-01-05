@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -98,12 +96,12 @@ namespace Azure.ResourceManager.Storage
 
         internal static StorageAccountData DeserializeStorageAccountData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<Sku> sku = default;
             Optional<Kind> kind = default;
             Optional<Identity> identity = default;
             Optional<ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -146,7 +144,7 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))

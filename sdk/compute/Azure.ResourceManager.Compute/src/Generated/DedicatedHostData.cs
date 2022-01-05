@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public DedicatedHostData(Location location, Models.Sku sku) : base(location)
+        public DedicatedHostData(AzureLocation location, Models.Sku sku) : base(location)
         {
             if (sku == null)
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningTime"> The date when the host was first provisioned. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The dedicated host instance view. </param>
-        internal DedicatedHostData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<Resources.Models.SubResource> virtualMachines, DedicatedHostLicenseTypes? licenseType, DateTimeOffset? provisioningTime, string provisioningState, DedicatedHostInstanceView instanceView) : base(id, name, type, tags, location)
+        internal DedicatedHostData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<Resources.Models.SubResource> virtualMachines, DedicatedHostLicenseTypes? licenseType, DateTimeOffset? provisioningTime, string provisioningState, DedicatedHostInstanceView instanceView) : base(id, name, type, tags, location)
         {
             Sku = sku;
             PlatformFaultDomain = platformFaultDomain;

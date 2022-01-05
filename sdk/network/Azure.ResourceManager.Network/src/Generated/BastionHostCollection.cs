@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, BastionHost, BastionHostData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, BastionHost, BastionHostData> Construct() { }
     }
 }

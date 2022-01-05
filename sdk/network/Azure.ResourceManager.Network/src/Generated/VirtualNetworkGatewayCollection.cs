@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualNetworkGateway, VirtualNetworkGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualNetworkGateway, VirtualNetworkGatewayData> Construct() { }
     }
 }

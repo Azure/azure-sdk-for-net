@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkProfile, NetworkProfileData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkProfile, NetworkProfileData> Construct() { }
     }
 }

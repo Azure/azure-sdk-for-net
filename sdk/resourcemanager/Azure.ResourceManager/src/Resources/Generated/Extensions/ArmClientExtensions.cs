@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {

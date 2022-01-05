@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -307,6 +306,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, GeoBackupPolicy, GeoBackupPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, GeoBackupPolicy, GeoBackupPolicyData> Construct() { }
     }
 }

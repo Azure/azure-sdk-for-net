@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -367,6 +366,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ResourceLink, ResourceLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ResourceLink, ResourceLinkData> Construct() { }
     }
 }

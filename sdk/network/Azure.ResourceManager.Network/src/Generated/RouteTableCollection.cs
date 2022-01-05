@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RouteTable, RouteTableData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, RouteTable, RouteTableData> Construct() { }
     }
 }

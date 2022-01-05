@@ -417,6 +417,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TemplateSpec, TemplateSpecData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, TemplateSpec, TemplateSpecData> Construct() { }
     }
 }

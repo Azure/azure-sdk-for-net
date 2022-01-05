@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServiceBusNamespace, ServiceBusNamespaceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceBusNamespace, ServiceBusNamespaceData> Construct() { }
     }
 }
