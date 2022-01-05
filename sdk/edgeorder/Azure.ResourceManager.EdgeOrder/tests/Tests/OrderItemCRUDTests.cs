@@ -1,0 +1,100 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.EdgeOrder.Models;
+using Azure.ResourceManager.EdgeOrder.Tests.Helpers;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
+{
+    [TestFixture]
+    public class OrderItemCRUDTests : EdgeOrderManagementClientBase
+    {
+        public OrderItemCRUDTests() : base(true)
+        {
+        }
+
+        [SetUp]
+        public async Task ClearAndInitialize()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await InitializeClients();
+            }
+        }
+
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            CleanupResourceGroups();
+        }
+
+        [TestCase]
+        public async Task TestOrderItemCRUDOperations()
+        {
+            var resourceGroupName = Recording.GenerateAssetName("SdkRg");
+            await EdgeOrderManagementTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
+                EdgeOrderManagementTestUtilities.DefaultResourceLocation, resourceGroupName);
+            var orderItemName = Recording.GenerateAssetName("Sdk-OrderItem");
+            ContactDetails contactDetails = GetDefaultContactDetails();
+            ShippingAddress shippingAddress = GetDefaultShippingAddress();
+            AddressProperties addressProperties = new(contactDetails)
+            {
+                ShippingAddress = shippingAddress
+            };
+            AddressDetails addressDetails = new(addressProperties);
+            string orderId = string.Format(EdgeOrderManagementTestUtilities.OrderArmIdFormat,
+                TestEnvironment.SubscriptionId, resourceGroupName, EdgeOrderManagementTestUtilities.DefaultResourceLocation, orderItemName);
+
+            OrderItemResourceCollection _orderItemResourceCollection = GetOrderItemResourceCollection(resourceGroupName);
+
+            OrderItemResourceData orderItemResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
+                GetDefaultOrderItemDetails(), addressDetails, orderId);
+
+            // Create
+            EdgeOrderManagementCreateOrderItemOperation createOrderItemOperation = await
+                _orderItemResourceCollection.CreateOrUpdateAsync(orderItemName, orderItemResourceData);
+            await createOrderItemOperation.WaitForCompletionAsync();
+            Assert.IsTrue(createOrderItemOperation.HasCompleted);
+            Assert.IsTrue(createOrderItemOperation.HasValue);
+
+            // Get
+            Response<OrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
+            OrderItemResource orderItemResource = getOrderItemResourceResponse.Value;
+            Assert.IsNotNull(orderItemResource);
+
+            // Update
+            addressProperties.ContactDetails.ContactName = "Updated contact name";
+            OrderItemUpdateParameter orderItemUpdateParameter = new()
+            {
+                ForwardAddress = addressProperties
+            };
+            EdgeOrderManagementUpdateOrderItemOperation updateOrderItemOperation = await orderItemResource.UpdateAsync(orderItemUpdateParameter);
+            await updateOrderItemOperation.WaitForCompletionAsync();
+            Assert.IsTrue(updateOrderItemOperation.HasCompleted);
+            Assert.IsTrue(updateOrderItemOperation.HasValue);
+
+            // Get
+            getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
+            orderItemResource = getOrderItemResourceResponse.Value;
+            Assert.IsNotNull(orderItemResource);
+
+            //Cancel
+            Response cancelOrderItemResponse = await orderItemResource.CancelOrderItemAsync(
+                new CancellationReason("Order item cancelled"));
+            Assert.AreEqual(cancelOrderItemResponse.Status, 204);
+
+            // Get
+            getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
+            orderItemResource = getOrderItemResourceResponse.Value;
+            Assert.IsNotNull(orderItemResource);
+
+            // Delete
+            EdgeOrderManagementDeleteOrderItemByNameOperation deleteOrderItemByNameOperation = await orderItemResource.DeleteAsync();
+            await deleteOrderItemByNameOperation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(deleteOrderItemByNameOperation.HasCompleted);
+        }
+    }
+}
