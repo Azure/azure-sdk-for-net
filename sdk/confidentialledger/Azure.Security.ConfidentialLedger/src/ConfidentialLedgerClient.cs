@@ -40,8 +40,8 @@ namespace Azure.Security.ConfidentialLedger
                 actualOptions,
                 Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[] { authPolicy },
-                new ResponseClassifier(),
-                transportOptions);
+                transportOptions,
+                new ResponseClassifier());
             _ledgerUri = ledgerUri;
             _apiVersion = actualOptions.Version;
         }

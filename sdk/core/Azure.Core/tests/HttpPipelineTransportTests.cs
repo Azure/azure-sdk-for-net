@@ -11,15 +11,6 @@ namespace Azure.Core.Tests
     public class HttpPipelineTransportTests
     {
         [Test]
-        public void DisposeCallsDisposeInternal()
-        {
-            var target = new MockHttpPipelineTransport();
-            target.Dispose();
-
-            Assert.IsTrue(target.DisposeCalled);
-        }
-
-        [Test]
         public void CreateReturnsStaticInstanceWhenNoOptionsArePassed([Values(true, false)] bool noOptionsSpecified)
         {
             var options = new HttpPipelineTransportOptions();
@@ -40,9 +31,6 @@ namespace Azure.Core.Tests
             public override void Process(HttpMessage message) { throw new NotImplementedException(); }
             public override ValueTask ProcessAsync(HttpMessage message) { throw new NotImplementedException(); }
             public override Request CreateRequest() { throw new NotImplementedException(); }
-
-            public bool DisposeCalled { get; set; }
-            internal override void DisposeInternal() => DisposeCalled = true;
         }
     }
 }
