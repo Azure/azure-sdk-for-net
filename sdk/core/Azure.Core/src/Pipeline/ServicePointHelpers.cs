@@ -40,7 +40,7 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                // Only change when the default runtime limit is used
+                // Only change these configuration values when the default value is used
                 if (requestServicePoint.ConnectionLimit == RuntimeDefaultConnectionLimit)
                 {
                     requestServicePoint.ConnectionLimit = IncreasedConnectionLimit;
