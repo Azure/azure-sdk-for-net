@@ -138,26 +138,6 @@ namespace Azure.ResourceManager.Communication.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Communication.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.Communication.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.Communication.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.Communication.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.Communication.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Communication.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Communication.Models.CreatedByType left, Azure.ResourceManager.Communication.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Communication.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Communication.Models.CreatedByType left, Azure.ResourceManager.Communication.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum KeyType
     {
         Primary = 0,
@@ -173,11 +153,6 @@ namespace Azure.ResourceManager.Communication.Models
         public LinkNotificationHubOptions(string resourceId, string connectionString) { }
         public string ConnectionString { get { throw null; } }
         public string ResourceId { get { throw null; } }
-    }
-    public partial class LocationResource
-    {
-        public LocationResource() { }
-        public string Location { get { throw null; } set { } }
     }
     public partial class NameAvailability
     {
@@ -240,10 +215,5 @@ namespace Azure.ResourceManager.Communication.Models
     {
         public RegenerateKeyOptions() { }
         public Azure.ResourceManager.Communication.Models.KeyType? KeyType { get { throw null; } set { } }
-    }
-    public partial class TaggedResource
-    {
-        public TaggedResource() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }
