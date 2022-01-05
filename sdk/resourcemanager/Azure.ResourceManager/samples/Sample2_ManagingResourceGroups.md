@@ -4,7 +4,6 @@ For this example, you need the following namespaces:
 ```C# Snippet:Managing_Resource_Groups_Namespaces
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +42,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-AzureLocation location = AzureLocation.WestUS2;
+Location location = Location.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
