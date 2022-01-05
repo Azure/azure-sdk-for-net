@@ -1,14 +1,6 @@
 # Release History
 
-## 1.0.0-preview.13 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 1.0.0-preview.13 (2022-01-11)
 
 ## 1.0.0-preview.12 (2021-11-09)
 - Added data flow flowlet
