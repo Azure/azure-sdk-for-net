@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
     using System.Collections.Generic;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Models;
+    using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Models;
     using Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport;
 
     public class SourceControlConfigurationTest

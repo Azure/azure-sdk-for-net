@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "kubernetesconfiguration/resource-manager" -AutoRestVersion "v2" -Namespace "Microsoft.Azure.Management.KubernetesConfiguration.Extensions" -AutoRestCodeGenerationFlags "--tag=package-2021-09" -SdkGenerationDirectory "$PSScriptRoot\Generated"

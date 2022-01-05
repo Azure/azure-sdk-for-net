@@ -1,88 +1,89 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
 {
     using System;
     using Microsoft.Azure.Management.KubernetesConfiguration.Tests.Helpers;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations;
-    using Microsoft.Azure.Management.KubernetesConfiguration.SourceControlConfigurations.Models;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models;
 
     /// <summary>
     /// Base class for tests of SourceControlConfiguration resource type
     /// </summary>
-    public class SourceControlConfigurationTestBase : TestBase, IDisposable
+    public class ExtensionTestBase : TestBase, IDisposable
     {
         public SourceControlConfigurationClient SourceControlConfigurationClient { get; set; }
 
-        public SourceControlConfiguration SourceControlConfiguration { get; set; }
+        public Extension Extension { get; set; }
 
-        public const string ApiVersion = "2019-11-01-preview";
-        public const string ConfigurationType = "SourceControlConfiguration";
-        public const string OperatorTypeFlux = "Flux";
+        public const string ApiVersion = "2020-09-01";
+        public const string ConfigurationType = "Extensions";
 
         public ClusterInfo Cluster { get; set; }
 
-        public SourceControlConfigurationTestBase(MockContext context)
+        public ExtensionTestBase(MockContext context)
         {
             var handler = new RecordedDelegatingHandler();
             SourceControlConfigurationClient = context.GetServiceClient<SourceControlConfigurationClient>(false, handler);
         }
 
         /// <summary>
-        /// Creates or Updates a SourceControlConfiguration
+        /// Creates an Extension
         /// </summary>
-        /// <returns>The SourceControlConfiguration object that was created or updated.</returns>
-        public SourceControlConfiguration CreateSourceControlConfiguration()
+        /// <returns>The Extension object that was created.</returns>
+        public Extension CreateExtension()
         {
-            return SourceControlConfigurationClient.SourceControlConfigurations.CreateOrUpdate(
+            return SourceControlConfigurationClient.Extensions.Create(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                sourceControlConfigurationName: SourceControlConfiguration.Name,
-                sourceControlConfiguration: SourceControlConfiguration);
-        }
-
-        /// <summary>
-        /// Get a SourceControlConfiguration
-        /// </summary>
-        /// <returns>The SourceControlConfiguration object.</returns>
-        public SourceControlConfiguration GetSourceControlConfiguration()
-        {
-            return SourceControlConfigurationClient.SourceControlConfigurations.Get(
-                resourceGroupName: Cluster.ResourceGroup,
-                clusterRp: Cluster.RpName,
-                clusterResourceName: Cluster.Type,
-                clusterName: Cluster.Name,
-                sourceControlConfigurationName: SourceControlConfiguration.Name
+                extensionName: Extension.Name,
+                extension: Extension
             );
         }
 
         /// <summary>
-        /// Delete a SourceControlConfiguration
+        /// Get an Extension
         /// </summary>
-        public void DeleteSourceControlConfiguration()
+        /// <returns>The Extension object.</returns>
+        public Extension GetExtension()
         {
-            SourceControlConfigurationClient.SourceControlConfigurations.Delete(
+            return SourceControlConfigurationClient.Extensions.Get(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                sourceControlConfigurationName: SourceControlConfiguration.Name
+                extensionName: Extension.Name
             );
         }
 
         /// <summary>
-        /// List SourceControlConfigurations in a cluster
+        /// Delete an Extension
+        /// </summary>
+        public void DeleteExtension()
+        {
+            SourceControlConfigurationClient.Extensions.Delete(
+                resourceGroupName: Cluster.ResourceGroup,
+                clusterRp: Cluster.RpName,
+                clusterResourceName: Cluster.Type,
+                clusterName: Cluster.Name,
+                extensionName: Extension.Name,
+                forceDelete: true
+            );
+        }
+
+        /// <summary>
+        /// List Extensions in a cluster
         /// </summary>
         /// <returns></returns>
-        public IPage<SourceControlConfiguration> ListSourceControlConfigurations()
+        public IPage<Extension> ListExtensions()
         {
-            return SourceControlConfigurationClient.SourceControlConfigurations.List(
+            return SourceControlConfigurationClient.Extensions.List(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
