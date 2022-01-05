@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.CosmosDB
         #region RestorableDatabaseAccount
         /// <summary> Gets an object representing a RestorableDatabaseAccountCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <returns> Returns a <see cref="RestorableDatabaseAccountCollection" /> object. </returns>
-        public static RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts(this Subscription subscription)
+        public static RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts(this Subscription subscription, string location)
         {
-            return new RestorableDatabaseAccountCollection(subscription);
+            return new RestorableDatabaseAccountCollection(subscription, location);
         }
         #endregion
 
