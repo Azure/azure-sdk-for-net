@@ -7,13 +7,13 @@ Familiarity with the `Microsoft.Azure.OperationalInsights` v1.1.0 package is ass
 ## Table of contents
 
 - [Migration benefits](#migration-benefits)
-    - [Cross-service SDK improvements](#cross-service-sdk-improvements)
-    - [New features](#new-features)
+  - [Cross-service SDK improvements](#cross-service-sdk-improvements)
+  - [New features](#new-features)
 - [Important changes](#important-changes)
-    - [The client](#the-client)
-    - [Client constructors and authentication](#client-constructors-and-authentication)
-    - [Send a single query request](#send-a-single-query-request)
-    - [Retrieve results from a table](#retrieve-results-from-a-table)
+  - [The client](#the-client)
+  - [Client constructors and authentication](#client-constructors-and-authentication)
+  - [Send a single query request](#send-a-single-query-request)
+  - [Retrieve results from a table](#retrieve-results-from-a-table)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
@@ -61,18 +61,18 @@ In `Microsoft.Azure.OperationalInsights` v1.1.0:
 using Microsoft.Azure.OperationalInsights;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
-	
+
 // code omitted for brevity
 
 var adSettings = new ActiveDirectoryServiceSettings
-	{
-	    AuthenticationEndpoint = new Uri("https://login.microsoftonline.com"),
-	    TokenAudience = new Uri("https://api.loganalytics.io/"),
-	    ValidateAuthority = true
-	};
-	
+{
+    AuthenticationEndpoint = new Uri("https://login.microsoftonline.com"),
+    TokenAudience = new Uri("https://api.loganalytics.io/"),
+    ValidateAuthority = true
+};
+
 ServiceClientCredentials credentials = ApplicationTokenProvider.LoginSilentAsync(
-	    "<domainId or tenantId>", "<clientId>", "<clientSecret>", adSettings).GetAwaiter().GetResult();
+    "<domainId or tenantId>", "<clientId>", "<clientSecret>", adSettings).GetAwaiter().GetResult();
 var client = new OperationalInsightsDataClient(credentials);
 ```
 
@@ -93,9 +93,9 @@ In `Microsoft.Azure.OperationalInsights` v1.1.0:
 
 ```csharp
 using Microsoft.Azure.OperationalInsights.Models;
-	
+
 // code omitted for brevity
-	
+
 QueryResults response = await client.QueryAsync("AzureActivity | top 10 by TimeGenerated");
 ```
 
@@ -108,9 +108,9 @@ In `Azure.Monitor.Query` v1.0.x:
 using Azure;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
-	
+
 // code omitted for brevity
-	
+
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 	workspaceId,
 	"AzureActivity | top 10 by TimeGenerated",
@@ -124,17 +124,17 @@ In `Microsoft.Azure.OperationalInsights` v1.1.0:
 ```csharp
 using Microsoft.Azure.OperationalInsights;
 using Microsoft.Azure.OperationalInsights.Models;
-	
+
 // code omitted for brevity
 
 var client = new OperationalInsightsDataClient(credentials);
 QueryResults response = await client.QueryAsync("AzureActivity | top 10 by TimeGenerated");
 IList<Table> tables = response.Tables;
-	
+
 foreach (Table table in tables)
 {
 	IList<IList<string>> rows = table.Rows;
-	                
+
 	foreach (IList<string> row in rows)
 	{
 	    foreach (string element in row)
@@ -151,15 +151,16 @@ In `Azure.Monitor.Query` v1.0.x:
 using Azure;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
-	
+
 // code omitted for brevity
-	
+
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 	workspaceId,
 	"AzureActivity | top 10 by TimeGenerated",
 	new QueryTimeRange(TimeSpan.FromDays(1)));
 LogsTable table = response.Value.Table;
 IReadOnlyList<LogsTableRow> rows = table.Rows;
+
 foreach (LogsTableRow row in rows)
 {
     Console.WriteLine(row.GetString(0)); // Access a particular element with index
