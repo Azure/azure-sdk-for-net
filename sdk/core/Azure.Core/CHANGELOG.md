@@ -1,6 +1,6 @@
 # Release History
 
-## 1.22.0-beta.1 (Unreleased)
+## 1.22.0 (2022-01-11)
 
 ### Features Added
 
@@ -14,10 +14,6 @@
 ```c#
 options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 ```
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.21.0 (2021-11-03)
 
