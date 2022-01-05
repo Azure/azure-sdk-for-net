@@ -71,7 +71,7 @@ steps:
         --debug
         ${{parameters.TestsConventionOptions}}
       displayName: Create Live Test pipelines for public repository
-      condition: ne('${{parameters.TestsConventionOptions}}','')
+      condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -90,7 +90,7 @@ steps:
         --debug
         ${{parameters.TestsConventionOptions}}
       displayName: Create Weekly (Multi-Cloud) Live Test pipelines for public repository
-      condition: ne('${{parameters.TestsConventionOptions}}','')
+      condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
 
@@ -151,6 +151,6 @@ steps:
         --no-schedule
         ${{parameters.TestsConventionOptions}}
       displayName: Create Live Test pipelines for private repository
-      condition: ne('${{parameters.TestsConventionOptions}}','')
+      condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
