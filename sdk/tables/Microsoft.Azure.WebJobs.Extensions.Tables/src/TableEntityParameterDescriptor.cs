@@ -5,7 +5,7 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
 {
     /// <summary>Represents a parameter bound to a table entity in Azure Storage.</summary>
     [JsonTypeName("TableEntity")]
-    public class TableEntityParameterDescriptor : ParameterDescriptor
+    internal class TableEntityParameterDescriptor : ParameterDescriptor
     {
         /// <summary>Gets or sets the name of the storage account.</summary>
         public string AccountName { get; set; }

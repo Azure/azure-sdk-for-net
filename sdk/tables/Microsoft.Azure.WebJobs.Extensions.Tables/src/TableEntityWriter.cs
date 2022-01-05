@@ -1,20 +1,16 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Data.Tables;
 using Azure.Data.Tables.Models;
-using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Protocols;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class TableEntityWriter: IWatcher, ICollector<TableEntity>, IAsyncCollector<TableEntity>
+    internal class TableEntityWriter: ICollector<TableEntity>, IAsyncCollector<TableEntity>
     {
         private readonly TableClient _table;
         private readonly string _partitionKey;
@@ -33,15 +29,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         private readonly Dictionary<string, Dictionary<string, TableTransactionAction>> _map = new();
 
-        private readonly TableParameterLog _log;
-        private readonly Stopwatch _watch = new Stopwatch();
-
         public TableEntityWriter(TableClient table, string partitionKey, string rowKey)
         {
             _table = table;
             _partitionKey = partitionKey;
             _rowKey = rowKey;
-            _log = new TableParameterLog();
         }
 
         public void Add(TableEntity item)
@@ -88,7 +80,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 _map[partitionKey] = partition;
             }
 
-            _log.EntitiesWritten++;
             if (string.IsNullOrEmpty(item.ETag.ToString()))
             {
                 partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.Add, item));
@@ -124,24 +115,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         {
             if (partition.Count > 0)
             {
-                try
-                {
-                    _watch.Start();
-                    await ExecuteBatchAndCreateTableIfNotExistsAsync(partition, cancellationToken).ConfigureAwait(false);
-                }
-                finally
-                {
-                    _watch.Stop();
-                    _log.ElapsedWriteTime = _watch.Elapsed;
-                }
-            }
-        }
-
-        internal virtual async Task ExecuteBatchAndCreateTableIfNotExistsAsync(
-            Dictionary<string, TableTransactionAction> partition, CancellationToken cancellationToken)
-        {
-            if (partition.Count > 0)
-            {
                 RequestFailedException exception = null;
                 try
                 {
@@ -161,18 +134,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     // Commit the batch
                     await _table.SubmitTransactionAsync(partition.Values, cancellationToken).ConfigureAwait(false);
                 }
-            }
-        }
-
-        public ParameterLog GetStatus()
-        {
-            if (_log.EntitiesWritten > 0)
-            {
-                return _log;
-            }
-            else
-            {
-                return null;
             }
         }
     }
