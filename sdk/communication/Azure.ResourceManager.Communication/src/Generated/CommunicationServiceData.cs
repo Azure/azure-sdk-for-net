@@ -13,6 +13,7 @@ using Azure.ResourceManager.Models;
 
 [assembly: CodeGenSuppressType("TaggedResource")]
 [assembly: CodeGenSuppressType("LocationResource")]
+[assembly: CodeGenSuppressType("CreatedByType")]
 
 namespace Azure.ResourceManager.Communication
 {
