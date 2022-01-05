@@ -35,40 +35,6 @@ function Get-SwaggerInfo()
     exit 1
 }
 
-function Get-InputJsonFileInfo()
-{
-    param(
-        [string]$dir,
-        [string]$AUTOREST_CONFIG_FILE = "autorest.md"
-    )
-    Set-Location $dir
-    $inputfileInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/blob\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/data-plane\/?<filePath>"
-    $rawInputfileInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/data-plane\/?<filePath>"
-    $inputfileNoCommitRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(blob\/)?(?<branch>.*)\/specification\/(?<specName>.*)\/data-plane\/?<filePath>"
-    try
-    {
-        $content = Get-Content .\$AUTOREST_CONFIG_FILE -Raw
-        if ($content -match $inputfileInfoRegex)
-        {
-            return $matches["org"], $matches["specName"], $matches["commitID"], $matches["filePath"]
-        }
-        if ($content -match $rawInputfileInfoRegex)
-        {
-            return $matches["org"], $matches["specName"], $matches["commitID"], $matches["filePath"]
-        }
-        if ($content -match $inputfileNoCommitRegex)
-        {
-            return $matches["org"], $matches["specName"], "", $matches["filePath"]
-        }
-    }
-    catch
-    {
-        Write-Error "Error parsing input file info"
-        Write-Error $_
-    }
-    Write-Host "Cannot find input file info"
-    exit 1
-}
 function New-DataPlanePackageFolder() {
   param(
       [string]$service,
@@ -85,6 +51,23 @@ function New-DataPlanePackageFolder() {
   $projectFolder="$sdkPath/sdk/$service/$namespace"
   if (Test-Path -Path $projectFolder) {
     Write-Host "Path exists!"
+      # update the input-file url if needed.
+    if ($inputfile -ne "") {
+        Write-Host "Updating autorest.md file."
+        $inputfile = "input-file: $inputfile"
+        $inputfileRex = "input-file *:.*.json"
+        $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
+        if (Test-Path -Path $file) {
+            (Get-Content $file) -replace $inputfileRex, "$inputfile" | Set-Content $file
+            if ( $? -ne $True) {
+            Write-Error "Failed to update autorest.md. exit code: $?"
+            exit 1
+            }
+        } else {
+            Write-Error "autorest.md doesn't exist."
+            exit 1
+        }
+    }
   } else {
     Write-Host "Path doesn't exist. create template."
     if ($inputfile -eq "") {
@@ -92,43 +75,21 @@ function New-DataPlanePackageFolder() {
         exit 1
     }
     dotnet new -i $sdkPath/eng/templates/Azure.ServiceTemplate.Template
-    $projectFolder="$sdkPath/sdk/$service/$namespace"
     Write-Host "Create project folder $projectFolder"
     New-Item -Path $projectFolder -ItemType Directory
     Set-Location $projectFolder
     $namespaceArray = $namespace.Split(".")
-    if ( $namespaceArray.Count -ne 3) {
+    if ( $namespaceArray.Count -lt 3) {
         Write-Error "Error: invalid namespace name."
         exit 1
     }
 
-    $libraryName = $namespaceArray[2]
+    $libraryName = $namespaceArray[-1]
     dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --includeCI true --force
     dotnet sln remove src\$namespace.csproj
     dotnet sln add src\$namespace.csproj
     dotnet sln remove tests\$namespace.Tests.csproj
     dotnet sln add tests\$namespace.Tests.csproj
-  }
-
-  # update the Dataplane target flag
-
-
-  # update the input-file url if needed.
-  if ($inputfile -ne "") {
-    Write-Host "Updating autorest.md file."
-    $inputfile = "input-file: $inputfile"
-    $inputfileRex = "input-file *:.*.json"
-    $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
-    if (Test-Path -Path $file) {
-        (Get-Content $file) -replace $inputfileRex, "$inputfile" | Set-Content $file
-        if ( $? -ne $True) {
-          Write-Error "Failed to update autorest.md. exit code: $?"
-          exit 1
-        }
-    } else {
-        Write-Error "autorest.md doesn't exist."
-        exit 1
-    }
   }
 
   $outputJson = [PSCustomObject]@{

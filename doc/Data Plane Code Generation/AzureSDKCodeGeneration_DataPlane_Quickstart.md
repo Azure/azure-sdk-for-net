@@ -44,9 +44,9 @@ This tutorial has following sections:
 
 ## Getting started - shippable package ##
 
-For this tutorial, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. We will use dotnet project tempalte [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
+For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
 
-You can run `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` to generate the first-verion shippable SDK client library package directly as following
+You can run `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` to generate the first-version shippable SDK client library package directly as following
 ```
 eng/automation/Invoke-DataPlaneGenerateShippablePackage.ps1 -service <servicename> -namespace Azure.<group>.<source> -sdkPath <sdkrepoRootPath> -inputfile <inputfilelink> -securityScope <securityScope>
 ```
@@ -58,7 +58,7 @@ pwsh /home/azure-sdk-for-net/eng/automation/Invoke-DataPlaneGenerateShippablePac
 **Note**: namespace is the shipped package name, it should be Azure.<group>.<service>
 **Note**: inputfile is the api definition file. It can be local file e.g. ./swagger/compute.json or premlink, e.g. https://github.com/dpokluda/azure-rest-api-specs/blob/be397aa65510bd4e8f87da539af2b0025f6f44ca/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2020-09-01/deviceupdate.json".
 
-Or you can do **step-by-step** as following.
+The script `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` will do **step-by-step** as following.
 
 ### Create the project folder ###
 
