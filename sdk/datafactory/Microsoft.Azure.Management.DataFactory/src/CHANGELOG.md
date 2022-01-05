@@ -4,6 +4,7 @@
 ###  Feature Additions
 - Added support UAMI M2
 - Added connectionProperties in GoogleAdWordsLinkedService
+- Added servicePrincipalCredentialType and servicePrincipalCredential into AzureBlobFSLinkedService
 
 ## Version 5.0.0
 ###  Feature Additions
