@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.version = version ?? throw new ArgumentNullException(nameof(version));
@@ -37,7 +37,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey)
+        internal HttpMessage CreateCreateRequest(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileChangeTime)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,6 +66,10 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-file-attributes", fileAttributes);
             request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
             request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
+            if (fileChangeTime != null)
+            {
+                request.Headers.Add("x-ms-file-change-time", fileChangeTime);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -78,9 +82,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -95,7 +100,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateCreateRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey);
+            using var message = CreateCreateRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey, fileChangeTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -115,9 +120,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public ResponseWithHeaders<DirectoryCreateHeaders> Create(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryCreateHeaders> Create(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -132,7 +138,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateCreateRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey);
+            using var message = CreateCreateRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey, fileChangeTime);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -254,7 +260,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, string filePermission, string filePermissionKey)
+        internal HttpMessage CreateSetPropertiesRequest(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, string filePermission, string filePermissionKey, string fileChangeTime)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -280,6 +286,10 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-file-attributes", fileAttributes);
             request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
             request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
+            if (fileChangeTime != null)
+            {
+                request.Headers.Add("x-ms-file-change-time", fileChangeTime);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -291,9 +301,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -308,7 +319,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateSetPropertiesRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey);
+            using var message = CreateSetPropertiesRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey, fileChangeTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectorySetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -327,9 +338,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -344,7 +356,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateSetPropertiesRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey);
+            using var message = CreateSetPropertiesRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey, fileChangeTime);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectorySetPropertiesHeaders(message.Response);
             switch (message.Response.Status)

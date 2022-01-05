@@ -567,6 +567,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -579,6 +580,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1383,6 +1385,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1394,6 +1397,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);
                     }
 
