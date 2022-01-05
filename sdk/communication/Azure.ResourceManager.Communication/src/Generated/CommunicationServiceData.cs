@@ -11,10 +11,6 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-[assembly: CodeGenSuppressType("TaggedResource")]
-[assembly: CodeGenSuppressType("LocationResource")]
-[assembly: CodeGenSuppressType("CreatedByType")]
-
 namespace Azure.ResourceManager.Communication
 {
     /// <summary> A class representing the CommunicationService data model. </summary>
