@@ -512,15 +512,13 @@ namespace Azure.Communication.CallingServer.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_RemoveParticipantFromDefaultAudioGroupOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantToDefaultAudioGroupOperation
-        internal async Task<Response> AddParticipantToDefaultAudioGroupOperation(CallConnection callConnection, string participantUserId)
+        internal async Task AddParticipantToDefaultAudioGroupOperation(CallConnection callConnection, string participantUserId)
         {
             Console.WriteLine("Performing add participant to default audio group operation");
 
             var response = await callConnection.AddParticipantToDefaultAudioGroupAsync(new CommunicationUserIdentifier(participantUserId)).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.Status);
-
-            return response;
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantToDefaultAudioGroupOperation
 
