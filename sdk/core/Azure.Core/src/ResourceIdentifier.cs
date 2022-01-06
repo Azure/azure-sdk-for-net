@@ -167,14 +167,24 @@ namespace Azure.Core
                 if (parent.ResourceType != SubscriptionResourceType && parent.ResourceType != TenantResourceType)
                     throw new ArgumentOutOfRangeException(nameof(parts), $"Provider resource can only come after the root or {SubscriptionsKey}.");
 
-                return AppendNext(new ResourceIdentifier(parent, ProviderResourceType, parts[1]), Trim(parts, 2));
+                var newParent = new ResourceIdentifier(parent, ProviderResourceType, parts[1]);
+                parts.RemoveRange(0, 2);
+                return AppendNext(newParent, parts);
             }
 
             if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return AppendNext(new ResourceIdentifier(parent, parts[1], parts[2], parts[3]), Trim(parts, 4));
+            {
+                var newParent = new ResourceIdentifier(parent, parts[1], parts[2], parts[3]);
+                parts.RemoveRange(0, 4);
+                return AppendNext(newParent, parts);
+            }
 
             if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return AppendNext(new ResourceIdentifier(parent, parts[0], parts[1]), Trim(parts, 2));
+            {
+                var newParent = new ResourceIdentifier(parent, parts[0], parts[1]);
+                parts.RemoveRange(0, 2);
+                return AppendNext(newParent, parts);
+            }
 
             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
         }
@@ -375,14 +385,6 @@ namespace Azure.Core
         public static bool operator >=(ResourceIdentifier left, ResourceIdentifier right)
         {
             return left is null ? right is null : left.CompareTo(right) >= 0;
-        }
-
-        private static List<string> Trim(List<string> list, int numberToTrim)
-        {
-            if (numberToTrim < 0 || numberToTrim > list.Count)
-                throw new ArgumentOutOfRangeException(nameof(numberToTrim));
-            list.RemoveRange(0, numberToTrim);
-            return list;
         }
 
         /// <summary>
