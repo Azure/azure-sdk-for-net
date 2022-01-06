@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
@@ -21,6 +22,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
     public class WebPubSubEventRequestTests
     {
         private static readonly Uri TestUri = new Uri("https://my-host.com");
+        private static readonly RequestValidator TestValidator = new(Options.Create(new WebPubSubOptions()));
 
         [Test]
         public void TestUpdateConnectionState()
@@ -156,7 +158,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var body = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, body: body);
 
-            var request = await context.Request.ReadWebPubSubEventAsync(new RequestValidator());
+            var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
 
             Assert.AreEqual(typeof(ConnectEventRequest), request.GetType());
 
@@ -170,8 +172,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestParseConnectedRequest()
         {
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectedEvent);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions()));
 
-            var request = await context.Request.ReadWebPubSubEventAsync(new RequestValidator());
+            var request = await context.Request.ReadWebPubSubEventAsync(validator);
 
             Assert.AreEqual(typeof(ConnectedEventRequest), request.GetType());
 
@@ -187,7 +190,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var text = "hello world";
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.User, "message", body: text);
 
-            var request = await context.Request.ReadWebPubSubEventAsync(new RequestValidator());
+            var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
 
             Assert.AreEqual(typeof(UserEventRequest), request.GetType());
 
@@ -207,7 +210,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new RequestValidator(new ServiceEndpoint($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;"));
+            var options = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;") }));
             var result = options.IsValidSignature(connectionContext);
             Assert.AreEqual(valid, result);
         }
@@ -220,8 +223,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new RequestValidator();
-            var result = options.IsValidSignature(connectionContext);
+            var result = TestValidator.IsValidSignature(connectionContext);
             Assert.True(result);
         }
 
@@ -233,8 +235,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new RequestValidator(new ServiceEndpoint($"Endpoint={TestUri};Version=1.0;"));
-            var result = options.IsValidSignature(connectionContext);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions{ ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
+            var result = validator.IsValidSignature(connectionContext);
             Assert.True(result);
         }
 
@@ -245,8 +247,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 WebPubSubEventType.System,
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 origin: TestUri.Host);
-            var options = new RequestValidator(new ServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
-            var result = options.IsValidSignature(connectionContext);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
+            var result = validator.IsValidSignature(connectionContext);
             Assert.False(result);
         }
 
@@ -273,9 +275,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [TestCase("http://localhost", false)]
         public void TestAbuseProtectionCompare(string requestHost, bool expected)
         {
-            var options = new RequestValidator(new ServiceEndpoint($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
 
-            Assert.AreEqual(expected, options.IsValidOrigin(new List<string> { requestHost }));
+            Assert.AreEqual(expected, validator.IsValidOrigin(new List<string> { requestHost }));
         }
 
         private static HttpContext PrepareHttpContext(

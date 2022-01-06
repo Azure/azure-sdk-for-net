@@ -23,10 +23,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 .AddWebPubSub(o => o.ServiceEndpoint = new ServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
                 .AddWebPubSubServiceClient<TestHub>()
                 .Services.BuildServiceProvider();
-            var wpsOptions = serviceProvider.GetRequiredService<IOptions<WebPubSubOptions>>().Value;
+            var validator = serviceProvider.GetRequiredService<RequestValidator>();
 
-            Assert.NotNull(wpsOptions);
-            Assert.True(wpsOptions.RequestValidator.IsValidOrigin(new List<string> { testHost }));
+            Assert.NotNull(validator);
+            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
 
             var serviceClient = serviceProvider.GetRequiredService<WebPubSubServiceClient<TestHub>>();
             Assert.NotNull(serviceClient);

@@ -29,9 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(configure));
             }
 
-            services.Configure(configure)
-                // overwrite to attach inner request validator based on all endpoints.
-                .Configure<WebPubSubOptions>(o => AttachValidator(o));
+            services.Configure(configure);
 
             return services.AddWebPubSubCore();
         }
@@ -73,28 +71,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddSingleton<ServiceRequestHandlerAdapter>()
                 .AddSingleton<WebPubSubMarkerService>()
-                .AddSingleton<WebPubSubServiceClientFactory>();
+                .AddSingleton<WebPubSubServiceClientFactory>()
+                .AddSingleton<RequestValidator>();
 
             var builder = new WebPubSubServerBuilder(services);
             return builder;
-        }
-
-        private static WebPubSubOptions AttachValidator(WebPubSubOptions options)
-        {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            if (options.ServiceEndpoint == null)
-            {
-                options.RequestValidator = new();
-            }
-            else
-            {
-                options.RequestValidator = new RequestValidator(options.ServiceEndpoint);
-            }
-            return options;
         }
     }
 }

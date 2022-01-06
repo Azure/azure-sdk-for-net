@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Azure.WebPubSub.Common;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -17,19 +18,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     {
         private readonly Dictionary<string, string> _hostKeyMappings = new(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Create a default ValidationOptions.
-        /// </summary>
-        public RequestValidator()
-        { }
-
-        /// <summary>
-        /// Init the ValidatoinOptions based on ServiceEndpoint Endpoint and AccessKey.
-        /// </summary>
-        /// <param name="endpoint"></param>
-        public RequestValidator(ServiceEndpoint endpoint)
+        public RequestValidator(IOptions<WebPubSubOptions> options)
         {
-            _hostKeyMappings.Add(endpoint.Endpoint.Host, endpoint.AccessKey);
+            if (options.Value == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+            // add for single endpoint
+            var endpoint = options.Value.ServiceEndpoint;
+            if (endpoint != null)
+            {
+                _hostKeyMappings.Add(endpoint.Endpoint.Host, endpoint.AccessKey);
+            }
         }
 
         public bool IsValidSignature(WebPubSubConnectionContext context)

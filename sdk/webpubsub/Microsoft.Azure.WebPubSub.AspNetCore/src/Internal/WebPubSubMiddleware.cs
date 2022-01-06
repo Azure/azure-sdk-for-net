@@ -13,18 +13,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     {
         private readonly RequestDelegate _next;
         private readonly ServiceRequestHandlerAdapter _handler;
-        private readonly WebPubSubOptions _options;
+        private readonly RequestValidator _requestValidator;
         private readonly ILogger _logger;
 
         public WebPubSubMiddleware(
             RequestDelegate next,
-            IOptions<WebPubSubOptions> options,
             ServiceRequestHandlerAdapter handler,
+            RequestValidator requestValidator,
             ILogger<WebPubSubMiddleware> logger)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _handler = handler ?? throw new ArgumentNullException(nameof(handler));
-            _options = options.Value ?? throw new ArgumentNullException(nameof(options));
+            _requestValidator = requestValidator ?? throw new ArgumentNullException(nameof(requestValidator));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -40,9 +40,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             // Handle Abuse Protection
             if (context.Request.IsPreflightRequest(out var requestOrigins))
             {
-                var validationOptions = _options.RequestValidator;
                 Log.ReceivedAbuseProtectionRequest(_logger);
-                if (validationOptions.IsValidOrigin(requestOrigins))
+                if (_requestValidator.IsValidOrigin(requestOrigins))
                 {
                     context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                 }
