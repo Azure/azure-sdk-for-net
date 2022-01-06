@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -500,6 +501,7 @@ namespace Azure.Data.Tables.Tests
             var actualSas = client.GenerateSasUri(permissions, expires);
 
             Assert.AreEqual("?" + expectedSas, actualSas.Query);
+            CollectionAssert.Contains(actualSas.Segments, TableName);
         }
 
         [Test]
