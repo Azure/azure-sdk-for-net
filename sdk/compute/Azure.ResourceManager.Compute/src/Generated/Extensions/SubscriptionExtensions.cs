@@ -26,30 +26,34 @@ namespace Azure.ResourceManager.Compute
         #region VirtualMachineExtensionImage
         /// <summary> Gets an object representing a VirtualMachineExtensionImageCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="publisherName"> The String to use. </param>
         /// <returns> Returns a <see cref="VirtualMachineExtensionImageCollection" /> object. </returns>
-        public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this Subscription subscription)
+        public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this Subscription subscription, string location, string publisherName)
         {
-            return new VirtualMachineExtensionImageCollection(subscription);
+            return new VirtualMachineExtensionImageCollection(subscription, location, publisherName);
         }
         #endregion
 
         #region OSVersion
         /// <summary> Gets an object representing a OSVersionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <returns> Returns a <see cref="OSVersionCollection" /> object. </returns>
-        public static OSVersionCollection GetOSVersions(this Subscription subscription)
+        public static OSVersionCollection GetOSVersions(this Subscription subscription, string location)
         {
-            return new OSVersionCollection(subscription);
+            return new OSVersionCollection(subscription, location);
         }
         #endregion
 
         #region OSFamily
         /// <summary> Gets an object representing a OSFamilyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <returns> Returns a <see cref="OSFamilyCollection" /> object. </returns>
-        public static OSFamilyCollection GetOSFamilies(this Subscription subscription)
+        public static OSFamilyCollection GetOSFamilies(this Subscription subscription, string location)
         {
-            return new OSFamilyCollection(subscription);
+            return new OSFamilyCollection(subscription, location);
         }
         #endregion
 

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +22,14 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of LongTermRetentionBackup and their operations over its parent. </summary>
-    public partial class ResourceGroupLongTermRetentionBackupCollection : ArmCollection
+    public partial class ResourceGroupLongTermRetentionBackupCollection : ArmCollection, IEnumerable<ResourceGroupLongTermRetentionBackup>, IAsyncEnumerable<ResourceGroupLongTermRetentionBackup>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LongTermRetentionBackupsRestOperations _longTermRetentionBackupsRestClient;
+        private readonly string _locationName;
+        private readonly string _longTermRetentionServerName;
+        private readonly string _longTermRetentionDatabaseName;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupLongTermRetentionBackupCollection"/> class for mocking. </summary>
         protected ResourceGroupLongTermRetentionBackupCollection()
@@ -32,10 +38,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of ResourceGroupLongTermRetentionBackupCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ResourceGroupLongTermRetentionBackupCollection(ArmResource parent) : base(parent)
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        internal ResourceGroupLongTermRetentionBackupCollection(ArmResource parent, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _longTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _locationName = locationName;
+            _longTermRetentionServerName = longTermRetentionServerName;
+            _longTermRetentionDatabaseName = longTermRetentionDatabaseName;
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -47,26 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_GetByResourceGroup
         /// <summary> Gets a long term retention backup. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public virtual Response<ResourceGroupLongTermRetentionBackup> Get(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        public virtual Response<ResourceGroupLongTermRetentionBackup> Get(string backupName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
             if (backupName == null)
             {
                 throw new ArgumentNullException(nameof(backupName));
@@ -76,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _longTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
+                var response = _longTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupLongTermRetentionBackup(Parent, response.Value), response.GetRawResponse());
@@ -92,26 +89,11 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_GetByResourceGroup
         /// <summary> Gets a long term retention backup. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroupLongTermRetentionBackup>> GetAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        public async virtual Task<Response<ResourceGroupLongTermRetentionBackup>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
             if (backupName == null)
             {
                 throw new ArgumentNullException(nameof(backupName));
@@ -121,7 +103,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _longTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
+                var response = await _longTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroupLongTermRetentionBackup(Parent, response.Value), response.GetRawResponse());
@@ -134,26 +116,11 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public virtual Response<ResourceGroupLongTermRetentionBackup> GetIfExists(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        public virtual Response<ResourceGroupLongTermRetentionBackup> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
             if (backupName == null)
             {
                 throw new ArgumentNullException(nameof(backupName));
@@ -163,7 +130,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _longTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken);
+                var response = _longTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ResourceGroupLongTermRetentionBackup>(null, response.GetRawResponse())
                     : Response.FromValue(new ResourceGroupLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
@@ -176,26 +143,11 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroupLongTermRetentionBackup>> GetIfExistsAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        public async virtual Task<Response<ResourceGroupLongTermRetentionBackup>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
             if (backupName == null)
             {
                 throw new ArgumentNullException(nameof(backupName));
@@ -205,7 +157,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _longTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _longTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ResourceGroupLongTermRetentionBackup>(null, response.GetRawResponse())
                     : Response.FromValue(new ResourceGroupLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
@@ -218,26 +170,11 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public virtual Response<bool> Exists(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
             if (backupName == null)
             {
                 throw new ArgumentNullException(nameof(backupName));
@@ -247,7 +184,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken);
+                var response = GetIfExists(backupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -258,26 +195,11 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
             if (backupName == null)
             {
                 throw new ArgumentNullException(nameof(backupName));
@@ -287,7 +209,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await GetIfExistsAsync(backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,35 +223,19 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_ListByResourceGroupDatabase
         /// <summary> Lists all long term retention backups for a database. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGroupLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroupLongTermRetentionBackup> GetAll(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGroupLongTermRetentionBackup> GetAll(bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-
             Page<ResourceGroupLongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _longTermRetentionBackupsRestClient.ListByResourceGroupDatabase(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                    var response = _longTermRetentionBackupsRestClient.ListByResourceGroupDatabase(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +250,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _longTermRetentionBackupsRestClient.ListByResourceGroupDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
+                    var response = _longTermRetentionBackupsRestClient.ListByResourceGroupDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -360,35 +266,19 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: LongTermRetentionBackups_ListByResourceGroupDatabase
         /// <summary> Lists all long term retention backups for a database. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGroupLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGroupLongTermRetentionBackup> GetAllAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGroupLongTermRetentionBackup> GetAllAsync(bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-
             async Task<Page<ResourceGroupLongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _longTermRetentionBackupsRestClient.ListByResourceGroupDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _longTermRetentionBackupsRestClient.ListByResourceGroupDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -403,7 +293,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _longTermRetentionBackupsRestClient.ListByResourceGroupDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _longTermRetentionBackupsRestClient.ListByResourceGroupDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -459,6 +349,21 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ResourceGroupLongTermRetentionBackup> IEnumerable<ResourceGroupLongTermRetentionBackup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ResourceGroupLongTermRetentionBackup> IAsyncEnumerable<ResourceGroupLongTermRetentionBackup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

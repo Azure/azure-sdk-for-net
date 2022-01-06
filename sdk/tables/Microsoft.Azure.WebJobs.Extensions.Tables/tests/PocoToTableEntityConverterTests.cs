@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         public void Create_ReturnsInstance()
         {
             // Act
-            IConverter<Poco, TableEntity> converter = new PocoToTableEntityConverter<Poco>();
+            PocoToTableEntityConverter<Poco> converter = new PocoToTableEntityConverter<Poco>();
             // Assert
             Assert.NotNull(converter);
         }
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Assert
             var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonStringPartitionKey>());
 
-            Assert.AreEqual("If the PartitionKey property is present, it must be a String.", exception.Message);
+            Assert.AreEqual("If the PartitionKey property is present, it must be a System.String.", exception.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Assert
             var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonStringRowKey>());
 
-            Assert.AreEqual("If the RowKey property is present, it must be a String.", exception.Message);
+            Assert.AreEqual("If the RowKey property is present, it must be a System.String.", exception.Message);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Assert
             var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonDateTimeOffsetTimestamp>());
 
-            Assert.AreEqual("If the Timestamp property is present, it must be a DateTimeOffset.", exception.Message);
+            Assert.AreEqual("If the Timestamp property is present, it must be a System.DateTimeOffset or System.Nullable`1[System.DateTimeOffset].", exception.Message);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Assert
             var exception = Assert.Throws<InvalidOperationException>(() => new PocoToTableEntityConverter<PocoWithNonStringETag>());
 
-            Assert.AreEqual("If the ETag property is present, it must be a String.", exception.Message);
+            Assert.AreEqual("If the ETag property is present, it must be a System.String or Azure.ETag.", exception.Message);
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         public void Convert_IfInputIsNull_ReturnsNull()
         {
             // Arrange
-            IConverter<Poco, TableEntity> product = CreateProductUnderTest<Poco>();
+            PocoToTableEntityConverter<Poco> product = CreateProductUnderTest<Poco>();
             Poco input = null;
             // Act
             TableEntity actual = product.Convert(input);
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPartitionKey, TableEntity> product = CreateProductUnderTest<PocoWithPartitionKey>();
+            var product = CreateProductUnderTest<PocoWithPartitionKey>();
             PocoWithPartitionKey input = new PocoWithPartitionKey
             {
                 PartitionKey = expectedPartitionKey
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithReadOnlyPartitionKey, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithReadOnlyPartitionKey>();
             PocoWithReadOnlyPartitionKey input = new PocoWithReadOnlyPartitionKey
             {
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPartitionKey, TableEntity> product = CreateProductUnderTest<PocoWithPartitionKey>();
+            var product = CreateProductUnderTest<PocoWithPartitionKey>();
             PocoWithPartitionKey input = new PocoWithPartitionKey
             {
                 PartitionKey = expectedPartitionKey
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithPrivatePartitionKey, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivatePartitionKey>();
             PocoWithPrivatePartitionKey input = new PocoWithPrivatePartitionKey
             {
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithPrivatePartitionKeyGetter, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivatePartitionKeyGetter>();
             PocoWithPrivatePartitionKeyGetter input = new PocoWithPrivatePartitionKeyGetter
             {
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithStaticPartitionKey, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithStaticPartitionKey>();
             PocoWithStaticPartitionKey.PartitionKey = "UnexpectedPK";
             PocoWithStaticPartitionKey input = new PocoWithStaticPartitionKey
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithWriteOnlyPartitionKey, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithWriteOnlyPartitionKey>();
             PocoWithWriteOnlyPartitionKey input = new PocoWithWriteOnlyPartitionKey
             {
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithRowKey, TableEntity> product = CreateProductUnderTest<PocoWithRowKey>();
+            var product = CreateProductUnderTest<PocoWithRowKey>();
             PocoWithRowKey input = new PocoWithRowKey
             {
                 RowKey = expectedRowKey
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithReadOnlyRowKey, TableEntity> product = CreateProductUnderTest<PocoWithReadOnlyRowKey>();
+            var product = CreateProductUnderTest<PocoWithReadOnlyRowKey>();
             PocoWithReadOnlyRowKey input = new PocoWithReadOnlyRowKey
             {
                 WriteRowKey = expectedRowKey
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedRowKey = "RK";
-            IConverter<PocoWithRowKey, TableEntity> product = CreateProductUnderTest<PocoWithRowKey>();
+            var product = CreateProductUnderTest<PocoWithRowKey>();
             PocoWithRowKey input = new PocoWithRowKey
             {
                 RowKey = expectedRowKey
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateRowKey, TableEntity> product = CreateProductUnderTest<PocoWithPrivateRowKey>();
+            var product = CreateProductUnderTest<PocoWithPrivateRowKey>();
             PocoWithPrivateRowKey input = new PocoWithPrivateRowKey
             {
                 PartitionKey = expectedPartitionKey,
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateRowKeyGetter, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivateRowKeyGetter>();
             PocoWithPrivateRowKeyGetter input = new PocoWithPrivateRowKeyGetter
             {
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticRowKey, TableEntity> product = CreateProductUnderTest<PocoWithStaticRowKey>();
+            var product = CreateProductUnderTest<PocoWithStaticRowKey>();
             PocoWithStaticRowKey.RowKey = "UnexpectedRK";
             PocoWithStaticRowKey input = new PocoWithStaticRowKey
             {
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyRowKey, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithWriteOnlyRowKey>();
             PocoWithWriteOnlyRowKey input = new PocoWithWriteOnlyRowKey
             {
@@ -376,7 +376,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             DateTimeOffset expectedTimestamp = DateTimeOffset.Now;
-            IConverter<PocoWithTimestamp, TableEntity> product = CreateProductUnderTest<PocoWithTimestamp>();
+            var product = CreateProductUnderTest<PocoWithTimestamp>();
             PocoWithTimestamp input = new PocoWithTimestamp
             {
                 Timestamp = expectedTimestamp
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             DateTimeOffset expectedTimestamp = DateTimeOffset.Now;
-            IConverter<PocoWithReadOnlyTimestamp, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithReadOnlyTimestamp>();
             PocoWithReadOnlyTimestamp input = new PocoWithReadOnlyTimestamp
             {
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             DateTimeOffset expectedTimestamp = DateTimeOffset.Now;
-            IConverter<PocoWithTimestamp, TableEntity> product = CreateProductUnderTest<PocoWithTimestamp>();
+            var product = CreateProductUnderTest<PocoWithTimestamp>();
             PocoWithTimestamp input = new PocoWithTimestamp
             {
                 Timestamp = expectedTimestamp
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateTimestamp, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivateTimestamp>();
             PocoWithPrivateTimestamp input = new PocoWithPrivateTimestamp
             {
@@ -454,7 +454,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateTimestampGetter, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivateTimestampGetter>();
             PocoWithPrivateTimestampGetter input = new PocoWithPrivateTimestampGetter
             {
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticTimestamp, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithStaticTimestamp>();
             PocoWithStaticTimestamp.Timestamp = DateTimeOffset.Now;
             PocoWithStaticTimestamp input = new PocoWithStaticTimestamp
@@ -494,7 +494,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyTimestamp, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithWriteOnlyTimestamp>();
             PocoWithWriteOnlyTimestamp input = new PocoWithWriteOnlyTimestamp
             {
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             string expectedETag = "abc";
-            IConverter<PocoWithETag, TableEntity> product = CreateProductUnderTest<PocoWithETag>();
+            var product = CreateProductUnderTest<PocoWithETag>();
             PocoWithETag input = new PocoWithETag
             {
                 ETag = expectedETag
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             string expectedETag = "abc";
-            IConverter<PocoWithReadOnlyETag, TableEntity> product = CreateProductUnderTest<PocoWithReadOnlyETag>();
+            var product = CreateProductUnderTest<PocoWithReadOnlyETag>();
             PocoWithReadOnlyETag input = new PocoWithReadOnlyETag
             {
                 WriteETag = expectedETag
@@ -548,7 +548,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedETag = "RK";
-            IConverter<PocoWithETag, TableEntity> product = CreateProductUnderTest<PocoWithETag>();
+            var product = CreateProductUnderTest<PocoWithETag>();
             PocoWithETag input = new PocoWithETag
             {
                 ETag = expectedETag
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateETag, TableEntity> product = CreateProductUnderTest<PocoWithPrivateETag>();
+            var product = CreateProductUnderTest<PocoWithPrivateETag>();
             PocoWithPrivateETag input = new PocoWithPrivateETag
             {
                 PartitionKey = expectedPartitionKey,
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateETagGetter, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivateETagGetter>();
             PocoWithPrivateETagGetter input = new PocoWithPrivateETagGetter
             {
@@ -606,7 +606,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticETag, TableEntity> product = CreateProductUnderTest<PocoWithStaticETag>();
+            var product = CreateProductUnderTest<PocoWithStaticETag>();
             PocoWithStaticETag.ETag = "UnexpectedETag";
             PocoWithStaticETag input = new PocoWithStaticETag
             {
@@ -625,7 +625,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyETag, TableEntity> product = CreateProductUnderTest<PocoWithWriteOnlyETag>();
+            var product = CreateProductUnderTest<PocoWithWriteOnlyETag>();
             PocoWithWriteOnlyETag input = new PocoWithWriteOnlyETag
             {
                 PartitionKey = expectedPartitionKey,
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             int? expectedOtherProperty = 123;
-            IConverter<PocoWithOtherProperty, TableEntity> product = CreateProductUnderTest<PocoWithOtherProperty>();
+            var product = CreateProductUnderTest<PocoWithOtherProperty>();
             PocoWithOtherProperty input = new PocoWithOtherProperty
             {
                 OtherProperty = expectedOtherProperty
@@ -665,7 +665,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             int? expectedOtherProperty = 123;
-            IConverter<PocoWithReadOnlyOtherProperty, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithReadOnlyOtherProperty>();
             PocoWithReadOnlyOtherProperty input = new PocoWithReadOnlyOtherProperty
             {
@@ -687,7 +687,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateOtherProperty, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivateOtherProperty>();
             PocoWithPrivateOtherProperty input = new PocoWithPrivateOtherProperty
             {
@@ -708,7 +708,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithPrivateOtherPropertyGetter, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithPrivateOtherPropertyGetter>();
             PocoWithPrivateOtherPropertyGetter input = new PocoWithPrivateOtherPropertyGetter
             {
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithStaticOtherProperty, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithStaticOtherProperty>();
             PocoWithStaticOtherProperty.OtherProperty = 456;
             PocoWithStaticOtherProperty input = new PocoWithStaticOtherProperty
@@ -750,7 +750,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithWriteOnlyOtherProperty, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithWriteOnlyOtherProperty>();
             PocoWithWriteOnlyOtherProperty input = new PocoWithWriteOnlyOtherProperty
             {
@@ -771,7 +771,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             const string expectedPartitionKey = "PK";
-            IConverter<PocoWithIndexerOtherProperty, TableEntity> product =
+            var product =
                 CreateProductUnderTest<PocoWithIndexerOtherProperty>();
             PocoWithIndexerOtherProperty input = new PocoWithIndexerOtherProperty
             {
@@ -784,72 +784,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.NotNull(actual);
             Assert.False(actual.ContainsKey("OtherProperty"));
             Assert.AreSame(expectedPartitionKey, actual.PartitionKey);
-        }
-
-        [Test]
-        public void ConvertsPartitionKey_IfPocoHasPartitionKeyProperty_ReturnsTrue()
-        {
-            // Arrange
-            PocoToTableEntityConverter<PocoWithPartitionKey> product = CreateProductUnderTest<PocoWithPartitionKey>();
-            // Act
-            bool convertsPartitionKey = product.ConvertsPartitionKey;
-            // Assert
-            Assert.True(convertsPartitionKey);
-        }
-
-        [Test]
-        public void ConvertsPartitionKey_IfPocoDoesNotHavePartitionKeyProperty_ReturnsFalse()
-        {
-            // Arrange
-            PocoToTableEntityConverter<Poco> product = CreateProductUnderTest<Poco>();
-            // Act
-            bool convertsPartitionKey = product.ConvertsPartitionKey;
-            // Assert
-            Assert.False(convertsPartitionKey);
-        }
-
-        [Test]
-        public void ConvertsRowKey_IfPocoHasRowKeyProperty_ReturnsTrue()
-        {
-            // Arrange
-            PocoToTableEntityConverter<PocoWithRowKey> product = CreateProductUnderTest<PocoWithRowKey>();
-            // Act
-            bool convertsRowKey = product.ConvertsRowKey;
-            // Assert
-            Assert.True(convertsRowKey);
-        }
-
-        [Test]
-        public void ConvertsRowKey_IfPocoDoesNotHaveRowKeyProperty_ReturnsFalse()
-        {
-            // Arrange
-            PocoToTableEntityConverter<Poco> product = CreateProductUnderTest<Poco>();
-            // Act
-            bool convertsRowKey = product.ConvertsRowKey;
-            // Assert
-            Assert.False(convertsRowKey);
-        }
-
-        [Test]
-        public void ConvertsETag_IfPocoHasETagProperty_ReturnsTrue()
-        {
-            // Arrange
-            PocoToTableEntityConverter<PocoWithETag> product = CreateProductUnderTest<PocoWithETag>();
-            // Act
-            bool convertsETag = product.ConvertsETag;
-            // Assert
-            Assert.True(convertsETag);
-        }
-
-        [Test]
-        public void ConvertsETag_IfPocoDoesNotHaveETagProperty_ReturnsFalse()
-        {
-            // Arrange
-            PocoToTableEntityConverter<Poco> product = CreateProductUnderTest<Poco>();
-            // Act
-            bool convertsETag = product.ConvertsETag;
-            // Assert
-            Assert.False(convertsETag);
         }
 
         private static PocoToTableEntityConverter<TInput> CreateProductUnderTest<TInput>()

@@ -115,11 +115,12 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
-        "nigiri"
+        "nigiri",
+        "qnas"
       ]
     },
     {
-      "filename": "**/sdk/connectedvmware/**/*",
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
         "Ctlr",
         "Lsilogic",

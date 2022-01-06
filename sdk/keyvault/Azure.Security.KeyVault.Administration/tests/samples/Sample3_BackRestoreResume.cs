@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -14,6 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         { }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task ResumeBackupRestore()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
