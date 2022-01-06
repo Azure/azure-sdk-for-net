@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate if created successfully
             schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
             Assert.NotNull(schemaGroup);
-            Assert.IsTrue(await _schemaGroupCollection.CheckIfExistsAsync(schemaGroupName));
+            Assert.IsTrue(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
 
             //delete eventhub
             await schemaGroup.DeleteAsync();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate
             schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
             Assert.Null(schemaGroup);
-            Assert.IsFalse(await _schemaGroupCollection.CheckIfExistsAsync(schemaGroupName));
+            Assert.IsFalse(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
         }
 
         [Test]

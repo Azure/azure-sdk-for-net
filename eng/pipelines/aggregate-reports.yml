@@ -1,12 +1,3 @@
-resources:
-  pipelines:
-  - pipeline: net-core
-    project: internal
-    source: net - core
-    branch: main
-    tags: 
-    - scheduled
-
 trigger: none
 
 pr:
@@ -31,10 +22,16 @@ stages:
       - job: GenerateReports
         timeoutInMinutes: 120
         steps:
-          - download: net-core
-            artifact: packages
-            patterns: '*'
-            displayName: "Download packages artifacts from 'net - core' pipeline "
+          - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+          - task: PowerShell@2
+            displayName: Download Latest Dev Packages
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/DownloadDevPackages.ps1'
+              arguments: >
+                -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
+                -NupkgFilesDestination 'nupkgFiles'
 
           - pwsh: |
               npx cspell lint `
@@ -53,20 +50,8 @@ stages:
               CheckLinkGuidance: $true
 
           - pwsh: |
-              mkdir "$(System.ArtifactsDirectory)/BuildArtifacts"
-              ls "$(PIPELINE.WORKSPACE)/net-core/packages"
-              Copy-Item -Path "$(PIPELINE.WORKSPACE)/net-core/packages/*" -Destination "$(System.ArtifactsDirectory)/BuildArtifacts"
-            displayName: Create Artifact Directory
-
-          - pwsh: |
-              mkdir '$(System.ArtifactsDirectory)/Packages'
-              Move-Item -Path '$(System.ArtifactsDirectory)/BuildArtifacts/*' -Destination '$(System.ArtifactsDirectory)/Packages/' -Include Azure.*.nupkg -Exclude *.symbols.nupkg
-            displayName: Isolate packages to process
-
-          - pwsh: |
-              mkdir '$(Build.ArtifactStagingDirectory)/reports'
-              Copy-Item -Path '$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html' -Destination '$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html'
-            displayName: Setup reports directory
+              New-Item -Path '$(Build.ArtifactStagingDirectory)' -Name 'reports' -ItemType 'directory'
+            displayName: Create Directory for Aggregate Reports
 
           - task: PowerShell@2
             displayName: Generate Dependency Report
@@ -74,10 +59,10 @@ stages:
               pwsh: true
               filePath: 'eng/scripts/dependencies/AnalyzeDeps.ps1'
               arguments: >
-                -PackagesPath '$(System.ArtifactsDirectory)/Packages/'
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
                 -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
                 -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
-                -DumpPath '$(Build.ArtifactStagingDirectory)/reports/data.js'
+                -DumpPath '$(Build.ArtifactStagingDirectory)/reports'
 
           - task: PowerShell@2
             displayName: 'Generate azure-sdk.deps.json'
@@ -85,7 +70,7 @@ stages:
               pwsh: true
               filePath: 'eng/scripts/dependencies/generate-deps.ps1'
               arguments: >
-                -PackagesPath '$(System.ArtifactsDirectory)/Packages/'
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
                 -DepsOutputFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
                 -ProjectRefPath '$(Build.ArtifactStagingDirectory)/reports'
 
@@ -122,15 +107,27 @@ stages:
               artifactName: reports
               path: '$(Build.ArtifactStagingDirectory)/reports'
 
-          - task: AzureFileCopy@2
-            displayName: 'Upload dependency report'
+          - task: AzureFileCopy@4
+            displayName: 'Upload Dependency Report'
             inputs:
-              sourcePath: '$(Build.ArtifactStagingDirectory)/reports'
+              sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
               azureSubscription: 'Azure SDK Artifacts'
               destination: AzureBlob
               storage: azuresdkartifacts
               containerName: 'azure-sdk-for-net'
               blobPrefix: dependencies
+              AdditionalArgumentsForBlobCopy: '--exclude-pattern=*data.js*'
+
+          - task: AzureFileCopy@4
+            displayName: 'Upload Dependency Graph'
+            inputs:
+              sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
+              azureSubscription: 'Azure SDK Artifacts'
+              destination: AzureBlob
+              storage: azuresdkartifacts
+              containerName: 'azure-sdk-for-net'
+              blobPrefix: dependencies/dependencyGraph
+              AdditionalArgumentsForBlobCopy: '--include-pattern=*data.js*'
 
           - task: PowerShell@2
             displayName: "Verify Repository Resource Refs"

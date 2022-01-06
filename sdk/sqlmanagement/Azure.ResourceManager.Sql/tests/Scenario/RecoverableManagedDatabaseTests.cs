@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string recoverableManagedDatabaseName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(recoverableManagedDatabaseName));
+            Assert.IsTrue(collection.Exists(recoverableManagedDatabaseName));
 
             // 3.Get
             var getRecoverableManagedDatabase = await collection.GetAsync(recoverableManagedDatabaseName);

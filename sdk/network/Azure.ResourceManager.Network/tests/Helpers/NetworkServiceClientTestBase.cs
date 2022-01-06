@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
     public class NetworkServiceClientTestBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
     {
         private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
-        public NetworkServiceClientTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public NetworkServiceClientTestBase(bool isAsync) : base(isAsync)
         {
         }
 
-        public NetworkServiceClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
+        public NetworkServiceClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 
@@ -687,16 +687,16 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getVnetResponse;
         }
 
-        public static string GetChildLbResourceId(string subscriptionId, string resourceGroupName, string lbname, string childResourceType, string childResourceName)
+        public static ResourceIdentifier GetChildLbResourceId(string subscriptionId, string resourceGroupName, string lbname, string childResourceType, string childResourceName)
         {
             return
-                string.Format(
+                new ResourceIdentifier(string.Format(
                     "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/loadBalancers/{2}/{3}/{4}",
                     subscriptionId,
                     resourceGroupName,
                     lbname,
                     childResourceType,
-                    childResourceName);
+                    childResourceName));
         }
 
         protected ApplicationGatewayCollection GetApplicationGatewayCollection(string resourceGroupName)

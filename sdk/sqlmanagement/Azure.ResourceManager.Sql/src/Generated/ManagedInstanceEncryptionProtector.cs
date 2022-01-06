@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstanceEncryptionProtector : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceEncryptionProtector"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string encryptionProtectorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedInstanceEncryptionProtectorsRestOperations _managedInstanceEncryptionProtectorsRestClient;
         private readonly ManagedInstanceEncryptionProtectorData _data;

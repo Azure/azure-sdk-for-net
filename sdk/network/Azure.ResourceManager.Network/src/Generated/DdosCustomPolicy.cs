@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a DdosCustomPolicy along with the instance operations that can be performed on it. </summary>
     public partial class DdosCustomPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DdosCustomPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ddosCustomPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DdosCustomPoliciesRestOperations _ddosCustomPoliciesRestClient;
         private readonly DdosCustomPolicyData _data;

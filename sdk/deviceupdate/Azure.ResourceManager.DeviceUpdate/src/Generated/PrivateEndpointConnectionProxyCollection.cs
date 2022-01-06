@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionProxyId == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionProxyId == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.ExistsAsync");
             scope.Start();
             try
             {

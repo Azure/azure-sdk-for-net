@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string siteName, CancellationToken cancellationToken = default)
         {
             if (siteName == null)
             {
                 throw new ArgumentNullException(nameof(siteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
             if (siteName == null)
             {
                 throw new ArgumentNullException(nameof(siteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.ExistsAsync");
             scope.Start();
             try
             {

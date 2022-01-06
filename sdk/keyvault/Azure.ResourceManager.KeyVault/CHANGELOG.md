@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
 
 ## 1.0.0-beta.4 (2021-12-07)
 
@@ -84,7 +99,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard)));
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard)));
 
 VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
 Vault vault = lro.Value;
@@ -102,6 +117,6 @@ VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Loc
 
 After upgrade:
 ```C# Snippet:Changelog_CreateModel
-VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard));
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```

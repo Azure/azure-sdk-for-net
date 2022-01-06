@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             {
                 Console.WriteLine("eventHub 'foo' exists");
             }
-            if (await eventHubCollection.CheckIfExistsAsync("bar"))
+            if (await eventHubCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("eventHub 'bar' exists");
             }

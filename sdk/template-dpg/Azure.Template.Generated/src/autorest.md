@@ -10,7 +10,7 @@ input-file:
 - $(this-folder)/swagger/swagger.json
 namespace: Azure.Template.Generated
 public-clients: true
-low-level-client: true
+data-plane: true
 security: AADToken
 security-scopes: https://dev.azuresdkgenerated.net/.default
 ```

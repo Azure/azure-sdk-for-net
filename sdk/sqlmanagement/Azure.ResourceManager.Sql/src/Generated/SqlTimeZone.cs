@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a SqlTimeZone along with the instance operations that can be performed on it. </summary>
     public partial class SqlTimeZone : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SqlTimeZone"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string timeZoneId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TimeZonesRestOperations _timeZonesRestClient;
         private readonly SqlTimeZoneData _data;

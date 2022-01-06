@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static ElasticPoolData DeserializeElasticPoolData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             Optional<string> kind = default;
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 Console.WriteLine(managedInstance.Data.Name);
             }
 
-            if (await managedInstanceCollection.CheckIfExistsAsync("bar"))
+            if (await managedInstanceCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("Virtual network 'bar' exists.");
             }

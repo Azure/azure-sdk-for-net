@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (managedInstanceName == null)
             {
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (managedInstanceName == null)
             {
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.ExistsAsync");
             scope.Start();
             try
             {

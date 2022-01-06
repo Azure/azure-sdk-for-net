@@ -2476,6 +2476,7 @@ namespace Azure.Storage.Files.Shares
                             destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2490,6 +2491,7 @@ namespace Azure.Storage.Files.Shares
                             destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
                             cancellationToken: cancellationToken);
                     }

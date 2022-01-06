@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a VirtualWAN along with the instance operations that can be performed on it. </summary>
     public partial class VirtualWAN : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualWAN"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualWANName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualWansRestOperations _virtualWansRestClient;
         private readonly NetworkManagementRestOperations _restClient;

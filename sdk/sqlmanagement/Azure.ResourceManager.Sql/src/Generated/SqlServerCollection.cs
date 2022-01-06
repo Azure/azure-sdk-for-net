@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (serverName == null)
             {
                 throw new ArgumentNullException(nameof(serverName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServerCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlServerCollection.Exists");
             scope.Start();
             try
             {
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (serverName == null)
             {
                 throw new ArgumentNullException(nameof(serverName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServerCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlServerCollection.ExistsAsync");
             scope.Start();
             try
             {

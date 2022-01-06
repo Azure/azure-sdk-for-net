@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetWebPubSubs().CheckIfExists(_webPubSubName))
+            if (_resourceGroup.GetWebPubSubs().Exists(_webPubSubName))
             {
                 var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(_webPubSubName);
                 await webPubSub.Value.DeleteAsync();

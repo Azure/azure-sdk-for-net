@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a FirewallPolicyRuleCollectionGroup along with the instance operations that can be performed on it. </summary>
     public partial class FirewallPolicyRuleCollectionGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="FirewallPolicyRuleCollectionGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly FirewallPolicyRuleCollectionGroupsRestOperations _firewallPolicyRuleCollectionGroupsRestClient;
         private readonly FirewallPolicyRuleCollectionGroupData _data;

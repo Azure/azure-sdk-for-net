@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {

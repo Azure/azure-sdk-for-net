@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServerCommunicationLink along with the instance operations that can be performed on it. </summary>
     public partial class ServerCommunicationLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerCommunicationLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string communicationLinkName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServerCommunicationLinksRestOperations _serverCommunicationLinksRestClient;
         private readonly ServerCommunicationLinkData _data;

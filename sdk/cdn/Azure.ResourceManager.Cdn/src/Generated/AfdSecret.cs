@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a AfdSecret along with the instance operations that can be performed on it. </summary>
     public partial class AfdSecret : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AfdSecret"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string secretName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdSecretsRestOperations _afdSecretsRestClient;
         private readonly AfdSecretData _data;

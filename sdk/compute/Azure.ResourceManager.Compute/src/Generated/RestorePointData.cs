@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
@@ -31,14 +32,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sourceMetadata"> Gets the details of the VM captured at the time of the restore point creation. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the restore point. </param>
         /// <param name="consistencyMode"> Gets the consistency mode for the restore point. Please refer to https://aka.ms/RestorePoints for more details. </param>
-        /// <param name="provisioningDetails"> Gets the provisioning details set by the server during Create restore point operation. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType type, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeTypes? consistencyMode, RestorePointProvisioningDetails provisioningDetails) : base(id, name, type)
+        /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType type, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeTypes? consistencyMode, DateTimeOffset? timeCreated) : base(id, name, type)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
             ProvisioningState = provisioningState;
             ConsistencyMode = consistencyMode;
-            ProvisioningDetails = provisioningDetails;
+            TimeCreated = timeCreated;
         }
 
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </summary>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         public string ProvisioningState { get; }
         /// <summary> Gets the consistency mode for the restore point. Please refer to https://aka.ms/RestorePoints for more details. </summary>
         public ConsistencyModeTypes? ConsistencyMode { get; }
-        /// <summary> Gets the provisioning details set by the server during Create restore point operation. </summary>
-        public RestorePointProvisioningDetails ProvisioningDetails { get; }
+        /// <summary> Gets the creation time of the restore point. </summary>
+        public DateTimeOffset? TimeCreated { get; set; }
     }
 }

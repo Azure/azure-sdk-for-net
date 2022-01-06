@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkProfileName == null)
             {
                 throw new ArgumentNullException(nameof(networkProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (networkProfileName == null)
             {
                 throw new ArgumentNullException(nameof(networkProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.ExistsAsync");
             scope.Start();
             try
             {

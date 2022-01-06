@@ -15,6 +15,7 @@ namespace Azure.Identity.Tests
     {
         public IdentityRecordedTestSanitizer()
         {
+            SanitizedHeaders.Add("secret");
             AddJsonPathSanitizer("$..refresh_token");
             AddJsonPathSanitizer("$..access_token");
         }

@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {

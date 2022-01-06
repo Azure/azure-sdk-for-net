@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteSlotDiagnosticAnalysis along with the instance operations that can be performed on it. </summary>
     public partial class SiteSlotDiagnosticAnalysis : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotDiagnosticAnalysis"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string slot, string diagnosticCategory, string analysisName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticsRestOperations _diagnosticsRestClient;
         private readonly AnalysisDefinitionData _data;

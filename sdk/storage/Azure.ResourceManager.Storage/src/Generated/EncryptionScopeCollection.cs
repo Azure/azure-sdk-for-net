@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             if (encryptionScopeName == null)
             {
                 throw new ArgumentNullException(nameof(encryptionScopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             if (encryptionScopeName == null)
             {
                 throw new ArgumentNullException(nameof(encryptionScopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.ExistsAsync");
             scope.Start();
             try
             {

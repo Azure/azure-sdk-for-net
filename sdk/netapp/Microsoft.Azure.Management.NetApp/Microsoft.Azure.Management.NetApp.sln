@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.NetApp", "src\Microsoft.Azure.Management.NetApp.csproj", "{7A7F0988-3199-4454-B75B-461D991788DA}"
 EndProject
@@ -25,7 +25,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6F6B0812-D86C-4668-AFB8-2FB70CD52581}
 		SolutionGuid = {AEBFD32C-E839-462C-9E20-0F6423C582B7}
 	EndGlobalSection
 EndGlobal

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// class.
         /// </summary>
         /// <param name="alerts">Alerts data type connection.</param>
-        public AlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts = default(DataConnectorDataTypeCommon))
+        public AlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts)
         {
             Alerts = alerts;
             CustomInit();
@@ -49,5 +50,22 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "alerts")]
         public DataConnectorDataTypeCommon Alerts { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Alerts == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Alerts");
+            }
+            if (Alerts != null)
+            {
+                Alerts.Validate();
+            }
+        }
     }
 }

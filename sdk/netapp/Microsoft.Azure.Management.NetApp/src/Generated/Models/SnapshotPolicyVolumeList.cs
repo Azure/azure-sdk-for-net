@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the SnapshotPolicyVolumeList class.
         /// </summary>
         /// <param name="value">List of volumes</param>
-        public SnapshotPolicyVolumeList(IList<object> value = default(IList<object>))
+        public SnapshotPolicyVolumeList(IList<Volume> value = default(IList<Volume>))
         {
             Value = value;
             CustomInit();
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets list of volumes
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<object> Value { get; set; }
+        public IList<Volume> Value { get; set; }
 
     }
 }

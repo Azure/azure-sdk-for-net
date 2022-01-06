@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A Class representing a DeletedManagedHsm along with the instance operations that can be performed on it. </summary>
     public partial class DeletedManagedHsm : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DeletedManagedHsm"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedHsmsRestOperations _managedHsmsRestClient;
         private readonly DeletedManagedHsmData _data;

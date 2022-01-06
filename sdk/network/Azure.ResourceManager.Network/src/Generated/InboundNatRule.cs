@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a InboundNatRule along with the instance operations that can be performed on it. </summary>
     public partial class InboundNatRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="InboundNatRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string inboundNatRuleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly InboundNatRulesRestOperations _inboundNatRulesRestClient;
         private readonly InboundNatRuleData _data;

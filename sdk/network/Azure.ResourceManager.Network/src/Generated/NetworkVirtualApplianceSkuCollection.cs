@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string skuName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string skuName, CancellationToken cancellationToken = default)
         {
             if (skuName == null)
             {
                 throw new ArgumentNullException(nameof(skuName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();
             try
             {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
             if (skuName == null)
             {
                 throw new ArgumentNullException(nameof(skuName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, collection.Data.Options.Throughput);
 
-            bool ifExists = await MongoDBCollectionCollection.CheckIfExistsAsync(_collectionName);
+            bool ifExists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
             Assert.True(ifExists);
 
             // NOT WORKING API

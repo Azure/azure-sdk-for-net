@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string tableName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TableCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("TableCollection.Exists");
             scope.Start();
             try
             {
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TableCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TableCollection.ExistsAsync");
             scope.Start();
             try
             {

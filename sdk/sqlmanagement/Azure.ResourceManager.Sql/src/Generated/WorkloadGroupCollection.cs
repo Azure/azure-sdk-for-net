@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string workloadGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string workloadGroupName, CancellationToken cancellationToken = default)
         {
             if (workloadGroupName == null)
             {
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string workloadGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
             if (workloadGroupName == null)
             {
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

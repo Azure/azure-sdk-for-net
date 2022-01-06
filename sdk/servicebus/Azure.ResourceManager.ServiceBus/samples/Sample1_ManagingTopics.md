@@ -70,7 +70,7 @@ if (serviceBusTopic != null)
 {
     Console.WriteLine("topic 'foo' exists");
 }
-if (await serviceBusTopicCollection.CheckIfExistsAsync("bar"))
+if (await serviceBusTopicCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("topic 'bar' exists");
 }

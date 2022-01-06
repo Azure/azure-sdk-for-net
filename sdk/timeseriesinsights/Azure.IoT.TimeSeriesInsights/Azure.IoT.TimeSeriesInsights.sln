@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSeriesInsightsClientSample", "samples\TimeSeriesInsightsClientSample\TimeSeriesInsightsClientSample.csproj", "{D243481B-0944-4F60-9B1F-35EDFC7769BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{7FE9FA2F-7793-4EB9-B8D0-26696536508B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

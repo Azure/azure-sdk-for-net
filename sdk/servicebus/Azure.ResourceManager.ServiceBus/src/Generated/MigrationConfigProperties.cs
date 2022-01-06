@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A Class representing a MigrationConfigProperties along with the instance operations that can be performed on it. </summary>
     public partial class MigrationConfigProperties : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="MigrationConfigProperties"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string configName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MigrationConfigsRestOperations _migrationConfigsRestClient;
         private readonly MigrationConfigPropertiesData _data;

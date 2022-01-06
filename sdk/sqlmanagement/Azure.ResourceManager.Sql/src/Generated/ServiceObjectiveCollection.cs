@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
             if (serviceObjectiveName == null)
             {
                 throw new ArgumentNullException(nameof(serviceObjectiveName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
             if (serviceObjectiveName == null)
             {
                 throw new ArgumentNullException(nameof(serviceObjectiveName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.ExistsAsync");
             scope.Start();
             try
             {

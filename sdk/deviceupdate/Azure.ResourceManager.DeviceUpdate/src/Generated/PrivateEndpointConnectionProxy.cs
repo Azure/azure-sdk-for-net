@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A Class representing a PrivateEndpointConnectionProxy along with the instance operations that can be performed on it. </summary>
     public partial class PrivateEndpointConnectionProxy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PrivateEndpointConnectionProxy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateEndpointConnectionProxiesRestOperations _privateEndpointConnectionProxiesRestClient;
         private readonly PrivateEndpointConnectionProxyData _data;

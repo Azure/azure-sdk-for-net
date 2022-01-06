@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 1.CheckIfExist
             string virtualClusterName = (await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync()).FirstOrDefault().Data.Name;
-            Assert.IsTrue(_resourceGroup.GetVirtualClusters().CheckIfExists(virtualClusterName));
-            Assert.IsFalse(_resourceGroup.GetVirtualClusters().CheckIfExists(virtualClusterName + "0"));
+            Assert.IsTrue(_resourceGroup.GetVirtualClusters().Exists(virtualClusterName));
+            Assert.IsFalse(_resourceGroup.GetVirtualClusters().Exists(virtualClusterName + "0"));
 
             // 2.Get
             var getVirtualCluster = await _resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName);

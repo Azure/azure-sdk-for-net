@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure", "..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{E772769A-7CE1-4FBC-A084-C0936EB2C766}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{FD65B96F-855A-495C-AA82-03402336E96C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{E772769A-7CE1-4FBC-A084-C0936EB2C766}.Release|x64.Build.0 = Release|Any CPU
 		{E772769A-7CE1-4FBC-A084-C0936EB2C766}.Release|x86.ActiveCfg = Release|Any CPU
 		{E772769A-7CE1-4FBC-A084-C0936EB2C766}.Release|x86.Build.0 = Release|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Debug|x64.Build.0 = Debug|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Debug|x86.Build.0 = Debug|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Release|x64.ActiveCfg = Release|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Release|x64.Build.0 = Release|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Release|x86.ActiveCfg = Release|Any CPU
+		{FD65B96F-855A-495C-AA82-03402336E96C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
-                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.RootResourceIdentifier.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
+                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager
             var genericResourceOperations = new ChangeTrackingList<GenericResource>();
             foreach (string id in ids)
             {
-                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), id));
+                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), new ResourceIdentifier(id)));
             }
             return genericResourceOperations;
         }

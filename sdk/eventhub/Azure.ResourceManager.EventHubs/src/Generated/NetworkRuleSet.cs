@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A Class representing a NetworkRuleSet along with the instance operations that can be performed on it. </summary>
     public partial class NetworkRuleSet : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NetworkRuleSet"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
         private readonly NetworkRuleSetData _data;

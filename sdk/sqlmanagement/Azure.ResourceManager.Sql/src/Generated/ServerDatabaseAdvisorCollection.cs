@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string advisorName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string advisorName, CancellationToken cancellationToken = default)
         {
             if (advisorName == null)
             {
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.Exists");
             scope.Start();
             try
             {
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
             if (advisorName == null)
             {
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteSlotInstance along with the instance operations that can be performed on it. </summary>
     public partial class SiteSlotInstance : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotInstance"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly WebSiteInstanceStatusData _data;
@@ -147,11 +153,11 @@ namespace Azure.ResourceManager.AppService
 
         #region SiteSlotInstanceExtension
 
-        /// <summary> Gets a collection of SiteSlotInstanceExtensions in the SiteSlotInstance. </summary>
-        /// <returns> An object representing collection of SiteSlotInstanceExtensions and their operations over a SiteSlotInstance. </returns>
-        public SiteSlotInstanceExtensionCollection GetSiteSlotInstanceExtensions()
+        /// <summary> Gets an object representing a SiteSlotInstanceExtension along with the instance operations that can be performed on it in the SiteSlotInstance. </summary>
+        /// <returns> Returns a <see cref="SiteSlotInstanceExtension" /> object. </returns>
+        public SiteSlotInstanceExtension GetSiteSlotInstanceExtension()
         {
-            return new SiteSlotInstanceExtensionCollection(this);
+            return new SiteSlotInstanceExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
         #endregion
 

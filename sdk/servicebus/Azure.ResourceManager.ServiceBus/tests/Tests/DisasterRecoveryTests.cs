@@ -18,25 +18,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public DisasterRecoveryTests(bool isAsync) : base(isAsync)
         {
         }
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
-                List<ServiceBusNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (ServiceBusNamespace serviceBusNamespace in namespaceList)
-                {
-                    await serviceBusNamespace.DeleteAsync();
-                }
-                _resourceGroup = null;
-            }
-        }
         [Test]
         [RecordedTest]
         public async Task CreateGetUpdateDeleteDisasterRecovery()
         {
+            IgnoreTestInLiveMode();
             _resourceGroup = await CreateResourceGroupAsync();
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");

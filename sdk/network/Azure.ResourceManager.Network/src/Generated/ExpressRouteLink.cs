@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ExpressRouteLink along with the instance operations that can be performed on it. </summary>
     public partial class ExpressRouteLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ExpressRouteLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRoutePortName, string linkName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteLinksRestOperations _expressRouteLinksRestClient;
         private readonly ExpressRouteLinkData _data;

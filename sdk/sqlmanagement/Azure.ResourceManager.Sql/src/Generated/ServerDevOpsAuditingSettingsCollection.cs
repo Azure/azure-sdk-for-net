@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
             if (devOpsAuditingSettingsName == null)
             {
                 throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
             if (devOpsAuditingSettingsName == null)
             {
                 throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.ExistsAsync");
             scope.Start();
             try
             {

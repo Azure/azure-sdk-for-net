@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a IpAllocation along with the instance operations that can be performed on it. </summary>
     public partial class IpAllocation : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="IpAllocation"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ipAllocationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly IpAllocationsRestOperations _ipAllocationsRestClient;
         private readonly IpAllocationData _data;
