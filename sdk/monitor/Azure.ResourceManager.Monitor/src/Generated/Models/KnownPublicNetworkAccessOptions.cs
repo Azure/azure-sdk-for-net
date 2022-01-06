@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
-    public readonly partial struct KnownPublicNetworkAccessOptions : IEquatable<KnownPublicNetworkAccessOptions>
+    internal readonly partial struct KnownPublicNetworkAccessOptions : IEquatable<KnownPublicNetworkAccessOptions>
     {
         private readonly string _value;
 

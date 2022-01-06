@@ -13,6 +13,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
+#   naming:
+#     override:
+#       DataCollectionEndpoint: DataCollectionEndpointProperties
 
 mgmt-debug:
   show-request-path: true
@@ -60,9 +63,24 @@ directive:
   - rename-model:
       from: AutoscaleSettingResource
       to: AutoscaleSetting
-  - rename-model:
-      from: DataCollectionEndpoint
-      to: DataCollectionEndpointProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionEndpointResource.properties.properties
+    transform:  >
+        $ = {
+          "description": "Resource properties.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DataCollectionEndpoint"
+            }
+          ],
+          "x-ms-client-flatten": false
+        }
+#   - rename-model:
+#       from: DataCollectionEndpoint
+#       to: DataCollectionEndpointProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionEndpoint
+    transform: $["x-ms-client-name"] = "DataCollectionEndpointProperties"
   - rename-model:
       from: DataCollectionEndpointResource
       to: DataCollectionEndpoint

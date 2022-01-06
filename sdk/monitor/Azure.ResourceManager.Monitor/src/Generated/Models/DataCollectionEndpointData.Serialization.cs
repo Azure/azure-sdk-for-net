@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
@@ -35,39 +40,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(ImmutableId))
-            {
-                writer.WritePropertyName("immutableId");
-                writer.WriteStringValue(ImmutableId);
-            }
-            if (Optional.IsDefined(ConfigurationAccess))
-            {
-                writer.WritePropertyName("configurationAccess");
-                writer.WriteObjectValue(ConfigurationAccess);
-            }
-            if (Optional.IsDefined(LogsIngestion))
-            {
-                writer.WritePropertyName("logsIngestion");
-                writer.WriteObjectValue(LogsIngestion);
-            }
-            if (Optional.IsDefined(NetworkAcls))
-            {
-                writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkAcls);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element)
         {
+            Optional<DataCollectionEndpointProperties> properties = default;
             Optional<KnownDataCollectionEndpointResourceKind> kind = default;
             Optional<string> etag = default;
             Optional<SystemData> systemData = default;
@@ -76,14 +54,18 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> description = default;
-            Optional<string> immutableId = default;
-            Optional<DataCollectionEndpointPropertiesConfigurationAccess> configurationAccess = default;
-            Optional<DataCollectionEndpointPropertiesLogsIngestion> logsIngestion = default;
-            Optional<DataCollectionEndpointPropertiesNetworkAcls> networkAcls = default;
-            Optional<KnownDataCollectionEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = DataCollectionEndpointProperties.DeserializeDataCollectionEndpointProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -139,70 +121,8 @@ namespace Azure.ResourceManager.Monitor
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("immutableId"))
-                        {
-                            immutableId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationAccess"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            configurationAccess = DataCollectionEndpointPropertiesConfigurationAccess.DeserializeDataCollectionEndpointPropertiesConfigurationAccess(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("logsIngestion"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            logsIngestion = DataCollectionEndpointPropertiesLogsIngestion.DeserializeDataCollectionEndpointPropertiesLogsIngestion(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkAcls"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            networkAcls = DataCollectionEndpointPropertiesNetworkAcls.DeserializeDataCollectionEndpointPropertiesNetworkAcls(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new KnownDataCollectionEndpointProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataCollectionEndpointData(id, name, type, tags, location, Optional.ToNullable(kind), etag.Value, systemData, description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState));
+            return new DataCollectionEndpointData(id, name, type, tags, location, properties.Value, Optional.ToNullable(kind), etag.Value, systemData);
         }
     }
 }
