@@ -12,6 +12,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.ServiceBus.Tests.Helpers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create namespace with standard
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
-            ServiceBusNamespaceData createParameters2 = new ServiceBusNamespaceData(Location.EastUS);
+            ServiceBusNamespaceData createParameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS);
             createParameters2.Sku = new ServiceBusSku(SkuName.Standard)
             {
                 Tier = SkuTier.Standard
