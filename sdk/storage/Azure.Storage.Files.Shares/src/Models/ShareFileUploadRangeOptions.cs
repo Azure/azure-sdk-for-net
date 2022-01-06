@@ -30,5 +30,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// hashing on uploads.
         /// </summary>
         public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+
+        /// <summary>
+        /// The last write time of the file.  If not provided, the current FileLastWrittenOn associated with the
+        /// file will be preserved.
+        /// </summary>
+        public DateTimeOffset? FileLastWrittenOn { get; set; }
     }
 }

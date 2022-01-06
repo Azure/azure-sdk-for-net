@@ -1034,7 +1034,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
                 FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
-                FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                FileCreatedOn = new DateTimeOffset(2022, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
 
@@ -2195,6 +2195,33 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.IsNotNull(response.Value.ContentHash);
                 Assert.IsTrue(response.Value.IsServerEncrypted);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task UploadRangeAsync_LastWrittenOn()
+        {
+            // Arrange
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient fileClient = test.File;
+
+            using Stream stream = new MemoryStream(data);
+            ShareFileUploadRangeOptions options = new ShareFileUploadRangeOptions
+            {
+                FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+            };
+
+            // Act
+            await fileClient.UploadRangeAsync(
+                range: new HttpRange(Constants.KB, Constants.KB),
+                content: stream,
+                options: options);
+
+            // Assert
+            Response<ShareFileProperties> propertiesResponse = await fileClient.GetPropertiesAsync();
+            Assert.AreEqual(options.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
         }
 
         [RecordedTest]
