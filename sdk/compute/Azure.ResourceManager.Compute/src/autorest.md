@@ -27,6 +27,10 @@ override-operation-name:
   VirtualMachineScaleSetVMs_Start: PowerOn
   CloudServices_Start: PowerOn
 
+operation-groups-to-omit:
+- SharedGalleries
+- SharedGalleryImages
+
 directive:
   - from: compute.json
     where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages

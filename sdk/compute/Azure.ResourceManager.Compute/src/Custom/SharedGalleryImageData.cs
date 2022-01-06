@@ -8,14 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
-    public partial class SharedGalleryImage : PirSharedGalleryResource
+    public partial class SharedGalleryImageData : PirSharedGalleryResource
     {
         /// <summary> Initializes a new instance of SharedGalleryImage. </summary>
-        internal SharedGalleryImage()
+        internal SharedGalleryImageData()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
         }
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="features"> A list of gallery image features. </param>
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
-        internal SharedGalleryImage(string name, string location, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, uniqueId)
+        internal SharedGalleryImageData(string name, string location, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, uniqueId)
         {
             OsType = osType;
             OsState = osState;

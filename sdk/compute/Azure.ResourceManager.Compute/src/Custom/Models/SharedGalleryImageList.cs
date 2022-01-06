@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SharedGalleryImageList. </summary>
         /// <param name="value"> A list of shared gallery images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SharedGalleryImageList(IEnumerable<SharedGalleryImage> value)
+        internal SharedGalleryImageList(IEnumerable<SharedGalleryImageData> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SharedGalleryImageList. </summary>
         /// <param name="value"> A list of shared gallery images. </param>
         /// <param name="nextLink"> The uri to fetch the next page of shared gallery images. Call ListNext() with this to fetch the next page of shared gallery images. </param>
-        internal SharedGalleryImageList(IReadOnlyList<SharedGalleryImage> value, string nextLink)
+        internal SharedGalleryImageList(IReadOnlyList<SharedGalleryImageData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of shared gallery images. </summary>
-        public IReadOnlyList<SharedGalleryImage> Value { get; }
+        public IReadOnlyList<SharedGalleryImageData> Value { get; }
         /// <summary> The uri to fetch the next page of shared gallery images. Call ListNext() with this to fetch the next page of shared gallery images. </summary>
         public string NextLink { get; }
     }
