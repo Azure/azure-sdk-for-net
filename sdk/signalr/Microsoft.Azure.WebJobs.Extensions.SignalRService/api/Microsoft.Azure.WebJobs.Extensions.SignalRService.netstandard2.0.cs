@@ -1,10 +1,12 @@
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
+    [System.ObsoleteAttribute("Please use SignalRTriggerCategories instead.")]
     public static partial class Category
     {
         public const string Connections = "connections";
         public const string Messages = "messages";
     }
+    [System.ObsoleteAttribute("Please use SignalRTriggerEvents instead.")]
     public static partial class Event
     {
         public const string Connected = "connected";
@@ -249,6 +251,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string HubName { get { throw null; } }
         public string[] ParameterNames { get { throw null; } }
+    }
+    public static partial class SignalRTriggerCategories
+    {
+        public const string Connections = "connections";
+        public const string Messages = "messages";
+    }
+    public static partial class SignalRTriggerEvents
+    {
+        public const string Connected = "connected";
+        public const string Disconnected = "disconnected";
     }
     public partial class SignalRTriggerException : System.Exception
     {

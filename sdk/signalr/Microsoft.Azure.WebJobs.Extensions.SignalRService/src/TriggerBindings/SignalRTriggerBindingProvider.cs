@@ -131,23 +131,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             if (string.Equals(name, Constants.OnConnected, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(name, Constants.OnDisconnected, StringComparison.OrdinalIgnoreCase))
             {
-                return Category.Connections;
+                return SignalRTriggerCategories.Connections;
             }
 
-            return Category.Messages;
+            return SignalRTriggerCategories.Messages;
         }
 
         private static string GetEventFromMethodName(string name, string category)
         {
-            if (category == Category.Connections)
+            if (category == SignalRTriggerCategories.Connections)
             {
                 if (string.Equals(name, Constants.OnConnected, StringComparison.OrdinalIgnoreCase))
                 {
-                    return Event.Connected;
+                    return SignalRTriggerEvents.Connected;
                 }
                 if (string.Equals(name, Constants.OnDisconnected, StringComparison.OrdinalIgnoreCase))
                 {
-                    return Event.Disconnected;
+                    return SignalRTriggerEvents.Disconnected;
                 }
             }
 
