@@ -567,9 +567,9 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly Azure.Core.ResourceType Root;
         public ResourceType(string resourceType) { throw null; }
         public string Namespace { get { throw null; } }
+        public static Azure.Core.ResourceType Root { get { throw null; } }
         public string Type { get { throw null; } }
         public bool Equals(Azure.Core.ResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
