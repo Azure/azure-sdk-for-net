@@ -76,13 +76,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Delete the blob here
                     // as new one will be created in case of failure
                     blob.Delete();
+
                     if (itemsAccepted != 0)
                     {
-                        // log successfull transmit from storage.
+                        AzureMonitorExporterEventSource.Log.Write($"TransmissionSuccessfulFromStorage{EventLevelSuffix.Informational}", $"{itemsAccepted} items were transmitted from storage");
                     }
                     else
                     {
-                        // log unsuccessfull attempt
+                        AzureMonitorExporterEventSource.Log.Write($"FailedTransmissionFromStorage{EventLevelSuffix.Informational}");
                     }
                 }
             }

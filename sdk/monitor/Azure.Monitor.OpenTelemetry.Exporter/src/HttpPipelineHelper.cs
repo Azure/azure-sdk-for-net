@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return MinimumRetryInterval;
         }
 
-        internal static string GetPartialContentFromBreeze(TrackResponse response, string content)
+        internal static string GetPartialContentForRetry(TrackResponse response, string content)
         {
             string partialContent = null;
             var contentArray = content.Split('\n');

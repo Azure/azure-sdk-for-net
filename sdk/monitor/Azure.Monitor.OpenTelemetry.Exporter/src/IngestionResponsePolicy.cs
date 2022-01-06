@@ -60,10 +60,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         using var document = JsonDocument.Parse(message.Response.ContentStream, default);
                         response = TrackResponse.DeserializeTrackResponse(document.RootElement);
                         requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                        var partialContent = HttpPipelineHelper.GetPartialContentFromBreeze(response, Encoding.UTF8.GetString(requestContent));
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(message);
-                        this.storage.CreateBlob(Encoding.UTF8.GetBytes(partialContent), retryInterval);
-                        itemsAccepted = response.ItemsAccepted.GetValueOrDefault();
+                        var partialContent = HttpPipelineHelper.GetPartialContentForRetry(response, Encoding.UTF8.GetString(requestContent));
+                        if (partialContent != null)
+                        {
+                            retryInterval = HttpPipelineHelper.GetRetryInterval(message);
+                            this.storage.CreateBlob(Encoding.UTF8.GetBytes(partialContent), retryInterval);
+                            itemsAccepted = response.ItemsAccepted.GetValueOrDefault();
+                        }
                     }
                     break;
                 case ResponseStatusCodes.RequestTimeout:
@@ -83,7 +86,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
                     this.storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
                     break;
-                case null: // UnknownNetworkError
+                case null:
+                    // UnknownNetworkError
                     // No HttpMessage. Send TelemetryItems To Storage
                     requestContent = HttpPipelineHelper.GetRequestContent(message.Request.Content);
                     this.storage.CreateBlob(requestContent, HttpPipelineHelper.MinimumRetryInterval);
