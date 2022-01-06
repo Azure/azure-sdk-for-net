@@ -220,10 +220,10 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             Console.WriteLine("Start detect...");
 
             List<VariableValues> variables = new List<VariableValues>();
-            variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
-            variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00" }, new[] { 0.0f, 0.0f }));
+            variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
+            variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
 
-            LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 2);
+            LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 1);
 
             try
             {
