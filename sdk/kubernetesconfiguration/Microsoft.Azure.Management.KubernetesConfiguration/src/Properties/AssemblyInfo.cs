@@ -4,11 +4,11 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure KubernetesConfiguration SourceControlConfigurations Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure KubernetesConfiguration SourceControlConfigurations management operations including the ability to create, update and delete configurations and extensions.")]
+[assembly: AssemblyTitle("Microsoft Azure KubernetesConfiguration Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure KubernetesConfiguration management operations including the ability to create, update and delete configurations and extensions.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
