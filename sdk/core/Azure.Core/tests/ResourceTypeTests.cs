@@ -14,7 +14,6 @@ namespace Azure.Core.Tests
         [TestCase("\t")]
         [TestCase(" ")]
         [TestCase("\r")]
-        [TestCase(null)]
         public void InvalidConstructorParam(string input)
         {
             Assert.Throws<ArgumentException>(() => new ResourceType(input));
@@ -24,7 +23,7 @@ namespace Azure.Core.Tests
         public void NullImplicitFromString()
         {
             string from = null;
-            Assert.Throws<ArgumentException>(() => { ResourceType to = from; });
+            Assert.Throws<ArgumentNullException>(() => { ResourceType to = from; });
         }
 
         [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]

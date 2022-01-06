@@ -14,6 +14,8 @@ namespace Azure.Core
     /// </summary>
     public readonly struct ResourceType : IEquatable<ResourceType>
     {
+        private const char Separator = '/';
+
         /// <summary>
         /// The resource type for the root of the resource hierarchy.
         /// </summary>
@@ -25,18 +27,14 @@ namespace Azure.Core
         /// <param name="resourceType"> The resource type string to convert. </param>
         public ResourceType(string resourceType)
         {
-            if (string.IsNullOrWhiteSpace(resourceType))
-                throw new ArgumentException($"{nameof(resourceType)} cannot be null or whitespace", nameof(resourceType));
+            Argument.AssertNotNullOrWhiteSpace(resourceType, nameof(resourceType));
 
-            // split the path into segments
-            var parts = resourceType.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-            // There must be at least a namespace and type name
-            if (parts.Length < 1)
+            int index = resourceType.IndexOf(Separator);
+            if (index == -1 || resourceType.Length <3)
                 throw new ArgumentOutOfRangeException(nameof(resourceType));
 
-            Namespace = parts[0];
-            Type = string.Join("/", parts.Skip(1).Take(parts.Length - 1));
+            Namespace = resourceType.Substring(0, index);
+            Type = resourceType.Substring(index + 1);
         }
 
         /// <summary>
@@ -52,7 +50,7 @@ namespace Azure.Core
 
         internal ResourceType AppendChild(string childType)
         {
-            return new ResourceType(Namespace, $"{Type}/{childType}");
+            return new ResourceType(Namespace, $"{Type}{Separator}{childType}");
         }
 
         /// <summary>
@@ -61,8 +59,7 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string GetLastType()
         {
-            var types = Type.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            return types[types.Length - 1];
+            return Type.Substring(Type.LastIndexOf(Separator) + 1);
         }
 
         /// <summary>
@@ -128,7 +125,7 @@ namespace Azure.Core
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Namespace}/{Type}";
+            return $"{Namespace}{Separator}{Type}";
         }
 
         /// <inheritdoc/>
