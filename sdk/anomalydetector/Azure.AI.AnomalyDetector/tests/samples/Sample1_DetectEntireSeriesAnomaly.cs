@@ -57,26 +57,38 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //detect
             Console.WriteLine("Detecting anomalies in the entire time series.");
 
-            EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
-
-            if (result.IsAnomaly.Contains(true))
+            try
             {
-                Console.WriteLine("An anomaly was detected at index:");
-                for (int i = 0; i < request.Series.Count; ++i)
+                EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
+
+                if (result.IsAnomaly.Contains(true))
                 {
-                    if (result.IsAnomaly[i])
+                    Console.WriteLine("An anomaly was detected at index:");
+                    for (int i = 0; i < request.Series.Count; ++i)
                     {
-                        Console.Write(i);
-                        Console.Write(" ");
+                        if (result.IsAnomaly[i])
+                        {
+                            Console.Write(i);
+                            Console.Write(" ");
+                        }
                     }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
+                else
+                {
+                    Console.WriteLine(" No anomalies detected in the series.");
+                }
             }
-            else
+            catch (RequestFailedException ex)
             {
-                Console.WriteLine(" No anomalies detected in the series.");
+                Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
+                throw new Exception(ex.Message);
             }
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+                throw new Exception(ex.Message);
+            }
             #endregion
         }
     }

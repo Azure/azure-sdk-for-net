@@ -240,7 +240,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("last detection failed: ", ex.Message));
+                Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
                 throw new Exception(ex.Message);
             }
             catch (Exception ex)
