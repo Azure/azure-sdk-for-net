@@ -51,10 +51,19 @@ namespace Azure.Identity
             : this(CredentialPipeline.GetInstance(options), options)
         { }
 
+        /// <summary>
+        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
+        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// </summary>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public EnvironmentCredential(EnvironmentCredentialOptions options)
+            : this(CredentialPipeline.GetInstance(options), options)
+        { }
+
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
-            _options = options ?? new TokenCredentialOptions();
+            _options = options ?? new EnvironmentCredentialOptions();
 
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
@@ -75,7 +84,14 @@ namespace Azure.Identity
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
-                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, _options, _pipeline, null);
+                    ClientCertificateCredentialOptions clientCertificateCredentialOptions = new ClientCertificateCredentialOptions
+                    {
+                        AuthorityHost = _options.AuthorityHost,
+                        IsLoggingPIIEnabled = _options.IsLoggingPIIEnabled,
+                        Transport = _options.Transport,
+                        SendCertificateChain = (_options as EnvironmentCredentialOptions)?.SendCertificateChain ?? false
+                    };
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificateCredentialOptions, _pipeline, null);
                 }
             }
         }

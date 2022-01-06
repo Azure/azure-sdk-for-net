@@ -37,8 +37,16 @@ namespace Azure.Identity
 
         internal AzureApplicationCredential(AzureApplicationCredentialOptions options, EnvironmentCredential environmentCredential = null, ManagedIdentityCredential managedIdentityCredential = null)
         {
+            EnvironmentCredentialOptions environmentCredentialOptions = new EnvironmentCredentialOptions
+            {
+                AuthorityHost = options.AuthorityHost,
+                IsLoggingPIIEnabled = options.IsLoggingPIIEnabled,
+                Transport = options.Transport,
+                SendCertificateChain = options.SendCertificateChain
+            };
+
             _credential = new ChainedTokenCredential(
-                environmentCredential ?? new EnvironmentCredential(options),
+                environmentCredential ?? new EnvironmentCredential(environmentCredentialOptions),
                 managedIdentityCredential ?? new ManagedIdentityCredential(options.ManagedIdentityClientId)
             );
         }

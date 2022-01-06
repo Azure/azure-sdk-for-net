@@ -21,7 +21,7 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateEnvironmentCredential()
         {
-            return new EnvironmentCredential(Pipeline);
+            return new EnvironmentCredential(Pipeline, new EnvironmentCredentialOptions { SendCertificateChain = true });
         }
 
         public virtual TokenCredential CreateManagedIdentityCredential(string clientId)
