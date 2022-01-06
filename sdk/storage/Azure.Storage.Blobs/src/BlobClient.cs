@@ -1625,6 +1625,8 @@ namespace Azure.Storage.Blobs
             long? expectedContentLength = null;
             if (UsingClientSideEncryption)
             {
+                options ??= new BlobUploadOptions();
+
                 if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
                 {
                     throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
