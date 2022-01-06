@@ -124,8 +124,7 @@ namespace Azure.Core
 
         private static ResourceIdentifier Create(string resourceId)
         {
-            if (resourceId is null)
-                throw new ArgumentNullException(nameof(resourceId));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             if (!resourceId.StartsWith("/", StringComparison.InvariantCultureIgnoreCase))
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier must start with '/'.");
@@ -431,8 +430,7 @@ namespace Azure.Core
 
         private static void ValidatePathSegment(string segment, string parameterName)
         {
-            if (string.IsNullOrWhiteSpace(segment))
-                throw new ArgumentNullException(parameterName);
+            Argument.AssertNotNullOrWhiteSpace(segment, nameof(segment));
             if (segment.Contains("/"))
                 throw new ArgumentOutOfRangeException(parameterName, $"{parameterName} must be a single path segment");
         }

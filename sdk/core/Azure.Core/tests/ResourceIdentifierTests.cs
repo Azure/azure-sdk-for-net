@@ -173,7 +173,7 @@ namespace Azure.Core.Tests
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else
@@ -196,7 +196,7 @@ namespace Azure.Core.Tests
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else
@@ -321,7 +321,7 @@ namespace Azure.Core.Tests
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else
@@ -345,7 +345,7 @@ namespace Azure.Core.Tests
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else
@@ -396,7 +396,7 @@ namespace Azure.Core.Tests
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else
@@ -420,7 +420,7 @@ namespace Azure.Core.Tests
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else
@@ -584,7 +584,7 @@ namespace Azure.Core.Tests
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else
@@ -607,7 +607,7 @@ namespace Azure.Core.Tests
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
-                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+                Assert.Throws(typeof(ArgumentException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else
