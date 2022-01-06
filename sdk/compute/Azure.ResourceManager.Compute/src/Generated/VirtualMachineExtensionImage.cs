@@ -89,6 +89,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}
+        /// OperationId: VirtualMachineExtensionImages_Get
         /// <summary> Gets a virtual machine extension image. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualMachineExtensionImage>> GetAsync(CancellationToken cancellationToken = default)
@@ -109,6 +112,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}
+        /// OperationId: VirtualMachineExtensionImages_Get
         /// <summary> Gets a virtual machine extension image. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualMachineExtensionImage> Get(CancellationToken cancellationToken = default)

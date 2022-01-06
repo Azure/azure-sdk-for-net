@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(restorePointCollectionName, true);
             uri.AppendPath("/restorePoints/", false);
             uri.AppendPath(restorePointName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(restorePointCollectionName, true);
             uri.AppendPath("/restorePoints/", false);
             uri.AppendPath(restorePointName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(restorePointCollectionName, true);
             uri.AppendPath("/restorePoints/", false);
             uri.AppendPath(restorePointName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);

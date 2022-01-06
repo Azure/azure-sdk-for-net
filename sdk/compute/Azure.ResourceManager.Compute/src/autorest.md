@@ -10,17 +10,17 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/76f8e0c50629ef12aa338d55782278ceca46212a/specification/compute/resource-manager/readme.md
-tag: package-2021-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a4783665bb6c0b13f345aec/specification/compute/resource-manager/readme.md
+tag: package-2021-08-01
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
-  lenient-model-deduplication: true
   
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
-- /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+
+mgmt-debug:
+  show-request-path: true
 
 override-operation-name:
   VirtualMachineScaleSets_Start: PowerOn
@@ -49,4 +49,7 @@ directive:
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
+  - from: disk.json
+    where: $.definitions.PurchasePlan
+    transform: $["x-ms-client-name"] = "DiskPurchasePlan"
 ```

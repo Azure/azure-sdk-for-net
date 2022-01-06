@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/sharedGalleries", false);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             if (sharedTo != null)
             {
                 uri.AppendQuery("sharedTo", sharedTo.Value.ToString(), true);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(location, true);
             uri.AppendPath("/sharedGalleries/", false);
             uri.AppendPath(galleryUniqueName, true);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);

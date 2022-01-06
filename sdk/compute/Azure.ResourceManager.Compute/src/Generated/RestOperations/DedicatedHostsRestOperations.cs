@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts/", false);
             uri.AppendPath(hostName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts/", false);
             uri.AppendPath(hostName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts/", false);
             uri.AppendPath(hostName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/hostGroups/", false);
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);

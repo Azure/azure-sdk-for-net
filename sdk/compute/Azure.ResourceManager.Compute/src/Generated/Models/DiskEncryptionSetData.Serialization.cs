@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> provisioningState = default;
             Optional<bool> rotationToLatestKeyVersionEnabled = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Optional<ApiError> autoKeyRotationError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -181,11 +182,21 @@ namespace Azure.ResourceManager.Compute
                             lastKeyRotationTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("autoKeyRotationError"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoKeyRotationError = ApiError.DeserializeApiError(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DiskEncryptionSetData(id, name, type, tags, location, identity.Value, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp));
+            return new DiskEncryptionSetData(id, name, type, tags, location, identity.Value, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value);
         }
     }
 }

@@ -68,6 +68,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("supportsHibernation");
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(SupportedCapabilities))
+            {
+                writer.WritePropertyName("supportedCapabilities");
+                writer.WriteObjectValue(SupportedCapabilities);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

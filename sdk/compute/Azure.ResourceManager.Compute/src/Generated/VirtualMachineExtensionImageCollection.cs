@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.Compute
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineExtensionImages_Get
         /// <summary> Gets a virtual machine extension image. </summary>
         /// <param name="type"> The String to use. </param>
         /// <param name="version"> The String to use. </param>
@@ -81,6 +84,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineExtensionImages_Get
         /// <summary> Gets a virtual machine extension image. </summary>
         /// <param name="type"> The String to use. </param>
         /// <param name="version"> The String to use. </param>
@@ -237,6 +243,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineExtensionImages_ListTypes
         /// <summary> Gets a list of virtual machine extension image types. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IReadOnlyList<VirtualMachineExtensionImage>> GetAll(CancellationToken cancellationToken = default)
@@ -255,6 +264,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineExtensionImages_ListTypes
         /// <summary> Gets a list of virtual machine extension image types. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -273,6 +285,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineExtensionImages_ListVersions
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
         /// <param name="type"> The String to use. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -301,6 +316,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualMachineExtensionImages_ListVersions
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
         /// <param name="type"> The String to use. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>

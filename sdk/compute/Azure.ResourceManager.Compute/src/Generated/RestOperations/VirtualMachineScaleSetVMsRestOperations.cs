@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             if (vmScaleSetVMReimageInput != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/reimageall", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/deallocate", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmScaleSetName, true);
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("forceDeletion", forceDeletion.Value, true);
             }
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/instanceView", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("skipShutdown", skipShutdown.Value, true);
             }
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/restart", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/redeploy", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -1311,7 +1311,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("sasUriExpirationTimeInMinutes", sasUriExpirationTimeInMinutes.Value, true);
             }
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/performMaintenance", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualMachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/simulateEviction", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -1614,7 +1614,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/runCommand", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");

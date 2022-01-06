@@ -144,6 +144,28 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
+        #region CapacityReservationGroup
+        /// <summary> Gets an object representing a CapacityReservationGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CapacityReservationGroup" /> object. </returns>
+        public static CapacityReservationGroup GetCapacityReservationGroup(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CapacityReservationGroup(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region CapacityReservation
+        /// <summary> Gets an object representing a CapacityReservation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CapacityReservation" /> object. </returns>
+        public static CapacityReservation GetCapacityReservation(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CapacityReservation(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region VirtualMachineScaleSetExtension
         /// <summary> Gets an object representing a VirtualMachineScaleSetExtension along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
