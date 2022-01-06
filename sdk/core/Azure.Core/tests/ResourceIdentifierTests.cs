@@ -11,14 +11,715 @@ namespace Azure.Core.Tests
     [Parallelizable]
     public class ResourceIdentifierTests
     {
-        private const string TrackedResourceId =
-            "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm";
-        private const string ChildResourceId =
-            "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/vortualNetworks/myNet/subnets/mySubnet";
+        private const string TrackedResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm";
+        private const string ChildResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/vortualNetworks/myNet/subnets/mySubnet";
         private const string ResourceGroupResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg";
         private const string LocationResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/locations/MyLocation";
         private const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
         private const string TenantResourceId = "/providers/Microsoft.Billing/billingAccounts/3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31";
+        private const string LocationBaseResourceId = "/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2";
+        private const string LocationInDifferentNamespace = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/westus2";
+
+        #region LocationResouceIdentifier
+        [Test]
+        public void LocationFromDiffNamespaceWithChildResouce()
+        {
+            string resourceId = $"{LocationInDifferentNamespace}/publishers/128technology";
+            var id = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, id.ToString());
+            Assert.AreEqual("westus2", id.Location?.ToString());
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", id.SubscriptionId);
+            Assert.AreEqual("Microsoft.Compute/locations/publishers", id.ResourceType.ToString());
+            Assert.AreEqual("128technology", id.Name);
+            Assert.IsNull(id.Provider);
+            Assert.AreEqual(true, id.IsChild);
+            ValidateLocationBaseResource(id.Parent, LocationInDifferentNamespace, false, "Microsoft.Compute/locations", "db1ab6f0-4769-4b27-930e-01e2ef9c123c");
+        }
+
+        [Test]
+        public void LocationWithChildResouce()
+        {
+            string resourceId = $"{LocationBaseResourceId}/myResourceType/myResourceName";
+            var id = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, id.ToString());
+            Assert.AreEqual("westus2", id.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
+            Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType", id.ResourceType.ToString());
+            Assert.AreEqual("myResourceName", id.Name);
+            Assert.IsNull(id.Provider);
+            Assert.AreEqual(true, id.IsChild);
+            ValidateLocationBaseResource(id.Parent, LocationBaseResourceId, true, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
+        }
+
+        [Test]
+        public void LocationWithChildSingleton()
+        {
+            string resourceId = $"{LocationBaseResourceId}/myResourceType/myResourceName/mySingletonResource";
+            var id = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, id.ToString());
+            Assert.AreEqual("westus2", id.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
+            Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType/mySingletonResource", id.ResourceType.ToString());
+            Assert.AreEqual(string.Empty, id.Name);
+            Assert.IsNull(id.Provider);
+            Assert.AreEqual(true, id.IsChild);
+
+            var parentId = id.Parent;
+            Assert.AreEqual($"{LocationBaseResourceId}/myResourceType/myResourceName", parentId.ToString());
+            Assert.AreEqual("westus2", parentId.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", parentId.SubscriptionId);
+            Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType", parentId.ResourceType.ToString());
+            Assert.AreEqual("myResourceName", parentId.Name);
+            Assert.IsNull(parentId.Provider);
+            Assert.AreEqual(true, parentId.IsChild);
+
+            ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, true, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
+        }
+
+        [Test]
+        public void LocationWithProviderResource()
+        {
+            string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName";
+            var id = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, id.ToString());
+            Assert.AreEqual("westus2", id.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
+            Assert.AreEqual("myProvider/myResourceType", id.ResourceType.ToString());
+            Assert.AreEqual("myResourceName", id.Name);
+            Assert.IsNull(id.Provider);
+            Assert.AreEqual(false, id.IsChild);
+
+            ValidateLocationBaseResource(id.Parent, LocationBaseResourceId, true, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
+        }
+
+        [Test]
+        public void LocationWithProviderResourceWithChild()
+        {
+            string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName/myChildResource/myChildResourceName";
+            var id = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, id.ToString());
+            Assert.AreEqual("westus2", id.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
+            Assert.AreEqual("myProvider/myResourceType/myChildResource", id.ResourceType.ToString());
+            Assert.AreEqual("myChildResourceName", id.Name);
+            Assert.IsNull(id.Provider);
+            Assert.AreEqual(true, id.IsChild);
+
+            var parentId = id.Parent;
+            Assert.AreEqual($"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName", parentId.ToString());
+            Assert.AreEqual("westus2", parentId.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", parentId.SubscriptionId);
+            Assert.AreEqual("myProvider/myResourceType", parentId.ResourceType.ToString());
+            Assert.AreEqual("myResourceName", parentId.Name);
+            Assert.IsNull(parentId.Provider);
+            Assert.AreEqual(false, parentId.IsChild);
+
+            ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, true, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
+        }
+
+        [Test]
+        public void LocationWithExtensionResource()
+        {
+            string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName/providers/mySecondNamespace/myChildResource/myChildResourceName";
+            var id = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, id.ToString());
+            Assert.AreEqual("westus2", id.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
+            Assert.AreEqual("mySecondNamespace/myChildResource", id.ResourceType.ToString());
+            Assert.AreEqual("myChildResourceName", id.Name);
+            Assert.IsNull(id.Provider);
+            Assert.AreEqual(false, id.IsChild);
+
+            var parentId = id.Parent;
+            Assert.AreEqual($"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName", parentId.ToString());
+            Assert.AreEqual("westus2", parentId.Location?.ToString());
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", parentId.SubscriptionId);
+            Assert.AreEqual("myProvider/myResourceType", parentId.ResourceType.ToString());
+            Assert.AreEqual("myResourceName", parentId.Name);
+            Assert.IsNull(parentId.Provider);
+            Assert.AreEqual(false, parentId.IsChild);
+
+            ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, true, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
+        }
+
+        [Test]
+        public void TryGetPropertiesForLocationResource()
+        {
+            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.NotNull(id1.SubscriptionId);
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
+            Assert.IsTrue(id1.Location.HasValue);
+            Assert.AreEqual(AzureLocation.WestUS2, id1.Location);
+            Assert.Null(id1.ResourceGroupName);
+            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
+            Assert.NotNull(id1.Parent);
+            Assert.IsTrue(expectedId.Equals(id1.Parent));
+        }
+
+        [TestCase(LocationResourceId, "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(LocationResourceId, null, "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(LocationResourceId, "Microsoft.Authorization", null, "MyRoleAssignemnt")]
+        [TestCase(LocationResourceId, "Microsoft.Authorization", "roleAssignments", null)]
+        [TestCase(LocationResourceId, "", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(LocationResourceId, "Microsoft.Authorization", "   ", "MyRoleAssignemnt")]
+        [TestCase(LocationResourceId, "Microsoft.Authorization", "roleAssignments", "")]
+        [TestCase(LocationResourceId, "Microsoft/Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(LocationResourceId, "Microsoft.Authorization", "roleA/ssignments", "MyRoleAssignemnt")]
+        [TestCase(LocationResourceId, "Microsoft.Authorization", "roleAssignments", "MyRole/Assignemnt")]
+
+        public void TestAppendLocationProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (providerNamespace is null || resourceTypeName is null || resourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else
+            {
+                var expected = $"{resourceId}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}";
+                Assert.AreEqual(expected, resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName).ToString());
+            }
+        }
+
+        [TestCase(LocationResourceId, "wheels", "Wheel1")]
+        [TestCase(LocationResourceId, null, "wheel2")]
+        [TestCase(LocationResourceId, "wheels", null)]
+        [TestCase(LocationResourceId, "", "wheel2")]
+        [TestCase(LocationResourceId, "wheels", "  ")]
+        [TestCase(LocationResourceId, "wheels/spokes", "wheel2")]
+        [TestCase(LocationResourceId, "wheels", "wheel1/wheel2")]
+        public void TestAppendLocationChildResource(string resourceId, string childTypeName, string childResourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (childTypeName is null || childResourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else
+            {
+                var expected = $"{resourceId}/{childTypeName}/{childResourceName}";
+                Assert.AreEqual(expected, resource.AppendChildResource(childTypeName, childResourceName).ToString());
+            }
+        }
+        #endregion
+
+        #region ResourceGroupResourceIdentifier
+        [TestCase("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "myRg", "Microsoft.Compute", "virtualMachines", "myVM")]
+        [TestCase("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "!@#$%^&*()-_+=;:'\",<.>/?", "Microsoft.Network", "virtualNetworks", "MvVM_vnet")]
+        [TestCase("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "myRg", "Microsoft.Network", "publicIpAddresses", "!@#$%^&*()-_+=;:'\",<.>/?")]
+        public void CanParseRPIds(string subscription, string resourceGroup, string provider, string type, string name)
+        {
+            var resourceId = $"/subscriptions/{subscription}/resourceGroups/{Uri.EscapeDataString(resourceGroup)}/providers/{provider}/{type}/{Uri.EscapeDataString(name)}";
+            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, subject.ToString());
+            Assert.AreEqual(subscription, subject.SubscriptionId);
+            Assert.AreEqual(resourceGroup, Uri.UnescapeDataString(subject.ResourceGroupName));
+            Assert.AreEqual(provider, subject.ResourceType.Namespace);
+            Assert.AreEqual(type, subject.ResourceType.Type);
+            Assert.AreEqual(name, Uri.UnescapeDataString(subject.Name));
+        }
+
+        [TestCase("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "myRg", "Microsoft.Web", "appServices/myApp/config", "appServices/config")]
+        public void CanParseProxyResource(string subscription, string rg, string resourceNamespace, string resource, string type)
+        {
+            string id = $"/subscriptions/{subscription}/resourceGroups/{rg}/providers/{resourceNamespace}/{resource}";
+            ResourceIdentifier subject = new ResourceIdentifier(id);
+            Assert.AreEqual(id, subject.ToString());
+            Assert.AreEqual(subscription, subject.SubscriptionId);
+            Assert.AreEqual(resourceNamespace, subject.ResourceType.Namespace);
+            Assert.AreEqual(type, subject.ResourceType.Type);
+        }
+
+        [Test]
+        public void CanParseResourceGroups()
+        {
+            ResourceIdentifier subject = new ResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg");
+            Assert.AreEqual("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg", subject.ToString());
+            Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
+            Assert.AreEqual("myRg", subject.ResourceGroupName);
+            Assert.AreEqual("Microsoft.Resources", subject.ResourceType.Namespace);
+            Assert.AreEqual("resourceGroups", subject.ResourceType.Type);
+        }
+
+        [TestCase("MyVnet", "MySubnet")]
+        [TestCase("!@#$%^&*()-_+=;:'\",<.>/?", "MySubnet")]
+        [TestCase("MyVnet", "!@#$%^&*()-_+=;:'\",<.>/?")]
+        public void CanParseChildResources(string parentName, string name)
+        {
+            var resourceId = $"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}/subnets/{Uri.EscapeDataString(name)}";
+            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, subject.ToString());
+            Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
+            Assert.AreEqual("myRg", Uri.UnescapeDataString(subject.ResourceGroupName));
+            Assert.AreEqual("Microsoft.Network", subject.ResourceType.Namespace);
+            Assert.AreEqual("virtualNetworks", subject.Parent.ResourceType.Type);
+            Assert.AreEqual("virtualNetworks/subnets", subject.ResourceType.Type);
+            Assert.AreEqual(name, Uri.UnescapeDataString(subject.Name));
+
+            // check parent type parsing
+            ResourceIdentifier parentResource = new ResourceIdentifier($"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}");
+            Assert.AreEqual(parentResource, subject.Parent);
+            Assert.AreEqual(parentResource.ToString(), subject.Parent.ToString());
+            Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", ((ResourceIdentifier)subject.Parent).SubscriptionId);
+            Assert.AreEqual("myRg", Uri.UnescapeDataString(((ResourceIdentifier)subject.Parent).ResourceGroupName));
+            Assert.AreEqual("Microsoft.Network", subject.Parent.ResourceType.Namespace);
+            Assert.AreEqual("virtualNetworks", subject.Parent.ResourceType.Type);
+            Assert.AreEqual(parentName, Uri.UnescapeDataString(subject.Parent.Name));
+        }
+
+        [TestCase(true, "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport", "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport")]
+        [TestCase(false, "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport2", "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport")]
+        [TestCase(false, "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport", "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test")]
+        public void CheckHashCode(bool expected, string resourceId1, string resourceId2)
+        {
+            ResourceIdentifier resourceIdentifier1 = new ResourceIdentifier(resourceId1);
+            ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier(resourceId2);
+            Assert.AreEqual(expected, resourceIdentifier1.GetHashCode() == resourceIdentifier2.GetHashCode());
+        }
+
+        [Test]
+        public void EqualsObj()
+        {
+            object input = TrackedResourceId;
+            ResourceIdentifier resource = new ResourceIdentifier(TrackedResourceId);
+            Assert.AreEqual(true, resource.Equals(input));
+            Assert.IsFalse(resource.Equals(new object()));
+        }
+
+        [Test]
+        public void TryGetPropertiesForResourceGroupResource()
+        {
+            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.NotNull(id1.SubscriptionId);
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
+            Assert.IsFalse(id1.Location.HasValue);
+            Assert.NotNull(id1.ResourceGroupName);
+            Assert.AreEqual("myRg", id1.ResourceGroupName);
+            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
+            Assert.NotNull(id1.Parent);
+            Assert.IsTrue(expectedId.Equals(id1.Parent));
+        }
+
+        [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(ResourceGroupResourceId, null, "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", null, "MyRoleAssignemnt")]
+        [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", "roleAssignments", null)]
+        [TestCase(ResourceGroupResourceId, "", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", "   ", "MyRoleAssignemnt")]
+        [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", "roleAssignments", "")]
+        [TestCase(ResourceGroupResourceId, "Microsoft/Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", "roleA/ssignments", "MyRoleAssignemnt")]
+        [TestCase(ResourceGroupResourceId, "Microsoft.Authorization", "roleAssignments", "MyRole/Assignemnt")]
+
+        public void TestAppendResourceGroupProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (providerNamespace is null || resourceTypeName is null || resourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else
+            {
+                var expected = $"{resourceId}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}";
+                Assert.AreEqual(expected, resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName).ToString());
+            }
+        }
+
+        [TestCase(ResourceGroupResourceId, "wheels", "Wheel1")]
+        [TestCase(ResourceGroupResourceId, "wheels", "Wheel2")]
+        [TestCase(ResourceGroupResourceId, null, "wheel2")]
+        [TestCase(ResourceGroupResourceId, "wheels", null)]
+        [TestCase(ResourceGroupResourceId, "", "wheel2")]
+        [TestCase(ResourceGroupResourceId, "wheels", "  ")]
+        [TestCase(ResourceGroupResourceId, "wheels/spokes", "wheel2")]
+        [TestCase(ResourceGroupResourceId, "wheels", "wheel1/wheel2")]
+        public void TestAppendResourceGroupChildResource(string resourceId, string childTypeName, string childResourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (childTypeName is null || childResourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else
+            {
+                var expected = $"{resourceId}/{childTypeName}/{childResourceName}";
+                Assert.AreEqual(expected, resource.AppendChildResource(childTypeName, childResourceName).ToString());
+            }
+        }
+        #endregion
+
+        #region TenantResourceIdentifier
+        [TestCase("/providers/Contoso.Widgets/widgets/myWidget/configuration", Description = "singleton homed in a tenant resource")]
+        [TestCase("/providers/Contoso.Widgets/widgets/myWidget/providers/Contoso.Extensions/extensions/myExtension", Description = "Extension over a subscription resource")]
+        [TestCase("/providers/Contoso.Widgets/widgets/myWidget/flanges/myFlange", Description = "Child of a subscription resource")]
+        public void CanParseValidTenantResource(string resourceId)
+        {
+            ResourceIdentifier tenant = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, tenant.ToString());
+        }
+
+        [Test]
+        public void TryGetPropertiesForTenantResource()
+        {
+            ResourceIdentifier id1 = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.Null(id1.SubscriptionId);
+            Assert.Null(id1.Location);
+            Assert.Null(id1.ResourceGroupName);
+            Assert.NotNull(id1.Parent);
+            ResourceIdentifier id2 = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget/flages/myFlange");
+            Assert.NotNull(id2.Parent);
+            Assert.AreEqual(true, id1.Equals(id2.Parent));
+        }
+
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget", "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", null, "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", null, "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleAssignments", null)]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "   ", "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleAssignments", "")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft/Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleA/ssignments", "MyRoleAssignemnt")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleAssignments", "MyRole/Assignemnt")]
+        public void TestAppendTenantProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (providerNamespace is null || resourceTypeName is null || resourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else
+            {
+                var expected = $"{resourceId}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}";
+                Assert.AreEqual(expected, resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName).ToString());
+            }
+        }
+
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget", "wheels", "Wheel1")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "wheels", "Wheel2")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", null, "wheel2")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "wheels", null)]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "", "wheel2")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "wheels", "  ")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "wheels/spokes", "wheel2")]
+        [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "wheels", "wheel1/wheel2")]
+        public void TestAppendTenantChildResource(string resourceId, string childTypeName, string childResourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (childTypeName is null || childResourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else
+            {
+                var expected = $"{resourceId}/{childTypeName}/{childResourceName}";
+                Assert.AreEqual(expected, resource.AppendChildResource(childTypeName, childResourceName).ToString());
+            }
+        }
+        #endregion
+
+        #region TenantProviderResourceIdentifier
+        [TestCase("/providers/Microsoft.Insights")]
+        public void ImplicitConstructorProviderOnly(string resourceProviderID)
+        {
+            string x = resourceProviderID;
+            string y;
+            ResourceIdentifier z = new ResourceIdentifier(x);
+            y = z;
+
+            Assert.IsNotNull(z.Parent);
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.AreEqual("Microsoft.Resources/providers", z.ResourceType.ToString());
+            Assert.AreEqual(string.Empty, z.Parent.Name);
+
+            if (resourceProviderID is null)
+            {
+                Assert.IsNull(z);
+                Assert.IsNull(y);
+            }
+            else
+            {
+                Assert.AreEqual(resourceProviderID, y);
+                Assert.AreEqual(resourceProviderID, y);
+            }
+        }
+
+        [TestCase("/providers/Microsoft.Insights/providers/Microsoft.Compute/virtualMachines/myVmName")]
+        public void ImplicitConstructorVirtualMachine(string resourceProviderID)
+        {
+            string x = resourceProviderID;
+            string y;
+            ResourceIdentifier z = new ResourceIdentifier(x);
+            y = z;
+
+            Assert.AreEqual("myVmName", z.Name);
+            Assert.AreEqual("Microsoft.Compute/virtualMachines", z.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
+            Assert.AreEqual("Microsoft.Resources/providers", z.Parent.ResourceType.ToString());
+
+            if (resourceProviderID is null)
+            {
+                Assert.IsNull(z);
+                Assert.IsNull(y);
+            }
+            else
+            {
+                Assert.AreEqual(resourceProviderID, y);
+                Assert.AreEqual(resourceProviderID, y);
+            }
+        }
+
+        [TestCase("/providers/Microsoft.Insights/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testsubnet")]
+        public void ImplicitConstructorSubnet(string resourceProviderID)
+        {
+            string x = resourceProviderID;
+            string y;
+            ResourceIdentifier z = new ResourceIdentifier(x);
+            y = z;
+
+            Assert.AreEqual("testsubnet", z.Name);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks/subnets", z.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Parent.Provider);
+            Assert.AreEqual("testvnet", z.Parent.Name);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks", z.Parent.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Parent.Name);
+            Assert.AreEqual("Microsoft.Resources/providers", z.Parent.Parent.ResourceType.ToString());
+
+            if (resourceProviderID is null)
+            {
+                Assert.IsNull(z);
+                Assert.IsNull(y);
+            }
+            else
+            {
+                Assert.AreEqual(resourceProviderID, y);
+                Assert.AreEqual(resourceProviderID, y);
+            }
+        }
+        #endregion
+
+        #region SubscriptionResourceIdentifier
+        [Test]
+        public void CanParseSubscriptions()
+        {
+            ResourceIdentifier subject = new ResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575");
+            Assert.AreEqual("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.ToString());
+            Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
+            Assert.AreEqual("Microsoft.Resources", subject.ResourceType.Namespace);
+            Assert.AreEqual("subscriptions", subject.ResourceType.Type);
+        }
+
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/configuration", Description = "singleton homed in a subscription resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/providers/Contoso.Extensions/extensions/myExtension", Description = "Extension over a subscription resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/flanges/myFlange", Description = "Child of a subscription resource")]
+        public void CanParseValidSubscriptionResource(string resourceId)
+        {
+            ResourceIdentifier subscription = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, subscription.ToString());
+        }
+
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack", Description = "No provider tagname")]
+        public void CanParseValidNoProviderResource(string resourceId)
+        {
+            ResourceIdentifier subscription = new ResourceIdentifier(resourceId);
+            Assert.AreEqual(resourceId, subscription.ToString());
+        }
+
+        [Test]
+        public void TryGetPropertiesForSubscriptionResource()
+        {
+            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.NotNull(id1.SubscriptionId);
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
+            Assert.Null(id1.Location);
+            Assert.Null(id1.ResourceGroupName);
+            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
+            Assert.NotNull(id1.Parent);
+            Assert.IsTrue(expectedId.Equals(id1.Parent));
+        }
+
+        [Test]
+        public void TryGetPropertiesForSubscriptionProvider()
+        {
+            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute");
+            Assert.NotNull(id1.SubscriptionId);
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", id1.SubscriptionId);
+            Assert.Null(id1.Location);
+            Assert.Null(id1.ResourceGroupName);
+            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c");
+            Assert.NotNull(id1.Parent);
+            Assert.IsTrue(expectedId.Equals(id1.Parent));
+        }
+
+        [TestCase(SubscriptionResourceId, "Microsoft.Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(SubscriptionResourceId, null, "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(SubscriptionResourceId, "Microsoft.Authorization", null, "MyRoleAssignemnt")]
+        [TestCase(SubscriptionResourceId, "Microsoft.Authorization", "roleAssignments", null)]
+        [TestCase(SubscriptionResourceId, "", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(SubscriptionResourceId, "Microsoft.Authorization", "   ", "MyRoleAssignemnt")]
+        [TestCase(SubscriptionResourceId, "Microsoft.Authorization", "roleAssignments", "")]
+        [TestCase(SubscriptionResourceId, "Microsoft/Authorization", "roleAssignments", "MyRoleAssignemnt")]
+        [TestCase(SubscriptionResourceId, "Microsoft.Authorization", "roleA/ssignments", "MyRoleAssignemnt")]
+        [TestCase(SubscriptionResourceId, "Microsoft.Authorization", "roleAssignments", "MyRole/Assignemnt")]
+
+        public void TestAppendSubscriptionProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (providerNamespace is null || resourceTypeName is null || resourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else if (providerNamespace.Contains("/") || resourceTypeName.Contains("/") || resourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
+            else
+            {
+                var expected = $"{resourceId}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}";
+                Assert.AreEqual(expected, resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName).ToString());
+            }
+        }
+
+        [TestCase(SubscriptionResourceId, "wheels", "Wheel2")]
+        [TestCase(SubscriptionResourceId, null, "wheel2")]
+        [TestCase(SubscriptionResourceId, "wheels", null)]
+        [TestCase(SubscriptionResourceId, "", "wheel2")]
+        [TestCase(SubscriptionResourceId, "wheels", "  ")]
+        [TestCase(SubscriptionResourceId, "wheels/spokes", "wheel2")]
+        [TestCase(SubscriptionResourceId, "wheels", "wheel1/wheel2")]
+        public void TestAppendSubscriptionChildResource(string resourceId, string childTypeName, string childResourceName)
+        {
+            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            if (childTypeName is null || childResourceName is null)
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
+                Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else if (childTypeName.Contains("/") || childResourceName.Contains("/"))
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () => resource.AppendChildResource(childTypeName, childResourceName));
+            else
+            {
+                var expected = $"{resourceId}/{childTypeName}/{childResourceName}";
+                Assert.AreEqual(expected, resource.AppendChildResource(childTypeName, childResourceName).ToString());
+            }
+        }
+        #endregion
+
+        #region SubscriptionProviderResourceIdentifier
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Insights")]
+        public void ImplicitConstructorWithProvider(string resourceProviderID)
+        {
+            string x = resourceProviderID;
+            string y;
+            ResourceIdentifier z = new ResourceIdentifier(x);
+            y = z;
+
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.AreEqual("Microsoft.Resources/providers", z.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.ResourceType.ToString());
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Name);
+
+            if (resourceProviderID is null)
+            {
+                Assert.IsNull(z);
+                Assert.IsNull(y);
+            }
+            else
+            {
+                Assert.AreEqual(resourceProviderID, y);
+                Assert.AreEqual(resourceProviderID, y);
+            }
+        }
+
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Insights/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testsubnet")]
+        public void ImplicitConstructorWithSubnet(string resourceProviderID)
+        {
+            string x = resourceProviderID;
+            string y;
+            ResourceIdentifier z = new ResourceIdentifier(x);
+            y = z;
+
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks/subnets", z.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Parent.Provider);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks/subnets", z.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Network/virtualNetworks", z.Parent.ResourceType.ToString());
+            Assert.AreEqual("testvnet", z.Parent.Name);
+            Assert.AreEqual("Microsoft.Resources/providers", z.Parent.Parent.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.Parent.Parent.ResourceType.ToString());
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Parent.Parent.Name);
+
+            if (resourceProviderID is null)
+            {
+                Assert.IsNull(z);
+                Assert.IsNull(y);
+            }
+            else
+            {
+                Assert.AreEqual(resourceProviderID, y);
+                Assert.AreEqual(resourceProviderID, y);
+            }
+        }
+
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Insights/providers/Microsoft.Network/virtualNetworks/testvnet")]
+        public void ImplicitConstructorWithVNet(string resourceProviderID)
+        {
+            string x = resourceProviderID;
+            string y;
+            ResourceIdentifier z = new ResourceIdentifier(x);
+            y = z;
+
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks", z.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks", z.ResourceType.ToString());
+            Assert.AreEqual("testvnet", z.Name);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
+            Assert.AreEqual("Microsoft.Resources/providers", z.Parent.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Name);
+            Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.Parent.ResourceType.ToString());
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Parent.Name);
+
+            if (resourceProviderID is null)
+            {
+                Assert.IsNull(z);
+                Assert.IsNull(y);
+            }
+            else
+            {
+                Assert.AreEqual(resourceProviderID, y);
+                Assert.AreEqual(resourceProviderID, y);
+            }
+        }
+        #endregion
+
+        [Test]
+        public void ThrowOnMistypedResource()
+        {
+            ResourceIdentifier tenant;
+            Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101"));
+            Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
+            Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
+
+            ResourceIdentifier subscription = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.IsNotNull(subscription);
+            Assert.DoesNotThrow(() => subscription = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
+            Assert.DoesNotThrow(() => subscription = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
+        }
 
         [Test]
         public void VerifyRootResource()
