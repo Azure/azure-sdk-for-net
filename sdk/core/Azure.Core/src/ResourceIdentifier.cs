@@ -14,6 +14,8 @@ namespace Azure.Core
     /// </summary>
     public sealed class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
+        private const char Separator = '/';
+
         private static ResourceType TenantResourceType = new ResourceType("Microsoft.Resources/tenants");
         private static ResourceType SubscriptionResourceType = new ResourceType("Microsoft.Resources/subscriptions");
         private static ResourceType ResourceGroupResourceType = new ResourceType("Microsoft.Resources/resourceGroups");
@@ -39,12 +41,13 @@ namespace Azure.Core
         /// <param name="name"> The name of the resource. </param>
         internal ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, string name)
         {
-            Init(parent, resourceType, name, true);
+            Init(parent, resourceType, name);
             ResourceType = resourceType;
             Name = name;
             Parent = parent ?? Root;
             if (parent is null)
                 _stringValue = RootStringValue;
+            IsChild = true;
         }
 
         /// <summary>
@@ -54,19 +57,21 @@ namespace Azure.Core
         public ResourceIdentifier(string resourceId)
         {
             var id = Create(resourceId);
-            Init(id.Parent, id.ResourceType, id.Name, id.IsChild);
+            Init(id.Parent, id.ResourceType, id.Name);
             ResourceType = id.ResourceType;
             Name = id.Name;
             Parent = id.Parent;
+            IsChild = id.IsChild;
         }
 
         private ResourceIdentifier(ResourceIdentifier parent, string resourceTypeName, string resourceName)
         {
             ResourceType resourceType = ChooseResourceType(resourceTypeName, parent);
-            Init(parent, resourceType, resourceName, true);
+            Init(parent, resourceType, resourceName);
             ResourceType = resourceType;
             Name = resourceName;
             Parent = parent;
+            IsChild = true;
         }
 
         /// <summary>
@@ -79,13 +84,14 @@ namespace Azure.Core
         internal ResourceIdentifier(ResourceIdentifier parent, string providerNamespace, string resourceTypeName, string resourceName)
         {
             ResourceType resourceType = new ResourceType(providerNamespace, resourceTypeName);
-            Init(parent, resourceType, resourceName, false);
+            Init(parent, resourceType, resourceName);
             ResourceType = resourceType;
             Name = resourceName;
             Parent = parent;
+            IsChild = false;
         }
 
-        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string name, bool isChild)
+        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string name)
         {
             if (parent is not null)
             {
@@ -110,8 +116,6 @@ namespace Azure.Core
 
             if (resourceType == ProviderResourceType)
                 Provider = name;
-
-            IsChild = isChild;
         }
 
         private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
@@ -126,63 +130,61 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            if (!resourceId.StartsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            if (!resourceId.StartsWith(RootStringValue, StringComparison.InvariantCultureIgnoreCase))
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier must start with '/'.");
 
-            var parts = resourceId.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            if (parts.Count < 2)
+            if (resourceId.Length == 1)
+                return Root;
+
+            var parts = resourceId.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length < 2)
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier is too short it must have at least 2 path segments.");
 
-            var firstToLower = parts[0].ToLowerInvariant();
-            if (firstToLower != SubscriptionsKey && firstToLower != ProvidersKey)
+            if (!parts[0].Equals(SubscriptionsKey, StringComparison.OrdinalIgnoreCase) && !parts[0].Equals(ProvidersKey, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with either '/{SubscriptionsKey}' or '/{ProvidersKey}'.");
 
-            return AppendNext(Root, parts);
+            return AppendNext(Root, parts, 0);
         }
 
-        private static ResourceIdentifier AppendNext(ResourceIdentifier parent, List<string> parts)
+        private static ResourceIdentifier AppendNext(ResourceIdentifier parent, string[] parts, int startIndex)
         {
-            if (parts.Count == 0)
+            int partsCount = parts.Length - startIndex;
+
+            if (partsCount == 0)
                 return parent;
 
-            var lowerFirstPart = parts[0].ToLowerInvariant();
-
-            if (parts.Count == 1)
+            if (partsCount == 1)
             {
                 //subscriptions and resourceGroups aren't valid ids without their name
-                if (lowerFirstPart == SubscriptionsKey || lowerFirstPart == ResourceGroupsLowerKey)
-                    throw new ArgumentOutOfRangeException(nameof(parts), $"The ResourceIdentifier is missing the key for {lowerFirstPart}.");
+                if (parts[startIndex].Equals(SubscriptionsKey, StringComparison.OrdinalIgnoreCase) || parts[startIndex].Equals(ResourceGroupsLowerKey, StringComparison.OrdinalIgnoreCase))
+                    throw new ArgumentOutOfRangeException(nameof(parts), $"The ResourceIdentifier is missing the key for {parts[startIndex]}.");
 
                 //resourceGroup must contain either child or provider resource type
                 if (parent.ResourceType == ResourceGroupResourceType)
                     throw new ArgumentOutOfRangeException(nameof(parts), $"Expected {ProvidersKey} path segment after {ResourceGroupsLowerKey}.");
 
-                return new ResourceIdentifier(parent, parts[0], string.Empty);
+                return new ResourceIdentifier(parent, parts[startIndex], string.Empty);
             }
 
-            if (lowerFirstPart == ProvidersKey && (parts.Count == 2 || parts[2].ToLowerInvariant() == ProvidersKey))
+            bool isFirstProvider = parts[startIndex].Equals(ProvidersKey, StringComparison.OrdinalIgnoreCase);
+
+            if (isFirstProvider && (partsCount == 2 || parts[startIndex+2].Equals(ProvidersKey, StringComparison.OrdinalIgnoreCase)))
             {
                 //provider resource can only be on a tenant or a subscription parent
                 if (parent.ResourceType != SubscriptionResourceType && parent.ResourceType != TenantResourceType)
                     throw new ArgumentOutOfRangeException(nameof(parts), $"Provider resource can only come after the root or {SubscriptionsKey}.");
 
-                var newParent = new ResourceIdentifier(parent, ProviderResourceType, parts[1]);
-                parts.RemoveRange(0, 2);
-                return AppendNext(newParent, parts);
+                return AppendNext(new ResourceIdentifier(parent, ProviderResourceType, parts[startIndex + 1]), parts, startIndex + 2);
             }
 
-            if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
+            if (partsCount > 3 && isFirstProvider)
             {
-                var newParent = new ResourceIdentifier(parent, parts[1], parts[2], parts[3]);
-                parts.RemoveRange(0, 4);
-                return AppendNext(newParent, parts);
+                return AppendNext(new ResourceIdentifier(parent, parts[startIndex + 1], parts[startIndex + 2], parts[startIndex + 3]), parts, startIndex+4);
             }
 
-            if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
+            if (partsCount > 1 && !isFirstProvider)
             {
-                var newParent = new ResourceIdentifier(parent, parts[0], parts[1]);
-                parts.RemoveRange(0, 2);
-                return AppendNext(newParent, parts);
+                return AppendNext(new ResourceIdentifier(parent, parts[startIndex], parts[startIndex + 1]), parts, startIndex+2);
             }
 
             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
@@ -196,22 +198,22 @@ namespace Azure.Core
         /// <summary>
         /// The resource type of the resource.
         /// </summary>
-        public ResourceType ResourceType { get; private set; }
+        public ResourceType ResourceType { get; }
 
         /// <summary>
         /// The name of the resource.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// The immediate parent containing this resource.
         /// </summary>
-        public ResourceIdentifier Parent { get; private set; }
+        public ResourceIdentifier Parent { get; }
 
         /// <summary>
         /// Determines whether this resource is in the same namespace as its parent.
         /// </summary>
-        internal bool IsChild { get; private set; }
+        internal bool IsChild { get; }
 
         /// <summary>
         /// Gets the subscription id if it exists otherwise null.

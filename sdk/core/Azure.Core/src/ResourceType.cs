@@ -15,6 +15,7 @@ namespace Azure.Core
     public readonly struct ResourceType : IEquatable<ResourceType>
     {
         private const char Separator = '/';
+        private readonly string _stringValue;
 
         /// <summary>
         /// The resource type for the root of the resource hierarchy.
@@ -33,6 +34,7 @@ namespace Azure.Core
             if (index == -1 || resourceType.Length <3)
                 throw new ArgumentOutOfRangeException(nameof(resourceType));
 
+            _stringValue = resourceType;
             Namespace = resourceType.Substring(0, index);
             Type = resourceType.Substring(index + 1);
         }
@@ -46,11 +48,12 @@ namespace Azure.Core
         {
             Namespace = providerNamespace;
             Type = name;
+            _stringValue = $"{Namespace}{Separator}{Type}";
         }
 
         internal ResourceType AppendChild(string childType)
         {
-            return new ResourceType(Namespace, $"{Type}{Separator}{childType}");
+            return new ResourceType($"{_stringValue}{Separator}{childType}");
         }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace Azure.Core
         /// <param name="other"> <see cref="ResourceType"/> to be converted into a string. </param>
         public static implicit operator string(ResourceType other)
         {
-            return other.ToString();
+            return other._stringValue;
         }
 
         /// <summary>
@@ -119,13 +122,13 @@ namespace Azure.Core
         /// <returns> True if they are equals, otherwise false. </returns>
         public bool Equals(ResourceType other)
         {
-            return string.Equals(ToString(), other.ToString(), StringComparison.OrdinalIgnoreCase);
+            return _stringValue.Equals(other._stringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Namespace}{Separator}{Type}";
+            return _stringValue;
         }
 
         /// <inheritdoc/>
@@ -150,7 +153,7 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return StringComparer.OrdinalIgnoreCase.GetHashCode(ToString());
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(_stringValue);
         }
     }
 }
