@@ -60,5 +60,12 @@ namespace Azure.Monitor.Query.Tests
             var client = new MetricsQueryClient(new Uri("https://management.azure.gov"), new MockCredential(), new MetricsQueryClientOptions());
             Assert.AreEqual(new Uri("https://management.azure.gov"), client.Endpoint);
         }
+
+        [Test]
+        public async Task CanGetMetricQueryResult()
+        {
+            var client = new MetricsQueryClient(new Uri("https://management.azure.gov"), new MockCredential(), new MetricsQueryClientOptions());
+
+        }
     }
 }
