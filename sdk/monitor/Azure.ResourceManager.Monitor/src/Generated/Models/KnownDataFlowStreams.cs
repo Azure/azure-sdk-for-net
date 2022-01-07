@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The KnownDataFlowStreams. </summary>
-    public readonly partial struct KnownDataFlowStreams : IEquatable<KnownDataFlowStreams>
+    internal readonly partial struct KnownDataFlowStreams : IEquatable<KnownDataFlowStreams>
     {
         private readonly string _value;
 

@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
@@ -35,39 +40,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(DataSources))
-            {
-                writer.WritePropertyName("dataSources");
-                writer.WriteObjectValue(DataSources);
-            }
-            if (Optional.IsDefined(Destinations))
-            {
-                writer.WritePropertyName("destinations");
-                writer.WriteObjectValue(Destinations);
-            }
-            if (Optional.IsCollectionDefined(DataFlows))
-            {
-                writer.WritePropertyName("dataFlows");
-                writer.WriteStartArray();
-                foreach (var item in DataFlows)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element)
         {
+            Optional<DataCollectionRuleProperties> properties = default;
             Optional<KnownDataCollectionRuleResourceKind> kind = default;
             Optional<string> etag = default;
             Optional<SystemData> systemData = default;
@@ -76,14 +54,18 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> description = default;
-            Optional<string> immutableId = default;
-            Optional<DataCollectionRulePropertiesDataSources> dataSources = default;
-            Optional<DataCollectionRulePropertiesDestinations> destinations = default;
-            Optional<IList<DataFlow>> dataFlows = default;
-            Optional<KnownDataCollectionRuleProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = DataCollectionRuleProperties.DeserializeDataCollectionRuleProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -139,75 +121,8 @@ namespace Azure.ResourceManager.Monitor
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("immutableId"))
-                        {
-                            immutableId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataSources"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            dataSources = DataCollectionRulePropertiesDataSources.DeserializeDataCollectionRulePropertiesDataSources(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("destinations"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            destinations = DataCollectionRulePropertiesDestinations.DeserializeDataCollectionRulePropertiesDestinations(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("dataFlows"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<DataFlow> array = new List<DataFlow>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataFlow.DeserializeDataFlow(item));
-                            }
-                            dataFlows = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new KnownDataCollectionRuleProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataCollectionRuleData(id, name, type, tags, location, Optional.ToNullable(kind), etag.Value, systemData, description.Value, immutableId.Value, dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleData(id, name, type, tags, location, properties.Value, Optional.ToNullable(kind), etag.Value, systemData);
         }
     }
 }

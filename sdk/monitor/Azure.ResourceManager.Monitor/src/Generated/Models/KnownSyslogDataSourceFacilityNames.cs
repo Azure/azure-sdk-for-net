@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The KnownSyslogDataSourceFacilityNames. </summary>
-    public readonly partial struct KnownSyslogDataSourceFacilityNames : IEquatable<KnownSyslogDataSourceFacilityNames>
+    internal readonly partial struct KnownSyslogDataSourceFacilityNames : IEquatable<KnownSyslogDataSourceFacilityNames>
     {
         private readonly string _value;
 

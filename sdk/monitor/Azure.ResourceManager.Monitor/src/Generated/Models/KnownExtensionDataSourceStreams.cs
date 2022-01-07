@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The KnownExtensionDataSourceStreams. </summary>
-    public readonly partial struct KnownExtensionDataSourceStreams : IEquatable<KnownExtensionDataSourceStreams>
+    internal readonly partial struct KnownExtensionDataSourceStreams : IEquatable<KnownExtensionDataSourceStreams>
     {
         private readonly string _value;
 

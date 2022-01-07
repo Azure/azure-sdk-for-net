@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The KnownPerfCounterDataSourceStreams. </summary>
-    public readonly partial struct KnownPerfCounterDataSourceStreams : IEquatable<KnownPerfCounterDataSourceStreams>
+    internal readonly partial struct KnownPerfCounterDataSourceStreams : IEquatable<KnownPerfCounterDataSourceStreams>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The KnownWindowsEventLogDataSourceStreams. </summary>
-    public readonly partial struct KnownWindowsEventLogDataSourceStreams : IEquatable<KnownWindowsEventLogDataSourceStreams>
+    internal readonly partial struct KnownWindowsEventLogDataSourceStreams : IEquatable<KnownWindowsEventLogDataSourceStreams>
     {
         private readonly string _value;
 

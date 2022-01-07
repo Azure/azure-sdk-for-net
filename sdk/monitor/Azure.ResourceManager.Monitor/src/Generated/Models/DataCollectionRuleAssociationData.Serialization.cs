@@ -18,40 +18,34 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(DataCollectionRuleId))
-            {
-                writer.WritePropertyName("dataCollectionRuleId");
-                writer.WriteStringValue(DataCollectionRuleId);
-            }
-            if (Optional.IsDefined(DataCollectionEndpointId))
-            {
-                writer.WritePropertyName("dataCollectionEndpointId");
-                writer.WriteStringValue(DataCollectionEndpointId);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DataCollectionRuleAssociationData DeserializeDataCollectionRuleAssociationData(JsonElement element)
         {
+            Optional<DataCollectionRuleAssociationProperties> properties = default;
             Optional<string> etag = default;
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> description = default;
-            Optional<string> dataCollectionRuleId = default;
-            Optional<string> dataCollectionEndpointId = default;
-            Optional<KnownDataCollectionRuleAssociationProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = DataCollectionRuleAssociationProperties.DeserializeDataCollectionRuleAssociationProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
@@ -82,45 +76,8 @@ namespace Azure.ResourceManager.Monitor
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataCollectionRuleId"))
-                        {
-                            dataCollectionRuleId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataCollectionEndpointId"))
-                        {
-                            dataCollectionEndpointId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new KnownDataCollectionRuleAssociationProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataCollectionRuleAssociationData(id, name, type, etag.Value, systemData, description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleAssociationData(id, name, type, properties.Value, etag.Value, systemData);
         }
     }
 }

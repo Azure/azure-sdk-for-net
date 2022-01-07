@@ -8,27 +8,17 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Azure Monitor Metrics destination. </summary>
-    public partial class AzureMonitorMetricsDestination
+    internal partial class AzureMonitorMetricsDestination
     {
         /// <summary> Initializes a new instance of AzureMonitorMetricsDestination. </summary>
-        public AzureMonitorMetricsDestination()
+        internal AzureMonitorMetricsDestination()
         {
-        }
-
-        /// <summary> Initializes a new instance of AzureMonitorMetricsDestination. </summary>
-        /// <param name="name">
-        /// A friendly name for the destination. 
-        /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// </param>
-        internal AzureMonitorMetricsDestination(string name)
-        {
-            Name = name;
         }
 
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
     }
 }

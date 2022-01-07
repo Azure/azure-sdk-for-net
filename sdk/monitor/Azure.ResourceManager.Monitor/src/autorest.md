@@ -33,9 +33,24 @@ directive:
   - rename-model:
       from: MetricAlertResource
       to: MetricAlert
-  - rename-model:
-      from: DataCollectionRuleAssociation
-      to: DataCollectionRuleAssociationProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRuleAssociationProxyOnlyResource.properties.properties
+    transform:  >
+        $ = {
+          "description": "Resource properties.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DataCollectionRuleAssociation"
+            }
+          ],
+          "x-ms-client-flatten": false
+        }
+#   - rename-model:
+#       from: DataCollectionRuleAssociation
+#       to: DataCollectionRuleAssociationProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRuleAssociation
+    transform: $["x-ms-client-name"] = "DataCollectionRuleAssociationProperties"
   - rename-model:
       from: DataCollectionRuleAssociationProxyOnlyResource
       to: DataCollectionRuleAssociation
@@ -84,9 +99,24 @@ directive:
   - rename-model:
       from: DataCollectionEndpointResource
       to: DataCollectionEndpoint
-  - rename-model:
-      from: DataCollectionRule
-      to: DataCollectionRuleProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRuleResource.properties.properties
+    transform:  >
+        $ = {
+          "description": "Resource properties.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DataCollectionRule"
+            }
+          ],
+          "x-ms-client-flatten": false
+        }
+#   - rename-model:
+#       from: DataCollectionRule
+#       to: DataCollectionRuleProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRule
+    transform: $["x-ms-client-name"] = "DataCollectionRuleProperties"
   - rename-model:
       from: DataCollectionRuleResource
       to: DataCollectionRule
@@ -114,4 +144,10 @@ directive:
   - rename-model:
       from: VMInsightsOnboardingStatus
       to: VmInsightsOnboardingStatus
+#   - rename-model:
+#       from: Resource
+#       to: MonitorResource
+  - from: activityLogAlerts_API.json
+    where: $.definitions.Resource
+    transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
 ```
