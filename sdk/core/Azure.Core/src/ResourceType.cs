@@ -2,19 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
 
 namespace Azure.Core
 {
     /// <summary>
     /// Structure representing a resource type.
     /// </summary>
+    /// <remarks> See https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types for more info. </remarks>
     public readonly struct ResourceType : IEquatable<ResourceType>
     {
-        private const char Separator = '/';
         private readonly string _stringValue;
 
         /// <summary>
@@ -30,7 +27,7 @@ namespace Azure.Core
         {
             Argument.AssertNotNullOrWhiteSpace(resourceType, nameof(resourceType));
 
-            int index = resourceType.IndexOf(Separator);
+            int index = resourceType.IndexOf(ResourceIdentifier.Separator);
             if (index == -1 || resourceType.Length <3)
                 throw new ArgumentOutOfRangeException(nameof(resourceType));
 
@@ -48,19 +45,19 @@ namespace Azure.Core
         {
             Namespace = providerNamespace;
             Type = name;
-            _stringValue = $"{Namespace}{Separator}{Type}";
+            _stringValue = $"{Namespace}{ResourceIdentifier.Separator}{Type}";
         }
 
         internal ResourceType AppendChild(string childType)
         {
-            return new ResourceType($"{_stringValue}{Separator}{childType}");
+            return new ResourceType($"{_stringValue}{ResourceIdentifier.Separator}{childType}");
         }
 
         /// <summary>
         /// Gets the last resource type name.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string GetLastType() => Type.Substring(Type.LastIndexOf(Separator) + 1);
+        public string GetLastType() => Type.Substring(Type.LastIndexOf(ResourceIdentifier.Separator) + 1);
 
         /// <summary>
         /// Gets the resource type Namespace.
