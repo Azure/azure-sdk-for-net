@@ -72,7 +72,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 }
                 if (!hasAnomaly)
                 {
-                    Console.WriteLine(" No anomalies detected in the series.");
+                    Console.WriteLine("No anomalies detected in the series.");
                 }
             }
             catch (RequestFailedException ex)
