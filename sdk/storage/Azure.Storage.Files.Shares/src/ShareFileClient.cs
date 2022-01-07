@@ -4084,13 +4084,20 @@ namespace Azure.Storage.Files.Shares
 
                     ResponseWithHeaders<FileUploadRangeHeaders> response;
 
+                    string fileLastWriteTime = null;
+
+                    if (options?.PreserveFileLastWrittenOn ?? false)
+                    {
+                        fileLastWriteTime = Constants.File.Preserve;
+                    }
+
                     if (async)
                     {
                         response = await FileRestClient.UploadRangeAsync(
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
-                            fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: fileLastWriteTime,
                             optionalbody: content,
                             contentMD5: hashResult?.MD5,
                             leaseAccessConditions: options?.Conditions,
@@ -4103,7 +4110,7 @@ namespace Azure.Storage.Files.Shares
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
-                            fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: fileLastWriteTime,
                             optionalbody: content,
                             contentMD5: hashResult?.MD5,
                             leaseAccessConditions: options?.Conditions,
@@ -4172,7 +4179,7 @@ namespace Azure.Storage.Files.Shares
                 sourceRange: sourceRange,
                 conditions: options?.Conditions,
                 sourceAuthentication: options?.SourceAuthentication,
-                fileLastWrittenOn: default,
+                fileLastWrittenOn: options?.PreserveFileLastWrittenOn,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4219,7 +4226,7 @@ namespace Azure.Storage.Files.Shares
                 sourceRange: sourceRange,
                 conditions: options?.Conditions,
                 sourceAuthentication: options?.SourceAuthentication,
-                fileLastWrittenOn: default,
+                fileLastWrittenOn: options?.PreserveFileLastWrittenOn,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4467,7 +4474,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange sourceRange,
             ShareFileRequestConditions conditions,
             HttpAuthorization sourceAuthentication,
-            DateTimeOffset? fileLastWrittenOn,
+            bool? fileLastWrittenOn,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4486,6 +4493,13 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ResponseWithHeaders<FileUploadRangeFromURLHeaders> response;
 
+                    string fileLastWriteTime = null;
+
+                    if (fileLastWrittenOn ?? false)
+                    {
+                        fileLastWriteTime = Constants.File.Preserve;
+                    }
+
                     if (async)
                     {
                         response = await FileRestClient.UploadRangeFromURLAsync(
@@ -4494,7 +4508,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
-                            fileLastWriteTime: fileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: fileLastWriteTime,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4507,7 +4521,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
-                            fileLastWriteTime: fileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: fileLastWriteTime,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
