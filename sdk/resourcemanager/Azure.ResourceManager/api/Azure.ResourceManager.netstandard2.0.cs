@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Models
         public string Identity { get { throw null; } set { } }
         public string KeyIdentifier { get { throw null; } set { } }
     }
-    public sealed partial class Plan : System.IComparable<Azure.ResourceManager.Models.Plan>, System.IEquatable<Azure.ResourceManager.Models.Plan>
+    public sealed partial class Plan : System.IEquatable<Azure.ResourceManager.Models.Plan>
     {
         public Plan(string name, string publisher, string product) { }
         public string Name { get { throw null; } set { } }
@@ -487,18 +487,13 @@ namespace Azure.ResourceManager.Models
         public string PromotionCode { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
-        public int CompareTo(Azure.ResourceManager.Models.Plan other) { throw null; }
         public bool Equals(Azure.ResourceManager.Models.Plan other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
-        public static bool operator >(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
-        public static bool operator >=(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
-        public static bool operator <(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
-        public static bool operator <=(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
     }
     public abstract partial class Resource
     {
@@ -508,7 +503,7 @@ namespace Azure.ResourceManager.Models
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType Type { get { throw null; } }
     }
-    public sealed partial class Sku : System.IComparable<Azure.ResourceManager.Models.Sku>, System.IEquatable<Azure.ResourceManager.Models.Sku>
+    public sealed partial class Sku : System.IEquatable<Azure.ResourceManager.Models.Sku>
     {
         public Sku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -516,18 +511,13 @@ namespace Azure.ResourceManager.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.Models.SkuTier? Tier { get { throw null; } set { } }
-        public int CompareTo(Azure.ResourceManager.Models.Sku other) { throw null; }
         public bool Equals(Azure.ResourceManager.Models.Sku other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
-        public static bool operator >(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
-        public static bool operator >=(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
-        public static bool operator <(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
-        public static bool operator <=(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
     }
     public enum SkuTier
     {
@@ -2215,7 +2205,6 @@ namespace Azure.ResourceManager.Resources.Models
         public SystemAssignedIdentity(System.Guid tenantId, System.Guid principalId) { }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
-        public int CompareTo(Azure.ResourceManager.Resources.Models.SystemAssignedIdentity other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.SystemAssignedIdentity other) { throw null; }
         public static bool Equals(Azure.ResourceManager.Resources.Models.SystemAssignedIdentity original, Azure.ResourceManager.Resources.Models.SystemAssignedIdentity other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2288,7 +2277,6 @@ namespace Azure.ResourceManager.Resources.Models
         public UserAssignedIdentity() { }
         public System.Guid ClientId { get { throw null; } }
         public System.Guid PrincipalId { get { throw null; } }
-        public int CompareTo(Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }
         public static bool Equals(Azure.ResourceManager.Resources.Models.UserAssignedIdentity original, Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
