@@ -165,7 +165,7 @@ namespace ConsoleTest
                     }
                 }
             };
-            Operation<BinaryData> operationResponse = await _updatesClient.ImportUpdateAsync(action, RequestContent.Create(updateToImport), new RequestContext());
+            Operation<BinaryData> operationResponse = await _updatesClient.ImportUpdateAsync(true, action, RequestContent.Create(updateToImport), new RequestContext());
             string operationId = GetJobIdFromLocationHeader(operationResponse.GetRawResponse());
             Console.WriteLine($"Import operation id: {operationId}");
 
@@ -357,7 +357,7 @@ namespace ConsoleTest
                     version
                 }
             };
-            Response deployment = await _managementClient.CreateOrUpdateDeploymentAsync(deploymentId, groupid, RequestContent.Create(data));
+            Response deployment = await _managementClient.CreateOrUpdateDeploymentAsync(deploymentId, groupid, RequestContent.Create(data), new RequestContext());
             var deploymentDoc = JsonDocument.Parse(deployment.Content.ToMemory());
 
             Console.WriteLine($"Deployment '{deploymentDoc.RootElement.GetProperty("deploymentId").GetString()}' is created.");
@@ -416,7 +416,7 @@ namespace ConsoleTest
         private async Task DeleteUpdateStepAsync(string provider, string name, string version)
         {
             Console.WriteLine("Deleting the update...");
-            Operation<BinaryData> operationResponse = await _updatesClient.DeleteUpdateAsync(provider, name, version);
+            Operation<BinaryData> operationResponse = await _updatesClient.DeleteUpdateAsync(true, provider, name, version);
             string operationId = GetJobIdFromLocationHeader(operationResponse.GetRawResponse());
             Console.WriteLine($"Delete operation id: {operationId}");
 
