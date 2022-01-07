@@ -127,7 +127,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
                     version = "2021.1117.1036.48"
                 }
             };
-            Response createDeploymentResponse = await client.CreateOrUpdateDeploymentAsync(deploymentid, groupid, RequestContent.Create(deploymentBody), new RequestContext());
+            Response createDeploymentResponse = await client.CreateOrUpdateDeploymentAsync(groupid, deploymentid, RequestContent.Create(deploymentBody), new RequestContext());
             Assert.IsTrue(createDeploymentResponse.Status == 200);
             /* get deployment. */
             Response getDepoloymentResponse = await client.GetDeploymentAsync(groupid, deploymentid, new RequestContext());
