@@ -46,21 +46,21 @@ This tutorial has following sections:
 
 For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
 
-You can run `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` to generate the starting SDK client library package directly as following
+You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following
 ```
-eng/automation/Invoke-DataPlaneGenerateShippablePackage.ps1 -service <servicename> -namespace Azure.<group>.<source> -sdkPath <sdkrepoRootPath> -inputfile <inputfilelink> -securityScope <securityScope>
+eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<source> -sdkPath <sdkrepoRootPath> -inputfile <inputfilelink> -securityScope <securityScope>
 ```
 
 e.g.
 ```
-pwsh /home/azure-sdk-for-net/eng/automation/Invoke-DataPlaneGenerateShippablePackage.ps1 -service sample -namespace Azure.Template.Sample -sdkPath /home/azure-sdk-for-net -inputfile https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
+pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service sample -namespace Azure.Template.Sample -sdkPath /home/azure-sdk-for-net -inputfile https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 ```
 
 **Note**: Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 **Note**: namespace is the shipped package name, it should be Azure.<group>.<service>
 **Note**: inputfile is the api definition file. It can be local file e.g. ./swagger/compute.json or premlink, e.g. https://github.com/dpokluda/azure-rest-api-specs/blob/be397aa65510bd4e8f87da539af2b0025f6f44ca/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2020-09-01/deviceupdate.json".
 
-The script `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` will do **step-by-step** as following.
+The script `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` will do **step-by-step** as following.
 
 ### Create the project folder
 
