@@ -40,7 +40,7 @@ function New-DataPlanePackageFolder() {
       [string]$service,
       [string]$namespace,
       [string]$sdkPath = "",
-      [string]$inputfile = "",
+      [string]$inputfiles = "", # input files, separated by semicolon if more than one
       [string]$securityScope,
       [string]$AUTOREST_CONFIG_FILE = "autorest.md",
       [string]$outputJsonFile = "output.json"
@@ -48,13 +48,20 @@ function New-DataPlanePackageFolder() {
 
   $sdkPath = $sdkPath -replace "\\", "/"
 
+  $inputfile = ""
+  $fileArray = $inputfiles.Split(";")
+  if ($inputfiles -ne "" && $fileArray.Length -gt 0) {
+    $inputfile = $fileArray[0];
+    for ($i = 1; $i -lt $fileArray.Count ; $i++) {
+        $inputfile = $inputfile + [Environment]::NewLine + "- " + $fileArray[$i]
+    }
+  }
   $projectFolder="$sdkPath/sdk/$service/$namespace"
   if (Test-Path -Path $projectFolder) {
     Write-Host "Path exists!"
       # update the input-file url if needed.
     if ($inputfile -ne "") {
         Write-Host "Updating autorest.md file."
-        $inputfile = "input-file: $inputfile"
         $inputfileRex = "input-file *:.*.json"
         $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
         if (Test-Path -Path $file) {
