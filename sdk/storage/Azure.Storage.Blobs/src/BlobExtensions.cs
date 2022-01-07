@@ -1390,6 +1390,76 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
+        #region ToPageBlobRanges
+        internal static PageBlobRange[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            List<PageBlobRange> pageBlobRangeList = new List<PageBlobRange>();
+
+            int pageRangeIndex = 0;
+            int clearRangeIndex = 0;
+
+            IReadOnlyList<PageRange> pageRanges = response.Value.PageRange;
+            IReadOnlyList<ClearRange> clearRanges = response.Value.ClearRange;
+
+            while (pageRangeIndex < pageRanges.Count
+                || clearRangeIndex < clearRanges.Count)
+            {
+                // Haven't ran out of page ranges or clear ranges yet.
+                if (pageRangeIndex < pageRanges.Count
+                    && clearRangeIndex < clearRanges.Count)
+                {
+                    // Next page range starts before next clear range.
+                    if (pageRanges[pageRangeIndex].Start <= clearRanges[clearRangeIndex].Start)
+                    {
+                        pageBlobRangeList.Add(new PageBlobRange
+                        {
+                            IsClear = false,
+                            Range = response.Value.PageRange[pageRangeIndex].ToHttpRange()
+                        });
+                        pageRangeIndex++;
+                    }
+                    // Next clear range starts before next page range.
+                    else
+                    {
+                        pageBlobRangeList.Add(new PageBlobRange
+                        {
+                            IsClear = true,
+                            Range = response.Value.ClearRange[clearRangeIndex].ToHttpRange()
+                        });
+                        clearRangeIndex++;
+                    }
+                }
+                // We ran out of clear ranges.
+                else if (pageRangeIndex < response.Value.PageRange.Count)
+                {
+                    pageBlobRangeList.Add(new PageBlobRange
+                    {
+                        IsClear = false,
+                        Range = response.Value.PageRange[pageRangeIndex].ToHttpRange()
+                    });
+                    pageRangeIndex++;
+                }
+                // we ran out of filled ranges.
+                else
+                {
+                    pageBlobRangeList.Add(new PageBlobRange
+                    {
+                        IsClear = true,
+                        Range = response.Value.ClearRange[clearRangeIndex].ToHttpRange()
+                    });
+                    clearRangeIndex++;
+                }
+            }
+
+            return pageBlobRangeList.ToArray();
+        }
+        #endregion ToPageBlobRanges
+
         #region ValidateConditionsNotPresent
         internal static void ValidateConditionsNotPresent(
             this RequestConditions requestConditions,
