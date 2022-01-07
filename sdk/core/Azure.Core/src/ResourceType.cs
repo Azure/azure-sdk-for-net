@@ -60,10 +60,7 @@ namespace Azure.Core
         /// Gets the last resource type name.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string GetLastType()
-        {
-            return Type.Substring(Type.LastIndexOf(Separator) + 1);
-        }
+        public string GetLastType() => Type.Substring(Type.LastIndexOf(Separator) + 1);
 
         /// <summary>
         /// Gets the resource type Namespace.
