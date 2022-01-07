@@ -1562,9 +1562,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                pageBlob.GetPageRangesAsync(
+                pageBlob.GetPageRangesPageableAsync(
                     range: new HttpRange(0, 4 * Constants.KB),
-                    conditions: conditions),
+                    conditions: conditions).ToListAsync(),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 

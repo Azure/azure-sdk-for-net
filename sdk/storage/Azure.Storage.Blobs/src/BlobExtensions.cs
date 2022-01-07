@@ -1398,13 +1398,27 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
+        }
+
+        internal static PageBlobRange[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
+        }
+
+        internal static PageBlobRange[] ToPageBlobRanges(
+            IReadOnlyList<PageRange> pageRanges,
+            IReadOnlyList<ClearRange> clearRanges)
+        {
             List<PageBlobRange> pageBlobRangeList = new List<PageBlobRange>();
 
             int pageRangeIndex = 0;
             int clearRangeIndex = 0;
-
-            IReadOnlyList<PageRange> pageRanges = response.Value.PageRange;
-            IReadOnlyList<ClearRange> clearRanges = response.Value.ClearRange;
 
             while (pageRangeIndex < pageRanges.Count
                 || clearRangeIndex < clearRanges.Count)
@@ -1419,7 +1433,7 @@ namespace Azure.Storage.Blobs
                         pageBlobRangeList.Add(new PageBlobRange
                         {
                             IsClear = false,
-                            Range = response.Value.PageRange[pageRangeIndex].ToHttpRange()
+                            Range = pageRanges[pageRangeIndex].ToHttpRange()
                         });
                         pageRangeIndex++;
                     }
@@ -1429,18 +1443,18 @@ namespace Azure.Storage.Blobs
                         pageBlobRangeList.Add(new PageBlobRange
                         {
                             IsClear = true,
-                            Range = response.Value.ClearRange[clearRangeIndex].ToHttpRange()
+                            Range = clearRanges[clearRangeIndex].ToHttpRange()
                         });
                         clearRangeIndex++;
                     }
                 }
                 // We ran out of clear ranges.
-                else if (pageRangeIndex < response.Value.PageRange.Count)
+                else if (pageRangeIndex < pageRanges.Count)
                 {
                     pageBlobRangeList.Add(new PageBlobRange
                     {
                         IsClear = false,
-                        Range = response.Value.PageRange[pageRangeIndex].ToHttpRange()
+                        Range = pageRanges[pageRangeIndex].ToHttpRange()
                     });
                     pageRangeIndex++;
                 }
@@ -1450,7 +1464,7 @@ namespace Azure.Storage.Blobs
                     pageBlobRangeList.Add(new PageBlobRange
                     {
                         IsClear = true,
-                        Range = response.Value.ClearRange[clearRangeIndex].ToHttpRange()
+                        Range = clearRanges[clearRangeIndex].ToHttpRange()
                     });
                     clearRangeIndex++;
                 }

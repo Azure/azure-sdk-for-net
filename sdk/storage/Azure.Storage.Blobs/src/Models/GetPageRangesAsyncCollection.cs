@@ -12,21 +12,34 @@ namespace Azure.Storage.Blobs.Models
 {
     internal class GetPageRangesAsyncCollection : StorageCollectionEnumerator<PageBlobRange>
     {
+        // indicates if we are calling GetPageRange or GetPageRangeDiff.
+        private readonly bool _diff;
         private readonly PageBlobClient _client;
         private readonly HttpRange? _range;
         private readonly string _snapshot;
+        private readonly string _previousSnapshot;
+        private readonly Uri _previousSnapshotUri;
         private readonly PageBlobRequestConditions _requestConditions;
+        private readonly string _operationName;
 
         public GetPageRangesAsyncCollection(
+            bool diff,
             PageBlobClient client,
             HttpRange? range,
             string snapshot,
-            PageBlobRequestConditions requestConditions)
+            string previousSnapshot,
+            Uri previousSnapshotUri,
+            PageBlobRequestConditions requestConditions,
+            string operationName)
         {
+            _diff = diff;
             _client = client;
             _range = range;
             _snapshot = snapshot;
+            _previousSnapshot = previousSnapshot;
+            _previousSnapshotUri = previousSnapshotUri;
             _requestConditions = requestConditions;
+            _operationName = operationName;
         }
 
         public override async ValueTask<Page<PageBlobRange>> GetNextPageAsync(
@@ -35,36 +48,81 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
-            if (async)
+            // We are calling GetPageRangeDiff
+            if (_diff)
             {
-                response = await _client.GetPageRangesPageableInteral(
-                    marker: continuationToken,
-                    pageSizeHint: pageSizeHint,
-                    range: _range,
-                    snapshot: _snapshot,
-                    conditions: _requestConditions,
-                    async: true,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                response = _client.GetPageRangesPageableInteral(
-                    marker: continuationToken,
-                    pageSizeHint: pageSizeHint,
-                    range: _range,
-                    snapshot: _snapshot,
-                    conditions: _requestConditions,
-                    async: false,
-                    cancellationToken: cancellationToken)
-                    .EnsureCompleted();
+                ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
+                if (async)
+                {
+                    response = await _client.GetPageRangesDiffPageableInternal(
+                        marker: continuationToken,
+                        pageSizeHint: pageSizeHint,
+                        range: _range,
+                        snapshot: _snapshot,
+                        previousSnapshot: _previousSnapshot,
+                        previousSnapshotUri: _previousSnapshotUri,
+                        conditions: _requestConditions,
+                        async: true,
+                        operationName: _operationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    response = _client.GetPageRangesDiffPageableInternal(
+                        marker: continuationToken,
+                        pageSizeHint: pageSizeHint,
+                        range: _range,
+                        snapshot: _snapshot,
+                        previousSnapshot: _previousSnapshot,
+                        previousSnapshotUri: _previousSnapshotUri,
+                        conditions: _requestConditions,
+                        async: false,
+                        operationName: _operationName,
+                        cancellationToken: cancellationToken)
+                        .EnsureCompleted();
+                }
+
+                return Page<PageBlobRange>.FromValues(
+                    values: response.ToPageBlobRanges(),
+                    continuationToken: response.Value.NextMarker,
+                    response: response.GetRawResponse());
             }
 
-            return Page<PageBlobRange>.FromValues(
-                values: response.ToPageBlobRanges(),
-                continuationToken: response.Value.NextMarker,
-                response: response.GetRawResponse());
+            // We are calling GetPageRange
+            else
+            {
+                ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
+                if (async)
+                {
+                    response = await _client.GetPageRangesPageableInteral(
+                        marker: continuationToken,
+                        pageSizeHint: pageSizeHint,
+                        range: _range,
+                        snapshot: _snapshot,
+                        conditions: _requestConditions,
+                        async: true,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    response = _client.GetPageRangesPageableInteral(
+                        marker: continuationToken,
+                        pageSizeHint: pageSizeHint,
+                        range: _range,
+                        snapshot: _snapshot,
+                        conditions: _requestConditions,
+                        async: false,
+                        cancellationToken: cancellationToken)
+                        .EnsureCompleted();
+                }
+
+                return Page<PageBlobRange>.FromValues(
+                    values: response.ToPageBlobRanges(),
+                    continuationToken: response.Value.NextMarker,
+                    response: response.GetRawResponse());
+            }
         }
     }
 }
