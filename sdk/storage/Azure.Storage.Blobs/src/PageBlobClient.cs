@@ -2804,6 +2804,132 @@ namespace Azure.Storage.Blobs.Specialized
 
         #endregion GetManagedDiskPageRangesDiff
 
+        #region GetManagedDiskPageRangesDiffPageable
+        /// <summary>
+        /// The <see cref="GetManagedDiskPageRangesDiffPageable"/>
+        /// operation returns the list of page ranges that differ between a
+        /// <paramref name="previousSnapshotUri"/> and this page blob. Changed pages
+        /// include both updated and cleared pages.  This API only works with
+        /// managed disk storage accounts.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optionally specifies the range of bytes over which to list ranges,
+        /// inclusively. If omitted, then all ranges for the blob are returned.
+        /// </param>
+        /// <param name="snapshot">
+        /// Optionally specifies the blob snapshot to retrieve page ranges
+        /// information from. For more information on working with blob snapshots,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
+        /// </param>
+        /// <param name="previousSnapshotUri">
+        /// This parameter only works with managed disk storage accounts.
+        /// Specifies that the response will contain only pages that were
+        /// changed between target blob and previous snapshot.  Changed pages
+        /// include both updated and cleared pages. The target blob may be a
+        /// snapshot, as long as the snapshot specified by
+        /// <paramref name="previousSnapshotUri"/> is the older of the two.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on getting page ranges for the this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{PageBlobRange}"/> describing the
+        /// valid page ranges for this blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<PageBlobRange> GetManagedDiskPageRangesDiffPageable(
+            HttpRange? range = default,
+            string snapshot = default,
+            Uri previousSnapshotUri = default,
+            PageBlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => new GetPageRangesAsyncCollection(
+                diff: true,
+                client: this,
+                range: range,
+                snapshot: snapshot,
+                previousSnapshot: null,
+                previousSnapshotUri: previousSnapshotUri,
+                requestConditions: conditions,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetManagedDiskPageRangesDiffPageable)}")
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetManagedDiskPageRangesDiffPageableAsync"/>
+        /// operation returns the list of page ranges that differ between a
+        /// <paramref name="previousSnapshotUri"/> and this page blob. Changed pages
+        /// include both updated and cleared pages.  This API only works with
+        /// managed disk storage accounts.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optionally specifies the range of bytes over which to list ranges,
+        /// inclusively. If omitted, then all ranges for the blob are returned.
+        /// </param>
+        /// <param name="snapshot">
+        /// Optionally specifies the blob snapshot to retrieve page ranges
+        /// information from. For more information on working with blob snapshots,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
+        /// </param>
+        /// <param name="previousSnapshotUri">
+        /// This parameter only works with managed disk storage accounts.
+        /// Specifies that the response will contain only pages that were
+        /// changed between target blob and previous snapshot.  Changed pages
+        /// include both updated and cleared pages. The target blob may be a
+        /// snapshot, as long as the snapshot specified by
+        /// <paramref name="previousSnapshotUri"/> is the older of the two.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on getting page ranges for the this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{PageBlobRange}"/> describing the
+        /// valid page ranges for this blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<PageBlobRange> GetManagedDiskPageRangesDiffPageableAsync(
+            HttpRange? range = default,
+            string snapshot = default,
+            Uri previousSnapshotUri = default,
+            PageBlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => new GetPageRangesAsyncCollection(
+                diff: true,
+                client: this,
+                range: range,
+                snapshot: snapshot,
+                previousSnapshot: null,
+                previousSnapshotUri: previousSnapshotUri,
+                requestConditions: conditions,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetManagedDiskPageRangesDiffPageable)}")
+            .ToAsyncCollection(cancellationToken);
+        #endregion GetManagedDiskPageRangesDiffPageable
+
         #region Resize
         /// <summary>
         /// The <see cref="Resize"/> operation resizes the page blob to
