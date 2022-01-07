@@ -143,14 +143,24 @@ function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGrou
         $spPassword = $servicePrincipal.Secret
         $appId = $servicePrincipal.ApplicationId
     } else {
-        Write-Verbose "Creating password for service principal via MS Graph API"
-        # Microsoft graph objects (Az version >= 7.0.0) do not provision a secret # on creation so it must be added separately.
-        # Submitting a password credential object without specifying a password will result in one being generated on the server side.
-        $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
-        $password.DisplayName = "Password for $displayName"
-        $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal }
-        $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
-        $appId = $servicePrincipal.AppId
+        if ((Get-Module Az).Version -eq "7.0.0") {
+            Write-Verbose "Creating password and credential for service principal via MS Graph API"
+            Write-Warning "Please update Az to >= 7.1.0 by running 'Update-Module Az'"
+            # Microsoft graph objects (Az version == 7.0.0) do not provision a secret on creation so it must be added separately.
+            # Submitting a password credential object without specifying a password will result in one being generated on the server side.
+            $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
+            $password.DisplayName = "Password for $displayName"
+            $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal }
+            $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
+            $appId = $servicePrincipal.AppId
+        } else {
+            Write-Verbose "Creating service principal credential via MS Graph API"
+            # In 7.1.0 the password credential issue was fixed (see https://github.com/Azure/azure-powershell/pull/16690) but the
+            # parameter set was changed making the above call fail due to a missing ServicePrincipalId parameter.
+            $credential = Retry { $servicePrincipal | New-AzADSpCredential }
+            $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
+            $appId = $servicePrincipal.AppId
+        }
     }
 
     return @{
