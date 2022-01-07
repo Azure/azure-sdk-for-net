@@ -14,4 +14,12 @@ output-folder: Generated/
 clear-output-folder: true
 mgmt-debug:
   show-request-path: true
+directive:
+  - rename-model:
+      from: Configuration
+      to: ProductConfiguration
+  - from: swagger-document
+    where: "$.definitions.DiskPool.properties.sku"
+    transform: >
+      $["x-ms-client-flatten"] = false;
 ```

@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.StoragePool
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
+            }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
             foreach (var item in Tags)
@@ -64,24 +69,12 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("sku");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(NameSkuName))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(NameSkuName);
-            }
-            if (Optional.IsDefined(Tier))
-            {
-                writer.WritePropertyName("tier");
-                writer.WriteStringValue(Tier);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DiskPoolData DeserializeDiskPoolData(JsonElement element)
         {
+            Optional<Models.Sku> sku = default;
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;
             Optional<SystemData> systemData = default;
@@ -96,10 +89,18 @@ namespace Azure.ResourceManager.StoragePool
             Optional<IList<WritableSubResource>> disks = default;
             string subnetId = default;
             Optional<IList<string>> additionalCapabilities = default;
-            Optional<string> name0 = default;
-            Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = Models.Sku.DeserializeSku(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("managedBy"))
                 {
                     managedBy = property.Value.GetString();
@@ -227,30 +228,8 @@ namespace Azure.ResourceManager.StoragePool
                     }
                     continue;
                 }
-                if (property.NameEquals("sku"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("name"))
-                        {
-                            name0 = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("tier"))
-                        {
-                            tier = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DiskPoolData(id, name, type, tags, location, managedBy.Value, Optional.ToList(managedByExtended), systemData, provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities), name0.Value, tier.Value);
+            return new DiskPoolData(id, name, type, tags, location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), systemData, provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities));
         }
     }
 }

@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="type"> The type. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="sku"> Determines the SKU of the Disk pool. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="systemData"> Resource metadata required by ARM RPC. </param>
@@ -61,10 +62,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
-        /// <param name="nameSkuName"> Sku name. </param>
-        /// <param name="tier"> Sku tier. </param>
-        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string managedBy, IReadOnlyList<string> managedByExtended, SystemData systemData, ProvisioningStates provisioningState, IList<string> availabilityZones, OperationalStatus status, IList<WritableSubResource> disks, string subnetId, IList<string> additionalCapabilities, string nameSkuName, string tier) : base(id, name, type, tags, location)
+        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, string managedBy, IReadOnlyList<string> managedByExtended, SystemData systemData, ProvisioningStates provisioningState, IList<string> availabilityZones, OperationalStatus status, IList<WritableSubResource> disks, string subnetId, IList<string> additionalCapabilities) : base(id, name, type, tags, location)
         {
+            Sku = sku;
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
             SystemData = systemData;
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.StoragePool
             Disks = disks;
             SubnetId = subnetId;
             AdditionalCapabilities = additionalCapabilities;
-            NameSkuName = nameSkuName;
-            Tier = tier;
         }
 
+        /// <summary> Determines the SKU of the Disk pool. </summary>
+        public Models.Sku Sku { get; set; }
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>
         public string ManagedBy { get; }
         /// <summary> List of Azure resource ids that manage this resource. </summary>
@@ -96,9 +96,5 @@ namespace Azure.ResourceManager.StoragePool
         public string SubnetId { get; set; }
         /// <summary> List of additional capabilities for Disk Pool. </summary>
         public IList<string> AdditionalCapabilities { get; }
-        /// <summary> Sku name. </summary>
-        public string NameSkuName { get; set; }
-        /// <summary> Sku tier. </summary>
-        public string Tier { get; set; }
     }
 }
