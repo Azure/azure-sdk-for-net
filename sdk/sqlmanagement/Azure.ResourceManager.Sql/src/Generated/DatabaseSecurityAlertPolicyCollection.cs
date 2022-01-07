@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {

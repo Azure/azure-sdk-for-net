@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a PublicIPPrefix along with the instance operations that can be performed on it. </summary>
     public partial class PublicIPPrefix : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PublicIPPrefix"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publicIpPrefixName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PublicIPPrefixesRestOperations _publicIPPrefixesRestClient;
         private readonly PublicIPPrefixData _data;

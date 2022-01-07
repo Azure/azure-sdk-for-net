@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedTransparentDataEncryption along with the instance operations that can be performed on it. </summary>
     public partial class ManagedTransparentDataEncryption : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedTransparentDataEncryption"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string tdeName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedDatabaseTransparentDataEncryptionRestOperations _managedDatabaseTransparentDataEncryptionRestClient;
         private readonly ManagedTransparentDataEncryptionData _data;

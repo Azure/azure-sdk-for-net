@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected EventHubTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        protected EventHubTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }
 
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
+        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }

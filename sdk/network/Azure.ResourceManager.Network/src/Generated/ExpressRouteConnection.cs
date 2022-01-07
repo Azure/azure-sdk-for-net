@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ExpressRouteConnection along with the instance operations that can be performed on it. </summary>
     public partial class ExpressRouteConnection : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ExpressRouteConnection"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteConnectionsRestOperations _expressRouteConnectionsRestClient;
         private readonly ExpressRouteConnectionData _data;

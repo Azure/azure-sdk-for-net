@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, table.Data.Options.Throughput);
 
-            bool ifExists = await GremlinGraphContainer.CheckIfExistsAsync(_graphName);
+            bool ifExists = await GremlinGraphContainer.ExistsAsync(_graphName);
             Assert.True(ifExists);
 
             // NOT WORKING API

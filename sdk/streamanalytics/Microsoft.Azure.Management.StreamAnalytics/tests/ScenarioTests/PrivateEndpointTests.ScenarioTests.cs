@@ -57,11 +57,8 @@ namespace StreamAnalytics.Tests
 
                 PrivateEndpoint exceptedPrivateEndpoint = new PrivateEndpoint()
                 {
-                    Properties = new PrivateEndpointProperties()
-                    {
-                        ManualPrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> { 
-                            privateLinkServiceConnection 
-                        }
+                    ManualPrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> {
+                        privateLinkServiceConnection
                     }
                 };
 
@@ -75,12 +72,12 @@ namespace StreamAnalytics.Tests
                 Assert.Equal(expectedClusterResourceId, putCluster.Body.Id);
                 Assert.Equal(clusterName, putCluster.Body.Name);
                 Assert.Equal(TestHelper.ClusterFullResourceType, putCluster.Body.Type);
-                Assert.Equal("Succeeded", putCluster.Body.Properties.ProvisioningState);
+                Assert.Equal("Succeeded", putCluster.Body.ProvisioningState);
 
                 Assert.Equal(privateEndpointName, putPrivateEndpoint.Body.Name);
-                Assert.Equal(expectedPrivateLinkServiceId, putPrivateEndpoint.Body.Properties.ManualPrivateLinkServiceConnections[0].PrivateLinkServiceId);
+                Assert.Equal(expectedPrivateLinkServiceId, putPrivateEndpoint.Body.ManualPrivateLinkServiceConnections[0].PrivateLinkServiceId);
                 Assert.Equal(TestHelper.PrivateEndpointFullResourceType, putPrivateEndpoint.Body.Type);
-                Assert.Equal("PendingCreation", putPrivateEndpoint.Body.Properties.ManualPrivateLinkServiceConnections[0].PrivateLinkServiceConnectionState.Status);
+                Assert.Equal("PendingCreation", putPrivateEndpoint.Body.ManualPrivateLinkServiceConnections[0].PrivateLinkServiceConnectionState.Status);
 
                 // Verify GET request returns expected private endpoint
                 var getPrivateEndpoint = await streamAnalyticsManagementClient.PrivateEndpoints.GetWithHttpMessagesAsync(resourceGroupName, clusterName, privateEndpointName);

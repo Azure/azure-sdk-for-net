@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a SecurityRule along with the instance operations that can be performed on it. </summary>
     public partial class SecurityRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SecurityRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SecurityRulesRestOperations _securityRulesRestClient;
         private readonly SecurityRuleData _data;

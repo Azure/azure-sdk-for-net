@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a CdnCustomDomain along with the instance operations that can be performed on it. </summary>
     public partial class CdnCustomDomain : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="CdnCustomDomain"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CdnCustomDomainsRestOperations _cdnCustomDomainsRestClient;
         private readonly CdnCustomDomainData _data;

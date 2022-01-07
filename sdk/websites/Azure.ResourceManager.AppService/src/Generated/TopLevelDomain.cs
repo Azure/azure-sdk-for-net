@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a TopLevelDomain along with the instance operations that can be performed on it. </summary>
     public partial class TopLevelDomain : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="TopLevelDomain"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TopLevelDomainsRestOperations _topLevelDomainsRestClient;
         private readonly TopLevelDomainData _data;

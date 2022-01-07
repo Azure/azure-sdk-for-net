@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.ExistsAsync");
             scope.Start();
             try
             {

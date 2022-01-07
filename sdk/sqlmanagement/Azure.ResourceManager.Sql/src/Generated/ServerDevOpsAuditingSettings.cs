@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServerDevOpsAuditingSettings along with the instance operations that can be performed on it. </summary>
     public partial class ServerDevOpsAuditingSettings : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerDevOpsAuditingSettings"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServerDevOpsAuditSettingsRestOperations _serverDevOpsAuditSettingsRestClient;
         private readonly ServerDevOpsAuditingSettingsData _data;

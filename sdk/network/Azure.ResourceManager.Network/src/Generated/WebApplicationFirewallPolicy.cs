@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a WebApplicationFirewallPolicy along with the instance operations that can be performed on it. </summary>
     public partial class WebApplicationFirewallPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="WebApplicationFirewallPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebApplicationFirewallPoliciesRestOperations _webApplicationFirewallPoliciesRestClient;
         private readonly WebApplicationFirewallPolicyData _data;

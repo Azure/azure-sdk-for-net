@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteSlotTriggeredWebJobHistory along with the instance operations that can be performed on it. </summary>
     public partial class SiteSlotTriggeredWebJobHistory : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotTriggeredWebJobHistory"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName, string id)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly TriggeredJobHistoryData _data;

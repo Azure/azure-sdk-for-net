@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A Class representing a SchemaGroup along with the instance operations that can be performed on it. </summary>
     public partial class SchemaGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SchemaGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string schemaGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/schemagroups/{schemaGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SchemaRegistryRestOperations _schemaRegistryRestClient;
         private readonly SchemaGroupData _data;

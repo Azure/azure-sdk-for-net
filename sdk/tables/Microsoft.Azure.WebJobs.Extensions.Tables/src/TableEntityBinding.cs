@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Cosmos.Table;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
@@ -14,18 +14,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     {
         private readonly string _parameterName;
         private readonly IArgumentBinding<TableEntityContext> _argumentBinding;
-        private readonly CloudTableClient _client;
+        private readonly TableServiceClient _client;
         private readonly string _accountName;
         private readonly IBindableTableEntityPath _path;
         private readonly IObjectToTypeConverter<TableEntityContext> _converter;
 
         public TableEntityBinding(string parameterName, IArgumentBinding<TableEntityContext> argumentBinding,
-            CloudTableClient client, IBindableTableEntityPath path)
+            TableServiceClient client, IBindableTableEntityPath path)
         {
             _parameterName = parameterName;
             _argumentBinding = argumentBinding;
             _client = client;
-            _accountName = TableClient.GetAccountName(client);
+            _accountName = TableClientHelpers.GetAccountName(client);
             _path = path;
             _converter = CreateConverter(client, path);
         }
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public string RowKey => _path.RowKeyPattern;
 
-        private static IObjectToTypeConverter<TableEntityContext> CreateConverter(CloudTableClient client, IBindableTableEntityPath path)
+        private static IObjectToTypeConverter<TableEntityContext> CreateConverter(TableServiceClient client, IBindableTableEntityPath path)
         {
             return new CompositeObjectToTypeConverter<TableEntityContext>(
                 new EntityOutputConverter<TableEntityContext>(new IdentityConverter<TableEntityContext>()),
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
 
             TableEntityPath boundPath = _path.Bind(context.BindingData);
-            var table = _client.GetTableReference(boundPath.TableName);
+            var table = _client.GetTableClient(boundPath.TableName);
             TableEntityContext entityContext = new TableEntityContext
             {
                 Table = table,
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 throw new InvalidOperationException("Unable to convert value to TableEntityContext.");
             }
 
-            TableClient.ValidateAzureTableKeyValue(entityContext.PartitionKey);
-            TableClient.ValidateAzureTableKeyValue(entityContext.RowKey);
+            TableClientHelpers.ValidateAzureTableKeyValue(entityContext.PartitionKey);
+            TableClientHelpers.ValidateAzureTableKeyValue(entityContext.RowKey);
             return BindEntityAsync(entityContext, context);
         }
 

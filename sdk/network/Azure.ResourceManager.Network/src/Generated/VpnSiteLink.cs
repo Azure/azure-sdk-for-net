@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a VpnSiteLink along with the instance operations that can be performed on it. </summary>
     public partial class VpnSiteLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VpnSiteLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vpnSiteName, string vpnSiteLinkName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VpnSiteLinksRestOperations _vpnSiteLinksRestClient;
         private readonly VpnSiteLinkData _data;

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteSlotDetector along with the instance operations that can be performed on it. </summary>
     public partial class SiteSlotDetector : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotDetector"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string slot, string detectorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticsRestOperations _diagnosticsRestClient;
         private readonly AppServiceDetectorData _data;

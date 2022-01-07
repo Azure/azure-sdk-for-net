@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a BgpConnection along with the instance operations that can be performed on it. </summary>
     public partial class BgpConnection : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="BgpConnection"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualHubBgpConnectionRestOperations _virtualHubBgpConnectionRestClient;
         private readonly VirtualHubBgpConnectionsRestOperations _virtualHubBgpConnectionsRestClient;

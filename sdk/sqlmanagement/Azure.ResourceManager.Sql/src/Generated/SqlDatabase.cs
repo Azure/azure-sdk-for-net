@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a SqlDatabase along with the instance operations that can be performed on it. </summary>
     public partial class SqlDatabase : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SqlDatabase"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabasesRestOperations _databasesRestClient;
         private readonly DatabaseColumnsRestOperations _databaseColumnsRestClient;

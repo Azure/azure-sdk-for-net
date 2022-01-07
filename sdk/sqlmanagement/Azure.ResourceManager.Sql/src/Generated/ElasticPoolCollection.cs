@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string elasticPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string elasticPoolName, CancellationToken cancellationToken = default)
         {
             if (elasticPoolName == null)
             {
                 throw new ArgumentNullException(nameof(elasticPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
             if (elasticPoolName == null)
             {
                 throw new ArgumentNullException(nameof(elasticPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.ExistsAsync");
             scope.Start();
             try
             {

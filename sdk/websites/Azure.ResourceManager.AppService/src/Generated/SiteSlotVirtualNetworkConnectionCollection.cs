@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vnetName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
             if (vnetName == null)
             {
                 throw new ArgumentNullException(nameof(vnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
             if (vnetName == null)
             {
                 throw new ArgumentNullException(nameof(vnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {

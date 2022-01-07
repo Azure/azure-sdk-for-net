@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a VirtualCluster along with the instance operations that can be performed on it. </summary>
     public partial class VirtualCluster : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualCluster"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualClusterName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualClustersRestOperations _virtualClustersRestClient;
         private readonly VirtualClusterData _data;

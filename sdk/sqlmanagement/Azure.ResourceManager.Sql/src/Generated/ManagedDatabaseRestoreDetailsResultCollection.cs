@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.Exists");
             scope.Start();
             try
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.ExistsAsync");
             scope.Start();
             try
             {

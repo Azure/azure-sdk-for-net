@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string id, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string id, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.ExistsAsync");
             scope.Start();
             try
             {

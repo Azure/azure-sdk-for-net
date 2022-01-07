@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (predefinedPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(predefinedPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (predefinedPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(predefinedPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {

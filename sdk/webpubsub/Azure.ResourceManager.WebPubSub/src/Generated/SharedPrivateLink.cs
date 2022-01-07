@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A Class representing a SharedPrivateLink along with the instance operations that can be performed on it. </summary>
     public partial class SharedPrivateLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SharedPrivateLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string sharedPrivateLinkName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SharedPrivateLinksRestOperations _sharedPrivateLinksRestClient;
         private readonly SharedPrivateLinkData _data;

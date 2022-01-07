@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.Exists");
             scope.Start();
             try
             {
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.ExistsAsync");
             scope.Start();
             try
             {

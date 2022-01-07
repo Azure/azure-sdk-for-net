@@ -40,11 +40,18 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
     $cluster = RunOrExitOnFailure az aks list -g $clusterGroup --subscription $subscription -o json
     $clusterName = ($cluster | ConvertFrom-Json).name
 
+    $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json
+    $defaultNamespace = $kubeContext.contexts.Where({ $_.name -eq $clusterName }).context.namespace
+
     RunOrExitOnFailure az aks get-credentials `
         -n "$clusterName" `
         -g "$clusterGroup" `
         --subscription "$subscription" `
         --overwrite-existing
+
+    if ($defaultNamespace) {
+        RunOrExitOnFailure kubectl config set-context $clusterName --namespace $defaultNamespace
+    }
 
     if ($pushImages) {
         $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
@@ -149,9 +156,10 @@ function DeployStressPackage(
     }
     $imageTag += "/$($pkg.Namespace)/$($pkg.ReleaseName):${deployId}"
 
-    if ($pushImages) {
+    $dockerFilePath = "$($pkg.Directory)/Dockerfile"
+    if ($pushImages -and (Test-Path $dockerFilePath)) {
         Write-Host "Building and pushing stress test docker image '$imageTag'"
-        $dockerFile = Get-ChildItem "$($pkg.Directory)/Dockerfile"
+        $dockerFile = Get-ChildItem $dockerFilePath
         Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
         if ($LASTEXITCODE) { return }
         Run docker push $imageTag

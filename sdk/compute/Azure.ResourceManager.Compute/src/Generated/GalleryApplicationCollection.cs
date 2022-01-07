@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string galleryApplicationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationName == null)
             {
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationName == null)
             {
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.ExistsAsync");
             scope.Start();
             try
             {

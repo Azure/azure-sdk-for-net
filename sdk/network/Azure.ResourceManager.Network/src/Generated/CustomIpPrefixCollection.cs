@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string customIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string customIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (customIpPrefixName == null)
             {
                 throw new ArgumentNullException(nameof(customIpPrefixName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefixCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefixCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string customIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string customIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (customIpPrefixName == null)
             {
                 throw new ArgumentNullException(nameof(customIpPrefixName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefixCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefixCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A Class representing a WebPubSub along with the instance operations that can be performed on it. </summary>
     public partial class WebPubSub : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="WebPubSub"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
         private readonly WebPubSubPrivateLinkResourcesRestOperations _webPubSubPrivateLinkResourcesRestClient;

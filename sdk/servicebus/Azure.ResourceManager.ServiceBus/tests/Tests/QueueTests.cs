@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate if created successfully
             queue = await _queueCollection.GetIfExistsAsync(queueName);
             Assert.NotNull(queue);
-            Assert.IsTrue(await _queueCollection.CheckIfExistsAsync(queueName));
+            Assert.IsTrue(await _queueCollection.ExistsAsync(queueName));
 
             //delete queue
             await queue.DeleteAsync();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate
             queue = await _queueCollection.GetIfExistsAsync(queueName);
             Assert.Null(queue);
-            Assert.IsFalse(await _queueCollection.CheckIfExistsAsync(queueName));
+            Assert.IsFalse(await _queueCollection.ExistsAsync(queueName));
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 0);
         }

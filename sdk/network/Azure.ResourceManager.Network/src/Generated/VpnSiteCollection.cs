@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vpnSiteName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (vpnSiteName == null)
             {
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (vpnSiteName == null)
             {
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.ExistsAsync");
             scope.Start();
             try
             {

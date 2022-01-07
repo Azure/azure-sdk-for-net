@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteConfigConnectionString along with the instance operations that can be performed on it. </summary>
     public partial class SiteConfigConnectionString : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteConfigConnectionString"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string connectionStringKey)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly ApiKeyVaultReferenceData _data;

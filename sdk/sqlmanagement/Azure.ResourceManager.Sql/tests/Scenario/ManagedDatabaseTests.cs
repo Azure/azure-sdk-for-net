@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(databaseName, database.Value.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(databaseName));
-            Assert.IsFalse(collection.CheckIfExists(databaseName + "0"));
+            Assert.IsTrue(collection.Exists(databaseName));
+            Assert.IsFalse(collection.Exists(databaseName + "0"));
 
             // 3.Get
             var getDatabase = await collection.GetAsync(databaseName);

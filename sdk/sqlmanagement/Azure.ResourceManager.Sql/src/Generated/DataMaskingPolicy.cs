@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a DataMaskingPolicy along with the instance operations that can be performed on it. </summary>
     public partial class DataMaskingPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DataMaskingPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DataMaskingPoliciesRestOperations _dataMaskingPoliciesRestClient;
         private readonly DataMaskingRulesRestOperations _dataMaskingRulesRestClient;

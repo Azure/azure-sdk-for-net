@@ -74,7 +74,7 @@ if (configurationStore != null)
     Console.WriteLine(configurationStore.Data.Name);
 }
 
-if (await configurationStoreCollection.CheckIfExistsAsync("myApp"))
+if (await configurationStoreCollection.ExistsAsync("myApp"))
 {
     Console.WriteLine("ConfigurationStore 'myApp' exists.");
 }

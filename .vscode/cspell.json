@@ -78,6 +78,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "skus",
     "structs",
     "uints",
     "unformattable",
@@ -98,7 +99,6 @@
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
-        "skus",
         "vmss",
         "unattend",
         "ssdlrs",
@@ -115,7 +115,20 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
-        "nigiri"
+        "nigiri",
+        "qnas"
+      ]
+    },
+    {
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
+      "words": [
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse"
       ]
     },
     {
@@ -146,7 +159,6 @@
         "Owasp",
         "Pfsmm",
         "Snat",
-        "Skus",
         "Sstp",
         "TLSDHEDSS",
         "TLSDHERSA",
@@ -169,12 +181,6 @@
         "setsas",
         "mhsm",
         "mhsmip"
-      ]
-    },
-    {
-      "filename": "**/sdk/webpubsub/**/*.cs",
-      "words": [
-        "skus"
       ]
     },
     {
@@ -230,8 +236,13 @@
         "Ragrs",
         "Ragzrs",
         "Rehydrated",
-        "Skus",
         "Undelete"
+      ]
+    },
+	{
+      "filename": "**/sdk/storagepool/**/*.cs",
+      "words": [
+        "Iscsi"
       ]
     },
     {
@@ -284,7 +295,6 @@
       "filename": "**/sdk/websites/**/*.cs",
       "words": [
         "Ipssl",
-        "Skus",
         "Kube",
         "Metadatas",
         "Unparked",

@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string analysisName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string analysisName, CancellationToken cancellationToken = default)
         {
             if (analysisName == null)
             {
                 throw new ArgumentNullException(nameof(analysisName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             if (analysisName == null)
             {
                 throw new ArgumentNullException(nameof(analysisName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.ExistsAsync");
             scope.Start();
             try
             {

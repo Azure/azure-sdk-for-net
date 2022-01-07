@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a HostingEnvironmentDetector along with the instance operations that can be performed on it. </summary>
     public partial class HostingEnvironmentDetector : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentDetector"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string detectorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticsRestOperations _diagnosticsRestClient;
         private readonly AppServiceDetectorData _data;

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a HybridConnectionLimits along with the instance operations that can be performed on it. </summary>
     public partial class HybridConnectionLimits : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="HybridConnectionLimits"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AppServicePlansRestOperations _appServicePlansRestClient;
         private readonly HybridConnectionLimitsData _data;

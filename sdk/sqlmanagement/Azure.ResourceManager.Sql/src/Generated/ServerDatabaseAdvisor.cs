@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServerDatabaseAdvisor along with the instance operations that can be performed on it. </summary>
     public partial class ServerDatabaseAdvisor : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerDatabaseAdvisor"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseAdvisorsRestOperations _databaseAdvisorsRestClient;
         private readonly AdvisorData _data;

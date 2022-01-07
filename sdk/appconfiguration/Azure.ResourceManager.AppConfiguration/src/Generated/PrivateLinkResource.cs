@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A Class representing a PrivateLinkResource along with the instance operations that can be performed on it. </summary>
     public partial class PrivateLinkResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PrivateLinkResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName, string groupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly PrivateLinkResourceData _data;

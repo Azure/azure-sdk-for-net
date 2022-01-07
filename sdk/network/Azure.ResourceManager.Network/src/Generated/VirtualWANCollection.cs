@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (virtualWANName == null)
             {
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualWANName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (virtualWANName == null)
             {
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.ExistsAsync");
             scope.Start();
             try
             {

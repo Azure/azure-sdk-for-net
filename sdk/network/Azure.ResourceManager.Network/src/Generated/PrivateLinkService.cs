@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a PrivateLinkService along with the instance operations that can be performed on it. </summary>
     public partial class PrivateLinkService : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PrivateLinkService"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateLinkServicesRestOperations _privateLinkServicesRestClient;
         private readonly PrivateLinkServiceData _data;

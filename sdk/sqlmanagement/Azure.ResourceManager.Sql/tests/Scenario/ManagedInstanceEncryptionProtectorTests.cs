@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(false, encryption.Value.Data.AutoRotationEnabled);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(encryptionProtectorName));
+            Assert.IsTrue(collection.Exists(encryptionProtectorName));
 
             // 3.Get
             var getEncryption = await collection.GetAsync(encryptionProtectorName);

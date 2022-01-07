@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a User along with the instance operations that can be performed on it. </summary>
     public partial class User : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="User"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            var resourceId = $"/providers/Microsoft.Web/publishingUsers/web";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebSiteManagementRestOperations _restClient;
         private readonly UserData _data;

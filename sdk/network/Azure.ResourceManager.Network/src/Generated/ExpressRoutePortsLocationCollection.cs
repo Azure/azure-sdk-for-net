@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string locationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string locationName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
             scope.Start();
             try
             {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string locationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string locationName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.ExistsAsync");
             scope.Start();
             try
             {

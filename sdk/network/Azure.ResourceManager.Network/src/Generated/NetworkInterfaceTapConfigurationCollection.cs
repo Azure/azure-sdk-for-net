@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string tapConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             if (tapConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(tapConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             if (tapConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(tapConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.ExistsAsync");
             scope.Start();
             try
             {

@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string webJobName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
         {
             if (webJobName == null)
             {
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJobCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJobCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
             if (webJobName == null)
             {
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJobCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotTriggeredWebJobCollection.ExistsAsync");
             scope.Start();
             try
             {

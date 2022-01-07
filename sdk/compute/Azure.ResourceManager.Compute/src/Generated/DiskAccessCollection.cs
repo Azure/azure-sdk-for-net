@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string diskAccessName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.ExistsAsync");
             scope.Start();
             try
             {

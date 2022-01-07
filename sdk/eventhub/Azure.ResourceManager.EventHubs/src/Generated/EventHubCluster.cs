@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A Class representing a EventHubCluster along with the instance operations that can be performed on it. </summary>
     public partial class EventHubCluster : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="EventHubCluster"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ClustersRestOperations _clustersRestClient;
         private readonly EventHubClustersRestOperations _eventHubClustersRestClient;

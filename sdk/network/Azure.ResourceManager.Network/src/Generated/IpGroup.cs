@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a IpGroup along with the instance operations that can be performed on it. </summary>
     public partial class IpGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="IpGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ipGroupsName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly IpGroupsRestOperations _ipGroupsRestClient;
         private readonly IpGroupData _data;

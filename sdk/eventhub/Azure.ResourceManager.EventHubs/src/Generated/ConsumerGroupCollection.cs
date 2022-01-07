@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string consumerGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string consumerGroupName, CancellationToken cancellationToken = default)
         {
             if (consumerGroupName == null)
             {
                 throw new ArgumentNullException(nameof(consumerGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
             if (consumerGroupName == null)
             {
                 throw new ArgumentNullException(nameof(consumerGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

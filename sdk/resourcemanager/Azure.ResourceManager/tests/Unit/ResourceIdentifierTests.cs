@@ -235,9 +235,9 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(subscription is null, id1.SubscriptionId is null);
             if (!(subscription is null))
                 Assert.AreEqual(subscription, id1.SubscriptionId);
-            Assert.AreEqual(location is null, id1.Location is null);
+            Assert.AreEqual(location is null, !id1.Location.HasValue);
             if (!(location is null))
-                Assert.AreEqual(location, id1.Location.Name);
+                Assert.AreEqual(location, id1.Location?.Name);
             Assert.AreEqual(resourceGroup is null, id1.ResourceGroupName is null);
             if (!(resourceGroup is null))
                 Assert.AreEqual(resourceGroup, id1.ResourceGroupName);

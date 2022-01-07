@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServiceObjective along with the instance operations that can be performed on it. </summary>
     public partial class ServiceObjective : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceObjective"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string serviceObjectiveName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServiceObjectivesRestOperations _serviceObjectivesRestClient;
         private readonly ServiceObjectiveData _data;

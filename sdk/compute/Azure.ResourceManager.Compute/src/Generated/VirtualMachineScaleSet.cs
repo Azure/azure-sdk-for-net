@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a VirtualMachineScaleSet along with the instance operations that can be performed on it. </summary>
     public partial class VirtualMachineScaleSet : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSet"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineScaleSetsRestOperations _virtualMachineScaleSetsRestClient;
         private readonly VirtualMachineScaleSetRollingUpgradesRestOperations _virtualMachineScaleSetRollingUpgradesRestClient;

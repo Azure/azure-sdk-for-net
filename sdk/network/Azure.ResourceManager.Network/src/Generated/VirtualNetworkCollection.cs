@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.ExistsAsync");
             scope.Start();
             try
             {

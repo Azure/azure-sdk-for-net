@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a DeletedServer along with the instance operations that can be performed on it. </summary>
     public partial class DeletedServer : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DeletedServer"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string deletedServerName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeletedServersRestOperations _deletedServersRestClient;
         private readonly DeletedServerData _data;

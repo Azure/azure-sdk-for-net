@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetWebPubSubByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetWebPubSubsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(WebPubSub.ResourceType);
             filters.SubstringFilter = filter;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetWebPubSubByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetWebPubSubsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(WebPubSub.ResourceType);
             filters.SubstringFilter = filter;

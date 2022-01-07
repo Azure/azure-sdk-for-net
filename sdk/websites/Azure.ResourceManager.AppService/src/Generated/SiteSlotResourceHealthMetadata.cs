@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteSlotResourceHealthMetadata along with the instance operations that can be performed on it. </summary>
     public partial class SiteSlotResourceHealthMetadata : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotResourceHealthMetadata"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourceHealthMetadataRestOperations _resourceHealthMetadataRestClient;
         private readonly ResourceHealthMetadataData _data;

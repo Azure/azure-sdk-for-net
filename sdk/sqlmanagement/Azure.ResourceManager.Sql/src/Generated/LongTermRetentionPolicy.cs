@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a LongTermRetentionPolicy along with the instance operations that can be performed on it. </summary>
     public partial class LongTermRetentionPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="LongTermRetentionPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string policyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LongTermRetentionPoliciesRestOperations _longTermRetentionPoliciesRestClient;
         private readonly LongTermRetentionPolicyData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a InstanceFailoverGroup along with the instance operations that can be performed on it. </summary>
     public partial class InstanceFailoverGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="InstanceFailoverGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly InstanceFailoverGroupsRestOperations _instanceFailoverGroupsRestClient;
         private readonly InstanceFailoverGroupData _data;

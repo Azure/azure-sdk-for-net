@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServerDnsAlias along with the instance operations that can be performed on it. </summary>
     public partial class ServerDnsAlias : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerDnsAlias"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServerDnsAliasesRestOperations _serverDnsAliasesRestClient;
         private readonly ServerDnsAliasData _data;

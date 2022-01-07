@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(int jobVersion, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.ExistsAsync");
             scope.Start();
             try
             {

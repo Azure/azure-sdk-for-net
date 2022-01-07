@@ -90,7 +90,7 @@ if (virtualNetwork != null)
     Console.WriteLine(virtualNetwork.Data.Name);
 }
 
-if (await virtualNetworkCollection.CheckIfExistsAsync("bar"))
+if (await virtualNetworkCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("Virtual network 'bar' exists.");
 }

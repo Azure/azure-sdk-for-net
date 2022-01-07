@@ -7,10 +7,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
@@ -109,22 +111,29 @@ namespace Azure.Core.TestFramework
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
-            string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
-                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
-                null;
 
+            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+
+            return Path.Combine(
+                GetSessionFileDirectory(),
+                fileName);
+        }
+
+        private string GetSessionFileDirectory()
+        {
             // Use the current class name instead of the name of the class that declared a test.
             // This can be used in inherited tests that, for example, use a different endpoint for the same tests.
             string className = GetType().Name;
 
-            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+            TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
-            string path = TestEnvironment.GetSourcePath(GetType().Assembly);
-
-            return Path.Combine(path,
+            string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
+                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
+                null;
+            return Path.Combine(
+                TestEnvironment.GetSourcePath(GetType().Assembly),
                 "SessionRecords",
-                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
-                fileName);
+                additionalParameterName == null ? className : $"{className}({additionalParameterName})");
         }
 
         public override void GlobalTimeoutTearDown()
@@ -169,7 +178,48 @@ namespace Azure.Core.TestFramework
         {
             Logger?.Dispose();
             Logger = null;
-            _proxy?.Stop();
+
+            // Clean up unused test files
+            if (Mode == RecordedTestMode.Record)
+            {
+                var knownMethods = new HashSet<string>();
+
+                // Management tests record in ctor
+                knownMethods.Add(GetType().Name);
+
+                // Collect all method names
+                foreach (var method in GetType()
+                             .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
+                {
+                    // TestCase attribute allows specifying a test name
+                    foreach (var attribute in method.GetCustomAttributes(true))
+                    {
+                        if (attribute is ITestData { TestName: { } name})
+                        {
+                            knownMethods.Add(name);
+                        }
+                    }
+
+                    knownMethods.Add(method.Name);
+                }
+
+                foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
+                {
+                    bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
+
+                    if (!used)
+                    {
+                        try
+                        {
+                            fileInfo.Delete();
+                        }
+                        catch
+                        {
+                            // Ignore
+                        }
+                    }
+                }
+            }
         }
 
         [SetUp]

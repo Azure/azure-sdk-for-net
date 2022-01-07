@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A Class representing a ConsumerGroup along with the instance operations that can be performed on it. </summary>
     public partial class ConsumerGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ConsumerGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ConsumerGroupsRestOperations _consumerGroupsRestClient;
         private readonly ConsumerGroupData _data;
