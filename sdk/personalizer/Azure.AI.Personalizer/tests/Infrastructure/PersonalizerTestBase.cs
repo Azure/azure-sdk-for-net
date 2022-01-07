@@ -12,7 +12,7 @@ namespace Azure.AI.Personalizer.Tests
     {
         public static bool IsTestTenant = false;
 
-        public PersonalizerTestBase(bool isAsync): base(isAsync)
+        public PersonalizerTestBase(bool isAsync) : base(isAsync)
         {
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
             Matcher = new RecordMatcher(compareBodies: false);
@@ -21,10 +21,10 @@ namespace Azure.AI.Personalizer.Tests
 
         protected async Task<PersonalizerClient> GetPersonalizerClientAsync(bool isSingleSlot = false, bool isLocalInference = false)
         {
-            //string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
-            //string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
-            string endpoint = isSingleSlot ? "https://autoopte2etest3.ppe.cognitiveservices.azure.com" : TestEnvironment.MultiSlotEndpoint;
-            string apiKey = isSingleSlot ? "{personalizerApiKey}" : TestEnvironment.MultiSlotApiKey;
+            string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
+            string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
+            //string endpoint = isSingleSlot ? "https://autoopte2etest3.ppe.cognitiveservices.azure.com" : TestEnvironment.MultiSlotEndpoint;
+            //string apiKey = isSingleSlot ? "{personalizerApiKey}" : TestEnvironment.MultiSlotApiKey;
             PersonalizerAdministrationClient adminClient = GetAdministrationClient(isSingleSlot);
             if (!isSingleSlot)
             {
@@ -70,10 +70,10 @@ namespace Azure.AI.Personalizer.Tests
 
         protected PersonalizerAdministrationClient GetAdministrationClient(bool isSingleSlot = false)
         {
-            //string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
-            //string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
-            string endpoint = isSingleSlot ? "https://autoopte2etest3.ppe.cognitiveservices.azure.com" : TestEnvironment.MultiSlotEndpoint;
-            string apiKey = isSingleSlot ? "{personalizerApiKey}" : TestEnvironment.MultiSlotApiKey;
+            string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
+            string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
+            //string endpoint = isSingleSlot ? "https://autoopte2etest3.ppe.cognitiveservices.azure.com" : TestEnvironment.MultiSlotEndpoint;
+            //string apiKey = isSingleSlot ? "{personalizerApiKey}" : TestEnvironment.MultiSlotApiKey;
             var credential = new AzureKeyCredential(apiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
             PersonalizerAdministrationClient personalizerAdministrationClient = new PersonalizerAdministrationClient(new Uri(endpoint), credential, options);
