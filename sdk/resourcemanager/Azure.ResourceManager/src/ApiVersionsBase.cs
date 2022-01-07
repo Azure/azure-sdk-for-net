@@ -138,10 +138,22 @@ namespace Azure.ResourceManager.Core
                     return 1;
                 }
 
-                return string.Compare(thisPreviewPart, otherPreviewPart, StringComparison.InvariantCulture);
+                // string.Compare doesn't ensure the return value is 0, 1, -1, so here we need to normalize it
+                // see https://docs.microsoft.com/en-us/dotnet/api/system.string.compare?view=net-6.0#system-string-compare(system-string-system-string-system-stringcomparison)
+                return string.Compare(thisPreviewPart, otherPreviewPart, StringComparison.InvariantCulture) switch
+                {
+                    > 0 => 1,
+                    < 0 => -1,
+                    _ => 0,
+                };
             }
 
-            return string.Compare(thisDatePart, otherDatePart, StringComparison.InvariantCulture);
+            return string.Compare(thisDatePart, otherDatePart, StringComparison.InvariantCulture) switch
+            {
+                > 0 => 1,
+                < 0 => -1,
+                _ => 0,
+            };
         }
 
         /// <summary>

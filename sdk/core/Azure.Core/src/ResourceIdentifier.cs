@@ -277,7 +277,12 @@ namespace Azure.Core
             if (other is null)
                 return 1;
 
-            return string.Compare(StringValue, other.StringValue, StringComparison.OrdinalIgnoreCase);
+            return string.Compare(StringValue, other.StringValue, StringComparison.OrdinalIgnoreCase) switch
+            {
+                > 0 => 1,
+                < 0 => -1,
+                _ => 0,
+            };
         }
 
         /// <inheritdoc/>
