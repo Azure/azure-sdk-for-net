@@ -6,47 +6,135 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.IoT.DeviceUpdate.Models;
 
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Updates service client. </summary>
     public partial class UpdatesClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://api.adu.microsoft.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        internal UpdatesRestClient RestClient { get; }
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly string _endpoint;
+        private readonly string _instanceId;
+        private readonly string _apiVersion;
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary> Initializes a new instance of UpdatesClient for mocking. </summary>
+        protected UpdatesClient()
+        {
+        }
 
         /// <summary> Initializes a new instance of UpdatesClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="accountEndpoint"> Account endpoint. </param>
+        /// <param name="endpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
-        internal UpdatesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string accountEndpoint, string instanceId)
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/>, or <paramref name="credential"/> is null. </exception>
+        public UpdatesClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
         {
-            RestClient = new UpdatesRestClient(clientDiagnostics, pipeline, accountEndpoint, instanceId);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            options ??= new DeviceUpdateClientOptions();
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _instanceId = instanceId;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Get a specific update version. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Update>> GetUpdateAsync(string provider, string name, string version, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   updateId: {
+        ///     provider: string,
+        ///     name: string,
+        ///     version: string
+        ///   },
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   isDeployable: boolean,
+        ///   updateType: string,
+        ///   installedCriteria: string,
+        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
+        ///         description: string,
+        ///         handler: string,
+        ///         handlerProperties: AnyObject,
+        ///         files: [string],
+        ///         updateId: UpdateId
+        ///       }
+        ///     ]
+        ///   },
+        ///   referencedBy: [UpdateId],
+        ///   scanResult: string,
+        ///   manifestVersion: string,
+        ///   importedDateTime: string (ISO 8601 Format),
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetUpdate");
             scope.Start();
             try
             {
-                return await RestClient.GetUpdateAsync(provider, name, version, accessCondition, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetUpdateRequest(provider, name, version, ifNoneMatch);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -59,15 +147,72 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Update> GetUpdate(string provider, string name, string version, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   updateId: {
+        ///     provider: string,
+        ///     name: string,
+        ///     version: string
+        ///   },
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   isDeployable: boolean,
+        ///   updateType: string,
+        ///   installedCriteria: string,
+        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
+        ///         description: string,
+        ///         handler: string,
+        ///         handlerProperties: AnyObject,
+        ///         files: [string],
+        ///         updateId: UpdateId
+        ///       }
+        ///     ]
+        ///   },
+        ///   referencedBy: [UpdateId],
+        ///   scanResult: string,
+        ///   manifestVersion: string,
+        ///   importedDateTime: string (ISO 8601 Format),
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetUpdate");
             scope.Start();
             try
             {
-                return RestClient.GetUpdate(provider, name, version, accessCondition, cancellationToken);
+                using HttpMessage message = CreateGetUpdateRequest(provider, name, version, ifNoneMatch);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -81,15 +226,51 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="fileId"> File identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<File>> GetFileAsync(string provider, string name, string version, string fileId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="fileId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   fileId: string,
+        ///   fileName: string,
+        ///   sizeInBytes: number,
+        ///   hashes: Dictionary&lt;string, string&gt;,
+        ///   mimeType: string,
+        ///   scanResult: string,
+        ///   scanDetails: string,
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFile");
             scope.Start();
             try
             {
-                return await RestClient.GetFileAsync(provider, name, version, fileId, accessCondition, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetFileRequest(provider, name, version, fileId, ifNoneMatch);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -103,15 +284,51 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="fileId"> File identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<File> GetFile(string provider, string name, string version, string fileId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="fileId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   fileId: string,
+        ///   fileName: string,
+        ///   sizeInBytes: number,
+        ///   hashes: Dictionary&lt;string, string&gt;,
+        ///   mimeType: string,
+        ///   scanResult: string,
+        ///   scanDetails: string,
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFile");
             scope.Start();
             try
             {
-                return RestClient.GetFile(provider, name, version, fileId, accessCondition, cancellationToken);
+                using HttpMessage message = CreateGetFileRequest(provider, name, version, fileId, ifNoneMatch);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -122,15 +339,68 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Retrieve operation status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Models.Operation>> GetOperationAsync(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   operationId: string,
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   updateId: {
+        ///     provider: string,
+        ///     name: string,
+        ///     version: string
+        ///   },
+        ///   resourceLocation: string,
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   },
+        ///   traceId: string,
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
             scope.Start();
             try
             {
-                return await RestClient.GetOperationAsync(operationId, accessCondition, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -141,15 +411,68 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Retrieve operation status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Models.Operation> GetOperation(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   operationId: string,
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   updateId: {
+        ///     provider: string,
+        ///     name: string,
+        ///     version: string
+        ///   },
+        ///   resourceLocation: string,
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   },
+        ///   traceId: string,
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
             scope.Start();
             try
             {
-                return RestClient.GetOperation(operationId, accessCondition, cancellationToken);
+                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -158,174 +481,405 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<string> GetProvidersAsync(CancellationToken cancellationToken = default)
+        /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
+        /// <param name="search"> Request updates matching a free-text search expression. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       updateId: {
+        ///         provider: string,
+        ///         name: string,
+        ///         version: string
+        ///       },
+        ///       description: string,
+        ///       friendlyName: string,
+        ///       isDeployable: boolean,
+        ///       updateType: string,
+        ///       installedCriteria: string,
+        ///       compatibility: [Dictionary&lt;string, string&gt;],
+        ///       instructions: {
+        ///         steps: [
+        ///           {
+        ///             type: &quot;Inline&quot; | &quot;Reference&quot;,
+        ///             description: string,
+        ///             handler: string,
+        ///             handlerProperties: AnyObject,
+        ///             files: [string],
+        ///             updateId: UpdateId
+        ///           }
+        ///         ]
+        ///       },
+        ///       referencedBy: [UpdateId],
+        ///       scanResult: string,
+        ///       manifestVersion: string,
+        ///       importedDateTime: string (ISO 8601 Format),
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       etag: string
+        ///     }
+        ///   ],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = null, string filter = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetUpdates");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
+                do
                 {
-                    var response = await RestClient.GetProvidersAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetUpdatesRequest(search, filter)
+                        : CreateGetUpdatesNextPageRequest(nextLink, search, filter);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
+        }
+
+        /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
+        /// <param name="search"> Request updates matching a free-text search expression. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       updateId: {
+        ///         provider: string,
+        ///         name: string,
+        ///         version: string
+        ///       },
+        ///       description: string,
+        ///       friendlyName: string,
+        ///       isDeployable: boolean,
+        ///       updateType: string,
+        ///       installedCriteria: string,
+        ///       compatibility: [Dictionary&lt;string, string&gt;],
+        ///       instructions: {
+        ///         steps: [
+        ///           {
+        ///             type: &quot;Inline&quot; | &quot;Reference&quot;,
+        ///             description: string,
+        ///             handler: string,
+        ///             handlerProperties: AnyObject,
+        ///             files: [string],
+        ///             updateId: UpdateId
+        ///           }
+        ///         ]
+        ///       },
+        ///       referencedBy: [UpdateId],
+        ///       scanResult: string,
+        ///       manifestVersion: string,
+        ///       importedDateTime: string (ISO 8601 Format),
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       etag: string
+        ///     }
+        ///   ],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetUpdates(string search = null, string filter = null, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetUpdates");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
+                do
                 {
-                    var response = await RestClient.GetProvidersNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetUpdatesRequest(search, filter)
+                        : CreateGetUpdatesNextPageRequest(nextLink, search, filter);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<string> GetProviders(CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
+#pragma warning restore AZC0002
         {
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetProviders");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
+                do
                 {
-                    var response = RestClient.GetProviders(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetProvidersRequest()
+                        : CreateGetProvidersNextPageRequest(nextLink);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
+        }
+
+        /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetProviders");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
+                do
                 {
-                    var response = RestClient.GetProvidersNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetProvidersRequest()
+                        : CreateGetProvidersNextPageRequest(nextLink);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
         /// <param name="provider"> Update provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
-        public virtual AsyncPageable<string> GetNamesAsync(string provider, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             if (provider == null)
             {
                 throw new ArgumentNullException(nameof(provider));
             }
 
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetNames");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
+                do
                 {
-                    var response = await RestClient.GetNamesAsync(provider, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetNamesRequest(provider)
+                        : CreateGetNamesNextPageRequest(nextLink, provider);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetNamesNextPageAsync(nextLink, provider, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
         /// <param name="provider"> Update provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
-        public virtual Pageable<string> GetNames(string provider, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             if (provider == null)
             {
                 throw new ArgumentNullException(nameof(provider));
             }
 
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetNames");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
+                do
                 {
-                    var response = RestClient.GetNames(provider, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetNamesRequest(provider)
+                        : CreateGetNamesNextPageRequest(nextLink, provider);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetNamesNextPage(nextLink, provider, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
-        public virtual AsyncPageable<string> GetVersionsAsync(string provider, string name, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             if (provider == null)
             {
@@ -336,45 +890,56 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(name));
             }
 
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetVersions");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
+                do
                 {
-                    var response = await RestClient.GetVersionsAsync(provider, name, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetVersionsRequest(provider, name, filter)
+                        : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetVersionsNextPageAsync(nextLink, provider, name, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
-        public virtual Pageable<string> GetVersions(string provider, string name, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             if (provider == null)
             {
@@ -385,46 +950,56 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetVersions");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
+                do
                 {
-                    var response = RestClient.GetVersions(provider, name, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetVersionsRequest(provider, name, filter)
+                        : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetVersionsNextPage(nextLink, provider, name, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
-        public virtual AsyncPageable<string> GetFilesAsync(string provider, string name, string version, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             if (provider == null)
             {
@@ -439,46 +1014,56 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(version));
             }
 
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetFiles");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
+                do
                 {
-                    var response = await RestClient.GetFilesAsync(provider, name, version, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetFilesRequest(provider, name, version)
+                        : CreateGetFilesNextPageRequest(nextLink, provider, name, version);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetFilesNextPageAsync(nextLink, provider, name, version, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
-        public virtual Pageable<string> GetFiles(string provider, string name, string version, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [string],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context = null)
+#pragma warning restore AZC0002
         {
             if (provider == null)
             {
@@ -493,115 +1078,839 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(version));
             }
 
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetFiles");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
+                do
                 {
-                    var response = RestClient.GetFiles(provider, name, version, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetFilesRequest(provider, name, version)
+                        : CreateGetFilesNextPageRequest(nextLink, provider, name, version);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetFilesNextPage(nextLink, provider, name, version, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Models.Operation> GetOperationsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       operationId: string,
+        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///       updateId: {
+        ///         provider: string,
+        ///         name: string,
+        ///         version: string
+        ///       },
+        ///       resourceLocation: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [Error],
+        ///         innererror: {
+        ///           code: string,
+        ///           message: string,
+        ///           errorDetail: string,
+        ///           innerError: InnerError
+        ///         },
+        ///         occurredDateTime: string (ISO 8601 Format)
+        ///       },
+        ///       traceId: string,
+        ///       lastActionDateTime: string (ISO 8601 Format),
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       etag: string
+        ///     }
+        ///   ],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<Models.Operation>> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetOperations");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
+                do
                 {
-                    var response = await RestClient.GetOperationsAsync(filter, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetOperationsRequest(filter, top)
+                        : CreateGetOperationsNextPageRequest(nextLink, filter, top);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            async Task<Page<Models.Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetOperationsNextPageAsync(nextLink, filter, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Models.Operation> GetOperations(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       operationId: string,
+        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///       updateId: {
+        ///         provider: string,
+        ///         name: string,
+        ///         version: string
+        ///       },
+        ///       resourceLocation: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [Error],
+        ///         innererror: {
+        ///           code: string,
+        ///           message: string,
+        ///           errorDetail: string,
+        ///           innerError: InnerError
+        ///         },
+        ///         occurredDateTime: string (ISO 8601 Format)
+        ///       },
+        ///       traceId: string,
+        ///       lastActionDateTime: string (ISO 8601 Format),
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       etag: string
+        ///     }
+        ///   ],
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
+#pragma warning restore AZC0002
         {
-            Page<Models.Operation> FirstPageFunc(int? pageSizeHint)
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetOperations");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
+                do
                 {
-                    var response = RestClient.GetOperations(filter, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetOperationsRequest(filter, top)
+                        : CreateGetOperationsNextPageRequest(nextLink, filter, top);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
-            Page<Models.Operation> NextPageFunc(string nextLink, int? pageSizeHint)
+        }
+
+        /// <summary> Import new update version. </summary>
+        /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   importManifest: {
+        ///     url: string (required),
+        ///     sizeInBytes: number (required),
+        ///     hashes: Dictionary&lt;string, string&gt; (required)
+        ///   } (required),
+        ///   friendlyName: string,
+        ///   files: [
+        ///     {
+        ///       filename: string (required),
+        ///       url: string (required)
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   updateId: {
+        ///     provider: string,
+        ///     name: string,
+        ///     version: string
+        ///   },
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   isDeployable: boolean,
+        ///   updateType: string,
+        ///   installedCriteria: string,
+        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
+        ///         description: string,
+        ///         handler: string,
+        ///         handlerProperties: AnyObject,
+        ///         files: [string],
+        ///         updateId: UpdateId
+        ///       }
+        ///     ]
+        ///   },
+        ///   referencedBy: [UpdateId],
+        ///   scanResult: string,
+        ///   manifestVersion: string,
+        ///   importedDateTime: string (ISO 8601 Format),
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(string action, RequestContent content, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.ImportUpdate");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetOperationsNextPage(nextLink, filter, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                using HttpMessage message = CreateImportUpdateRequest(action, content);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "UpdatesClient.ImportUpdate", OperationFinalStateVia.Location, context).ConfigureAwait(false);
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import new update version. </summary>
+        /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   importManifest: {
+        ///     url: string (required),
+        ///     sizeInBytes: number (required),
+        ///     hashes: Dictionary&lt;string, string&gt; (required)
+        ///   } (required),
+        ///   friendlyName: string,
+        ///   files: [
+        ///     {
+        ///       filename: string (required),
+        ///       url: string (required)
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   updateId: {
+        ///     provider: string,
+        ///     name: string,
+        ///     version: string
+        ///   },
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   isDeployable: boolean,
+        ///   updateType: string,
+        ///   installedCriteria: string,
+        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
+        ///         description: string,
+        ///         handler: string,
+        ///         handlerProperties: AnyObject,
+        ///         files: [string],
+        ///         updateId: UpdateId
+        ///       }
+        ///     ]
+        ///   },
+        ///   referencedBy: [UpdateId],
+        ///   scanResult: string,
+        ///   manifestVersion: string,
+        ///   importedDateTime: string (ISO 8601 Format),
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   etag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> ImportUpdate(string action, RequestContent content, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.ImportUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportUpdateRequest(action, content);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "UpdatesClient.ImportUpdate", OperationFinalStateVia.Location, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a specific update version. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> DeleteUpdateAsync(string provider, string name, string version, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.DeleteUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "UpdatesClient.DeleteUpdate", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a specific update version. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="context"> The request context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       message: string,
+        ///       errorDetail: string,
+        ///       innerError: InnerError
+        ///     },
+        ///     occurredDateTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> DeleteUpdate(string provider, string name, string version, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.DeleteUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "UpdatesClient.DeleteUpdate", OperationFinalStateVia.Location, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateImportUpdateRequest(string action, RequestContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates", false);
+            uri.AppendQuery("action", action, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetUpdatesRequest(string search, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (search != null)
+            {
+                uri.AppendQuery("$search", search, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetUpdateRequest(string provider, string name, string version, ETag? ifNoneMatch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch.Value);
+            }
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200304.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteUpdateRequest(string provider, string name, string version)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier202.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetProvidersRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetNamesRequest(string provider)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetVersionsRequest(string provider, string name, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetFilesRequest(string provider, string name, string version)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/files", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetFileRequest(string provider, string name, string version, string fileId, ETag? ifNoneMatch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch.Value);
+            }
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200304.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetOperationsRequest(string filter, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/operations", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetOperationRequest(string operationId, ETag? ifNoneMatch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch.Value);
+            }
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200304.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetUpdatesNextPageRequest(string nextLink, string search, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetProvidersNextPageRequest(string nextLink)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetNamesNextPageRequest(string nextLink, string provider)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string provider, string name, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetFilesNextPageRequest(string nextLink, string provider, string name, string version)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, string filter, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        private sealed class ResponseClassifier202 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    202 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200304 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200304();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    304 => false,
+                    _ => true
+                };
+            }
         }
     }
 }
