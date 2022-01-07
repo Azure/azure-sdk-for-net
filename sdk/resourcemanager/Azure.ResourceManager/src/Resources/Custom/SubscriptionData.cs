@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Resources
     public partial class SubscriptionData
     {
         /// <summary> The ARM resource identifier.</summary>
-        [CodeGenMember("Id")]
         public virtual ResourceIdentifier Id { get; }
     }
 }

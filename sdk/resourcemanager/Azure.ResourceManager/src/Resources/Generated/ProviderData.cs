@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -14,9 +15,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the Provider data model. </summary>
     public partial class ProviderData
     {
-
-        /// <summary> The provider ID. </summary>
-        public string Id { get; }
         /// <summary> The namespace of the resource provider. </summary>
         public string Namespace { get; }
         /// <summary> The registration state of the resource provider. </summary>

@@ -14,6 +14,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
+[assembly:CodeGenSuppressType("GenericResourceFilter")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>

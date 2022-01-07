@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.Resources
     public partial class ProviderData
     {
         public ProviderData() { }
-        public string Id { get { throw null; } }
+        public Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
         public string Namespace { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get { throw null; } }
         public string RegistrationPolicy { get { throw null; } }

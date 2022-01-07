@@ -13,8 +13,6 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the Provider data model. </summary>
-    [CodeGenSuppress("ProviderData")]
-    [CodeGenSuppress("ProviderData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IReadOnlyList<ProviderResourceType>), typeof(ProviderAuthorizationConsentState?))]
     [PropertyReferenceType]
     public partial class ProviderData
     {
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
         /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
         [SerializationConstructor]
-        internal ProviderData(string id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState)
+        internal ProviderData(ResourceIdentifier id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState)
         {
             Id = id;
             Namespace = @namespace;
@@ -42,5 +40,8 @@ namespace Azure.ResourceManager.Resources
             ResourceTypes = resourceTypes;
             ProviderAuthorizationConsentState = providerAuthorizationConsentState;
         }
+
+        /// <summary> The provider ID. </summary>
+        public ResourceIdentifier Id { get; }
     }
 }
