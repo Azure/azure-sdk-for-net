@@ -770,7 +770,14 @@ namespace Azure.Core.Tests
         [TestCase("/0c2f6471-1bf0-4dda-aec3-cb9272f09575/myRg/")]
         public void InvalidRPIds(string invalidID)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = new ResourceIdentifier(invalidID); });
+            if (invalidID == String.Empty)
+            {
+                Assert.Throws<ArgumentException>(() => { ResourceIdentifier subject = new ResourceIdentifier(invalidID); });
+            }
+            else
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = new ResourceIdentifier(invalidID); });
+            }
         }
 
         [TestCase(TrackedResourceId)]
@@ -979,7 +986,12 @@ namespace Azure.Core.Tests
             ResourceIdentifier a = new ResourceIdentifier(resourceProviderID1);
             ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
             if (a != null)
-                Assert.AreEqual(expected, a.CompareTo(b));
+            {
+                int actual = a.CompareTo(b);
+                Assert.AreEqual(expected < 0, actual < 0);
+                Assert.AreEqual(expected > 0, actual > 0);
+                Assert.AreEqual(expected == 0, actual == 0);
+            }
         }
 
         [TestCase(TrackedResourceId, TrackedResourceId, 0)]
@@ -989,9 +1001,14 @@ namespace Azure.Core.Tests
         public void CompareToString(string resourceProviderID1, string resourceProviderID2, int expected)
         {
             ResourceIdentifier a = new ResourceIdentifier(resourceProviderID1);
-            string b = resourceProviderID2;
+            ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
             if (a != null)
-                Assert.AreEqual(expected, a.CompareTo(resourceProviderID2 == null ? null : new ResourceIdentifier(b)));
+            {
+                int actual = a.CompareTo(b);
+                Assert.AreEqual(expected < 0, actual < 0);
+                Assert.AreEqual(expected > 0, actual > 0);
+                Assert.AreEqual(expected == 0, actual == 0);
+            }
         }
 
         [TestCase(TrackedResourceId, TrackedResourceId, true, "object")]

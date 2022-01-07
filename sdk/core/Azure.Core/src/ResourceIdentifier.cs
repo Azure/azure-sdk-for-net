@@ -45,9 +45,9 @@ namespace Azure.Core
             ResourceType = resourceType;
             Name = name;
             Parent = parent ?? Root;
+            IsChild = true;
             if (parent is null)
                 _stringValue = RootStringValue;
-            IsChild = true;
         }
 
         /// <summary>
@@ -62,6 +62,7 @@ namespace Azure.Core
             Name = id.Name;
             Parent = id.Parent;
             IsChild = id.IsChild;
+            _stringValue = resourceId;
         }
 
         private ResourceIdentifier(ResourceIdentifier parent, string resourceTypeName, string resourceName)
@@ -118,19 +119,23 @@ namespace Azure.Core
                 Provider = name;
         }
 
-        private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
+        private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent)
         {
-            ResourceGroupsLowerKey => ResourceGroupResourceType,
+            if (resourceTypeName.Equals(ResourceGroupsLowerKey, StringComparison.OrdinalIgnoreCase))
+                return ResourceGroupResourceType;
+
             //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
-            SubscriptionsKey when parent.ResourceType == TenantResourceType => SubscriptionResourceType,
-            _ => parent.ResourceType.AppendChild(resourceTypeName)
-        };
+            if (resourceTypeName.Equals(SubscriptionsKey, StringComparison.OrdinalIgnoreCase) && parent.ResourceType == TenantResourceType)
+                return SubscriptionResourceType;
+
+            return parent.ResourceType.AppendChild(resourceTypeName);
+        }
 
         private static ResourceIdentifier Create(string resourceId)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            if (!resourceId.StartsWith(RootStringValue, StringComparison.InvariantCultureIgnoreCase))
+            if (resourceId[0] != Separator)
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier must start with '/'.");
 
             if (resourceId.Length == 1)
@@ -168,7 +173,7 @@ namespace Azure.Core
 
             bool isFirstProvider = parts[startIndex].Equals(ProvidersKey, StringComparison.OrdinalIgnoreCase);
 
-            if (isFirstProvider && (partsCount == 2 || parts[startIndex+2].Equals(ProvidersKey, StringComparison.OrdinalIgnoreCase)))
+            if (isFirstProvider && (partsCount == 2 || parts[startIndex + 2].Equals(ProvidersKey, StringComparison.OrdinalIgnoreCase)))
             {
                 //provider resource can only be on a tenant or a subscription parent
                 if (parent.ResourceType != SubscriptionResourceType && parent.ResourceType != TenantResourceType)
@@ -179,12 +184,12 @@ namespace Azure.Core
 
             if (partsCount > 3 && isFirstProvider)
             {
-                return AppendNext(new ResourceIdentifier(parent, parts[startIndex + 1], parts[startIndex + 2], parts[startIndex + 3]), parts, startIndex+4);
+                return AppendNext(new ResourceIdentifier(parent, parts[startIndex + 1], parts[startIndex + 2], parts[startIndex + 3]), parts, startIndex + 4);
             }
 
             if (partsCount > 1 && !isFirstProvider)
             {
-                return AppendNext(new ResourceIdentifier(parent, parts[startIndex], parts[startIndex + 1]), parts, startIndex+2);
+                return AppendNext(new ResourceIdentifier(parent, parts[startIndex], parts[startIndex + 1]), parts, startIndex + 2);
             }
 
             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
@@ -193,7 +198,7 @@ namespace Azure.Core
         /// <summary>
         /// Cache the string representation of this resource, so traversal only needs to occur once.
         /// </summary>
-        internal string StringValue => _stringValue ??= ToResourceString();
+        private string StringValue => _stringValue ??= ToResourceString();
 
         /// <summary>
         /// The resource type of the resource.
@@ -273,7 +278,8 @@ namespace Azure.Core
         {
             if (other is null)
                 return false;
-            return string.Equals(ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
+
+            return StringValue.Equals(other.StringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -287,7 +293,8 @@ namespace Azure.Core
         {
             if (other is null)
                 return 1;
-            return string.Compare(ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
+
+            return string.Compare(StringValue, other.StringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
@@ -297,9 +304,11 @@ namespace Azure.Core
             ResourceIdentifier? resourceObj = obj as ResourceIdentifier;
             if (resourceObj is not null)
                 return resourceObj.Equals(this);
+
             string? stringObj = obj as string;
             if (stringObj is not null)
                 return Equals(new ResourceIdentifier(stringObj));
+
             return false;
         }
 
@@ -307,7 +316,7 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return ToString().GetHashCode();
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(StringValue);
         }
 
         /// <summary>
@@ -433,7 +442,7 @@ namespace Azure.Core
         private static void ValidatePathSegment(string segment, string parameterName)
         {
             Argument.AssertNotNullOrWhiteSpace(segment, nameof(segment));
-            if (segment.Contains("/"))
+            if (segment.Contains(Separator))
                 throw new ArgumentOutOfRangeException(parameterName, $"{parameterName} must be a single path segment");
         }
     }
