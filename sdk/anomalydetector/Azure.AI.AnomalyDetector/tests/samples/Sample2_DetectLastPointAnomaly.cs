@@ -65,12 +65,12 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
-                throw new Exception(ex.Message);
+                throw;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
-                throw new Exception(ex.Message);
+                throw;
             }
             #endregion
         }
