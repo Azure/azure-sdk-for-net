@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Resources
     [CodeGenSuppress("CreateResourceIdentifier")]
     public partial class Tenant : ArmResource
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Subscription"/> class.
         /// </summary>
@@ -67,13 +66,11 @@ namespace Azure.ResourceManager.Resources
             return new ManagementGroup(this, id);
         }
 
-        // /// <summary>
-        // /// Gets the subscription collection for this tenant.
-        // /// </summary>
-        // /// <returns> A collection of the subscriptions. </returns>
-        // public virtual SubscriptionCollection GetSubscriptions()
-        // {
-        //     return new SubscriptionCollection(this);
-        // }
+        /// <summary> Gets an object representing a ManagementGroupCollection along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ManagementGroupCollection" /> object. </returns>
+        public virtual ManagementGroupCollection GetManagementGroups()
+        {
+            return new ManagementGroupCollection(this);
+        }
     }
 }

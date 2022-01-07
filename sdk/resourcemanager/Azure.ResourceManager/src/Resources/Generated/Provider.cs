@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Provider>> RegisterAsync(ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Provider>> RegisterAsync(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Provider.Register");
             scope.Start();
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Provider> Register(ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
+        public virtual Response<Provider> Register(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Provider.Register");
             scope.Start();

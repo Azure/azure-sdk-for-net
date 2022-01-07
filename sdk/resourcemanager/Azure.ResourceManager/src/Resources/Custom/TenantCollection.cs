@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.Resources
     [CodeGenSuppress("ExistsAsync", typeof(CancellationToken))]
     public partial class TenantCollection : ArmCollection, IEnumerable<Tenant>, IAsyncEnumerable<Tenant>
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TenantCollection"/> class.
         /// </summary>

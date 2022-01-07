@@ -4,8 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
-# csharpgen:
-#   attach: true
 azure-arm: true
 arm-core: true
 clear-output-folder: true
@@ -18,9 +16,9 @@ head-as-boolean: false
 mgmt-debug:
   show-request-path: true
 batch:
-#   - tag: package-common-type
+  - tag: package-common-type
   - tag: package-resources
-#   - tag: package-management
+  - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -115,8 +113,6 @@ request-path-to-resource-data:
   /subscriptions/{subscriptionId}: Subscription
   # tenant does not have name and type
   /: Tenant
-#   /subscriptions/{subscriptionId}/tagNames/{tagName}: PredefinedTag # TODO: this should be a non-resource
-#   /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}: PredefinedTagValue
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
@@ -136,7 +132,6 @@ request-path-to-resource-type:
   /subscriptions/{subscriptionId}/resourcegroups: Microsoft.Resources/resourceGroups
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: Microsoft.Resources/features
   /{resourceId}: Microsoft.Resources/resources
-#   /subscriptions/{subscriptionId}/tagNames/{tagName}: Microsoft.Resources/tagNames
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Microsoft.Resources/providers
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
@@ -161,6 +156,8 @@ override-operation-name:
   Resources_ValidateMoveResources: ValidateMoveResources
   Resources_List: GetGenericResources
   Resources_ListByResourceGroup: GetGenericResources
+  Providers_RegisterAtManagementGroupScope: RegisterProvider
+  ResourceLinks_ListAtSubscription: GetResourceLinks
 no-property-type-replacement: ProviderData;Provider
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
@@ -179,6 +176,7 @@ directive:
   - remove-operation: ManagementLocks_ListAtResourceGroupLevel
   - remove-operation: ManagementLocks_ListAtResourceLevel
   - remove-operation: ManagementLocks_ListAtSubscriptionLevel
+  # These methods was not in the previous manual code, remove them for the first generation and can add them back later.
   - remove-operation: ResourceGroups_CheckExistence
   - remove-operation: Resources_CheckExistenceById
   - remove-operation: Resources_CheckExistence
@@ -186,6 +184,8 @@ directive:
   - remove-operation: Resources_Update
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
+  - remove-operation: Providers_RegisterAtManagementGroupScope
+
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
     transform: >
@@ -201,7 +201,6 @@ directive:
     transform: >
       $["operationId"] = "Operations_ListFeaturesOperations";
     reason: Add operation group so that we can omit related models by the operation group.
-#   - remove-operation: ResourceLinks_ListAtSubscription # The filter values are different, so keep this operation.
   - rename-operation:
       from: checkResourceName
       to: ResourceCheck_CheckResourceName
@@ -238,6 +237,9 @@ directive:
   - rename-model:
       from: Resource
       to: TrackedResourceExtended
+  - rename-model:
+      from: ProviderRegistrationRequest
+      to: ProviderRegistrationOptions
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json
@@ -313,14 +315,71 @@ namespace: Azure.ResourceManager.Management
 title: ManagementClient
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/94a37114e8f4067410b52d3b1c75aa6e09180658/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
-list-exception:
-  - /providers/Microsoft.Management/managementGroups/{groupId} # the list method returns a different schema.
 request-path-to-parent:
   /providers/Microsoft.Management/managementGroups: /providers/Microsoft.Management/managementGroups/{groupId}
+  /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
 operation-groups-to-omit:
-  - ManagementCheck
+  - HierarchySettings
+  - ManagementGroupSubscriptions
+  - Entities
+  - TenantBackfill
+no-property-type-replacement: CheckNameAvailabilityOptions
 directive:
+  - rename-model:
+      from: PatchManagementGroupRequest
+      to: PatchManagementGroupOptions
+  - rename-model:
+      from: CreateManagementGroupRequest
+      to: CreateManagementGroupOptions
+  - rename-model:
+      from: CreateManagementGroupChildInfo
+      to: ManagementGroupChildOptions
+  - rename-model:
+      from: CreateParentGroupInfo
+      to: ManagementGroupParentCreateOptions
+  - rename-model:
+      from: CheckNameAvailabilityRequest
+      to: CheckNameAvailabilityOptions
   - rename-operation:
       from: CheckNameAvailability
-      to: ManagementCheck_CheckNameAvailability
+      to: ManagementGroups_CheckNameAvailability
+  - rename-operation:
+      from: StartTenantBackfill
+      to: TenantBackfill_Start
+  - rename-operation:
+      from: TenantBackfillStatus
+      to: TenantBackfill_Status
+  - from: management.json
+    where: $.parameters.ExpandParameter
+    transform: >
+      $['x-ms-enum'] = {
+        name: "ManagementGroupExpandType",
+        modelAsString: true
+      }
+  - from: management.json
+    where: $.definitions.ManagementGroupListResult.properties.value.items
+    transform: >
+      $['$ref'] = "#/definitions/ManagementGroup"
+  - from: management.json
+    where: $.definitions.ManagementGroupInfo
+    transform: 'return undefined'
+  - remove-model: OperationResults
+  - from: management.json
+    where: $.parameters.SearchParameter
+    transform: >
+      $['x-ms-enum'] = {
+        name: "SearchOptions",
+        modelAsString: true
+      }
+    reason: omit operation group does not clean this enum parameter, rename it and then suppress with codegen attribute.
+  - from: management.json
+    where: $.parameters.EntityViewParameter
+    transform: >
+      $['x-ms-enum'] = {
+        name: "EntityViewOptions",
+        modelAsString: true
+      }
+    reason: omit operation group does not clean this enum parameter, rename it and then suppress with codegen attribute.
+  - remove-model: EntityHierarchyItem
+  - remove-model: EntityHierarchyItemProperties
 ```

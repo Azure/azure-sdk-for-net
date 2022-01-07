@@ -6,9 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -18,7 +22,8 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Management
 {
     /// <summary> A class representing collection of ManagementGroup and their operations over its parent. </summary>
-    public partial class ManagementGroupCollection : ArmCollection
+    public partial class ManagementGroupCollection : ArmCollection, IEnumerable<ManagementGroup>, IAsyncEnumerable<ManagementGroup>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementGroupsRestOperations _managementGroupsRestClient;
@@ -28,7 +33,7 @@ namespace Azure.ResourceManager.Management
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupCollection"/> class class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagementGroupCollection(ArmResource parent) : base(parent)
         {
@@ -55,7 +60,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual ManagementGroupCreateOrUpdateOperation CreateOrUpdate(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagementGroupCreateOrUpdateOperation CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async virtual Task<ManagementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -139,7 +144,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<ManagementGroup> Get(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroup> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -176,7 +181,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> GetAsync(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementGroup>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -207,7 +212,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<ManagementGroup> GetIfExists(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroup> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -238,7 +243,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -269,7 +274,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<bool> Exists(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -298,7 +303,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -317,6 +322,121 @@ namespace Azure.ResourceManager.Management
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// RequestPath: /providers/Microsoft.Management/managementGroups
+        /// ContextualPath: /
+        /// OperationId: ManagementGroups_List
+        /// <summary>
+        /// List management groups for the authenticated user.
+        /// 
+        /// </summary>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="skiptoken">
+        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
+        /// 
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagementGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroup> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            Page<ManagementGroup> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managementGroupsRestClient.List(cacheControl, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ManagementGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managementGroupsRestClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /providers/Microsoft.Management/managementGroups
+        /// ContextualPath: /
+        /// OperationId: ManagementGroups_List
+        /// <summary>
+        /// List management groups for the authenticated user.
+        /// 
+        /// </summary>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="skiptoken">
+        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
+        /// 
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagementGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroup> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ManagementGroup>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managementGroupsRestClient.ListAsync(cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ManagementGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managementGroupsRestClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        IEnumerator<ManagementGroup> IEnumerable<ManagementGroup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ManagementGroup> IAsyncEnumerable<ManagementGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Management.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Management.Models
     {
         internal static ManagementGroupListResult DeserializeManagementGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagementGroupInfo>> value = default;
+            Optional<IReadOnlyList<ManagementGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Management.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagementGroupInfo> array = new List<ManagementGroupInfo>();
+                    List<ManagementGroupData> array = new List<ManagementGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupInfo.DeserializeManagementGroupInfo(item));
+                        array.Add(ManagementGroupData.DeserializeManagementGroupData(item));
                     }
                     value = array;
                     continue;

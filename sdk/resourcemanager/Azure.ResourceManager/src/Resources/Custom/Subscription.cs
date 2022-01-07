@@ -32,150 +32,92 @@ namespace Azure.ResourceManager.Resources
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
-        // /// <summary>
-        // /// Gets the predefined tag collection under this subscription.
-        // /// </summary>
-        // /// <returns> The tags collection. </returns>
-        // public virtual PredefinedTagCollection GetPredefinedTags()
-        // {
-        //     return new PredefinedTagCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
-        // }
+        /// RequestPath: /subscriptions/{subscriptionId}/resources
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Resources_List
+        /// <summary> Get all the resources in a subscription. </summary>
+        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;The properties you can use for eq (equals) or ne (not equals) are: location, resourceType, name, resourceGroup, identity, identity/principalId, plan, plan/publisher, plan/product, plan/name, plan/version, and plan/promotionCode.&lt;br&gt;&lt;br&gt;For example, to filter by a resource type, use: $filter=resourceType eq &apos;Microsoft.Network/virtualNetworks&apos;&lt;br&gt;&lt;br&gt;You can use substringof(value, property) in the filter. The properties you can use for substring are: name and resourceGroup.&lt;br&gt;&lt;br&gt;For example, to get all resources with &apos;demo&apos; anywhere in the name, use: $filter=substringof(&apos;demo&apos;, name)&lt;br&gt;&lt;br&gt;You can link more than one substringof together by adding and/or operators.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. When you filter by a tag name and value, the tags for each resource are not returned in the results.&lt;br&gt;&lt;br&gt;You can use some properties together when filtering. The combinations you can use are: substringof and/or resourceType, plan and plan/publisher and plan/name, identity and identity/principalId. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
+        /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = await _resourcesRestClient.ListAsync(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = await _resourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
 
-        // /// <summary>
-        // /// Gets the provider collection under this subscription.
-        // /// </summary>
-        // /// <returns> The provider collection. </returns>
-        // public virtual ProviderCollection GetProviders()
-        // {
-        //     return new ProviderCollection(this);
-        // }
-
-        // /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
-        // /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // public virtual AsyncPageable<LocationExpanded> GetLocationsAsync(CancellationToken cancellationToken = default)
-        // {
-        //     async Task<Page<LocationExpanded>> FirstPageFunc(int? pageSizeHint)
-        //     {
-        //         using var scope = _clientDiagnostics.CreateScope("Subscription.GetLocations");
-        //         scope.Start();
-        //         try
-        //         {
-        //             var response = await _restClient.ListLocationsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-        //             return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-        //         }
-        //         catch (Exception e)
-        //         {
-        //             scope.Failed(e);
-        //             throw;
-        //         }
-        //     }
-        //     return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        // }
-
-        // /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
-        // /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // public virtual Pageable<LocationExpanded> GetLocations(CancellationToken cancellationToken = default)
-        // {
-        //     Page<LocationExpanded> FirstPageFunc(int? pageSizeHint)
-        //     {
-        //         using var scope = _clientDiagnostics.CreateScope("Subscription.GetLocations");
-        //         scope.Start();
-        //         try
-        //         {
-        //             var response = _restClient.ListLocations(Id.Name, cancellationToken);
-        //             return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-        //         }
-        //         catch (Exception e)
-        //         {
-        //             scope.Failed(e);
-        //             throw;
-        //         }
-        //     }
-        //     return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        // }
-
-    //     /// <summary>
-    //     /// Gets a collection representing all resources as generic objects in the current tenant.
-    //     /// </summary>
-    //     /// <returns> GenericResource collection. </returns>
-    //     public virtual GenericResourceCollection GetGenericResources()
-    //     {
-    //         return new GenericResourceCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
-    //     }
-
-    //     /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
-    //     /// <param name="cancellationToken"> The cancellation token to use. </param>
-    //     public virtual Pageable<Feature> GetFeatures(CancellationToken cancellationToken = default)
-    //     {
-    //         Page<Feature> FirstPageFunc(int? pageSizeHint)
-    //         {
-    //             using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
-    //             scope.Start();
-    //             try
-    //             {
-    //                 var response = _featuresRestOperations.ListAll(cancellationToken);
-    //                 return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
-    //             }
-    //             catch (Exception e)
-    //             {
-    //                 scope.Failed(e);
-    //                 throw;
-    //             }
-    //         }
-    //         Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
-    //         {
-    //             using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
-    //             scope.Start();
-    //             try
-    //             {
-    //                 var response = _featuresRestOperations.ListAllNextPage(nextLink, cancellationToken);
-    //                 return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
-    //             }
-    //             catch (Exception e)
-    //             {
-    //                 scope.Failed(e);
-    //                 throw;
-    //             }
-    //         }
-    //         return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-    //     }
-
-    //     /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
-    //     /// <param name="cancellationToken"> The cancellation token to use. </param>
-    //     public virtual AsyncPageable<Feature> GetFeaturesAsync(CancellationToken cancellationToken = default)
-    //     {
-    //         async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
-    //         {
-    //             using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
-    //             scope.Start();
-    //             try
-    //             {
-    //                 var response = await _featuresRestOperations.ListAllAsync(cancellationToken).ConfigureAwait(false);
-    //                 return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
-    //             }
-    //             catch (Exception e)
-    //             {
-    //                 scope.Failed(e);
-    //                 throw;
-    //             }
-    //         }
-    //         async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
-    //         {
-    //             using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
-    //             scope.Start();
-    //             try
-    //             {
-    //                 var response = await _featuresRestOperations.ListAllNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-    //                 return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
-    //             }
-    //             catch (Exception e)
-    //             {
-    //                 scope.Failed(e);
-    //                 throw;
-    //             }
-    //         }
-    //         return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-    //     }
-    // }
+        /// RequestPath: /subscriptions/{subscriptionId}/resources
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Resources_List
+        /// <summary> Get all the resources in a subscription. </summary>
+        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;The properties you can use for eq (equals) or ne (not equals) are: location, resourceType, name, resourceGroup, identity, identity/principalId, plan, plan/publisher, plan/product, plan/name, plan/version, and plan/promotionCode.&lt;br&gt;&lt;br&gt;For example, to filter by a resource type, use: $filter=resourceType eq &apos;Microsoft.Network/virtualNetworks&apos;&lt;br&gt;&lt;br&gt;You can use substringof(value, property) in the filter. The properties you can use for substring are: name and resourceGroup.&lt;br&gt;&lt;br&gt;For example, to get all resources with &apos;demo&apos; anywhere in the name, use: $filter=substringof(&apos;demo&apos;, name)&lt;br&gt;&lt;br&gt;You can link more than one substringof together by adding and/or operators.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. When you filter by a tag name and value, the tags for each resource are not returned in the results.&lt;br&gt;&lt;br&gt;You can use some properties together when filtering. The combinations you can use are: substringof and/or resourceType, plan and plan/publisher and plan/name, identity and identity/principalId. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
+        /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GenericResource> GetGenericResources(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<GenericResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = _resourcesRestClient.List(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = _resourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
     }
 }

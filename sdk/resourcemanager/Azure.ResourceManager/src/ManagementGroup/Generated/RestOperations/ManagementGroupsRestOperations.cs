@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        internal HttpMessage CreateGetRequest(string groupId, Enum0? expand, bool? recurse, string filter, string cacheControl)
+        internal HttpMessage CreateGetRequest(string groupId, ManagementGroupExpandType? expand, bool? recurse, string filter, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async Task<Response<ManagementGroupData>> GetAsync(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupData>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public Response<ManagementGroupData> Get(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupData> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl)
+        internal HttpMessage CreateCreateOrUpdateRequest(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public Response CreateOrUpdate(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string groupId, PatchManagementGroupRequest patchGroupRequest, string cacheControl)
+        internal HttpMessage CreateUpdateRequest(string groupId, PatchManagementGroupOptions patchGroupRequest, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="patchGroupRequest"/> is null. </exception>
-        public async Task<Response<ManagementGroupData>> UpdateAsync(string groupId, PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupData>> UpdateAsync(string groupId, PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="patchGroupRequest"/> is null. </exception>
-        public Response<ManagementGroupData> Update(string groupId, PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupData> Update(string groupId, PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -578,6 +578,79 @@ namespace Azure.ResourceManager.Management
                         DescendantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DescendantListResult.DeserializeDescendantListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityOptions checkNameAvailabilityRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/checkNameAvailability", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(checkNameAvailabilityRequest);
+            request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            if (checkNameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityRequest));
+            }
+
+            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CheckNameAvailabilityResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            if (checkNameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityRequest));
+            }
+
+            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CheckNameAvailabilityResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

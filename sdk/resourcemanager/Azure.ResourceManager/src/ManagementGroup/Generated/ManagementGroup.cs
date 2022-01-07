@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.Management
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementGroupsRestOperations _managementGroupsRestClient;
-        private readonly HierarchySettingsRestOperations _hierarchySettingsRestClient;
         private readonly ManagementGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class for mocking. </summary>
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.Management
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _hierarchySettingsRestClient = new HierarchySettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class. </summary>
@@ -57,7 +55,6 @@ namespace Azure.ResourceManager.Management
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _hierarchySettingsRestClient = new HierarchySettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class. </summary>
@@ -70,7 +67,6 @@ namespace Azure.ResourceManager.Management
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _hierarchySettingsRestClient = new HierarchySettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -106,7 +102,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagementGroup>> GetAsync(Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementGroup>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Get");
             scope.Start();
@@ -136,7 +132,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroup> Get(Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroup> Get(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Get");
             scope.Start();
@@ -159,7 +155,17 @@ namespace Azure.ResourceManager.Management
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -167,7 +173,17 @@ namespace Azure.ResourceManager.Management
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
@@ -241,7 +257,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patchGroupRequest"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> UpdateAsync(PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementGroup>> UpdateAsync(PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (patchGroupRequest == null)
             {
@@ -273,7 +289,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patchGroupRequest"/> is null. </exception>
-        public virtual Response<ManagementGroup> Update(PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroup> Update(PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (patchGroupRequest == null)
             {
@@ -292,106 +308,6 @@ namespace Azure.ResourceManager.Management
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// RequestPath: /providers/Microsoft.Management/managementGroups
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_List
-        /// <summary>
-        /// List management groups for the authenticated user.
-        /// 
-        /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
-        /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
-        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroupInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroupInfo> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ManagementGroupInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementGroupsRestClient.ListAsync(cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagementGroupInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementGroupsRestClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /providers/Microsoft.Management/managementGroups
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_List
-        /// <summary>
-        /// List management groups for the authenticated user.
-        /// 
-        /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
-        /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
-        /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroupInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroupInfo> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            Page<ManagementGroupInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managementGroupsRestClient.List(cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagementGroupInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managementGroupsRestClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
@@ -493,73 +409,5 @@ namespace Azure.ResourceManager.Management
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
-
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/settings
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: HierarchySettings_List
-        /// <summary>
-        /// Gets all the hierarchy settings defined at the Management Group level. Settings can only be set on the root Management Group of the hierarchy.
-        /// 
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<HierarchySettingsInfo>>> GetHierarchySettingsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetHierarchySettings");
-            scope.Start();
-            try
-            {
-                var response = await _hierarchySettingsRestClient.ListAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/settings
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: HierarchySettings_List
-        /// <summary>
-        /// Gets all the hierarchy settings defined at the Management Group level. Settings can only be set on the root Management Group of the hierarchy.
-        /// 
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<HierarchySettingsInfo>> GetHierarchySettings(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetHierarchySettings");
-            scope.Start();
-            try
-            {
-                var response = _hierarchySettingsRestClient.List(Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region SubscriptionUnderManagementGroup
-
-        /// <summary> Gets a collection of SubscriptionUnderManagementGroups in the ManagementGroup. </summary>
-        /// <returns> An object representing collection of SubscriptionUnderManagementGroups and their operations over a ManagementGroup. </returns>
-        public SubscriptionUnderManagementGroupCollection GetSubscriptionUnderManagementGroups()
-        {
-            return new SubscriptionUnderManagementGroupCollection(this);
-        }
-        #endregion
-
-        #region HierarchySettings
-
-        /// <summary> Gets an object representing a HierarchySettings along with the instance operations that can be performed on it in the ManagementGroup. </summary>
-        /// <returns> Returns a <see cref="HierarchySettings" /> object. </returns>
-        public HierarchySettings GetHierarchySettings()
-        {
-            return new HierarchySettings(this, new ResourceIdentifier(Id.ToString() + "/settings/default"));
-        }
-        #endregion
     }
 }

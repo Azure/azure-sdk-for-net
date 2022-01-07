@@ -187,94 +187,6 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resources
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Resources_List
-        /// <summary> Get all the resources in a subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;The properties you can use for eq (equals) or ne (not equals) are: location, resourceType, name, resourceGroup, identity, identity/principalId, plan, plan/publisher, plan/product, plan/name, plan/version, and plan/promotionCode.&lt;br&gt;&lt;br&gt;For example, to filter by a resource type, use: $filter=resourceType eq &apos;Microsoft.Network/virtualNetworks&apos;&lt;br&gt;&lt;br&gt;You can use substringof(value, property) in the filter. The properties you can use for substring are: name and resourceGroup.&lt;br&gt;&lt;br&gt;For example, to get all resources with &apos;demo&apos; anywhere in the name, use: $filter=substringof(&apos;demo&apos;, name)&lt;br&gt;&lt;br&gt;You can link more than one substringof together by adding and/or operators.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. When you filter by a tag name and value, the tags for each resource are not returned in the results.&lt;br&gt;&lt;br&gt;You can use some properties together when filtering. The combinations you can use are: substringof and/or resourceType, plan and plan/publisher and plan/name, identity and identity/principalId. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
-        /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GenericResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResourceData> GetGenericResourcesAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<GenericResourceData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = await _resourcesRestClient.ListAsync(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GenericResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = await _resourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resources
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Resources_List
-        /// <summary> Get all the resources in a subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;The properties you can use for eq (equals) or ne (not equals) are: location, resourceType, name, resourceGroup, identity, identity/principalId, plan, plan/publisher, plan/product, plan/name, plan/version, and plan/promotionCode.&lt;br&gt;&lt;br&gt;For example, to filter by a resource type, use: $filter=resourceType eq &apos;Microsoft.Network/virtualNetworks&apos;&lt;br&gt;&lt;br&gt;You can use substringof(value, property) in the filter. The properties you can use for substring are: name and resourceGroup.&lt;br&gt;&lt;br&gt;For example, to get all resources with &apos;demo&apos; anywhere in the name, use: $filter=substringof(&apos;demo&apos;, name)&lt;br&gt;&lt;br&gt;You can link more than one substringof together by adding and/or operators.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. When you filter by a tag name and value, the tags for each resource are not returned in the results.&lt;br&gt;&lt;br&gt;You can use some properties together when filtering. The combinations you can use are: substringof and/or resourceType, plan and plan/publisher and plan/name, identity and identity/principalId. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
-        /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GenericResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResourceData> GetGenericResources(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<GenericResourceData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = _resourcesRestClient.List(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GenericResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = _resourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
         /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Tags_DeleteValue
@@ -608,11 +520,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceLinkData> GetAtSubscriptionResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceLinkData> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceLinkData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAtSubscriptionResourceLinks");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
@@ -627,7 +539,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ResourceLinkData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAtSubscriptionResourceLinks");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
@@ -650,11 +562,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceLinkData> GetAtSubscriptionResourceLinks(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceLinkData> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<ResourceLinkData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAtSubscriptionResourceLinks");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
@@ -669,7 +581,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ResourceLinkData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAtSubscriptionResourceLinks");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {

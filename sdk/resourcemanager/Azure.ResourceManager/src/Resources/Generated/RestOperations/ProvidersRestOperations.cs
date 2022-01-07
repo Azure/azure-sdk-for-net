@@ -120,79 +120,6 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateRegisterAtManagementGroupScopeRequest(string groupId, string resourceProviderNamespace)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(groupId, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath(resourceProviderNamespace, true);
-            uri.AppendPath("/register", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Registers a management group with a resource provider. </summary>
-        /// <param name="groupId"> The management group ID. </param>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async Task<Response> RegisterAtManagementGroupScopeAsync(string groupId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-
-            using var message = CreateRegisterAtManagementGroupScopeRequest(groupId, resourceProviderNamespace);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Registers a management group with a resource provider. </summary>
-        /// <param name="groupId"> The management group ID. </param>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public Response RegisterAtManagementGroupScope(string groupId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-
-            using var message = CreateRegisterAtManagementGroupScopeRequest(groupId, resourceProviderNamespace);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateProviderPermissionsRequest(string subscriptionId, string resourceProviderNamespace)
         {
             var message = _pipeline.CreateMessage();
@@ -276,7 +203,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationRequest properties)
+        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -308,7 +235,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async Task<Response<ProviderData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -341,7 +268,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public Response<ProviderData> Register(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationRequest properties = null, CancellationToken cancellationToken = default)
+        public Response<ProviderData> Register(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

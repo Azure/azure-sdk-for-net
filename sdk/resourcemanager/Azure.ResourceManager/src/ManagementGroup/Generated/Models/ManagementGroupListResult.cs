@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Management.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
         internal ManagementGroupListResult()
         {
-            Value = new ChangeTrackingList<ManagementGroupInfo>();
+            Value = new ChangeTrackingList<ManagementGroupData>();
         }
 
         /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
         /// <param name="value"> The list of management groups. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ManagementGroupListResult(IReadOnlyList<ManagementGroupInfo> value, string nextLink)
+        internal ManagementGroupListResult(IReadOnlyList<ManagementGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of management groups. </summary>
-        public IReadOnlyList<ManagementGroupInfo> Value { get; }
+        public IReadOnlyList<ManagementGroupData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
