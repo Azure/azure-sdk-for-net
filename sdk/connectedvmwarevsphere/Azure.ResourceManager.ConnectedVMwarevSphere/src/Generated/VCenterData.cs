@@ -8,8 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         /// <param name="fqdn"> Gets or sets the FQDN/IPAddress of the vCenter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
-        public VCenterData(AzureLocation location, string fqdn) : base(location)
+        public VCenterData(Location location, string fqdn) : base(location)
         {
             if (fqdn == null)
             {
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="credentials"> Username / Password Credentials to connect to vcenter. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VCenterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, CheckNameAvailabilityRequest extendedLocation, SystemData systemData, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, tags, location)
+        internal VCenterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ExtendedLocation extendedLocation, SystemData systemData, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SystemData = systemData;
@@ -68,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Gets or sets the extended location. </summary>
-        public CheckNameAvailabilityRequest ExtendedLocation { get; set; }
+        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The system data. </summary>
         public SystemData SystemData { get; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
