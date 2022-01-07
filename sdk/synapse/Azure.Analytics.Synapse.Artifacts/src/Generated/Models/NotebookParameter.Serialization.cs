@@ -12,8 +12,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(StoredProcedureParameterConverter))]
-    public partial class StoredProcedureParameter : IUtf8JsonSerializable
+    [JsonConverter(typeof(NotebookParameterConverter))]
+    public partial class NotebookParameter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,10 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static StoredProcedureParameter DeserializeStoredProcedureParameter(JsonElement element)
+        internal static NotebookParameter DeserializeNotebookParameter(JsonElement element)
         {
             Optional<object> value = default;
-            Optional<StoredProcedureParameterType> type = default;
+            Optional<NotebookParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -61,23 +61,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new StoredProcedureParameterType(property.Value.GetString());
+                    type = new NotebookParameterType(property.Value.GetString());
                     continue;
                 }
             }
-            return new StoredProcedureParameter(value.Value, Optional.ToNullable(type));
+            return new NotebookParameter(value.Value, Optional.ToNullable(type));
         }
 
-        internal partial class StoredProcedureParameterConverter : JsonConverter<StoredProcedureParameter>
+        internal partial class NotebookParameterConverter : JsonConverter<NotebookParameter>
         {
-            public override void Write(Utf8JsonWriter writer, StoredProcedureParameter model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, NotebookParameter model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override StoredProcedureParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override NotebookParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeStoredProcedureParameter(document.RootElement);
+                return DeserializeNotebookParameter(document.RootElement);
             }
         }
     }
