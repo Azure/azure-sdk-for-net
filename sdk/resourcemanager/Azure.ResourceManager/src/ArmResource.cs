@@ -64,7 +64,11 @@ namespace Azure.ResourceManager.Core
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
             Pipeline = clientContext.Pipeline;
+            #if DEBUG
+            #pragma warning disable CA2214
             ValidateResourceType(id);
+            #pragma warning restore CA2214
+            #endif
         }
 
         private Tenant Tenant => _tenant ??= new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
