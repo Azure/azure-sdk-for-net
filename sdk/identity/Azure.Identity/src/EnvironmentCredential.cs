@@ -19,6 +19,7 @@ namespace Azure.Identity
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
     /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>A path to certificate and private key pair in PEM or PFX format, which can authenticate the App Registration.</description></item>
+    /// <item><term>AZURE_CLIENT_CERTIFICATE_SEND_X5C</term><description>Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
@@ -51,24 +52,16 @@ namespace Azure.Identity
             : this(CredentialPipeline.GetInstance(options), options)
         { }
 
-        /// <summary>
-        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
-        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
-        /// </summary>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public EnvironmentCredential(EnvironmentCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options), options)
-        { }
-
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
-            _options = options ?? new EnvironmentCredentialOptions();
+            _options = options ?? new TokenCredentialOptions();
 
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
             string clientSecret = EnvironmentVariables.ClientSecret;
             string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
+            string clientCertificateSendX5c = EnvironmentVariables.ClientCertificateSendX5c;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
@@ -84,12 +77,15 @@ namespace Azure.Identity
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
+                    bool sendCertificateChain = !string.IsNullOrEmpty(clientCertificateSendX5c) &&
+                        (clientCertificateSendX5c == "1" || clientCertificateSendX5c == "true");
+
                     ClientCertificateCredentialOptions clientCertificateCredentialOptions = new ClientCertificateCredentialOptions
                     {
                         AuthorityHost = _options.AuthorityHost,
                         IsLoggingPIIEnabled = _options.IsLoggingPIIEnabled,
                         Transport = _options.Transport,
-                        SendCertificateChain = (_options as EnvironmentCredentialOptions)?.SendCertificateChain ?? false
+                        SendCertificateChain = sendCertificateChain
                     };
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificateCredentialOptions, _pipeline, null);
                 }

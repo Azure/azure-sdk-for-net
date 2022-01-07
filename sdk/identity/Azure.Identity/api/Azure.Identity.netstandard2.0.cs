@@ -183,15 +183,9 @@ namespace Azure.Identity
     public partial class EnvironmentCredential : Azure.Core.TokenCredential
     {
         public EnvironmentCredential() { }
-        public EnvironmentCredential(Azure.Identity.EnvironmentCredentialOptions options) { }
         public EnvironmentCredential(Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class EnvironmentCredentialOptions : Azure.Identity.TokenCredentialOptions
-    {
-        public EnvironmentCredentialOptions() { }
-        public bool SendCertificateChain { get { throw null; } set { } }
     }
     public static partial class IdentityModelFactory
     {
