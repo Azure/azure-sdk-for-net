@@ -10,18 +10,18 @@ This tutorial has following sections:
 - [Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)](#azure-sdk-code-geneneration-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
   - [Setup your repo](#setup-your-repo)
-  - [Getting started - shippable package](#getting-started---shippable-package)
+  - [Create starting package](#create-starting-package)
     - [Create the project folder](#create-the-project-folder)
-      - [1. install dotnet tempate](#1-install-dotnet-tempate)
+      - [1. install dotnet template](#1-install-dotnet-template)
       - [2. dotnet new project](#2-dotnet-new-project)
       - [3. update the solution file if needed](#3-update-the-solution-file-if-needed)
     - [Generate client library](#generate-client-library)
     - [Export Public API](#export-public-api)
-  - [Improve the SDK library package](#improve-the-sdk-library-package)
+  - [Add package ship requirements](#add-package-ship-requirements)
     - [Tests](#tests)
     - [Samples](#samples)
     - [Snippets](#snippets)
-    - [README.md](#readmemd)
+    - [README](#readme)
     - [Changelog](#changelog)
 
 <!-- /TOC -->
@@ -42,11 +42,11 @@ This tutorial has following sections:
 - Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET Contributing.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
 - Create a branch to work in. 
 
-## Getting started - shippable package
+## Create starting package
 
 For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
 
-You can run `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` to generate the first-version shippable SDK client library package directly as following
+You can run `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` to generate the starting SDK client library package directly as following
 ```
 eng/automation/Invoke-DataPlaneGenerateShippablePackage.ps1 -service <servicename> -namespace Azure.<group>.<source> -sdkPath <sdkrepoRootPath> -inputfile <inputfilelink> -securityScope <securityScope>
 ```
@@ -64,7 +64,7 @@ The script `eng\automation\Invoke-DataPlaneGenerateShippablePackage.ps1` will do
 
 ### Create the project folder
 
-#### 1. install dotnet tempate
+#### 1. install dotnet template
 navigate to the sdk repo root director, and run the following commands:
 
 ```
@@ -85,10 +85,10 @@ dotnet new dataplane --libraryName DeviceUpdate --swagger https://github.com/dpo
 
 #### 3. update the solution file if needed
 Run 'dotnet sln' as following to update the projects in the solution file:
-dotnet sln remove src\Azure.<grouop>.<service>.csproj
-dotnet sln add src\Azure.<grouop>.<service>.csproj
-dotnet sln remove tests\Azure.<grouop>.<service>.Tests.csproj
-dotnet sln add tests\Azure.<grouop>.<service>.Tests.csproj
+dotnet sln remove src\Azure.<group>.<service>.csproj
+dotnet sln add src\Azure.<group>.<service>.csproj
+dotnet sln remove tests\Azure.<group>.<service>.Tests.csproj
+dotnet sln add tests\Azure.<group>.<service>.Tests.csproj
 
 **Learn more:** to understand more about the Azure SDK repo structure, see [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md) in the `azure-sdk` repo.
 
@@ -108,7 +108,7 @@ Running the script for a project in `sdk\deviceupdate` would look like this:
 eng\scripts\Export-API.ps1 deviceupdate
 ```
 
-## Improve the SDK library package
+## Add package ship requirements
 You can continuously work on the first-version shippable package created above to refine, such as add Tests, Samples and refine the Readme.md and Changlog.
 ### Tests ###
 
@@ -135,7 +135,7 @@ In this section, we will talk about how to add samples. As you can see, we alrea
 
 Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/tests/Samples/TemplateServiceSamples.HelloWorld.cs#L30) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/README.md#create-resource). Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
 
-### README.md
+### README
 
 README.md file instructions are listed in `Azure.<group>.<service>/README.md` file. Please add/update the README.md file as per your library.
 

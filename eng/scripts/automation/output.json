@@ -1,0 +1,12 @@
+{
+  "packages": [
+    {
+      "packageName": "agrifood",
+      "result": "succeeded",
+      "path": [
+        "sdk/agrifood/Azure.ResourceManager.agrifood"
+      ],
+      "packageFolder": "sdk/agrifood/Azure.ResourceManager.agrifood"
+    }
+  ]
+}
