@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
 {
 
     /// <summary>
-    /// Defines values for StorageAccountType.
+    /// Defines values for PrincipalsModificationKind.
     /// </summary>
-    public static class StorageAccountType
+    public static class PrincipalsModificationKind
     {
-        public const string GRS = "GRS";
-        public const string LRS = "LRS";
+        public const string Union = "Union";
+        public const string Replace = "Replace";
+        public const string None = "None";
     }
 }
