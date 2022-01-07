@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string roleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string roleName, CancellationToken cancellationToken = default)
         {
             if (roleName == null)
             {
                 throw new ArgumentNullException(nameof(roleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string roleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string roleName, CancellationToken cancellationToken = default)
         {
             if (roleName == null)
             {
                 throw new ArgumentNullException(nameof(roleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.ExistsAsync");
             scope.Start();
             try
             {

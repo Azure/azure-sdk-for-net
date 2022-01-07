@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static JobAgentData DeserializeJobAgentData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.Network.Tests
             _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
-        private static string GetChildAppGwResourceId(string subscriptionId,
+        private static ResourceIdentifier GetChildAppGwResourceId(string subscriptionId,
                                                 string resourceGroupName,
                                                 string appGwname,
                                                 string childResourceType,
                                                 string childResourceName)
         {
-            return string.Format(
+            return new ResourceIdentifier(string.Format(
                     "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/applicationGateways/{2}/{3}/{4}",
                     subscriptionId,
                     resourceGroupName,
                     appGwname,
                     childResourceType,
-                    childResourceName);
+                    childResourceName));
         }
 
         private List<ApplicationGatewaySslCertificate> CreateSslCertificate(string sslCertName, string password)

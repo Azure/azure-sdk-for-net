@@ -17,7 +17,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The resource type for the root of the resource hierarchy.
         /// </summary>
-        public static ResourceType RootResourceType => new ResourceType(string.Empty, string.Empty);
+        public static ResourceType Root => new ResourceType(string.Empty, string.Empty);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager
             // Check if ResourceIdentifier
             else
             {
-                ResourceIdentifier id = resourceIdOrType;
+                ResourceIdentifier id = new ResourceIdentifier(resourceIdOrType);
                 Type = id.ResourceType.Type;
                 Namespace = id.ResourceType.Namespace;
             }

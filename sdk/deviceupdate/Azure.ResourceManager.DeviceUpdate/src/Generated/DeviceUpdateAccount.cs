@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A Class representing a DeviceUpdateAccount along with the instance operations that can be performed on it. </summary>
     public partial class DeviceUpdateAccount : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DeviceUpdateAccount"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeviceUpdateAccountsRestOperations _deviceUpdateAccountsRestClient;
         private readonly DeviceUpdateAccountData _data;

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a AfdRoute along with the instance operations that can be performed on it. </summary>
     public partial class AfdRoute : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="AfdRoute"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdRoutesRestOperations _afdRoutesRestClient;
         private readonly AfdRouteData _data;

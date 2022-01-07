@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a OSFamily along with the instance operations that can be performed on it. </summary>
     public partial class OSFamily : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="OSFamily"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osFamilyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
         private readonly OSFamilyData _data;

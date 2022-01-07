@@ -15,7 +15,7 @@ batch:
 # TODO: Uncomment when we ship authoring support and remove ./ConversationsClientOptions.cs.
 # - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/33138867cd88a4a8689feb591a98dda26d96a63e/specification/cognitiveservices/data-plane/Language/preview/2021-07-15-preview/analyzeconversations-authoring.json
 #   add-credentials: true
-#   low-level-client: true
+#   data-plane: true
 
 modelerfour:
   lenient-model-deduplication: true

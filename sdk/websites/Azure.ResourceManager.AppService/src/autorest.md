@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/ec2b6d1985ce89c8646276e0806a738338e98bd2/specification/web/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
 tag: package-2021-02
 clear-output-folder: true
 skip-csproj: true
@@ -38,30 +38,28 @@ modelerfour:
     
 output-folder: ./Generated
 
+list-exception:
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}
+
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip
 - /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql/status
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}
-
-request-path-to-singleton-resource: 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web: sourcecontrols/web
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking: configurations/networking
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: basicPublishingCredentialsPolicies/ftp
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm: basicPublishingCredentialsPolicies/scm
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs: config/logs
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs: config/logs
-# exist problem
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}: snapshots/{snapshotId}
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}: snapshots/{snapshotId}
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web: config/web
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql/status: migratemysql/status
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks: privateAccess/virtualNetworks
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp: basicPublishingCredentialsPolicies/ftp
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm: basicPublishingCredentialsPolicies/scm
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web: config/web
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork: networkConfig/virtualNetwork
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames: config/slotConfigNames
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: BasicPublishingCredentialsPolicyFtp
@@ -105,7 +103,9 @@ override-operation-name:
 
 mgmt-debug:
   show-request-path: true
-  suppress-list-exception: true
+
+no-property-type-replacement:
+- ApiManagementConfig
       
 directive:
 # rename model
@@ -131,135 +131,14 @@ directive:
   - rename-model:
       from: Domain
       to: AppServiceDomain
-  - rename-model:
-      from: SiteConfigResource
-      to: SiteConfig
+#   - rename-model:
+#       from: SiteConfig
+#       to: SiteConfigProperties
+#   - rename-model:
+#       from: SiteConfigResource
+#       to: SiteConfig
 
 # Enum rename
-  - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/availableStacks"].get.parameters
-    transform: >
-      $[0]={
-            "name": "osTypeSelected",
-            "in": "query",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "WindowsFunctions",
-              "LinuxFunctions",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "OsTypeSelected",
-            "modelAsString": true
-          }
-          }
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks"].get.parameters
-    transform: >
-      $[0]={
-            "name": "osTypeSelected",
-            "in": "query",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "WindowsFunctions",
-              "LinuxFunctions",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "OsTypeSelected",
-            "modelAsString": true
-          }
-          }
-  - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/functionAppStacks"].get.parameters
-    transform: >
-      $[1]={
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
-  - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/webAppStacks"].get.parameters
-    transform: >
-      $[1]={
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
-  - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/locations/{location}/functionAppStacks"].get.parameters
-    transform: >
-      $[0]={
-            "name": "location",
-            "in": "path",
-            "description": "Function App stack location.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
-  - from: swagger-document
-    where: $.paths["/providers/Microsoft.Web/locations/{location}/webAppStacks"].get.parameters
-    transform: >
-      $[0]={
-            "name": "location",
-            "in": "path",
-            "description": "Web App stack location.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "stackOsType",
-            "in": "query",
-            "description": "Stack OS Type",
-            "type": "string",
-            "enum": [
-              "Windows",
-              "Linux",
-              "All"
-            ],
-            "x-ms-enum": {
-            "name": "StackOsType",
-            "modelAsString": true
-          }
-          }
   - from: swagger-document
     where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
     transform: >
@@ -320,17 +199,22 @@ directive:
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.ApiManagementConfig.properties
+    where: $.definitions.SiteConfig
     transform: >
-        $["apiconfig111"] = {
-          "description": "this is a fake",
-          "type": "string"
-        }
+        $["x-ms-client-name"] = "SiteConfigProperties"
   - from: swagger-document
-    where: $.definitions.SiteConfig.properties
+    where: $.definitions.SiteConfigResource
     transform: >
-        delete $["minTlsVersion"];
-        delete $["scmMinTlsVersion"];
+        $["x-ms-client-name"] = "SiteConfig"
+  - from: swagger-document
+    where: $.definitions.ApiManagementConfig.properties.*
+    transform: >
+        $["x-nullable"] = true;
+#   - from: swagger-document
+#     where: $.definitions.SiteConfig.properties
+#     transform: >
+#         delete $["minTlsVersion"];
+#         delete $["scmMinTlsVersion"];
   - from: swagger-document
     where: $.definitions.Site.properties.properties.properties.trafficManagerHostNames
     transform: >

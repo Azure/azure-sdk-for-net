@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a VirtualMachineExtension along with the instance operations that can be performed on it. </summary>
     public partial class VirtualMachineExtension : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualMachineExtension"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineExtensionsRestOperations _virtualMachineExtensionsRestClient;
         private readonly VirtualMachineExtensionData _data;

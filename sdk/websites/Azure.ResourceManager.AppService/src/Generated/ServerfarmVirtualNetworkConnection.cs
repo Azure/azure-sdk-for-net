@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a ServerfarmVirtualNetworkConnection along with the instance operations that can be performed on it. </summary>
     public partial class ServerfarmVirtualNetworkConnection : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerfarmVirtualNetworkConnection"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string vnetName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AppServicePlansRestOperations _appServicePlansRestClient;
         private readonly VnetInfoResourceData _data;

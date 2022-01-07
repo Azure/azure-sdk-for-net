@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             if (firewallRuleName == null)
             {
                 throw new ArgumentNullException(nameof(firewallRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             if (firewallRuleName == null)
             {
                 throw new ArgumentNullException(nameof(firewallRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.ExistsAsync");
             scope.Start();
             try
             {

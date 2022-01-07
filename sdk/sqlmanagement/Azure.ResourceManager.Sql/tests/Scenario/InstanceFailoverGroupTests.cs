@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                     new ManagedInstancePairInfo(primaryManagedInstanceId,partnerManagedInstanceId),
                 },
             };
-            var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups().CreateOrUpdateAsync(locationName, instanceFailoverGroupName, data);
+            var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups(locationName).CreateOrUpdateAsync(instanceFailoverGroupName, data);
             return instanceFailoverGroupLro.Value;
         }
 
@@ -87,23 +87,23 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(instanceFailoverGroupName, instanceFailoverGroup.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName));
-            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups().CheckIfExists(locationName, instanceFailoverGroupName + "0"));
+            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups(locationName).Exists(instanceFailoverGroupName));
+            Assert.IsTrue(_resourceGroup.GetInstanceFailoverGroups(locationName).Exists(instanceFailoverGroupName + "0"));
 
             // 3.Get
-            var getInstanceFailoverGroup = await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName);
+            var getInstanceFailoverGroup = await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAsync(instanceFailoverGroupName);
             Assert.IsNotNull(instanceFailoverGroup.Data);
             Assert.AreEqual(instanceFailoverGroupName, instanceFailoverGroup.Data.Name);
 
             // 4.GetAll
-            var list = await _resourceGroup.GetInstanceFailoverGroups().GetAllAsync(locationName).ToEnumerableAsync();
+            var list = await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(instanceFailoverGroupName, list.FirstOrDefault().Data.Name);
 
             // 5.Delete
-            var deleteInstanceFailoverGroup = (await _resourceGroup.GetInstanceFailoverGroups().GetAsync(locationName, instanceFailoverGroupName)).Value;
+            var deleteInstanceFailoverGroup = (await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAsync(instanceFailoverGroupName)).Value;
             await deleteInstanceFailoverGroup.DeleteAsync();
-            list = await _resourceGroup.GetInstanceFailoverGroups().GetAllAsync(locationName).ToEnumerableAsync();
+            list = await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
 

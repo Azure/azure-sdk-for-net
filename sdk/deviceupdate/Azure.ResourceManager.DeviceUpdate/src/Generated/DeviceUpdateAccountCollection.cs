@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.ExistsAsync");
             scope.Start();
             try
             {

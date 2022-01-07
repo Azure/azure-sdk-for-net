@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Storage.Tests
             AssertStorageAccountEqual(account1, account2);
             StorageAccount account3 = await storageAccountCollection.GetIfExistsAsync(accountName + "1");
             Assert.IsNull(account3);
-            Assert.IsTrue(await storageAccountCollection.CheckIfExistsAsync(accountName));
-            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName + "1"));
+            Assert.IsTrue(await storageAccountCollection.ExistsAsync(accountName));
+            Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName + "1"));
 
             //delete storage account
             await account1.DeleteAsync();
 
             //validate if deleted successfully
-            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName));
+            Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName));
             StorageAccount account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }

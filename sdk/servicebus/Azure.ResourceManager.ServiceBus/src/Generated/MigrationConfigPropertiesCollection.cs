@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.Exists");
             scope.Start();
             try
             {
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.ExistsAsync");
             scope.Start();
             try
             {

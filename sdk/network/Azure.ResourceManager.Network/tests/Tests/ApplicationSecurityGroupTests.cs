@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
             }).WaitForCompletionAsync();
 
-            Assert.True(await collection.CheckIfExistsAsync(name));
+            Assert.True(await collection.ExistsAsync(name));
 
             var applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
             ValidateCommon(applicationSecurityGroupData, name);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await applicationSecurityGroup.DeleteAsync();
 
-            Assert.False(await collection.CheckIfExistsAsync(name));
+            Assert.False(await collection.ExistsAsync(name));
 
             applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);

@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a HostingEnvironmentRecommendation along with the instance operations that can be performed on it. </summary>
     public partial class HostingEnvironmentRecommendation : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentRecommendation"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RecommendationsRestOperations _recommendationsRestClient;
         private readonly RecommendationRuleData _data;

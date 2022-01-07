@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string bastionHostName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (bastionHostName == null)
             {
                 throw new ArgumentNullException(nameof(bastionHostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (bastionHostName == null)
             {
                 throw new ArgumentNullException(nameof(bastionHostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.ExistsAsync");
             scope.Start();
             try
             {

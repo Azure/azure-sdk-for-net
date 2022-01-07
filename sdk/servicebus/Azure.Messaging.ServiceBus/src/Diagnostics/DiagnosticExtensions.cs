@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 properties,
                 out string diagnosticId))
             {
-                scope.AddLink(diagnosticId);
+                scope.AddLink(diagnosticId, null);
             }
         }
     }

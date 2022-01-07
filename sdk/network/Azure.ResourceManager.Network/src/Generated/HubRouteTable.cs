@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a HubRouteTable along with the instance operations that can be performed on it. </summary>
     public partial class HubRouteTable : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="HubRouteTable"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HubRouteTablesRestOperations _hubRouteTablesRestClient;
         private readonly HubRouteTableData _data;

@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string columnName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string columnName, CancellationToken cancellationToken = default)
         {
             if (columnName == null)
             {
                 throw new ArgumentNullException(nameof(columnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string columnName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string columnName, CancellationToken cancellationToken = default)
         {
             if (columnName == null)
             {
                 throw new ArgumentNullException(nameof(columnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.ExistsAsync");
             scope.Start();
             try
             {

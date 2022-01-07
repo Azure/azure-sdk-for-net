@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A Class representing a WebPubSub along with the instance operations that can be performed on it. </summary>
     public partial class WebPubSub : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="WebPubSub"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
         private readonly WebPubSubPrivateLinkResourcesRestOperations _webPubSubPrivateLinkResourcesRestClient;
@@ -558,7 +564,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<Models.Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
             scope.Start();
@@ -576,7 +582,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Sku>> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<Models.Sku>> GetSkus(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
             scope.Start();

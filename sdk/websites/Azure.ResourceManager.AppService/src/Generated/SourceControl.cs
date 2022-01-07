@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SourceControl along with the instance operations that can be performed on it. </summary>
     public partial class SourceControl : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SourceControl"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string sourceControlType)
+        {
+            var resourceId = $"/providers/Microsoft.Web/sourcecontrols/{sourceControlType}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebSiteManagementRestOperations _restClient;
         private readonly SourceControlData _data;

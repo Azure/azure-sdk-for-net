@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a OSVersion along with the instance operations that can be performed on it. </summary>
     public partial class OSVersion : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="OSVersion"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osVersionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
         private readonly OSVersionData _data;

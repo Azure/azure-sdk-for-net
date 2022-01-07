@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             if (applicationDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(applicationDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             if (applicationDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(applicationDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.ExistsAsync");
             scope.Start();
             try
             {

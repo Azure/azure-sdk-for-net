@@ -53,6 +53,15 @@ namespace Azure.Core.TestFramework
             JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue))));
         }
 
+        public void ReplaceHostInUri(string replacementHostName)
+        {
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"https://(?<host>[^/]+)/", replacementHostName)
+                {
+                    GroupForReplace = "host"
+                });
+        }
+
         public virtual string SanitizeUri(string uri)
         {
             return uri;

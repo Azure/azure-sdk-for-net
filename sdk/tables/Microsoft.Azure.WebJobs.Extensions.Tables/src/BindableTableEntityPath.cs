@@ -20,9 +20,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return new ParameterizedTableEntityPath(tableNameTemplate, partitionKeyTemplate, rowKeyTemplate);
             }
 
-            TableClient.ValidateAzureTableName(tableNamePattern);
-            TableClient.ValidateAzureTableKeyValue(partitionKeyPattern);
-            TableClient.ValidateAzureTableKeyValue(rowKeyPattern);
+            TableClientHelpers.ValidateAzureTableName(tableNamePattern);
+            TableClientHelpers.ValidateAzureTableKeyValue(partitionKeyPattern);
+            TableClientHelpers.ValidateAzureTableKeyValue(rowKeyPattern);
             TableEntityPath innerPath = new TableEntityPath(tableNamePattern, partitionKeyPattern, rowKeyPattern);
             return new BoundTableEntityPath(innerPath);
         }

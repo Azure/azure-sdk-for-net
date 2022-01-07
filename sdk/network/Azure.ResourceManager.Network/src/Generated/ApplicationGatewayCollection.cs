@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (applicationGatewayName == null)
             {
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (applicationGatewayName == null)
             {
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.ExistsAsync");
             scope.Start();
             try
             {

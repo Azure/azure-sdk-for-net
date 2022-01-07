@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
             if (restorePointCollectionName == null)
             {
                 throw new ArgumentNullException(nameof(restorePointCollectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
             if (restorePointCollectionName == null)
             {
                 throw new ArgumentNullException(nameof(restorePointCollectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.ExistsAsync");
             scope.Start();
             try
             {

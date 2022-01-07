@@ -162,7 +162,7 @@ To setup ApplicationInsights tracking for your application follow the [Start Mon
 
 ### OpenTelemetry with Azure Monitor, Zipkin and others
 
-OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#ActivitySource support) section before proceeding to OpenTelemetry configuration.
+OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#activitysource-support) section before proceeding to OpenTelemetry configuration.
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 

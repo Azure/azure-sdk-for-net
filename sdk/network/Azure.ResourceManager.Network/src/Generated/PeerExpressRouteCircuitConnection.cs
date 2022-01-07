@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a PeerExpressRouteCircuitConnection along with the instance operations that can be performed on it. </summary>
     public partial class PeerExpressRouteCircuitConnection : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PeerExpressRouteCircuitConnection"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, string connectionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections/{connectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PeerExpressRouteCircuitConnectionsRestOperations _peerExpressRouteCircuitConnectionsRestClient;
         private readonly PeerExpressRouteCircuitConnectionData _data;

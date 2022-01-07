@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A Class representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it. </summary>
     public partial class NamespaceAuthorizationRule : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="NamespaceAuthorizationRule"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
         private readonly AuthorizationRuleData _data;

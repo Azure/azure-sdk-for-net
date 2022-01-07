@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
             VaultCollection vaultCollection = resourceGroup.GetVaults();
-            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard)));
+            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard)));
 
             VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
             Vault vault = lro.Value;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public void CreateModel()
         {
             #region Snippet:Changelog_CreateModel
-            VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
+            VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard));
             VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
             #endregion
         }

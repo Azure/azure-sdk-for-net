@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A Class representing a CdnEndpoint along with the instance operations that can be performed on it. </summary>
     public partial class CdnEndpoint : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="CdnEndpoint"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CdnEndpointsRestOperations _cdnEndpointsRestClient;
         private readonly CdnEndpointData _data;

@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Exists");
             scope.Start();
             try
             {
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.ExistsAsync");
             scope.Start();
             try
             {

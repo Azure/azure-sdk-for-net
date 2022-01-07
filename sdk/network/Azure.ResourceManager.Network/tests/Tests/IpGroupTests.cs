@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (_resourceGroup.GetIpGroups().CheckIfExists(_ipGroupName))
+            if (_resourceGroup.GetIpGroups().Exists(_ipGroupName))
             {
                 var ipGroup = await _resourceGroup.GetIpGroups().GetAsync(_ipGroupName);
                 await ipGroup.Value.DeleteAsync();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task CheckIfExist()
         {
             await CreateIpGroup(_ipGroupName);
-            Assert.IsTrue(_resourceGroup.GetIpGroups().CheckIfExists(_ipGroupName));
+            Assert.IsTrue(_resourceGroup.GetIpGroups().Exists(_ipGroupName));
         }
 
         [Test]

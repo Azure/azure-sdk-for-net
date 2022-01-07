@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a GalleryApplicationVersion along with the instance operations that can be performed on it. </summary>
     public partial class GalleryApplicationVersion : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="GalleryApplicationVersion"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}/versions/{galleryApplicationVersionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GalleryApplicationVersionsRestOperations _galleryApplicationVersionsRestClient;
         private readonly GalleryApplicationVersionData _data;

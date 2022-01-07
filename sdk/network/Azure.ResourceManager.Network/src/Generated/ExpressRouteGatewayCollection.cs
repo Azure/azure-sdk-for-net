@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayName == null)
             {
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayName == null)
             {
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.ExistsAsync");
             scope.Start();
             try
             {

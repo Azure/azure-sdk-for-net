@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a StorageAccount along with the instance operations that can be performed on it. </summary>
     public partial class StorageAccount : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="StorageAccount"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly StorageAccountsRestOperations _storageAccountsRestClient;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;

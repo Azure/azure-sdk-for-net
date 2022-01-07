@@ -43,7 +43,7 @@ directive:
     $.Metrics.type = "object";
 ```
 
-### Times aren't required
+### Times aren't required 
 ``` yaml
 directive:
 - from: swagger-document

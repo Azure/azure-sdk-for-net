@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Write'</param>
         /// <param name="durationInSeconds">Time duration in seconds until the
         /// SAS access expires.</param>
-        public GrantAccessData(string access, int durationInSeconds)
+        /// <param name="getSecureVMGuestStateSAS">Set this flag to true to get
+        /// additional SAS for VM guest state</param>
+        public GrantAccessData(string access, int durationInSeconds, bool? getSecureVMGuestStateSAS = default(bool?))
         {
             Access = access;
             DurationInSeconds = durationInSeconds;
+            GetSecureVMGuestStateSAS = getSecureVMGuestStateSAS;
             CustomInit();
         }
 
@@ -57,6 +60,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "durationInSeconds")]
         public int DurationInSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets set this flag to true to get additional SAS for VM
+        /// guest state
+        /// </summary>
+        [JsonProperty(PropertyName = "getSecureVMGuestStateSAS")]
+        public bool? GetSecureVMGuestStateSAS { get; set; }
 
         /// <summary>
         /// Validate the object.

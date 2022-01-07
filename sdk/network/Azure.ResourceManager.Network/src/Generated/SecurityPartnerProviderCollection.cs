@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string securityPartnerProviderName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (securityPartnerProviderName == null)
             {
                 throw new ArgumentNullException(nameof(securityPartnerProviderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (securityPartnerProviderName == null)
             {
                 throw new ArgumentNullException(nameof(securityPartnerProviderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.ExistsAsync");
             scope.Start();
             try
             {

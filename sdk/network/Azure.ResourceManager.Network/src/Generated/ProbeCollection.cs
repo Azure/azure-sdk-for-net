@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string probeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string probeName, CancellationToken cancellationToken = default)
         {
             if (probeName == null)
             {
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string probeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string probeName, CancellationToken cancellationToken = default)
         {
             if (probeName == null)
             {
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.ExistsAsync");
             scope.Start();
             try
             {

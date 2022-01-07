@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             await CreateWebPubSub(webPubSubName);
-            Assert.IsTrue(_resourceGroup.GetWebPubSubs().CheckIfExists(webPubSubName));
-            Assert.IsFalse(_resourceGroup.GetWebPubSubs().CheckIfExists(webPubSubName + "1"));
+            Assert.IsTrue(_resourceGroup.GetWebPubSubs().Exists(webPubSubName));
+            Assert.IsFalse(_resourceGroup.GetWebPubSubs().Exists(webPubSubName + "1"));
         }
 
         [Test]

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = x;
+            ResourceIdentifier z = new ResourceIdentifier(x);
             y = z;
 
             Assert.IsNotNull(z.Parent);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = x;
+            ResourceIdentifier z = new ResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("myVmName", z.Name);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = x;
+            ResourceIdentifier z = new ResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("testsubnet", z.Name);

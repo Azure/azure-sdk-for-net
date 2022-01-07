@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a JobAgent along with the instance operations that can be performed on it. </summary>
     public partial class JobAgent : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="JobAgent"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JobAgentsRestOperations _jobAgentsRestClient;
         private readonly JobExecutionsRestOperations _jobExecutionsRestClient;

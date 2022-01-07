@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it. </summary>
     public partial class ApplicationGatewayAvailableSslOptions : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ApplicationGatewayAvailableSslOptions"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
         private readonly ApplicationGatewayAvailableSslOptionsData _data;

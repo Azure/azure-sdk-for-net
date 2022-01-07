@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string originName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string originName, CancellationToken cancellationToken = default)
         {
             if (originName == null)
             {
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string originName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
             if (originName == null)
             {
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.ExistsAsync");
             scope.Start();
             try
             {

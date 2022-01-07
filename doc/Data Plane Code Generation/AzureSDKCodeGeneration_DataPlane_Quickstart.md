@@ -82,9 +82,9 @@ In Visual Studio:
 
 #### 4. Update the Assembly Info
 
-You'll notice that the `Azure.<group>.<service>` project has `properties/AssemblyInfo.cs` file in it. Replace `Microsoft.Test` namespace with the correct resource provider namepace for your service.
+You'll notice that the `Azure.<group>.<service>` project has `properties/AssemblyInfo.cs` file in it. Replace `Microsoft.Test` namespace with the correct resource provider namespace for your service.
 
-**Learn more:** see the [Azure Services Resource Providers](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-services-resource-providers) for the list of possible namespaces.
+**Learn more:** see the [Azure Services Resource Providers](https://docs.microsoft.com/azure/azure-resource-manager/management/azure-services-resource-providers) for the list of possible namespaces.
 
 #### 5. Save and commit your changes to your branch
 

@@ -23,6 +23,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A Class representing a SiteProcess along with the instance operations that can be performed on it. </summary>
     public partial class SiteProcess : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteProcess"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string processId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly ProcessInfoData _data;

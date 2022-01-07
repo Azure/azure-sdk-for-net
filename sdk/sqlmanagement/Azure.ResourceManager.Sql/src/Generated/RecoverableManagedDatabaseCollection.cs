@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string recoverableDatabaseName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
             if (recoverableDatabaseName == null)
             {
                 throw new ArgumentNullException(nameof(recoverableDatabaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
             if (recoverableDatabaseName == null)
             {
                 throw new ArgumentNullException(nameof(recoverableDatabaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.ExistsAsync");
             scope.Start();
             try
             {

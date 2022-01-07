@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
         public void NoDataValidation()
         {
             ////subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/myRg
-            var resource = Client.GetResourceGroup($"/subscriptions/{Guid.NewGuid()}/resourceGroups/fakeRg");
+            var resource = Client.GetResourceGroup(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/resourceGroups/fakeRg"));
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
@@ -50,18 +50,13 @@ namespace Azure.ResourceManager.Tests
             await deleteOp.UpdateStatusAsync();
             await deleteOp.WaitForCompletionResponseAsync();
             await deleteOp.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2));
-
-            var rgOp2 = await subscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"), new ResourceGroupData(Location.WestUS2));
-            ResourceGroup rg2 = rgOp.Value;
-            rg2.Id.Name = null;
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg2.DeleteAsync(false));
         }
 
         [TestCase]
         [RecordedTest]
         public void StartDeleteNonExistantRg()
         {
-            var rgOp = InstrumentClientExtension(Client.GetResourceGroup($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/fake"));
+            var rgOp = InstrumentClientExtension(Client.GetResourceGroup(new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/fake")));
             var deleteOpTask = rgOp.DeleteAsync(false);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await deleteOpTask);
             Assert.AreEqual(404, exception.Status);
@@ -83,10 +78,8 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
             Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
 
-            rg1.Id.Name = null;
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.GetAsync());
-
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceGroup(rg1.Data.Id + "x").GetAsync());
+            ResourceIdentifier fakeId = new ResourceIdentifier(rg1.Data.Id.ToString() + "x");
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceGroup(new ResourceIdentifier(fakeId)).GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 
@@ -112,9 +105,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(null));
-
-            rg1.Id.Name = null;
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(parameters));
         }
 
         [TestCase]
@@ -134,9 +124,6 @@ namespace Azure.ResourceManager.Tests
                 var expOp = await rg.ExportTemplateAsync(null, false);
                 _ = await expOp.WaitForCompletionAsync();
             });
-
-            rg.Id.Name = null;
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.ExportTemplateAsync(parameters, false));
         }
 
         [TestCase]

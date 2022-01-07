@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
             if (vpnServerConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(vpnServerConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
             if (vpnServerConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(vpnServerConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationCollection.ExistsAsync");
             scope.Start();
             try
             {

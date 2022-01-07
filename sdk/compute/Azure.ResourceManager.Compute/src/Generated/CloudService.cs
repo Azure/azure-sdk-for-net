@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a CloudService along with the instance operations that can be performed on it. </summary>
     public partial class CloudService : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="CloudService"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServicesRestOperations _cloudServicesRestClient;
         private readonly CloudServicesUpdateDomainRestOperations _cloudServicesUpdateDomainRestClient;

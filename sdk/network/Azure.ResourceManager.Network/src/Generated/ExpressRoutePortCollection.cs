@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string expressRoutePortName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (expressRoutePortName == null)
             {
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (expressRoutePortName == null)
             {
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.ExistsAsync");
             scope.Start();
             try
             {

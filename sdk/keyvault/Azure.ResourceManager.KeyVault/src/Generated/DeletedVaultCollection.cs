@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string vaultName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string vaultName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.Exists");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string vaultName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string vaultName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.ExistsAsync");
             scope.Start();
             try
             {

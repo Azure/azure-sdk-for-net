@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A Class representing a PrivateLink along with the instance operations that can be performed on it. </summary>
     public partial class PrivateLink : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="PrivateLink"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string groupId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly PrivateLinkData _data;

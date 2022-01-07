@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (roleInstanceName == null)
             {
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (roleInstanceName == null)
             {
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.ExistsAsync");
             scope.Start();
             try
             {

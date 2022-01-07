@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService
     public static partial class TenantExtensions
     {
         #region User
-        /// <summary> Gets an object representing a UserCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a User along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="UserCollection" /> object. </returns>
-        public static UserCollection GetUsers(this Tenant tenant)
+        /// <returns> Returns a <see cref="User" /> object. </returns>
+        public static User GetUser(this Tenant tenant)
         {
-            return new UserCollection(tenant);
+            return new User(tenant, new ResourceIdentifier(tenant.Id + "/providers/Microsoft.Web/publishingUsers/web"));
         }
         #endregion
 
@@ -53,11 +53,6 @@ namespace Azure.ResourceManager.AppService
         private static ProviderRestOperations GetProviderRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
             return new ProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
-        }
-
-        private static WebSiteManagementRestOperations GetWebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
-        {
-            return new WebSiteManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// RequestPath: /providers/Microsoft.CertificateRegistration/operations
@@ -257,10 +252,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacks
         /// <summary> Lists the ApplicationStackResources for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this Tenant tenant, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this Tenant tenant, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -306,10 +301,10 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Provider_GetAvailableStacks
         /// <summary> Lists the ApplicationStackResources for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this Tenant tenant, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this Tenant tenant, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -356,10 +351,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists the FunctionAppStacks for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Tenant tenant, Enum9? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -371,7 +365,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetFunctionAppStacksAsync(stackOsType, stackOsType1, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetFunctionAppStacksAsync(stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -386,7 +380,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetFunctionAppStacksNextPageAsync(nextLink, stackOsType, stackOsType1, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetFunctionAppStacksNextPageAsync(nextLink, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -406,10 +400,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists the FunctionAppStacks for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this Tenant tenant, Enum9? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -421,7 +414,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetFunctionAppStacks(stackOsType, stackOsType1, cancellationToken: cancellationToken);
+                        var response = restOperations.GetFunctionAppStacks(stackOsType, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -436,7 +429,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetFunctionAppStacksNextPage(nextLink, stackOsType, stackOsType1, cancellationToken: cancellationToken);
+                        var response = restOperations.GetFunctionAppStacksNextPage(nextLink, stackOsType, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -460,7 +453,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Tenant tenant, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -516,7 +509,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Tenant tenant, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -572,7 +565,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Tenant tenant, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -628,7 +621,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this Tenant tenant, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -776,10 +769,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists the WebAppStacks for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this Tenant tenant, Enum13? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -791,7 +783,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetWebAppStacksAsync(stackOsType, stackOsType1, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetWebAppStacksAsync(stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -806,7 +798,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetWebAppStacksNextPageAsync(nextLink, stackOsType, stackOsType1, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetWebAppStacksNextPageAsync(nextLink, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -826,10 +818,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists the WebAppStacks for this <see cref="Tenant" />. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksProviders(this Tenant tenant, Enum13? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksProviders(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -841,7 +832,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetWebAppStacks(stackOsType, stackOsType1, cancellationToken: cancellationToken);
+                        var response = restOperations.GetWebAppStacks(stackOsType, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -856,7 +847,7 @@ namespace Azure.ResourceManager.AppService
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetWebAppStacksNextPage(nextLink, stackOsType, stackOsType1, cancellationToken: cancellationToken);
+                        var response = restOperations.GetWebAppStacksNextPage(nextLink, stackOsType, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -866,86 +857,6 @@ namespace Azure.ResourceManager.AppService
                     }
                 }
                 return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// RequestPath: /providers/Microsoft.Web/generateGithubAccessTokenForAppserviceCLI
-        /// ContextualPath: /
-        /// OperationId: GenerateGithubAccessTokenForAppserviceCLIAsync
-        /// <summary> Description for Exchange code for GitHub access token for AppService CLI. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="code"> Code string to exchange for Github Access token. </param>
-        /// <param name="state"> State string used for verification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="state"/> is null. </exception>
-        public static async Task<Response<AppServiceGithubToken>> GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(this Tenant tenant, string code, string state, CancellationToken cancellationToken = default)
-        {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (state == null)
-            {
-                throw new ArgumentNullException(nameof(state));
-            }
-
-            return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("TenantExtensions.GenerateGithubAccessTokenForAppserviceCLIAsync");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(code, state, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// RequestPath: /providers/Microsoft.Web/generateGithubAccessTokenForAppserviceCLI
-        /// ContextualPath: /
-        /// OperationId: GenerateGithubAccessTokenForAppserviceCLIAsync
-        /// <summary> Description for Exchange code for GitHub access token for AppService CLI. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="code"> Code string to exchange for Github Access token. </param>
-        /// <param name="state"> State string used for verification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="state"/> is null. </exception>
-        public static Response<AppServiceGithubToken> GenerateGithubAccessTokenForAppserviceCLIAsync(this Tenant tenant, string code, string state, CancellationToken cancellationToken = default)
-        {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (state == null)
-            {
-                throw new ArgumentNullException(nameof(state));
-            }
-
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("TenantExtensions.GenerateGithubAccessTokenForAppserviceCLIAsync");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.GenerateGithubAccessTokenForAppserviceCLIAsync(code, state, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
             }
             );
         }
