@@ -2940,6 +2940,8 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
         public async Task UploadRangeFromUriAsync_NonAsciiSourceUri()
         {
             await using DisposingShare test = await GetTestShareAsync();
