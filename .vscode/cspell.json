@@ -96,6 +96,13 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
+    },
+    {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
@@ -153,6 +160,7 @@
         "Eaptls",
         "Fqdns",
         "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "Ipconfiguration",
         "Mbps",
         "Nics",
@@ -239,7 +247,7 @@
         "Undelete"
       ]
     },
-	{
+    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "Iscsi"

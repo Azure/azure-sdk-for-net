@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SecurityPartnerProvider, SecurityPartnerProviderData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SecurityPartnerProvider, SecurityPartnerProviderData> Construct() { }
     }
 }

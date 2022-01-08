@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<Resources.Models.Location> locations = await LinkResource.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locations = await LinkResource.GetAvailableLocationsAsync();
 
             Assert.IsTrue(locations.Count() >= 0);
         }

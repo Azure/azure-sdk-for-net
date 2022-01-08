@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         /// <summary> Initializes a new instance of VMwareHostData. </summary>
         /// <param name="location"> The location. </param>
-        public VMwareHostData(Location location) : base(location)
+        public VMwareHostData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
@@ -41,7 +39,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VMwareHostData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ExtendedLocation extendedLocation, SystemData systemData, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, string provisioningState) : base(id, name, type, tags, location)
+        internal VMwareHostData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, SystemData systemData, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, string provisioningState) : base(id, name, type, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SystemData = systemData;

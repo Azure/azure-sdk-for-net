@@ -347,6 +347,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AzureWebCategory, AzureWebCategoryData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AzureWebCategory, AzureWebCategoryData> Construct() { }
     }
 }

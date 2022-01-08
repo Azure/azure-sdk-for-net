@@ -380,6 +380,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkWatcher, NetworkWatcherData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkWatcher, NetworkWatcherData> Construct() { }
     }
 }

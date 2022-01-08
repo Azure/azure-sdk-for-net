@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, IpAllocation, IpAllocationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, IpAllocation, IpAllocationData> Construct() { }
     }
 }

@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Network" VersionOverride="1.0.0-beta.3" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.AppConfiguration.csproj" />
+    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

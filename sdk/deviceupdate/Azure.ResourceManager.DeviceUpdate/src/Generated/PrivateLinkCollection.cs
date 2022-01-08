@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -264,6 +263,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLink, PrivateLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLink, PrivateLinkData> Construct() { }
     }
 }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.StoragePool.Models;
 
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, IscsiTarget, IscsiTargetData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, IscsiTarget, IscsiTargetData> Construct() { }
     }
 }

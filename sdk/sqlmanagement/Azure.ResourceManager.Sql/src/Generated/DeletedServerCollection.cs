@@ -356,6 +356,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeletedServer, DeletedServerData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeletedServer, DeletedServerData> Construct() { }
     }
 }

@@ -420,6 +420,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VMwareDatastore, VMwareDatastoreData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VMwareDatastore, VMwareDatastoreData> Construct() { }
     }
 }

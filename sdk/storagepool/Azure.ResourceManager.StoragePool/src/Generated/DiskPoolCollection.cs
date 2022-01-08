@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DiskPool, DiskPoolData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DiskPool, DiskPoolData> Construct() { }
     }
 }

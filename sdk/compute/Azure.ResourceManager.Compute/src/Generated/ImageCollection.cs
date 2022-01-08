@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Image, ImageData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Image, ImageData> Construct() { }
     }
 }

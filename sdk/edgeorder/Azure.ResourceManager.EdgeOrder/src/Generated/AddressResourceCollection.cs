@@ -432,6 +432,6 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AddressResource, AddressResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AddressResource, AddressResourceData> Construct() { }
     }
 }

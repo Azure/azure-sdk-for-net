@@ -409,6 +409,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeploymentScript, DeploymentScriptData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeploymentScript, DeploymentScriptData> Construct() { }
     }
 }

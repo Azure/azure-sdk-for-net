@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
