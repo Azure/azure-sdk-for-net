@@ -143,10 +143,10 @@ function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGrou
         $spPassword = $servicePrincipal.Secret
         $appId = $servicePrincipal.ApplicationId
     } else {
-        if ((Get-Module Az).Version -eq "7.0.0") {
+        if ((Get-Module Az.Resources).Version -eq "5.1.0") {
             Write-Verbose "Creating password and credential for service principal via MS Graph API"
-            Write-Warning "Please update Az to >= 7.1.0 by running 'Update-Module Az'"
-            # Microsoft graph objects (Az version == 7.0.0) do not provision a secret on creation so it must be added separately.
+            Write-Warning "Please update Az.Resources to >= 5.2.0 by running 'Update-Module Az'"
+            # Microsoft graph objects (Az.Resources version == 5.1.0) do not provision a secret on creation so it must be added separately.
             # Submitting a password credential object without specifying a password will result in one being generated on the server side.
             $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
             $password.DisplayName = "Password for $displayName"
