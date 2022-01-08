@@ -39,7 +39,7 @@ namespace Azure.Core
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ResourceIdentifier(string resourceId)
         {
-            var id = Create(resourceId);
+            ResourceIdentifier id = Create(resourceId);
             Init(id.Parent, id.ResourceType, id.Name, id.IsProviderResource);
             _stringValue = resourceId;
         }
@@ -222,7 +222,7 @@ namespace Azure.Core
             if (Parent is null)
                 return string.Empty;
 
-            var initial = Parent == Root ? string.Empty : Parent.StringValue;
+            string initial = Parent == Root ? string.Empty : Parent.StringValue;
 
             StringBuilder builder = new StringBuilder(initial);
             if (!IsProviderResource)
