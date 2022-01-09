@@ -5600,7 +5600,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8705/providers/Microsoft.Cdn/profiles/AFDProfile-5776/afdEndpoints/AFDEndpoint-1678"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8705/providers/Microsoft.Cdn/profiles/AFDProfile-5776/afdEndpoints/AFDEndpoint-1678"
                   }
                 ],
                 "patternsToMatch": [
@@ -5644,7 +5644,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8705/providers/Microsoft.Cdn/profiles/AFDProfile-5776/afdEndpoints/AFDEndpoint-1678"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8705/providers/Microsoft.Cdn/profiles/AFDProfile-5776/afdEndpoints/AFDEndpoint-1678"
                   }
                 ],
                 "patternsToMatch": [
@@ -7032,7 +7032,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8705/providers/Microsoft.Cdn/profiles/AFDProfile-5776/afdEndpoints/AFDEndpoint-1678"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8705/providers/Microsoft.Cdn/profiles/AFDProfile-5776/afdEndpoints/AFDEndpoint-1678"
                   }
                 ],
                 "patternsToMatch": [

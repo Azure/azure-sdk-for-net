@@ -4406,11 +4406,11 @@
       "RequestBody": {
         "properties": {
           "originGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/originGroups/AFDOriginGroup-557"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/originGroups/AFDOriginGroup-557"
           },
           "ruleSets": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/rulesets/AFDRuleSet8204"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/rulesets/AFDRuleSet8204"
             }
           ],
           "patternsToMatch": [
@@ -4451,12 +4451,12 @@
           "queryStringCachingBehavior": "NotSet",
           "customDomains": [],
           "originGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/originGroups/AFDOriginGroup-557"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/originGroups/AFDOriginGroup-557"
           },
           "originPath": null,
           "ruleSets": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/rulesets/AFDRuleSet8204"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-987/providers/Microsoft.Cdn/profiles/AFDProfile-7213/rulesets/AFDRuleSet8204"
             }
           ],
           "supportedProtocols": [

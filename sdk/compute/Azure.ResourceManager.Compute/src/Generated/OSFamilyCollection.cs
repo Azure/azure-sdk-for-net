@@ -344,6 +344,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OSFamily, OSFamilyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, OSFamily, OSFamilyData> Construct() { }
     }
 }

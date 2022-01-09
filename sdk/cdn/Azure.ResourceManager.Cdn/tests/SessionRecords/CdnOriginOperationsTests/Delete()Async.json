@@ -2493,7 +2493,7 @@
           "isHttpsAllowed": true,
           "optimizationType": "GeneralWebDelivery",
           "defaultOriginGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/originGroups/testOriginGroup"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/originGroups/testOriginGroup"
           },
           "origins": [
             {
@@ -2517,7 +2517,7 @@
                 },
                 "origins": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/origins/testOrigin"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/origins/testOrigin"
                   }
                 ]
               }
@@ -2594,14 +2594,14 @@
                 "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
                 "origins": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/origins/testOrigin"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/origins/testOrigin"
                   }
                 ]
               }
             }
           ],
           "defaultOriginGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/originGroups/testOriginGroup"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/originGroups/testOriginGroup"
           },
           "customDomains": [],
           "geoFilters": [],
@@ -6303,14 +6303,14 @@
                 "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
                 "origins": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/origins/testOrigin"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/origins/testOrigin"
                   }
                 ]
               }
             }
           ],
           "defaultOriginGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/originGroups/testOriginGroup"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-9621/providers/Microsoft.Cdn/profiles/profile-1677/endpoints/endpoint-2108/originGroups/testOriginGroup"
           },
           "customDomains": [],
           "geoFilters": [],

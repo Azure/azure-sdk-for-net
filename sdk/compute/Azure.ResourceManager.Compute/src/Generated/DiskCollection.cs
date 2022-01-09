@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Disk, DiskData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Disk, DiskData> Construct() { }
     }
 }

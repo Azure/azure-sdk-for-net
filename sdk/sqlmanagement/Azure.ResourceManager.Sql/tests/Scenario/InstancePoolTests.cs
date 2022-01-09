@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task GlobalSetUp()
         {
             //var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("Sql-RG-1000");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string networkSecurityGroupName = SessionRecording.GenerateAssetName("networkSecurityGroup-");
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
             };
             var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
 
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
             RouteTableData routeTableData = new RouteTableData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
             };
             var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
 
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             };
             var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
             string subnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
-            InstancePoolData data = new InstancePoolData(Location.WestUS2)
+            InstancePoolData data = new InstancePoolData(AzureLocation.WestUS2)
             {
                 Sku = new Models.Sku("GP_Gen5", "GeneralPurpose", null, "Gen5", null),
                 LicenseType = InstancePoolLicenseType.LicenseIncluded,
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 SubnetId = subnetId,
                 VCores = 8,
             };

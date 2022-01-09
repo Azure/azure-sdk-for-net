@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, FirewallPolicy, FirewallPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, FirewallPolicy, FirewallPolicyData> Construct() { }
     }
 }

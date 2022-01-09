@@ -603,7 +603,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                             { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
                         };
 
-                        diagnosticScope.AddLink(diagnosticId, attributes);
+                        diagnosticScope.AddLink(diagnosticId, null, attributes);
                     }
                 }
             }

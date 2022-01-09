@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            ServiceBusNamespaceData parameters2 = new ServiceBusNamespaceData(Location.EastUS)
+            ServiceBusNamespaceData parameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS)
             {
                 Sku = new ServiceBusSku(SkuName.Premium)
                 {

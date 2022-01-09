@@ -10,6 +10,7 @@
             using Azure.ResourceManager.Resources;
             using Azure.ResourceManager.Resources.Models;
             using System.Linq;
+            using Azure.Core;
 
 #if !SNIPPET
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
 #endif
             var armClient = new ArmClient(new DefaultAzureCredential());
 
-            var location = Location.WestUS;
+            var location = AzureLocation.WestUS;
             // Create ResourceGroup
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         public void CreateVmExtension()
         {
             #region Snippet:Changelog_CreateVMExtension
-            var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+            var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
             {
                 Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
                 Publisher = "Microsoft.Compute",

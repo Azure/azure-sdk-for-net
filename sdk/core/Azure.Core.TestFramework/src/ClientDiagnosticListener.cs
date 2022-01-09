@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
                     {
                         Name = name,
                         Activity = Activity.Current,
-                        Links = links.Select(a => a.ParentId).ToList(),
+                        Links = links.Select(a => new ProducedLink(a.ParentId, a.TraceStateString)).ToList(),
                         LinkedActivities = links.ToList()
                     };
 
@@ -234,13 +234,31 @@ namespace Azure.Core.Tests
             public bool IsCompleted { get; set; }
             public bool IsFailed => Exception != null;
             public Exception Exception { get; set; }
-            public List<string> Links { get; set; } = new List<string>();
+            public List<ProducedLink> Links { get; set; } = new List<ProducedLink>();
             public List<Activity> LinkedActivities { get; set; } = new List<Activity>();
 
             public override string ToString()
             {
                 return Name;
             }
+        }
+
+        public struct ProducedLink
+        {
+            public ProducedLink(string id)
+            {
+                Traceparent = id;
+                Tracestate = null;
+            }
+
+            public ProducedLink(string traceparent, string tracestate)
+            {
+                Traceparent = traceparent;
+                Tracestate = tracestate;
+            }
+
+            public string Traceparent { get; set; }
+            public string Tracestate { get; set; }
         }
     }
 }

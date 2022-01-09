@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Asset;
             var exception = Assert.Throws<InvalidOperationException>(() => new TableEntityToPocoConverter<PocoWithNonStringPartitionKey>());
 
-            Assert.AreEqual("If the PartitionKey property is present, it must be a String.", exception.Message);
+            Assert.AreEqual("If the PartitionKey property is present, it must be a System.String.", exception.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Assert
             var exception = Assert.Throws<InvalidOperationException>(() => new TableEntityToPocoConverter<PocoWithNonStringRowKey>());
 
-            Assert.AreEqual("If the RowKey property is present, it must be a String.", exception.Message);
+            Assert.AreEqual("If the RowKey property is present, it must be a System.String.", exception.Message);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Assert
             var exception = Assert.Throws<InvalidOperationException>(() => new TableEntityToPocoConverter<PocoWithNonDateTimeOffsetTimestamp>());
 
-            Assert.AreEqual("If the Timestamp property is present, it must be a DateTimeOffset.", exception.Message);
+            Assert.AreEqual("If the Timestamp property is present, it must be a System.DateTimeOffset or System.Nullable`1[System.DateTimeOffset].", exception.Message);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act & Assert
             var exception = Assert.Throws<InvalidOperationException>(() => new TableEntityToPocoConverter<PocoWithNonStringETag>());
 
-            Assert.AreEqual("If the ETag property is present, it must be a String.", exception.Message);
+            Assert.AreEqual("If the ETag property is present, it must be a System.String or Azure.ETag.", exception.Message);
         }
 
         [Test]

@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DdosProtectionPlan, DdosProtectionPlanData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DdosProtectionPlan, DdosProtectionPlanData> Construct() { }
     }
 }
