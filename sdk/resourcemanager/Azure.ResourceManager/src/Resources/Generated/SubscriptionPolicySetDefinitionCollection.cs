@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicySetDefinition and their operations over its parent. </summary>
     public partial class SubscriptionPolicySetDefinitionCollection : ArmCollection, IEnumerable<SubscriptionPolicySetDefinition>, IAsyncEnumerable<SubscriptionPolicySetDefinition>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicySetDefinitionsRestOperations _policySetDefinitionsRestClient;
@@ -431,6 +430,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SubscriptionPolicySetDefinition, PolicySetDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SubscriptionPolicySetDefinition, PolicySetDefinitionData> Construct() { }
     }
 }

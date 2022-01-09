@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ManagementLockObject and their operations over its parent. </summary>
     public partial class ManagementLockObjectCollection : ArmCollection, IEnumerable<ManagementLockObject>, IAsyncEnumerable<ManagementLockObject>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementLocksRestOperations _managementLocksRestClient;
@@ -389,6 +387,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagementLockObject, ManagementLockObjectData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagementLockObject, ManagementLockObjectData> Construct() { }
     }
 }

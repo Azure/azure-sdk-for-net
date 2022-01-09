@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of ResourceGroupData. </summary>
         /// <param name="location"> The location. </param>
-        public ResourceGroupData(Location location) : base(location)
+        public ResourceGroupData(AzureLocation location) : base(location)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource group properties. </param>
         /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
-        internal ResourceGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceGroupProperties properties, string managedBy) : base(id, name, type, tags, location)
+        internal ResourceGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ResourceGroupProperties properties, string managedBy) : base(id, name, type, tags, location)
         {
             Properties = properties;
             ManagedBy = managedBy;

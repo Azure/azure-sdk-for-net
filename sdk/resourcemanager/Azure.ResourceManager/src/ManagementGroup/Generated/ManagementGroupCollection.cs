@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management.Models;
 using Azure.ResourceManager.Resources;
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Management
 {
     /// <summary> A class representing collection of ManagementGroup and their operations over its parent. </summary>
     public partial class ManagementGroupCollection : ArmCollection, IEnumerable<ManagementGroup>, IAsyncEnumerable<ManagementGroup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementGroupsRestOperations _managementGroupsRestClient;
@@ -440,6 +438,6 @@ namespace Azure.ResourceManager.Management
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagementGroup, ManagementGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagementGroup, ManagementGroupData> Construct() { }
     }
 }

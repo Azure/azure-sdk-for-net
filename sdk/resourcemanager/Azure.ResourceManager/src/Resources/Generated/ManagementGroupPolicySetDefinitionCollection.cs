@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicySetDefinition and their operations over its parent. </summary>
     public partial class ManagementGroupPolicySetDefinitionCollection : ArmCollection, IEnumerable<ManagementGroupPolicySetDefinition>, IAsyncEnumerable<ManagementGroupPolicySetDefinition>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicySetDefinitionsRestOperations _policySetDefinitionsRestClient;
@@ -386,6 +384,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagementGroupPolicySetDefinition, PolicySetDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagementGroupPolicySetDefinition, PolicySetDefinitionData> Construct() { }
     }
 }

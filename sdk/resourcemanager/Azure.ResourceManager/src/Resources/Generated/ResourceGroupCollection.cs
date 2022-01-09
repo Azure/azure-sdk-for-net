@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ResourceGroup and their operations over its parent. </summary>
     public partial class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroup>, IAsyncEnumerable<ResourceGroup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourceGroupsRestOperations _resourceGroupsRestClient;
@@ -377,6 +376,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ResourceGroup, ResourceGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ResourceGroup, ResourceGroupData> Construct() { }
     }
 }

@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
             scope.Start();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
             scope.Start();
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of Providers in the Subscription. </summary>
         /// <returns> An object representing collection of Providers and their operations over a Subscription. </returns>
-        public ProviderCollection GetProviders()
+        public virtual ProviderCollection GetProviders()
         {
             return new ProviderCollection(this);
         }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of ResourceGroups in the Subscription. </summary>
         /// <returns> An object representing collection of ResourceGroups and their operations over a Subscription. </returns>
-        public ResourceGroupCollection GetResourceGroups()
+        public virtual ResourceGroupCollection GetResourceGroups()
         {
             return new ResourceGroupCollection(this);
         }
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of SubscriptionPolicyDefinitions in the Subscription. </summary>
         /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a Subscription. </returns>
-        public SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
+        public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
         {
             return new SubscriptionPolicyDefinitionCollection(this);
         }
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of SubscriptionPolicySetDefinitions in the Subscription. </summary>
         /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a Subscription. </returns>
-        public SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
+        public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
         {
             return new SubscriptionPolicySetDefinitionCollection(this);
         }

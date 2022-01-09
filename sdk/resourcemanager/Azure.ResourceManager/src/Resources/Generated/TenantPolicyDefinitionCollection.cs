@@ -14,14 +14,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicyDefinition and their operations over its parent. </summary>
     public partial class TenantPolicyDefinitionCollection : ArmCollection, IEnumerable<TenantPolicyDefinition>, IAsyncEnumerable<TenantPolicyDefinition>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyDefinitionsRestOperations _policyDefinitionsRestClient;
@@ -310,6 +308,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TenantPolicyDefinition, PolicyDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, TenantPolicyDefinition, PolicyDefinitionData> Construct() { }
     }
 }

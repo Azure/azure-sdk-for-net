@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicyAssignment and their operations over its parent. </summary>
     public partial class PolicyAssignmentCollection : ArmCollection, IEnumerable<PolicyAssignment>, IAsyncEnumerable<PolicyAssignment>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyAssignmentsRestOperations _policyAssignmentsRestClient;
@@ -419,7 +417,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = _policyAssignmentsRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken);
+                        var response = _policyAssignmentsRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -434,7 +432,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = _policyAssignmentsRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken);
+                        var response = _policyAssignmentsRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -576,7 +574,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = await _policyAssignmentsRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _policyAssignmentsRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -591,7 +589,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = await _policyAssignmentsRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _policyAssignmentsRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -620,6 +618,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PolicyAssignment, PolicyAssignmentData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PolicyAssignment, PolicyAssignmentData> Construct() { }
     }
 }

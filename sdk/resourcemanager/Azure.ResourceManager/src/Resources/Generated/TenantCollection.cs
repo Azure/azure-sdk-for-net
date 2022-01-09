@@ -14,14 +14,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Tenant and their operations over its parent. </summary>
     public partial class TenantCollection : ArmCollection, IEnumerable<Tenant>, IAsyncEnumerable<Tenant>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TenantsRestOperations _tenantsRestClient;
@@ -132,6 +130,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Tenant, TenantData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Tenant, TenantData> Construct() { }
     }
 }

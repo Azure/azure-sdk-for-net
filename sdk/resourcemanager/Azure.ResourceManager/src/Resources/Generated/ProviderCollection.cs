@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Provider and their operations over its parent. </summary>
     public partial class ProviderCollection : ArmCollection, IEnumerable<Provider>, IAsyncEnumerable<Provider>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ProvidersRestOperations _providersRestClient;
@@ -308,6 +307,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Provider, ProviderData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Provider, ProviderData> Construct() { }
     }
 }

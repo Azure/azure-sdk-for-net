@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -286,6 +285,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceLink> GetAll(string scope, CancellationToken cancellationToken = default)
         {
@@ -333,6 +333,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceLink> GetAllAsync(string scope, CancellationToken cancellationToken = default)
         {
@@ -375,6 +376,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ResourceLink, ResourceLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ResourceLink, ResourceLinkData> Construct() { }
     }
 }

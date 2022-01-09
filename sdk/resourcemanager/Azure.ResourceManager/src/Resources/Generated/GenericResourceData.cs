@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of GenericResourceData. </summary>
         /// <param name="location"> The location. </param>
-        public GenericResourceData(Location location) : base(location)
+        public GenericResourceData(AzureLocation location) : base(location)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdTime"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedTime"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ExtendedLocation extendedLocation, Plan plan, object properties, string kind, string managedBy, Models.Sku sku, ResourceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, tags, location, extendedLocation)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, Plan plan, object properties, string kind, string managedBy, Models.Sku sku, ResourceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, tags, location, extendedLocation)
         {
             Plan = plan;
             Properties = properties;

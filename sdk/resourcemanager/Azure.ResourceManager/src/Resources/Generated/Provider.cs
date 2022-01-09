@@ -188,20 +188,25 @@ namespace Azure.ResourceManager.Resources
         /// OperationId: Providers_ProviderPermissions
         /// <summary> Get the provider permissions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<ProviderPermission>>> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProviderPermission> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Provider.ProviderPermissions");
-            scope.Start();
-            try
+            async Task<Page<ProviderPermission>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _providersRestClient.ProviderPermissionsAsync(Id.SubscriptionId, Id.Provider, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("Provider.ProviderPermissions");
+                scope.Start();
+                try
+                {
+                    var response = await _providersRestClient.ProviderPermissionsAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
@@ -209,20 +214,25 @@ namespace Azure.ResourceManager.Resources
         /// OperationId: Providers_ProviderPermissions
         /// <summary> Get the provider permissions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ProviderPermission>> ProviderPermissions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProviderPermission> ProviderPermissions(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Provider.ProviderPermissions");
-            scope.Start();
-            try
+            Page<ProviderPermission> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _providersRestClient.ProviderPermissions(Id.SubscriptionId, Id.Provider, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("Provider.ProviderPermissions");
+                scope.Start();
+                try
+                {
+                    var response = _providersRestClient.ProviderPermissions(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
@@ -275,20 +285,25 @@ namespace Azure.ResourceManager.Resources
         /// <summary> List the resource types for a specified resource provider. </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<ProviderResourceType>>> GetProviderResourceTypesAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProviderResourceType> GetProviderResourceTypesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
-            scope.Start();
-            try
+            async Task<Page<ProviderResourceType>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _providerResourceTypesRestClient.ListAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
+                scope.Start();
+                try
+                {
+                    var response = await _providerResourceTypesRestClient.ListAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
@@ -297,27 +312,32 @@ namespace Azure.ResourceManager.Resources
         /// <summary> List the resource types for a specified resource provider. </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ProviderResourceType>> GetProviderResourceTypes(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProviderResourceType> GetProviderResourceTypes(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
-            scope.Start();
-            try
+            Page<ProviderResourceType> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _providerResourceTypesRestClient.List(Id.SubscriptionId, Id.Provider, expand, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
+                scope.Start();
+                try
+                {
+                    var response = _providerResourceTypesRestClient.List(Id.SubscriptionId, Id.Provider, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         #region Feature
 
         /// <summary> Gets a collection of Features in the Provider. </summary>
         /// <returns> An object representing collection of Features and their operations over a Provider. </returns>
-        public FeatureCollection GetFeatures()
+        public virtual FeatureCollection GetFeatures()
         {
             return new FeatureCollection(this);
         }

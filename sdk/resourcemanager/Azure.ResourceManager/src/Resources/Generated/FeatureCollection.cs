@@ -14,14 +14,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Feature and their operations over its parent. </summary>
     public partial class FeatureCollection : ArmCollection, IEnumerable<Feature>, IAsyncEnumerable<Feature>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly FeaturesRestOperations _featuresRestClient;
@@ -298,6 +296,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Feature, FeatureData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Feature, FeatureData> Construct() { }
     }
 }

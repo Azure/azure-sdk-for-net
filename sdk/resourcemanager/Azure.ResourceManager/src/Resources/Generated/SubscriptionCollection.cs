@@ -14,14 +14,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Subscription and their operations over its parent. </summary>
     public partial class SubscriptionCollection : ArmCollection, IEnumerable<Subscription>, IAsyncEnumerable<Subscription>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubscriptionsRestOperations _subscriptionsRestClient;
@@ -298,6 +296,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Subscription, SubscriptionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Subscription, SubscriptionData> Construct() { }
     }
 }

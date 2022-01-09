@@ -14,14 +14,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of DataPolicyManifest and their operations over its parent. </summary>
     public partial class DataPolicyManifestCollection : ArmCollection, IEnumerable<DataPolicyManifest>, IAsyncEnumerable<DataPolicyManifest>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DataPolicyManifestsRestOperations _dataPolicyManifestsRestClient;
@@ -308,6 +306,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DataPolicyManifest, DataPolicyManifestData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DataPolicyManifest, DataPolicyManifestData> Construct() { }
     }
 }

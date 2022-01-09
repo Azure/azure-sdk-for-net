@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
         /// <returns> An object representing collection of GenericResources and their operations over a Tenant. </returns>
-        public GenericResourceCollection GetGenericResources()
+        public virtual GenericResourceCollection GetGenericResources()
         {
             return new GenericResourceCollection(this);
         }
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of TenantPolicyDefinitions in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitions and their operations over a Tenant. </returns>
-        public TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
+        public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
         {
             return new TenantPolicyDefinitionCollection(this);
         }
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of TenantPolicySetDefinitions in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicySetDefinitions and their operations over a Tenant. </returns>
-        public TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions()
+        public virtual TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions()
         {
             return new TenantPolicySetDefinitionCollection(this);
         }
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of DataPolicyManifests in the Tenant. </summary>
         /// <returns> An object representing collection of DataPolicyManifests and their operations over a Tenant. </returns>
-        public DataPolicyManifestCollection GetDataPolicyManifests()
+        public virtual DataPolicyManifestCollection GetDataPolicyManifests()
         {
             return new DataPolicyManifestCollection(this);
         }
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of ResourceLinks in the Tenant. </summary>
         /// <returns> An object representing collection of ResourceLinks and their operations over a Tenant. </returns>
-        public ResourceLinkCollection GetResourceLinks()
+        public virtual ResourceLinkCollection GetResourceLinks()
         {
             return new ResourceLinkCollection(this);
         }
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a collection of Subscriptions in the Tenant. </summary>
         /// <returns> An object representing collection of Subscriptions and their operations over a Tenant. </returns>
-        public SubscriptionCollection GetSubscriptions()
+        public virtual SubscriptionCollection GetSubscriptions()
         {
             return new SubscriptionCollection(this);
         }
