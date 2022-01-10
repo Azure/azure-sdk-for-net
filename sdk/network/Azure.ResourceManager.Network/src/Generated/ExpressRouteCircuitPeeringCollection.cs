@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCircuitPeering and their operations over its parent. </summary>
     public partial class ExpressRouteCircuitPeeringCollection : ArmCollection, IEnumerable<ExpressRouteCircuitPeering>, IAsyncEnumerable<ExpressRouteCircuitPeering>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteCircuitPeeringsRestOperations _expressRouteCircuitPeeringsRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitPeerings_CreateOrUpdate
         /// <summary> Creates or updates a peering in the specified express route circuits. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="peeringParameters"> Parameters supplied to the create or update express route circuit peering operation. </param>
@@ -78,6 +80,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitPeerings_CreateOrUpdate
         /// <summary> Creates or updates a peering in the specified express route circuits. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="peeringParameters"> Parameters supplied to the create or update express route circuit peering operation. </param>
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitPeerings_Get
         /// <summary> Gets the specified peering for the express route circuit. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitPeeringsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitPeering(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitPeering(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,6 +147,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitPeerings_Get
         /// <summary> Gets the specified peering for the express route circuit. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitPeeringsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCircuitPeering(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitPeering(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitPeeringsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCircuitPeering>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuitPeering(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCircuitPeering(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +222,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitPeeringsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCircuitPeering>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuitPeering(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCircuitPeering(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,6 +281,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitPeerings_List
         /// <summary> Gets all peerings in a specified express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuitPeering" /> that may take multiple service requests to iterate over. </returns>
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitPeeringsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +311,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitPeeringsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,6 +322,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitPeerings_List
         /// <summary> Gets all peerings in a specified express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuitPeering" /> that may take multiple service requests to iterate over. </returns>
@@ -320,7 +337,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitPeeringsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitPeeringsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitPeering(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

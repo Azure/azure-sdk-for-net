@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>
         internal PublicIPAddressListResult()
         {
-            Value = new ChangeTrackingList<PublicIPAddressData>();
+            Value = new ChangeTrackingList<PublicIpAddressData>();
         }
 
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>
         /// <param name="value"> A list of public IP addresses that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PublicIPAddressListResult(IReadOnlyList<PublicIPAddressData> value, string nextLink)
+        internal PublicIPAddressListResult(IReadOnlyList<PublicIpAddressData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of public IP addresses that exists in a resource group. </summary>
-        public IReadOnlyList<PublicIPAddressData> Value { get; }
+        public IReadOnlyList<PublicIpAddressData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

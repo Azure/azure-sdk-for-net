@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRoutePortsLocation and their operations over its parent. </summary>
     public partial class ExpressRoutePortsLocationCollection : ArmCollection, IEnumerable<ExpressRoutePortsLocation>, IAsyncEnumerable<ExpressRoutePortsLocation>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRoutePortsLocationsRestOperations _expressRoutePortsLocationsRestClient;
@@ -45,6 +44,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRoutePortsLocations_Get
         /// <summary> Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRoutePortsLocationsRestClient.Get(Id.SubscriptionId, locationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePortsLocation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -72,6 +74,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRoutePortsLocations_Get
         /// <summary> Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRoutePortsLocationsRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRoutePortsLocation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +122,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRoutePortsLocationsRestClient.Get(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRoutePortsLocation(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +149,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRoutePortsLocationsRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRoutePortsLocation(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,6 +208,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRoutePortsLocations_List
         /// <summary> Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRoutePortsLocation" /> that may take multiple service requests to iterate over. </returns>
@@ -215,7 +223,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRoutePortsLocationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,7 +238,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRoutePortsLocationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,6 +249,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRoutePortsLocations_List
         /// <summary> Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRoutePortsLocation" /> that may take multiple service requests to iterate over. </returns>
@@ -253,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRoutePortsLocationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -268,7 +279,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRoutePortsLocationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ApplicationSecurityGroup and their operations over its parent. </summary>
     public partial class ApplicationSecurityGroupCollection : ArmCollection, IEnumerable<ApplicationSecurityGroup>, IAsyncEnumerable<ApplicationSecurityGroup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApplicationSecurityGroupsRestOperations _applicationSecurityGroupsRestClient;
@@ -46,6 +45,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ApplicationSecurityGroups_CreateOrUpdate
         /// <summary> Creates or updates an application security group. </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ApplicationSecurityGroups_CreateOrUpdate
         /// <summary> Creates or updates an application security group. </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ApplicationSecurityGroups_Get
         /// <summary> Gets information about the specified application security group. </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationSecurityGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationSecurityGroup(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,6 +149,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ApplicationSecurityGroups_Get
         /// <summary> Gets information about the specified application security group. </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationSecurityGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationSecurityGroup(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ApplicationSecurityGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ApplicationSecurityGroup(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ApplicationSecurityGroup(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +224,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ApplicationSecurityGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ApplicationSecurityGroup(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ApplicationSecurityGroup(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,6 +283,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ApplicationSecurityGroups_List
         /// <summary> Gets all the application security groups in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -284,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _applicationSecurityGroupsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +313,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _applicationSecurityGroupsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -310,6 +324,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ApplicationSecurityGroups_List
         /// <summary> Gets all the application security groups in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _applicationSecurityGroupsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,7 +354,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _applicationSecurityGroupsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

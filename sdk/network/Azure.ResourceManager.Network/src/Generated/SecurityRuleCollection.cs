@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of SecurityRule and their operations over its parent. </summary>
     public partial class SecurityRuleCollection : ArmCollection, IEnumerable<SecurityRule>, IAsyncEnumerable<SecurityRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SecurityRulesRestOperations _securityRulesRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// OperationId: SecurityRules_CreateOrUpdate
         /// <summary> Creates or updates a security rule in the specified network security group. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
@@ -78,6 +80,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// OperationId: SecurityRules_CreateOrUpdate
         /// <summary> Creates or updates a security rule in the specified network security group. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// OperationId: SecurityRules_Get
         /// <summary> Get the specified network security rule. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 var response = _securityRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,6 +147,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// OperationId: SecurityRules_Get
         /// <summary> Get the specified network security rule. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _securityRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SecurityRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 var response = _securityRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SecurityRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new SecurityRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +222,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _securityRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SecurityRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new SecurityRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,6 +281,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// OperationId: SecurityRules_List
         /// <summary> Gets all security rules in a network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _securityRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +311,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _securityRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,6 +322,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// OperationId: SecurityRules_List
         /// <summary> Gets all security rules in a network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
@@ -320,7 +337,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _securityRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _securityRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

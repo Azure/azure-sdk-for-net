@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ExpressRouteCircuitConnection(ArmResource options, ExpressRouteCircuitConnectionData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ExpressRouteCircuitConnection(ArmResource options, ResourceIdentifier id, ExpressRouteCircuitConnectionData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _expressRouteCircuitConnectionsRestClient = new ExpressRouteCircuitConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// OperationId: ExpressRouteCircuitConnections_Get
         /// <summary> Gets the specified Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteCircuitConnection>> GetAsync(CancellationToken cancellationToken = default)
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,6 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// OperationId: ExpressRouteCircuitConnections_Get
         /// <summary> Gets the specified Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRouteCircuitConnection> Get(CancellationToken cancellationToken = default)
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,6 +152,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// OperationId: ExpressRouteCircuitConnections_Delete
         /// <summary> Deletes the specified Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +177,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// OperationId: ExpressRouteCircuitConnections_Delete
         /// <summary> Deletes the specified Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

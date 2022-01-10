@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of NetworkInterface and their operations over its parent. </summary>
     public partial class NetworkInterfaceCollection : ArmCollection, IEnumerable<NetworkInterface>, IAsyncEnumerable<NetworkInterface>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NetworkInterfacesRestOperations _networkInterfacesRestClient;
@@ -46,6 +45,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: NetworkInterfaces_CreateOrUpdate
         /// <summary> Creates or updates a network interface. </summary>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: NetworkInterfaces_CreateOrUpdate
         /// <summary> Creates or updates a network interface. </summary>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: NetworkInterfaces_Get
         /// <summary> Gets information about the specified network interface. </summary>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -133,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterface(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,6 +150,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: NetworkInterfaces_Get
         /// <summary> Gets information about the specified network interface. </summary>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -161,7 +172,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterface(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterface>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new NetworkInterface(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +228,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterface>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new NetworkInterface(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,6 +289,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: NetworkInterfaces_List
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
@@ -290,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkInterfacesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +319,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkInterfacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,6 +330,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: NetworkInterfaces_List
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
@@ -328,7 +345,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkInterfacesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,7 +360,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkInterfacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

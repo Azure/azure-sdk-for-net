@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of NetworkInterfaceTapConfiguration and their operations over its parent. </summary>
     public partial class NetworkInterfaceTapConfigurationCollection : ArmCollection, IEnumerable<NetworkInterfaceTapConfiguration>, IAsyncEnumerable<NetworkInterfaceTapConfiguration>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NetworkInterfaceTapConfigurationsRestOperations _networkInterfaceTapConfigurationsRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceTapConfigurations_CreateOrUpdate
         /// <summary> Creates or updates a Tap configuration in the specified NetworkInterface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="tapConfigurationParameters"> Parameters supplied to the create or update tap configuration operation. </param>
@@ -78,6 +80,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceTapConfigurations_CreateOrUpdate
         /// <summary> Creates or updates a Tap configuration in the specified NetworkInterface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="tapConfigurationParameters"> Parameters supplied to the create or update tap configuration operation. </param>
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceTapConfigurations_Get
         /// <summary> Get the specified tap configuration on a network interface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkInterfaceTapConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,6 +147,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceTapConfigurations_Get
         /// <summary> Get the specified tap configuration on a network interface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkInterfaceTapConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkInterfaceTapConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new NetworkInterfaceTapConfiguration(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +222,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkInterfaceTapConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new NetworkInterfaceTapConfiguration(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,6 +281,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceTapConfigurations_List
         /// <summary> Get all Tap configurations in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceTapConfiguration" /> that may take multiple service requests to iterate over. </returns>
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkInterfaceTapConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +311,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkInterfaceTapConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,6 +322,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceTapConfigurations_List
         /// <summary> Get all Tap configurations in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceTapConfiguration" /> that may take multiple service requests to iterate over. </returns>
@@ -320,7 +337,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkInterfaceTapConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkInterfaceTapConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

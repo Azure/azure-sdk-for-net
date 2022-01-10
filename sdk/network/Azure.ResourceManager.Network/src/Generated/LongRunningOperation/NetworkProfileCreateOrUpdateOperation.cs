@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal NetworkProfileCreateOrUpdateOperation(ArmResource operationsBase, Response<NetworkProfileData> response)
         {
-            _operation = new OperationOrResponseInternals<NetworkProfile>(Response.FromValue(new NetworkProfile(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NetworkProfile>(Response.FromValue(new NetworkProfile(operationsBase, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

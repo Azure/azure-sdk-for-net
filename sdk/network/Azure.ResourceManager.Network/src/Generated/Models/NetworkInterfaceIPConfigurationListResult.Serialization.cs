@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkInterfaceIPConfigurationListResult DeserializeNetworkInterfaceIPConfigurationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> value = default;
+            Optional<IReadOnlyList<NetworkInterfaceIpConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
+                    List<NetworkInterfaceIpConfigurationData> array = new List<NetworkInterfaceIpConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                        array.Add(NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(item));
                     }
                     value = array;
                     continue;

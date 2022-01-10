@@ -39,11 +39,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkGatewayConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualNetworkGatewayConnection(ArmResource options, VirtualNetworkGatewayConnectionData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VirtualNetworkGatewayConnection(ArmResource options, ResourceIdentifier id, VirtualNetworkGatewayConnectionData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualNetworkGatewayConnectionsRestClient = new VirtualNetworkGatewayConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _virtualNetworkGatewaysRestClient = new VirtualNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -93,6 +94,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_Get
         /// <summary> Gets the specified virtual network gateway connection by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualNetworkGatewayConnection>> GetAsync(CancellationToken cancellationToken = default)
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualNetworkGatewayConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetworkGatewayConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkGatewayConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_Get
         /// <summary> Gets the specified virtual network gateway connection by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualNetworkGatewayConnection> Get(CancellationToken cancellationToken = default)
@@ -124,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualNetworkGatewayConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkGatewayConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkGatewayConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,6 +156,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_Delete
         /// <summary> Deletes the specified virtual network Gateway connection. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,6 +181,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_Delete
         /// <summary> Deletes the specified virtual network Gateway connection. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,12 +206,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_UpdateTags
         /// <summary> Updates a virtual network gateway connection tags. </summary>
         /// <param name="parameters"> Parameters supplied to update virtual network gateway connection tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayConnectionUpdateTagsOperation> UpdateAsync(TagsObject parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkGatewayConnectionUpdateOperation> UpdateAsync(TagsObject parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -210,7 +226,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualNetworkGatewayConnectionsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayConnectionUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new VirtualNetworkGatewayConnectionUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,12 +238,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_UpdateTags
         /// <summary> Updates a virtual network gateway connection tags. </summary>
         /// <param name="parameters"> Parameters supplied to update virtual network gateway connection tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayConnectionUpdateTagsOperation Update(TagsObject parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkGatewayConnectionUpdateOperation Update(TagsObject parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -239,7 +258,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworkGatewayConnectionsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayConnectionUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new VirtualNetworkGatewayConnectionUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -251,6 +270,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGateways_VpnDeviceConfigurationScript
         /// <summary> Gets a xml format representation for vpn device configuration script. </summary>
         /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -276,6 +298,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGateways_VpnDeviceConfigurationScript
         /// <summary> Gets a xml format representation for vpn device configuration script. </summary>
         /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -301,6 +326,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_SetSharedKey
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="parameters"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -330,6 +358,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_SetSharedKey
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="parameters"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -359,6 +390,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_GetSharedKey
         /// <summary> The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual network gateway connection shared key through Network resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ConnectionSharedKey>> GetSharedKeyAsync(CancellationToken cancellationToken = default)
@@ -377,6 +411,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_GetSharedKey
         /// <summary> The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual network gateway connection shared key through Network resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConnectionSharedKey> GetSharedKey(CancellationToken cancellationToken = default)
@@ -395,6 +432,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey/reset
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_ResetSharedKey
         /// <summary> The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="parameters"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -424,6 +464,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey/reset
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_ResetSharedKey
         /// <summary> The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="parameters"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -453,6 +496,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/startPacketCapture
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_StartPacketCapture
         /// <summary> Starts packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -476,6 +522,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/startPacketCapture
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_StartPacketCapture
         /// <summary> Starts packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -499,6 +548,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/stopPacketCapture
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_StopPacketCapture
         /// <summary> Stops packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -528,6 +580,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/stopPacketCapture
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_StopPacketCapture
         /// <summary> Stops packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -557,6 +612,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/getikesas
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_GetIkeSas
         /// <summary> Lists IKE Security Associations for the virtual network gateway connection in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -579,6 +637,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/getikesas
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_GetIkeSas
         /// <summary> Lists IKE Security Associations for the virtual network gateway connection in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -601,6 +662,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/resetconnection
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_ResetConnection
         /// <summary> Resets the virtual network gateway connection specified. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -623,6 +687,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/resetconnection
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// OperationId: VirtualNetworkGatewayConnections_ResetConnection
         /// <summary> Resets the virtual network gateway connection specified. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

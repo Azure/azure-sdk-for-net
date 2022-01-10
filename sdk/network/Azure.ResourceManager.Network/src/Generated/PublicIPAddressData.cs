@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PublicIPAddress data model. </summary>
-    public partial class PublicIPAddressData : Resource
+    /// <summary> A class representing the PublicIpAddress data model. </summary>
+    public partial class PublicIpAddressData : Resource
     {
-        /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
-        public PublicIPAddressData()
+        /// <summary> Initializes a new instance of PublicIpAddressData. </summary>
+        public PublicIpAddressData()
         {
             Zones = new ChangeTrackingList<string>();
             IpTags = new ChangeTrackingList<IpTag>();
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
+        /// <summary> Initializes a new instance of PublicIpAddressData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
         /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
-        internal PublicIPAddressData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPAddressSku sku, string etag, IList<string> zones, IPAllocationMethod? publicIPAllocationMethod, IPVersion? publicIPAddressVersion, IPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IpTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, string resourceGuid, ProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, DeleteOptions? deleteOption) : base(id, name, type, location, tags)
+        internal PublicIpAddressData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPAddressSku sku, string etag, IList<string> zones, IPAllocationMethod? publicIPAllocationMethod, IPVersion? publicIPAddressVersion, IPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IpTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, string resourceGuid, ProvisioningState? provisioningState, PublicIpAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIpAddressData linkedPublicIPAddress, DeleteOptions? deleteOption) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the public IP address resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The service public IP address of the public IP address resource. </summary>
-        public PublicIPAddressData ServicePublicIPAddress { get; set; }
+        public PublicIpAddressData ServicePublicIPAddress { get; set; }
         /// <summary> The NatGateway for the Public IP address. </summary>
         public NatGatewayData NatGateway { get; set; }
         /// <summary> Migration phase of Public IP Address. </summary>
         public PublicIPAddressMigrationPhase? MigrationPhase { get; set; }
         /// <summary> The linked public IP address of the public IP address resource. </summary>
-        public PublicIPAddressData LinkedPublicIPAddress { get; set; }
+        public PublicIpAddressData LinkedPublicIPAddress { get; set; }
         /// <summary> Specify what happens to the public IP address when the VM using it is deleted. </summary>
         public DeleteOptions? DeleteOption { get; set; }
     }

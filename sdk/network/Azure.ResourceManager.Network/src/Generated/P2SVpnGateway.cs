@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "P2SVpnGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal P2SVpnGateway(ArmResource options, P2SVpnGatewayData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal P2SVpnGateway(ArmResource options, ResourceIdentifier id, P2SVpnGatewayData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_Get
         /// <summary> Retrieves the details of a virtual wan p2s vpn gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<P2SVpnGateway>> GetAsync(CancellationToken cancellationToken = default)
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _p2sVpnGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new P2SVpnGateway(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,6 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_Get
         /// <summary> Retrieves the details of a virtual wan p2s vpn gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<P2SVpnGateway> Get(CancellationToken cancellationToken = default)
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 var response = _p2sVpnGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new P2SVpnGateway(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,6 +152,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_Delete
         /// <summary> Deletes a virtual wan p2s vpn gateway. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +177,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_Delete
         /// <summary> Deletes a virtual wan p2s vpn gateway. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,12 +202,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_UpdateTags
         /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public async virtual Task<P2SVpnGatewayUpdateTagsOperation> UpdateAsync(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<P2SVpnGatewayUpdateOperation> UpdateAsync(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (p2SVpnGatewayParameters == null)
             {
@@ -206,7 +222,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _p2sVpnGatewaysRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+                var operation = new P2SVpnGatewayUpdateOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,12 +234,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_UpdateTags
         /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public virtual P2SVpnGatewayUpdateTagsOperation Update(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual P2SVpnGatewayUpdateOperation Update(TagsObject p2SVpnGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (p2SVpnGatewayParameters == null)
             {
@@ -235,7 +254,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _p2sVpnGatewaysRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken);
-                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+                var operation = new P2SVpnGatewayUpdateOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -247,6 +266,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/reset
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_Reset
         /// <summary> Resets the primary of the p2s vpn gateway in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +291,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/reset
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_Reset
         /// <summary> Resets the primary of the p2s vpn gateway in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,6 +316,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/generatevpnprofile
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_GenerateVpnProfile
         /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
         /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -320,6 +348,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/generatevpnprofile
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_GenerateVpnProfile
         /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
         /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -349,6 +380,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealth
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_GetP2SVpnConnectionHealth
         /// <summary> Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -371,6 +405,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealth
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_GetP2SVpnConnectionHealth
         /// <summary> Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -393,6 +430,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealthDetailed
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_GetP2SVpnConnectionHealthDetailed
         /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
         /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -422,6 +462,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealthDetailed
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_GetP2SVpnConnectionHealthDetailed
         /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
         /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -451,6 +494,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{p2sVpnGatewayName}/disconnectP2sVpnConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_DisconnectP2SVpnConnections
         /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
         /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -480,6 +526,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{p2sVpnGatewayName}/disconnectP2sVpnConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// OperationId: P2sVpnGateways_DisconnectP2SVpnConnections
         /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
         /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>

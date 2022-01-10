@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PublicIPPrefixData : IUtf8JsonSerializable
+    public partial class PublicIpPrefixData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        internal static PublicIPPrefixData DeserializePublicIPPrefixData(JsonElement element)
+        internal static PublicIpPrefixData DeserializePublicIpPrefixData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPPrefixSku> sku = default;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPPrefixData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, resourceGuid.Value, Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIpPrefixData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, resourceGuid.Value, Optional.ToNullable(provisioningState), natGateway.Value);
         }
     }
 }

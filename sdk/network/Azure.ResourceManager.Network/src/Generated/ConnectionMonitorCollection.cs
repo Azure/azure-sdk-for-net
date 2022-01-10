@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ConnectionMonitor and their operations over its parent. </summary>
     public partial class ConnectionMonitorCollection : ArmCollection, IEnumerable<ConnectionMonitor>, IAsyncEnumerable<ConnectionMonitor>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ConnectionMonitorsRestOperations _connectionMonitorsRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: ConnectionMonitors_CreateOrUpdate
         /// <summary> Create or update a connection monitor. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
@@ -79,6 +81,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: ConnectionMonitors_CreateOrUpdate
         /// <summary> Create or update a connection monitor. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: ConnectionMonitors_Get
         /// <summary> Gets a connection monitor by name. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _connectionMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConnectionMonitor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitor(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,6 +149,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: ConnectionMonitors_Get
         /// <summary> Gets a connection monitor by name. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _connectionMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ConnectionMonitor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitor(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 var response = _connectionMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ConnectionMonitor(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +224,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _connectionMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ConnectionMonitor(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,6 +283,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: ConnectionMonitors_List
         /// <summary> Lists all connection monitors for the specified Network Watcher. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectionMonitor" /> that may take multiple service requests to iterate over. </returns>
@@ -284,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _connectionMonitorsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value.Id, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -295,6 +309,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: ConnectionMonitors_List
         /// <summary> Lists all connection monitors for the specified Network Watcher. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConnectionMonitor" /> that may take multiple service requests to iterate over. </returns>
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _connectionMonitorsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value.Id, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

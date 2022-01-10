@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCrossConnection and their operations over its parent. </summary>
     public partial class ExpressRouteCrossConnectionCollection : ArmCollection, IEnumerable<ExpressRouteCrossConnection>, IAsyncEnumerable<ExpressRouteCrossConnection>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteCrossConnectionsRestOperations _expressRouteCrossConnectionsRestClient;
@@ -46,6 +45,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCrossConnections_CreateOrUpdate
         /// <summary> Update the specified ExpressRouteCrossConnection. </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="parameters"> Parameters supplied to the update express route crossConnection operation. </param>
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCrossConnections_CreateOrUpdate
         /// <summary> Update the specified ExpressRouteCrossConnection. </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="parameters"> Parameters supplied to the update express route crossConnection operation. </param>
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCrossConnections_Get
         /// <summary> Gets details about the specified ExpressRouteCrossConnection. </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCrossConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCrossConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnection(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,6 +149,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCrossConnections_Get
         /// <summary> Gets details about the specified ExpressRouteCrossConnection. </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCrossConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCrossConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnection(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCrossConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCrossConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCrossConnection(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCrossConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +224,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCrossConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCrossConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCrossConnection(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCrossConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,6 +283,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCrossConnections_ListByResourceGroup
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCrossConnection" /> that may take multiple service requests to iterate over. </returns>
@@ -284,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCrossConnectionsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +313,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCrossConnectionsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -310,6 +324,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCrossConnections_ListByResourceGroup
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnection" /> that may take multiple service requests to iterate over. </returns>
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCrossConnectionsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,7 +354,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCrossConnectionsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

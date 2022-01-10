@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualHubRouteTableV2"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualHubRouteTableV2(ArmResource options, VirtualHubRouteTableV2Data resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VirtualHubRouteTableV2(ArmResource options, ResourceIdentifier id, VirtualHubRouteTableV2Data data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualHubRouteTableV2sRestClient = new VirtualHubRouteTableV2SRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// OperationId: VirtualHubRouteTableV2s_Get
         /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualHubRouteTableV2>> GetAsync(CancellationToken cancellationToken = default)
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualHubRouteTableV2sRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHubRouteTableV2(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,6 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// OperationId: VirtualHubRouteTableV2s_Get
         /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualHubRouteTableV2> Get(CancellationToken cancellationToken = default)
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualHubRouteTableV2sRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHubRouteTableV2(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,17 +152,20 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// OperationId: VirtualHubRouteTableV2s_Delete
         /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualHubRouteTableV2SDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubRouteTableV2DeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.Delete");
             scope.Start();
             try
             {
                 var response = await _virtualHubRouteTableV2sRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubRouteTableV2SDeleteOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VirtualHubRouteTableV2DeleteOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -167,17 +177,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// OperationId: VirtualHubRouteTableV2s_Delete
         /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualHubRouteTableV2SDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualHubRouteTableV2DeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.Delete");
             scope.Start();
             try
             {
                 var response = _virtualHubRouteTableV2sRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VirtualHubRouteTableV2SDeleteOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VirtualHubRouteTableV2DeleteOperation(_clientDiagnostics, Pipeline, _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

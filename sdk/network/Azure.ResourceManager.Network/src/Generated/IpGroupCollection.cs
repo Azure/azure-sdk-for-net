@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of IpGroup and their operations over its parent. </summary>
     public partial class IpGroupCollection : ArmCollection, IEnumerable<IpGroup>, IAsyncEnumerable<IpGroup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly IpGroupsRestOperations _ipGroupsRestClient;
@@ -46,6 +45,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: IpGroups_CreateOrUpdate
         /// <summary> Creates or updates an ipGroups in a specified resource group. </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: IpGroups_CreateOrUpdate
         /// <summary> Creates or updates an ipGroups in a specified resource group. </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: IpGroups_Get
         /// <summary> Gets the specified ipGroups. </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
@@ -133,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ipGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IpGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IpGroup(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,6 +150,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: IpGroups_Get
         /// <summary> Gets the specified ipGroups. </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
@@ -161,7 +172,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ipGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new IpGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IpGroup(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ipGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<IpGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new IpGroup(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +228,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ipGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<IpGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new IpGroup(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,6 +289,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: IpGroups_ListByResourceGroup
         /// <summary> Gets all IpGroups in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IpGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -290,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _ipGroupsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +319,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _ipGroupsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,6 +330,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: IpGroups_ListByResourceGroup
         /// <summary> Gets all IpGroups in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IpGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -328,7 +345,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _ipGroupsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,7 +360,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _ipGroupsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

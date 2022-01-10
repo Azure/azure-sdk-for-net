@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCircuitAuthorization and their operations over its parent. </summary>
     public partial class ExpressRouteCircuitAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteCircuitAuthorization>, IAsyncEnumerable<ExpressRouteCircuitAuthorization>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteCircuitAuthorizationsRestOperations _expressRouteCircuitAuthorizationsRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations/{authorizationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitAuthorizations_CreateOrUpdate
         /// <summary> Creates or updates an authorization in the specified express route circuit. </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
@@ -78,6 +80,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations/{authorizationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitAuthorizations_CreateOrUpdate
         /// <summary> Creates or updates an authorization in the specified express route circuit. </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations/{authorizationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitAuthorizations_Get
         /// <summary> Gets the specified authorization from the specified express route circuit. </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitAuthorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitAuthorization(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorization(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,6 +147,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations/{authorizationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitAuthorizations_Get
         /// <summary> Gets the specified authorization from the specified express route circuit. </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitAuthorizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCircuitAuthorization(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorization(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitAuthorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCircuitAuthorization>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuitAuthorization(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCircuitAuthorization(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +222,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitAuthorizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCircuitAuthorization>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuitAuthorization(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCircuitAuthorization(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,6 +281,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitAuthorizations_List
         /// <summary> Gets all authorizations in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorization" /> that may take multiple service requests to iterate over. </returns>
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitAuthorizationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +311,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitAuthorizationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,6 +322,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// OperationId: ExpressRouteCircuitAuthorizations_List
         /// <summary> Gets all authorizations in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuitAuthorization" /> that may take multiple service requests to iterate over. </returns>
@@ -320,7 +337,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitAuthorizationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitAuthorizationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

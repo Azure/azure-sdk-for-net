@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCircuit and their operations over its parent. </summary>
     public partial class ExpressRouteCircuitCollection : ArmCollection, IEnumerable<ExpressRouteCircuit>, IAsyncEnumerable<ExpressRouteCircuit>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteCircuitsRestOperations _expressRouteCircuitsRestClient;
@@ -46,6 +45,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCircuits_CreateOrUpdate
         /// <summary> Creates or updates an express route circuit. </summary>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCircuits_CreateOrUpdate
         /// <summary> Creates or updates an express route circuit. </summary>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCircuits_Get
         /// <summary> Gets information about the specified express route circuit. </summary>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, circuitName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuit(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuit(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,6 +149,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCircuits_Get
         /// <summary> Gets information about the specified express route circuit. </summary>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, circuitName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCircuit(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuit(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, circuitName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCircuit>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuit(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCircuit(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +224,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, circuitName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteCircuit>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuit(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteCircuit(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,6 +283,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCircuits_List
         /// <summary> Gets all the express route circuits in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuit" /> that may take multiple service requests to iterate over. </returns>
@@ -284,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +313,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -310,6 +324,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteCircuits_List
         /// <summary> Gets all the express route circuits in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuit" /> that may take multiple service requests to iterate over. </returns>
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,7 +354,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -39,11 +39,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "VpnSiteLinkConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VpnSiteLinkConnection(ArmResource options, VpnSiteLinkConnectionData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VpnSiteLinkConnection(ArmResource options, ResourceIdentifier id, VpnSiteLinkConnectionData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _vpnSiteLinkConnectionsRestClient = new VpnSiteLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _vpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -93,6 +94,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// OperationId: VpnSiteLinkConnections_Get
         /// <summary> Retrieves the details of a vpn site link connection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VpnSiteLinkConnection>> GetAsync(CancellationToken cancellationToken = default)
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnSiteLinkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// OperationId: VpnSiteLinkConnections_Get
         /// <summary> Retrieves the details of a vpn site link connection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VpnSiteLinkConnection> Get(CancellationToken cancellationToken = default)
@@ -124,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnSiteLinkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,17 +156,20 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/resetconnection
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// OperationId: VpnLinkConnections_ResetConnection
         /// <summary> Resets the VpnLink connection specified. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnLinkConnectionResetConnectionOperation> ResetConnectionVpnLinkConnectionAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnSiteLinkConnectionResetConnectionOperation> ResetConnectionAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnectionVpnLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnection");
             scope.Start();
             try
             {
                 var response = await _vpnLinkConnectionsRestClient.ResetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnLinkConnectionResetConnectionOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateResetConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VpnSiteLinkConnectionResetConnectionOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateResetConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,17 +181,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/resetconnection
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// OperationId: VpnLinkConnections_ResetConnection
         /// <summary> Resets the VpnLink connection specified. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnLinkConnectionResetConnectionOperation ResetConnectionVpnLinkConnection(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnSiteLinkConnectionResetConnectionOperation ResetConnection(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnectionVpnLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnection");
             scope.Start();
             try
             {
                 var response = _vpnLinkConnectionsRestClient.ResetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VpnLinkConnectionResetConnectionOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateResetConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VpnSiteLinkConnectionResetConnectionOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateResetConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -193,17 +206,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/getikesas
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// OperationId: VpnLinkConnections_GetIkeSas
         /// <summary> Lists IKE Security Associations for Vpn Site Link Connection in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnLinkConnectionGetIkeSasOperation> GetIkeSasVpnLinkConnectionAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnSiteLinkConnectionGetIkeSasVpnLinkConnectionOperation> GetIkeSasVpnLinkConnectionAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.GetIkeSasVpnLinkConnection");
             scope.Start();
             try
             {
                 var response = await _vpnLinkConnectionsRestClient.GetIkeSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnLinkConnectionGetIkeSasOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateGetIkeSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VpnSiteLinkConnectionGetIkeSasVpnLinkConnectionOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateGetIkeSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,17 +231,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/getikesas
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// OperationId: VpnLinkConnections_GetIkeSas
         /// <summary> Lists IKE Security Associations for Vpn Site Link Connection in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnLinkConnectionGetIkeSasOperation GetIkeSasVpnLinkConnection(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnSiteLinkConnectionGetIkeSasVpnLinkConnectionOperation GetIkeSasVpnLinkConnection(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.GetIkeSasVpnLinkConnection");
             scope.Start();
             try
             {
                 var response = _vpnLinkConnectionsRestClient.GetIkeSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VpnLinkConnectionGetIkeSasOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateGetIkeSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VpnSiteLinkConnectionGetIkeSasVpnLinkConnectionOperation(_clientDiagnostics, Pipeline, _vpnLinkConnectionsRestClient.CreateGetIkeSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

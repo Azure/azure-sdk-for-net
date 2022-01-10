@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of Subnet and their operations over its parent. </summary>
     public partial class SubnetCollection : ArmCollection, IEnumerable<Subnet>, IAsyncEnumerable<Subnet>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubnetsRestOperations _subnetsRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: Subnets_CreateOrUpdate
         /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
@@ -78,6 +80,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: Subnets_CreateOrUpdate
         /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: Subnets_Get
         /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -131,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 var response = _subnetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subnet(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subnet(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,6 +148,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: Subnets_Get
         /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _subnetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Subnet(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subnet(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +198,7 @@ namespace Azure.ResourceManager.Network
                 var response = _subnetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<Subnet>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new Subnet(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +226,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _subnetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<Subnet>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new Subnet(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,6 +287,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: Subnets_List
         /// <summary> Gets all subnets in a virtual network. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Subnet" /> that may take multiple service requests to iterate over. </returns>
@@ -288,7 +302,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _subnetsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +317,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _subnetsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,6 +328,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: Subnets_List
         /// <summary> Gets all subnets in a virtual network. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Subnet" /> that may take multiple service requests to iterate over. </returns>
@@ -326,7 +343,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _subnetsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +358,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _subnetsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         {
             TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
             LoadBalancerBackendAddresses = new ChangeTrackingList<LoadBalancerBackendAddress>();
-            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIpConfigurationData>();
             LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
             OutboundRules = new ChangeTrackingList<WritableSubResource>();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPoolData(string id, string name, string etag, string type, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
+        internal BackendAddressPoolData(string id, string name, string etag, string type, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIpConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> An array of backend addresses. </summary>
         public IList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get; }
         /// <summary> An array of references to IP addresses defined in network interfaces. </summary>
-        public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get; }
+        public IReadOnlyList<NetworkInterfaceIpConfigurationData> BackendIPConfigurations { get; }
         /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
         public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> A reference to an outbound rule that uses this backend address pool. </summary>

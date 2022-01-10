@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PublicIPAddressData : IUtf8JsonSerializable
+    public partial class PublicIpAddressData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        internal static PublicIPAddressData DeserializePublicIPAddressData(JsonElement element)
+        internal static PublicIpAddressData DeserializePublicIpAddressData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPAddressSku> sku = default;
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Network
             Optional<int> idleTimeoutInMinutes = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<PublicIPAddressData> servicePublicIPAddress = default;
+            Optional<PublicIpAddressData> servicePublicIPAddress = default;
             Optional<NatGatewayData> natGateway = default;
             Optional<PublicIPAddressMigrationPhase> migrationPhase = default;
-            Optional<PublicIPAddressData> linkedPublicIPAddress = default;
+            Optional<PublicIpAddressData> linkedPublicIPAddress = default;
             Optional<DeleteOptions> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePublicIPAddress = DeserializePublicIPAddressData(property0.Value);
+                            servicePublicIPAddress = DeserializePublicIpAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("natGateway"))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            linkedPublicIPAddress = DeserializePublicIPAddressData(property0.Value);
+                            linkedPublicIPAddress = DeserializePublicIpAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deleteOption"))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPAddressData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), resourceGuid.Value, Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIpAddressData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), resourceGuid.Value, Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

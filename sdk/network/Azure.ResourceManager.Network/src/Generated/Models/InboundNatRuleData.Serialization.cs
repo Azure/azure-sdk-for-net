@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> type = default;
             Optional<string> id = default;
             Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<NetworkInterfaceIPConfigurationData> backendIPConfiguration = default;
+            Optional<NetworkInterfaceIpConfigurationData> backendIPConfiguration = default;
             Optional<TransportProtocol> protocol = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value);
+                            backendIPConfiguration = NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocol"))

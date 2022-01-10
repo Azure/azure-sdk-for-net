@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
         public ApplicationGatewayBackendAddressPool()
         {
-            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIpConfigurationData>();
             BackendAddresses = new ChangeTrackingList<ApplicationGatewayBackendAddress>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendIPConfigurations"> Collection of references to IPs defined in network interfaces. </param>
         /// <param name="backendAddresses"> Backend addresses. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal ApplicationGatewayBackendAddressPool(string id, string name, string etag, string type, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayBackendAddressPool(string id, string name, string etag, string type, IReadOnlyList<NetworkInterfaceIpConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Collection of references to IPs defined in network interfaces. </summary>
-        public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get; }
+        public IReadOnlyList<NetworkInterfaceIpConfigurationData> BackendIPConfigurations { get; }
         /// <summary> Backend addresses. </summary>
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>

@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of OutboundRule and their operations over its parent. </summary>
     public partial class OutboundRuleCollection : ArmCollection, IEnumerable<OutboundRule>, IAsyncEnumerable<OutboundRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LoadBalancerOutboundRulesRestOperations _loadBalancerOutboundRulesRestClient;
@@ -43,6 +42,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: LoadBalancerOutboundRules_Get
         /// <summary> Gets the specified load balancer outbound rule. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -61,7 +63,7 @@ namespace Azure.ResourceManager.Network
                 var response = _loadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OutboundRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -70,6 +72,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: LoadBalancerOutboundRules_Get
         /// <summary> Gets the specified load balancer outbound rule. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +93,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _loadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OutboundRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,7 +120,7 @@ namespace Azure.ResourceManager.Network
                 var response = _loadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<OutboundRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new OutboundRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +147,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _loadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<OutboundRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new OutboundRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,6 +206,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: LoadBalancerOutboundRules_List
         /// <summary> Gets all the outbound rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OutboundRule" /> that may take multiple service requests to iterate over. </returns>
@@ -213,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _loadBalancerOutboundRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,7 +236,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _loadBalancerOutboundRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,6 +247,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: LoadBalancerOutboundRules_List
         /// <summary> Gets all the outbound rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OutboundRule" /> that may take multiple service requests to iterate over. </returns>
@@ -251,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _loadBalancerOutboundRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -266,7 +277,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _loadBalancerOutboundRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

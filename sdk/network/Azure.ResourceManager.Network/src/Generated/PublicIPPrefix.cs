@@ -18,10 +18,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a PublicIPPrefix along with the instance operations that can be performed on it. </summary>
-    public partial class PublicIPPrefix : ArmResource
+    /// <summary> A Class representing a PublicIpPrefix along with the instance operations that can be performed on it. </summary>
+    public partial class PublicIpPrefix : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PublicIPPrefix"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PublicIpPrefix"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publicIpPrefixName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}";
@@ -29,40 +29,41 @@ namespace Azure.ResourceManager.Network
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PublicIPPrefixesRestOperations _publicIPPrefixesRestClient;
-        private readonly PublicIPPrefixData _data;
+        private readonly PublicIpPrefixData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PublicIPPrefix"/> class for mocking. </summary>
-        protected PublicIPPrefix()
+        /// <summary> Initializes a new instance of the <see cref="PublicIpPrefix"/> class for mocking. </summary>
+        protected PublicIpPrefix()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublicIPPrefix"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal PublicIPPrefix(ArmResource options, PublicIPPrefixData resource) : base(options, new ResourceIdentifier(resource.Id))
-        {
-            HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _publicIPPrefixesRestClient = new PublicIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="PublicIPPrefix"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PublicIpPrefix"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PublicIPPrefix(ArmResource options, ResourceIdentifier id) : base(options, id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal PublicIpPrefix(ArmResource options, ResourceIdentifier id, PublicIpPrefixData data) : base(options, id)
+        {
+            HasData = true;
+            _data = data;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _publicIPPrefixesRestClient = new PublicIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="PublicIpPrefix"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal PublicIpPrefix(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _publicIPPrefixesRestClient = new PublicIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublicIPPrefix"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublicIpPrefix"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PublicIPPrefix(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal PublicIpPrefix(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _publicIPPrefixesRestClient = new PublicIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PublicIPPrefixData Data
+        public virtual PublicIpPrefixData Data
         {
             get
             {
@@ -89,19 +90,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// OperationId: PublicIPPrefixes_Get
         /// <summary> Gets the specified public IP prefix in a specified resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PublicIPPrefix>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<PublicIpPrefix>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefix.Get");
+            using var scope = _clientDiagnostics.CreateScope("PublicIpPrefix.Get");
             scope.Start();
             try
             {
                 var response = await _publicIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PublicIPPrefix(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicIpPrefix(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,19 +114,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// OperationId: PublicIPPrefixes_Get
         /// <summary> Gets the specified public IP prefix in a specified resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PublicIPPrefix> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIpPrefix> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefix.Get");
+            using var scope = _clientDiagnostics.CreateScope("PublicIpPrefix.Get");
             scope.Start();
             try
             {
                 var response = _publicIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublicIPPrefix(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicIpPrefix(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,17 +154,20 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// OperationId: PublicIPPrefixes_Delete
         /// <summary> Deletes the specified public IP prefix. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PublicIPPrefixDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PublicIpPrefixDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefix.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PublicIpPrefix.Delete");
             scope.Start();
             try
             {
                 var response = await _publicIPPrefixesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PublicIPPrefixDeleteOperation(_clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new PublicIpPrefixDeleteOperation(_clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,17 +179,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// OperationId: PublicIPPrefixes_Delete
         /// <summary> Deletes the specified public IP prefix. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PublicIPPrefixDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PublicIpPrefixDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefix.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PublicIpPrefix.Delete");
             scope.Start();
             try
             {
                 var response = _publicIPPrefixesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PublicIPPrefixDeleteOperation(_clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new PublicIpPrefixDeleteOperation(_clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -191,23 +204,26 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// OperationId: PublicIPPrefixes_UpdateTags
         /// <summary> Updates public IP prefix tags. </summary>
         /// <param name="parameters"> Parameters supplied to update public IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<PublicIPPrefix>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<PublicIpPrefix>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefix.Update");
+            using var scope = _clientDiagnostics.CreateScope("PublicIpPrefix.Update");
             scope.Start();
             try
             {
                 var response = await _publicIPPrefixesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PublicIPPrefix(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicIpPrefix(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,23 +232,26 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// OperationId: PublicIPPrefixes_UpdateTags
         /// <summary> Updates public IP prefix tags. </summary>
         /// <param name="parameters"> Parameters supplied to update public IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<PublicIPPrefix> Update(TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIpPrefix> Update(TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefix.Update");
+            using var scope = _clientDiagnostics.CreateScope("PublicIpPrefix.Update");
             scope.Start();
             try
             {
                 var response = _publicIPPrefixesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new PublicIPPrefix(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicIpPrefix(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ExpressRouteGateway(ArmResource options, ExpressRouteGatewayData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ExpressRouteGateway(ArmResource options, ResourceIdentifier id, ExpressRouteGatewayData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _expressRouteGatewaysRestClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// OperationId: ExpressRouteGateways_Get
         /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteGateway>> GetAsync(CancellationToken cancellationToken = default)
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGateway(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,6 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// OperationId: ExpressRouteGateways_Get
         /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRouteGateway> Get(CancellationToken cancellationToken = default)
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGateway(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,6 +152,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// OperationId: ExpressRouteGateways_Delete
         /// <summary> Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +177,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// OperationId: ExpressRouteGateways_Delete
         /// <summary> Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,12 +202,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// OperationId: ExpressRouteGateways_UpdateTags
         /// <summary> Updates express route gateway tags. </summary>
         /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteGatewayUpdateTagsOperation> UpdateAsync(TagsObject expressRouteGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteGatewayUpdateOperation> UpdateAsync(TagsObject expressRouteGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayParameters == null)
             {
@@ -206,7 +222,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteGatewaysRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
+                var operation = new ExpressRouteGatewayUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,12 +234,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// OperationId: ExpressRouteGateways_UpdateTags
         /// <summary> Updates express route gateway tags. </summary>
         /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
-        public virtual ExpressRouteGatewayUpdateTagsOperation Update(TagsObject expressRouteGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteGatewayUpdateOperation Update(TagsObject expressRouteGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayParameters == null)
             {
@@ -235,7 +254,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteGatewaysRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken);
-                var operation = new ExpressRouteGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
+                var operation = new ExpressRouteGatewayUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualNetworkGatewayNatRule and their operations over its parent. </summary>
     public partial class VirtualNetworkGatewayNatRuleCollection : ArmCollection, IEnumerable<VirtualNetworkGatewayNatRule>, IAsyncEnumerable<VirtualNetworkGatewayNatRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualNetworkGatewayNatRulesRestOperations _virtualNetworkGatewayNatRulesRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// OperationId: VirtualNetworkGatewayNatRules_CreateOrUpdate
         /// <summary> Creates a nat rule to a scalable virtual network gateway if it doesn&apos;t exist else updates the existing nat rules. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
@@ -78,6 +80,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// OperationId: VirtualNetworkGatewayNatRules_CreateOrUpdate
         /// <summary> Creates a nat rule to a scalable virtual network gateway if it doesn&apos;t exist else updates the existing nat rules. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// OperationId: VirtualNetworkGatewayNatRules_Get
         /// <summary> Retrieves the details of a nat rule. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualNetworkGatewayNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkGatewayNatRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkGatewayNatRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,6 +147,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// OperationId: VirtualNetworkGatewayNatRules_Get
         /// <summary> Retrieves the details of a nat rule. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualNetworkGatewayNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetworkGatewayNatRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkGatewayNatRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualNetworkGatewayNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VirtualNetworkGatewayNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkGatewayNatRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new VirtualNetworkGatewayNatRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +222,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualNetworkGatewayNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VirtualNetworkGatewayNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkGatewayNatRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new VirtualNetworkGatewayNatRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,6 +281,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// OperationId: VirtualNetworkGatewayNatRules_ListByVirtualNetworkGateway
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkGatewayNatRule" /> that may take multiple service requests to iterate over. </returns>
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _virtualNetworkGatewayNatRulesRestClient.ListByVirtualNetworkGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +311,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _virtualNetworkGatewayNatRulesRestClient.ListByVirtualNetworkGatewayNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,6 +322,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// OperationId: VirtualNetworkGatewayNatRules_ListByVirtualNetworkGateway
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkGatewayNatRule" /> that may take multiple service requests to iterate over. </returns>
@@ -320,7 +337,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _virtualNetworkGatewayNatRulesRestClient.ListByVirtualNetworkGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _virtualNetworkGatewayNatRulesRestClient.ListByVirtualNetworkGatewayNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

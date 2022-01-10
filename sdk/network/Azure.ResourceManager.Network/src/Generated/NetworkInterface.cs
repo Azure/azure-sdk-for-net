@@ -39,11 +39,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "NetworkInterface"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkInterface(ArmResource options, NetworkInterfaceData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal NetworkInterface(ArmResource options, ResourceIdentifier id, NetworkInterfaceData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _networkInterfacesRestClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -93,6 +94,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_Get
         /// <summary> Gets information about the specified network interface. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,6 +118,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_Get
         /// <summary> Gets information about the specified network interface. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,7 +133,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,6 +158,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_Delete
         /// <summary> Deletes the specified network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,6 +183,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_Delete
         /// <summary> Deletes the specified network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,6 +208,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_UpdateTags
         /// <summary> Updates a network interface tags. </summary>
         /// <param name="parameters"> Parameters supplied to update network interface tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -211,7 +227,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkInterfacesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,6 +236,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_UpdateTags
         /// <summary> Updates a network interface tags. </summary>
         /// <param name="parameters"> Parameters supplied to update network interface tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -236,7 +255,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfacesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,6 +264,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_GetEffectiveRouteTable
         /// <summary> Gets all route tables applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,6 +289,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_GetEffectiveRouteTable
         /// <summary> Gets all route tables applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -289,17 +314,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveNetworkSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_ListEffectiveNetworkSecurityGroups
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfaceListEffectiveNetworkSecurityGroupsOperation> GetEffectiveNetworkSecurityGroupsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation> GetEffectiveNetworkSecurityGroupsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
                 var response = await _networkInterfacesRestClient.ListEffectiveNetworkSecurityGroupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkInterfaceListEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,17 +339,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveNetworkSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaces_ListEffectiveNetworkSecurityGroups
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfaceListEffectiveNetworkSecurityGroupsOperation GetEffectiveNetworkSecurityGroups(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation GetEffectiveNetworkSecurityGroups(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
                 var response = _networkInterfacesRestClient.ListEffectiveNetworkSecurityGroups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkInterfaceListEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -333,6 +364,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/loadBalancers
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceLoadBalancers_List
         /// <summary> List all load balancers in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancerData" /> that may take multiple service requests to iterate over. </returns>
@@ -371,6 +405,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/loadBalancers
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceLoadBalancers_List
         /// <summary> List all load balancers in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerData" /> that may take multiple service requests to iterate over. </returns>
@@ -409,13 +446,13 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region NetworkInterfaceIPConfiguration
+        #region NetworkInterfaceIpConfiguration
 
-        /// <summary> Gets a collection of NetworkInterfaceIPConfigurations in the NetworkInterface. </summary>
-        /// <returns> An object representing collection of NetworkInterfaceIPConfigurations and their operations over a NetworkInterface. </returns>
-        public virtual NetworkInterfaceIPConfigurationCollection GetNetworkInterfaceIPConfigurations()
+        /// <summary> Gets a collection of NetworkInterfaceIpConfigurations in the NetworkInterface. </summary>
+        /// <returns> An object representing collection of NetworkInterfaceIpConfigurations and their operations over a NetworkInterface. </returns>
+        public virtual NetworkInterfaceIpConfigurationCollection GetNetworkInterfaceIpConfigurations()
         {
-            return new NetworkInterfaceIPConfigurationCollection(this);
+            return new NetworkInterfaceIpConfigurationCollection(this);
         }
         #endregion
 

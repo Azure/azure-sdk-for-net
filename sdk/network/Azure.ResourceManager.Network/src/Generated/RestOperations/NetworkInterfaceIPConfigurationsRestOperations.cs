@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
-        public async Task<Response<NetworkInterfaceIPConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterfaceIpConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NetworkInterfaceIPConfigurationData value = default;
+                        NetworkInterfaceIpConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(document.RootElement);
+                        value = NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkInterfaceIPConfigurationData)null, message.Response);
+                    return Response.FromValue((NetworkInterfaceIpConfigurationData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
-        public Response<NetworkInterfaceIPConfigurationData> Get(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
+        public Response<NetworkInterfaceIpConfigurationData> Get(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -234,13 +234,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NetworkInterfaceIPConfigurationData value = default;
+                        NetworkInterfaceIpConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(document.RootElement);
+                        value = NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkInterfaceIPConfigurationData)null, message.Response);
+                    return Response.FromValue((NetworkInterfaceIpConfigurationData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

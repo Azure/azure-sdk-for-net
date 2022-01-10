@@ -251,23 +251,23 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region PublicIPAddress
-        /// <summary> Gets an object representing a PublicIPAddressCollection along with the instance operations that can be performed on it. </summary>
+        #region PublicIpAddress
+        /// <summary> Gets an object representing a PublicIpAddressCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PublicIPAddressCollection" /> object. </returns>
-        public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="PublicIpAddressCollection" /> object. </returns>
+        public static PublicIpAddressCollection GetPublicIpAddresses(this ResourceGroup resourceGroup)
         {
-            return new PublicIPAddressCollection(resourceGroup);
+            return new PublicIpAddressCollection(resourceGroup);
         }
         #endregion
 
-        #region PublicIPPrefix
-        /// <summary> Gets an object representing a PublicIPPrefixCollection along with the instance operations that can be performed on it. </summary>
+        #region PublicIpPrefix
+        /// <summary> Gets an object representing a PublicIpPrefixCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PublicIPPrefixCollection" /> object. </returns>
-        public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="PublicIpPrefixCollection" /> object. </returns>
+        public static PublicIpPrefixCollection GetPublicIpPrefixes(this ResourceGroup resourceGroup)
         {
-            return new PublicIPPrefixCollection(resourceGroup);
+            return new PublicIpPrefixCollection(resourceGroup);
         }
         #endregion
 
@@ -371,13 +371,13 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region VirtualWAN
-        /// <summary> Gets an object representing a VirtualWANCollection along with the instance operations that can be performed on it. </summary>
+        #region VirtualWan
+        /// <summary> Gets an object representing a VirtualWanCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualWANCollection" /> object. </returns>
-        public static VirtualWANCollection GetVirtualWANs(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualWanCollection" /> object. </returns>
+        public static VirtualWanCollection GetVirtualWans(this ResourceGroup resourceGroup)
         {
-            return new VirtualWANCollection(resourceGroup);
+            return new VirtualWanCollection(resourceGroup);
         }
         #endregion
 
@@ -471,12 +471,15 @@ namespace Azure.ResourceManager.Network
             return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AvailableResourceGroupDelegations_List
         /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -523,12 +526,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AvailableResourceGroupDelegations_List
         /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -575,12 +581,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AvailableServiceAliases_ListByResourceGroup
         /// <summary> Lists the AvailableServiceAliases for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -627,12 +636,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AvailableServiceAliases_ListByResourceGroup
         /// <summary> Lists the AvailableServiceAliases for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -679,12 +691,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AvailablePrivateEndpointTypes_ListByResourceGroup
         /// <summary> Lists the AvailablePrivateEndpointTypes for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -731,12 +746,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AvailablePrivateEndpointTypes_ListByResourceGroup
         /// <summary> Lists the AvailablePrivateEndpointTypes for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -783,6 +801,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -790,7 +811,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroup resourceGroup, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static async Task<CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroup resourceGroup, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -810,7 +831,7 @@ namespace Azure.ResourceManager.Network
                 {
                     var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -824,6 +845,9 @@ namespace Azure.ResourceManager.Network
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -831,7 +855,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroup resourceGroup, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroup resourceGroup, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -851,7 +875,7 @@ namespace Azure.ResourceManager.Network
                 {
                     var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.CheckPrivateLinkServiceVisibilityByResourceGroup(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -865,13 +889,16 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
         /// <summary> Lists the AutoApprovedPrivateLinkServices for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -884,7 +911,7 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {
@@ -899,7 +926,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<AutoApprovedPrivateLinkService>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {
@@ -917,13 +944,16 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
         /// <summary> Lists the AutoApprovedPrivateLinkServices for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServices(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -936,7 +966,7 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {
@@ -951,7 +981,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<AutoApprovedPrivateLinkService> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {

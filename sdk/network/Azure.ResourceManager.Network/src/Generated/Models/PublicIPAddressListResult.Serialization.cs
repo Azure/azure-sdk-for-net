@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PublicIPAddressListResult DeserializePublicIPAddressListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PublicIPAddressData>> value = default;
+            Optional<IReadOnlyList<PublicIpAddressData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PublicIPAddressData> array = new List<PublicIPAddressData>();
+                    List<PublicIpAddressData> array = new List<PublicIpAddressData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicIPAddressData.DeserializePublicIPAddressData(item));
+                        array.Add(PublicIpAddressData.DeserializePublicIpAddressData(item));
                     }
                     value = array;
                     continue;

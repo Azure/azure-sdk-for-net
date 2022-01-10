@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="publicIpPrefixName"/> is null. </exception>
-        public async Task<Response<PublicIPPrefixData>> GetAsync(string subscriptionId, string resourceGroupName, string publicIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIpPrefixData>> GetAsync(string subscriptionId, string resourceGroupName, string publicIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PublicIPPrefixData value = default;
+                        PublicIpPrefixData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
+                        value = PublicIpPrefixData.DeserializePublicIpPrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PublicIPPrefixData)null, message.Response);
+                    return Response.FromValue((PublicIpPrefixData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="publicIpPrefixName"/> is null. </exception>
-        public Response<PublicIPPrefixData> Get(string subscriptionId, string resourceGroupName, string publicIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<PublicIpPrefixData> Get(string subscriptionId, string resourceGroupName, string publicIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -221,19 +221,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PublicIPPrefixData value = default;
+                        PublicIpPrefixData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
+                        value = PublicIpPrefixData.DeserializePublicIpPrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PublicIPPrefixData)null, message.Response);
+                    return Response.FromValue((PublicIpPrefixData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string publicIpPrefixName, PublicIPPrefixData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string publicIpPrefixName, PublicIpPrefixData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIpPrefixName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string publicIpPrefixName, PublicIpPrefixData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIpPrefixName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string publicIpPrefixName, PublicIpPrefixData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update public IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIpPrefixName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<PublicIPPrefixData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string publicIpPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIpPrefixData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string publicIpPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PublicIPPrefixData value = default;
+                        PublicIpPrefixData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
+                        value = PublicIpPrefixData.DeserializePublicIpPrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update public IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIpPrefixName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<PublicIPPrefixData> UpdateTags(string subscriptionId, string resourceGroupName, string publicIpPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public Response<PublicIpPrefixData> UpdateTags(string subscriptionId, string resourceGroupName, string publicIpPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -431,9 +431,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PublicIPPrefixData value = default;
+                        PublicIpPrefixData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
+                        value = PublicIpPrefixData.DeserializePublicIpPrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

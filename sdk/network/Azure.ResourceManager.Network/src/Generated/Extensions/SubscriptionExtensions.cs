@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -308,6 +307,9 @@ namespace Azure.ResourceManager.Network
             return new WebApplicationFirewallPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAll
         /// <summary> Lists the ApplicationGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,7 +327,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -340,7 +342,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -353,6 +355,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAll
         /// <summary> Lists the ApplicationGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -370,7 +375,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -385,7 +390,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -426,206 +431,273 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists all available server variables. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableServerVariables
+        /// <summary> Lists the Strings for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<string>>> GetAvailableServerVariablesApplicationGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServerVariablesApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.ListAvailableServerVariablesAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(response.Value, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available server variables. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<string>> GetAvailableServerVariablesApplicationGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<string> GetApplicationGatewaysAvailableServerVariablesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServerVariablesApplicationGateways");
-                scope.Start();
-                try
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
                 {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.ListAvailableServerVariables(subscription.Id.SubscriptionId, cancellationToken);
-                    return Response.FromValue(response.Value, response.GetRawResponse());
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewaysAvailableServerVariables");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListAvailableServerVariablesAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
                 }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
             }
             );
         }
 
-        /// <summary> Lists all available request headers. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableServerVariables
+        /// <summary> Lists the Strings for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<string>>> GetAvailableRequestHeadersApplicationGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableRequestHeadersApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.ListAvailableRequestHeadersAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(response.Value, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available request headers. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<string>> GetAvailableRequestHeadersApplicationGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<string> GetApplicationGatewaysAvailableServerVariables(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableRequestHeadersApplicationGateways");
-                scope.Start();
-                try
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                Page<string> FirstPageFunc(int? pageSizeHint)
                 {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.ListAvailableRequestHeaders(subscription.Id.SubscriptionId, cancellationToken);
-                    return Response.FromValue(response.Value, response.GetRawResponse());
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewaysAvailableServerVariables");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListAvailableServerVariables(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
                 }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
             }
             );
         }
 
-        /// <summary> Lists all available response headers. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableRequestHeaders
+        /// <summary> Lists the Strings for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<string>>> GetAvailableResponseHeadersApplicationGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableResponseHeadersApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.ListAvailableResponseHeadersAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(response.Value, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available response headers. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<string>> GetAvailableResponseHeadersApplicationGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<string> GetApplicationGatewaysAvailableRequestHeadersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableResponseHeadersApplicationGateways");
-                scope.Start();
-                try
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
                 {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.ListAvailableResponseHeaders(subscription.Id.SubscriptionId, cancellationToken);
-                    return Response.FromValue(response.Value, response.GetRawResponse());
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewaysAvailableRequestHeaders");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListAvailableRequestHeadersAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
                 }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
             }
             );
         }
 
-        /// <summary> Lists all available web application firewall rule sets. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableRequestHeaders
+        /// <summary> Lists the Strings for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>>> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.ListAvailableWafRuleSetsAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(response.Value.Value, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available web application firewall rule sets. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> GetApplicationGatewayAvailableWafRuleSetsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<string> GetApplicationGatewaysAvailableRequestHeaders(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync");
-                scope.Start();
-                try
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                Page<string> FirstPageFunc(int? pageSizeHint)
                 {
-                    var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.ListAvailableWafRuleSets(subscription.Id.SubscriptionId, cancellationToken);
-                    return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewaysAvailableRequestHeaders");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListAvailableRequestHeaders(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
                 }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
             }
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableResponseHeaders
+        /// <summary> Lists the Strings for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<string> GetApplicationGatewaysAvailableResponseHeadersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewaysAvailableResponseHeaders");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListAvailableResponseHeadersAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            }
+            );
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableResponseHeaders
+        /// <summary> Lists the Strings for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<string> GetApplicationGatewaysAvailableResponseHeaders(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                Page<string> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewaysAvailableResponseHeaders");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListAvailableResponseHeaders(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            }
+            );
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableWafRuleSets
+        /// <summary> Lists the ApplicationGatewayFirewallRuleSets for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                async Task<Page<ApplicationGatewayFirewallRuleSet>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSets");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListAvailableWafRuleSetsAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            }
+            );
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationGateways_ListAvailableWafRuleSets
+        /// <summary> Lists the ApplicationGatewayFirewallRuleSets for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSets(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                Page<ApplicationGatewayFirewallRuleSet> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSets");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListAvailableWafRuleSets(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            }
+            );
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationSecurityGroups_ListAll
         /// <summary> Lists the ApplicationSecurityGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -643,7 +715,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -658,7 +730,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -671,6 +743,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ApplicationSecurityGroups_ListAll
         /// <summary> Lists the ApplicationSecurityGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -688,7 +763,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -703,7 +778,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -744,12 +819,15 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailableDelegations_List
         /// <summary> Lists the AvailableDelegations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -796,12 +874,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailableDelegations_List
         /// <summary> Lists the AvailableDelegations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableDelegations(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -848,12 +929,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailableServiceAliases_List
         /// <summary> Lists the AvailableServiceAliases for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -900,12 +984,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailableServiceAliases_List
         /// <summary> Lists the AvailableServiceAliases for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -952,6 +1039,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AzureFirewalls_ListAll
         /// <summary> Lists the AzureFirewalls for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -969,7 +1059,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -984,7 +1074,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -997,6 +1087,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AzureFirewalls_ListAll
         /// <summary> Lists the AzureFirewalls for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1014,7 +1107,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1029,7 +1122,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1070,6 +1163,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AzureFirewallFqdnTags_ListAll
         /// <summary> Lists the AzureFirewallFqdnTags for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1115,6 +1211,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AzureFirewallFqdnTags_ListAll
         /// <summary> Lists the AzureFirewallFqdnTags for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1160,6 +1259,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: BastionHosts_List
         /// <summary> Lists the BastionHosts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1177,7 +1279,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1192,7 +1294,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1205,6 +1307,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: BastionHosts_List
         /// <summary> Lists the BastionHosts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1222,7 +1327,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1237,7 +1342,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new BastionHost(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1278,6 +1383,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CheckDnsNameAvailability
         /// <summary> Checks whether a domain name in the cloudapp.azure.com zone is available for use. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -1315,6 +1423,9 @@ namespace Azure.ResourceManager.Network
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CheckDnsNameAvailability
         /// <summary> Checks whether a domain name in the cloudapp.azure.com zone is available for use. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -1352,11 +1463,14 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CustomIPPrefixes_ListAll
         /// <summary> Lists the CustomIpPrefixes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomIpPrefix> GetCustomIPPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CustomIpPrefix> GetCustomIpPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1364,12 +1478,12 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<CustomIpPrefix>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1379,12 +1493,12 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<CustomIpPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1397,11 +1511,14 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CustomIPPrefixes_ListAll
         /// <summary> Lists the CustomIpPrefixes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomIpPrefix> GetCustomIPPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<CustomIpPrefix> GetCustomIpPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1409,12 +1526,12 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<CustomIpPrefix> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1424,12 +1541,12 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<CustomIpPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1470,6 +1587,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DdosProtectionPlans_List
         /// <summary> Lists the DdosProtectionPlans for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1487,7 +1607,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1502,7 +1622,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1515,6 +1635,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DdosProtectionPlans_List
         /// <summary> Lists the DdosProtectionPlans for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1532,7 +1655,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1547,7 +1670,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(subscription, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1588,6 +1711,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DscpConfiguration_ListAll
         /// <summary> Lists the DscpConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1605,7 +1731,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1620,7 +1746,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1633,6 +1759,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DscpConfiguration_ListAll
         /// <summary> Lists the DscpConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1650,7 +1779,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1665,7 +1794,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1706,12 +1835,15 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailableEndpointServices_List
         /// <summary> Lists the EndpointServiceResults for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1758,12 +1890,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailableEndpointServices_List
         /// <summary> Lists the EndpointServiceResults for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<EndpointServiceResult> GetAvailableEndpointServices(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1810,6 +1945,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteCircuits_ListAll
         /// <summary> Lists the ExpressRouteCircuits for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1827,7 +1965,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1842,7 +1980,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1855,6 +1993,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteCircuits_ListAll
         /// <summary> Lists the ExpressRouteCircuits for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1872,7 +2013,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1887,7 +2028,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1928,6 +2069,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteServiceProviders_List
         /// <summary> Lists the ExpressRouteServiceProviders for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1973,6 +2117,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteServiceProviders_List
         /// <summary> Lists the ExpressRouteServiceProviders for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2018,6 +2165,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteCrossConnections_List
         /// <summary> Lists the ExpressRouteCrossConnections for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2035,7 +2185,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2050,7 +2200,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2063,6 +2213,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteCrossConnections_List
         /// <summary> Lists the ExpressRouteCrossConnections for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2080,7 +2233,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2095,7 +2248,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2136,6 +2289,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRoutePorts_List
         /// <summary> Lists the ExpressRoutePorts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2153,7 +2309,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2168,7 +2324,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2181,6 +2337,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRoutePorts_List
         /// <summary> Lists the ExpressRoutePorts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2198,7 +2357,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2213,7 +2372,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2254,6 +2413,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: FirewallPolicies_ListAll
         /// <summary> Lists the FirewallPolicies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2271,7 +2433,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2286,7 +2448,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2299,6 +2461,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: FirewallPolicies_ListAll
         /// <summary> Lists the FirewallPolicies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2316,7 +2481,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2331,7 +2496,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2372,6 +2537,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: IpAllocations_List
         /// <summary> Lists the IpAllocations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2389,7 +2557,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2404,7 +2572,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2417,6 +2585,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: IpAllocations_List
         /// <summary> Lists the IpAllocations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2434,7 +2605,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2449,7 +2620,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2490,6 +2661,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: IpGroups_List
         /// <summary> Lists the IpGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2507,7 +2681,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2522,7 +2696,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2535,6 +2709,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: IpGroups_List
         /// <summary> Lists the IpGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2552,7 +2729,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2567,7 +2744,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new IpGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2608,6 +2785,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LoadBalancers_ListAll
         /// <summary> Lists the LoadBalancers for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2625,7 +2805,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2640,7 +2820,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2653,6 +2833,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LoadBalancers_ListAll
         /// <summary> Lists the LoadBalancers for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2670,7 +2853,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2685,7 +2868,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2726,6 +2909,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LoadBalancers_SwapPublicIpAddresses
         /// <summary> Swaps VIPs between two load balancers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
@@ -2733,7 +2919,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<LoadBalancerSwapPublicIpAddressesOperation> SwapPublicIpAddressesLoadBalancerAsync(this Subscription subscription, string location, LoadBalancerVipSwapRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static async Task<SwapLoadBalancerPublicIpAddressesOperation> SwapLoadBalancerPublicIpAddressesAsync(this Subscription subscription, string location, LoadBalancerVipSwapRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -2747,13 +2933,13 @@ namespace Azure.ResourceManager.Network
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SwapPublicIpAddressesLoadBalancer");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SwapLoadBalancerPublicIpAddresses");
                 scope.Start();
                 try
                 {
                     var restOperations = GetLoadBalancersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.SwapPublicIpAddressesAsync(subscription.Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new LoadBalancerSwapPublicIpAddressesOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new SwapLoadBalancerPublicIpAddressesOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -2767,6 +2953,9 @@ namespace Azure.ResourceManager.Network
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LoadBalancers_SwapPublicIpAddresses
         /// <summary> Swaps VIPs between two load balancers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
@@ -2774,7 +2963,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static LoadBalancerSwapPublicIpAddressesOperation SwapPublicIpAddressesLoadBalancer(this Subscription subscription, string location, LoadBalancerVipSwapRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static SwapLoadBalancerPublicIpAddressesOperation SwapLoadBalancerPublicIpAddresses(this Subscription subscription, string location, LoadBalancerVipSwapRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -2788,13 +2977,13 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SwapPublicIpAddressesLoadBalancer");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.SwapLoadBalancerPublicIpAddresses");
                 scope.Start();
                 try
                 {
                     var restOperations = GetLoadBalancersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.SwapPublicIpAddresses(subscription.Id.SubscriptionId, location, parameters, cancellationToken);
-                    var operation = new LoadBalancerSwapPublicIpAddressesOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new SwapLoadBalancerPublicIpAddressesOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -2808,6 +2997,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NatGateways_ListAll
         /// <summary> Lists the NatGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2825,7 +3017,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2840,7 +3032,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2853,6 +3045,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NatGateways_ListAll
         /// <summary> Lists the NatGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2870,7 +3065,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2885,7 +3080,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NatGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2926,6 +3121,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkInterfaces_ListAll
         /// <summary> Lists the NetworkInterfaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2943,7 +3141,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2958,7 +3156,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -2971,6 +3169,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkInterfaces_ListAll
         /// <summary> Lists the NetworkInterfaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2988,7 +3189,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3003,7 +3204,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3044,6 +3245,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkProfiles_ListAll
         /// <summary> Lists the NetworkProfiles for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3061,7 +3265,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3076,7 +3280,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3089,6 +3293,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkProfiles_ListAll
         /// <summary> Lists the NetworkProfiles for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3106,7 +3313,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3121,7 +3328,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3162,6 +3369,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkSecurityGroups_ListAll
         /// <summary> Lists the NetworkSecurityGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3179,7 +3389,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3194,7 +3404,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3207,6 +3417,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkSecurityGroups_ListAll
         /// <summary> Lists the NetworkSecurityGroups for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3224,7 +3437,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3239,7 +3452,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3280,6 +3493,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkVirtualAppliances_List
         /// <summary> Lists the NetworkVirtualAppliances for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3297,7 +3513,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3312,7 +3528,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3325,6 +3541,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkVirtualAppliances_List
         /// <summary> Lists the NetworkVirtualAppliances for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3342,7 +3561,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3357,7 +3576,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3398,6 +3617,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkWatchers_ListAll
         /// <summary> Lists the NetworkWatchers for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3415,7 +3637,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(subscription, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3428,6 +3650,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: NetworkWatchers_ListAll
         /// <summary> Lists the NetworkWatchers for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3445,7 +3670,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(subscription, value)), null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(subscription, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3486,6 +3711,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateEndpoints_ListBySubscription
         /// <summary> Lists the PrivateEndpoints for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3503,7 +3731,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3518,7 +3746,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3531,6 +3759,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateEndpoints_ListBySubscription
         /// <summary> Lists the PrivateEndpoints for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3548,7 +3779,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3563,7 +3794,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3604,12 +3835,15 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailablePrivateEndpointTypes_List
         /// <summary> Lists the AvailablePrivateEndpointTypes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -3656,12 +3890,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: AvailablePrivateEndpointTypes_List
         /// <summary> Lists the AvailablePrivateEndpointTypes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -3708,6 +3945,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateLinkServices_ListBySubscription
         /// <summary> Lists the PrivateLinkServices for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3725,7 +3965,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3740,7 +3980,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3753,6 +3993,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateLinkServices_ListBySubscription
         /// <summary> Lists the PrivateLinkServices for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3770,7 +4013,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3785,7 +4028,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -3826,6 +4069,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateLinkServices_CheckPrivateLinkServiceVisibility
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -3833,7 +4079,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Subscription subscription, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static async Task<CheckPrivateLinkServiceVisibilityOperation> CheckPrivateLinkServiceVisibilityAsync(this Subscription subscription, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3847,13 +4093,13 @@ namespace Azure.ResourceManager.Network
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckPrivateLinkServiceVisibilityPrivateLinkService");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckPrivateLinkServiceVisibility");
                 scope.Start();
                 try
                 {
                     var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.CheckPrivateLinkServiceVisibilityAsync(subscription.Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -3867,6 +4113,9 @@ namespace Azure.ResourceManager.Network
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateLinkServices_CheckPrivateLinkServiceVisibility
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -3874,7 +4123,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation CheckPrivateLinkServiceVisibilityPrivateLinkService(this Subscription subscription, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static CheckPrivateLinkServiceVisibilityOperation CheckPrivateLinkServiceVisibility(this Subscription subscription, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3888,13 +4137,13 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckPrivateLinkServiceVisibilityPrivateLinkService");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckPrivateLinkServiceVisibility");
                 scope.Start();
                 try
                 {
                     var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.CheckPrivateLinkServiceVisibility(subscription.Id.SubscriptionId, location, parameters, cancellationToken);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -3908,13 +4157,16 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
         /// <summary> Lists the AutoApprovedPrivateLinkServices for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3927,7 +4179,7 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {
@@ -3942,7 +4194,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<AutoApprovedPrivateLinkService>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {
@@ -3960,13 +4212,16 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
         /// <summary> Lists the AutoApprovedPrivateLinkServices for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServices(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3979,7 +4234,7 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {
@@ -3994,7 +4249,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<AutoApprovedPrivateLinkService> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServices");
                     scope.Start();
                     try
                     {
@@ -4012,24 +4267,27 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Lists the PublicIPAddresses for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PublicIPAddresses_ListAll
+        /// <summary> Lists the PublicIpAddresses for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PublicIPAddress> GetPublicIPAddressesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PublicIpAddress> GetPublicIPAddressesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPublicIPAddressesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<PublicIPAddress>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<PublicIpAddress>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPAddresses");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpAddress(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4037,14 +4295,14 @@ namespace Azure.ResourceManager.Network
                         throw;
                     }
                 }
-                async Task<Page<PublicIPAddress>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<PublicIpAddress>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPAddresses");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpAddress(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4057,24 +4315,27 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Lists the PublicIPAddresses for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PublicIPAddresses_ListAll
+        /// <summary> Lists the PublicIpAddresses for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PublicIPAddress> GetPublicIPAddresses(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<PublicIpAddress> GetPublicIPAddresses(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPublicIPAddressesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<PublicIPAddress> FirstPageFunc(int? pageSizeHint)
+                Page<PublicIpAddress> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPAddresses");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpAddress(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4082,14 +4343,14 @@ namespace Azure.ResourceManager.Network
                         throw;
                     }
                 }
-                Page<PublicIPAddress> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<PublicIpAddress> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPAddresses");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpAddress(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4102,52 +4363,55 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Filters the list of PublicIPAddresses for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of PublicIpAddresses for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetPublicIPAddressesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetPublicIpAddressesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(PublicIPAddress.ResourceType);
+            ResourceFilterCollection filters = new(PublicIpAddress.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of PublicIPAddresses for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of PublicIpAddresses for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetPublicIPAddressesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetPublicIpAddressesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(PublicIPAddress.ResourceType);
+            ResourceFilterCollection filters = new(PublicIpAddress.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the PublicIPPrefixes for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PublicIPPrefixes_ListAll
+        /// <summary> Lists the PublicIpPrefixes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PublicIPPrefix> GetPublicIPPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PublicIpPrefix> GetPublicIPPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPublicIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<PublicIPPrefix>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<PublicIpPrefix>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPPrefixes");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4155,14 +4419,14 @@ namespace Azure.ResourceManager.Network
                         throw;
                     }
                 }
-                async Task<Page<PublicIPPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<PublicIpPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPPrefixes");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4175,24 +4439,27 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Lists the PublicIPPrefixes for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: PublicIPPrefixes_ListAll
+        /// <summary> Lists the PublicIpPrefixes for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PublicIPPrefix> GetPublicIPPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<PublicIpPrefix> GetPublicIPPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPublicIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<PublicIPPrefix> FirstPageFunc(int? pageSizeHint)
+                Page<PublicIpPrefix> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPPrefixes");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4200,14 +4467,14 @@ namespace Azure.ResourceManager.Network
                         throw;
                     }
                 }
-                Page<PublicIPPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<PublicIpPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPPrefixes");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PublicIpPrefix(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4220,34 +4487,37 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Filters the list of PublicIPPrefixes for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of PublicIpPrefixes for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetPublicIPPrefixesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetPublicIpPrefixesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(PublicIPPrefix.ResourceType);
+            ResourceFilterCollection filters = new(PublicIpPrefix.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of PublicIPPrefixes for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of PublicIpPrefixes for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetPublicIPPrefixesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetPublicIpPrefixesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(PublicIPPrefix.ResourceType);
+            ResourceFilterCollection filters = new(PublicIpPrefix.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: RouteFilters_List
         /// <summary> Lists the RouteFilters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4265,7 +4535,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4280,7 +4550,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4293,6 +4563,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: RouteFilters_List
         /// <summary> Lists the RouteFilters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4310,7 +4583,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4325,7 +4598,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4366,6 +4639,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: RouteTables_ListAll
         /// <summary> Lists the RouteTables for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4383,7 +4659,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4398,7 +4674,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4411,6 +4687,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: RouteTables_ListAll
         /// <summary> Lists the RouteTables for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4428,7 +4707,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4443,7 +4722,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RouteTable(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4484,6 +4763,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: SecurityPartnerProviders_List
         /// <summary> Lists the SecurityPartnerProviders for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4501,7 +4783,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4516,7 +4798,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4529,6 +4811,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: SecurityPartnerProviders_List
         /// <summary> Lists the SecurityPartnerProviders for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4546,7 +4831,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4561,7 +4846,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4602,6 +4887,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: BgpServiceCommunities_List
         /// <summary> Lists the BgpServiceCommunities for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4647,6 +4935,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: BgpServiceCommunities_List
         /// <summary> Lists the BgpServiceCommunities for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4692,6 +4983,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ServiceEndpointPolicies_List
         /// <summary> Lists the ServiceEndpointPolicies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4709,7 +5003,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4724,7 +5018,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4737,6 +5031,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ServiceEndpointPolicies_List
         /// <summary> Lists the ServiceEndpointPolicies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4754,7 +5051,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4769,7 +5066,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -4810,6 +5107,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ServiceTags_List
         /// <summary> Gets a list of service tag information resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
@@ -4842,6 +5142,9 @@ namespace Azure.ResourceManager.Network
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ServiceTags_List
         /// <summary> Gets a list of service tag information resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
@@ -4874,12 +5177,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Usages_List
         /// <summary> Lists the Usages for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Usage> GetUsagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -4926,12 +5232,15 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Usages_List
         /// <summary> Lists the Usages for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<Usage> GetUsages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -4978,6 +5287,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualNetworks_ListAll
         /// <summary> Lists the VirtualNetworks for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4995,7 +5307,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5010,7 +5322,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5023,6 +5335,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualNetworks_ListAll
         /// <summary> Lists the VirtualNetworks for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5040,7 +5355,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5055,7 +5370,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5096,6 +5411,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualNetworkTaps_ListAll
         /// <summary> Lists the VirtualNetworkTaps for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5113,7 +5431,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5128,7 +5446,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5141,6 +5459,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualNetworkTaps_ListAll
         /// <summary> Lists the VirtualNetworkTaps for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5158,7 +5479,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5173,7 +5494,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5214,6 +5535,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualRouters_List
         /// <summary> Lists the VirtualRouters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5231,7 +5555,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5246,7 +5570,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5259,6 +5583,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualRouters_List
         /// <summary> Lists the VirtualRouters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5276,7 +5603,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5291,7 +5618,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5332,24 +5659,27 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the VirtualWANs for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualWans_List
+        /// <summary> Lists the VirtualWans for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualWAN> GetVirtualWansAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualWan> GetVirtualWansAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetVirtualWansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<VirtualWAN>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<VirtualWan>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5357,14 +5687,14 @@ namespace Azure.ResourceManager.Network
                         throw;
                     }
                 }
-                async Task<Page<VirtualWAN>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<VirtualWan>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5377,24 +5707,27 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Lists the VirtualWANs for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualWans_List
+        /// <summary> Lists the VirtualWans for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualWAN> GetVirtualWans(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualWan> GetVirtualWans(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetVirtualWansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<VirtualWAN> FirstPageFunc(int? pageSizeHint)
+                Page<VirtualWan> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
                     scope.Start();
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5402,14 +5735,14 @@ namespace Azure.ResourceManager.Network
                         throw;
                     }
                 }
-                Page<VirtualWAN> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<VirtualWan> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5422,34 +5755,37 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Filters the list of VirtualWANs for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of VirtualWans for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetVirtualWANsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetVirtualWansAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(VirtualWAN.ResourceType);
+            ResourceFilterCollection filters = new(VirtualWan.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of VirtualWANs for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of VirtualWans for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetVirtualWANsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetVirtualWansAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(VirtualWAN.ResourceType);
+            ResourceFilterCollection filters = new(VirtualWan.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VpnSites_List
         /// <summary> Lists the VpnSites for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5467,7 +5803,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5482,7 +5818,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5495,6 +5831,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VpnSites_List
         /// <summary> Lists the VpnSites for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5512,7 +5851,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5527,7 +5866,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnSite(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5568,6 +5907,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VpnServerConfigurations_List
         /// <summary> Lists the VpnServerConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5585,7 +5927,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5600,7 +5942,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5613,6 +5955,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VpnServerConfigurations_List
         /// <summary> Lists the VpnServerConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5630,7 +5975,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5645,7 +5990,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5686,6 +6031,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualHubs_List
         /// <summary> Lists the VirtualHubs for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5703,7 +6051,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5718,7 +6066,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5731,6 +6079,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VirtualHubs_List
         /// <summary> Lists the VirtualHubs for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5748,7 +6099,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5763,7 +6114,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5804,6 +6155,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VpnGateways_List
         /// <summary> Lists the VpnGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5821,7 +6175,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5836,7 +6190,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5849,6 +6203,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: VpnGateways_List
         /// <summary> Lists the VpnGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5866,7 +6223,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5881,7 +6238,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5922,11 +6279,14 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: P2sVpnGateways_List
         /// <summary> Lists the P2SVpnGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<P2SVpnGateway> GetP2sVpnGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<P2SVpnGateway> GetP2SVpnGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -5934,12 +6294,12 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<P2SVpnGateway>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5949,12 +6309,12 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<P2SVpnGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5967,11 +6327,14 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: P2sVpnGateways_List
         /// <summary> Lists the P2SVpnGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<P2SVpnGateway> GetP2sVpnGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<P2SVpnGateway> GetP2SVpnGateways(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -5979,12 +6342,12 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<P2SVpnGateway> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -5994,12 +6357,12 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<P2SVpnGateway> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -6040,52 +6403,68 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists ExpressRoute gateways under a given subscription. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteGateways_ListBySubscription
+        /// <summary> Lists the ExpressRouteGateways for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<ExpressRouteGateway>>> GetExpressRouteGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteGateways");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(subscription, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists ExpressRoute gateways under a given subscription. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<ExpressRouteGateway>> GetExpressRouteGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ExpressRouteGateway> GetExpressRouteGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteGateways");
-                scope.Start();
-                try
+                var restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                async Task<Page<ExpressRouteGateway>> FirstPageFunc(int? pageSizeHint)
                 {
-                    var restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken);
-                    return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(subscription, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteGateways");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(subscription, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
                 }
-                catch (Exception e)
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            }
+            );
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ExpressRouteGateways_ListBySubscription
+        /// <summary> Lists the ExpressRouteGateways for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ExpressRouteGateway> GetExpressRouteGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                Page<ExpressRouteGateway> FirstPageFunc(int? pageSizeHint)
                 {
-                    scope.Failed(e);
-                    throw;
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteGateways");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(subscription, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
                 }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
             }
             );
         }
@@ -6118,6 +6497,9 @@ namespace Azure.ResourceManager.Network
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: WebApplicationFirewallPolicies_ListAll
         /// <summary> Lists the WebApplicationFirewallPolicies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -6135,7 +6517,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -6150,7 +6532,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = await restOperations.ListAllNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -6163,6 +6545,9 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: WebApplicationFirewallPolicies_ListAll
         /// <summary> Lists the WebApplicationFirewallPolicies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -6180,7 +6565,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAll(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -6195,7 +6580,7 @@ namespace Azure.ResourceManager.Network
                     try
                     {
                         var response = restOperations.ListAllNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(subscription, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {

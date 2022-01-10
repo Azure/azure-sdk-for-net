@@ -37,11 +37,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewaySslPredefinedPolicy"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ApplicationGatewaySslPredefinedPolicy(ArmResource options, ApplicationGatewaySslPredefinedPolicyData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ApplicationGatewaySslPredefinedPolicy(ArmResource options, ResourceIdentifier id, ApplicationGatewaySslPredefinedPolicyData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -88,6 +89,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// OperationId: ApplicationGateways_GetSslPredefinedPolicy
         /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetAsync(CancellationToken cancellationToken = default)
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationGatewaysRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,6 +112,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// OperationId: ApplicationGateways_GetSslPredefinedPolicy
         /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGatewaySslPredefinedPolicy> Get(CancellationToken cancellationToken = default)
@@ -119,7 +126,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DdosCustomPolicies_CreateOrUpdate
         /// <summary> Creates or updates a DDoS custom policy. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
@@ -76,6 +79,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DdosCustomPolicies_CreateOrUpdate
         /// <summary> Creates or updates a DDoS custom policy. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
@@ -110,6 +116,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DdosCustomPolicies_Get
         /// <summary> Gets information about the specified DDoS custom policy. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ddosCustomPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DdosCustomPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosCustomPolicy(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,6 +146,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DdosCustomPolicies_Get
         /// <summary> Gets information about the specified DDoS custom policy. </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,7 +167,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ddosCustomPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DdosCustomPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosCustomPolicy(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,7 +194,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ddosCustomPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new DdosCustomPolicy(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ddosCustomPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new DdosCustomPolicy(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

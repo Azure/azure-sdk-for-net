@@ -14,14 +14,15 @@ skip-csproj: true
 output-folder: Generated/
 clear-output-folder: true
 
-modelerfour:
-  lenient-model-deduplication: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
 flatten-payloads: false
 
 resource-model-requires-type: false
+
+mgmt-debug:
+  show-request-path: true
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -33,8 +34,30 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}: DefaultSecurityRule
 
 override-operation-name:
-  ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
+  ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSets
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
+  VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutes
+  ExpressRouteCircuits_GetPeeringStats: GetPeeringStats
+  ExpressRouteCircuits_ListRoutesTable: GetRoutesTable
+  ExpressRouteCircuits_ListRoutesTableSummary: GetRoutesTableSummary
+  ExpressRouteCrossConnections_ListArpTable: GetArpTable
+  ExpressRouteCrossConnections_ListRoutesTable: GetRoutesTable
+  ExpressRouteCrossConnections_ListRoutesTableSummary: GetRoutesTableSummary
+  NetworkWatchers_GetVMSecurityRules: GetVmSecurityRules
+  NetworkWatchers_VerifyIPFlow: NetworkWatchers_VerifyIpFlow
+  PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup: GetAutoApprovedPrivateLinkServices
+  PrivateLinkServices_CheckPrivateLinkServiceVisibility: CheckPrivateLinkServiceVisibility
+  PrivateLinkServices_ListAutoApprovedPrivateLinkServices: GetAutoApprovedPrivateLinkServices
+  ApplicationGateways_ListAvailableRequestHeaders: GetApplicationGatewaysAvailableRequestHeaders
+  ApplicationGateways_ListAvailableResponseHeaders: GetApplicationGatewaysAvailableResponseHeaders
+  ApplicationGateways_ListAvailableServerVariables: GetApplicationGatewaysAvailableServerVariables
+  LoadBalancers_SwapPublicIpAddresses: SwapLoadBalancerPublicIpAddresses
+  VirtualNetworks_CheckIPAddressAvailability: CheckIpAddressAvailability
+  VirtualNetworks_ListUsage: GetUsages
+  VirtualNetworkGateways_Generatevpnclientpackage: GenerateVpnClientPackage
+  Generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVpnServerConfigurationVpnProfile
+  VpnServerConfigurationsAssociatedWithVirtualWan_List: GetAssociatedVpnServerConfigurations
+  VpnLinkConnections_ResetConnection: ResetConnection
 
 directive:
 #   networkWatcher.json:

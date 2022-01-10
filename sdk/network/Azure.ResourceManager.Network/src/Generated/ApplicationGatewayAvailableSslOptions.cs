@@ -37,11 +37,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewayAvailableSslOptions"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ApplicationGatewayAvailableSslOptions(ArmResource options, ApplicationGatewayAvailableSslOptionsData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ApplicationGatewayAvailableSslOptions(ArmResource options, ResourceIdentifier id, ApplicationGatewayAvailableSslOptionsData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -93,6 +94,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the parent resource of this resource. </summary>
         public ArmResource Parent { get; }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// OperationId: ApplicationGateways_ListAvailableSslOptions
         /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ApplicationGatewayAvailableSslOptions>> GetAsync(CancellationToken cancellationToken = default)
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationGatewaysRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// OperationId: ApplicationGateways_ListAvailableSslOptions
         /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGatewayAvailableSslOptions> Get(CancellationToken cancellationToken = default)
@@ -124,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationGatewaysRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

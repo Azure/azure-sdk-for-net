@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualWANName"/> is null. </exception>
-        public async Task<Response<VirtualWANData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualWanData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualWANData value = default;
+                        VirtualWanData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualWANData.DeserializeVirtualWANData(document.RootElement);
+                        value = VirtualWanData.DeserializeVirtualWanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualWANData)null, message.Response);
+                    return Response.FromValue((VirtualWanData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualWANName"/> is null. </exception>
-        public Response<VirtualWANData> Get(string subscriptionId, string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        public Response<VirtualWanData> Get(string subscriptionId, string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -127,19 +127,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualWANData value = default;
+                        VirtualWanData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualWANData.DeserializeVirtualWANData(document.RootElement);
+                        value = VirtualWanData.DeserializeVirtualWanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualWANData)null, message.Response);
+                    return Response.FromValue((VirtualWanData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWANData wANParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWanData wANParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="wANParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWanData wANParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="wANParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWanData wANParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="wANParameters"/> is null. </exception>
-        public async Task<Response<VirtualWANData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string virtualWANName, TagsObject wANParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualWanData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string virtualWANName, TagsObject wANParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualWANData value = default;
+                        VirtualWanData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualWANData.DeserializeVirtualWANData(document.RootElement);
+                        value = VirtualWanData.DeserializeVirtualWanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="wANParameters"/> is null. </exception>
-        public Response<VirtualWANData> UpdateTags(string subscriptionId, string resourceGroupName, string virtualWANName, TagsObject wANParameters, CancellationToken cancellationToken = default)
+        public Response<VirtualWanData> UpdateTags(string subscriptionId, string resourceGroupName, string virtualWANName, TagsObject wANParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualWANData value = default;
+                        VirtualWanData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualWANData.DeserializeVirtualWANData(document.RootElement);
+                        value = VirtualWanData.DeserializeVirtualWanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

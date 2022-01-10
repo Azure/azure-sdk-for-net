@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PacketCapture and their operations over its parent. </summary>
     public partial class PacketCaptureCollection : ArmCollection, IEnumerable<PacketCapture>, IAsyncEnumerable<PacketCapture>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PacketCapturesRestOperations _packetCapturesRestClient;
@@ -44,13 +43,16 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: PacketCaptures_Create
         /// <summary> Create and start a packet capture on the specified VM. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="parameters"> Parameters that define the create packet capture operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PacketCaptureCreateOperation CreateOrUpdate(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PacketCaptureCreateOrUpdateOperation CreateOrUpdate(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (packetCaptureName == null)
             {
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _packetCapturesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken);
-                var operation = new PacketCaptureCreateOperation(Parent, _clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
+                var operation = new PacketCaptureCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -78,13 +80,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: PacketCaptures_Create
         /// <summary> Create and start a packet capture on the specified VM. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="parameters"> Parameters that define the create packet capture operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PacketCaptureCreateOperation> CreateOrUpdateAsync(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PacketCaptureCreateOrUpdateOperation> CreateOrUpdateAsync(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (packetCaptureName == null)
             {
@@ -100,7 +105,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _packetCapturesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PacketCaptureCreateOperation(Parent, _clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
+                var operation = new PacketCaptureCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: PacketCaptures_Get
         /// <summary> Gets a packet capture session by name. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 var response = _packetCapturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCapture(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,6 +147,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: PacketCaptures_Get
         /// <summary> Gets a packet capture session by name. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _packetCapturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PacketCapture(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 var response = _packetCapturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<PacketCapture>(null, response.GetRawResponse())
-                    : Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new PacketCapture(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +222,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _packetCapturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<PacketCapture>(null, response.GetRawResponse())
-                    : Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new PacketCapture(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,6 +281,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: PacketCaptures_List
         /// <summary> Lists all packet capture sessions within the specified resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _packetCapturesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(Parent, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -293,6 +307,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
+        /// OperationId: PacketCaptures_List
         /// <summary> Lists all packet capture sessions within the specified resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
@@ -305,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _packetCapturesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(Parent, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

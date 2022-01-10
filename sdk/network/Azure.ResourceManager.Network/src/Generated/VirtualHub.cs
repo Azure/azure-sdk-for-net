@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualHub"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualHub(ArmResource options, VirtualHubData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VirtualHub(ArmResource options, ResourceIdentifier id, VirtualHubData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualHubsRestClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_Get
         /// <summary> Retrieves the details of a VirtualHub. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualHub>> GetAsync(CancellationToken cancellationToken = default)
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,6 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_Get
         /// <summary> Retrieves the details of a VirtualHub. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualHub> Get(CancellationToken cancellationToken = default)
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,6 +152,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_Delete
         /// <summary> Deletes a VirtualHub. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +177,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_Delete
         /// <summary> Deletes a VirtualHub. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,6 +202,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_UpdateTags
         /// <summary> Updates VirtualHub tags. </summary>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,7 +221,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,6 +230,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_UpdateTags
         /// <summary> Updates VirtualHub tags. </summary>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,7 +249,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken);
-                return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -239,6 +258,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/effectiveRoutes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_GetEffectiveVirtualHubRoutes
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -262,6 +284,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/effectiveRoutes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// OperationId: VirtualHubs_GetEffectiveVirtualHubRoutes
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>

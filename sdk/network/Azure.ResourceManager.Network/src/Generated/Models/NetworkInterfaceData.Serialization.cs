@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> virtualMachine = default;
             Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
             Optional<PrivateEndpointData> privateEndpoint = default;
-            Optional<IList<NetworkInterfaceIPConfigurationData>> ipConfigurations = default;
+            Optional<IList<NetworkInterfaceIpConfigurationData>> ipConfigurations = default;
             Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> tapConfigurations = default;
             Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
             Optional<string> macAddress = default;
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
+                            List<NetworkInterfaceIpConfigurationData> array = new List<NetworkInterfaceIpConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                                array.Add(NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(item));
                             }
                             ipConfigurations = array;
                             continue;

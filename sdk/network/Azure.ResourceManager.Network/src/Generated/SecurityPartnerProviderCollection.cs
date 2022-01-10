@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of SecurityPartnerProvider and their operations over its parent. </summary>
     public partial class SecurityPartnerProviderCollection : ArmCollection, IEnumerable<SecurityPartnerProvider>, IAsyncEnumerable<SecurityPartnerProvider>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SecurityPartnerProvidersRestOperations _securityPartnerProvidersRestClient;
@@ -46,6 +45,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: SecurityPartnerProviders_CreateOrUpdate
         /// <summary> Creates or updates the specified Security Partner Provider. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: SecurityPartnerProviders_CreateOrUpdate
         /// <summary> Creates or updates the specified Security Partner Provider. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: SecurityPartnerProviders_Get
         /// <summary> Gets the specified Security Partner Provider. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _securityPartnerProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPartnerProvider(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProvider(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,6 +149,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: SecurityPartnerProviders_Get
         /// <summary> Gets the specified Security Partner Provider. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _securityPartnerProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SecurityPartnerProvider(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProvider(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 var response = _securityPartnerProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new SecurityPartnerProvider(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +224,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _securityPartnerProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new SecurityPartnerProvider(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,6 +283,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: SecurityPartnerProviders_ListByResourceGroup
         /// <summary> Lists all Security Partner Providers in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityPartnerProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -284,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _securityPartnerProvidersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +313,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _securityPartnerProvidersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -310,6 +324,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: SecurityPartnerProviders_ListByResourceGroup
         /// <summary> Lists all Security Partner Providers in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityPartnerProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _securityPartnerProvidersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,7 +354,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _securityPartnerProvidersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

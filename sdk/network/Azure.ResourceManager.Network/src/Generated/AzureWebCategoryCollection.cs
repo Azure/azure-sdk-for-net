@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of AzureWebCategory and their operations over its parent. </summary>
     public partial class AzureWebCategoryCollection : ArmCollection, IEnumerable<AzureWebCategory>, IAsyncEnumerable<AzureWebCategory>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebCategoriesRestOperations _webCategoriesRestClient;
@@ -45,6 +44,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: WebCategories_Get
         /// <summary> Gets the specified Azure Web Category. </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -73,6 +75,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: WebCategories_Get
         /// <summary> Gets the specified Azure Web Category. </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AzureWebCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<AzureWebCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new AzureWebCategory(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +153,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<AzureWebCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new AzureWebCategory(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,6 +214,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: WebCategories_ListBySubscription
         /// <summary> Gets all the Azure Web Categories in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureWebCategory" /> that may take multiple service requests to iterate over. </returns>
@@ -221,7 +229,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _webCategoriesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -236,7 +244,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _webCategoriesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,6 +255,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: WebCategories_ListBySubscription
         /// <summary> Gets all the Azure Web Categories in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureWebCategory" /> that may take multiple service requests to iterate over. </returns>
@@ -259,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _webCategoriesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,7 +285,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _webCategoriesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

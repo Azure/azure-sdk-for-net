@@ -37,11 +37,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "AzureWebCategory"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal AzureWebCategory(ArmResource options, AzureWebCategoryData resource) : base(options, resource.Id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal AzureWebCategory(ArmResource options, ResourceIdentifier id, AzureWebCategoryData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webCategoriesRestClient = new WebCategoriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -88,6 +89,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// OperationId: WebCategories_Get
         /// <summary> Gets the specified Azure Web Category. </summary>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,6 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// OperationId: WebCategories_Get
         /// <summary> Gets the specified Azure Web Category. </summary>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 var response = _webCategoriesRestClient.Get(Id.SubscriptionId, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

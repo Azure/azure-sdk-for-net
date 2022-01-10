@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<SubnetData> subnet = default;
-            Optional<PublicIPAddressData> publicIPAddress = default;
+            Optional<PublicIpAddressData> publicIPAddress = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value);
+                            publicIPAddress = PublicIpAddressData.DeserializePublicIpAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

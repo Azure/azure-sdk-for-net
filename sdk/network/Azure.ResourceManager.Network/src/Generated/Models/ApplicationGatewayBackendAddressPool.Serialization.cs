@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
+            Optional<IReadOnlyList<NetworkInterfaceIpConfigurationData>> backendIPConfigurations = default;
             Optional<IList<ApplicationGatewayBackendAddress>> backendAddresses = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
+                            List<NetworkInterfaceIpConfigurationData> array = new List<NetworkInterfaceIpConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                                array.Add(NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(item));
                             }
                             backendIPConfigurations = array;
                             continue;

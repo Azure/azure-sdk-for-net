@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "DdosProtectionPlan"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DdosProtectionPlan(ArmResource options, DdosProtectionPlanData resource) : base(options, resource.Id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DdosProtectionPlan(ArmResource options, ResourceIdentifier id, DdosProtectionPlanData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _ddosProtectionPlansRestClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// OperationId: DdosProtectionPlans_Get
         /// <summary> Gets information about the specified DDoS protection plan. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DdosProtectionPlan>> GetAsync(CancellationToken cancellationToken = default)
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,6 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// OperationId: DdosProtectionPlans_Get
         /// <summary> Gets information about the specified DDoS protection plan. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DdosProtectionPlan> Get(CancellationToken cancellationToken = default)
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,6 +152,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// OperationId: DdosProtectionPlans_Delete
         /// <summary> Deletes the specified DDoS protection plan. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +177,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// OperationId: DdosProtectionPlans_Delete
         /// <summary> Deletes the specified DDoS protection plan. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -209,7 +222,7 @@ namespace Azure.ResourceManager.Network
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +251,7 @@ namespace Azure.ResourceManager.Network
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -267,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -296,7 +309,7 @@ namespace Azure.ResourceManager.Network
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -324,7 +337,7 @@ namespace Azure.ResourceManager.Network
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -352,7 +365,7 @@ namespace Azure.ResourceManager.Network
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -361,6 +374,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// OperationId: DdosProtectionPlans_UpdateTags
         /// <summary> Update a DDoS protection plan tags. </summary>
         /// <param name="parameters"> Parameters supplied to the update DDoS protection plan resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -377,7 +393,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _ddosProtectionPlansRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -386,6 +402,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
+        /// OperationId: DdosProtectionPlans_UpdateTags
         /// <summary> Update a DDoS protection plan tags. </summary>
         /// <param name="parameters"> Parameters supplied to the update DDoS protection plan resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -402,7 +421,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ddosProtectionPlansRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

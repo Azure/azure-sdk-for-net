@@ -398,14 +398,14 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region NetworkInterfaceIPConfiguration
-        /// <summary> Gets an object representing a NetworkInterfaceIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        #region NetworkInterfaceIpConfiguration
+        /// <summary> Gets an object representing a NetworkInterfaceIpConfiguration along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkInterfaceIPConfiguration" /> object. </returns>
-        public static NetworkInterfaceIPConfiguration GetNetworkInterfaceIPConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkInterfaceIpConfiguration" /> object. </returns>
+        public static NetworkInterfaceIpConfiguration GetNetworkInterfaceIpConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkInterfaceIPConfiguration(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkInterfaceIpConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -585,25 +585,25 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region PublicIPAddress
-        /// <summary> Gets an object representing a PublicIPAddress along with the instance operations that can be performed on it but with no data. </summary>
+        #region PublicIpAddress
+        /// <summary> Gets an object representing a PublicIpAddress along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublicIPAddress" /> object. </returns>
-        public static PublicIPAddress GetPublicIPAddress(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PublicIpAddress" /> object. </returns>
+        public static PublicIpAddress GetPublicIpAddress(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PublicIPAddress(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PublicIpAddress(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region PublicIPPrefix
-        /// <summary> Gets an object representing a PublicIPPrefix along with the instance operations that can be performed on it but with no data. </summary>
+        #region PublicIpPrefix
+        /// <summary> Gets an object representing a PublicIpPrefix along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublicIPPrefix" /> object. </returns>
-        public static PublicIPPrefix GetPublicIPPrefix(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PublicIpPrefix" /> object. </returns>
+        public static PublicIpPrefix GetPublicIpPrefix(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PublicIPPrefix(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PublicIpPrefix(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -794,14 +794,14 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region VirtualWAN
-        /// <summary> Gets an object representing a VirtualWAN along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualWan
+        /// <summary> Gets an object representing a VirtualWan along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualWAN" /> object. </returns>
-        public static VirtualWAN GetVirtualWAN(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWan" /> object. </returns>
+        public static VirtualWan GetVirtualWan(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualWAN(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualWan(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

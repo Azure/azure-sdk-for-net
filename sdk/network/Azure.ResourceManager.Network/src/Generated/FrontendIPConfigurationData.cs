@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIPPrefix"> The reference to the Public IP Prefix resource. </param>
         /// <param name="gatewayLoadBalancer"> The reference to gateway load balancer frontend IP. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal FrontendIPConfigurationData(string id, string name, string etag, string type, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, ProvisioningState? provisioningState) : base(id)
+        internal FrontendIPConfigurationData(string id, string name, string etag, string type, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, PublicIpAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The reference to the subnet resource. </summary>
         public SubnetData Subnet { get; set; }
         /// <summary> The reference to the Public IP resource. </summary>
-        public PublicIPAddressData PublicIPAddress { get; set; }
+        public PublicIpAddressData PublicIPAddress { get; set; }
         /// <summary> The reference to the Public IP Prefix resource. </summary>
         public WritableSubResource PublicIPPrefix { get; set; }
         /// <summary> The reference to gateway load balancer frontend IP. </summary>

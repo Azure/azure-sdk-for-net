@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<IPVersion> privateIPAddressVersion = default;
             Optional<SubnetData> subnet = default;
-            Optional<PublicIPAddressData> publicIPAddress = default;
+            Optional<PublicIpAddressData> publicIPAddress = default;
             Optional<WritableSubResource> publicIPPrefix = default;
             Optional<WritableSubResource> gatewayLoadBalancer = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value);
+                            publicIPAddress = PublicIpAddressData.DeserializePublicIpAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPPrefix"))

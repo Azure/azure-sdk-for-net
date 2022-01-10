@@ -18,20 +18,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
-    public partial class PublicIPPrefixCreateOrUpdateOperation : Operation<PublicIPPrefix>, IOperationSource<PublicIPPrefix>
+    public partial class PublicIpPrefixCreateOrUpdateOperation : Operation<PublicIpPrefix>, IOperationSource<PublicIpPrefix>
     {
-        private readonly OperationInternals<PublicIPPrefix> _operation;
+        private readonly OperationInternals<PublicIpPrefix> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of PublicIPPrefixCreateOrUpdateOperation for mocking. </summary>
-        protected PublicIPPrefixCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of PublicIpPrefixCreateOrUpdateOperation for mocking. </summary>
+        protected PublicIpPrefixCreateOrUpdateOperation()
         {
         }
 
-        internal PublicIPPrefixCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PublicIpPrefixCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<PublicIPPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PublicIPPrefixCreateOrUpdateOperation");
+            _operation = new OperationInternals<PublicIpPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PublicIpPrefixCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override PublicIPPrefix Value => _operation.Value;
+        public override PublicIpPrefix Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,23 @@ namespace Azure.ResourceManager.Network.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PublicIPPrefix>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PublicIpPrefix>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PublicIPPrefix>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PublicIpPrefix>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        PublicIPPrefix IOperationSource<PublicIPPrefix>.CreateResult(Response response, CancellationToken cancellationToken)
+        PublicIpPrefix IOperationSource<PublicIpPrefix>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PublicIPPrefix(_operationBase, PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement));
+            var data = PublicIpPrefixData.DeserializePublicIpPrefixData(document.RootElement);
+            return new PublicIpPrefix(_operationBase, new ResourceIdentifier(data.Id), data);
         }
 
-        async ValueTask<PublicIPPrefix> IOperationSource<PublicIPPrefix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PublicIpPrefix> IOperationSource<PublicIpPrefix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PublicIPPrefix(_operationBase, PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement));
+            var data = PublicIpPrefixData.DeserializePublicIpPrefixData(document.RootElement);
+            return new PublicIpPrefix(_operationBase, new ResourceIdentifier(data.Id), data);
         }
     }
 }

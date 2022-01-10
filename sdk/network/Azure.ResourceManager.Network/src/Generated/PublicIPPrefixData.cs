@@ -12,18 +12,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PublicIPPrefix data model. </summary>
-    public partial class PublicIPPrefixData : Resource
+    /// <summary> A class representing the PublicIpPrefix data model. </summary>
+    public partial class PublicIpPrefixData : Resource
     {
-        /// <summary> Initializes a new instance of PublicIPPrefixData. </summary>
-        public PublicIPPrefixData()
+        /// <summary> Initializes a new instance of PublicIpPrefixData. </summary>
+        public PublicIpPrefixData()
         {
             Zones = new ChangeTrackingList<string>();
             IpTags = new ChangeTrackingList<IpTag>();
             PublicIPAddresses = new ChangeTrackingList<Resources.Models.SubResource>();
         }
 
-        /// <summary> Initializes a new instance of PublicIPPrefixData. </summary>
+        /// <summary> Initializes a new instance of PublicIpPrefixData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        internal PublicIPPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IpTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<Resources.Models.SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIpConfiguration, WritableSubResource customIPPrefix, string resourceGuid, ProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, type, location, tags)
+        internal PublicIpPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IpTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<Resources.Models.SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIpConfiguration, WritableSubResource customIPPrefix, string resourceGuid, ProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;

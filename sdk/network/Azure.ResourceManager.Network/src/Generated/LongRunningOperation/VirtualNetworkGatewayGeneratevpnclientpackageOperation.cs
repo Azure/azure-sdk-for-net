@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
-    public partial class VirtualNetworkGatewayGeneratevpnclientpackageOperation : Operation<string>, IOperationSource<string>
+    public partial class VirtualNetworkGatewayGenerateVpnClientPackageOperation : Operation<string>, IOperationSource<string>
     {
         private readonly OperationInternals<string> _operation;
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayGeneratevpnclientpackageOperation for mocking. </summary>
-        protected VirtualNetworkGatewayGeneratevpnclientpackageOperation()
+        /// <summary> Initializes a new instance of VirtualNetworkGatewayGenerateVpnClientPackageOperation for mocking. </summary>
+        protected VirtualNetworkGatewayGenerateVpnClientPackageOperation()
         {
         }
 
-        internal VirtualNetworkGatewayGeneratevpnclientpackageOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworkGatewayGenerateVpnClientPackageOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewayGeneratevpnclientpackageOperation");
+            _operation = new OperationInternals<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewayGenerateVpnClientPackageOperation");
         }
 
         /// <inheritdoc />

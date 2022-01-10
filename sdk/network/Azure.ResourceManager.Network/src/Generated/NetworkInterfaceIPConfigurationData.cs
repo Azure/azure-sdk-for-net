@@ -12,11 +12,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkInterfaceIPConfiguration data model. </summary>
-    public partial class NetworkInterfaceIPConfigurationData : Models.SubResource
+    /// <summary> A class representing the NetworkInterfaceIpConfiguration data model. </summary>
+    public partial class NetworkInterfaceIpConfigurationData : Models.SubResource
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
-        public NetworkInterfaceIPConfigurationData()
+        /// <summary> Initializes a new instance of NetworkInterfaceIpConfigurationData. </summary>
+        public NetworkInterfaceIpConfigurationData()
         {
             VirtualNetworkTaps = new ChangeTrackingList<VirtualNetworkTapData>();
             ApplicationGatewayBackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
             ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of NetworkInterfaceIpConfigurationData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
         /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
-        internal NetworkInterfaceIPConfigurationData(string id, string name, string etag, string type, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id)
+        internal NetworkInterfaceIpConfigurationData(string id, string name, string etag, string type, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIpAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Whether this is a primary customer address on the network interface. </summary>
         public bool? Primary { get; set; }
         /// <summary> Public IP address bound to the IP configuration. </summary>
-        public PublicIPAddressData PublicIPAddress { get; set; }
+        public PublicIpAddressData PublicIPAddress { get; set; }
         /// <summary> Application security groups in which the IP configuration is included. </summary>
         public IList<ApplicationSecurityGroupData> ApplicationSecurityGroups { get; }
         /// <summary> The provisioning state of the network interface IP configuration. </summary>

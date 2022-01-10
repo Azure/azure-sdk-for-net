@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceIPConfigurationData : IUtf8JsonSerializable
+    public partial class NetworkInterfaceIpConfigurationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterfaceIPConfigurationData DeserializeNetworkInterfaceIPConfigurationData(JsonElement element)
+        internal static NetworkInterfaceIpConfigurationData DeserializeNetworkInterfaceIpConfigurationData(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> etag = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
             Optional<IPVersion> privateIPAddressVersion = default;
             Optional<SubnetData> subnet = default;
             Optional<bool> primary = default;
-            Optional<PublicIPAddressData> publicIPAddress = default;
+            Optional<PublicIpAddressData> publicIPAddress = default;
             Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties> privateLinkConnectionProperties = default;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value);
+                            publicIPAddress = PublicIpAddressData.DeserializePublicIpAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("applicationSecurityGroups"))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, etag.Value, type.Value, gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
+            return new NetworkInterfaceIpConfigurationData(id.Value, name.Value, etag.Value, type.Value, gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ApplicationGatewayBackendHealthServer DeserializeApplicationGatewayBackendHealthServer(JsonElement element)
         {
             Optional<string> address = default;
-            Optional<NetworkInterfaceIPConfigurationData> ipConfiguration = default;
+            Optional<NetworkInterfaceIpConfigurationData> ipConfiguration = default;
             Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
             Optional<string> healthProbeLog = default;
             foreach (var property in element.EnumerateObject())
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ipConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value);
+                    ipConfiguration = NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("health"))

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> networkInterfaceTapConfigurations = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<NetworkInterfaceIPConfigurationData> destinationNetworkInterfaceIPConfiguration = default;
+            Optional<NetworkInterfaceIpConfigurationData> destinationNetworkInterfaceIPConfiguration = default;
             Optional<FrontendIPConfigurationData> destinationLoadBalancerFrontEndIPConfiguration = default;
             Optional<int> destinationPort = default;
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value);
+                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIpConfigurationData.DeserializeNetworkInterfaceIpConfigurationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destinationLoadBalancerFrontEndIPConfiguration"))

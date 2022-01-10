@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualWAN data model. </summary>
-    public partial class VirtualWANData : Resource
+    /// <summary> A class representing the VirtualWan data model. </summary>
+    public partial class VirtualWanData : Resource
     {
-        /// <summary> Initializes a new instance of VirtualWANData. </summary>
-        public VirtualWANData()
+        /// <summary> Initializes a new instance of VirtualWanData. </summary>
+        public VirtualWanData()
         {
             VirtualHubs = new ChangeTrackingList<WritableSubResource>();
             VpnSites = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualWANData. </summary>
+        /// <summary> Initializes a new instance of VirtualWanData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="office365LocalBreakoutCategory"> The office local breakout category. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual WAN resource. </param>
         /// <param name="typePropertiesType"> The type of the VirtualWAN. </param>
-        internal VirtualWANData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, ProvisioningState? provisioningState, string typePropertiesType) : base(id, name, type, location, tags)
+        internal VirtualWanData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, ProvisioningState? provisioningState, string typePropertiesType) : base(id, name, type, location, tags)
         {
             Etag = etag;
             DisableVpnEncryption = disableVpnEncryption;

@@ -39,11 +39,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "NetworkVirtualAppliance"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkVirtualAppliance(ArmResource options, NetworkVirtualApplianceData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal NetworkVirtualAppliance(ArmResource options, ResourceIdentifier id, NetworkVirtualApplianceData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -93,6 +94,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: NetworkVirtualAppliances_Get
         /// <summary> Gets the specified Network Virtual Appliance. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkVirtualAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualAppliance(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,6 +118,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: NetworkVirtualAppliances_Get
         /// <summary> Gets the specified Network Virtual Appliance. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,7 +133,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkVirtualAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualAppliance(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,6 +158,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: NetworkVirtualAppliances_Delete
         /// <summary> Deletes the specified Network Virtual Appliance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,6 +183,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: NetworkVirtualAppliances_Delete
         /// <summary> Deletes the specified Network Virtual Appliance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,6 +208,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: NetworkVirtualAppliances_UpdateTags
         /// <summary> Updates a Network Virtual Appliance. </summary>
         /// <param name="parameters"> Parameters supplied to Update Network Virtual Appliance Tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -211,7 +227,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkVirtualAppliancesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualAppliance(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,6 +236,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: NetworkVirtualAppliances_UpdateTags
         /// <summary> Updates a Network Virtual Appliance. </summary>
         /// <param name="parameters"> Parameters supplied to Update Network Virtual Appliance Tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -236,7 +255,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkVirtualAppliancesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualAppliance(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,13 +264,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: InboundSecurityRule_CreateOrUpdate
         /// <summary> Creates or updates the specified Network Virtual Appliance Inbound Security Rules. </summary>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<InboundSecurityRuleCreateOrUpdateOperation> CreateOrUpdateInboundSecurityRuleAsync(string ruleCollectionName, InboundSecurityRule parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation> CreateOrUpdateInboundSecurityRuleAsync(string ruleCollectionName, InboundSecurityRule parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (ruleCollectionName == null)
             {
@@ -267,7 +289,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _inboundSecurityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InboundSecurityRuleCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -279,13 +301,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// OperationId: InboundSecurityRule_CreateOrUpdate
         /// <summary> Creates or updates the specified Network Virtual Appliance Inbound Security Rules. </summary>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual InboundSecurityRuleCreateOrUpdateOperation CreateOrUpdateInboundSecurityRule(string ruleCollectionName, InboundSecurityRule parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation CreateOrUpdateInboundSecurityRule(string ruleCollectionName, InboundSecurityRule parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (ruleCollectionName == null)
             {
@@ -301,7 +326,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _inboundSecurityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters, cancellationToken);
-                var operation = new InboundSecurityRuleCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

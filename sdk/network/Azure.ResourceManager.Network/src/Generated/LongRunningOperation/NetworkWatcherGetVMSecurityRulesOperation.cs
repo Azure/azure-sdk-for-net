@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
-    public partial class NetworkWatcherGetVMSecurityRulesOperation : Operation<SecurityGroupViewResult>, IOperationSource<SecurityGroupViewResult>
+    public partial class NetworkWatcherGetVmSecurityRulesOperation : Operation<SecurityGroupViewResult>, IOperationSource<SecurityGroupViewResult>
     {
         private readonly OperationInternals<SecurityGroupViewResult> _operation;
 
-        /// <summary> Initializes a new instance of NetworkWatcherGetVMSecurityRulesOperation for mocking. </summary>
-        protected NetworkWatcherGetVMSecurityRulesOperation()
+        /// <summary> Initializes a new instance of NetworkWatcherGetVmSecurityRulesOperation for mocking. </summary>
+        protected NetworkWatcherGetVmSecurityRulesOperation()
         {
         }
 
-        internal NetworkWatcherGetVMSecurityRulesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkWatcherGetVmSecurityRulesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SecurityGroupViewResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatcherGetVMSecurityRulesOperation");
+            _operation = new OperationInternals<SecurityGroupViewResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatcherGetVmSecurityRulesOperation");
         }
 
         /// <inheritdoc />

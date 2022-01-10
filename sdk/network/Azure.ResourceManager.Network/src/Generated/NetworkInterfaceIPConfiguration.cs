@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a NetworkInterfaceIPConfiguration along with the instance operations that can be performed on it. </summary>
-    public partial class NetworkInterfaceIPConfiguration : ArmResource
+    /// <summary> A Class representing a NetworkInterfaceIpConfiguration along with the instance operations that can be performed on it. </summary>
+    public partial class NetworkInterfaceIpConfiguration : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceIPConfiguration"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceIpConfiguration"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}";
@@ -28,40 +28,41 @@ namespace Azure.ResourceManager.Network
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NetworkInterfaceIPConfigurationsRestOperations _networkInterfaceIPConfigurationsRestClient;
-        private readonly NetworkInterfaceIPConfigurationData _data;
+        private readonly NetworkInterfaceIpConfigurationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfiguration"/> class for mocking. </summary>
-        protected NetworkInterfaceIPConfiguration()
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIpConfiguration"/> class for mocking. </summary>
+        protected NetworkInterfaceIpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceIPConfiguration"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkInterfaceIPConfiguration(ArmResource options, NetworkInterfaceIPConfigurationData resource) : base(options, new ResourceIdentifier(resource.Id))
-        {
-            HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfiguration"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceIpConfiguration"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkInterfaceIPConfiguration(ArmResource options, ResourceIdentifier id) : base(options, id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal NetworkInterfaceIpConfiguration(ArmResource options, ResourceIdentifier id, NetworkInterfaceIpConfigurationData data) : base(options, id)
+        {
+            HasData = true;
+            _data = data;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIpConfiguration"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal NetworkInterfaceIpConfiguration(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfiguration"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIpConfiguration"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkInterfaceIPConfiguration(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal NetworkInterfaceIpConfiguration(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual NetworkInterfaceIPConfigurationData Data
+        public virtual NetworkInterfaceIpConfigurationData Data
         {
             get
             {
@@ -88,18 +89,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+        /// OperationId: NetworkInterfaceIPConfigurations_Get
         /// <summary> Gets the specified network interface ip configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NetworkInterfaceIPConfiguration>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkInterfaceIpConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfiguration.Get");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfiguration.Get");
             scope.Start();
             try
             {
                 var response = await _networkInterfaceIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIpConfiguration(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,18 +112,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+        /// OperationId: NetworkInterfaceIPConfigurations_Get
         /// <summary> Gets the specified network interface ip configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkInterfaceIPConfiguration> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceIpConfiguration> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfiguration.Get");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfiguration.Get");
             scope.Start();
             try
             {
                 var response = _networkInterfaceIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIpConfiguration(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

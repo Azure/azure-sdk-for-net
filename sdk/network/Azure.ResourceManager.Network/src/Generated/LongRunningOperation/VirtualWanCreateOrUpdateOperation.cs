@@ -18,9 +18,9 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN. </summary>
-    public partial class VirtualWanCreateOrUpdateOperation : Operation<VirtualWAN>, IOperationSource<VirtualWAN>
+    public partial class VirtualWanCreateOrUpdateOperation : Operation<VirtualWan>, IOperationSource<VirtualWan>
     {
-        private readonly OperationInternals<VirtualWAN> _operation;
+        private readonly OperationInternals<VirtualWan> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal VirtualWanCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<VirtualWAN>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualWanCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualWan>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualWanCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override VirtualWAN Value => _operation.Value;
+        public override VirtualWan Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,23 @@ namespace Azure.ResourceManager.Network.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualWAN>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<VirtualWan>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualWAN>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<VirtualWan>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        VirtualWAN IOperationSource<VirtualWAN>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualWan IOperationSource<VirtualWan>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualWAN(_operationBase, VirtualWANData.DeserializeVirtualWANData(document.RootElement));
+            var data = VirtualWanData.DeserializeVirtualWanData(document.RootElement);
+            return new VirtualWan(_operationBase, new ResourceIdentifier(data.Id), data);
         }
 
-        async ValueTask<VirtualWAN> IOperationSource<VirtualWAN>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualWan> IOperationSource<VirtualWan>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualWAN(_operationBase, VirtualWANData.DeserializeVirtualWANData(document.RootElement));
+            var data = VirtualWanData.DeserializeVirtualWanData(document.RootElement);
+            return new VirtualWan(_operationBase, new ResourceIdentifier(data.Id), data);
         }
     }
 }

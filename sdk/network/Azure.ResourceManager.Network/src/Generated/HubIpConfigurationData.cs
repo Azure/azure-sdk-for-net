@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
-        internal HubIpConfigurationData(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal HubIpConfigurationData(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIpAddressData publicIPAddress, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The reference to the subnet resource. </summary>
         public SubnetData Subnet { get; set; }
         /// <summary> The reference to the public IP resource. </summary>
-        public PublicIPAddressData PublicIPAddress { get; set; }
+        public PublicIpAddressData PublicIPAddress { get; set; }
         /// <summary> The provisioning state of the IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

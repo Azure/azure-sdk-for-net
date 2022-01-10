@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of CustomIpPrefix and their operations over its parent. </summary>
     public partial class CustomIpPrefixCollection : ArmCollection, IEnumerable<CustomIpPrefix>, IAsyncEnumerable<CustomIpPrefix>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CustomIPPrefixesRestOperations _customIPPrefixesRestClient;
@@ -46,13 +45,16 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: CustomIPPrefixes_CreateOrUpdate
         /// <summary> Creates or updates a custom IP prefix. </summary>
         /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update custom IP prefix operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual CustomIPPrefixCreateOrUpdateOperation CreateOrUpdate(string customIpPrefixName, CustomIpPrefixData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CustomIpPrefixCreateOrUpdateOperation CreateOrUpdate(string customIpPrefixName, CustomIpPrefixData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (customIpPrefixName == null)
             {
@@ -68,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _customIPPrefixesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, parameters, cancellationToken);
-                var operation = new CustomIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, parameters).Request, response);
+                var operation = new CustomIpPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -80,13 +82,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: CustomIPPrefixes_CreateOrUpdate
         /// <summary> Creates or updates a custom IP prefix. </summary>
         /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update custom IP prefix operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<CustomIPPrefixCreateOrUpdateOperation> CreateOrUpdateAsync(string customIpPrefixName, CustomIpPrefixData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CustomIpPrefixCreateOrUpdateOperation> CreateOrUpdateAsync(string customIpPrefixName, CustomIpPrefixData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (customIpPrefixName == null)
             {
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _customIPPrefixesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, parameters).Request, response);
+                var operation = new CustomIpPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: CustomIPPrefixes_Get
         /// <summary> Gets the specified custom IP prefix in a specified resource group. </summary>
         /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -133,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 var response = _customIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomIpPrefix(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIpPrefix(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,6 +150,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: CustomIPPrefixes_Get
         /// <summary> Gets the specified custom IP prefix in a specified resource group. </summary>
         /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -161,7 +172,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _customIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CustomIpPrefix(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIpPrefix(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _customIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CustomIpPrefix>(null, response.GetRawResponse())
-                    : Response.FromValue(new CustomIpPrefix(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new CustomIpPrefix(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +228,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _customIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customIpPrefixName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CustomIpPrefix>(null, response.GetRawResponse())
-                    : Response.FromValue(new CustomIpPrefix(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new CustomIpPrefix(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,6 +289,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: CustomIPPrefixes_List
         /// <summary> Gets all custom IP prefixes in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomIpPrefix" /> that may take multiple service requests to iterate over. </returns>
@@ -290,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _customIPPrefixesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +319,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _customIPPrefixesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,6 +330,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: CustomIPPrefixes_List
         /// <summary> Gets all custom IP prefixes in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomIpPrefix" /> that may take multiple service requests to iterate over. </returns>
@@ -328,7 +345,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _customIPPrefixesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,7 +360,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _customIPPrefixesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

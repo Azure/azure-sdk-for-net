@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PeerExpressRouteCircuitConnection and their operations over its parent. </summary>
     public partial class PeerExpressRouteCircuitConnectionCollection : ArmCollection, IEnumerable<PeerExpressRouteCircuitConnection>, IAsyncEnumerable<PeerExpressRouteCircuitConnection>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PeerExpressRouteCircuitConnectionsRestOperations _peerExpressRouteCircuitConnectionsRestClient;
@@ -43,6 +42,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections/{connectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// OperationId: PeerExpressRouteCircuitConnections_Get
         /// <summary> Gets the specified Peer Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -61,7 +63,7 @@ namespace Azure.ResourceManager.Network
                 var response = _peerExpressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -70,6 +72,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections/{connectionName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// OperationId: PeerExpressRouteCircuitConnections_Get
         /// <summary> Gets the specified Peer Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +93,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,7 +120,7 @@ namespace Azure.ResourceManager.Network
                 var response = _peerExpressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new PeerExpressRouteCircuitConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +147,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new PeerExpressRouteCircuitConnection(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,6 +206,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// OperationId: PeerExpressRouteCircuitConnections_List
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeerExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
@@ -213,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _peerExpressRouteCircuitConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,7 +236,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _peerExpressRouteCircuitConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,6 +247,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}
+        /// OperationId: PeerExpressRouteCircuitConnections_List
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeerExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
@@ -251,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _peerExpressRouteCircuitConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -266,7 +277,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _peerExpressRouteCircuitConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

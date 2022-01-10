@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of InboundNatRule and their operations over its parent. </summary>
     public partial class InboundNatRuleCollection : ArmCollection, IEnumerable<InboundNatRule>, IAsyncEnumerable<InboundNatRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly InboundNatRulesRestOperations _inboundNatRulesRestClient;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: InboundNatRules_CreateOrUpdate
         /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
@@ -78,6 +80,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: InboundNatRules_CreateOrUpdate
         /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
@@ -112,6 +117,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: InboundNatRules_Get
         /// <summary> Gets the specified load balancer inbound nat rule. </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -131,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 var response = _inboundNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InboundNatRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InboundNatRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,6 +148,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: InboundNatRules_Get
         /// <summary> Gets the specified load balancer inbound nat rule. </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _inboundNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new InboundNatRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InboundNatRule(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +198,7 @@ namespace Azure.ResourceManager.Network
                 var response = _inboundNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<InboundNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new InboundNatRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +226,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _inboundNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<InboundNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new InboundNatRule(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,6 +287,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: InboundNatRules_List
         /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
@@ -288,7 +302,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _inboundNatRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +317,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _inboundNatRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,6 +328,9 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// OperationId: InboundNatRules_List
         /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
@@ -326,7 +343,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _inboundNatRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +358,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _inboundNatRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

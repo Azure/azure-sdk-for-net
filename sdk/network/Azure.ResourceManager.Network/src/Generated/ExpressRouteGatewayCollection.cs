@@ -22,7 +22,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteGateway and their operations over its parent. </summary>
-    public partial class ExpressRouteGatewayCollection : ArmCollection, IEnumerable<ExpressRouteGateway>
+    public partial class ExpressRouteGatewayCollection : ArmCollection, IEnumerable<ExpressRouteGateway>, IAsyncEnumerable<ExpressRouteGateway>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteGatewaysRestOperations _expressRouteGatewaysRestClient;
@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteGateways_CreateOrUpdate
         /// <summary> Creates or updates a ExpressRoute gateway in a specified resource group. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
@@ -79,6 +82,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteGateways_CreateOrUpdate
         /// <summary> Creates or updates a ExpressRoute gateway in a specified resource group. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
@@ -113,6 +119,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteGateways_Get
         /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGateway(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGateway(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,6 +149,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteGateways_Get
         /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteGateway(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGateway(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteGateway(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +224,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRouteGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new ExpressRouteGateway(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -271,40 +283,56 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteGateways_ListByResourceGroup
         /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ExpressRouteGateway>> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteGateway> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
-            scope.Start();
-            try
+            Page<ExpressRouteGateway> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _expressRouteGatewaysRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _expressRouteGatewaysRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ExpressRouteGateways_ListByResourceGroup
         /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<ExpressRouteGateway>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteGateway> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<ExpressRouteGateway>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _expressRouteGatewaysRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _expressRouteGatewaysRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Filters the list of <see cref="ExpressRouteGateway" /> for this resource group represented as generic resources. </summary>
@@ -355,12 +383,17 @@ namespace Azure.ResourceManager.Network
 
         IEnumerator<ExpressRouteGateway> IEnumerable<ExpressRouteGateway>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ExpressRouteGateway> IAsyncEnumerable<ExpressRouteGateway>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

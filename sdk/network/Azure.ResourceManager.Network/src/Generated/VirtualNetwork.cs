@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetwork"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualNetwork(ArmResource options, VirtualNetworkData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VirtualNetwork(ArmResource options, ResourceIdentifier id, VirtualNetworkData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualNetworksRestClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_Get
         /// <summary> Gets the specified virtual network by resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetwork(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,6 +114,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_Get
         /// <summary> Gets the specified virtual network by resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,7 +129,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetwork(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,6 +154,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_Delete
         /// <summary> Deletes the specified virtual network. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,6 +179,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_Delete
         /// <summary> Deletes the specified virtual network. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,6 +204,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_UpdateTags
         /// <summary> Updates a virtual network tags. </summary>
         /// <param name="parameters"> Parameters supplied to update virtual network tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,7 +223,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualNetworksRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetwork(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,6 +232,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_UpdateTags
         /// <summary> Updates a virtual network tags. </summary>
         /// <param name="parameters"> Parameters supplied to update virtual network tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,7 +251,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworksRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetwork(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,18 +260,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/CheckIPAddressAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_CheckIPAddressAvailability
         /// <summary> Checks whether a private IP address is available for use. </summary>
         /// <param name="ipAddress"> The private IP address to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public async virtual Task<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string ipAddress, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IPAddressAvailabilityResult>> CheckIpAddressAvailabilityAsync(string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIpAddressAvailability");
             scope.Start();
             try
             {
@@ -266,18 +288,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/CheckIPAddressAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_CheckIPAddressAvailability
         /// <summary> Checks whether a private IP address is available for use. </summary>
         /// <param name="ipAddress"> The private IP address to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public virtual Response<IPAddressAvailabilityResult> CheckIPAddressAvailability(string ipAddress, CancellationToken cancellationToken = default)
+        public virtual Response<IPAddressAvailabilityResult> CheckIpAddressAvailability(string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIpAddressAvailability");
             scope.Start();
             try
             {
@@ -291,14 +316,17 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/usages
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_ListUsage
         /// <summary> Lists usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkUsage> GetUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualNetworkUsage> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsages");
                 scope.Start();
                 try
                 {
@@ -313,7 +341,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualNetworkUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsages");
                 scope.Start();
                 try
                 {
@@ -329,14 +357,17 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/usages
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// OperationId: VirtualNetworks_ListUsage
         /// <summary> Lists usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkUsage> GetUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualNetworkUsage> GetUsages(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsages");
                 scope.Start();
                 try
                 {
@@ -351,7 +382,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualNetworkUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsages");
                 scope.Start();
                 try
                 {

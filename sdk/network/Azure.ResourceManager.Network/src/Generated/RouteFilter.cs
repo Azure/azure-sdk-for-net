@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "RouteFilter"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal RouteFilter(ArmResource options, RouteFilterData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal RouteFilter(ArmResource options, ResourceIdentifier id, RouteFilterData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -89,6 +90,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// OperationId: RouteFilters_Get
         /// <summary> Gets the specified route filter. </summary>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _routeFiltersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteFilter(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,6 +114,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// OperationId: RouteFilters_Get
         /// <summary> Gets the specified route filter. </summary>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,7 +129,7 @@ namespace Azure.ResourceManager.Network
                 var response = _routeFiltersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteFilter(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,6 +154,9 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// OperationId: RouteFilters_Delete
         /// <summary> Deletes the specified route filter. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,6 +179,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// OperationId: RouteFilters_Delete
         /// <summary> Deletes the specified route filter. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,6 +204,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// OperationId: RouteFilters_UpdateTags
         /// <summary> Updates tags of a route filter. </summary>
         /// <param name="parameters"> Parameters supplied to update route filter tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,7 +223,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _routeFiltersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteFilter(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,6 +232,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// OperationId: RouteFilters_UpdateTags
         /// <summary> Updates tags of a route filter. </summary>
         /// <param name="parameters"> Parameters supplied to update route filter tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,7 +251,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _routeFiltersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteFilter(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

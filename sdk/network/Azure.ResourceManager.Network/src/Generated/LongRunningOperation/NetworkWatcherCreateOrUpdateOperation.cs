@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal NetworkWatcherCreateOrUpdateOperation(ArmResource operationsBase, Response<NetworkWatcherData> response)
         {
-            _operation = new OperationOrResponseInternals<NetworkWatcher>(Response.FromValue(new NetworkWatcher(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NetworkWatcher>(Response.FromValue(new NetworkWatcher(operationsBase, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

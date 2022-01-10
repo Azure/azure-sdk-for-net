@@ -37,11 +37,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "NetworkVirtualApplianceSku"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkVirtualApplianceSku(ArmResource options, NetworkVirtualApplianceSkuData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal NetworkVirtualApplianceSku(ArmResource options, ResourceIdentifier id, NetworkVirtualApplianceSkuData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -88,6 +89,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// OperationId: VirtualApplianceSkus_Get
         /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetAsync(CancellationToken cancellationToken = default)
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSku(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,6 +112,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// OperationId: VirtualApplianceSkus_Get
         /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkVirtualApplianceSku> Get(CancellationToken cancellationToken = default)
@@ -119,7 +126,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualApplianceSkusRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSku(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

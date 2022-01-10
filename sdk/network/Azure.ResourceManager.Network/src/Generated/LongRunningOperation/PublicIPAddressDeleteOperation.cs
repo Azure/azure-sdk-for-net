@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Deletes the specified public IP address. </summary>
-    public partial class PublicIPAddressDeleteOperation : Operation
+    public partial class PublicIpAddressDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of PublicIPAddressDeleteOperation for mocking. </summary>
-        protected PublicIPAddressDeleteOperation()
+        /// <summary> Initializes a new instance of PublicIpAddressDeleteOperation for mocking. </summary>
+        protected PublicIpAddressDeleteOperation()
         {
         }
 
-        internal PublicIPAddressDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PublicIpAddressDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PublicIPAddressDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PublicIpAddressDeleteOperation");
         }
 
         /// <inheritdoc />

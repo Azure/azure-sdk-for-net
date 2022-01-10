@@ -18,21 +18,20 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of NetworkInterfaceIPConfiguration and their operations over its parent. </summary>
-    public partial class NetworkInterfaceIPConfigurationCollection : ArmCollection, IEnumerable<NetworkInterfaceIPConfiguration>, IAsyncEnumerable<NetworkInterfaceIPConfiguration>
-
+    /// <summary> A class representing collection of NetworkInterfaceIpConfiguration and their operations over its parent. </summary>
+    public partial class NetworkInterfaceIpConfigurationCollection : ArmCollection, IEnumerable<NetworkInterfaceIpConfiguration>, IAsyncEnumerable<NetworkInterfaceIpConfiguration>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NetworkInterfaceIPConfigurationsRestOperations _networkInterfaceIPConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationCollection"/> class for mocking. </summary>
-        protected NetworkInterfaceIPConfigurationCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIpConfigurationCollection"/> class for mocking. </summary>
+        protected NetworkInterfaceIpConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of NetworkInterfaceIpConfigurationCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal NetworkInterfaceIPConfigurationCollection(ArmResource parent) : base(parent)
+        internal NetworkInterfaceIpConfigurationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -43,25 +42,28 @@ namespace Azure.ResourceManager.Network
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceIPConfigurations_Get
         /// <summary> Gets the specified network interface ip configuration. </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public virtual Response<NetworkInterfaceIPConfiguration> Get(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceIpConfiguration> Get(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.Get");
             scope.Start();
             try
             {
                 var response = _networkInterfaceIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceIPConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIpConfiguration(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -70,25 +72,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceIPConfigurations_Get
         /// <summary> Gets the specified network interface ip configuration. </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterfaceIPConfiguration>> GetAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkInterfaceIpConfiguration>> GetAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.Get");
             scope.Start();
             try
             {
                 var response = await _networkInterfaceIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterfaceIPConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIpConfiguration(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -101,21 +106,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public virtual Response<NetworkInterfaceIPConfiguration> GetIfExists(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceIpConfiguration> GetIfExists(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _networkInterfaceIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<NetworkInterfaceIpConfiguration>(null, response.GetRawResponse())
+                    : Response.FromValue(new NetworkInterfaceIpConfiguration(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,21 +133,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterfaceIPConfiguration>> GetIfExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkInterfaceIpConfiguration>> GetIfExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _networkInterfaceIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<NetworkInterfaceIpConfiguration>(null, response.GetRawResponse())
+                    : Response.FromValue(new NetworkInterfaceIpConfiguration(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,7 +167,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -187,7 +192,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -201,19 +206,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceIPConfigurations_List
         /// <summary> Get all ip configurations in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceIPConfiguration> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkInterfaceIpConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkInterfaceIpConfiguration> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NetworkInterfaceIPConfiguration> FirstPageFunc(int? pageSizeHint)
+            Page<NetworkInterfaceIpConfiguration> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _networkInterfaceIPConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIpConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -221,14 +229,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<NetworkInterfaceIPConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NetworkInterfaceIpConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _networkInterfaceIPConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIpConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,19 +247,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// OperationId: NetworkInterfaceIPConfigurations_List
         /// <summary> Get all ip configurations in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceIPConfiguration> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkInterfaceIpConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkInterfaceIpConfiguration> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkInterfaceIPConfiguration>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetworkInterfaceIpConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _networkInterfaceIPConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIpConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,14 +270,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<NetworkInterfaceIPConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NetworkInterfaceIpConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _networkInterfaceIPConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIPConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceIpConfiguration(Parent, new ResourceIdentifier(value.Id), value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -277,7 +288,7 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<NetworkInterfaceIPConfiguration> IEnumerable<NetworkInterfaceIPConfiguration>.GetEnumerator()
+        IEnumerator<NetworkInterfaceIpConfiguration> IEnumerable<NetworkInterfaceIpConfiguration>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -287,12 +298,12 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<NetworkInterfaceIPConfiguration> IAsyncEnumerable<NetworkInterfaceIPConfiguration>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkInterfaceIpConfiguration> IAsyncEnumerable<NetworkInterfaceIpConfiguration>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkInterfaceIPConfiguration, NetworkInterfaceIPConfigurationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkInterfaceIpConfiguration, NetworkInterfaceIpConfigurationData> Construct() { }
     }
 }

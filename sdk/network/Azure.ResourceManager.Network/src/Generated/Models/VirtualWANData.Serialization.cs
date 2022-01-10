@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualWANData : IUtf8JsonSerializable
+    public partial class VirtualWanData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        internal static VirtualWANData DeserializeVirtualWANData(JsonElement element)
+        internal static VirtualWanData DeserializeVirtualWanData(JsonElement element)
         {
             Optional<string> etag = default;
             Optional<string> id = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualWANData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(disableVpnEncryption), Optional.ToList(virtualHubs), Optional.ToList(vpnSites), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
+            return new VirtualWanData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(disableVpnEncryption), Optional.ToList(virtualHubs), Optional.ToList(vpnSites), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
         }
     }
 }
