@@ -3339,9 +3339,11 @@ namespace Azure.Storage.Blobs.Test
                 options.Tags = destTags;
             }
 
+            Uri sourceUri = sourceBlob.GenerateSasUri(BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
+
             // Act
             Response<BlobContentInfo> uploadResponse = await destBlob.SyncUploadFromUriAsync(
-                copySource: sourceBlob.Uri,
+                copySource: sourceUri,
                 options: options);
 
             // Assert
