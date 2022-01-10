@@ -1553,7 +1553,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStartCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold, BlobCopySourceTags? copySourceTags)
+        internal HttpMessage CreateStartCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1643,10 +1643,6 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-legal-hold", legalHold.Value);
             }
-            if (copySourceTags != null)
-            {
-                request.Headers.Add("x-ms-copy-source-tag-option", copySourceTags.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1673,17 +1669,16 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
-        /// <param name="copySourceTags"> Optional, default &apos;replace&apos;.  Indicates if source tags should be copied or replaced with the tags specified by x-ms-tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, BlobCopySourceTags? copySourceTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceTags);
+            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobStartCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1717,17 +1712,16 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
-        /// <param name="copySourceTags"> Optional, default &apos;replace&apos;.  Indicates if source tags should be copied or replaced with the tags specified by x-ms-tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, BlobCopySourceTags? copySourceTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceTags);
+            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobStartCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)

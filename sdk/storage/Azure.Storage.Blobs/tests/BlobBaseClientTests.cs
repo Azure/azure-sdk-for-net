@@ -2981,6 +2981,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(null)]
+        [TestCase(BlobCopySourceTags.Replace)]
+        [TestCase(BlobCopySourceTags.Copy)]
+        public async Task SyncCopyFromUriAsync_CopyTags(BlobCopySourceTags? copySourceTags)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            Dictionary<string, string> sourceTags = new Dictionary<string, string>
+            {
+                { "source", "tag" }
+            };
+
+            await srcBlob.SetTagsAsync(sourceTags);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                CopySourceTags = copySourceTags
+            };
+
+            Dictionary<string, string> destTags = new Dictionary<string, string>
+            {
+                { "dest", "tag" }
+            };
+
+            if (copySourceTags != BlobCopySourceTags.Copy)
+            {
+                options.Tags = destTags;
+            }
+
+            Uri sourceUri = srcBlob.GenerateSasUri(BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
+
+            // Act
+            await destBlob.SyncCopyFromUriAsync(
+                source: sourceUri,
+                options: options);
+
+            // Assert
+            Response<GetBlobTagResult> getTagsResponse = await destBlob.GetTagsAsync();
+
+            if (copySourceTags == BlobCopySourceTags.Copy)
+            {
+                AssertDictionaryEquality(sourceTags, getTagsResponse.Value.Tags);
+            }
+            else
+            {
+                AssertDictionaryEquality(destTags, getTagsResponse.Value.Tags);
+            }
+        }
+
+        [RecordedTest]
         public async Task DeleteAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
