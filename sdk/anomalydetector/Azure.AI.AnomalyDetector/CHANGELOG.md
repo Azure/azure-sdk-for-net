@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-preview.4 (2021-12-20)
+## 3.0.0-preview.4 (2022-01-18)
 
 - Added operation `AnomalyDetectorClient.LastDetectAnomaly`
 - Added 2 optional properties `ImputeMode` and `ImputeFixedValue` to `DetectRequest`.
