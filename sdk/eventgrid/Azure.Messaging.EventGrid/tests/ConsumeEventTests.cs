@@ -1177,6 +1177,7 @@ namespace Azure.Messaging.EventGrid.Tests
         // properties being tested below.
         private static void AssertResourceEventData(dynamic eventData)
         {
+            Assert.NotNull(eventData);
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
             var authorizationJson = JsonDocument.Parse(eventData.Authorization).RootElement;
             Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default",
