@@ -1198,6 +1198,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             var httpRequestJson = JsonDocument.Parse(eventData.HttpRequest).RootElement;
             Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            Assert.AreEqual("POST", eventData.HttpRequestValue.Method.ToString());
             Assert.AreEqual(
                 "https://management.azure.com/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default/listKeys?api-version=2018-11-01",
                 httpRequestJson.GetProperty("url").GetString());

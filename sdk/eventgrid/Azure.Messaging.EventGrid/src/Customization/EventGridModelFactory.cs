@@ -479,6 +479,17 @@ namespace Azure.Messaging.EventGrid
         {
             return ContainerRegistryArtifactEventData(id: id, timestamp: timestamp, action: action, target: target, location: null);
         }
+
+        /// <summary> Initializes a new instance of ResourceHttpRequest. </summary>
+        /// <param name="clientRequestId"> The client request ID. </param>
+        /// <param name="clientIpAddress"> The client IP address. </param>
+        /// <param name="method"> The request method. </param>
+        /// <param name="url"> The url used in the request. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceHttpRequest"/> instance for mocking. </returns>
+        public static ResourceHttpRequest ResourceHttpRequest(string clientRequestId = null, string clientIpAddress = null, RequestMethod? method = null, string url = null)
+        {
+            return new ResourceHttpRequest(clientRequestId, clientIpAddress, method?.Method, url);
+        }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
 }

@@ -18,13 +18,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of ResourceHttpRequest. </summary>
         /// <param name="clientRequestId"> The client request ID. </param>
         /// <param name="clientIpAddress"> The client IP address. </param>
-        /// <param name="method"> The request method. </param>
+        /// <param name="methodString"> The request method. </param>
         /// <param name="url"> The url used in the request. </param>
-        internal ResourceHttpRequest(string clientRequestId, string clientIpAddress, string method, string url)
+        internal ResourceHttpRequest(string clientRequestId, string clientIpAddress, string methodString, string url)
         {
             ClientRequestId = clientRequestId;
             ClientIpAddress = clientIpAddress;
-            Method = method;
+            MethodString = methodString;
             Url = url;
         }
 
@@ -32,8 +32,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ClientRequestId { get; }
         /// <summary> The client IP address. </summary>
         public string ClientIpAddress { get; }
-        /// <summary> The request method. </summary>
-        public string Method { get; }
         /// <summary> The url used in the request. </summary>
         public string Url { get; }
     }
