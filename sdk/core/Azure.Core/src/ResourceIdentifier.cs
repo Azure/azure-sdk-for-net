@@ -36,19 +36,27 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
         /// </summary>
         /// <param name="resourceId"> The id string to create the ResourceIdentifier from. </param>
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ResourceIdentifier(string resourceId)
         {
             ResourceIdentifier id = Create(resourceId);
-            Init(id.Parent, id.ResourceType, id.Name, id.IsProviderResource);
+            Init(id.Parent, id.ResourceType, id.Name);
             _stringValue = resourceId;
+
+            //need to set init only properties in ctor
+            ResourceType = id.ResourceType;
+            Name = id.Name;
+            IsProviderResource = id.IsProviderResource;
         }
 
         private ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool idProviderResource)
         {
-            Init(parent ?? Root, resourceType, resourceName, idProviderResource);
+            Init(parent ?? Root, resourceType, resourceName);
+
+            //need to set init only properties in ctor
+            ResourceType = resourceType;
+            Name = resourceName;
+            IsProviderResource = idProviderResource;
         }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         private ResourceIdentifier(ResourceIdentifier parent, string resourceTypeName, string resourceName)
             : this(parent, ChooseResourceType(resourceTypeName, parent), resourceName, false)
@@ -60,7 +68,7 @@ namespace Azure.Core
         {
         }
 
-        private void Init(ResourceIdentifier parent, ResourceType resourceType, string resourceName, bool isProviderResource)
+        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string resourceName)
         {
             if (parent is not null)
             {
@@ -86,13 +94,9 @@ namespace Azure.Core
             if (resourceType == ProviderResourceType)
                 Provider = resourceName;
 
-            ResourceType = resourceType;
-            Name = resourceName;
-            IsProviderResource = isProviderResource;
-            Parent = parent!;
-
             if (parent is null)
                 _stringValue = RootStringValue;
+            Parent = parent;
         }
 
         private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent)
@@ -180,22 +184,22 @@ namespace Azure.Core
         /// <summary>
         /// The resource type of the resource.
         /// </summary>
-        public ResourceType ResourceType { get; private set; }
+        public ResourceType ResourceType { get; }
 
         /// <summary>
         /// The name of the resource.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// The immediate parent containing this resource.
         /// </summary>
-        public ResourceIdentifier Parent { get; private set; }
+        public ResourceIdentifier? Parent { get; private set; }
 
         /// <summary>
         /// Determines whether this resource is in the same namespace as its parent.
         /// </summary>
-        internal bool IsProviderResource { get; private set; }
+        internal bool IsProviderResource { get; }
 
         /// <summary>
         /// Gets the subscription id if it exists otherwise null.
