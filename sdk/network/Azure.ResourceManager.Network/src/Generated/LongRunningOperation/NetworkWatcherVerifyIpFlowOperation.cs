@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Verify IP flow from the specified VM to a location given the currently configured NSG rules. </summary>
-    public partial class NetworkWatcherNetworkWatchers_VerifyIpFlowOperation : Operation<VerificationIPFlowResult>, IOperationSource<VerificationIPFlowResult>
+    public partial class NetworkWatcherVerifyIpFlowOperation : Operation<VerificationIPFlowResult>, IOperationSource<VerificationIPFlowResult>
     {
         private readonly OperationInternals<VerificationIPFlowResult> _operation;
 
-        /// <summary> Initializes a new instance of NetworkWatcherNetworkWatchers_VerifyIpFlowOperation for mocking. </summary>
-        protected NetworkWatcherNetworkWatchers_VerifyIpFlowOperation()
+        /// <summary> Initializes a new instance of NetworkWatcherVerifyIpFlowOperation for mocking. </summary>
+        protected NetworkWatcherVerifyIpFlowOperation()
         {
         }
 
-        internal NetworkWatcherNetworkWatchers_VerifyIpFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkWatcherVerifyIpFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<VerificationIPFlowResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatcherNetworkWatchers_VerifyIpFlowOperation");
+            _operation = new OperationInternals<VerificationIPFlowResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatcherVerifyIpFlowOperation");
         }
 
         /// <inheritdoc />

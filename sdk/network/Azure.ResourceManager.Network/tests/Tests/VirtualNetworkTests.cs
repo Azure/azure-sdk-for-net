@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Static,
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.Network.Tests
             await putNicResponseOperation.WaitForCompletionAsync();;
 
             // Check Ip Address availability API
-            Response<IPAddressAvailabilityResult> responseAvailable = await putVnetResponse.Value.CheckIPAddressAvailabilityAsync("10.0.1.10");
+            Response<IPAddressAvailabilityResult> responseAvailable = await putVnetResponse.Value.CheckIpAddressAvailabilityAsync("10.0.1.10");
 
             Assert.True(responseAvailable.Value.Available);
             Assert.IsEmpty(responseAvailable.Value.AvailableIPAddresses);
 
-            Response<IPAddressAvailabilityResult> responseTaken = await putVnetResponse.Value.CheckIPAddressAvailabilityAsync("10.0.1.9");
+            Response<IPAddressAvailabilityResult> responseTaken = await putVnetResponse.Value.CheckIpAddressAvailabilityAsync("10.0.1.9");
 
             Assert.False(responseTaken.Value.Available);
             Assert.AreEqual(5, responseTaken.Value.AvailableIPAddresses.Count);
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<Subnet> getSubnetResponse = await putVnetResponse.Value.GetSubnets().GetAsync(subnetName);
 
             // Get Vnet usage
-            var usage = await putVnetResponse.Value.GetUsageAsync().ToEnumerableAsync();
+            var usage = await putVnetResponse.Value.GetUsagesAsync().ToEnumerableAsync();
             Assert.AreEqual(0.0, usage[0].CurrentValue);
 
             // Create Nic
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Static,
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network.Tests
             var nicResponse = await putNicResponseOperation.WaitForCompletionAsync();;
 
             // Get Vnet usage again
-            usage = await putVnetResponse.Value.GetUsageAsync().ToEnumerableAsync();
+            usage = await putVnetResponse.Value.GetUsagesAsync().ToEnumerableAsync();
             Assert.AreEqual(1.0, usage[0].CurrentValue);
 
             // Delete Vnet and Nic

@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Network.Tests
             _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
-        public async Task<PublicIPPrefixCollection> GetCollection()
+        public async Task<PublicIpPrefixCollection> GetCollection()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_public_ip_prefix_"));
-            return resourceGroup.GetPublicIPPrefixes();
+            return resourceGroup.GetPublicIpPrefixes();
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
 
             // create
-            PublicIPPrefix prefix = await container.CreateOrUpdate(name, new PublicIPPrefixData()
+            PublicIpPrefix prefix = await container.CreateOrUpdate(name, new PublicIpPrefixData()
             {
                 Location = TestEnvironment.Location,
                 PrefixLength = 28,
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(prefixes);
         }
 
-        private void ValidateCommon(PublicIPPrefixData data, string name)
+        private void ValidateCommon(PublicIpPrefixData data, string name)
         {
             Assert.AreEqual(name, data.Name);
             Assert.AreEqual(28, data.PrefixLength);

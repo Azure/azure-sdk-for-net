@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIpAddresses());
             Assert.IsNotNull(nic1publicIp.Data);
 
             // Create VirtualNetworkGateway
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIpAddresses());
             Assert.IsNotNull(nic1publicIp.Data);
 
             // Create VirtualNetworkGateway
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Create PublicIpAddress
             string publicIpName1 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel1 = Recording.GenerateAssetName("azsmnet");
-            PublicIPAddress nic1publicIp1 = await CreateDefaultPublicIpAddress(publicIpName1, domainNameLabel1, location1, resourceGroup1.GetPublicIPAddresses());
+            PublicIpAddress nic1publicIp1 = await CreateDefaultPublicIpAddress(publicIpName1, domainNameLabel1, location1, resourceGroup1.GetPublicIpAddresses());
 
             // Create VirtualNetworkGateway
             string virtualNetworkGatewayName1 = Recording.GenerateAssetName("azsmnet");
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Create PublicIpAddress
             string publicIpName2 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel2 = Recording.GenerateAssetName("azsmnet");
-            PublicIPAddress nic2publicIp2 = await CreateDefaultPublicIpAddress(publicIpName2, domainNameLabel2, location2, resourceGroup2.GetPublicIPAddresses());
+            PublicIpAddress nic2publicIp2 = await CreateDefaultPublicIpAddress(publicIpName2, domainNameLabel2, location2, resourceGroup2.GetPublicIpAddresses());
 
             // Create VirtualNetworkGateway
             string virtualNetworkGatewayName2 = Recording.GenerateAssetName("azsmnet");
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
             //B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIpAddresses());
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIpAddresses());
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIpAddresses());
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
@@ -1317,7 +1317,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
             // B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
@@ -1425,7 +1425,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 ProcessorArchitecture = ProcessorArchitecture.Amd64
             };
-            var packageUrlOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.GeneratevpnclientpackageAsync(vpnClientParameters);
+            var packageUrlOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.GenerateVpnClientPackageAsync(vpnClientParameters);
             await packageUrlOperation.WaitForCompletionAsync();
             //Assert.NotNull(packageUrl);
             //Assert.NotEmpty(packageUrl);
@@ -1485,13 +1485,13 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName1 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel1 = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp1 = await CreateDefaultPublicIpAddress(publicIpName1, resourceGroupName, domainNameLabel1, location);
+            PublicIpAddress nic1publicIp1 = await CreateDefaultPublicIpAddress(publicIpName1, resourceGroupName, domainNameLabel1, location);
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp1.Id);
 
             string publicIpName2 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel2 = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp2 = await CreateDefaultPublicIpAddress(publicIpName2, resourceGroupName, domainNameLabel2, location);
+            PublicIpAddress nic1publicIp2 = await CreateDefaultPublicIpAddress(publicIpName2, resourceGroupName, domainNameLabel2, location);
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp2.Id);
 
             //B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
@@ -1609,7 +1609,7 @@ namespace Azure.ResourceManager.Network.Tests
                 AddressSpace = new AddressSpace() { AddressPrefixes = { "10.1.0.0/16" } },
                 Subnets = { new SubnetData() { Name = gatewaySubnetName, AddressPrefix = "10.1.1.0/24" } }
             };
-            PublicIPAddress publicIPAddress = await CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location);
+            PublicIpAddress publicIPAddress = await CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location);
             var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
             var virtualNetworksCreateOrUpdateOperation = await virtualNetworkCollection.CreateOrUpdateAsync(vnet1Name, vnet1);
             Response<VirtualNetwork> vnet1Response = await virtualNetworksCreateOrUpdateOperation.WaitForCompletionAsync();
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.Network.Tests
                 BgpSettings = new BgpSettings() { Asn = 1337, BgpPeeringAddress = null, PeerWeight = 5 }
             };
 
-            PublicIPAddress gw2Ip = await CreateDefaultPublicIpAddress(gw2IpName, resourceGroupName, gw2IpDomainNameLabel, location);
+            PublicIpAddress gw2Ip = await CreateDefaultPublicIpAddress(gw2IpName, resourceGroupName, gw2IpDomainNameLabel, location);
             var vnet2 = new VirtualNetworkData()
             {
                 Location = location,
@@ -1680,7 +1680,7 @@ namespace Azure.ResourceManager.Network.Tests
             // configure both gateways in parallel
             Response<VirtualNetworkGateway> gw1GetResponse = await virtualNetworkGatewayCollection.GetAsync(gw1Name);
             Response<VirtualNetworkGateway> gw2GetResponse = await virtualNetworkGatewayCollection.GetAsync(gw2Name);
-            Response<PublicIPAddress> gw2IpResponse = await GetResourceGroup(resourceGroupName).GetPublicIPAddresses().GetAsync(gw1IpName);
+            Response<PublicIpAddress> gw2IpResponse = await GetResourceGroup(resourceGroupName).GetPublicIpAddresses().GetAsync(gw1IpName);
             string sharedKey = "chocolate";
 
             string conn1Name = Recording.GenerateAssetName("azsmnet");
@@ -1746,7 +1746,7 @@ namespace Azure.ResourceManager.Network.Tests
             // A.Prerequisite:-Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName,
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName,
                 domainNameLabel, location);
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
@@ -1899,7 +1899,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
+            PublicIpAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
             Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API

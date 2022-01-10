@@ -44,13 +44,15 @@ override-operation-name:
   ExpressRouteCrossConnections_ListRoutesTable: GetRoutesTable
   ExpressRouteCrossConnections_ListRoutesTableSummary: GetRoutesTableSummary
   NetworkWatchers_GetVMSecurityRules: GetVmSecurityRules
-  NetworkWatchers_VerifyIPFlow: NetworkWatchers_VerifyIpFlow
+  NetworkWatchers_VerifyIPFlow: VerifyIpFlow
   PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup: GetAutoApprovedPrivateLinkServices
   PrivateLinkServices_CheckPrivateLinkServiceVisibility: CheckPrivateLinkServiceVisibility
   PrivateLinkServices_ListAutoApprovedPrivateLinkServices: GetAutoApprovedPrivateLinkServices
   ApplicationGateways_ListAvailableRequestHeaders: GetApplicationGatewaysAvailableRequestHeaders
   ApplicationGateways_ListAvailableResponseHeaders: GetApplicationGatewaysAvailableResponseHeaders
   ApplicationGateways_ListAvailableServerVariables: GetApplicationGatewaysAvailableServerVariables
+  CustomIPPrefixes_ListAll: GetCustomIpPrefixes
+  P2sVpnGateways_List: GetP2SVpnGateways
   LoadBalancers_SwapPublicIpAddresses: SwapLoadBalancerPublicIpAddresses
   VirtualNetworks_CheckIPAddressAvailability: CheckIpAddressAvailability
   VirtualNetworks_ListUsage: GetUsages
@@ -78,6 +80,18 @@ directive:
   - remove-operation: "GetBastionShareableLink"
   - remove-operation: "GetActiveSessions"
   - remove-operation: "DisconnectActiveSessions"
+  - from: swagger-document
+    where: $.definitions.NetworkInterfaceIPConfiguration
+    transform: $["x-ms-client-name"] = "NetworkInterfaceIpConfiguration"
+  - from: swagger-document
+    where: $.definitions.PublicIPAddress
+    transform: $["x-ms-client-name"] = "PublicIpAddress"
+  - from: swagger-document
+    where: $.definitions.PublicIPPrefix
+    transform: $["x-ms-client-name"] = "PublicIpPrefix"
+  - from: swagger-document
+    where: $.definitions.VirtualWAN
+    transform: $["x-ms-client-name"] = "VirtualWan"
 ```
 
 ### Tag: package-track2-preview

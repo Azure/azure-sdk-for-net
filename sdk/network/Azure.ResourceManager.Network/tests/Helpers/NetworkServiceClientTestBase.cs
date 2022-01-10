@@ -531,9 +531,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressCollection publicIPAddressCollection)
+        public async Task<PublicIpAddress> CreateDefaultPublicIpAddress(string name, string domainNameLabel, string location, PublicIpAddressCollection publicIpAddressCollection)
         {
-            var publicIp = new PublicIPAddressData()
+            var publicIp = new PublicIpAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -542,17 +542,17 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put nic1PublicIpAddress
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(name, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
+            Operation<PublicIpAddress> putPublicIpAddressOperation = await publicIpAddressCollection.CreateOrUpdateAsync(name, publicIp);
+            Response<PublicIpAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
+            Response<PublicIpAddress> getPublicIpAddressResponse = await publicIpAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
         }
 
-        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location)
+        public async Task<PublicIpAddress> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location)
         {
-            var publicIp = new PublicIPAddressData()
+            var publicIp = new PublicIpAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -561,11 +561,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put nic1PublicIpAddress
-            var publicIPAddressCollection = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(name, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
+            var publicIPAddressCollection = GetResourceGroup(resourceGroupName).GetPublicIpAddresses();
+            Operation<PublicIpAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(name, publicIp);
+            Response<PublicIpAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
+            Response<PublicIpAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
         }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIpAddressData() { /*Id = publicIpAddressId*/ };
             }
 
             // Test NIC apis
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIpAddressData() { /*Id = publicIpAddressId*/ };
             }
 
             // Test NIC apis
@@ -715,9 +715,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return resourceGroup.GetLoadBalancers();
         }
 
-        protected PublicIPAddressCollection GetPublicIPAddressCollection(string resourceGroupName)
+        protected PublicIpAddressCollection GetPublicIPAddressCollection(string resourceGroupName)
         {
-            return GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
+            return GetResourceGroup(resourceGroupName).GetPublicIpAddresses();
         }
 
         protected VirtualNetworkCollection GetVirtualNetworkCollection(string resourceGroupName)

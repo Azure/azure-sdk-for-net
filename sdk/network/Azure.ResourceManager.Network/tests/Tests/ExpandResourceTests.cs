@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(
+            PublicIpAddress lbPublicIp = await CreateDefaultPublicIpAddress(
                 lbPublicIpName,
                 lbDomaingNameLabel,
                 location,
-                resourceGroup.GetPublicIPAddresses());
+                resourceGroup.GetPublicIpAddresses());
 
             // Create Vnet
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                        PublicIPAddress = new PublicIpAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get NIC with expanded subnet
             nic1 = await networkInterfaceCollection.GetAsync(nic1name, "IPConfigurations/Subnet");
-            foreach (NetworkInterfaceIPConfiguration ipconfig in nic1.GetNetworkInterfaceIPConfigurations())
+            foreach (NetworkInterfaceIpConfiguration ipconfig in nic1.GetNetworkInterfaceIpConfigurations())
             {
                 Assert.NotNull(ipconfig.Data.Subnet);
                 Assert.NotNull(ipconfig.Data.Subnet.Id);
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Get publicIPAddress with expanded ipconfigurations
-            Response<PublicIPAddress> publicip = await resourceGroup.GetPublicIPAddresses().GetAsync(
+            Response<PublicIpAddress> publicip = await resourceGroup.GetPublicIpAddresses().GetAsync(
                 lbPublicIpName,
                 "IPConfiguration");
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Network.Tests
             await networkInterfaceCollection.Get(nic3name).Value.DeleteAsync();
 
             // Delete all PublicIPAddresses
-            await resourceGroup.GetPublicIPAddresses().Get(lbPublicIpName).Value.DeleteAsync();
+            await resourceGroup.GetPublicIpAddresses().Get(lbPublicIpName).Value.DeleteAsync();
         }
     }
 }

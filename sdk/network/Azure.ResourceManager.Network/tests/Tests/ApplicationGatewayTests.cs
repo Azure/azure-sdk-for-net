@@ -687,15 +687,15 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get available WAF rule sets (validate first result set/group)
             // TODO -- double async, we need to fix this
-            Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> availableWAFRuleSets = await _subscription.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync();
+            IReadOnlyList<ApplicationGatewayFirewallRuleSet> availableWAFRuleSets = await _subscription.GetApplicationGatewayAvailableWafRuleSetsAsync().ToEnumerableAsync();
             Assert.NotNull(availableWAFRuleSets);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value);
-            Assert.NotNull(availableWAFRuleSets.Value[0].Name);
-            Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetType);
-            Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetVersion);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value[0].RuleGroups);
-            Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].RuleGroupName);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value[0].RuleGroups[0].Rules);
+            Assert.IsNotEmpty(availableWAFRuleSets);
+            Assert.NotNull(availableWAFRuleSets[0].Name);
+            Assert.NotNull(availableWAFRuleSets[0].RuleSetType);
+            Assert.NotNull(availableWAFRuleSets[0].RuleSetVersion);
+            Assert.IsNotEmpty(availableWAFRuleSets[0].RuleGroups);
+            Assert.NotNull(availableWAFRuleSets[0].RuleGroups[0].RuleGroupName);
+            Assert.IsNotEmpty(availableWAFRuleSets[0].RuleGroups[0].Rules);
             // Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private ResourceGroup _resourceGroup;
         private VirtualNetwork _network;
-        private PublicIPAddress _publicIPAddress;
+        private PublicIpAddress _publicIPAddress;
         private AzureFirewall _firewall;
 
         private ResourceIdentifier _resourceGroupIdentifier;
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Network.Tests
             _network = vnetLro.Value;
             _networkIdentifier = _network.Id;
 
-            PublicIPAddressData ipData = new PublicIPAddressData()
+            PublicIpAddressData ipData = new PublicIpAddressData()
             {
                 Location = AzureLocation.WestUS2,
                 PublicIPAllocationMethod = IPAllocationMethod.Static,
                 Sku = new PublicIPAddressSku() { Name = PublicIPAddressSkuName.Standard },
             };
-            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("publicIp-"), ipData);
+            var ipLro = await rg.GetPublicIpAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("publicIp-"), ipData);
             _publicIPAddress = ipLro.Value;
             _publicIPAddressIdentifier = _publicIPAddress.Id;
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Tests
             var client = GetArmClient();
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
             _network = await _resourceGroup.GetVirtualNetworks().GetAsync(_networkIdentifier.Name);
-            _publicIPAddress = await _resourceGroup.GetPublicIPAddresses().GetAsync(_publicIPAddressIdentifier.Name);
+            _publicIPAddress = await _resourceGroup.GetPublicIpAddresses().GetAsync(_publicIPAddressIdentifier.Name);
             _firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallIdentifier.Name);
         }
 

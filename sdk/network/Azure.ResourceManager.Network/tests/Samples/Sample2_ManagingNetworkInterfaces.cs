@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             VirtualNetwork virtualNetwork = await virtualNetworkCollection.CreateOrUpdate(vnetName, vnetInput).WaitForCompletionAsync();
 
             #region Snippet:Managing_Networks_CreateANetworkInterface
-            PublicIPAddressCollection publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
+            PublicIpAddressCollection publicIPAddressCollection = resourceGroup.GetPublicIpAddresses();
             string publicIPAddressName = "myIPAddress";
-            PublicIPAddressData publicIPInput = new PublicIPAddressData()
+            PublicIpAddressData publicIPInput = new PublicIpAddressData()
             {
                 Location = resourceGroup.Data.Location,
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     DomainNameLabel = "myDomain"
                 }
             };
-            PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
+            PublicIpAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
             string networkInterfaceName = "myNetworkInterface";
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             {
                 Location = resourceGroup.Data.Location,
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = "ipConfig",
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        PublicIPAddress = new PublicIPAddressData()
+                        PublicIPAddress = new PublicIpAddressData()
                         {
                             Id = publicIPAddress.Id
                         },

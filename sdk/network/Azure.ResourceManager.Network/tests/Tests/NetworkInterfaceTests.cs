@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            var publicIp = new PublicIPAddressData()
+            var publicIp = new PublicIpAddressData()
             {
                 Location = location,
                 Tags =
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
+            var publicIPAddressCollection = resourceGroup.GetPublicIpAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(publicIpName, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            Response<PublicIpAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
+            Response<PublicIpAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
 
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        PublicIPAddress = new PublicIPAddressData()
+                        PublicIPAddress = new PublicIpAddressData()
                         {
                             Id = getPublicIpAddressResponse.Value.Id
                         },
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify List IpConfigurations in NetworkInterface
             var networkInterfaceOperations = resourceGroup.GetNetworkInterfaces().Get(nicName).Value;
-            AsyncPageable<NetworkInterfaceIPConfiguration> listNicIpConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIPConfigurations().GetAllAsync();
-            List<NetworkInterfaceIPConfiguration> listNicIpConfigurations = await listNicIpConfigurationsAP.ToEnumerableAsync();
+            AsyncPageable<NetworkInterfaceIpConfiguration> listNicIpConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIpConfigurations().GetAllAsync();
+            List<NetworkInterfaceIpConfiguration> listNicIpConfigurations = await listNicIpConfigurationsAP.ToEnumerableAsync();
             Assert.AreEqual(ipConfigName, listNicIpConfigurations.First().Data.Name);
             Assert.NotNull(listNicIpConfigurations.First().Data.Etag);
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 EnableAcceleratedNetworking = true,
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Primary = true,
                         Name = ipConfigName,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            var publicIp = new PublicIPAddressData()
+            var publicIp = new PublicIpAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -294,13 +294,13 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
+            var publicIPAddressCollection = resourceGroup.GetPublicIpAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(publicIpName, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            Response<PublicIpAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
+            Response<PublicIpAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
 
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -337,12 +337,12 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         Primary = true,
-                        PublicIPAddress = new PublicIPAddressData()
+                        PublicIPAddress = new PublicIpAddressData()
                         {
                             Id = getPublicIpAddressResponse.Value.Id
                         },
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network.Tests
                             Id = getSubnetResponse.Value.Id
                         }
                     },
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipconfigName2,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network.Tests
                             Id = getSubnet1Response.Value.Id
                         }
                     },
-                        new NetworkInterfaceIPConfigurationData()
+                        new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipconfigName2,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Network.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            var publicIp = new PublicIPAddressData()
+            var publicIp = new PublicIpAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -605,9 +605,9 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
+            var publicIPAddressCollection = resourceGroup.GetPublicIpAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(publicIpName, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            Response<PublicIpAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Primary = true,
                         Name = ipConfigName,
@@ -661,14 +661,14 @@ namespace Azure.ResourceManager.Network.Tests
                             Id = getSubnetResponse.Value.Id
                         }
                     },
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipv6IpConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = IPVersion.IPv6,
                     },
 
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName2,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 IpConfigurations = {
-                    new NetworkInterfaceIPConfigurationData()
+                    new NetworkInterfaceIpConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,

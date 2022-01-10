@@ -322,19 +322,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherNetworkWatchers_VerifyIpFlowOperation> NetworkWatchers_VerifyIpFlowAsync(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherVerifyIpFlowOperation> VerifyIpFlowAsync(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.NetworkWatchers_VerifyIpFlow");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.VerifyIpFlow");
             scope.Start();
             try
             {
                 var response = await _networkWatchersRestClient.VerifyIPFlowAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherNetworkWatchers_VerifyIpFlowOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkWatcherVerifyIpFlowOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -354,19 +354,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherNetworkWatchers_VerifyIpFlowOperation NetworkWatchers_VerifyIpFlow(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherVerifyIpFlowOperation VerifyIpFlow(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.NetworkWatchers_VerifyIpFlow");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.VerifyIpFlow");
             scope.Start();
             try
             {
                 var response = _networkWatchersRestClient.VerifyIPFlow(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherNetworkWatchers_VerifyIpFlowOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkWatcherVerifyIpFlowOperation(_clientDiagnostics, Pipeline, _networkWatchersRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

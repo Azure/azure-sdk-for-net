@@ -10,7 +10,6 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -46,11 +45,11 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(
+            PublicIpAddress lbPublicIp = await CreateDefaultPublicIpAddress(
                 lbPublicIpName,
                 lbDomaingNameLabel,
                 location,
-                resourceGroup.GetPublicIPAddresses());
+                resourceGroup.GetPublicIpAddresses());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                        PublicIPAddress = new PublicIpAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -1010,7 +1009,7 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIpAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIpAddresses());
 
             // Create Vnet
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -1044,7 +1043,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                        PublicIPAddress = new PublicIpAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -1197,7 +1196,7 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIpAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIpAddresses());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
@@ -1212,7 +1211,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                        PublicIPAddress = new PublicIpAddressData()
                         {
                             Id = lbPublicIp.Id
                         }

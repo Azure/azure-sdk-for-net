@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private ResourceGroup _resourceGroup;
         private Subnet _subnet;
-        private PublicIPAddress _publicIPAddress;
+        private PublicIpAddress _publicIPAddress;
         private string _bastionName;
 
         private ResourceIdentifier _resourceGroupIdentifier;
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Network.Tests
             subnetData.AddressPrefix = "10.0.0.0/24";
             var subnetLro = await vnet.GetSubnets().CreateOrUpdateAsync("AzureBastionSubnet", subnetData);
             _subnetIdentifier = subnetLro.Value.Id;
-            PublicIPAddressData ipData = new PublicIPAddressData();
+            PublicIpAddressData ipData = new PublicIpAddressData();
             ipData.Location = AzureLocation.WestUS2;
             ipData.PublicIPAllocationMethod = IPAllocationMethod.Static;
             ipData.Sku = new PublicIPAddressSku();
             ipData.Sku.Name = PublicIPAddressSkuName.Standard;
-            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("ip-"), ipData);
+            var ipLro = await rg.GetPublicIpAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("ip-"), ipData);
             _publicIPAddressIdentifier = ipLro.Value.Id;
             _bastionName = SessionRecording.GenerateAssetName("bastion-");
             await StopSessionRecordingAsync();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Tests
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
             VirtualNetwork vnet = await _resourceGroup.GetVirtualNetworks().GetAsync(_subnetIdentifier.Parent.Name);
             _subnet = await vnet.GetSubnets().GetAsync(_subnetIdentifier.Name);
-            _publicIPAddress = await _resourceGroup.GetPublicIPAddresses().GetAsync(_publicIPAddressIdentifier.Name);
+            _publicIPAddress = await _resourceGroup.GetPublicIpAddresses().GetAsync(_publicIPAddressIdentifier.Name);
         }
 
         [TearDown]
