@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         VirtualMachineRunCommand IOperationSource<VirtualMachineRunCommand>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualMachineRunCommand(_operationBase, VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement));
+            var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
+            return new VirtualMachineRunCommand(_operationBase, data.Id, data);
         }
 
         async ValueTask<VirtualMachineRunCommand> IOperationSource<VirtualMachineRunCommand>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualMachineRunCommand(_operationBase, VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement));
+            var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
+            return new VirtualMachineRunCommand(_operationBase, data.Id, data);
         }
     }
 }

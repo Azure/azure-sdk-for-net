@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of VirtualMachineScaleSetVMExtension and their operations over its parent. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetVMExtension>
+    public partial class VirtualMachineScaleSetVMExtensionCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetVMExtension>, IAsyncEnumerable<VirtualMachineScaleSetVMExtension>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineScaleSetVMExtensionsRestOperations _virtualMachineScaleSetVMExtensionsRestClient;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VirtualMachineScaleSetVM.ResourceType;
+        protected override ResourceType ValidResourceType => VirtualMachineScaleSetVm.ResourceType;
 
         // Collection level operations.
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _virtualMachineScaleSetVMExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vmExtensionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineScaleSetVMExtension(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetVMExtension(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _virtualMachineScaleSetVMExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vmExtensionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachineScaleSetVMExtension(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetVMExtension(Parent, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _virtualMachineScaleSetVMExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vmExtensionName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VirtualMachineScaleSetVMExtension>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineScaleSetVMExtension(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new VirtualMachineScaleSetVMExtension(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _virtualMachineScaleSetVMExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vmExtensionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VirtualMachineScaleSetVMExtension>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineScaleSetVMExtension(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new VirtualMachineScaleSetVMExtension(this, new ResourceIdentifier(response.Value.Id), response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -293,20 +293,25 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to get all extensions of an instance in Virtual Machine Scaleset. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<VirtualMachineScaleSetVMExtension>> GetAll(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetVMExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineScaleSetVMExtension> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionCollection.GetAll");
-            scope.Start();
-            try
+            Page<VirtualMachineScaleSetVMExtension> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _virtualMachineScaleSetVMExtensionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(value => new VirtualMachineScaleSetVMExtension(Parent, value)).ToArray() as IReadOnlyList<VirtualMachineScaleSetVMExtension>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualMachineScaleSetVMExtensionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetVMExtension(Parent, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/extensions
@@ -315,30 +320,40 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to get all extensions of an instance in Virtual Machine Scaleset. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<VirtualMachineScaleSetVMExtension>>> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetVMExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSetVMExtension> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<VirtualMachineScaleSetVMExtension>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _virtualMachineScaleSetVMExtensionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(value => new VirtualMachineScaleSetVMExtension(Parent, value)).ToArray() as IReadOnlyList<VirtualMachineScaleSetVMExtension>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualMachineScaleSetVMExtensionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetVMExtension(Parent, new ResourceIdentifier(value.Id), value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         IEnumerator<VirtualMachineScaleSetVMExtension> IEnumerable<VirtualMachineScaleSetVMExtension>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<VirtualMachineScaleSetVMExtension> IAsyncEnumerable<VirtualMachineScaleSetVMExtension>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

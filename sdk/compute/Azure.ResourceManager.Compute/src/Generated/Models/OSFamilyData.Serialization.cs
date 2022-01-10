@@ -11,9 +11,9 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class OSFamilyData
+    public partial class OsFamilyData
     {
-        internal static OSFamilyData DeserializeOSFamilyData(JsonElement element)
+        internal static OsFamilyData DeserializeOsFamilyData(JsonElement element)
         {
             Optional<string> location = default;
             Optional<OSFamilyProperties> properties = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new OSFamilyData(id, name, type, location.Value, properties.Value);
+            return new OsFamilyData(id, name, type, location.Value, properties.Value);
         }
     }
 }

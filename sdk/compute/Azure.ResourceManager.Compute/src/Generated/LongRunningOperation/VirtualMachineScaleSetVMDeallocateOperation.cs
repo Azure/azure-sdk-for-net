@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses. You are not billed for the compute resources of this virtual machine once it is deallocated. </summary>
-    public partial class VirtualMachineScaleSetVMDeallocateOperation : Operation
+    public partial class VirtualMachineScaleSetVmDeallocateOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMDeallocateOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMDeallocateOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmDeallocateOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmDeallocateOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMDeallocateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmDeallocateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMDeallocateOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmDeallocateOperation");
         }
 
         /// <inheritdoc />

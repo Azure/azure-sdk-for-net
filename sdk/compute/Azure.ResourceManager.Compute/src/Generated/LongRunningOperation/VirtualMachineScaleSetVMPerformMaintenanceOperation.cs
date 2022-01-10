@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Performs maintenance on a virtual machine in a VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMPerformMaintenanceOperation : Operation
+    public partial class VirtualMachineScaleSetVmPerformMaintenanceOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMPerformMaintenanceOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMPerformMaintenanceOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmPerformMaintenanceOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmPerformMaintenanceOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMPerformMaintenanceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmPerformMaintenanceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMPerformMaintenanceOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmPerformMaintenanceOperation");
         }
 
         /// <inheritdoc />

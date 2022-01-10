@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of CloudService and their operations over its parent. </summary>
     public partial class CloudServiceCollection : ArmCollection, IEnumerable<CloudService>, IAsyncEnumerable<CloudService>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServicesRestOperations _cloudServicesRestClient;
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudService(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudService(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CloudService(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudService(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CloudService>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new CloudService(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CloudService>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new CloudService(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _cloudServicesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,7 +305,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _cloudServicesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _cloudServicesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _cloudServicesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of the <see cref = "Disk"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Disk(ArmResource options, DiskData resource) : base(options, resource.Id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal Disk(ArmResource options, ResourceIdentifier id, DiskData data) : base(options, id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _disksRestClient = new DisksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Disk(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Disk(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new Disk(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new Disk(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new Disk(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new Disk(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -336,7 +337,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new Disk(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new Disk(this, originalResponse.Value.Id, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

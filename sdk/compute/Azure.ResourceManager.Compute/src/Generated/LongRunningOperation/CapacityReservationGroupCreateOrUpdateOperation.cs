@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal CapacityReservationGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<CapacityReservationGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<CapacityReservationGroup>(Response.FromValue(new CapacityReservationGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<CapacityReservationGroup>(Response.FromValue(new CapacityReservationGroup(operationsBase, response.Value.Id, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

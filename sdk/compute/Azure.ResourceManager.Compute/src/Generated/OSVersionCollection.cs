@@ -20,23 +20,23 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of OSVersion and their operations over its parent. </summary>
-    public partial class OSVersionCollection : ArmCollection, IEnumerable<OSVersion>, IAsyncEnumerable<OSVersion>
-
+    /// <summary> A class representing collection of OsVersion and their operations over its parent. </summary>
+    public partial class OsVersionCollection : ArmCollection, IEnumerable<OsVersion>, IAsyncEnumerable<OsVersion>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
         private readonly string _location;
 
-        /// <summary> Initializes a new instance of the <see cref="OSVersionCollection"/> class for mocking. </summary>
-        protected OSVersionCollection()
+        /// <summary> Initializes a new instance of the <see cref="OsVersionCollection"/> class for mocking. </summary>
+        protected OsVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersionCollection class. </summary>
+        /// <summary> Initializes a new instance of OsVersionCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        internal OSVersionCollection(ArmResource parent, string location) : base(parent)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        internal OsVersionCollection(ArmResource parent, string location) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -55,21 +55,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public virtual Response<OSVersion> Get(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<OsVersion> Get(string osVersionName, CancellationToken cancellationToken = default)
         {
             if (osVersionName == null)
             {
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.Get");
             scope.Start();
             try
             {
                 var response = _cloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSVersion(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OsVersion(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,21 +85,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OsVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             if (osVersionName == null)
             {
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.Get");
             scope.Start();
             try
             {
                 var response = await _cloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OSVersion(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OsVersion(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,21 +112,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public virtual Response<OSVersion> GetIfExists(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<OsVersion> GetIfExists(string osVersionName, CancellationToken cancellationToken = default)
         {
             if (osVersionName == null)
             {
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _cloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<OSVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<OsVersion>(null, response.GetRawResponse())
+                    : Response.FromValue(new OsVersion(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OsVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             if (osVersionName == null)
             {
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _cloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<OSVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<OsVersion>(null, response.GetRawResponse())
+                    : Response.FromValue(new OsVersion(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -217,17 +217,17 @@ namespace Azure.ResourceManager.Compute
         /// OperationId: CloudServiceOperatingSystems_ListOSVersions
         /// <summary> Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OSVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OSVersion> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OsVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OsVersion> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<OSVersion> FirstPageFunc(int? pageSizeHint)
+            Page<OsVersion> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _cloudServiceOperatingSystemsRestClient.ListOSVersions(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OsVersion(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<OSVersion> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OsVersion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _cloudServiceOperatingSystemsRestClient.ListOSVersionsNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OsVersion(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -258,17 +258,17 @@ namespace Azure.ResourceManager.Compute
         /// OperationId: CloudServiceOperatingSystems_ListOSVersions
         /// <summary> Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OSVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OSVersion> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OsVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OsVersion> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OSVersion>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OsVersion>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _cloudServiceOperatingSystemsRestClient.ListOSVersionsAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OsVersion(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<OSVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OsVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _cloudServiceOperatingSystemsRestClient.ListOSVersionsNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OsVersion(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="OSVersion" /> for this subscription represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="OsVersion" /> for this subscription represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(OSVersion.ResourceType);
+                var filters = new ResourceFilterCollection(OsVersion.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
             }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Filters the list of <see cref="OSVersion" /> for this subscription represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="OsVersion" /> for this subscription represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("OsVersionCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(OSVersion.ResourceType);
+                var filters = new ResourceFilterCollection(OsVersion.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
             }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<OSVersion> IEnumerable<OSVersion>.GetEnumerator()
+        IEnumerator<OsVersion> IEnumerable<OsVersion>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -350,12 +350,12 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<OSVersion> IAsyncEnumerable<OSVersion>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<OsVersion> IAsyncEnumerable<OsVersion>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, OSVersion, OSVersionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, OsVersion, OsVersionData> Construct() { }
     }
 }

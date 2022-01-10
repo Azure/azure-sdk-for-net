@@ -23,13 +23,21 @@ mgmt-debug:
   show-request-path: true
 
 override-operation-name:
+  VirtualMachines_Start: PowerOn
   VirtualMachineScaleSets_Start: PowerOn
   VirtualMachineScaleSetVMs_Start: PowerOn
   CloudServices_Start: PowerOn
+  CloudServicesUpdateDomain_GetUpdateDomain: GetUpdateDomain
+  CloudServicesUpdateDomain_ListUpdateDomains: GetUpdateDomains
+  CloudServicesUpdateDomain_WalkUpdateDomain: WalkUpdateDomain
+  GallerySharingProfile_Update: UpdateSharingProfile
+  VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
+  VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
 
-operation-groups-to-omit:
-- SharedGalleries
-- SharedGalleryImages
+request-path-to-resource-data:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
 
 directive:
   - from: compute.json
@@ -53,6 +61,15 @@ directive:
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
+  - rename-model:
+      from: OSFamily
+      to: OsFamily
+  - rename-model:
+      from: OSVersion
+      to: OsVersion
+  - rename-model:
+      from: VirtualMachineScaleSetVM
+      to: VirtualMachineScaleSetVm
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"

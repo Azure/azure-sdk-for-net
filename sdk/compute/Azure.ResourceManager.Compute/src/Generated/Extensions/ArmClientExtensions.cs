@@ -200,14 +200,14 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineScaleSetVM
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVM along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualMachineScaleSetVm
+        /// <summary> Gets an object representing a VirtualMachineScaleSetVm along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVM" /> object. </returns>
-        public static VirtualMachineScaleSetVM GetVirtualMachineScaleSetVM(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVm" /> object. </returns>
+        public static VirtualMachineScaleSetVm GetVirtualMachineScaleSetVm(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetVM(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetVm(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -354,6 +354,39 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
+        #region SharedGallery
+        /// <summary> Gets an object representing a SharedGallery along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SharedGallery" /> object. </returns>
+        public static SharedGallery GetSharedGallery(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGallery(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region SharedGalleryImage
+        /// <summary> Gets an object representing a SharedGalleryImage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SharedGalleryImage" /> object. </returns>
+        public static SharedGalleryImage GetSharedGalleryImage(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGalleryImage(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region SharedGalleryImageVersion
+        /// <summary> Gets an object representing a SharedGalleryImageVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SharedGalleryImageVersion" /> object. </returns>
+        public static SharedGalleryImageVersion GetSharedGalleryImageVersion(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGalleryImageVersion(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region RoleInstance
         /// <summary> Gets an object representing a RoleInstance along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -387,25 +420,25 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region OSVersion
-        /// <summary> Gets an object representing a OSVersion along with the instance operations that can be performed on it but with no data. </summary>
+        #region OsVersion
+        /// <summary> Gets an object representing a OsVersion along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSVersion" /> object. </returns>
-        public static OSVersion GetOSVersion(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OsVersion" /> object. </returns>
+        public static OsVersion GetOsVersion(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OSVersion(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OsVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region OSFamily
-        /// <summary> Gets an object representing a OSFamily along with the instance operations that can be performed on it but with no data. </summary>
+        #region OsFamily
+        /// <summary> Gets an object representing a OsFamily along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSFamily" /> object. </returns>
-        public static OSFamily GetOSFamily(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OsFamily" /> object. </returns>
+        public static OsFamily GetOsFamily(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OSFamily(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OsFamily(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

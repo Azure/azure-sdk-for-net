@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of GalleryImage and their operations over its parent. </summary>
     public partial class GalleryImageCollection : ArmCollection, IEnumerable<GalleryImage>, IAsyncEnumerable<GalleryImage>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GalleryImagesRestOperations _galleryImagesRestClient;
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _galleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryImage(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GalleryImage(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _galleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GalleryImage(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GalleryImage(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _galleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<GalleryImage>(null, response.GetRawResponse())
-                    : Response.FromValue(new GalleryImage(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new GalleryImage(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _galleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<GalleryImage>(null, response.GetRawResponse())
-                    : Response.FromValue(new GalleryImage(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new GalleryImage(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _galleryImagesRestClient.ListByGallery(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _galleryImagesRestClient.ListByGalleryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _galleryImagesRestClient.ListByGalleryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,7 +352,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _galleryImagesRestClient.ListByGalleryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GalleryImage(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

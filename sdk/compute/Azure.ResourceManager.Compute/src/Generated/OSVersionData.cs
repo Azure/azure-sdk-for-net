@@ -11,21 +11,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the OSVersion data model. </summary>
-    public partial class OSVersionData : Resource
+    /// <summary> A class representing the OsVersion data model. </summary>
+    public partial class OsVersionData : Resource
     {
-        /// <summary> Initializes a new instance of OSVersionData. </summary>
-        internal OSVersionData()
+        /// <summary> Initializes a new instance of OsVersionData. </summary>
+        internal OsVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersionData. </summary>
+        /// <summary> Initializes a new instance of OsVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS version properties. </param>
-        internal OSVersionData(ResourceIdentifier id, string name, ResourceType type, string location, OSVersionProperties properties) : base(id, name, type)
+        internal OsVersionData(ResourceIdentifier id, string name, ResourceType type, string location, OSVersionProperties properties) : base(id, name, type)
         {
             Location = location;
             Properties = properties;

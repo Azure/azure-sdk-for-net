@@ -11,9 +11,9 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class OSVersionData
+    public partial class OsVersionData
     {
-        internal static OSVersionData DeserializeOSVersionData(JsonElement element)
+        internal static OsVersionData DeserializeOsVersionData(JsonElement element)
         {
             Optional<string> location = default;
             Optional<OSVersionProperties> properties = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new OSVersionData(id, name, type, location.Value, properties.Value);
+            return new OsVersionData(id, name, type, location.Value, properties.Value);
         }
     }
 }

@@ -11,21 +11,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the OSFamily data model. </summary>
-    public partial class OSFamilyData : Resource
+    /// <summary> A class representing the OsFamily data model. </summary>
+    public partial class OsFamilyData : Resource
     {
-        /// <summary> Initializes a new instance of OSFamilyData. </summary>
-        internal OSFamilyData()
+        /// <summary> Initializes a new instance of OsFamilyData. </summary>
+        internal OsFamilyData()
         {
         }
 
-        /// <summary> Initializes a new instance of OSFamilyData. </summary>
+        /// <summary> Initializes a new instance of OsFamilyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS family properties. </param>
-        internal OSFamilyData(ResourceIdentifier id, string name, ResourceType type, string location, OSFamilyProperties properties) : base(id, name, type)
+        internal OsFamilyData(ResourceIdentifier id, string name, ResourceType type, string location, OSFamilyProperties properties) : base(id, name, type)
         {
             Location = location;
             Properties = properties;

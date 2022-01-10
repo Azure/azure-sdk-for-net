@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="osVersionName"/> is null. </exception>
-        public async Task<Response<OSVersionData>> GetOSVersionAsync(string subscriptionId, string location, string osVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<OsVersionData>> GetOSVersionAsync(string subscriptionId, string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSVersionData value = default;
+                        OsVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OSVersionData.DeserializeOSVersionData(document.RootElement);
+                        value = OsVersionData.DeserializeOsVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OSVersionData)null, message.Response);
+                    return Response.FromValue((OsVersionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="osVersionName"/> is null. </exception>
-        public Response<OSVersionData> GetOSVersion(string subscriptionId, string location, string osVersionName, CancellationToken cancellationToken = default)
+        public Response<OsVersionData> GetOSVersion(string subscriptionId, string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSVersionData value = default;
+                        OsVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OSVersionData.DeserializeOSVersionData(document.RootElement);
+                        value = OsVersionData.DeserializeOsVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OSVersionData)null, message.Response);
+                    return Response.FromValue((OsVersionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="osFamilyName"/> is null. </exception>
-        public async Task<Response<OSFamilyData>> GetOSFamilyAsync(string subscriptionId, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public async Task<Response<OsFamilyData>> GetOSFamilyAsync(string subscriptionId, string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -265,13 +265,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSFamilyData value = default;
+                        OsFamilyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OSFamilyData.DeserializeOSFamilyData(document.RootElement);
+                        value = OsFamilyData.DeserializeOsFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OSFamilyData)null, message.Response);
+                    return Response.FromValue((OsFamilyData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="osFamilyName"/> is null. </exception>
-        public Response<OSFamilyData> GetOSFamily(string subscriptionId, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public Response<OsFamilyData> GetOSFamily(string subscriptionId, string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -304,13 +304,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSFamilyData value = default;
+                        OsFamilyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OSFamilyData.DeserializeOSFamilyData(document.RootElement);
+                        value = OsFamilyData.DeserializeOsFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OSFamilyData)null, message.Response);
+                    return Response.FromValue((OsFamilyData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

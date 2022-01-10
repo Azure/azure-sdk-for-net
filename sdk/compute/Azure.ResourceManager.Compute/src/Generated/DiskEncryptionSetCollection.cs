@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of DiskEncryptionSet and their operations over its parent. </summary>
     public partial class DiskEncryptionSetCollection : ArmCollection, IEnumerable<DiskEncryptionSet>, IAsyncEnumerable<DiskEncryptionSet>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiskEncryptionSetsRestOperations _diskEncryptionSetsRestClient;
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _diskEncryptionSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiskEncryptionSet(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskEncryptionSet(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _diskEncryptionSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DiskEncryptionSet(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskEncryptionSet(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _diskEncryptionSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DiskEncryptionSet>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiskEncryptionSet(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new DiskEncryptionSet(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,7 +224,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _diskEncryptionSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DiskEncryptionSet>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiskEncryptionSet(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new DiskEncryptionSet(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _diskEncryptionSetsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _diskEncryptionSetsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _diskEncryptionSetsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _diskEncryptionSetsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of VirtualMachineRunCommand and their operations over its parent. </summary>
     public partial class VirtualMachineRunCommandCollection : ArmCollection, IEnumerable<VirtualMachineRunCommand>, IAsyncEnumerable<VirtualMachineRunCommand>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineRunCommandsRestOperations _virtualMachineRunCommandsRestClient;
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _virtualMachineRunCommandsRestClient.GetByVirtualMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineRunCommand(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _virtualMachineRunCommandsRestClient.GetByVirtualMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachineRunCommand(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _virtualMachineRunCommandsRestClient.GetByVirtualMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VirtualMachineRunCommand>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineRunCommand(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new VirtualMachineRunCommand(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _virtualMachineRunCommandsRestClient.GetByVirtualMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VirtualMachineRunCommand>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineRunCommand(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new VirtualMachineRunCommand(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _virtualMachineRunCommandsRestClient.ListByVirtualMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -319,7 +318,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _virtualMachineRunCommandsRestClient.ListByVirtualMachineNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +345,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _virtualMachineRunCommandsRestClient.ListByVirtualMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _virtualMachineRunCommandsRestClient.ListByVirtualMachineNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommand(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

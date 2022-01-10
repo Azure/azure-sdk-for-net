@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a OSVersion along with the instance operations that can be performed on it. </summary>
-    public partial class OSVersion : ArmResource
+    /// <summary> A Class representing a OsVersion along with the instance operations that can be performed on it. </summary>
+    public partial class OsVersion : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="OSVersion"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="OsVersion"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}";
@@ -28,40 +28,41 @@ namespace Azure.ResourceManager.Compute
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
-        private readonly OSVersionData _data;
+        private readonly OsVersionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="OSVersion"/> class for mocking. </summary>
-        protected OSVersion()
+        /// <summary> Initializes a new instance of the <see cref="OsVersion"/> class for mocking. </summary>
+        protected OsVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OSVersion"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal OSVersion(ArmResource options, OSVersionData resource) : base(options, resource.Id)
-        {
-            HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="OSVersion"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "OsVersion"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OSVersion(ArmResource options, ResourceIdentifier id) : base(options, id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal OsVersion(ArmResource options, ResourceIdentifier id, OsVersionData data) : base(options, id)
+        {
+            HasData = true;
+            _data = data;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="OsVersion"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal OsVersion(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OSVersion"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OsVersion"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OSVersion(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal OsVersion(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual OSVersionData Data
+        public virtual OsVersionData Data
         {
             get
             {
@@ -93,16 +94,16 @@ namespace Azure.ResourceManager.Compute
         /// OperationId: CloudServiceOperatingSystems_GetOSVersion
         /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<OSVersion>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OsVersion>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSVersion.Get");
+            using var scope = _clientDiagnostics.CreateScope("OsVersion.Get");
             scope.Start();
             try
             {
                 var response = await _cloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OsVersion(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +117,16 @@ namespace Azure.ResourceManager.Compute
         /// OperationId: CloudServiceOperatingSystems_GetOSVersion
         /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OSVersion> Get(CancellationToken cancellationToken = default)
+        public virtual Response<OsVersion> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSVersion.Get");
+            using var scope = _clientDiagnostics.CreateScope("OsVersion.Get");
             scope.Start();
             try
             {
                 var response = _cloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OsVersion(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

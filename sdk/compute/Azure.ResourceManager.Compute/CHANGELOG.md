@@ -4,7 +4,19 @@
 
 ### Features Added
 
+- Update API version of `compute.json` from `2021-04-01` to `2021-07-01`.
+- Update API version of `disk.json` from `2021-04-01` to `2021-08-01`.
+- Update API version of `gallery.json` and `sharedGallery.json` from `2021-09-30` to `2021-07-01`.
+- Add the APIs from `communityGallery.json`.
+
 ### Breaking Changes
+
+- Unified the name of classes in `LongRunningOperation` directory to be in the pattern of `{ResourceName}{OperationName}Operation`.
+- Change the return type of the functions to `Pageable<T>` if it previously returns `IReadOnlyList<T>`.
+- `SharedGallery`, `SharedGalleryImage` and `SharedGalleryImageVersion` to resources.
+- Rename some operation names.
+- Change class `OSFamily` name to `OsFamily`.
+- Change class `OSVersion` name to `OsVersion`. 
 
 ### Bugs Fixed
 

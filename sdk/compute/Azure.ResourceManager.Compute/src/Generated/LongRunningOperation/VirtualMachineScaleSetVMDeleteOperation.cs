@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Deletes a virtual machine from a VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMDeleteOperation : Operation
+    public partial class VirtualMachineScaleSetVmDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMDeleteOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMDeleteOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmDeleteOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmDeleteOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmDeleteOperation");
         }
 
         /// <inheritdoc />

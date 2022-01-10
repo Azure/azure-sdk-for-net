@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of CapacityReservation and their operations over its parent. </summary>
     public partial class CapacityReservationCollection : ArmCollection, IEnumerable<CapacityReservation>, IAsyncEnumerable<CapacityReservation>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CapacityReservationsRestOperations _capacityReservationsRestClient;
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _capacityReservationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CapacityReservation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapacityReservation(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _capacityReservationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CapacityReservation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapacityReservation(Parent, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _capacityReservationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<CapacityReservation>(null, response.GetRawResponse())
-                    : Response.FromValue(new CapacityReservation(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new CapacityReservation(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _capacityReservationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<CapacityReservation>(null, response.GetRawResponse())
-                    : Response.FromValue(new CapacityReservation(this, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new CapacityReservation(this, response.Value.Id, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +302,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _capacityReservationsRestClient.ListByCapacityReservationGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _capacityReservationsRestClient.ListByCapacityReservationGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +343,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _capacityReservationsRestClient.ListByCapacityReservationGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +358,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _capacityReservationsRestClient.ListByCapacityReservationGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
