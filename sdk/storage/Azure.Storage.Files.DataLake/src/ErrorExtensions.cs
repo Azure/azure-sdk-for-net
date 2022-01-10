@@ -28,8 +28,7 @@ namespace Azure.Storage.Files.DataLake
                 string message = error.Element("Message").Value.ToString(CultureInfo.InvariantCulture);
                 return clientDiagnostics.CreateRequestFailedExceptionWithContent(
                     response: response,
-                    message: message,
-                    errorCode: code);
+                    new ResponseError(code, message));
             }
             // json
             else if (response.Headers.ContentType != null
@@ -50,8 +49,10 @@ namespace Azure.Storage.Files.DataLake
 
                 return clientDiagnostics.CreateRequestFailedExceptionWithContent(
                     response: response,
-                    message: error.GetProperty("message").GetString(),
-                    errorCode: error.GetProperty("code").GetString(),
+                    new ResponseError(
+                        error.GetProperty("code").GetString(),
+                        error.GetProperty("message").GetString()
+                        ),
                     additionalInfo: details);
             }
             else
