@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualHub, VirtualHubData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualHub, VirtualHubData> Construct() { }
     }
 }

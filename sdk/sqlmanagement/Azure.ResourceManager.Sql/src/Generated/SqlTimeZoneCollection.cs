@@ -356,6 +356,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlTimeZone, SqlTimeZoneData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlTimeZone, SqlTimeZoneData> Construct() { }
     }
 }

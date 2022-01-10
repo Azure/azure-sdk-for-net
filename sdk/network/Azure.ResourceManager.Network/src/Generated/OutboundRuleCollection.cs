@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
@@ -294,6 +293,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OutboundRule, OutboundRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, OutboundRule, OutboundRuleData> Construct() { }
     }
 }

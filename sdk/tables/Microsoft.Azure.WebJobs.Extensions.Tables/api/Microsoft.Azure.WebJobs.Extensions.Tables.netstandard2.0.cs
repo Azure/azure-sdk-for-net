@@ -22,25 +22,6 @@ namespace Microsoft.Azure.WebJobs
         public int Take { get { throw null; } set { } }
     }
 }
-namespace Microsoft.Azure.WebJobs.Host.Protocols
-{
-    public partial class TableEntityParameterDescriptor : Microsoft.Azure.WebJobs.Host.Protocols.ParameterDescriptor
-    {
-        public TableEntityParameterDescriptor() { }
-        public string AccountName { get { throw null; } set { } }
-        public string PartitionKey { get { throw null; } set { } }
-        public string RowKey { get { throw null; } set { } }
-        public string TableName { get { throw null; } set { } }
-    }
-    public partial class TableParameterDescriptor : Microsoft.Azure.WebJobs.Host.Protocols.ParameterDescriptor
-    {
-        public TableParameterDescriptor() { }
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public System.IO.FileAccess Access { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public string TableName { get { throw null; } set { } }
-    }
-}
 namespace Microsoft.Extensions.Hosting
 {
     public static partial class TablesWebJobsBuilderExtensions

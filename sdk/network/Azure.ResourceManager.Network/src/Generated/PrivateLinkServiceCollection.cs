@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLinkService, PrivateLinkServiceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLinkService, PrivateLinkServiceData> Construct() { }
     }
 }

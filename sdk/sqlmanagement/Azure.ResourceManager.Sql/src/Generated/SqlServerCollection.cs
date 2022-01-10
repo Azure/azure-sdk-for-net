@@ -436,6 +436,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlServer, SqlServerData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlServer, SqlServerData> Construct() { }
     }
 }

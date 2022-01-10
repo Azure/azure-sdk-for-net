@@ -431,6 +431,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SubscriptionPolicyDefinition, PolicyDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SubscriptionPolicyDefinition, PolicyDefinitionData> Construct() { }
     }
 }

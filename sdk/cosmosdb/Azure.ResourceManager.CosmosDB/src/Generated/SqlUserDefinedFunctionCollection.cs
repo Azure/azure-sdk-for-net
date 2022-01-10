@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
@@ -333,6 +332,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlUserDefinedFunction, SqlUserDefinedFunctionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlUserDefinedFunction, SqlUserDefinedFunctionData> Construct() { }
     }
 }
