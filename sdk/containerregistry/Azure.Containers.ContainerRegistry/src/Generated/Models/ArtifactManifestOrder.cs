@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Sort options for ordering manifests in a collection. </summary>
-    public enum ArtifactManifestOrderBy
+    public enum ArtifactManifestOrder
     {
         /// <summary> Do not provide an orderby value in the request. </summary>
         None,
