@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>
         /// <param name="location"> The location. </param>
-        public CapacityReservationGroupData(Location location) : base(location)
+        public CapacityReservationGroupData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
             CapacityReservations = new ChangeTrackingList<Resources.Models.SubResource>();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
         /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
         /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, IList<string> zones, IReadOnlyList<Resources.Models.SubResource> capacityReservations, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView) : base(id, name, type, tags, location)
+        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IReadOnlyList<Resources.Models.SubResource> capacityReservations, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView) : base(id, name, type, tags, location)
         {
             Zones = zones;
             CapacityReservations = capacityReservations;

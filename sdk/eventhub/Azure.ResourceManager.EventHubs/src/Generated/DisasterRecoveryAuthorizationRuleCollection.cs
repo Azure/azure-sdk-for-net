@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EventHubs
@@ -294,6 +293,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DisasterRecoveryAuthorizationRule, AuthorizationRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DisasterRecoveryAuthorizationRule, AuthorizationRuleData> Construct() { }
     }
 }

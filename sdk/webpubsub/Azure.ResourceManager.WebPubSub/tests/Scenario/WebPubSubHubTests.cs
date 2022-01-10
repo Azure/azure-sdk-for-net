@@ -11,6 +11,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task CreateOrUpdate()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, Location.WestUS2, _resourceGroup);
+            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task CheckIfExist()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, Location.WestUS2, _resourceGroup);
+            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task Get()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, Location.WestUS2, _resourceGroup);
+            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GetAll()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, Location.WestUS2, _resourceGroup);
+            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task Delete()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, Location.WestUS2, _resourceGroup);
+            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();

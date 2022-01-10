@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WebPubSub, WebPubSubData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, WebPubSub, WebPubSubData> Construct() { }
     }
 }

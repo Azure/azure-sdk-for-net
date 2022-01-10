@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of DiskData. </summary>
         /// <param name="location"> The location. </param>
-        public DiskData(Location location) : base(location)
+        public DiskData(AzureLocation location) : base(location)
         {
             ManagedByExtended = new ChangeTrackingList<string>();
             Zones = new ChangeTrackingList<string>();
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        internal DiskData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, tags, location)
+        internal DiskData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, tags, location)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;

@@ -6,10 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineExtensionData(Location location) : base(location)
+        public VirtualMachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine extension instance view. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures) : base(id, name, type, tags, location)
+        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures) : base(id, name, type, tags, location)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;

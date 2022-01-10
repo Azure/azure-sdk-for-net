@@ -434,6 +434,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DedicatedHostGroup, DedicatedHostGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DedicatedHostGroup, DedicatedHostGroupData> Construct() { }
     }
 }

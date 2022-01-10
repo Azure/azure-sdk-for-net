@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DscpConfiguration, DscpConfigurationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DscpConfiguration, DscpConfigurationData> Construct() { }
     }
 }

@@ -406,6 +406,10 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
+                    if (Variables.Count == 0)
+                    {
+                        throw new TestRecordingMismatchException("The recording contains no variables.");
+                    }
                     Variables.TryGetValue(variableName, out string value);
                     return value;
                 default:

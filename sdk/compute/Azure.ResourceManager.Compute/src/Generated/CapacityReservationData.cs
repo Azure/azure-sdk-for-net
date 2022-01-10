@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called &apos;CapacityReservationSupported&apos; set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public CapacityReservationData(Location location, Models.Sku sku) : base(location)
+        public CapacityReservationData(AzureLocation location, Models.Sku sku) : base(location)
         {
             if (sku == null)
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningTime"> The date time when the capacity reservation was last updated. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningTime, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, type, tags, location)
+        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningTime, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Zones = zones;

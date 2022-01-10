@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Snapshot, SnapshotData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Snapshot, SnapshotData> Construct() { }
     }
 }

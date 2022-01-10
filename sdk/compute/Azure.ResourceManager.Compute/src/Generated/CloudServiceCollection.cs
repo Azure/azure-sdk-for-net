@@ -420,6 +420,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CloudService, CloudServiceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, CloudService, CloudServiceData> Construct() { }
     }
 }

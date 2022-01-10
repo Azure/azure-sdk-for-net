@@ -436,6 +436,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CapacityReservationGroup, CapacityReservationGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, CapacityReservationGroup, CapacityReservationGroupData> Construct() { }
     }
 }

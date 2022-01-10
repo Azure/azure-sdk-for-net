@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -276,6 +275,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServiceObjective, ServiceObjectiveData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceObjective, ServiceObjectiveData> Construct() { }
     }
 }

@@ -412,6 +412,6 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ConfigurationStore, ConfigurationStoreData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ConfigurationStore, ConfigurationStoreData> Construct() { }
     }
 }

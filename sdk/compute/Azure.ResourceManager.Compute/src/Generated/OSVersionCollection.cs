@@ -356,6 +356,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OSVersion, OSVersionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, OSVersion, OSVersionData> Construct() { }
     }
 }

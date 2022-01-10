@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -30,32 +29,22 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="request">Upstream HttpRequest.</param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
-        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, WebPubSubValidationOptions options = null, CancellationToken cancellationToken = default)
+        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/>.</returns>
+        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, RequestValidator options, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             // validation request.
-            if (request.IsPreflightRequest(out var requestHosts))
+            if (request.IsPreflightRequest(out var requestOrigins))
             {
-                if (options == null || !options.ContainsHost())
-                {
-                    return new PreflightRequest(true);
-                }
-                else
-                {
-                    foreach (var item in requestHosts)
-                    {
-                        if (options.ContainsHost(item))
-                        {
-                            return new PreflightRequest(true);
-                        }
-                    }
-                }
-                return new PreflightRequest(false);
+                return new PreflightRequest(options.IsValidOrigin(requestOrigins));
             }
 
             if (!request.TryParseCloudEvents(out var context))
@@ -63,7 +52,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 throw new ArgumentException("Invalid Web PubSub upstream request missing required fields in header.");
             }
 
-            if (!context.IsValidSignature(options))
+            if (!options.IsValidSignature(context))
             {
                 throw new UnauthorizedAccessException("Signature validation failed.");
             }
@@ -104,51 +93,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        internal static bool IsPreflightRequest(this HttpRequest request, out List<string> requestHosts)
+        internal static bool IsPreflightRequest(this HttpRequest request, out IReadOnlyList<string> requestOrigins)
         {
             if (HttpMethods.IsOptions(request.Method))
             {
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Count > 0)
                 {
-                    requestHosts = requestOrigin.ToList();
+                    requestOrigins = requestOrigin;
                     return true;
                 }
             }
-            requestHosts = null;
-            return false;
-        }
-
-        internal static bool IsValidSignature(this WebPubSubConnectionContext connectionContext, WebPubSubValidationOptions options)
-        {
-            // no options skip validation.
-            if (options == null || !options.ContainsHost())
-            {
-                return true;
-            }
-
-            // TODO: considering add cache to improve.
-            if (options.TryGetKey(connectionContext.Origin, out var accessKey))
-            {
-                // server side disable signature checks.
-                if (string.IsNullOrEmpty(accessKey))
-                {
-                    return true;
-                }
-
-                var signatures = connectionContext.Signature.ToHeaderList();
-                if (signatures == null)
-                {
-                    return false;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionContext.ConnectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-            }
+            requestOrigins = null;
             return false;
         }
 
@@ -272,16 +228,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 dataType = WebPubSubDataType.Binary;
                 return false;
             }
-        }
-
-        private static IReadOnlyList<string> ToHeaderList(this string signatures)
-        {
-            if (string.IsNullOrEmpty(signatures))
-            {
-                return default;
-            }
-
-            return signatures.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private static WebPubSubEventType GetEventType(this string ceType)

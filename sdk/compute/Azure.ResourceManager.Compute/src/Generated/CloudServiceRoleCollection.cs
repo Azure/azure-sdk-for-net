@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -306,6 +305,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CloudServiceRole, CloudServiceRoleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, CloudServiceRole, CloudServiceRoleData> Construct() { }
     }
 }

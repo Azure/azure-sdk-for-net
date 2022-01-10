@@ -434,6 +434,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualMachineScaleSet, VirtualMachineScaleSetData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualMachineScaleSet, VirtualMachineScaleSetData> Construct() { }
     }
 }

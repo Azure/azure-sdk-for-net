@@ -434,6 +434,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RestorePointGroup, RestorePointGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, RestorePointGroup, RestorePointGroupData> Construct() { }
     }
 }

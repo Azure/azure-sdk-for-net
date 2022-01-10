@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
