@@ -978,6 +978,28 @@ namespace Azure.Core.Tests
             Assert.AreEqual(resourceId, id.ToString());
         }
 
+        [TestCase("/subscriptions//providers/Contoso.Widgets/widgets/myWidget",
+            Description = "SubscriptionResourceIdentifier")]
+        [TestCase("/subscriptions//locations/westus2/providers/Contoso.Widgets/widgets/myWidget",
+            Description = "LocationResourceIdentifier")]
+        [TestCase("/subscriptions//resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget",
+            Description = "ResourceGroupResourceIdentifier")]
+        public void EmptySubscriptionId(string resourceId)
+        {
+            ResourceIdentifier id = new ResourceIdentifier(resourceId);
+            Assert.IsEmpty(id.SubscriptionId);
+            Assert.AreEqual(resourceId, id.ToString());
+        }
+
+        [TestCase("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups//providers/Contoso.Widgets/widgets/myWidget",
+            Description = "ResourceGroupResourceIdentifier")]
+        public void EmptyResourceGroupName(string resourceId)
+        {
+            ResourceIdentifier id = new ResourceIdentifier(resourceId);
+            Assert.IsEmpty(id.ResourceGroupName);
+            Assert.AreEqual(resourceId, id.ToString());
+        }
+
         [TestCase(TrackedResourceId, TrackedResourceId, 0)]
         [TestCase(TrackedResourceId, ChildResourceId, -1)]
         [TestCase(ChildResourceId, TrackedResourceId, 1)]

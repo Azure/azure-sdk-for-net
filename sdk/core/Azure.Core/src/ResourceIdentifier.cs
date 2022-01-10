@@ -70,10 +70,13 @@ namespace Azure.Core
                 ResourceGroupName = parent.ResourceGroupName;
             }
 
-            if (resourceType == SubscriptionResourceType)
+            if (resourceType == SubscriptionResourceType) // allow empty subscription ID
             {
-                if (!Guid.TryParse(resourceName, out _))
-                    throw new ArgumentOutOfRangeException(nameof(resourceName), $"The GUID for subscription is invalid {resourceName}.");
+                if (!string.IsNullOrEmpty(resourceName))
+                {
+                    if (!Guid.TryParse(resourceName, out _))
+                        throw new ArgumentOutOfRangeException(nameof(resourceName), $"The GUID for subscription is invalid {resourceName}.");
+                }
                 SubscriptionId = resourceName;
             }
 
@@ -228,7 +231,10 @@ namespace Azure.Core
             if (!IsProviderResource)
             {
                 builder.Append($"/{ResourceType.GetLastType()}");
-                if (!string.IsNullOrWhiteSpace(Name))
+                if (!string.IsNullOrWhiteSpace(Name) ||
+                    // allow empty subscription ID and resource group name
+                    ResourceType.GetLastType().Equals(SubscriptionsKey, StringComparison.InvariantCultureIgnoreCase) ||
+                    ResourceType.GetLastType().Equals(ResourceGroupsLowerKey, StringComparison.InvariantCultureIgnoreCase))
                     builder.Append($"/{Name}");
             }
             else
