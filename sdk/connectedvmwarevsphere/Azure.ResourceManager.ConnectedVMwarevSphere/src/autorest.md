@@ -12,6 +12,7 @@ output-folder: Generated/
 skip-csproj: true
 mgmt-debug:
   show-request-path: true
+no-property-type-replacement: ExtendedLocation
 directive:
   - rename-model:
       from: Identity

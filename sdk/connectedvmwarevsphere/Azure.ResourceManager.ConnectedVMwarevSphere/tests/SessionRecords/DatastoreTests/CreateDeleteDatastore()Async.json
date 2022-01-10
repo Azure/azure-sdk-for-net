@@ -1,0 +1,1090 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d79b4e9c8b976e4bbdd85b69adfd4ccf-d1c576c579a19148-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c0d8418de81045165d01f4867b8683ca",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "442",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:22:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e52a4796-df15-457d-9087-f83bdae92879",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e52a4796-df15-457d-9087-f83bdae92879",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082259Z:e52a4796-df15-457d-9087-f83bdae92879"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "33e01921-4d64-4f8c-a055-5bdaffd5e33d"
+          }
+        ],
+        "subscriptionId": "204898ee-cd13-4332-b9d4-55ca5c25496d",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "ARC-Testing",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourcegroups/testArcVMwareRG-1025?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9b3cee451d4f874daa44701548d6036c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "259",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8cf04223-a341-4f5d-ad7d-fa12c8382d10",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "8cf04223-a341-4f5d-ad7d-fa12c8382d10",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082303Z:8cf04223-a341-4f5d-ad7d-fa12c8382d10"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025",
+        "name": "testArcVMwareRG-1025",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648?api-version=2020-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "457",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.ConnectedVMwarevSphere/1.0.0-alpha.20220110.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "85e07a07fb6997c6bd12c0b538dba581",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "extendedLocation": {
+          "type": "CustomLocation",
+          "name": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ExtendedLocation/customLocations/service-sdk-test-cl"
+        },
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "vCenterId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/service-sdk-test-vcenter",
+          "moRefId": "datastore-11"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-10-01-preview, 2022-01-10-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1013",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:14 GMT",
+        "ETag": "\u00223200879e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Location": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/Datastores/testdatastore8648",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1f6c601f-f204-423f-91f2-392f0830161d",
+        "x-ms-correlation-request-id": "ed59ca48-3acb-4ada-a30e-f0c07b8ad950",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "e0466a76-ffdd-4bd0-bde5-7929599de247",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082314Z:ed59ca48-3acb-4ada-a30e-f0c07b8ad950"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "name": "testdatastore8648",
+        "type": "microsoft.connectedvmwarevsphere/datastores",
+        "location": "eastus",
+        "extendedLocation": {
+          "type": "CustomLocation",
+          "name": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ExtendedLocation/customLocations/service-sdk-test-cl"
+        },
+        "tags": {},
+        "systemData": {
+          "createdBy": "bf1347fd-2d31-40a9-9980-5f31f8e0edd1",
+          "createdByType": "Application",
+          "createdAt": "2022-01-10T08:23:11.4705445Z",
+          "lastModifiedBy": "bf1347fd-2d31-40a9-9980-5f31f8e0edd1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-01-10T08:23:11.4705445Z"
+        },
+        "properties": {
+          "vCenterId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/service-sdk-test-vcenter",
+          "moRefId": "datastore-11",
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "087f80195ae9f2dc7503910b8dd27268",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:14 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0bb830d5-4ab5-4c50-8a38-f9eb456e8535",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "17ed50a9-f84e-4ff8-9d4d-bb09f450c520",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082315Z:0bb830d5-4ab5-4c50-8a38-f9eb456e8535"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b37f93ca190cc8a357554c03572067a7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:14 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2bcbdcef-07b2-4912-8e13-65e5a0000e30",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "2f873828-5d6c-4edf-b7b1-cbb173ce15bc",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082315Z:2bcbdcef-07b2-4912-8e13-65e5a0000e30"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b89bd0e69d5c6e974604dd53ac17fd65",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:15 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2518c897-fc7f-4d2d-9268-551b406fc999",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "a21e0bc5-6e44-4bfd-8fb1-fe5873eada5f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082315Z:2518c897-fc7f-4d2d-9268-551b406fc999"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9cdb3bf3789600e4dcb6b1940dd99a54",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:15 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bb2c7537-7f8a-4a0f-af33-b986acebd296",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "e414fe0c-a69e-41db-8c5d-8005e8fa98cc",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082316Z:bb2c7537-7f8a-4a0f-af33-b986acebd296"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "bd24e99cba372d0cfc116c073b501c3f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:15 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "914db2a1-c09d-498b-a20b-338e81663d33",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "ba4ed739-86f0-4d1b-80b6-faf987741790",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082316Z:914db2a1-c09d-498b-a20b-338e81663d33"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1c0fe758ca456e11eb9bdca5eb03616c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:16 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2e955a6b-4a22-4ec6-aba4-3d48552e2f5e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "8ec28603-1c24-49d8-a27e-255d30f0c5a8",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082316Z:2e955a6b-4a22-4ec6-aba4-3d48552e2f5e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c2b7896940f3392d2eada0850bdcc48c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:16 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4970320d-c5d8-4bca-98dc-384b4b640769",
+        "x-ms-ratelimit-remaining-tenant-reads": "11993",
+        "x-ms-request-id": "16f7d454-7d54-4ad7-b730-d45042b22494",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082317Z:4970320d-c5d8-4bca-98dc-384b4b640769"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "253c719a7ecad10fd8b6d19cdd6742f8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:16 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cf12d77f-044c-4840-8fd0-c31194a675c3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11992",
+        "x-ms-request-id": "969fe374-47c7-4cbe-af65-1c9083314ae5",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082317Z:cf12d77f-044c-4840-8fd0-c31194a675c3"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b29effaf5998174cbad5ee982a8c620f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:17 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "35355d92-8d31-42f0-92d5-4b15f5d1097b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11991",
+        "x-ms-request-id": "b64d9af5-36b3-46f2-a18b-c2c052a4dc8a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082317Z:35355d92-8d31-42f0-92d5-4b15f5d1097b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "790b50d63bc6eba27ae5ea3c6e915bc7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:17 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4554fa78-09f6-485d-89c9-015b071e5271",
+        "x-ms-ratelimit-remaining-tenant-reads": "11990",
+        "x-ms-request-id": "bd3d5c6b-a229-4611-99d6-68d1ecb48901",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082318Z:4554fa78-09f6-485d-89c9-015b071e5271"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0cd5a76b123e41f325246bf59076a74b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:18 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "41496bd0-c90f-4843-afa6-7811003ef07c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11989",
+        "x-ms-request-id": "872527a7-341f-48ce-b6fd-5f43d02e9986",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082319Z:41496bd0-c90f-4843-afa6-7811003ef07c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8dc5c154c85b73315db237b26e0fa828",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:18 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3eef8f7e-9bda-4a02-be1c-d5e61b8cd683",
+        "x-ms-ratelimit-remaining-tenant-reads": "11988",
+        "x-ms-request-id": "f85dba05-b112-4ae0-b68c-c42823c2a48b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082319Z:3eef8f7e-9bda-4a02-be1c-d5e61b8cd683"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "822c267955b7c3d15cca54a2d0ad5b03",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:19 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3d261e45-1104-4a5f-9172-d8d3d26af03a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11987",
+        "x-ms-request-id": "a367d9bf-c8dd-4ae8-85c1-d5a662203bbb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082320Z:3d261e45-1104-4a5f-9172-d8d3d26af03a"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ace89f3ececba36b7561af8bdb40d215",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:19 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4d847198-17bc-4d8a-886d-20bbd8843f1c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11986",
+        "x-ms-request-id": "d4b0e8e0-5fbf-47d8-ba17-91a354c08d63",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082320Z:4d847198-17bc-4d8a-886d-20bbd8843f1c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "697b427b244afe94f0023091738fa3af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:20 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "071e3113-12a4-4254-908a-ed002356e665",
+        "x-ms-ratelimit-remaining-tenant-reads": "11985",
+        "x-ms-request-id": "edbeca97-1789-4af0-8d71-b90f59cb0e65",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082320Z:071e3113-12a4-4254-908a-ed002356e665"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "cf733457fc27ab5dbb890d56a645e81b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:20 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "400e796e-5153-47be-a75d-49e3fdba34f7",
+        "x-ms-ratelimit-remaining-tenant-reads": "11984",
+        "x-ms-request-id": "a6cd2506-9135-40db-8d0f-619595df1745",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082321Z:400e796e-5153-47be-a75d-49e3fdba34f7"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8d263ef7f2321ab90be9bcc99dd92fe6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:20 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0764450e-b88a-42f8-801e-ae81181cf790",
+        "x-ms-ratelimit-remaining-tenant-reads": "11983",
+        "x-ms-request-id": "50463ec7-757f-4df0-974f-1a66c978e1d2",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082321Z:0764450e-b88a-42f8-801e-ae81181cf790"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a634ffbd03cd7fede5d0adc0173e58ab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:21 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "87c98def-f4b7-4017-aa1c-607feb231252",
+        "x-ms-ratelimit-remaining-tenant-reads": "11982",
+        "x-ms-request-id": "c4e0aa2c-c35c-45d3-b204-cbca6d6c084f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082321Z:87c98def-f4b7-4017-aa1c-607feb231252"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "359a15191568647d7b59c43e40930de2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:21 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8c311335-94d0-4af7-bbf9-14ec9109ce4a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11981",
+        "x-ms-request-id": "5af879f6-4255-47f4-9577-f4398ea943a3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082322Z:8c311335-94d0-4af7-bbf9-14ec9109ce4a"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a698265a4110f34e51a7a86144f803cc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:21 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8e751952-1bb6-450b-a8ca-f32cbc48792e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11980",
+        "x-ms-request-id": "86b3a276-7330-4804-80a6-3f71a966d3ef",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082322Z:8e751952-1bb6-450b-a8ca-f32cbc48792e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "88af1091fa3ea87d82cf2b743faf3f51",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:22 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ba369a6a-1655-4ab3-b96f-e9e572c7cd44",
+        "x-ms-ratelimit-remaining-tenant-reads": "11979",
+        "x-ms-request-id": "098bed2d-9f9a-4768-95a9-45f1547227d9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082323Z:ba369a6a-1655-4ab3-b96f-e9e572c7cd44"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "f065cbc2b1a6d89ac6a7e4c16d1b1f82",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:22 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "38aa8ca1-2f7b-4b27-a4b8-be3005544472",
+        "x-ms-ratelimit-remaining-tenant-reads": "11978",
+        "x-ms-request-id": "a256ecfb-3e5d-4e77-9d8b-92394b11ac2d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082323Z:38aa8ca1-2f7b-4b27-a4b8-be3005544472"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2facf75585e460a3a8ef244015dab3a1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:23 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e15134e1-369a-457d-92e0-50017616939a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11977",
+        "x-ms-request-id": "248f5a72-fd33-43f9-bf9c-5154031d5315",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082324Z:e15134e1-369a-457d-92e0-50017616939a"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "799e56671393e02675d7c29716bc3b66",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:23 GMT",
+        "ETag": "\u00227c00932e-0000-0100-0000-61dbecf10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6534b262-0b49-4f5e-9e5e-58e56568c564",
+        "x-ms-ratelimit-remaining-tenant-reads": "11976",
+        "x-ms-request-id": "fd23b63d-cd7e-4943-8175-422a36773be5",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082324Z:6534b262-0b49-4f5e-9e5e-58e56568c564"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Accepted",
+        "startTime": "2022-01-10T08:23:13.1877283Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "481ea9b010023d6d270547b68c59c2eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "598",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:24 GMT",
+        "ETag": "\u00227c00bb2e-0000-0100-0000-61dbecfc0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0f2242a0-892d-4861-87df-5d9355ce6ac2",
+        "x-ms-ratelimit-remaining-tenant-reads": "11975",
+        "x-ms-request-id": "9797e99d-e4f8-4be9-8199-ad04e033428a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082325Z:0f2242a0-892d-4861-87df-5d9355ce6ac2"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConnectedVMwarevSphere/locations/EASTUS/operationStatuses/e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "name": "e0466a76-ffdd-4bd0-bde5-7929599de247*775FE5464594406ACEA75B4AEB7DB61CA91E0D7C4AA941D44A87C4222535B702",
+        "resourceId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "status": "Succeeded",
+        "startTime": "2022-01-10T08:23:13.1877283Z",
+        "endTime": "2022-01-10T08:23:24.5301072Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648?api-version=2020-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220107.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "165942f3a67c42efd0ccb90dc20b4aec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1317",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Jan 2022 08:23:24 GMT",
+        "ETag": "\u00223200af9e-0000-0100-0000-61dbecfc0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "67cfe034-e551-45ff-b52c-e5cad3d19fbd",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "16cb93f0-bd9a-4ab9-a853-83fc58cfd7e0",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220110T082325Z:67cfe034-e551-45ff-b52c-e5cad3d19fbd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/testArcVMwareRG-1025/providers/Microsoft.ConnectedVMwarevSphere/datastores/testdatastore8648",
+        "name": "testdatastore8648",
+        "type": "microsoft.connectedvmwarevsphere/datastores",
+        "location": "eastus",
+        "extendedLocation": {
+          "type": "CustomLocation",
+          "name": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ExtendedLocation/customLocations/service-sdk-test-cl"
+        },
+        "tags": {},
+        "systemData": {
+          "createdBy": "bf1347fd-2d31-40a9-9980-5f31f8e0edd1",
+          "createdByType": "Application",
+          "createdAt": "2022-01-10T08:23:11.4705445Z",
+          "lastModifiedBy": "ac9dc5fe-b644-4832-9d03-d9f1ab70c5f7",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-01-10T08:23:24.3218775Z"
+        },
+        "properties": {
+          "vCenterId": "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/service-sdk-test-vcenter",
+          "moRefId": "datastore-11",
+          "provisioningState": "Succeeded",
+          "uuid": "188ab041-e654-4172-8a92-a4fb156413cb",
+          "customResourceName": "188ab041-e654-4172-8a92-a4fb156413cb",
+          "statuses": [
+            {
+              "status": "True",
+              "type": "Ready",
+              "lastUpdatedAt": "2022-01-10T08:23:24.2850221Z"
+            },
+            {
+              "status": "True",
+              "type": "Idle",
+              "lastUpdatedAt": "2022-01-10T08:23:24.2850221Z"
+            }
+          ],
+          "moName": "vsanDatastore"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1543679393",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "SUBSCRIPTION_ID": "204898ee-cd13-4332-b9d4-55ca5c25496d"
+  }
+}

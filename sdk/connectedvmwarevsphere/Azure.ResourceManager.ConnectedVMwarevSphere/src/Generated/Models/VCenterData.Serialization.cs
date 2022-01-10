@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                writer.WriteObjectValue(ExtendedLocation);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VCenterData DeserializeVCenterData(JsonElement element)
         {
-            Optional<CheckNameAvailabilityRequest> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<SystemData> systemData = default;
             Optional<string> kind = default;
             IDictionary<string, string> tags = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<CheckNameAvailabilityRequest>(property.Value.ToString());
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VCenterData(id, name, type, tags, location, extendedLocation, systemData, kind.Value, uuid.Value, fqdn, Optional.ToNullable(port), version.Value, instanceUuid.Value, connectionStatus.Value, customResourceName.Value, credentials.Value, Optional.ToList(statuses), provisioningState.Value);
+            return new VCenterData(id, name, type, tags, location, extendedLocation.Value, systemData, kind.Value, uuid.Value, fqdn, Optional.ToNullable(port), version.Value, instanceUuid.Value, connectionStatus.Value, customResourceName.Value, credentials.Value, Optional.ToList(statuses), provisioningState.Value);
         }
     }
 }

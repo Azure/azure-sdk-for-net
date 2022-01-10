@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\Azure.ResourceManager.ConnectedVMwarevSphere.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\ResourcePoolTests\" />
   </ItemGroup>
 </Project>
