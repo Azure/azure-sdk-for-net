@@ -97,7 +97,7 @@ namespace Azure
                 error,
                 content,
                 null,
-                response.Sanitizer!);
+                response.Sanitizer);
 
             return (exceptionMessage, error);
         }

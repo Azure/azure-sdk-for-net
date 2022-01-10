@@ -3,16 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 #nullable enable
 
@@ -56,33 +53,13 @@ namespace Azure.Core.Pipeline
 
         internal static ResponseError? ExtractAzureErrorContent(string? content)
         {
-            string? errorCode = null;
-            string? message = null;
             try
             {
                 // Optimistic check for JSON object we expect
                 if (content == null ||
                     !content.StartsWith("{", StringComparison.OrdinalIgnoreCase)) return null;
 
-                string? parsedMessage = null;
-                using JsonDocument document = JsonDocument.Parse(content);
-                if (document.RootElement.TryGetProperty("error", out var errorProperty))
-                {
-                    if (errorProperty.TryGetProperty("code", out var codeProperty))
-                    {
-                        errorCode = codeProperty.GetString();
-                    }
-                    if (errorProperty.TryGetProperty("message", out var messageProperty))
-                    {
-                        parsedMessage = messageProperty.GetString();
-                    }
-                }
-
-                // Make sure we parsed a message so we don't overwrite the value with null
-                if (parsedMessage != null)
-                {
-                    message = parsedMessage;
-                }
+                return JsonSerializer.Deserialize<ResponseError>(content);
             }
             catch (Exception)
             {
@@ -90,7 +67,7 @@ namespace Azure.Core.Pipeline
                 // included verbatim in the detailed error message
             }
 
-            return new ResponseError(errorCode, message);
+            return null;
         }
 
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
@@ -108,14 +85,14 @@ namespace Azure.Core.Pipeline
             return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
         }
 
-        public RequestFailedException CreateRequestFailedExceptionWithContent(
+        private RequestFailedException CreateRequestFailedExceptionWithContent(
             Response response,
             ResponseError? error = null,
             string? content = null,
             IDictionary<string, string>? additionalInfo = null,
             Exception? innerException = null)
         {
-            var formatMessage = CreateRequestFailedMessageWithContent(response, error, content, additionalInfo);
+            var formatMessage = CreateRequestFailedMessageWithContent(response, error, content, additionalInfo, _sanitizer);
             var exception = new RequestFailedException(response.Status, formatMessage, error?.Code, innerException);
 
             if (additionalInfo != null)
@@ -132,11 +109,6 @@ namespace Azure.Core.Pipeline
         public async ValueTask<string> CreateRequestFailedMessageAsync(Response response, ResponseError? error, IDictionary<string, string>? additionalInfo, bool async)
         {
             var content = await ReadContentAsync(response, async).ConfigureAwait(false);
-            return CreateRequestFailedMessageWithContent(response, error, content, additionalInfo);
-        }
-
-        public string CreateRequestFailedMessageWithContent(Response response, ResponseError? error, string? content, IDictionary<string, string>? additionalInfo)
-        {
             return CreateRequestFailedMessageWithContent(response, error, content, additionalInfo, _sanitizer);
         }
 

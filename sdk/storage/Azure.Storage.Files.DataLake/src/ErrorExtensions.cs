@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.DataLake
                 XElement error = XDocument.Parse(body).Element("Error");
                 string code = error.Element("Code").Value.ToString(CultureInfo.InvariantCulture);
                 string message = error.Element("Message").Value.ToString(CultureInfo.InvariantCulture);
-                return clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                return clientDiagnostics.CreateRequestFailedException(
                     response: response,
                     new ResponseError(code, message));
             }
@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                 }
 
-                return clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                return clientDiagnostics.CreateRequestFailedException(
                     response: response,
                     new ResponseError(
                         error.GetProperty("code").GetString(),

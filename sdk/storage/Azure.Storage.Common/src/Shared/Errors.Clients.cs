@@ -106,7 +106,7 @@ namespace Azure.Storage
             => new ArgumentException($"The version specified by {paramName} is not supported by this library.");
 
         public static RequestFailedException ClientRequestIdMismatch(ClientDiagnostics clientDiagnostics, Response response, string echo, string original)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(
+            => clientDiagnostics.CreateRequestFailedException(
                 response,
                 new ResponseError(
                     response.GetErrorCode(null),
