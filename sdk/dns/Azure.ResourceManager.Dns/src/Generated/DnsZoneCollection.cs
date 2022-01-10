@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DnsZone, DnsZoneData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DnsZone, DnsZoneData> Construct() { }
     }
 }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Dns.Models;
 
@@ -371,6 +370,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RecordSetCname, RecordSetData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, RecordSetCname, RecordSetData> Construct() { }
     }
 }

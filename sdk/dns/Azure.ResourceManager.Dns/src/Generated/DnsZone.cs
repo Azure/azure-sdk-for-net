@@ -15,7 +15,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Dns.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -584,7 +583,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetAs in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetAs and their operations over a DnsZone. </returns>
-        public RecordSetACollection GetRecordSetAs()
+        public virtual RecordSetACollection GetRecordSetAs()
         {
             return new RecordSetACollection(this);
         }
@@ -594,7 +593,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetAaaas in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetAaaas and their operations over a DnsZone. </returns>
-        public RecordSetAaaaCollection GetRecordSetAaaas()
+        public virtual RecordSetAaaaCollection GetRecordSetAaaas()
         {
             return new RecordSetAaaaCollection(this);
         }
@@ -604,7 +603,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetCaas in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetCaas and their operations over a DnsZone. </returns>
-        public RecordSetCaaCollection GetRecordSetCaas()
+        public virtual RecordSetCaaCollection GetRecordSetCaas()
         {
             return new RecordSetCaaCollection(this);
         }
@@ -614,7 +613,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetCnames in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetCnames and their operations over a DnsZone. </returns>
-        public RecordSetCnameCollection GetRecordSetCnames()
+        public virtual RecordSetCnameCollection GetRecordSetCnames()
         {
             return new RecordSetCnameCollection(this);
         }
@@ -624,7 +623,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetMxes in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetMxes and their operations over a DnsZone. </returns>
-        public RecordSetMxCollection GetRecordSetMxes()
+        public virtual RecordSetMxCollection GetRecordSetMxes()
         {
             return new RecordSetMxCollection(this);
         }
@@ -634,7 +633,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetNs in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetNs and their operations over a DnsZone. </returns>
-        public RecordSetNsCollection GetRecordSetNs()
+        public virtual RecordSetNsCollection GetRecordSetNs()
         {
             return new RecordSetNsCollection(this);
         }
@@ -644,7 +643,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetPtrs in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetPtrs and their operations over a DnsZone. </returns>
-        public RecordSetPtrCollection GetRecordSetPtrs()
+        public virtual RecordSetPtrCollection GetRecordSetPtrs()
         {
             return new RecordSetPtrCollection(this);
         }
@@ -654,7 +653,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetSoas in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetSoas and their operations over a DnsZone. </returns>
-        public RecordSetSoaCollection GetRecordSetSoas()
+        public virtual RecordSetSoaCollection GetRecordSetSoas()
         {
             return new RecordSetSoaCollection(this);
         }
@@ -664,7 +663,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetSrvs in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetSrvs and their operations over a DnsZone. </returns>
-        public RecordSetSrvCollection GetRecordSetSrvs()
+        public virtual RecordSetSrvCollection GetRecordSetSrvs()
         {
             return new RecordSetSrvCollection(this);
         }
@@ -674,7 +673,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetTxts in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetTxts and their operations over a DnsZone. </returns>
-        public RecordSetTxtCollection GetRecordSetTxts()
+        public virtual RecordSetTxtCollection GetRecordSetTxts()
         {
             return new RecordSetTxtCollection(this);
         }
