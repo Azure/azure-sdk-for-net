@@ -3081,6 +3081,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
+                            copySourceTags: options?.CopySourceTags,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3117,6 +3118,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
+                            copySourceTags: options?.CopySourceTags,
                             cancellationToken: cancellationToken);
                     }
 
