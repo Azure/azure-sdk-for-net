@@ -78,10 +78,9 @@ namespace Azure.Core
                 if (!remaining.StartsWith(SubscriptionStart.AsSpan()) && !remaining.StartsWith(ProviderStart.AsSpan()))
                     throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
 
-                remaining = remaining.Slice(1);
                 //trim trailing '/' off the end if it exists
-                if (remaining[remaining.Length - 1] == Separator)
-                    remaining = remaining.Slice(0, remaining.Length - 1);
+                int length = remaining[remaining.Length - 1] == Separator ? remaining.Length - 2 : remaining.Length - 1;
+                remaining = remaining.Slice(1, length);
 
                 ReadOnlySpan<char> nextWord = PopNextWord(ref remaining);
 
