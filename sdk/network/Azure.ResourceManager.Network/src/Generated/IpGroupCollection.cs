@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, IpGroup, IpGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, IpGroup, IpGroupData> Construct() { }
     }
 }

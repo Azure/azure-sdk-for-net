@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         /// <param name="fqdn"> Gets or sets the FQDN/IPAddress of the vCenter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
-        public VCenterData(Location location, string fqdn) : base(location)
+        public VCenterData(AzureLocation location, string fqdn) : base(location)
         {
             if (fqdn == null)
             {

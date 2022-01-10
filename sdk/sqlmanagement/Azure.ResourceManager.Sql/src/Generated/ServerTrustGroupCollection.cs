@@ -431,6 +431,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerTrustGroup, ServerTrustGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerTrustGroup, ServerTrustGroupData> Construct() { }
     }
 }

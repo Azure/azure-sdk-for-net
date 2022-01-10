@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         /// <summary> Initializes a new instance of ResourcePoolData. </summary>
         /// <param name="location"> The location. </param>
-        public ResourcePoolData(Location location) : base(location)
+        public ResourcePoolData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }

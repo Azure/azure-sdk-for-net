@@ -157,7 +157,10 @@ namespace Azure.ResourceManager.Tests
         public void CompareToMethodString(int expected, string version1, string version2)
         {
             FakeResourceApiVersions v1 = version1 == "2019-12-01" ? FakeResourceApiVersions.V2019_12_01 : FakeResourceApiVersions.V2020_06_01;
-            Assert.AreEqual(expected, v1.CompareTo(version2));
+            int actual = v1.CompareTo(version2);
+            Assert.AreEqual(expected < 0, actual < 0);
+            Assert.AreEqual(expected > 0, actual > 0);
+            Assert.AreEqual(expected == 0, actual == 0);
         }
 
         private FakeResourceApiVersions ConvertFromString(string version)
@@ -200,7 +203,10 @@ namespace Azure.ResourceManager.Tests
             FakeResourceApiVersions v2 = null;
             if (version2 != null)
                 v2 = ConvertFromString(version2);
-            Assert.AreEqual(expected, v1.CompareTo(v2));
+            int actual = v1.CompareTo(v2);
+            Assert.AreEqual(expected < 0, actual < 0);
+            Assert.AreEqual(expected > 0, actual > 0);
+            Assert.AreEqual(expected == 0, actual == 0);
         }
 
         [TestCase]

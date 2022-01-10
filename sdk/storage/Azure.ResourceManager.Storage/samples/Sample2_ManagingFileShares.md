@@ -13,6 +13,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
+using Azure.Core;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
@@ -26,7 +27,7 @@ This is a scoped operations object, and any operations you perform will be done 
 
 ```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```

@@ -343,6 +343,99 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
+        protected void Snapshot_CRUD_WithSecurityType_Execute(string methodName, string location)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                var snapshotName = TestUtilities.GenerateName(DiskNamePrefix);
+
+                Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage);
+                disk.Location = location;
+                disk.OsType = OperatingSystemTypes.Linux;
+                disk.CreationData.ImageReference = new ImageDiskReference
+                {
+                    Id = "/Subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/Providers/Microsoft.Compute/Locations/EASTUS2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-lts-gen2/Versions/latest"
+                };
+                disk.SecurityProfile = new DiskSecurityProfile { SecurityType = DiskSecurityTypes.TrustedLaunch };
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+
+                    //put disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+
+                    // Generate snapshot using disk info
+                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id, location: location);
+
+                    // **********
+                    // TEST
+                    // **********
+
+                    Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
+                    Validate(snapshot, snapshotOut);
+                    Assert.NotNull(snapshotOut.SecurityProfile);
+                    Assert.Equal(disk.SecurityProfile.SecurityType, snapshotOut.SecurityProfile.SecurityType);
+                    OperateSnapshot(snapshot, rgName, snapshotName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        protected void Snapshot_CRUD_WithAcceleratedNetwork_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                var snapshotName = TestUtilities.GenerateName(DiskNamePrefix);
+
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB);
+                disk.SupportedCapabilities = new SupportedCapabilities { AcceleratedNetwork = true };
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    //put disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+
+                    // Generate snapshot using disk info
+                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id, location: location);
+
+                    // **********
+                    // TEST
+                    // **********
+
+                    Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
+                    Validate(snapshot, snapshotOut);
+                    Assert.NotNull(snapshotOut.SupportedCapabilities.AcceleratedNetwork);
+                    Assert.Equal(disk.SupportedCapabilities.AcceleratedNetwork, snapshotOut.SupportedCapabilities.AcceleratedNetwork);
+                    OperateSnapshot(snapshot, rgName, snapshotName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         protected void DiskEncryptionSet_CRUD_Execute(string methodName, string encryptionType, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
@@ -1130,6 +1223,16 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(disk.SecurityProfile.SecurityType, diskOut.SecurityProfile.SecurityType);
 
+                    // Begin get access with VmGuestStateSas
+                    GrantAccessData accessData = AccessDataDefault;
+                    accessData.GetSecureVMGuestStateSAS = true;
+                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, accessData);
+                    Assert.NotNull(accessUri.AccessSAS);
+                    Assert.NotNull(accessUri.SecurityDataAccessSAS);
+
+                    // End disk access
+                    m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+
                     // Delete
                     m_CrpClient.Disks.Delete(rgName, diskName);
 
@@ -1415,13 +1518,11 @@ namespace Compute.Tests.DiskRPTests
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
-
         }
-
 
         #endregion
 
-        #region Generation
+            #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
         protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null, string location = null)
@@ -1431,6 +1532,7 @@ namespace Compute.Tests.DiskRPTests
             switch (diskCreateOption)
             {
                 case "Upload":
+                case "UploadPreparedSecure":
                     disk = GenerateBaseDisk(diskCreateOption, location);
                     disk.CreationData.UploadSizeBytes = (long) (diskSizeGB ?? 10) * 1024 * 1024 * 1024 + 512;
                     break;
@@ -1440,6 +1542,7 @@ namespace Compute.Tests.DiskRPTests
                     disk.Zones = zones;
                     break;
                 case "Import":
+                case "ImportSecure":
                     disk = GenerateImportDisk(diskCreateOption, rgName, location);
                     disk.DiskSizeGB = diskSizeGB;
                     disk.Zones = zones;

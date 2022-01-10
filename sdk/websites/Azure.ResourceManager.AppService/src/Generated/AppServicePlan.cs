@@ -15,7 +15,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -700,7 +699,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of ServerfarmHybridConnectionNamespaceRelays in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmHybridConnectionNamespaceRelays and their operations over a AppServicePlan. </returns>
-        public ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
+        public virtual ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
         {
             return new ServerfarmHybridConnectionNamespaceRelayCollection(this);
         }
@@ -710,7 +709,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a HybridConnectionLimits along with the instance operations that can be performed on it in the AppServicePlan. </summary>
         /// <returns> Returns a <see cref="HybridConnectionLimits" /> object. </returns>
-        public HybridConnectionLimits GetHybridConnectionLimits()
+        public virtual HybridConnectionLimits GetHybridConnectionLimits()
         {
             return new HybridConnectionLimits(this, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
@@ -720,7 +719,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of ServerfarmVirtualNetworkConnections in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnections and their operations over a AppServicePlan. </returns>
-        public ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
+        public virtual ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
         {
             return new ServerfarmVirtualNetworkConnectionCollection(this);
         }

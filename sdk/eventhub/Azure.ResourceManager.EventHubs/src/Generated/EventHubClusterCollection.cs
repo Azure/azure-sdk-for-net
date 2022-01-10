@@ -412,6 +412,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, EventHubCluster, EventHubClusterData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, EventHubCluster, EventHubClusterData> Construct() { }
     }
 }

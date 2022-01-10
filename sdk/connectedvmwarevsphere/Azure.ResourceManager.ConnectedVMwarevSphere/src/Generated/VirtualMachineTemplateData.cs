@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineTemplateData(Location location) : base(location)
+        public VirtualMachineTemplateData(AzureLocation location) : base(location)
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
             Disks = new ChangeTrackingList<VirtualDisk>();
