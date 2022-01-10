@@ -446,7 +446,7 @@ namespace Azure.Core
         public ResourceIdentifier AppendChildResource(string childResourceType, string childResourceName)
         {
             ValidateChildResourceParameters(childResourceType, childResourceName);
-            return new ResourceIdentifier(this, ChooseResourceType(childResourceType.AsSpan(), Parent), childResourceName.AsSpan(), false);
+            return new ResourceIdentifier(this, ChooseResourceType(childResourceType.AsSpan(), this), childResourceName.AsSpan(), false);
         }
 
         private static void ValidateProviderResourceParameters(string providerNamespace, string resourceType, string resourceName)
