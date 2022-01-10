@@ -18,12 +18,13 @@ namespace Azure.Core
             Subscription,
             ResourceGroup,
             Location,
-            Provider
+            Provider,
+            None
         }
 
         private readonly struct ResourceIdentifierParts
         {
-            public ResourceIdentifierParts(ResourceIdentifier parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType? specialType)
+            public ResourceIdentifierParts(ResourceIdentifier parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType specialType)
             {
                 Parent = parent;
                 ResourceType = resourceType;
@@ -36,7 +37,7 @@ namespace Azure.Core
             public ResourceType ResourceType { get; }
             public string ResourceName { get; }
             public bool IsProviderResource { get; }
-            public SpecialType? SpecialType { get; }
+            public SpecialType SpecialType { get; }
         }
 
         internal const char Separator = '/';
@@ -55,7 +56,7 @@ namespace Azure.Core
         /// <summary>
         /// The root of the resource hierarchy.
         /// </summary>
-        public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, ResourceType.Tenant, string.Empty, false, null);
+        public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, ResourceType.Tenant, string.Empty, false, SpecialType.None);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
@@ -69,7 +70,7 @@ namespace Azure.Core
             if (resourceId.Length == 1 && resourceId[0] == Separator)
             {
                 //this is the same as Root but can't return that since this is a ctor
-                Init(null, ResourceType.Tenant, string.Empty, false, null);
+                Init(null, ResourceType.Tenant, string.Empty, false, SpecialType.None);
             }
             else
             {
@@ -79,8 +80,7 @@ namespace Azure.Core
                     throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
 
                 //trim trailing '/' off the end if it exists
-                int length = remaining[remaining.Length - 1] == Separator ? remaining.Length - 2 : remaining.Length - 1;
-                remaining = remaining.Slice(1, length);
+                remaining = remaining[remaining.Length - 1] == Separator ? remaining.Slice(1, remaining.Length - 2) : remaining.Slice(1);
 
                 ReadOnlySpan<char> nextWord = PopNextWord(ref remaining);
 
@@ -99,13 +99,13 @@ namespace Azure.Core
             }
         }
 
-        private ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType? specialType)
+        private ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType specialType)
         {
             Init(parent, resourceType, resourceName, isProviderResource, specialType);
         }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType? specialType)
+        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType specialType)
         {
             if (parent is not null)
             {
@@ -116,26 +116,23 @@ namespace Azure.Core
                 ResourceGroupName = parent.ResourceGroupName;
             }
 
-            if (specialType.HasValue)
+            //check the 4 resource types so we can extract the common identifier values
+            switch (specialType)
             {
-                //check the 4 resource types so we can extract the common identifier values
-                switch (specialType.Value)
-                {
-                    case SpecialType.ResourceGroup:
-                        ResourceGroupName = resourceName;
-                        break;
-                    case SpecialType.Subscription:
-                        if (!Guid.TryParse(resourceName, out _))
-                            throw new ArgumentOutOfRangeException(nameof(resourceName), $"The GUID for subscription is invalid {resourceName}.");
-                        SubscriptionId = resourceName;
-                        break;
-                    case SpecialType.Provider:
-                        Provider = resourceName;
-                        break;
-                    case SpecialType.Location:
-                        Location = resourceName;
-                        break;
-                }
+                case SpecialType.ResourceGroup:
+                    ResourceGroupName = resourceName;
+                    break;
+                case SpecialType.Subscription:
+                    if (!Guid.TryParse(resourceName, out _))
+                        throw new ArgumentOutOfRangeException(nameof(resourceName), $"The GUID for subscription is invalid {resourceName}.");
+                    SubscriptionId = resourceName;
+                    break;
+                case SpecialType.Provider:
+                    Provider = resourceName;
+                    break;
+                case SpecialType.Location:
+                    Location = resourceName;
+                    break;
             }
 
             ResourceType = resourceType;
@@ -147,7 +144,7 @@ namespace Azure.Core
                 _stringValue = RootStringValue;
         }
 
-        private static ResourceType ChooseResourceType(ReadOnlySpan<char> resourceTypeName, ResourceIdentifier parent, out SpecialType? specialType)
+        private static ResourceType ChooseResourceType(ReadOnlySpan<char> resourceTypeName, ResourceIdentifier parent, out SpecialType specialType)
         {
             if (resourceTypeName.Equals(ResourceGroupKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
@@ -162,7 +159,7 @@ namespace Azure.Core
                 return ResourceType.Subscription;
             }
 
-            specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
+            specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
             return parent.ResourceType.AppendChild(resourceTypeName.ToString());
         }
 
@@ -183,7 +180,7 @@ namespace Azure.Core
                     throw new ArgumentOutOfRangeException("resourceId", $"Expected {ProvidersKey} path segment after {ResourceGroupKey}.");
 
                 nextWord = secondWord;
-                SpecialType? specialType = firstWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
+                SpecialType specialType = firstWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
                 return new ResourceIdentifierParts(parent, parent.ResourceType.AppendChild(firstWord.ToString()), string.Empty, false, specialType);
             }
 
@@ -206,14 +203,14 @@ namespace Azure.Core
                 if (!fourthWord.IsEmpty)
                 {
                     nextWord = PopNextWord(ref remaining);
-                    SpecialType? specialType = thirdWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
+                    SpecialType specialType = thirdWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
                     return new ResourceIdentifierParts(parent, new ResourceType(secondWord.ToString(), thirdWord.ToString()), fourthWord.ToString(), true, specialType);
                 }
             }
             else
             {
                 nextWord = thirdWord;
-                return new ResourceIdentifierParts(parent, ChooseResourceType(firstWord, parent, out SpecialType? specialType), secondWord.ToString(), false, specialType);
+                return new ResourceIdentifierParts(parent, ChooseResourceType(firstWord, parent, out SpecialType specialType), secondWord.ToString(), false, specialType);
             }
 
             throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
@@ -453,7 +450,8 @@ namespace Azure.Core
         public ResourceIdentifier AppendProviderResource(string providerNamespace, string resourceType, string resourceName)
         {
             ValidateProviderResourceParameters(providerNamespace, resourceType, resourceName);
-            return new ResourceIdentifier(this, new ResourceType(providerNamespace, resourceType), resourceName, true, null);
+            SpecialType specialType = resourceType.Equals(LocationsKey, StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
+            return new ResourceIdentifier(this, new ResourceType(providerNamespace, resourceType), resourceName, true, specialType);
         }
 
         /// <summary>
@@ -467,7 +465,7 @@ namespace Azure.Core
         public ResourceIdentifier AppendChildResource(string childResourceType, string childResourceName)
         {
             ValidateChildResourceParameters(childResourceType, childResourceName);
-            return new ResourceIdentifier(this, ChooseResourceType(childResourceType.AsSpan(), this, out SpecialType? specialType), childResourceName, false, specialType);
+            return new ResourceIdentifier(this, ChooseResourceType(childResourceType.AsSpan(), this, out SpecialType specialType), childResourceName, false, specialType);
         }
 
         private static void ValidateProviderResourceParameters(string providerNamespace, string resourceType, string resourceName)
