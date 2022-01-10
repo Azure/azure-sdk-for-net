@@ -355,6 +355,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeletedSite, DeletedSiteData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeletedSite, DeletedSiteData> Construct() { }
     }
 }

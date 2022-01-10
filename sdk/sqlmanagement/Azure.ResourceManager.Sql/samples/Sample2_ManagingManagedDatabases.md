@@ -32,7 +32,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
@@ -46,7 +46,7 @@ please notice that ManagedDatabases is sub resource of managed instance, before 
 ```C# Snippet:Managing_Sql_CreateAManagedDatabases
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-ManagedDatabaseData data = new ManagedDatabaseData(Location.WestUS2)
+ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2)
 {
 };
 string databaseName = "myDatabase";

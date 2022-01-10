@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AppServiceCertificateOrder, AppServiceCertificateOrderData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AppServiceCertificateOrder, AppServiceCertificateOrderData> Construct() { }
     }
 }

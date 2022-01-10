@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -353,6 +352,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AfdRuleSet, AfdRuleSetData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdRuleSet, AfdRuleSetData> Construct() { }
     }
 }

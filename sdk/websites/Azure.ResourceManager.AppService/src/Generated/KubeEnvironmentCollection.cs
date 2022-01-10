@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, KubeEnvironment, KubeEnvironmentData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, KubeEnvironment, KubeEnvironmentData> Construct() { }
     }
 }

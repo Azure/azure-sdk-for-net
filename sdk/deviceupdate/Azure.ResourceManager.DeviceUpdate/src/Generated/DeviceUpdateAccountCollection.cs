@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeviceUpdateAccount, DeviceUpdateAccountData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeviceUpdateAccount, DeviceUpdateAccountData> Construct() { }
     }
 }

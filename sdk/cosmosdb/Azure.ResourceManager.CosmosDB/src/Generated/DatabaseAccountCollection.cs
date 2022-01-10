@@ -380,6 +380,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DatabaseAccount, DatabaseAccountData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DatabaseAccount, DatabaseAccountData> Construct() { }
     }
 }

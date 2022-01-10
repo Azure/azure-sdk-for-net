@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -319,6 +319,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteHybridConnectionNamespaceRelay, HybridConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteHybridConnectionNamespaceRelay, HybridConnectionData> Construct() { }
     }
 }

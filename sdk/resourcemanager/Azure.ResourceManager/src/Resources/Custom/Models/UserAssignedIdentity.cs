@@ -59,26 +59,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Compares this <see cref="UserAssignedIdentity"/> with another instance.
-        /// </summary>
-        /// <param name="other"> <see cref="UserAssignedIdentity"/> object to compare. </param>
-        /// <returns> -1 for less than, 0 for equals, 1 for greater than. </returns>
-        public int CompareTo(UserAssignedIdentity other)
-        {
-            if (other == null)
-                return 1;
-
-            int compareResult = 0;
-            if ((compareResult = ClientId.CompareTo(other.ClientId)) == 0 &&
-                (compareResult = PrincipalId.CompareTo(other.PrincipalId)) == 0)
-            {
-                return 0;
-            }
-
-            return compareResult;
-        }
-
-        /// <summary>
         /// Compares this <see cref="UserAssignedIdentity"/> instance with another object and determines if they are equals.
         /// </summary>
         /// <param name="other"> <see cref="UserAssignedIdentity"/> object to compare. </param>

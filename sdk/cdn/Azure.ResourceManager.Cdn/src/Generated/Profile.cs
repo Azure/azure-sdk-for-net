@@ -15,7 +15,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -1006,7 +1005,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of CdnEndpoints in the Profile. </summary>
         /// <returns> An object representing collection of CdnEndpoints and their operations over a Profile. </returns>
-        public CdnEndpointCollection GetCdnEndpoints()
+        public virtual CdnEndpointCollection GetCdnEndpoints()
         {
             return new CdnEndpointCollection(this);
         }
@@ -1016,7 +1015,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of AfdCustomDomains in the Profile. </summary>
         /// <returns> An object representing collection of AfdCustomDomains and their operations over a Profile. </returns>
-        public AfdCustomDomainCollection GetAfdCustomDomains()
+        public virtual AfdCustomDomainCollection GetAfdCustomDomains()
         {
             return new AfdCustomDomainCollection(this);
         }
@@ -1026,7 +1025,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of AfdEndpoints in the Profile. </summary>
         /// <returns> An object representing collection of AfdEndpoints and their operations over a Profile. </returns>
-        public AfdEndpointCollection GetAfdEndpoints()
+        public virtual AfdEndpointCollection GetAfdEndpoints()
         {
             return new AfdEndpointCollection(this);
         }
@@ -1036,7 +1035,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of AfdOriginGroups in the Profile. </summary>
         /// <returns> An object representing collection of AfdOriginGroups and their operations over a Profile. </returns>
-        public AfdOriginGroupCollection GetAfdOriginGroups()
+        public virtual AfdOriginGroupCollection GetAfdOriginGroups()
         {
             return new AfdOriginGroupCollection(this);
         }
@@ -1046,7 +1045,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of AfdRuleSets in the Profile. </summary>
         /// <returns> An object representing collection of AfdRuleSets and their operations over a Profile. </returns>
-        public AfdRuleSetCollection GetAfdRuleSets()
+        public virtual AfdRuleSetCollection GetAfdRuleSets()
         {
             return new AfdRuleSetCollection(this);
         }
@@ -1056,7 +1055,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of AfdSecurityPolicies in the Profile. </summary>
         /// <returns> An object representing collection of AfdSecurityPolicies and their operations over a Profile. </returns>
-        public AfdSecurityPolicyCollection GetAfdSecurityPolicies()
+        public virtual AfdSecurityPolicyCollection GetAfdSecurityPolicies()
         {
             return new AfdSecurityPolicyCollection(this);
         }
@@ -1066,7 +1065,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of AfdSecrets in the Profile. </summary>
         /// <returns> An object representing collection of AfdSecrets and their operations over a Profile. </returns>
-        public AfdSecretCollection GetAfdSecrets()
+        public virtual AfdSecretCollection GetAfdSecrets()
         {
             return new AfdSecretCollection(this);
         }

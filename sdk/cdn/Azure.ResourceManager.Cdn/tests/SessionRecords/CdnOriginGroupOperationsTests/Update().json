@@ -5138,7 +5138,7 @@
         "properties": {
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
             }
           ]
         }
@@ -5172,7 +5172,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
             }
           ],
           "resourceState": "Creating",
@@ -7006,7 +7006,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
             }
           ],
           "resourceState": "Active",
@@ -7074,7 +7074,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
             }
           ],
           "resourceState": "Active",
@@ -8799,7 +8799,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6718/providers/Microsoft.Cdn/profiles/profile-5019/endpoints/endpoint-1878/origins/testOrigin"
             }
           ],
           "resourceState": "Active",

@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -275,6 +276,6 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeletedAccount, DeletedAccountData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeletedAccount, DeletedAccountData> Construct() { }
     }
 }

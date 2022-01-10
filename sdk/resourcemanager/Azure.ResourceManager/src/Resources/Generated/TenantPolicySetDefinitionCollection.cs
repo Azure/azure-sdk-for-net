@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -310,6 +309,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TenantPolicySetDefinition, PolicySetDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, TenantPolicySetDefinition, PolicySetDefinitionData> Construct() { }
     }
 }
