@@ -25,6 +25,11 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobTransferManager : StorageTransferManager
     {
+        /// <summary>
+        /// internal job transfer to scan for job sand schedule requests accordingly
+        /// </summary>
+        internal BlobJobTransferScheduler jobTransferScheduler { get; set; }
+
         ///<summary>
         /// Initializes a new instance of the <see cref="StorageTransferManager"/>
         /// class.
@@ -33,7 +38,9 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobTransferManager(StorageTransferManagerOptions options = default)
             : base(options)
         {
+            jobTransferScheduler = new BlobJobTransferScheduler(options.ConcurrencyForLocalFilesystemListing, options.ConcurrencyForServiceListing);
         }
+
         /// <summary>
         /// Add Blob Upload Job to perform
         ///
@@ -53,10 +60,11 @@ namespace Azure.Storage.DataMovement.Blobs
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            string jobId = Guid.NewGuid().ToString();
+            string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
 
             BlobUploadTransferJob transferJob = new BlobUploadTransferJob(jobId, sourceLocalPath, destinationClient, uploadOptions, token);
-            JobsToProcess.Enqueue(transferJob);
+            TotalJobs.Enqueue(transferJob);
+            jobTransferScheduler.AddJob(transferJob);
 
             // TODO: remove stub
             return jobId;
@@ -81,11 +89,10 @@ namespace Azure.Storage.DataMovement.Blobs
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            string jobId = Guid.NewGuid().ToString();
+            string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
-            JobsToProcess.Enqueue(transferJob);
-
-            // TODO; remove stub
+            TotalJobs.Enqueue(transferJob);
+            jobTransferScheduler.AddJob(transferJob);
             return jobId;
         }
 
@@ -111,11 +118,10 @@ namespace Azure.Storage.DataMovement.Blobs
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            string jobId = Guid.NewGuid().ToString();
+            string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, overwrite, destinationClient, options, token);
-            ToScanQueue.Enqueue(transferJob);
-
-            // TODO; remove stub
+            TotalJobs.Enqueue(transferJob);
+            jobTransferScheduler.AddJob(transferJob);
             return jobId;
         }
 
@@ -139,16 +145,16 @@ namespace Azure.Storage.DataMovement.Blobs
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            string jobId = Guid.NewGuid().ToString();
+            string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
-            ToScanQueue.Enqueue(transferJob);
+            TotalJobs.Enqueue(transferJob);
+            jobTransferScheduler.AddJob(transferJob);
 
-            // TODO; remove stub
             return jobId;
         }
 
         /// <summary>
-        /// Returns storage job information if provided jobId
+        /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
         /// <returns></returns>

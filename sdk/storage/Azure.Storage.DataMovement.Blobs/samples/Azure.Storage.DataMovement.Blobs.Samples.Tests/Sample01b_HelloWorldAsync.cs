@@ -222,7 +222,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 StorageTransferManagerOptions options = new StorageTransferManagerOptions();
-                options.TransferStatus.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+                options.TransferResults.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
                 {
                     if (args.Exception.ErrorCode == "500")
                     {
@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     });
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
-                Progress<StorageTransferStatus> blob2Progress = new Progress<StorageTransferStatus>();
+                Progress<StorageTransferResults> blob2Progress = new Progress<StorageTransferResults>();
                 string uploadDirectoryJobId3 = transferManager.ScheduleUploadDirectory(
                     sourcePath,
                     destinationBlob2,
@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 StorageTransferManagerOptions options = new StorageTransferManagerOptions();
-                options.TransferStatus.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+                options.TransferResults.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
                 {
                     if (args.Exception.ErrorCode == "500")
                     {
@@ -349,7 +349,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     });
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
-                Progress<StorageTransferStatus> blob2Progress = new Progress<StorageTransferStatus>();
+                Progress<StorageTransferResults> blob2Progress = new Progress<StorageTransferResults>();
                 string downloadDirectoryJobId2 = transferManager.ScheduleDownloadDirectory(
                     sourceBlobDirectory2,
                     downloadPath2,
@@ -390,7 +390,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 TransferStateDirectoryPath = planFile
             };
-            transferManagerOptions.TransferStatus.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+            transferManagerOptions.TransferResults.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
             {
                 if (args.Exception.ErrorCode == "500")
                 {
@@ -563,7 +563,95 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             }
         }
 
-        //TODO: scenario. To get back file or directory handle and remove read only attributes on the folder
-        // then resume the directory transfer
+        /// <summary>
+        /// To get back file or directory handle and remove read only attributes on the folder
+        /// then resume the directory transfer
+        /// </summary>
+        [Test]
+        public async Task ErrorHandlingPermissions()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+            string downloadPath2 = CreateTempPath();
+
+            // Get a Storage account name, shared key, and endpoint Uri.
+            //
+            // You can obtain both from the Azure Portal by clicking Access
+            // Keys under Settings in the Portal Storage account blade.
+            //
+            // You can also get access to your account keys from the Azure CLI
+            // with:
+            //
+            //     az storage account keys list --account-name <account_name> --resource-group <resource_group>
+            //
+            string accountName = StorageAccountName;
+            string accountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            // Create a SharedKeyCredential that we can use to authenticate
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+
+            // Create a client that can authenticate with a connection string
+            BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
+            BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
+
+            await container.CreateIfNotExistsAsync();
+
+            // Make a service request to verify we've successfully authenticated
+            try
+            {
+                // Get a reference to a source blobs and upload sample content to download
+                BlobVirtualDirectoryClient sourceDirectoryBlob = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
+                BlobVirtualDirectoryClient sourceDirectoryBlob2 = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
+
+                await sourceDirectoryBlob.UploadAsync(originalPath);
+                await sourceDirectoryBlob2.UploadAsync(originalPath);
+
+                // Set configurations up to continue to on storage failures
+                // but not on local filesystem errors
+                StorageTransferManagerOptions options = new StorageTransferManagerOptions()
+                {
+                    ContinueOnStorageFailure = true,
+                    ContinueOnLocalFilesystemFailure = false,
+                };
+
+                // Create Blob Transfer Manager
+                BlobTransferManager transferManager = new BlobTransferManager();
+
+                // Create transfer single blob upload job with transfer options concurrency specified
+                // i.e. it's a bigger blob so it maybe need more help uploading fast
+                Progress<StorageTransferResults> blob2Progress = new Progress<StorageTransferResults>();
+                string jobId = transferManager.ScheduleDownloadDirectory(
+                    sourceDirectoryBlob2,
+                    downloadPath2,
+                    options: new BlobDirectoryDownloadOptions()
+                    {
+                        ProgressHandler = blob2Progress,
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            MaximumConcurrency = 4
+                        }
+                    });
+
+                // Some error happens here
+                // For example let's say we hit a LeaseIdMissing error. That means the customer
+                // now needs to specify the container lease id so they can proceed with the transfer
+
+                /*
+                TransferException exception = ??;
+                BlobClient b = exception.GetBlobClient();
+                string leaseId = "containerLeaseId";
+                BlobLeaseClient containerClient = b.GetParentBlobContainerClient().GetBlobLeaseClient(leaseId);
+                BlobVirtualDirectoryClient directoryClient
+                */
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
     }
 }

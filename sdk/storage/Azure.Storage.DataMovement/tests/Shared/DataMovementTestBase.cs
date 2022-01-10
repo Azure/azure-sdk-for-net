@@ -12,7 +12,7 @@ using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
-namespace Azure.Storage.Test.Shared
+namespace Azure.Storage.DataMovement.Tests.Shared
 {
     /// <summary>
     /// Base class for Common tests

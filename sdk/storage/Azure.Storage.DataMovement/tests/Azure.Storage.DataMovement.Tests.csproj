@@ -15,10 +15,10 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="SharedStorage" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
-    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="SharedStorage" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

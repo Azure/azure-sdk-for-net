@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     ///
     /// TODO: better description
     /// </summary>
-    public class TransferItemScheduler
+    public class TransferJobScheduler
     {
         /// <summary>
         /// The maximum number of simultaneous workers. Handles the amount of items
@@ -28,19 +28,19 @@ namespace Azure.Storage.DataMovement
         // the queue has something to process.
         //private TaskScheduler taskScheduler;
 
-        private AsyncQueue<StorageTransferJob> _itemsToProcess;
+        private AsyncQueue<StorageTransferJob> _jobsToProcess;
 
         /// <summary>
         /// The queue we hold onto as the finished scanned items are added. This is the
         /// waiting list of items ready to execute (upload, download, copy)
         /// </summary>
-        public AsyncQueue<StorageTransferJob> itemsToProcess => _itemsToProcess;
+        public AsyncQueue<StorageTransferJob> itemsToProcess => _jobsToProcess;
 
         /// <summary>
         /// TransferItemScheduler Constructor
         /// </summary>
         /// <param name="maxWorkerCount">The maximum number of simultaneous workers.</param>
-        public TransferItemScheduler(int? maxWorkerCount = default)
+        public TransferJobScheduler(int? maxWorkerCount = default)
         {
             // Set _maxWorkerCount
             if (maxWorkerCount.HasValue && maxWorkerCount > 0)
@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement
                 _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
 
-            _itemsToProcess = new AsyncQueue<StorageTransferJob>();
+            _jobsToProcess = new AsyncQueue<StorageTransferJob>();
         }
 
         /// <summary>

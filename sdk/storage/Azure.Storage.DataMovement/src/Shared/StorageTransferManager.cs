@@ -3,12 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-// To use AsyncQueue, might decide to go with another queue later
+// To use ConcurrentQueue, might decide to go with another queue later
 using Microsoft.VisualStudio.Threading;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using Azure.Storage.DataMovement.Models;
+using System.Collections.Concurrent;
 
 namespace Azure.Storage.DataMovement
 {
@@ -26,12 +27,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// TransferItemScheduler
         /// </summary>
-        private TransferItemScheduler _scheduler;
+        private TransferJobScheduler _scheduler;
 
         /// <summary>
         /// TransferItemScheduler
         /// </summary>
-        protected internal TransferItemScheduler Scheduler => _scheduler;
+        protected internal TransferJobScheduler Scheduler => _scheduler;
 
         /// <summary>
         /// To hold the jobs to scan
@@ -39,24 +40,12 @@ namespace Azure.Storage.DataMovement
         /// also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
         /// part of DMLib instead of scanning right before the job is benefical.
         /// </summary>
-        private AsyncQueue<StorageTransferJob> _toScanQueue;
+        private ConcurrentQueue<StorageTransferJob> _totalJobs;
 
         /// <summary>
         /// To hold the jobs to scan
         /// </summary>
-        protected internal AsyncQueue<StorageTransferJob> ToScanQueue => _toScanQueue;
-
-        /// <summary>
-        /// To hold the jobs that have finished scanning and ready to run; This will help with grabbing required
-        /// authentication from the original job and for updating the jobs for progress tracking
-        /// </summary>
-        private AsyncQueue<StorageTransferJob> _jobsToProcess;
-
-        /// <summary>
-        /// To hold the jobs that have finished scanning and ready to run; This will help with grabbing required
-        /// authentication from the original job and for updating the jobs for progress tracking
-        /// </summary>
-        protected internal AsyncQueue<StorageTransferJob> JobsToProcess => _jobsToProcess;
+        protected internal ConcurrentQueue<StorageTransferJob> TotalJobs => _totalJobs;
 
         // Not sure if we should keep the jobs that in in progress here
         //private IList<StorageTransferJob> _jobsInProgress;
@@ -80,9 +69,8 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Directory path where transfer state is kept.</param>
         public StorageTransferManager(StorageTransferManagerOptions options = default)
         {
-            _scheduler = new TransferItemScheduler();
-            _toScanQueue = new AsyncQueue<StorageTransferJob>();
-            _jobsToProcess = new AsyncQueue<StorageTransferJob>();
+            _scheduler = new TransferJobScheduler();
+            _totalJobs = new ConcurrentQueue<StorageTransferJob>();
             _options = options;
         }
 

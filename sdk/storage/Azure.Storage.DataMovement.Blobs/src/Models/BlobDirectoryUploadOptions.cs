@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Progress handler
         /// </summary>
-        public IProgress<StorageTransferStatus> ProgressHandler { get; set; }
+        public IProgress<StorageTransferResults> ProgressHandler { get; set; }
 
         /// <summary>
         /// Setting to upload ONLY the contents of the directory. Default set to false.

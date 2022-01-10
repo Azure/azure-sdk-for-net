@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs.Models;
 
@@ -69,11 +72,31 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Create next TransferItem/Task to be processed.
         /// </summary>
+        /// <param name="blobName">Name of the blob in the directory that will be downloaded</param>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        public async Task<Response> GetSingleDownloadTaskAsync(string blobName)
         {
-            // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadAsync(DestinationLocalPath, options: Options, cancellationToken: CancellationToken);
+            BlobRequestConditions conditions = new BlobRequestConditions()
+            {
+                IfModifiedSince = Options.DirectoryRequestConditions.IfModifiedSince ?? null,
+                IfUnmodifiedSince = Options.DirectoryRequestConditions.IfUnmodifiedSince ?? null,
+            };
+
+            BlockBlobClient blockBlobClient = SourceBlobClient.GetBlockBlobClient(blobName);
+            string downloadPath = Path.Combine(DestinationLocalPath, blobName);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
+            Response response;
+            using (Stream destination = File.Create(downloadPath))
+            {
+                response = await blockBlobClient.DownloadToAsync(
+                    downloadPath,
+                    conditions,
+                    Options.TransferOptions,
+                    CancellationToken)
+                    .ConfigureAwait(false);
+            }
+            return response;
         }
     }
 }

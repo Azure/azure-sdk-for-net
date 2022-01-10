@@ -114,16 +114,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         internal virtual BlobContainerClient ContainerClient => _containerClient;
 
-        /// <summary>
-        /// A <see cref="BlobClient"/> associated with the path.
-        /// </summary>
-        internal readonly BlobClient _blobClient;
-
-        /// <summary>
-        /// A <see cref="BlockBlobClient"/> associated with the path.
-        /// </summary>
-        internal virtual BlobClient BlobClient => _blobClient;
-
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
@@ -247,7 +237,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 encryptionScope: options.EncryptionScope);
 
             _containerClient = new BlobContainerClient(connectionString, blobContainerName, options);
-            _blobClient = new BlobClient(connectionString, blobContainerName, blobDirectoryPath, options);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -271,9 +260,10 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobVirtualDirectoryClient(Uri blobDirectoryUri, BlobClientOptions options = default)
             : this(blobDirectoryUri, (HttpPipelinePolicy)null, options, null)
         {
-            _blobClient = new BlobClient(blobDirectoryUri, options);
-            // TODO: change URI to not have directory path appended
-            _containerClient = new BlobContainerClient(blobDirectoryUri, options);
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), options);
         }
 
         /// <summary>
@@ -297,9 +287,10 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobVirtualDirectoryClient(Uri blobDirectoryUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : this(blobDirectoryUri, credential.AsPolicy(), options, credential)
         {
-            _blobClient = new BlobClient(blobDirectoryUri, credential, options);
-            // TODO: change URI to not have directory path appended
-            _containerClient = new BlobContainerClient(blobDirectoryUri, credential, options);
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), credential, options);
         }
 
         /// <summary>
@@ -327,9 +318,10 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobVirtualDirectoryClient(Uri blobDirectoryUri, AzureSasCredential credential, BlobClientOptions options = default)
             : this(blobDirectoryUri, credential.AsPolicy<BlobUriBuilder>(blobDirectoryUri), options, null)
         {
-            _blobClient = new BlobClient(blobDirectoryUri, credential, options);
-            // TODO: change URI to not have directory path appended
-            _containerClient = new BlobContainerClient(blobDirectoryUri, credential, options);
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), credential, options);
         }
 
         /// <summary>
@@ -354,9 +346,10 @@ namespace Azure.Storage.DataMovement.Blobs
             : this(blobDirectoryUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(blobDirectoryUri);
-            _blobClient = new BlobClient(blobDirectoryUri, credential, options);
-            // TODO: change URI to not have directory path appended
-            _containerClient = new BlobContainerClient(blobDirectoryUri, credential, options);
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), credential, options);
         }
 
         /// <summary>
@@ -401,40 +394,6 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="blobDirectoryUri">
-        /// A <see cref="Uri"/> referencing the blob that includes the
-        /// name of the account, the name of the container, and the path of
-        /// the blob directory.
-        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_directory}".
-        /// </param>
-        /// <param name="clientConfiguration">
-        /// See <see cref="BlobClientConfiguration"/>.
-        /// </param>
-        /// <param name="clientOptions">
-        /// See <see cref="BlobClientOptions"/>.
-        /// </param>
-        internal BlobVirtualDirectoryClient(
-            Uri blobDirectoryUri,
-            BlobClientConfiguration clientConfiguration,
-            BlobClientOptions clientOptions)
-        {
-            _uri = blobDirectoryUri;
-            if (!string.IsNullOrEmpty(blobDirectoryUri.Query))
-            {
-                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobDirectoryUri.Query);
-            }
-
-            _clientConfiguration = clientConfiguration;
-            _blobClient = new BlobClient(blobDirectoryUri, clientOptions);
-
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
-        }
         #endregion
 
         /// <summary>
@@ -449,8 +408,6 @@ namespace Azure.Storage.DataMovement.Blobs
             return GetParentBlobContainerClientCore();
         }
 
-        private BlobContainerClient _parentBlobContainerClient;
-
         /// <summary>
         /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobVirtualDirectoryClient"/>'s parent container.
         /// The new <see cref="BlobContainerClient"/>
@@ -460,21 +417,33 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
         protected internal virtual BlobContainerClient GetParentBlobContainerClientCore()
         {
-            if (_parentBlobContainerClient == null)
-            {
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
-                {
-                    // erase parameters unrelated to container
-                    BlobName = null,
-                    VersionId = null,
-                    Snapshot = null,
-                };
+            //TODO: replace with proper clone of the container client
+            return _containerClient;
+        }
 
-                // TODO: replace with a proper clone of the _containerClient internal
-                _parentBlobContainerClient = _blobClient.GetParentBlobContainerClient();
-            }
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobVirtualDirectoryClient"/>'s parent container.
+        /// The new <see cref="BlobContainerClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobVirtualDirectoryClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        public virtual BlockBlobClient GetBlockBlobClient(string blobName)
+        {
+            return GetBlockBlobClientCore(blobName);
+        }
 
-            return _parentBlobContainerClient;
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobVirtualDirectoryClient"/>'s parent container.
+        /// The new <see cref="BlobContainerClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobVirtualDirectoryClient"/>.
+        /// </summary>
+        /// <param name="blobName">Name of the blob</param>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual BlockBlobClient GetBlockBlobClientCore(string blobName)
+        {
+            return _containerClient.GetBlockBlobClient(blobName);
         }
 
         /// <summary>
@@ -946,6 +915,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     if (async)
                     {
+                        // TODO: is this the best way to enumerate and then download as enumeration is happening?
                         await foreach (Page<BlobItem> page in GetBlobsAsync(cancellationToken: cancellationToken).AsPages().ConfigureAwait(false))
                         {
                             foreach (BlobItem blob in page.Values)

@@ -8,7 +8,7 @@ using System.Threading;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Provides data for <see cref="StorageTransferStatus.FilesFailedTransferred"/>
+    /// Provides data for <see cref="StorageTransferResults.FilesFailedTransferred"/>
     /// event.
     /// </summary>
     public class PathTransferSkippedEventArgs : SyncAsyncEventArgs

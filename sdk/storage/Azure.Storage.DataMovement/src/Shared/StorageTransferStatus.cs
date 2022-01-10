@@ -4,38 +4,35 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Contains results for each job.
+    /// Defines the status of the <see cref="StorageTransferJob"/>.
     /// </summary>
-    public class StorageTransferStatus
+    public enum StorageTransferStatus
     {
         /// <summary>
-        /// Number of files/blobs transferred succesfully
+        /// The Job has been queued up but has not yet begun any transfers.
         /// </summary>
-        public event SyncAsyncEventHandler<PathTransferSuccessEventArgs> FilesTransferred;
-        internal SyncAsyncEventHandler<PathTransferSuccessEventArgs> GetFilesTransferred() => FilesTransferred;
+        Queued,
 
         /// <summary>
-        /// Number of directories transferred
+        /// The Job has started, but has not yet completed.
         /// </summary>
-        public event SyncAsyncEventHandler<PathTransferSuccessEventArgs> DirectoriesTransferred;
-        internal SyncAsyncEventHandler<PathTransferSuccessEventArgs> GetDirectoriesTransferred() => DirectoriesTransferred;
+        InProgress,
 
         /// <summary>
-        /// Number of Files Failing Transfer either due to no access or just failing transfer in general
+        /// The Job has completed with no failures.
         /// </summary>
-        public event SyncAsyncEventHandler<PathTransferFailedEventArgs> FilesFailedTransferred;
-
-        internal SyncAsyncEventHandler<PathTransferFailedEventArgs> GetTransferFailedHandlers() => FilesFailedTransferred;
+        CompletedSuccessful,
 
         /// <summary>
-        /// Number of directories skipped transfer. Due to inaccessability not sure if we should keep track if a few files in a folder are unable to transfer
+        /// The Job has completed with failures.
         /// </summary>
-        public event SyncAsyncEventHandler<PathTransferSkippedEventArgs> DirectoriesSkipped;
-        internal SyncAsyncEventHandler<PathTransferSkippedEventArgs> GetDirectoriesSkipped() => DirectoriesSkipped;
-    }
+        Failed,
+
+        // TODO: should we create a status to show that it has completed with some failures?
+        // e.g. was able to copy some files in a directory but not all..
+    };
 }

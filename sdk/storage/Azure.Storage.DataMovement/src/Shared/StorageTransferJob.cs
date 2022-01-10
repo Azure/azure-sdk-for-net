@@ -24,20 +24,31 @@ namespace Azure.Storage.DataMovement
         public CancellationToken CancellationToken { get; set; }
 
         /// <summary>
-        /// Create next TransferItem/Task to be processed.
-        /// </summary>
-        /// <returns></returns>
-        public virtual Task StartTransferTaskAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
         /// Create Storage Transfer Job.
         /// </summary>
         public StorageTransferJob(string jobId)
         {
             JobId = jobId;
+        }
+
+        /// <summary>
+        /// Create next TransferItem/Task to be processed.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Task StartTransferTaskAsync()
+        {
+            // TODO: remove stub
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Gets the status of the transfer job
+        /// </summary>
+        /// <returns>StorageTransferStatus with the value of the status of the job</returns>
+        public virtual StorageTransferStatus GetTransferStatus()
+        {
+            // TODO: remove stub
+            return StorageTransferStatus.CompletedSuccessful;
         }
     }
 }

@@ -15,6 +15,8 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
+using Azure.Storage.DataMovement.Blobs.Models;
+using Azure.Storage.DataMovement.Blobs.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -98,7 +100,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task Ctor_ConnectionStringEscapeBlobName()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             string directoryName = "!*'();[]:@&%=+$,/?#äÄöÖüÜß";
             string fullBlobPath = $"{directoryName}/{GetNewBlobName()}";
 
@@ -165,11 +167,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobVirtualDirectoryClient(httpUri, GetOAuthCredential()),
+                () => new BlobVirtualDirectoryClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -211,10 +213,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
             string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
-            BlobClient blobClient = directoryClient.GetBlobClient(GetNewBlobName());
+            BlockBlobClient blobClient = directoryClient.GetBlockBlobClient(GetNewBlobName());
             await blobClient.UploadAsync(new MemoryStream());
             Uri directoryUri = directoryClient.Uri;
 
@@ -230,10 +232,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task Ctor_AzureSasCredential_UserDelegationSAS()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
-            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingBlobContainer test = await GetTestContainerAsync(oauthService);
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
-            var blobClient = directoryClient.GetBlobClient(GetNewBlobName());
+            var blobClient = directoryClient.GetBlockBlobClient(GetNewBlobName());
             await blobClient.UploadAsync(new MemoryStream());
             Uri blobUri = blobClient.Uri;
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
@@ -257,7 +259,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
             Uri blobUri = test.Container.GetBlobClient("foo").Uri;
             blobUri = new Uri(blobUri.ToString() + "?" + sas);
@@ -276,7 +278,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task UploadDirectoryAsync_RemoteUnspecified()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
             BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
@@ -316,7 +318,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task UploadDirectoryAsync_RemoteGiven()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
             BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
@@ -356,7 +358,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task DownloadDirectoryAsync()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobDirectoryName();
             BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
@@ -404,7 +406,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task DownloadDirectoryAsync_Empty()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobDirectoryName();
             string folder = CreateRandomDirectory(Path.GetTempPath());
@@ -431,7 +433,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task UploadDirectoryAsync_Empty()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
             BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
@@ -454,7 +456,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         // This test is here just to see if DM stuff works, but shouldn't sit in here
-        // (just needed to use DisposingContainer). Maybe a refactor for Disposing* stuff out to a
+        // (just needed to use DisposingBlobContainer). Maybe a refactor for Disposing* stuff out to a
         // test common source might be useful for DMLib tests.
 
         // Test is disabled as it will not function properly until _toScanQueue > _jobsToProcess
@@ -465,7 +467,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task TransferManager_UploadTwoDirectories()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             string dirName = GetNewBlobName();
             BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
             string dirTwoName = GetNewBlobName();
@@ -505,7 +507,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -531,7 +533,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsFlatSegmentAsync_Tags()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             var blobName = directoryClient.DirectoryPath + "/" + GetNewBlobName();
@@ -559,7 +561,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsFlatSegmentAsync_RehydratePriority(RehydratePriority? rehydratePriority)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             var blobName = directoryClient.DirectoryPath + "/" + GetNewBlobName();
@@ -589,7 +591,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [AsyncOnly]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -606,7 +608,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync_Metadata()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -626,7 +628,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ListBlobsFlatSegmentAsync_EncryptionScope()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -647,8 +649,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
-            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete();
+            await using DisposingBlobContainer test = await GetTestContainerAsync(blobServiceClient);
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             var blobName = directoryClient.DirectoryPath + "/" + GetNewBlobName();
@@ -667,7 +669,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync_Uncommited()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -694,7 +696,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync_Snapshot()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -714,7 +716,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync_Prefix()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -731,7 +733,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsFlatSegmentAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             BlobVirtualDirectoryClient directoryClient = container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
@@ -746,7 +748,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync_PreservesWhitespace()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
             await VerifyBlobNameWhitespaceRoundtrips($"{directoryClient.DirectoryPath}/    prefix");
             await VerifyBlobNameWhitespaceRoundtrips($"{directoryClient.DirectoryPath}/suffix    ");
@@ -766,7 +768,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsFlatSegmentAsync_VersionId()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -796,7 +798,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ListBlobsFlatSegmentAsync_LastAccessed()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -818,7 +820,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsFlatSegmentAsync_DeletedWithVersions()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             var blobName = directoryClient.DirectoryPath + "/" + GetNewBlobName();
@@ -846,7 +848,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsHierarchySegmentAsync_Tags()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             var blobName = directoryClient.DirectoryPath + "/" + GetNewBlobName();
@@ -874,7 +876,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsHierarchySegmentAsync_RehydratePriority(RehydratePriority? rehydratePriority)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             var blobName = directoryClient.DirectoryPath + "/" + GetNewBlobName();
@@ -905,7 +907,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [AsyncOnly]
         public async Task ListBlobsHierarchySegmentAsync_MaxResults()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -924,7 +926,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsHierarchySegmentAsync_Metadata()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -943,7 +945,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsHierarchySegmentAsync_Metadata_NoMetadata()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -963,7 +965,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ListBlobsHierarchySegmentAsync_EncryptionScope()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -983,8 +985,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsHierarchySegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
-            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete();
+            await using DisposingBlobContainer test = await GetTestContainerAsync(blobServiceClient);
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             var blobName = directoryClient.DirectoryPath + "/" + GetNewBlobName();
@@ -1003,7 +1005,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsHierarchySegmentAsync_Uncommited()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -1030,7 +1032,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsHierarchySegmentAsync_Snapshot()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -1051,7 +1053,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsHierarchySegmentAsync_VersionId()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -1079,7 +1081,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task ListBlobsHierarchySegmentAsync_Prefix()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -1096,7 +1098,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsHierarchySegmentAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             BlobVirtualDirectoryClient directoryClient = container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
@@ -1112,7 +1114,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ListBlobsHierarchySegmentAsync_LastAccessed()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             // Arrange
@@ -1134,7 +1136,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task ListBlobsHierarchySegmentAsync_DeletedWithVersions()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             BlobVirtualDirectoryClient directoryClient = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(directoryClient.DirectoryPath + "/" + GetNewBlobName()));

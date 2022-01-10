@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -75,13 +76,42 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Create next TransferItem/Task to be processed.
+        /// Gets the Task for calling upload on a single blob
         /// </summary>
-        /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        /// <param name="fullPathName"></param>
+        /// <returns></returns>
+        internal async Task<Response<BlobContentInfo>> GetSingleUploadTaskAsync(string fullPathName)
         {
-            // Do only blockblob upload for now for now
-            return DestinationBlobClient.UploadAsync(SourceLocalPath, Overwrite, UploadOptions, CancellationToken);
+            // Replace backward slashes meant to be directory name separators
+            string blobName = fullPathName.Substring(SourceLocalPath.Length + 1);
+            blobName = blobName.Replace(@"\", "/");
+
+            BlockBlobClient blockBlobClient = DestinationBlobClient.GetBlockBlobClient(blobName);
+
+            BlobUploadOptions blobUploadOptions = new BlobUploadOptions()
+            {
+                HttpHeaders = new BlobHttpHeaders()
+                {
+                    ContentType = UploadOptions.HttpHeaders.ContentType,
+                    ContentEncoding = UploadOptions.HttpHeaders.ContentEncoding,
+                    ContentDisposition = UploadOptions.HttpHeaders.ContentDisposition,
+                    ContentLanguage = UploadOptions.HttpHeaders.ContentLanguage,
+                    CacheControl = UploadOptions.HttpHeaders.CacheControl
+                },
+                Metadata = UploadOptions.Metadata,
+                Tags = UploadOptions.Tags,
+                AccessTier = UploadOptions.AccessTier,
+                TransferOptions = UploadOptions.TransferOptions
+            };
+
+            Response<BlobContentInfo> response;
+
+            // This would not support PIPE or FIFO files, that require to be open from both ends
+            using (FileStream uploadStream = new FileStream(fullPathName, FileMode.Open, FileAccess.Read))
+            {
+                response = await blockBlobClient.UploadAsync(uploadStream, blobUploadOptions, CancellationToken).ConfigureAwait(false);
+            }
+            return response;
         }
     }
 }
