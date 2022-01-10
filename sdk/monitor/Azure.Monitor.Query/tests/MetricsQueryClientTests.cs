@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Monitor.Query.Models;
 using Moq;
 using NUnit.Framework;
 
@@ -62,10 +65,24 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
-        public async Task CanGetMetricQueryResult()
+        public void CanGetMetricQueryResult()
         {
             var client = new MetricsQueryClient(new Uri("https://management.azure.gov"), new MockCredential(), new MetricsQueryClientOptions());
 
+            MetricTimeSeriesElement metricTimeSeriesElement = new Models.MetricTimeSeriesElement();
+            Assert.IsNotNull(metricTimeSeriesElement);
+            IEnumerable<MetricTimeSeriesElement> metricTimeSeriesElements = new[] { metricTimeSeriesElement };
+
+            MetricUnit metricUnit = new MetricUnit("test");
+            Assert.IsNotNull(metricUnit);
+            Assert.AreEqual(metricUnit.ToString(), "test");
+
+            MetricResult metricResult = new Models.MetricResult("https://management.azure.gov", "type", new LocalizableString("name"), metricUnit, metricTimeSeriesElements);
+            Assert.IsNotNull(metricResult);
+            IEnumerable<MetricResult> metricResults = new[] { metricResult };
+
+            MetricsQueryResult metricsQueryResult = new Models.MetricsQueryResult(null, TimeSpan.FromMinutes(3).ToString(), null, "namespace", "eastus", metricResults.ToList());
+            Assert.IsNotNull(metricsQueryResult);
         }
     }
 }
