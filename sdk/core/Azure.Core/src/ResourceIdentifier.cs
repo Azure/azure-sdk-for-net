@@ -13,20 +13,30 @@ namespace Azure.Core
     /// </summary>
     public sealed class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
-        private readonly ref struct ResourceIdentifierParts
+        private enum SpecialType
         {
-            public ResourceIdentifierParts(ResourceIdentifier parent, ResourceType resourceType, ReadOnlySpan<char> resourceName, bool isProviderResource) : this()
+            Subscription,
+            ResourceGroup,
+            Location,
+            Provider
+        }
+
+        private readonly struct ResourceIdentifierParts
+        {
+            public ResourceIdentifierParts(ResourceIdentifier parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType? specialType)
             {
                 Parent = parent;
                 ResourceType = resourceType;
                 ResourceName = resourceName;
                 IsProviderResource = isProviderResource;
+                SpecialType = specialType;
             }
 
             public ResourceIdentifier Parent { get; }
             public ResourceType ResourceType { get; }
-            public ReadOnlySpan<char> ResourceName { get; }
+            public string ResourceName { get; }
             public bool IsProviderResource { get; }
+            public SpecialType? SpecialType { get; }
         }
 
         internal const char Separator = '/';
@@ -37,12 +47,15 @@ namespace Azure.Core
         private const string LocationsKey = "locations";
         private const string ResourceGroupKey = "resourcegroups";
 
+        private const string SubscriptionStart = "/subscriptions/";
+        private const string ProviderStart = "/providers/";
+
         private string? _stringValue;
 
         /// <summary>
         /// The root of the resource hierarchy.
         /// </summary>
-        public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, ResourceType.Tenant, ReadOnlySpan<char>.Empty, false);
+        public static readonly ResourceIdentifier Root = new ResourceIdentifier(null, ResourceType.Tenant, string.Empty, false, null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
@@ -53,48 +66,47 @@ namespace Azure.Core
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            if (resourceId[0] != Separator)
-                throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier must start with '/'.");
-
-            if (resourceId.Length == 1)
+            if (resourceId.Length == 1 && resourceId[0] == Separator)
             {
                 //this is the same as Root but can't return that since this is a ctor
-                Init(null, ResourceType.Tenant, string.Empty, false);
+                Init(null, ResourceType.Tenant, string.Empty, false, null);
             }
-
-            ReadOnlySpan<char> remaining = resourceId.AsSpan(1);
-            //trim trailing '/' off the end if it exists
-            if (remaining[remaining.Length - 1] == Separator)
-                remaining = remaining.Slice(0, remaining.Length - 1);
-
-            ReadOnlySpan<char> nextWord = GetNextWord(ref remaining);
-            //this can occur if someone passes in '/foobar' or '/foobar/'
-            if (remaining.IsEmpty)
-                throw new ArgumentOutOfRangeException(nameof(resourceId), "The ResourceIdentifier is too short it must have at least 2 path segments.");
-
-            if (!nextWord.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) && !nextWord.Equals(ProvidersKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with either '/{SubscriptionsKey}' or '/{ProvidersKey}'.");
-
-            //we know we at least have 1 ResourceIdentifier in the tree here
-            ResourceIdentifierParts nextParts = GetNextPieces(Root, ref remaining, ref nextWord);
-            while (!nextWord.IsEmpty)
+            else
             {
-                //continue to get the next ResourceIdentifier in the tree until we reach the end which will be 'this'
-                nextParts = GetNextPieces(new ResourceIdentifier(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource), ref remaining, ref nextWord);
-            }
+                ReadOnlySpan<char> remaining = resourceId.AsSpan();
 
-            //initialize ourselves last
-            Init(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName.ToString(), nextParts.IsProviderResource);
-            _stringValue = resourceId;
+                if (!remaining.StartsWith(SubscriptionStart.AsSpan()) && !remaining.StartsWith(ProviderStart.AsSpan()))
+                    throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
+
+                remaining = remaining.Slice(1);
+                //trim trailing '/' off the end if it exists
+                if (remaining[remaining.Length - 1] == Separator)
+                    remaining = remaining.Slice(0, remaining.Length - 1);
+
+                ReadOnlySpan<char> nextWord = PopNextWord(ref remaining);
+
+                //we know we at least have 1 ResourceIdentifier in the tree here
+                ResourceIdentifierParts nextParts = GetNextParts(Root, ref remaining, ref nextWord);
+                while (!nextWord.IsEmpty)
+                {
+                    //continue to get the next ResourceIdentifier in the tree until we reach the end which will be 'this'
+                    ResourceIdentifier newParent = new ResourceIdentifier(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
+                    nextParts = GetNextParts(newParent, ref remaining, ref nextWord);
+                }
+
+                //initialize ourselves last
+                Init(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
+                _stringValue = resourceId;
+            }
         }
 
-        private ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, ReadOnlySpan<char> resourceName, bool idProviderResource)
+        private ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType? specialType)
         {
-            Init(parent, resourceType, resourceName.ToString(), idProviderResource);
+            Init(parent, resourceType, resourceName, isProviderResource, specialType);
         }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource)
+        private void Init(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType? specialType)
         {
             if (parent is not null)
             {
@@ -105,54 +117,62 @@ namespace Azure.Core
                 ResourceGroupName = parent.ResourceGroupName;
             }
 
-            //check the 3 resource types so we can extract the common identifier values
-            if (resourceType.Namespace == ResourceType.ResourceNamespace)
+            if (specialType.HasValue)
             {
-                if (resourceType.Type == SubscriptionsKey)
+                //check the 4 resource types so we can extract the common identifier values
+                switch (specialType.Value)
                 {
-                    if (!Guid.TryParse(resourceName, out _))
-                        throw new ArgumentOutOfRangeException(nameof(resourceName), $"The GUID for subscription is invalid {resourceName}.");
-                    SubscriptionId = resourceName;
+                    case SpecialType.ResourceGroup:
+                        ResourceGroupName = resourceName;
+                        break;
+                    case SpecialType.Subscription:
+                        if (!Guid.TryParse(resourceName, out _))
+                            throw new ArgumentOutOfRangeException(nameof(resourceName), $"The GUID for subscription is invalid {resourceName}.");
+                        SubscriptionId = resourceName;
+                        break;
+                    case SpecialType.Provider:
+                        Provider = resourceName;
+                        break;
+                    case SpecialType.Location:
+                        Location = resourceName;
+                        break;
                 }
-
-                if (resourceType.Type.Equals(ResourceGroupKey, StringComparison.OrdinalIgnoreCase))
-                    ResourceGroupName = resourceName;
-
-                if (resourceType.Type == ProvidersKey)
-                    Provider = resourceName;
             }
-
-            //check for location
-            if (resourceType.GetLastType() == LocationsKey)
-                Location = resourceName;
 
             ResourceType = resourceType;
             Name = resourceName;
             IsProviderResource = isProviderResource;
-            Parent = parent!;
+            Parent = parent;
 
             if (parent is null)
                 _stringValue = RootStringValue;
         }
 
-        private static ResourceType ChooseResourceType(ReadOnlySpan<char> resourceTypeName, ResourceIdentifier parent)
+        private static ResourceType ChooseResourceType(ReadOnlySpan<char> resourceTypeName, ResourceIdentifier parent, out SpecialType? specialType)
         {
             if (resourceTypeName.Equals(ResourceGroupKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                specialType = SpecialType.ResourceGroup;
                 return ResourceType.ResourceGroup;
+            }
 
             //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
             if (resourceTypeName.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) && parent.ResourceType == ResourceType.Tenant)
+            {
+                specialType = SpecialType.Subscription;
                 return ResourceType.Subscription;
+            }
 
+            specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
             return parent.ResourceType.AppendChild(resourceTypeName.ToString());
         }
 
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly
-        private static ResourceIdentifierParts GetNextPieces(ResourceIdentifier parent, ref ReadOnlySpan<char> remaining, ref ReadOnlySpan<char> nextWord)
+        private static ResourceIdentifierParts GetNextParts(ResourceIdentifier parent, ref ReadOnlySpan<char> remaining, ref ReadOnlySpan<char> nextWord)
         {
             ReadOnlySpan<char> firstWord = nextWord;
+            ReadOnlySpan<char> secondWord = PopNextWord(ref remaining);
 
-            ReadOnlySpan<char> secondWord = GetNextWord(ref remaining);
             if (secondWord.IsEmpty)
             {
                 //subscriptions and resourceGroups aren't valid ids without their name
@@ -164,10 +184,11 @@ namespace Azure.Core
                     throw new ArgumentOutOfRangeException("resourceId", $"Expected {ProvidersKey} path segment after {ResourceGroupKey}.");
 
                 nextWord = secondWord;
-                return new ResourceIdentifierParts(parent, ChooseResourceType(firstWord, parent), ReadOnlySpan<char>.Empty, false);
+                SpecialType? specialType = firstWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
+                return new ResourceIdentifierParts(parent, parent.ResourceType.AppendChild(firstWord.ToString()), string.Empty, false, specialType);
             }
 
-            ReadOnlySpan<char> thirdWord = GetNextWord(ref remaining);
+            ReadOnlySpan<char> thirdWord = PopNextWord(ref remaining);
             if (firstWord.Equals(ProvidersKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 if (thirdWord.IsEmpty || thirdWord.Equals(ProvidersKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
@@ -176,30 +197,31 @@ namespace Azure.Core
                     if (parent.ResourceType == ResourceType.Subscription || parent.ResourceType == ResourceType.Tenant)
                     {
                         nextWord = thirdWord;
-                        return new ResourceIdentifierParts(parent, ResourceType.Provider, secondWord, true);
+                        return new ResourceIdentifierParts(parent, ResourceType.Provider, secondWord.ToString(), true, SpecialType.Provider);
                     }
 
                     throw new ArgumentOutOfRangeException("resourceId", $"Provider resource can only come after the root or {SubscriptionsKey}.");
                 }
 
-                ReadOnlySpan<char> fourthWord = GetNextWord(ref remaining);
+                ReadOnlySpan<char> fourthWord = PopNextWord(ref remaining);
                 if (!fourthWord.IsEmpty)
                 {
-                    nextWord = GetNextWord(ref remaining);
-                    return new ResourceIdentifierParts(parent, new ResourceType(secondWord.ToString(), thirdWord.ToString()), fourthWord, true);
+                    nextWord = PopNextWord(ref remaining);
+                    SpecialType? specialType = thirdWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
+                    return new ResourceIdentifierParts(parent, new ResourceType(secondWord.ToString(), thirdWord.ToString()), fourthWord.ToString(), true, specialType);
                 }
             }
             else
             {
                 nextWord = thirdWord;
-                return new ResourceIdentifierParts(parent, ChooseResourceType(firstWord, parent), secondWord, false);
+                return new ResourceIdentifierParts(parent, ChooseResourceType(firstWord, parent, out SpecialType? specialType), secondWord.ToString(), false, specialType);
             }
 
             throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
         }
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
 
-        private static ReadOnlySpan<char> GetNextWord(ref ReadOnlySpan<char> remaining)
+        private static ReadOnlySpan<char> PopNextWord(ref ReadOnlySpan<char> remaining)
         {
             int index = remaining.IndexOf(Separator);
             if (index < 0)
@@ -234,7 +256,7 @@ namespace Azure.Core
         /// <summary>
         /// The immediate parent containing this resource.
         /// </summary>
-        public ResourceIdentifier Parent { get; private set; }
+        public ResourceIdentifier? Parent { get; private set; }
 
         /// <summary>
         /// Determines whether this resource is in the same namespace as its parent.
@@ -432,7 +454,7 @@ namespace Azure.Core
         public ResourceIdentifier AppendProviderResource(string providerNamespace, string resourceType, string resourceName)
         {
             ValidateProviderResourceParameters(providerNamespace, resourceType, resourceName);
-            return new ResourceIdentifier(this, new ResourceType(providerNamespace, resourceType), resourceName.AsSpan(), true);
+            return new ResourceIdentifier(this, new ResourceType(providerNamespace, resourceType), resourceName, true, null);
         }
 
         /// <summary>
@@ -446,7 +468,7 @@ namespace Azure.Core
         public ResourceIdentifier AppendChildResource(string childResourceType, string childResourceName)
         {
             ValidateChildResourceParameters(childResourceType, childResourceName);
-            return new ResourceIdentifier(this, ChooseResourceType(childResourceType.AsSpan(), this), childResourceName.AsSpan(), false);
+            return new ResourceIdentifier(this, ChooseResourceType(childResourceType.AsSpan(), this, out SpecialType? specialType), childResourceName, false, specialType);
         }
 
         private static void ValidateProviderResourceParameters(string providerNamespace, string resourceType, string resourceName)
