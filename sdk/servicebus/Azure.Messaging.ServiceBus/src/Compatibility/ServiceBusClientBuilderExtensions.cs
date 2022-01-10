@@ -5,7 +5,6 @@ using Azure.Core.Extensions;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 
-
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
