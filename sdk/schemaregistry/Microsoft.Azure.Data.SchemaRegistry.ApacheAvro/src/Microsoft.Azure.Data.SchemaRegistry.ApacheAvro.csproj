@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Apache.Avro" VersionOverride="1.10.0" />
+    <PackageReference Include="Apache.Avro" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
