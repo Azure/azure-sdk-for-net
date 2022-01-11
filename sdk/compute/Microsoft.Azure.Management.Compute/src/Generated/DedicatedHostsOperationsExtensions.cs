@@ -471,6 +471,59 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Restart the dedicated host. The operation will complete successfully once
+            /// the dedicated host has restarted and is running. To determine the health of
+            /// VMs deployed on the dedicated host after the restart check the Resource
+            /// Health Center in the Azure Portal. Please refer to
+            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// for more details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            public static void BeginRestart(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName)
+            {
+                operations.BeginRestartAsync(resourceGroupName, hostGroupName, hostName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restart the dedicated host. The operation will complete successfully once
+            /// the dedicated host has restarted and is running. To determine the health of
+            /// VMs deployed on the dedicated host after the restart check the Resource
+            /// Health Center in the Azure Portal. Please refer to
+            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// for more details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestartAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists all of the dedicated hosts in the specified dedicated host group. Use
             /// the nextLink property in the response to get the next page of dedicated
             /// hosts.

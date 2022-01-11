@@ -158,9 +158,6 @@ namespace Compute.Tests
 
                     // Restart the DedicatedHost
                     m_CrpClient.DedicatedHosts.Restart(rgName, dhgName, dhName);
-                    // Delete operation does not preempt the restart operation. Therefore, we need to wait for the restart before issuing the delete, otherwise we will end up 
-                    // deleting the host group before deleting the dedicated host.
-                    Thread.Sleep(600000);
 
                     // Delete DedicatedHost and DedicatedHostGroup
                     m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
