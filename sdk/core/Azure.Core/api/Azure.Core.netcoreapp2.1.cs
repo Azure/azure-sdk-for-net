@@ -538,7 +538,7 @@ namespace Azure.Core
         public ResourceIdentifier(string resourceId) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Parent { get { throw null; } }
+        public Azure.Core.ResourceIdentifier? Parent { get { throw null; } }
         public string? Provider { get { throw null; } }
         public string? ResourceGroupName { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
