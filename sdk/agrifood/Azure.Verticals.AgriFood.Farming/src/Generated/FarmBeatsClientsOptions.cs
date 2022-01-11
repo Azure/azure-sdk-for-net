@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> Client options for FarmBeatsClient. </summary>
-    public partial class FarmBeatsClientOptions : ClientOptions
+    /// <summary> Client options for FarmBeats library clients. </summary>
+    public partial class FarmBeatsClientsOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_03_31_preview;
 
@@ -24,8 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of FarmBeatsClientOptions. </summary>
-        public FarmBeatsClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of FarmBeatsClientsOptions. </summary>
+        public FarmBeatsClientsOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

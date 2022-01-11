@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of ServiceBusAuthorizationRule and their operations over its parent. </summary>
     public partial class NamespaceQueueAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceQueueAuthorizationRule>, IAsyncEnumerable<NamespaceQueueAuthorizationRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly QueueAuthorizationRulesRestOperations _queueAuthorizationRulesRestClient;
@@ -37,10 +37,16 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _queueAuthorizationRulesRestClient = new QueueAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServiceBusQueue.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServiceBusQueue.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusQueue.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 

@@ -31,6 +31,30 @@ namespace Azure.Messaging.WebPubSub
         {
         }
 
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="hub"/> is null. </exception>
+        public WebPubSubServiceClient(string endpoint, string hub, WebPubSubServiceClientsOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (hub == null)
+            {
+                throw new ArgumentNullException(nameof(hub));
+            }
+            options ??= new WebPubSubServiceClientsOptions();
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _hub = hub;
+            _apiVersion = options.Version;
+        }
+
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
