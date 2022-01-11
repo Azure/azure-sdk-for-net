@@ -922,10 +922,10 @@ namespace Azure.Core.Pipeline
     }
     public partial class ServerCertificateCustomValidationArgs
     {
-        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? x509Chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { }
+        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? certificateAuthorityChain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { }
         public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
+        public System.Security.Cryptography.X509Certificates.X509Chain? CertificateAuthorityChain { get { throw null; } }
         public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
-        public System.Security.Cryptography.X509Certificates.X509Chain? X509Chain { get { throw null; } }
     }
 }
 namespace Azure.Core.Serialization
