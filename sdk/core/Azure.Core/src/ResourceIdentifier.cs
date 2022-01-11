@@ -192,7 +192,7 @@ namespace Azure.Core
                 ReadOnlySpan<char> resourceName = PopNextWord(ref remaining, onlyIfNotProviders: true);
                 if (!resourceName.IsEmpty)
                 {
-                    SpecialType? specialType = secondWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
+                    SpecialType specialType = secondWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
                     return new ResourceIdentifierParts($"{providerNamespace.ToString()}/{secondWord.ToString()}".AsSpan(), resourceName, true, specialType);
                 }
             }
@@ -209,7 +209,7 @@ namespace Azure.Core
             {
                 ReadOnlySpan<char> resourceName2 = PopNextWord(ref remaining, onlyIfNotProviders: true);
 
-                return new ResourceIdentifierParts($"{parentResourceType.ToString()}/{firstWord.ToString()}".AsSpan(), resourceName2, false, null);
+                return new ResourceIdentifierParts($"{parentResourceType.ToString()}/{firstWord.ToString()}".AsSpan(), resourceName2, false, SpecialType.None);
             }
 
             throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
