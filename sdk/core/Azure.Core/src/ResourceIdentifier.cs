@@ -40,7 +40,8 @@ namespace Azure.Core
             public SpecialType SpecialType { get; }
         }
 
-        private const char Separator = '/';
+        internal const char Separator = '/';
+
         private const string RootStringValue = "/";
         private const string ProvidersKey = "providers";
         private const string SubscriptionsKey = "subscriptions";
