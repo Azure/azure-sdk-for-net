@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -40,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
         private string _connection = "connection";
         private ServiceBusClient _client;
+        private Mock<ServiceBusAdministrationClient> _mockAdminClient;
 
         [SetUp]
         public void Setup()
@@ -48,6 +50,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _client = new ServiceBusClient(_testConnection);
             ServiceBusProcessorOptions processorOptions = new ServiceBusProcessorOptions();
             ServiceBusProcessor messageProcessor = _client.CreateProcessor(_entityPath);
+
+            _mockAdminClient = new Mock<ServiceBusAdministrationClient>(MockBehavior.Strict);
 
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor);
             var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>(_connection, _testConnection));
@@ -74,6 +78,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _mockProvider
                 .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Returns(_mockMessageReceiver.Object);
+
+            _mockClientFactory.Setup(p => p.CreateAdministrationClient(_testConnection))
+                .Returns(_mockAdminClient.Object);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
