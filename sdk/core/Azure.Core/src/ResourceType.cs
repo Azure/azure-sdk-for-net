@@ -12,18 +12,12 @@ namespace Azure.Core
     /// <remarks> See https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types for more info. </remarks>
     public readonly struct ResourceType : IEquatable<ResourceType>
     {
-        internal static ResourceType Tenant = new ResourceType(ResourceNamespace, "tenants", "Microsoft.Resources/tenants");
-        internal static ResourceType Subscription = new ResourceType(ResourceNamespace, "subscriptions", "Microsoft.Resources/subscriptions");
-        internal static ResourceType ResourceGroup = new ResourceType(ResourceNamespace, "resourceGroups", "Microsoft.Resources/resourceGroups");
-        internal static ResourceType Provider = new ResourceType(ResourceNamespace, "providers", "Microsoft.Resources/providers");
-        internal const string ResourceNamespace = "Microsoft.Resources";
+        internal static string Tenant = "Microsoft.Resources/tenants";
+        internal static string Subscription = "Microsoft.Resources/subscriptions";
+        internal static string ResourceGroup = "Microsoft.Resources/resourceGroups";
+        internal static string Provider = "Microsoft.Resources/providers";
 
         private readonly string _stringValue;
-
-        /// <summary>
-        /// The resource type for the root of the resource hierarchy.
-        /// </summary>
-        public static ResourceType Root { get; } = new ResourceType(string.Empty, string.Empty, string.Empty);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
@@ -40,25 +34,6 @@ namespace Azure.Core
             _stringValue = resourceType;
             Namespace = resourceType.Substring(0, index);
             Type = resourceType.Substring(index + 1);
-        }
-
-        internal ResourceType(string providerNamespace, string name)
-        {
-            Namespace = providerNamespace;
-            Type = name;
-            _stringValue = $"{Namespace}/{Type}";
-        }
-
-        private ResourceType(string providerNamespace, string name, string fullName)
-        {
-            Namespace = providerNamespace;
-            Type = name;
-            _stringValue = fullName;
-        }
-
-        internal ResourceType AppendChild(string childType)
-        {
-            return new ResourceType($"{_stringValue}/{childType}");
         }
 
         /// <summary>
@@ -124,7 +99,7 @@ namespace Azure.Core
         /// <returns> True if they are equals, otherwise false. </returns>
         public bool Equals(ResourceType other)
         {
-            return _stringValue.Equals(other._stringValue, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(_stringValue, other._stringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
