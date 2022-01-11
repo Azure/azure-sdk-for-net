@@ -79,7 +79,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void CredentialConstructionClientCertificateWithX5c()
+        public void CredentialConstructionClientCertificateWithSni()
         {
             using (new TestEnvVar(new()
             {
@@ -97,6 +97,29 @@ namespace Azure.Identity.Tests
                 Assert.NotNull(certProvider);
                 Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
                 Assert.True(cred.Client._includeX5CClaimHeader);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void CredentialConstructionClientCertificateWithoutSni()
+        {
+            using (new TestEnvVar(new()
+            {
+                { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath" }, { "AZURE_CLIENT_CERTIFICATE_ENABLE_SNI", "false" }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null }
+            }))
+            {
+                var provider = new EnvironmentCredential();
+                var cred = provider.Credential as ClientCertificateCredential;
+                Assert.NotNull(cred);
+                Assert.AreEqual("mockclientid", cred.ClientId);
+                Assert.AreEqual("mocktenantid", cred.TenantId);
+
+                var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
+
+                Assert.NotNull(certProvider);
+                Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
+                Assert.False(cred.Client._includeX5CClaimHeader);
             }
         }
 
