@@ -8,16 +8,17 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models
 {
 
     /// <summary>
-    /// Defines values for InstallStateType.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class InstallStateType
+    public static class CreatedByType
     {
-        public const string Pending = "Pending";
-        public const string Installed = "Installed";
-        public const string Failed = "Failed";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

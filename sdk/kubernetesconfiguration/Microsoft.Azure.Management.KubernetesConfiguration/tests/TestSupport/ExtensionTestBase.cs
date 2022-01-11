@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace KubernetesConfiguration.Tests.TestSupport
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
 {
     using System;
-    using KubernetesConfiguration.Tests.Helpers;
-    using Microsoft.Azure.Management.KubernetesConfiguration;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Tests.Helpers;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Models;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models;
 
     /// <summary>
     /// Base class for tests of SourceControlConfiguration resource type
@@ -19,9 +18,9 @@ namespace KubernetesConfiguration.Tests.TestSupport
     {
         public SourceControlConfigurationClient SourceControlConfigurationClient { get; set; }
 
-        public ExtensionInstance ExtensionInstance { get; set; }
+        public Extension Extension { get; set; }
 
-        public const string ApiVersion = "2020-07-01-preview";
+        public const string ApiVersion = "2020-09-01";
         public const string ConfigurationType = "Extensions";
 
         public ClusterInfo Cluster { get; set; }
@@ -33,55 +32,56 @@ namespace KubernetesConfiguration.Tests.TestSupport
         }
 
         /// <summary>
-        /// Creates an ExtensionInstance
+        /// Creates an Extension
         /// </summary>
-        /// <returns>The ExtensionInstance object that was created.</returns>
-        public ExtensionInstance CreateExtensionInstance()
+        /// <returns>The Extension object that was created.</returns>
+        public Extension CreateExtension()
         {
             return SourceControlConfigurationClient.Extensions.Create(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                extensionInstanceName: ExtensionInstance.Name,
-                extensionInstance: ExtensionInstance
+                extensionName: Extension.Name,
+                extension: Extension
             );
         }
 
         /// <summary>
-        /// Get an ExtensionInstance
+        /// Get an Extension
         /// </summary>
-        /// <returns>The ExtensionInstance object.</returns>
-        public ExtensionInstance GetExtensionInstance()
+        /// <returns>The Extension object.</returns>
+        public Extension GetExtension()
         {
             return SourceControlConfigurationClient.Extensions.Get(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                extensionInstanceName: ExtensionInstance.Name
+                extensionName: Extension.Name
             );
         }
 
         /// <summary>
-        /// Delete an ExtensionInstance
+        /// Delete an Extension
         /// </summary>
-        public void DeleteExtensionInstance()
+        public void DeleteExtension()
         {
             SourceControlConfigurationClient.Extensions.Delete(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                extensionInstanceName: ExtensionInstance.Name
+                extensionName: Extension.Name,
+                forceDelete: true
             );
         }
 
         /// <summary>
-        /// List ExtensionInstances in a cluster
+        /// List Extensions in a cluster
         /// </summary>
         /// <returns></returns>
-        public IPage<ExtensionInstance> ListExtensionInstances()
+        public IPage<Extension> ListExtensions()
         {
             return SourceControlConfigurationClient.Extensions.List(
                 resourceGroupName: Cluster.ResourceGroup,

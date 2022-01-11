@@ -8,14 +8,14 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Scope of the extensionInstance. It can be either Cluster or Namespace;
-    /// but not both.
+    /// Scope of the extension. It can be either Cluster or Namespace; but not
+    /// both.
     /// </summary>
     public partial class Scope
     {
@@ -30,10 +30,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <summary>
         /// Initializes a new instance of the Scope class.
         /// </summary>
-        /// <param name="cluster">Specifies that the scope of the
-        /// extensionInstance is Cluster</param>
-        /// <param name="namespaceProperty">Specifies that the scope of the
-        /// extensionInstance is Namespace</param>
         public Scope(ScopeCluster cluster = default(ScopeCluster), ScopeNamespace namespaceProperty = default(ScopeNamespace))
         {
             Cluster = cluster;
@@ -47,15 +43,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies that the scope of the extensionInstance is
-        /// Cluster
         /// </summary>
         [JsonProperty(PropertyName = "cluster")]
         public ScopeCluster Cluster { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies that the scope of the extensionInstance is
-        /// Namespace
         /// </summary>
         [JsonProperty(PropertyName = "namespace")]
         public ScopeNamespace NamespaceProperty { get; set; }

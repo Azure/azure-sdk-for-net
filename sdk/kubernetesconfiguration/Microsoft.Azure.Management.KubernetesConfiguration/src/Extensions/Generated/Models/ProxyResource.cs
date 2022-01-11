@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models
 {
     using System.Linq;
 

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -22,9 +22,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     public enum ResourceIdentityType
     {
         [EnumMember(Value = "SystemAssigned")]
-        SystemAssigned,
-        [EnumMember(Value = "None")]
-        None
+        SystemAssigned
     }
     internal static class ResourceIdentityTypeEnumExtension
     {
@@ -39,8 +37,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             {
                 case ResourceIdentityType.SystemAssigned:
                     return "SystemAssigned";
-                case ResourceIdentityType.None:
-                    return "None";
             }
             return null;
         }
@@ -51,8 +47,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             {
                 case "SystemAssigned":
                     return ResourceIdentityType.SystemAssigned;
-                case "None":
-                    return ResourceIdentityType.None;
             }
             return null;
         }

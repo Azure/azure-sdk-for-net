@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.KubernetesConfiguration
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -47,15 +47,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The Azure subscription ID. This is a GUID-formatted string (e.g.
-        /// 00000000-0000-0000-0000-000000000000)
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -76,9 +75,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the ISourceControlConfigurationsOperations.
+        /// Gets the IExtensionsOperations.
         /// </summary>
-        public virtual ISourceControlConfigurationsOperations SourceControlConfigurations { get; private set; }
+        public virtual IExtensionsOperations Extensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationStatusOperations.
+        /// </summary>
+        public virtual IOperationStatusOperations OperationStatus { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -326,10 +330,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// </summary>
         private void Initialize()
         {
-            SourceControlConfigurations = new SourceControlConfigurationsOperations(this);
+            Extensions = new ExtensionsOperations(this);
+            OperationStatus = new OperationStatusOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-03-01";
+            ApiVersion = "2021-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

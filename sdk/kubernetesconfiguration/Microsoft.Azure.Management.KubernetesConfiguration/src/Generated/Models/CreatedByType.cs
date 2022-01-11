@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
 
     /// <summary>
-    /// Defines values for LevelType.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class LevelType
+    public static class CreatedByType
     {
-        public const string Error = "Error";
-        public const string Warning = "Warning";
-        public const string Information = "Information";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
