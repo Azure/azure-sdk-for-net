@@ -538,7 +538,7 @@ namespace Azure.Core
         public ResourceIdentifier(string resourceId) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Parent { get { throw null; } }
+        public Azure.Core.ResourceIdentifier? Parent { get { throw null; } }
         public string? Provider { get { throw null; } }
         public string? ResourceGroupName { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
@@ -569,7 +569,6 @@ namespace Azure.Core
         private readonly int _dummyPrimitive;
         public ResourceType(string resourceType) { throw null; }
         public string Namespace { get { throw null; } }
-        public static Azure.Core.ResourceType Root { get { throw null; } }
         public string Type { get { throw null; } }
         public bool Equals(Azure.Core.ResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
