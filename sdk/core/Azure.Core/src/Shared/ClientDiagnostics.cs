@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 #nullable enable
@@ -59,7 +60,7 @@ namespace Azure.Core.Pipeline
                 if (content == null ||
                     !content.StartsWith("{", StringComparison.OrdinalIgnoreCase)) return null;
 
-                return JsonSerializer.Deserialize<ResponseError>(content);
+                return JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
             }
             catch (Exception)
             {
@@ -203,6 +204,12 @@ namespace Azure.Core.Pipeline
             }
 
             return null;
+        }
+
+        private class ErrorResponse
+        {
+            [JsonPropertyName("error")]
+            public ResponseError? Error { get; set; }
         }
     }
 }
