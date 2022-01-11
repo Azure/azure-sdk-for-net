@@ -124,7 +124,7 @@ namespace Azure.Core
         /// <returns> True if they are equals, otherwise false. </returns>
         public bool Equals(ResourceType other)
         {
-            return _stringValue.Equals(other._stringValue, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(_stringValue, other._stringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
