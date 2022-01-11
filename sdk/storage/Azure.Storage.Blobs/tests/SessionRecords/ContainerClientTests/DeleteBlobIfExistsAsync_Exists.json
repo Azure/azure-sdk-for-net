@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "8cf2769f-dd21-35e1-f199-7f8ea25255ee",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "8cf2769f-dd21-35e1-f199-7f8ea25255ee",
         "x-ms-request-id": "d3d79560-b01e-0088-645e-053fcb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "49953292-97fa-80ea-e50d-90de790d2484",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "wG0LyBpYwryqAu7hTbRAkAcKP0T0Vl7+JJ2nW/L69uGKpM40R43TO8/NQeazcQYxhlrgNNDL5mkODKR8sGfKsAwMVqjlC0h5NgN0JxV4S7OXdtSYGsIRvr5lJTvpV4pnApDapg==",
       "StatusCode": 201,
@@ -69,7 +69,7 @@
         "x-ms-content-crc64": "wWLDRmp6DSw=",
         "x-ms-request-id": "d3d79571-b01e-0088-725e-053fcb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T18:59:11.2544659Z"
       },
       "ResponseBody": []
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "d0d45072-90fb-83ac-73cb-9503d5205349",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -102,7 +102,7 @@
         "x-ms-client-request-id": "d0d45072-90fb-83ac-73cb-9503d5205349",
         "x-ms-delete-type-permanent": "false",
         "x-ms-request-id": "d3d79581-b01e-0088-805e-053fcb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -120,7 +120,7 @@
         "x-ms-client-request-id": "296b9894-5338-0d89-f714-c45fc483dea3",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -135,7 +135,7 @@
         "x-ms-client-request-id": "296b9894-5338-0d89-f714-c45fc483dea3",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "d3d79595-b01e-0088-125e-053fcb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -157,7 +157,7 @@
         "x-ms-client-request-id": "3c6f3f5d-2ab5-4610-45ea-2544e6b07427",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -171,7 +171,7 @@
         "x-ms-client-request-id": "3c6f3f5d-2ab5-4610-45ea-2544e6b07427",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "d3d795a8-b01e-0088-235e-053fcb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -189,7 +189,7 @@
         "x-ms-client-request-id": "85013bc0-a114-c7ed-0e1e-fcac365ae08f",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -202,7 +202,7 @@
         ],
         "x-ms-client-request-id": "85013bc0-a114-c7ed-0e1e-fcac365ae08f",
         "x-ms-request-id": "d3d795b6-b01e-0088-315e-053fcb000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

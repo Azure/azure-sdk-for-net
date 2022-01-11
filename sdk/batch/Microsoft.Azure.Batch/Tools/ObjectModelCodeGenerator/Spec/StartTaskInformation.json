@@ -2,7 +2,7 @@
       "Name": "StartTaskInformation",
       "ProtocolName": "Models.StartTaskInformation",
       "SummaryComment": "Specifies the detailed runtime information of the start task, including current state, error details, exit code, start time, end time, etc.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

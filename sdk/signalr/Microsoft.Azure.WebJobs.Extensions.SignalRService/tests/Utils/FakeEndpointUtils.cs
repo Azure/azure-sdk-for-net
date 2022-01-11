@@ -12,7 +12,7 @@ namespace Microsoft.Azure.SignalR.Tests.Common
 
         public static IEnumerable<string> GetFakeConnectionString(int count)
         {
-            return Enumerable.Range(StaticRandom.Next(0,9999), count).Select(i => $"Endpoint=http://localhost{i};AccessKey={FakeAccessKey};Version=1.0;");
+            return Enumerable.Range(StaticRandom.Next(0, 9999), count).Select(i => $"Endpoint=http://localhost{i};AccessKey={FakeAccessKey};Version=1.0;");
         }
 
         public static IEnumerable<ServiceEndpoint> GetFakeEndpoint(int count)

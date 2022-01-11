@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -42,14 +44,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="loadBalancerFrontendIPConfiguration">Reference to the
         /// frontend ip address configuration defined in regional
         /// loadbalancer.</param>
+        /// <param name="inboundNatRulesPortMapping">Collection of inbound NAT
+        /// rule port mappings.</param>
         /// <param name="name">Name of the backend address.</param>
-        public LoadBalancerBackendAddress(SubResource virtualNetwork = default(SubResource), SubResource subnet = default(SubResource), string ipAddress = default(string), SubResource networkInterfaceIPConfiguration = default(SubResource), SubResource loadBalancerFrontendIPConfiguration = default(SubResource), string name = default(string))
+        public LoadBalancerBackendAddress(SubResource virtualNetwork = default(SubResource), SubResource subnet = default(SubResource), string ipAddress = default(string), SubResource networkInterfaceIPConfiguration = default(SubResource), SubResource loadBalancerFrontendIPConfiguration = default(SubResource), IList<NatRulePortMapping> inboundNatRulesPortMapping = default(IList<NatRulePortMapping>), string name = default(string))
         {
             VirtualNetwork = virtualNetwork;
             Subnet = subnet;
             IpAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
+            InboundNatRulesPortMapping = inboundNatRulesPortMapping;
             Name = name;
             CustomInit();
         }
@@ -90,6 +95,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerFrontendIPConfiguration")]
         public SubResource LoadBalancerFrontendIPConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets collection of inbound NAT rule port mappings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundNatRulesPortMapping")]
+        public IList<NatRulePortMapping> InboundNatRulesPortMapping { get; private set; }
 
         /// <summary>
         /// Gets or sets name of the backend address.

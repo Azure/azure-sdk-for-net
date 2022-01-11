@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
     public static class ServerVersion
     {
         public const string FiveFullStopSeven = "5.7";
+        public const string EightFullStopZeroFullStopTwoOne = "8.0.21";
     }
 }

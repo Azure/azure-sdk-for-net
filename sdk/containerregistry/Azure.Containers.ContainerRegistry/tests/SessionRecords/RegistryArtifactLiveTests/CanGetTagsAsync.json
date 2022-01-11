@@ -86,7 +86,7 @@
         "x-ms-client-request-id": "ca05bcbb6f957c6d16fb2b00e6d762be",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "grant_type=refresh_token\u0026service=localtestacr01.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_read\u0026refresh_token=Sanitized",
+      "RequestBody": "grant_type=refresh_token\u0026service=localtestacr01.azurecr.io\u0026scope=repository%3Alibrary%2Fhello-world%3Ametadata_read\u0026refresh_token=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
@@ -211,7 +211,7 @@
         "x-ms-client-request-id": "c05dc9dbd8d722279a7a415ec6bd1345",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "grant_type=refresh_token\u0026service=localtestacr01.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_read\u0026refresh_token=Sanitized",
+      "RequestBody": "grant_type=refresh_token\u0026service=localtestacr01.azurecr.io\u0026scope=repository%3Alibrary%2Fhello-world%3Ametadata_read\u0026refresh_token=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",

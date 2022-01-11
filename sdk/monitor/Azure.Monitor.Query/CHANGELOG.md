@@ -1,14 +1,14 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2021-12-07)
 
 ### Features Added
+- Added `LogsTable` and `LogsTableRow` to `MonitorQueryModelFactory`
 
-### Breaking Changes
+## 1.0.1 (2021-11-09)
 
 ### Bugs Fixed
-
-### Other Changes
+- NaN, +inf, and -inf double values can now be retrieved from `LogsQueryResult`
 
 ## 1.0.0 (2021-10-07)
 

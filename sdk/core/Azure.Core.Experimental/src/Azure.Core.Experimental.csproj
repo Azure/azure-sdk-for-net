@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Experimental types that might eventually move to Azure.Core</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
-    <Version>0.1.0-preview.18</Version>
+    <Version>0.1.0-preview.19</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -23,6 +23,9 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>

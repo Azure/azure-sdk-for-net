@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests.TestFramework
 {
@@ -23,7 +24,7 @@ namespace Azure.Core.Tests.TestFramework
         public override bool HasCompleted => _completed;
         public override bool HasValue => _completed;
         public override Response GetRawResponse() => _rawResponse;
-        public override T Value => OperationHelpers.GetValue(ref _value);
+        public override T Value => GetValue(ref _value);
 
         public Action UpdateCalled { get; set; }
 
@@ -39,7 +40,7 @@ namespace Azure.Core.Tests.TestFramework
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             UpdateStatus(cancellationToken);
-            return new ValueTask<Response>(GetRawResponse());
+            return new ValueTask<Response>(GetRawResponse() ?? new MockResponse(200));
         }
 
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
@@ -54,11 +55,5 @@ namespace Azure.Core.Tests.TestFramework
             }
             return null;
         }
-
-        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
-
-        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

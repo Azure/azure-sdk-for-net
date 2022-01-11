@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-07-15-preview",
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210928.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "a909c2fbc7399ff1c172b8d14210c066",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,7 +17,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2857ab30-b4b1-4dea-b3e7-9167bc5ebc35",
+        "apim-request-id": "6c519bb2-cd47-4f7f-921e-fbf34c71fcca",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -26,45 +26,43 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 18:12:19 GMT",
+        "Date": "Sun, 24 Oct 2021 11:11:01 GMT",
         "pragma": "no-cache",
-        "request-id": "2857ab30-b4b1-4dea-b3e7-9167bc5ebc35",
+        "request-id": "6c519bb2-cd47-4f7f-921e-fbf34c71fcca",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "98"
+        "x-envoy-upstream-service-time": "56"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022query\u0022: \u0022We\u0027ll have 2 plates of seared salmon nigiri.\u0022,\n",
-        "  \u0022prediction\u0022: {\n",
-        "    \u0022intents\u0022: [\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022Order\u0022,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      }\n",
-        "    ],\n",
-        "    \u0022entities\u0022: [\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022OrderItem\u0022,\n",
-        "        \u0022text\u0022: \u00222 plates\u0022,\n",
-        "        \u0022offset\u0022: 11,\n",
-        "        \u0022length\u0022: 8,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      },\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022OrderItem\u0022,\n",
-        "        \u0022text\u0022: \u0022seared salmon nigiri\u0022,\n",
-        "        \u0022offset\u0022: 23,\n",
-        "        \u0022length\u0022: 20,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      }\n",
-        "    ],\n",
-        "    \u0022topIntent\u0022: \u0022Order\u0022,\n",
-        "    \u0022projectType\u0022: \u0022conversation\u0022\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
+        "prediction": {
+          "topIntent": "Order",
+          "projectKind": "conversation",
+          "intents": [
+            {
+              "category": "Order",
+              "confidenceScore": 1
+            }
+          ],
+          "entities": [
+            {
+              "category": "OrderItem",
+              "text": "2 plates",
+              "offset": 11,
+              "length": 8,
+              "confidenceScore": 1
+            },
+            {
+              "category": "OrderItem",
+              "text": "seared salmon nigiri",
+              "offset": 23,
+              "length": 20,
+              "confidenceScore": 1
+            }
+          ]
+        }
+      }
     }
   ],
   "Variables": {

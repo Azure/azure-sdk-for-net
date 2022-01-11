@@ -37,17 +37,17 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             JsonElement fetchWithTypeBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchWithTypeResponse)).RootElement;
             Assert.AreEqual("systemscanrulesets/AzureFileService", fetchWithTypeBodyJson.GetProperty("id").GetString());
             //Get with type and version
-            Response fetchWithTypeVersionResponse = await client.GetSystemRulesetsForVersionAsync(1, new(), "AzureFileService");
+            Response fetchWithTypeVersionResponse = await client.GetSystemRulesetsForVersionAsync(1, "AzureFileService");
             Assert.AreEqual(200, fetchWithTypeVersionResponse.Status);
             JsonElement fetchWithTypeVersionBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchWithTypeVersionResponse)).RootElement;
             Assert.AreEqual("systemscanrulesets/AzureFileService", fetchWithTypeVersionBodyJson.GetProperty("id").GetString());
             //Get with type for latest version
-            Response fetchWithTypeLatestVerResponse = await client.GetLatestSystemRulesetsAsync(new(), "AzureFileService");
+            Response fetchWithTypeLatestVerResponse = await client.GetLatestSystemRulesetsAsync("AzureFileService");
             Assert.AreEqual(200, fetchWithTypeLatestVerResponse.Status);
             JsonElement fetchWithTypeLatestVerBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchWithTypeLatestVerResponse)).RootElement;
             Assert.AreEqual("systemscanrulesets/AzureFileService", fetchWithTypeLatestVerBodyJson.GetProperty("id").GetString());
             //Get with type for list of versions
-            var fetchWithTypeforListResponseList = client.GetSystemRulesetsVersionsAsync(new(), "AzureFileService").GetAsyncEnumerator();
+            var fetchWithTypeforListResponseList = client.GetSystemRulesetsVersionsAsync("AzureFileService").GetAsyncEnumerator();
             await fetchWithTypeforListResponseList.MoveNextAsync();
             JsonElement fetchWithTypeforListBodyJson = JsonDocument.Parse(fetchWithTypeforListResponseList.Current).RootElement;
             await fetchWithTypeforListResponseList.DisposeAsync();

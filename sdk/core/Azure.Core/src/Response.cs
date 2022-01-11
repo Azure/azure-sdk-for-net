@@ -83,6 +83,14 @@ namespace Azure
         public abstract void Dispose();
 
         /// <summary>
+        /// Indicates whether the message's <see cref="ResponseClassifier"/> considers this
+        /// response an error.
+        /// </summary>
+        public virtual bool IsError { get; internal set; }
+
+        internal HttpMessageSanitizer? Sanitizer { get; set; } = HttpMessageSanitizer.Default;
+
+        /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
         /// <param name="name">The header name.</param>

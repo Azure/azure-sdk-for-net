@@ -24,6 +24,7 @@ using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System.Transactions;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -200,14 +201,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_AutoCompleteEnabledOnTrigger()
         {
             await TestMultiple<TestBatchAutoCompleteMessagesEnabledOnTrigger>(
-                configurationDelegate: BuildHostWithAutoCompleteDisabled<TestBatchAutoCompleteMessagesEnabledOnTrigger>());
+                configurationDelegate: DisableAutoComplete);
         }
 
         [Test]
         public async Task TestBatch_AutoCompleteEnabledOnTrigger_CompleteInFunction()
         {
             await TestMultiple<TestBatchAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>(
-                configurationDelegate: BuildHostWithAutoCompleteDisabled<TestBatchAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
+                configurationDelegate: DisableAutoComplete);
         }
 
         [Test]
@@ -215,12 +216,52 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
             var host = BuildHost<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>(
-                BuildHostWithAutoCompleteDisabled<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
+                DisableAutoComplete);
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCrossEntityTransaction>(EnableCrossEntityTransactions);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestBatch_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCrossEntityTransactionBatch>(EnableCrossEntityTransactions);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_CustomErrorHandler()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCustomErrorHandler>(SetCustomErrorHandler);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                // intentionally not calling host.StopAsync as we are expecting errors in the error log
+                // for this test, so we accept that the stop will not be graceful
             }
         }
 
@@ -536,15 +577,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        private static Action<IHostBuilder> BuildHostWithAutoCompleteDisabled<T>()
-        {
-            return builder =>
+        private static Action<IHostBuilder> DisableAutoComplete =>
+            builder =>
                 builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
                         sbOptions.AutoCompleteMessages = false;
                     }));
-        }
 
         private static Action<IHostBuilder> BuildDrainHost<T>()
         {
@@ -704,6 +743,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "       \"MaxRetries\": 3",
                 "  }",
                 "  \"TransportType\": \"AmqpTcp\",",
+                "  \"EnableCrossEntityTransactions\": false",
                 "  \"WebProxy\": \"\",",
                 "}",
                 "SingletonOptions",
@@ -1211,6 +1251,84 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // we want to validate that this doesn't trigger an exception in the SDK since AutoComplete = true
                 await messageActions.CompleteMessageAsync(message);
                 _waitHandle1.Set();
+            }
+        }
+
+        public class TestCrossEntityTransaction
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions,
+                ServiceBusClient client)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await messageActions.CompleteMessageAsync(message);
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    await sender.SendMessageAsync(new ServiceBusMessage());
+                    ts.Complete();
+                }
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = client.CreateReceiver(_firstQueueScope.QueueName);
+                // var received = await receiver1.ReceiveMessageAsync();
+                // Assert.IsNull(received);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
+                var received = await receiver2.ReceiveMessageAsync();
+                Assert.IsNotNull(received);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestCrossEntityTransactionBatch
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusMessageActions messageActions,
+                ServiceBusClient client)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await messageActions.CompleteMessageAsync(messages.First());
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    await sender.SendMessageAsync(new ServiceBusMessage());
+                    ts.Complete();
+                }
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = client.CreateReceiver(_firstQueueScope.QueueName);
+                // var received = await receiver1.ReceiveMessageAsync();
+                // Assert.IsNull(received);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
+                var received = await receiver2.ReceiveMessageAsync();
+                Assert.IsNotNull(received);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestCustomErrorHandler
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusClient client)
+            {
+                // Dispose the client so that we will trigger an error in the processor.
+                // We can't simply throw an exception here as it would be swallowed by TryExecuteAsync call in the listener.
+                // This means that the exception handler will not be used for errors originating from the function. This is the same
+                // behavior as in V4.
+                await client.DisposeAsync();
+            }
+
+            public static Task ErrorHandler(ProcessErrorEventArgs e)
+            {
+                Assert.IsInstanceOf<ObjectDisposedException>(e.Exception);
+                _waitHandle1.Set();
+                return Task.CompletedTask;
             }
         }
 

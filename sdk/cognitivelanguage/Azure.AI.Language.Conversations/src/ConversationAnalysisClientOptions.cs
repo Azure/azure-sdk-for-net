@@ -11,7 +11,7 @@ namespace Azure.AI.Language.Conversations
     /// </summary>
     public partial class ConversationAnalysisClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_07_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_11_01_Preview;
 
         /// <summary>
         /// The version of the service to use.
@@ -20,9 +20,9 @@ namespace Azure.AI.Language.Conversations
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Service version "2021-07-15-preview".
+            /// Service version "2021-11-01-preview".
             /// </summary>
-            V2021_07_15_Preview = 1,
+            V2021_11_01_Preview = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations
         {
             Version = version switch
             {
-                ServiceVersion.V2021_07_15_Preview => "2021-07-15-preview",
+                ServiceVersion.V2021_11_01_Preview => "2021-11-01-preview",
                 _ => throw new NotSupportedException()
             };
 

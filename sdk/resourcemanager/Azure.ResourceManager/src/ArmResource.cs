@@ -10,6 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.Linq;
+using System.Text;
 
 namespace Azure.ResourceManager.Core
 {
@@ -18,7 +19,6 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class ArmResource
     {
-        private TagResourceContainer _tagContainer;
         private TagResource _tagResource;
         private Tenant _tenant;
 
@@ -64,7 +64,11 @@ namespace Azure.ResourceManager.Core
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
             Pipeline = clientContext.Pipeline;
+            #if DEBUG
+            #pragma warning disable CA2214
             ValidateResourceType(id);
+            #pragma warning restore CA2214
+            #endif
         }
 
         private Tenant Tenant => _tenant ??= new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
@@ -107,11 +111,6 @@ namespace Azure.ResourceManager.Core
         protected internal TagResource TagResource => _tagResource ??= new TagResource(this, Id);
 
         /// <summary>
-        /// Gets the TagsOperations.
-        /// </summary>
-        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(this);
-
-        /// <summary>
         /// Validate the resource identifier against current operations.
         /// </summary>
         /// <param name="identifier"> The resource identifier. </param>
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected IEnumerable<Location> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
+        protected IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
             ProviderInfo resourcePageableProvider = Tenant.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
             if (resourcePageableProvider is null)
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => new AzureLocation(l));
         }
 
         /// <summary>
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected async Task<IEnumerable<Location>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
+        protected async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
             ProviderInfo resourcePageableProvider = await Tenant.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (Location)l);
+            return theResource.Locations.Select(l => new AzureLocation(l));
         }
     }
 }

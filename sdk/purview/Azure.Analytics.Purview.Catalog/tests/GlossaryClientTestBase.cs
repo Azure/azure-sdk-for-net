@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using Azure.Analytics.Purview.Tests;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -14,9 +15,11 @@ namespace Azure.Analytics.Purview.Catalog.Tests
     {
         public GlossaryClientTestBase(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
         public GlossaryClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
         public PurviewGlossaries GetGlossariesClient()
         {

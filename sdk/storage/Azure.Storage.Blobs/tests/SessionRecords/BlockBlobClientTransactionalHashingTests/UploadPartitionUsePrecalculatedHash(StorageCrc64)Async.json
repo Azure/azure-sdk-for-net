@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "f00b58c4-d054-b45d-1091-e3561be3ad1d",
         "x-ms-date": "Mon, 11 Oct 2021 23:44:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "f00b58c4-d054-b45d-1091-e3561be3ad1d",
         "x-ms-request-id": "5d1d3983-001e-008d-5ef9-beed10000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -42,7 +42,7 @@
         "x-ms-content-crc64": "R17jUmgYDRc=",
         "x-ms-date": "Mon, 11 Oct 2021 23:44:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "zTrB7cC2LADa9cjSb8/AkpXzSDQsV\u002B\u002BDuI/SUxYNI\u002B8OUif9reKoDSwKFV8Hi0VB0VHAJ5t58XZKPjUx5NjqzNLYwxynw\u002BSzSzoIIUGQeyxKkYLFTftUlWGxsm\u002BsdyhTIEmML8gpmQ1sDdxgcc80usMI5lNWJH/XhC269RF1BtMStAH4A0tkIfd0WD8e9CSRfPerpJDU/PvJtaqabqP89wcJTbzOPLZ3o8Vc4sxAuI8IKXkZyWFCPbcFLk6gybJTd2E4FaZowj9BNADLeBovifwakkUq4y6lxhAEyQ5n1tkSCWpqCKPpn2Y52JRgd8Sd1aVShTdtKJQzkk\u002BVY/kx2V4nuG\u002BwxIBZMfPf8AqZRE5LZ/NoFVCipeDVN3VUVDxsCP82Ob9V7BAk\u002BVREjjeJmU0ASfwGyMMNhBKO2o0KBd22cugLYguO9nriRBz7XheoTJ4oUwpAZUA7KLStxhKDGfR3jRtPfTZCcVOBJISnESb75o7u4rHSdgyn0DlW4TBoXionhNH7WM5n5uG3vkG7lBaOseCElDdCpBYOp638648iGcVZf41V/42/h/zPG7jL7DsjyDBQ48ny5eC67LAgavpSlKV8YRSJOLFSxA07coheQ7ty2SNf0jX7Z5mtmhLcnx0BfYcSToommY9\u002B/R\u002B8t3JXXKn0rpDW8sFwgPp63J6fdSTvOfUBS/QxS0CU4dUWP68nVj5p6PGMK4rFos6Pq73x3oj6zH59VRC1w2JQQhHsWUFLU4VfNY0zYw5qO6kmoZ\u002BCogJMG3IxqgAttCSOPOh52UiNRFg3kan6x2lvEhlnjiHDzZ8Onz3OGqmFMoFopCYl8GJgmV1HSxFZUlQIwZfmxiUCy29IazkLviqvsV8nkSNDSiK2B/XDfIKOtE3pxlgRn2xcZdi33IQpVdozl5mxMcAxxXd1L74vP0/turbrIvjRnRLzyytKjG2djbEakOTo3YONtwDhnG\u002BtLCaIySLOPTPiYvqGvmaU5jkJ16INFK9rBN0zXmr37wGjRp4FwsJKzk9\u002BNy3qYh4c\u002BdHH2MTNnxh3HcVFmt7I63L54njHjyR2vghSj9yBgaK\u002BFmWZLxc81qaGjaT8BTRwtUy78H\u002BmVWqsUBm7ehA79pwjh4R5L7tavAzSQAF/ernU4dmQxZAiGMH77N/\u002BgFuVS5cI2X6v94WQYDRz1BRoLdZf5pk2qzALAW7CfkPcXDuwPPVqdqA7JepU/2RcrkStkr4JnprCXqBm/dgP7XhCtAT4wpce/rY1JMGv4qzLr1IqFOuE072h7t5VA3nILDdxEUpfZOysjpQH03rYEnvzmk6G5NiNvuFHVtS5yfs9bfiKPtFha0pmfoZXfP9DydtiYWgrQg==",
       "StatusCode": 400,
@@ -54,7 +54,7 @@
         "x-ms-client-request-id": "8610ae0c-8014-9d1d-5d06-b73bd123792b",
         "x-ms-error-code": "Crc64Mismatch",
         "x-ms-request-id": "5d1d3992-001e-008d-6cf9-beed10000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ECrc64Mismatch\u003C/Code\u003E\u003CMessage\u003EThe CRC64 value specified in the request did not match with the CRC64 value calculated by the server.\n",
@@ -73,7 +73,7 @@
         "x-ms-client-request-id": "ac1ecf08-726e-bc3e-31ed-62b7fa5ef057",
         "x-ms-date": "Mon, 11 Oct 2021 23:44:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -83,7 +83,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "ac1ecf08-726e-bc3e-31ed-62b7fa5ef057",
         "x-ms-request-id": "5d1d39a9-001e-008d-7df9-beed10000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

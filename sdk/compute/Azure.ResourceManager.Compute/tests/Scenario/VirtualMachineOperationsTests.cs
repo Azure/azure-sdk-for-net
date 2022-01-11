@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24576")]
     public class VirtualMachineOperationsTests : VirtualMachineTestBase
     {
         public VirtualMachineOperationsTests(bool isAsync)
@@ -20,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<VirtualMachine> CreateVirtualMachineAsync(string vmName)
         {
-            var container = await GetVirtualMachineContainerAsync();
+            var collection = await GetVirtualMachineCollectionAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await container.CreateOrUpdateAsync(vmName, input);
+            var lro = await collection.CreateOrUpdateAsync(vmName, input);
             return lro.Value;
         }
 
@@ -53,24 +51,24 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            // Create a PPG here and add this PPG to this virtual machine using Update
-            var ppgName = Recording.GenerateAssetName("testPPG-");
-            var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
-            var ppgLRO = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
-            var ppg = ppgLRO.Value;
+            //// Create a PPG here and add this PPG to this virtual machine using Update
+            //var ppgName = Recording.GenerateAssetName("testPPG-");
+            //var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
+            //var ppgLRO = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
+            //var ppg = ppgLRO.Value;
             // update PPG requires the VM to be deallocated
             await vm.DeallocateAsync();
             var update = new VirtualMachineUpdate()
             {
-                ProximityPlacementGroup = new WritableSubResource()
+                HardwareProfile = new HardwareProfile
                 {
-                    Id = ppg.Id
+                    VmSize = VirtualMachineSizeTypes.StandardF1
                 }
             };
             var lro = await vm.UpdateAsync(update);
             VirtualMachine updatedVM = lro.Value;
 
-            Assert.AreEqual(ppg.Id, updatedVM.Data.ProximityPlacementGroup.Id);
+            Assert.AreEqual(VirtualMachineSizeTypes.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
         }
 
         [TestCase]

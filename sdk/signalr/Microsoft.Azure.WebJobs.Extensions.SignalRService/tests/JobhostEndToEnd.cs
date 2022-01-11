@@ -154,7 +154,7 @@ namespace SignalRServiceExtension.Tests
                     throw new Exception(null);
                 });
                 IExtensionRegistry registry = new DefaultExtensionRegistry();
-                ExtensionConfigContext context = new ExtensionConfigContext(configuration, nameResolver, converterManager, webHookProviderMock.Object, registry);
+                var context = new ExtensionConfigContext(configuration, nameResolver, converterManager, webHookProviderMock.Object, registry);
 
                 // Assert no exceptions
                 configProvider.Initialize(context);
@@ -177,11 +177,13 @@ namespace SignalRServiceExtension.Tests
         {
             var handler = new JwtSecurityTokenHandler();
             var accessKeys = new List<string> { DefaultAccessKey, DefaultAttributeAccessKey };
-            var validationParameters = new TokenValidationParameters();
-            validationParameters.ValidateIssuer = false;
-            validationParameters.ValidateAudience = false;
-            validationParameters.IssuerSigningKeyResolver = (token, securityToken, kid, validationParas) => from key in accessKeys
-                                                                                                            select new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                IssuerSigningKeyResolver = (token, securityToken, kid, validationParas) => from key in accessKeys
+                                                                                           select new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+            };
             handler.ValidateToken(connectionInfo.AccessToken, validationParameters, out var validatedToken);
             var validatedAccessKey = Encoding.UTF8.GetString((validatedToken.SigningKey as SymmetricSecurityKey)?.Key);
             var actualConnectionString = string.Format(DefaultConnectionStringFormat, DefaultEndpoint, validatedAccessKey);

@@ -17,6 +17,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         public string ApiKey => GetRecordedVariable("QUESTIONANSWERING_KEY", options => options.IsSecret());
 
         /// <summary>
+        /// Gets a <see cref="QuestionAnsweringProject"/> using the <see cref="ProjectName"/> and <see cref="DeploymentName"/>.
+        /// </summary>
+        public QuestionAnsweringProject Project => new QuestionAnsweringProject(ProjectName, DeploymentName);
+
+        /// <summary>
         /// Gets the primary test project name.
         /// </summary>
         public string ProjectName => GetRecordedVariable("QUESTIONANSWERING_PROJECT");

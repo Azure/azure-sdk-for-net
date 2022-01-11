@@ -86,7 +86,7 @@
         "x-ms-client-request-id": "ee3b2f6cf6cf4000788bcec779ab9223",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3alibrary%2fnode%3ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3Alibrary%2Fnode%3Ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
@@ -296,7 +296,7 @@
         "x-ms-client-request-id": "ff8ba2c78d48df634773ed46b50bbe53",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3alibrary%2fnode%3ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3Alibrary%2Fnode%3Ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
@@ -421,7 +421,7 @@
         "x-ms-client-request-id": "d60031f592200edb46c0210055faee66",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3alibrary%2fnode%3adelete\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3Alibrary%2Fnode%3Adelete\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",

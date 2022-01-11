@@ -18,15 +18,14 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewMetadataRoles service client. </summary>
     public partial class PurviewMetadataRolesClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewMetadataRolesClient for mocking. </summary>
         protected PurviewMetadataRolesClient()
@@ -34,7 +33,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists roles for Purview Account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -70,7 +69,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
@@ -79,9 +78,9 @@ namespace Azure.Analytics.Purview.Administration
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataRolesRequest()
-                        : CreateGetMetadataRolesNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetMetadataRolesRequest(context)
+                        : CreateGetMetadataRolesNextPageRequest(nextLink, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -89,7 +88,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists roles for Purview Account. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -125,7 +124,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetMetadataRoles(RequestOptions options)
+        public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
@@ -134,18 +133,18 @@ namespace Azure.Analytics.Purview.Administration
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataRolesRequest()
-                        : CreateGetMetadataRolesNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                        ? CreateGetMetadataRolesRequest(context)
+                        : CreateGetMetadataRolesNextPageRequest(nextLink, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateGetMetadataRolesRequest()
+        internal HttpMessage CreateGetMetadataRolesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -159,9 +158,9 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetMetadataRolesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetMetadataRolesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

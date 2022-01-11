@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<DiskAccess> CreateDiskAccessAsync(string name)
         {
-            var container = (await CreateResourceGroupAsync()).GetDiskAccesses();
+            var collection = (await CreateResourceGroupAsync()).GetDiskAccesses();
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var lro = await collection.CreateOrUpdateAsync(name, input);
             return lro.Value;
         }
 

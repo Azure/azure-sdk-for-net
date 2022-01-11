@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
         internal LoadBalancerOutboundRuleListResult()
         {
-            Value = new ChangeTrackingList<OutboundRule>();
+            Value = new ChangeTrackingList<OutboundRuleData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
         /// <param name="value"> A list of outbound rules in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LoadBalancerOutboundRuleListResult(IReadOnlyList<OutboundRule> value, string nextLink)
+        internal LoadBalancerOutboundRuleListResult(IReadOnlyList<OutboundRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of outbound rules in a load balancer. </summary>
-        public IReadOnlyList<OutboundRule> Value { get; }
+        public IReadOnlyList<OutboundRuleData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

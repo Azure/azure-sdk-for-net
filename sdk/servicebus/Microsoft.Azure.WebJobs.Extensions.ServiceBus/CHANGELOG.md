@@ -1,5 +1,32 @@
 # Release History
 
+## 5.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0 (2021-12-08)
+
+### Features Added
+
+- Add listener details.
+- Add protected constructors to `ServiceBusMessageActions` and `ServiceBusSessionMessageActions` for mocking.
+
+### Bugs Fixed
+
+- Make `ServiceBusMessageActions` thread-safe.
+
+## 5.1.0 (2021-11-10)
+
+### Features Added
+- Added `EnableCrossEntityTransactions` option
+- Added ability to bind to `ServiceBusClient`
+
 ## 5.0.0 (2021-10-21)
 
 ### Features Added

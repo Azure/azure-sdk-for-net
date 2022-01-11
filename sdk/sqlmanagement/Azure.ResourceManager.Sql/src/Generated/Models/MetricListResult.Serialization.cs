@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static MetricListResult DeserializeMetricListResult(JsonElement element)
         {
-            IReadOnlyList<Metric> value = default;
+            IReadOnlyList<SqlMetric> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<Metric> array = new List<Metric>();
+                    List<SqlMetric> array = new List<SqlMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item));
+                        array.Add(SqlMetric.DeserializeSqlMetric(item));
                     }
                     value = array;
                     continue;

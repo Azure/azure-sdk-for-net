@@ -4,7 +4,7 @@
       "TransportProtocolName": "Models.JobAddParameter",
       "SummaryComment": "An Azure Batch job.",
       "IsTopLevelObject": true,
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

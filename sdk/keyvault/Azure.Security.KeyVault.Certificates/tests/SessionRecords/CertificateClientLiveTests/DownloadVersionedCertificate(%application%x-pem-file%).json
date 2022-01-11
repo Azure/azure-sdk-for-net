@@ -5,7 +5,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Length": "0",
         "traceparent": "00-ddb94ffeebedef4f8f550a0e05d2c143-6a627fbeafde2d4e-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -115,7 +115,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -160,7 +159,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -205,7 +203,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -250,7 +247,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -295,7 +291,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -340,7 +335,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -385,7 +379,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -430,7 +423,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -475,7 +467,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -520,7 +511,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -565,7 +555,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -610,7 +599,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -655,7 +643,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -700,7 +687,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -744,7 +730,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -841,7 +826,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-375b1f6de0b1ce4986f5d7661e76d8f7-b56ed522a47fff4e-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -1008,7 +992,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1053,7 +1036,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1098,7 +1080,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1143,7 +1124,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1188,7 +1168,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1233,7 +1212,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1278,7 +1256,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1323,7 +1300,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1368,7 +1344,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1413,7 +1388,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1458,7 +1432,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1503,7 +1476,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1548,7 +1520,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1593,7 +1564,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1638,7 +1608,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1683,7 +1652,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1728,7 +1696,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1773,7 +1740,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1818,7 +1784,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1863,7 +1828,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1908,7 +1872,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -1952,7 +1915,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
@@ -2049,7 +2011,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-803285ce74d05442b3fde7020151c2f9-cdb015b1c4e82642-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -2147,7 +2108,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-62e31572e141cb449cc5caef55fe5acb-309f3582f2774949-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
@@ -2197,7 +2157,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-62e31572e141cb449cc5caef55fe5acb-177bb812b3a03b40-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",

@@ -10,29 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Aborts an unlocked immutability policy. The response of delete has immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is required for this operation. Deleting a locked immutability policy is not allowed, the only way is to delete the container after deleting all expired blobs inside the policy locked container. </summary>
-    public partial class BlobContainerDeleteImmutabilityPolicyOperation : Operation<ImmutabilityPolicy>
+    public partial class BlobContainerDeleteImmutabilityPolicyOperation : Operation<ImmutabilityPolicyData>
     {
-        private readonly OperationOrResponseInternals<ImmutabilityPolicy> _operation;
+        private readonly OperationOrResponseInternals<ImmutabilityPolicyData> _operation;
 
         /// <summary> Initializes a new instance of BlobContainerDeleteImmutabilityPolicyOperation for mocking. </summary>
         protected BlobContainerDeleteImmutabilityPolicyOperation()
         {
         }
 
-        internal BlobContainerDeleteImmutabilityPolicyOperation(Response<ImmutabilityPolicy> response)
+        internal BlobContainerDeleteImmutabilityPolicyOperation(Response<ImmutabilityPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<ImmutabilityPolicy>(response);
+            _operation = new OperationOrResponseInternals<ImmutabilityPolicyData>(response);
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ImmutabilityPolicy Value => _operation.Value;
+        public override ImmutabilityPolicyData Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -50,9 +51,9 @@ namespace Azure.ResourceManager.Storage.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ImmutabilityPolicy>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ImmutabilityPolicyData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ImmutabilityPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ImmutabilityPolicyData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

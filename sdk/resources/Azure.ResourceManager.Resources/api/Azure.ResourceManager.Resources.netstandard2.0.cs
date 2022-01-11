@@ -2,30 +2,31 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class Application : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected Application() { }
         public virtual Azure.ResourceManager.Resources.ApplicationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationName) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.ApplicationDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ApplicationDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Application> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.ApplicationRefreshPermissionsOperation RefreshPermissions(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ApplicationRefreshPermissionsOperation> RefreshPermissionsAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Application> Update(Azure.ResourceManager.Resources.Models.ApplicationPatchable parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> UpdateAsync(Azure.ResourceManager.Resources.Models.ApplicationPatchable parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ApplicationContainer : Azure.ResourceManager.Core.ArmContainer
+    public partial class ApplicationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.IEnumerable
     {
-        protected ApplicationContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected ApplicationCollection() { }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Models.ApplicationCreateOrUpdateOperation CreateOrUpdate(string applicationName, Azure.ResourceManager.Resources.ApplicationData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ApplicationCreateOrUpdateOperation> CreateOrUpdateAsync(string applicationName, Azure.ResourceManager.Resources.ApplicationData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Application> Get(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Application> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -34,10 +35,13 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> GetAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Application> GetIfExists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> GetIfExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.Application> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Application>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Application> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Application>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ApplicationData : Azure.ResourceManager.Resources.Models.GenericResourceAutoGenerated
     {
-        public ApplicationData(Azure.ResourceManager.Resources.Models.Location location, string kind) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public ApplicationData(Azure.Core.AzureLocation location, string kind) : base (default(Azure.Core.AzureLocation)) { }
         public string ApplicationDefinitionId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
@@ -59,26 +63,27 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationDefinition : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected ApplicationDefinition() { }
         public virtual Azure.ResourceManager.Resources.ApplicationDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationDefinitionName) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.ApplicationDefinitionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ApplicationDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ApplicationDefinitionContainer : Azure.ResourceManager.Core.ArmContainer
+    public partial class ApplicationDefinitionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>, System.Collections.IEnumerable
     {
-        protected ApplicationDefinitionContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected ApplicationDefinitionCollection() { }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Models.ApplicationDefinitionCreateOrUpdateOperation CreateOrUpdate(string applicationDefinitionName, Azure.ResourceManager.Resources.ApplicationDefinitionData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ApplicationDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(string applicationDefinitionName, Azure.ResourceManager.Resources.ApplicationDefinitionData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition> Get(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.ApplicationDefinition> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -87,10 +92,13 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition>> GetAsync(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition> GetIfExists(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition>> GetIfExistsAsync(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.ApplicationDefinition> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ApplicationDefinition> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ApplicationDefinitionData : Azure.ResourceManager.Resources.Models.GenericResourceAutoGenerated
     {
-        public ApplicationDefinitionData(Azure.ResourceManager.Resources.Models.Location location, Azure.ResourceManager.Resources.Models.ApplicationLockLevel lockLevel) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public ApplicationDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ApplicationLockLevel lockLevel) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
         public object CreateUiDefinition { get { throw null; } set { } }
@@ -108,123 +116,98 @@ namespace Azure.ResourceManager.Resources
     }
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.Resources.Application GetApplication(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.ApplicationDefinition GetApplicationDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.DeploymentExtended GetDeploymentExtended(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.DeploymentOperation GetDeploymentOperation(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.DeploymentScript GetDeploymentScript(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.JitRequestDefinition GetJitRequestDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.ScriptLog GetScriptLog(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.TemplateSpec GetTemplateSpec(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.TemplateSpecVersion GetTemplateSpecVersion(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.Application GetApplication(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.ApplicationDefinition GetApplicationDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.Deployment GetDeployment(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.DeploymentScript GetDeploymentScript(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.JitRequestDefinition GetJitRequestDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.ScriptLog GetScriptLog(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.TemplateSpec GetTemplateSpec(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.TemplateSpecVersion GetTemplateSpecVersion(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DeploymentExtended : Azure.ResourceManager.Core.ArmResource
+    public partial class Deployment : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected DeploymentExtended() { }
-        public virtual Azure.ResourceManager.Resources.DeploymentExtendedData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected Deployment() { }
+        public virtual Azure.ResourceManager.Resources.DeploymentData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult> CalculateTemplateHash(object template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult>> CalculateTemplateHashAsync(object template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CancelAtScope(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelAtScopeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CheckExistenceAtScope(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CheckExistenceAtScopeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CheckExistence(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CheckExistenceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.DeploymentDeleteAtScopeOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentDeleteAtScopeOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.DeploymentExportResult> ExportTemplateAtScope(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.DeploymentExportResult>> ExportTemplateAtScopeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.Resources.DeploymentOperationContainer GetDeploymentOperations() { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.DeploymentValidateAtScopeOperation ValidateAtScope(Azure.ResourceManager.Resources.Models.Deployment parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentValidateAtScopeOperation> ValidateAtScopeAsync(Azure.ResourceManager.Resources.Models.Deployment parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.DeploymentWhatIfOperation WhatIf(Azure.ResourceManager.Resources.Models.DeploymentWhatIfProperties properties, string location = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentWhatIfOperation> WhatIfAsync(Azure.ResourceManager.Resources.Models.DeploymentWhatIfProperties properties, string location = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.DeploymentExportResult> ExportTemplate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.DeploymentExportResult>> ExportTemplateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Deployment> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Deployment>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.DeploymentOperation> GetDeploymentOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.DeploymentOperation>> GetDeploymentOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.DeploymentOperation> GetDeploymentOperations(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.DeploymentOperation> GetDeploymentOperationsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.DeploymentValidateAtScopeOperation Validate(Azure.ResourceManager.Resources.Models.DeploymentInput parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentValidateAtScopeOperation> ValidateAsync(Azure.ResourceManager.Resources.Models.DeploymentInput parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.DeploymentWhatIfAtTenantScopeOperation WhatIf(string location, Azure.ResourceManager.Resources.Models.DeploymentWhatIfProperties properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentWhatIfAtTenantScopeOperation> WhatIfAsync(string location, Azure.ResourceManager.Resources.Models.DeploymentWhatIfProperties properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeploymentExtendedContainer : Azure.ResourceManager.Core.ArmContainer
+    public partial class DeploymentCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Deployment>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Deployment>, System.Collections.IEnumerable
     {
-        protected DeploymentExtendedContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.DeploymentCreateOrUpdateAtScopeOperation CreateOrUpdate(string deploymentName, Azure.ResourceManager.Resources.Models.Deployment parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentCreateOrUpdateAtScopeOperation> CreateOrUpdateAsync(string deploymentName, Azure.ResourceManager.Resources.Models.Deployment parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended> Get(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.DeploymentExtended> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.DeploymentExtended> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected override void ValidateResourceType(Azure.ResourceManager.ResourceIdentifier identifier) { }
+        protected DeploymentCollection() { }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.ResourceManager.Resources.Models.DeploymentCreateOrUpdateAtScopeOperation CreateOrUpdate(string deploymentName, Azure.ResourceManager.Resources.Models.DeploymentInput parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentCreateOrUpdateAtScopeOperation> CreateOrUpdateAsync(string deploymentName, Azure.ResourceManager.Resources.Models.DeploymentInput parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Deployment> Get(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Deployment> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Deployment> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Deployment>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Deployment> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Deployment>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.Deployment> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Deployment>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Deployment> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Deployment>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        protected override void ValidateResourceType(Azure.Core.ResourceIdentifier identifier) { }
     }
-    public partial class DeploymentExtendedData : Azure.ResourceManager.Models.Resource
+    public partial class DeploymentData : Azure.ResourceManager.Models.Resource
     {
-        internal DeploymentExtendedData() { }
+        internal DeploymentData() { }
         public string Location { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.DeploymentPropertiesExtended Properties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class DeploymentOperation : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected DeploymentOperation() { }
-        public virtual Azure.ResourceManager.Resources.DeploymentOperationData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentOperation> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentOperation>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DeploymentOperationContainer : Azure.ResourceManager.Core.ArmContainer
-    {
-        protected DeploymentOperationContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentOperation> Get(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.DeploymentOperation> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.DeploymentOperation> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentOperation>> GetAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentOperation> GetIfExists(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentOperation>> GetIfExistsAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DeploymentOperationData
-    {
-        internal DeploymentOperationData() { }
-        public string Id { get { throw null; } }
-        public string OperationId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.DeploymentOperationProperties Properties { get { throw null; } }
-    }
     public partial class DeploymentScript : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected DeploymentScript() { }
         public virtual Azure.ResourceManager.Resources.DeploymentScriptData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.DeploymentScriptDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentScriptDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.Resources.ScriptLog GetScriptLog() { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ScriptLogData>> GetLogs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ScriptLogData>>> GetLogsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.ScriptLog GetScriptLog() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> Update(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> UpdateAsync(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeploymentScriptContainer : Azure.ResourceManager.Core.ArmContainer
+    public partial class DeploymentScriptCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.IEnumerable
     {
-        protected DeploymentScriptContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected DeploymentScriptCollection() { }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Models.DeploymentScriptCreateOperation CreateOrUpdate(string scriptName, Azure.ResourceManager.Resources.DeploymentScriptData deploymentScript, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.DeploymentScriptCreateOperation> CreateOrUpdateAsync(string scriptName, Azure.ResourceManager.Resources.DeploymentScriptData deploymentScript, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> Get(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.DeploymentScript> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -233,6 +216,9 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> GetAsync(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> GetIfExists(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> GetIfExistsAsync(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.DeploymentScript> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.DeploymentScript>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.DeploymentScript> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DeploymentScript>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class DeploymentScriptData : Azure.ResourceManager.Models.Resource
     {
@@ -244,19 +230,20 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class JitRequestDefinition : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected JitRequestDefinition() { }
         public virtual Azure.ResourceManager.Resources.JitRequestDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jitRequestName) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.JitRequestDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.JitRequestDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -264,14 +251,14 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition> Update(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition>> UpdateAsync(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JitRequestDefinitionContainer : Azure.ResourceManager.Core.ArmContainer
+    public partial class JitRequestDefinitionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.JitRequestDefinition>, System.Collections.IEnumerable
     {
-        protected JitRequestDefinitionContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected JitRequestDefinitionCollection() { }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Models.JitRequestCreateOrUpdateOperation CreateOrUpdate(string jitRequestName, Azure.ResourceManager.Resources.JitRequestDefinitionData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.JitRequestCreateOrUpdateOperation> CreateOrUpdateAsync(string jitRequestName, Azure.ResourceManager.Resources.JitRequestDefinitionData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition> Get(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.JitRequestDefinition>> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -280,10 +267,12 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition>> GetAsync(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition> GetIfExists(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestDefinition>> GetIfExistsAsync(string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.JitRequestDefinition> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.JitRequestDefinition>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class JitRequestDefinitionData : Azure.ResourceManager.Models.TrackedResource
     {
-        public JitRequestDefinitionData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public JitRequestDefinitionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ApplicationResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationClientDetails CreatedBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies> JitAuthorizationPolicies { get { throw null; } }
@@ -295,31 +284,30 @@ namespace Azure.ResourceManager.Resources
     }
     public static partial class ManagementGroupExtensions
     {
-        public static Azure.ResourceManager.Resources.DeploymentExtendedContainer GetDeploymentExtendeds(this Azure.ResourceManager.Management.ManagementGroup managementGroup) { throw null; }
+        public static Azure.ResourceManager.Resources.DeploymentCollection GetDeployments(this Azure.ResourceManager.Management.ManagementGroup managementGroup) { throw null; }
     }
     public static partial class ResourceGroupExtensions
     {
-        public static Azure.ResourceManager.Resources.ApplicationDefinitionContainer GetApplicationDefinitions(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-        public static Azure.ResourceManager.Resources.ApplicationContainer GetApplications(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-        public static Azure.ResourceManager.Resources.DeploymentExtendedContainer GetDeploymentExtendeds(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-        public static Azure.ResourceManager.Resources.DeploymentScriptContainer GetDeploymentScripts(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-        public static Azure.ResourceManager.Resources.JitRequestDefinitionContainer GetJitRequestDefinitions(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-        public static Azure.ResourceManager.Resources.TemplateSpecContainer GetTemplateSpecs(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.ResourceManager.Resources.ApplicationDefinitionCollection GetApplicationDefinitions(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.ResourceManager.Resources.ApplicationCollection GetApplications(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.ResourceManager.Resources.DeploymentCollection GetDeployments(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.ResourceManager.Resources.DeploymentScriptCollection GetDeploymentScripts(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.ResourceManager.Resources.JitRequestDefinitionCollection GetJitRequestDefinitions(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.ResourceManager.Resources.TemplateSpecCollection GetTemplateSpecs(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
     }
     public partial class ScriptLog : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected ScriptLog() { }
         public virtual Azure.ResourceManager.Resources.ScriptLogData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ScriptLog> Get(int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ScriptLog>> GetAsync(int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ScriptLog>> GetLogs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ScriptLog>>> GetLogsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ScriptLogData : Azure.ResourceManager.Models.Resource
     {
@@ -328,49 +316,50 @@ namespace Azure.ResourceManager.Resources
     }
     public static partial class SubscriptionExtensions
     {
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetApplicationByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetApplicationByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Resources.Application> GetApplications(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetApplicationsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetApplicationsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Application> GetApplicationsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Resources.DeploymentExtendedContainer GetDeploymentExtendeds(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetDeploymentScriptByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetDeploymentScriptByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Resources.DeploymentCollection GetDeployments(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Resources.DeploymentScript> GetDeploymentScripts(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetDeploymentScriptsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetDeploymentScriptsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.DeploymentScript> GetDeploymentScriptsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetJitRequestDefinitionByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetJitRequestDefinitionByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.JitRequestDefinition>> GetJitRequestDefinitions(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetJitRequestDefinitionsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetJitRequestDefinitionsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.JitRequestDefinition>>> GetJitRequestDefinitionsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetTemplateSpecByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetTemplateSpecByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Resources.TemplateSpec> GetTemplateSpecs(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetTemplateSpecsAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetTemplateSpecsAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.TemplateSpec> GetTemplateSpecsAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TemplateSpec : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected TemplateSpec() { }
         public virtual Azure.ResourceManager.Resources.TemplateSpecData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string templateSpecName) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.TemplateSpecDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.TemplateSpecDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> Get(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> GetAsync(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.Resources.TemplateSpecVersionContainer GetTemplateSpecVersions() { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.TemplateSpecVersionCollection GetTemplateSpecVersions() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> Update(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> UpdateAsync(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TemplateSpecContainer : Azure.ResourceManager.Core.ArmContainer
+    public partial class TemplateSpecCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.IEnumerable
     {
-        protected TemplateSpecContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected TemplateSpecCollection() { }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Models.TemplateSpecCreateOrUpdateOperation CreateOrUpdate(string templateSpecName, Azure.ResourceManager.Resources.TemplateSpecData templateSpec, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.TemplateSpecCreateOrUpdateOperation> CreateOrUpdateAsync(string templateSpecName, Azure.ResourceManager.Resources.TemplateSpecData templateSpec, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> Get(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.TemplateSpec> GetAll(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -379,6 +368,9 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> GetAsync(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> GetIfExists(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> GetIfExistsAsync(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.TemplateSpec> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpec>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpec> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpec>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class TemplateSpecData : Azure.ResourceManager.Resources.Models.AzureResourceBaseAutoGenerated
     {
@@ -392,34 +384,38 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class TemplateSpecVersion : Azure.ResourceManager.Core.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected TemplateSpecVersion() { }
         public virtual Azure.ResourceManager.Resources.TemplateSpecVersionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion) { throw null; }
         public virtual Azure.ResourceManager.Resources.Models.TemplateSpecVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.TemplateSpecVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> Update(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> UpdateAsync(System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TemplateSpecVersionContainer : Azure.ResourceManager.Core.ArmContainer
+    public partial class TemplateSpecVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.IEnumerable
     {
-        protected TemplateSpecVersionContainer() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected TemplateSpecVersionCollection() { }
+        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Models.TemplateSpecVersionCreateOrUpdateOperation CreateOrUpdate(string templateSpecVersion, Azure.ResourceManager.Resources.TemplateSpecVersionData templateSpecVersionModel, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.TemplateSpecVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string templateSpecVersion, Azure.ResourceManager.Resources.TemplateSpecVersionData templateSpecVersionModel, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> Get(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.TemplateSpecVersion> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.TemplateSpecVersion> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> GetAsync(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> GetIfExists(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> GetIfExistsAsync(string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.TemplateSpecVersion> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpecVersion> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class TemplateSpecVersionData : Azure.ResourceManager.Resources.Models.AzureResourceBaseAutoGenerated
     {
@@ -434,8 +430,9 @@ namespace Azure.ResourceManager.Resources
     }
     public static partial class TenantExtensions
     {
-        public static Azure.ResourceManager.Resources.DeploymentExtended GetDeploymentExtended(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.DeploymentOperation GetDeploymentOperation(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult> CalculateTemplateHashDeployment(this Azure.ResourceManager.Resources.Tenant tenant, object template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Azure.ResourceManager.Resources.Tenant tenant, object template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Resources.DeploymentCollection GetDeployments(this Azure.ResourceManager.Resources.Tenant tenant) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Resources.Models
@@ -639,7 +636,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ApplicationPatchable : Azure.ResourceManager.Resources.Models.GenericResourceAutoGenerated
     {
-        public ApplicationPatchable(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public ApplicationPatchable(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ApplicationDefinitionId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
@@ -807,25 +804,18 @@ namespace Azure.ResourceManager.Resources.Models
         public string ResourceName { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
-    public partial class Deployment
-    {
-        public Deployment(Azure.ResourceManager.Resources.Models.DeploymentProperties properties) { }
-        public string Location { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.DeploymentProperties Properties { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class DeploymentCreateOrUpdateAtScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.DeploymentExtended>
+    public partial class DeploymentCreateOrUpdateAtScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Deployment>
     {
         protected DeploymentCreateOrUpdateAtScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.Resources.DeploymentExtended Value { get { throw null; } }
+        public override Azure.ResourceManager.Resources.Deployment Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.DeploymentExtended>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.Deployment>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.Deployment>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DeploymentDeleteAtScopeOperation : Azure.Operation
     {
@@ -842,6 +832,13 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal DeploymentExportResult() { }
         public object Template { get { throw null; } }
+    }
+    public partial class DeploymentInput
+    {
+        public DeploymentInput(Azure.ResourceManager.Resources.Models.DeploymentProperties properties) { }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.DeploymentProperties Properties { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeploymentMode : System.IEquatable<Azure.ResourceManager.Resources.Models.DeploymentMode>
@@ -861,6 +858,13 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.DeploymentMode (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.DeploymentMode left, Azure.ResourceManager.Resources.Models.DeploymentMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DeploymentOperation
+    {
+        internal DeploymentOperation() { }
+        public string Id { get { throw null; } }
+        public string OperationId { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.DeploymentOperationProperties Properties { get { throw null; } }
     }
     public partial class DeploymentOperationProperties
     {
@@ -1082,7 +1086,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class GenericResourceAutoGenerated : Azure.ResourceManager.Models.TrackedResource
     {
-        public GenericResourceAutoGenerated(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
+        public GenericResourceAutoGenerated(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.SkuAutoGenerated Sku { get { throw null; } set { } }
     }

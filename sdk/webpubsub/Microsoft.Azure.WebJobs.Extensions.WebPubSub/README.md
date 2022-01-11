@@ -15,7 +15,7 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 Install the Web PubSub extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub
 ```
 
 ### Prerequisites
@@ -30,13 +30,13 @@ You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal]
 
 The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
 
-For the local development use the `local.settings.json` file to store the connection string, `<connection_name>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection_name>` in function binding attributes:
+For the local development use the `local.settings.json` file to store the connection string, `<connection-string>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection-string>` in function binding attributes:
 
 ```json
 {
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "<connection_name>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
+    "<connection-string>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
   }
 }
 ```
@@ -84,13 +84,9 @@ public static class WebPubSubOutputBindingFunction
     [FunctionName("WebPubSubOutputBindingFunction")]
     public static async Task RunAsync(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
+        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubAction> action)
     {
-        await operation.AddAsync(new SendToAll
-        {
-            Message = BinaryData.FromString("Hello Web PubSub"),
-            DataType = MessageDataType.Text
-        });
+        await action.AddAsync(WebPubSubAction.CreateSendToAllAction("Hello Web PubSub!", WebPubSubDataType.Text));
     }
 }
 ```
@@ -104,11 +100,11 @@ public static class WebPubSubTriggerFunction
     public static void Run(
         ILogger logger,
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
-        string message,
-        MessageDataType dataType)
+        string data,
+        WebPubSubDataType dataType)
     {
-        logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
-            request.ConnectionContext.UserId, message, dataType);
+        logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+            request.ConnectionContext.UserId, data, dataType);
     }
 }
 ```
@@ -122,7 +118,7 @@ public static class WebPubSubTriggerReturnValueFunction
     public static UserEventResponse Run(
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
     {
-        return request.CreateResponse(BinaryData.FromString("ack"), MessageDataType.Text);
+        return request.CreateResponse(BinaryData.FromString("ack"), WebPubSubDataType.Text);
     }
 }
 ```

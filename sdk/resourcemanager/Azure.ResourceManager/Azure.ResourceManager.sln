@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31019.35
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31820.362
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{856C6092-55EB-4C02-B7D0-9846EDD70745}"
 EndProject
@@ -10,6 +10,22 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "src\Azure.ResourceManager.csproj", "{010FE057-7BB5-4F8C-BB9A-6378144F4CA8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Tests", "tests\Azure.ResourceManager.Tests.csproj", "{83E7651C-7FBE-45AA-B740-31FE9A3E44C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{217C9506-A0E0-4486-96FF-DAC0DF92CD1F}"
+	ProjectSection(SolutionItems) = preProject
+		samples\README.md = samples\README.md
+		samples\Sample1_HelloWorld.md = samples\Sample1_HelloWorld.md
+		samples\Sample1_HelloWorldAsync.md = samples\Sample1_HelloWorldAsync.md
+		samples\Sample2_ManagingResourceGroups.md = samples\Sample2_ManagingResourceGroups.md
+		samples\Sample3_CreatingAVirtualNetwork.md = samples\Sample3_CreatingAVirtualNetwork.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{4E159B41-7E02-4039-983A-F94EBF41D3C1}"
+	ProjectSection(SolutionItems) = preProject
+		docs\AuthUsingEnvironmentVariables.md = docs\AuthUsingEnvironmentVariables.md
+		docs\CONTRIBUTING.md = docs\CONTRIBUTING.md
+		docs\MigrationGuide.md = docs\MigrationGuide.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

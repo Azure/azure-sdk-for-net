@@ -125,10 +125,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private int _maxConcurrentSessions = 8;
 
         /// <summary>
-        /// Gets or sets an optional exception handler that will be invoked if an exception occurs while attempting to process
+        /// Gets or sets an optional error handler that will be invoked if an exception occurs while attempting to process
         /// a message. This does not apply for functions that receive a batch of messages.
         /// </summary>
-        internal Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
+        public Func<ProcessErrorEventArgs, Task> ProcessErrorAsync { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
@@ -156,6 +156,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented
         };
+
+        /// <summary>
+        /// <inheritdoc cref="ServiceBusClientOptions.EnableCrossEntityTransactions"/>
+        /// </summary>
+        public bool EnableCrossEntityTransactions { get; set; }
+
 #pragma warning restore AZC0014 // Avoid using banned types in public API
 
         /// <summary>
@@ -185,17 +191,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
                 { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
-                { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
+                { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty },
+                { nameof(EnableCrossEntityTransactions), EnableCrossEntityTransactions }
             };
 
             return options.ToString(Formatting.Indented);
         }
 
-        internal Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
+        internal async Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            ExceptionHandler?.Invoke(args);
-
-            return Task.CompletedTask;
+            if (ProcessErrorAsync != null)
+            {
+                await ProcessErrorAsync(args).ConfigureAwait(false);
+            }
         }
 
         internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)
@@ -256,7 +264,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 RetryOptions = ClientRetryOptions,
                 WebProxy = WebProxy,
-                TransportType = TransportType
+                TransportType = TransportType,
+                EnableCrossEntityTransactions = EnableCrossEntityTransactions
             };
     }
 }

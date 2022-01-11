@@ -27,6 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
+            Parameters = new ChangeTrackingDictionary<string, object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
@@ -34,12 +35,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
+        /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFlowReference(DataFlowReferenceType type, string referenceName, object datasetParameters, IDictionary<string, object> additionalProperties)
+        internal DataFlowReference(DataFlowReferenceType type, string referenceName, object datasetParameters, IDictionary<string, object> parameters, IDictionary<string, object> additionalProperties)
         {
             Type = type;
             ReferenceName = referenceName;
             DatasetParameters = datasetParameters;
+            Parameters = parameters;
             AdditionalProperties = additionalProperties;
         }
 
@@ -49,6 +52,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string ReferenceName { get; set; }
         /// <summary> Reference data flow parameters from dataset. </summary>
         public object DatasetParameters { get; set; }
+        /// <summary> Data flow parameters. </summary>
+        public IDictionary<string, object> Parameters { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, object> AdditionalProperties { get; }
     }

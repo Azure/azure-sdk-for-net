@@ -67,7 +67,7 @@ if (specificOperation.Status == DocumentOperationStatus.Succeeded)
 else if (specificOperation.Status == DocumentOperationStatus.Failed)
 {
     Console.WriteLine($"My {specificOperation.Kind} operation failed.");
-    DocumentAnalysisError error = specificOperation.Error;
+    ResponseError error = specificOperation.Error;
     Console.WriteLine($"Code: {error.Code}: Message: {error.Message}");
 }
 else

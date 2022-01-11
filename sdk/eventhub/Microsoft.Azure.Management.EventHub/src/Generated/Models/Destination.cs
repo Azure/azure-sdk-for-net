@@ -41,12 +41,21 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}.
         /// Here all the parameters (Namespace,EventHub .. etc) are mandatory
         /// irrespective of order</param>
-        public Destination(string name = default(string), string storageAccountResourceId = default(string), string blobContainer = default(string), string archiveNameFormat = default(string))
+        /// <param name="dataLakeSubscriptionId">Subscription Id of Azure Data
+        /// Lake Store</param>
+        /// <param name="dataLakeAccountName">The Azure Data Lake Store name
+        /// for the captured events</param>
+        /// <param name="dataLakeFolderPath">The destination folder path for
+        /// the captured events</param>
+        public Destination(string name = default(string), string storageAccountResourceId = default(string), string blobContainer = default(string), string archiveNameFormat = default(string), System.Guid? dataLakeSubscriptionId = default(System.Guid?), string dataLakeAccountName = default(string), string dataLakeFolderPath = default(string))
         {
             Name = name;
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainer = blobContainer;
             ArchiveNameFormat = archiveNameFormat;
+            DataLakeSubscriptionId = dataLakeSubscriptionId;
+            DataLakeAccountName = dataLakeAccountName;
+            DataLakeFolderPath = dataLakeFolderPath;
             CustomInit();
         }
 
@@ -82,6 +91,24 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.archiveNameFormat")]
         public string ArchiveNameFormat { get; set; }
+
+        /// <summary>
+        /// Gets or sets subscription Id of Azure Data Lake Store
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataLakeSubscriptionId")]
+        public System.Guid? DataLakeSubscriptionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Data Lake Store name for the captured events
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataLakeAccountName")]
+        public string DataLakeAccountName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the destination folder path for the captured events
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataLakeFolderPath")]
+        public string DataLakeFolderPath { get; set; }
 
     }
 }

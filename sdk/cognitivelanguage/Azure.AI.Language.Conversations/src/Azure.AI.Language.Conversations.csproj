@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the client library for the Conversations service, a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning, and pull out relevant, detailed information.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Language.Conversations client library</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure AI Language Conversations LUIS</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -26,6 +26,9 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
 

@@ -111,6 +111,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
+            if (Compression != null)
+            {
+                Compression.Validate();
+            }
         }
     }
 }

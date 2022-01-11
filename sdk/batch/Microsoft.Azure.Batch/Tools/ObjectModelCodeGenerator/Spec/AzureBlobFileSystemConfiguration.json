@@ -2,7 +2,7 @@
   "Name": "AzureBlobFileSystemConfiguration",
   "ProtocolName": "Models.AzureBlobFileSystemConfiguration",
   "SummaryComment": "Information used to connect to an Azure Storage Container using Blobfuse.",
-  "IsConstructorPublic":  false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

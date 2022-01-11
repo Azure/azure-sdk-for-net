@@ -15,7 +15,7 @@
         "x-ms-lease-action": "renew",
         "x-ms-lease-id": "146163c2-44da-e1e2-9360-df48b48375fe",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "b4579479-3a01-d9a9-a130-3fc404f19f19",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "cd1743fa-301a-0010-5977-6b1faa000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",

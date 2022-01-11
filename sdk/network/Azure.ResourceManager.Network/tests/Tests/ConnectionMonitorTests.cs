@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
         }
 
-        private ConnectionMonitorContainer ConnectionMonitors
+        private ConnectionMonitorCollection ConnectionMonitors
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = "cm";
             var cm = new ConnectionMonitorInput
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName1 = Recording.GenerateAssetName("azsmnet");
             string connectionMonitorName2 = Recording.GenerateAssetName("azsmnet");
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var operation = await connectionMonitor2.DeleteAsync();
             await operation.WaitForCompletionResponseAsync();
-            // TODO: restore to use Delete of the specific resource container: ADO 5998
+            // TODO: restore to use Delete of the specific resource collection: ADO 5998
             //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.DeleteAsync();
             //await connectionMonitorsDeleteOperation.WaitForCompletionAsync();;
             AsyncPageable<ConnectionMonitor> getConnectionMonitors2 = ConnectionMonitors.GetAllAsync();

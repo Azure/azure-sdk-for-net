@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Microsoft.Azure.SignalR;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -17,15 +16,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         public static IEnumerable<ServiceEndpoint> GetEndpoints(this IConfiguration config, AzureComponentFactory azureComponentFactory)
         {
-            foreach (IConfigurationSection child in config.GetChildren())
+            foreach (var child in config.GetChildren())
             {
-                if (child.TryGetNamedEndpointFromIdentity(azureComponentFactory, out ServiceEndpoint endpoint))
+                if (child.TryGetNamedEndpointFromIdentity(azureComponentFactory, out var endpoint))
                 {
                     yield return endpoint;
                     continue;
                 }
 
-                foreach (ServiceEndpoint item in child.GetNamedEndpointsFromConnectionString())
+                foreach (var item in child.GetNamedEndpointsFromConnectionString())
                 {
                     yield return item;
                 }
@@ -34,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public static IEnumerable<ServiceEndpoint> GetNamedEndpointsFromConnectionString(this IConfigurationSection section)
         {
-            string endpointName = section.Key;
+            var endpointName = section.Key;
             if (section.Value != null)
             {
                 yield return new ServiceEndpoint(section.Key, section.Value);
@@ -53,12 +52,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public static bool TryGetNamedEndpointFromIdentity(this IConfigurationSection section, AzureComponentFactory azureComponentFactory, out ServiceEndpoint endpoint)
         {
-            string text = section["ServiceUri"];
+            var text = section["ServiceUri"];
             if (text != null)
             {
-                string key = section.Key;
-                EndpointType value = section.GetValue("Type", EndpointType.Primary);
-                TokenCredential credential = azureComponentFactory.CreateTokenCredential(section);
+                var key = section.Key;
+                var value = section.GetValue("Type", EndpointType.Primary);
+                var credential = azureComponentFactory.CreateTokenCredential(section);
                 endpoint = new ServiceEndpoint(new Uri(text), credential, value, key);
                 return true;
             }

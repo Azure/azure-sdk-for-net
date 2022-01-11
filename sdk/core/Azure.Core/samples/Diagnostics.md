@@ -9,12 +9,16 @@ Azure SDKs produce various log messages that include information about:
 2. Authentication attempts
 3. Retries
 
-The simplest way to see the logs is to enable the console logging.
+The simplest way to see the logs is to enable the console logging using the [`AzureEventSourceListener`](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet).
 
 ```C# Snippet:ConsoleLogging
 // Setup a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
+
+### Azure Event Source Listener lifetime
+
+In order for the `AzureEventSourceListener` to collect logs, it must be in scope and active while the client library is in use.  If the listener is disposed or otherwise out of scope, logs cannot be collected.  Generally, we recommend creating the listener as a top-level member of the class where the Event Hubs client being inspected is used.
 
 ### Enabling content logging
 
@@ -158,7 +162,7 @@ To setup ApplicationInsights tracking for your application follow the [Start Mon
 
 ### OpenTelemetry with Azure Monitor, Zipkin and others
 
-OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#ActivitySource support) section before proceeding to OpenTelemetry configuration.
+OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#activitysource-support) section before proceeding to OpenTelemetry configuration.
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 

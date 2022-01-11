@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentListResult DeserializeDeploymentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeploymentExtendedData>> value = default;
+            Optional<IReadOnlyList<DeploymentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeploymentExtendedData> array = new List<DeploymentExtendedData>();
+                    List<DeploymentData> array = new List<DeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentExtendedData.DeserializeDeploymentExtendedData(item));
+                        array.Add(DeploymentData.DeserializeDeploymentData(item));
                     }
                     value = array;
                     continue;

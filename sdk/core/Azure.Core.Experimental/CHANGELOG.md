@@ -1,14 +1,28 @@
 # Release History
 
-## 0.1.0-preview.18 (Unreleased)
+## 0.1.0-preview.19 (Unreleased)
 
 ### Features Added
 
+- Added `RequestOptions` to enable per-invocation control of the request pipeline.
+
 ### Breaking Changes
+
+- The following types were removed:
+    - `ClassifiedResponse`
+    - `ExceptionFormattingResponseClassifier`
+    - `ResponseExtensions`
+    - `ResponsePropertiesPolicy`
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.18 (2021-11-03)
+
+- The following types were removed:
+    - `RequestOptions`
+    - `ResponseStatusOption`
 
 ## 0.1.0-preview.17 (2021-10-01)
 

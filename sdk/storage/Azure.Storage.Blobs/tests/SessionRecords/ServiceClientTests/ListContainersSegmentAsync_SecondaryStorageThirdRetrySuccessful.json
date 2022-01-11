@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "8b9753ac-9e87-5152-0eee-50f77954263a",
         "x-ms-date": "Wed, 17 Feb 2021 20:05:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "8b9753ac-9e87-5152-0eee-50f77954263a",
         "x-ms-request-id": "da96285b-201e-001a-3c68-0519ce000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "50f4b53d-ac3e-c7fa-cc55-c76b267b297f",
         "x-ms-date": "Wed, 17 Feb 2021 20:05:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -62,7 +62,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "50f4b53d-ac3e-c7fa-cc55-c76b267b297f",
         "x-ms-request-id": "7161d037-001e-0007-0168-051312000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seantest2sec-secondary.blob.core.windows.net/\"><Containers><Container><Name>test-container-fba01eb9-d3bd-12b4-4cda-c4a1a4d63782</Name><Properties><Last-Modified>Wed, 17 Feb 2021 20:05:11 GMT</Last-Modified><Etag>\"0x8D8D37F54E8C021\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><PublicAccess>container</PublicAccess><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><HasImmutabilityPolicy>false</HasImmutabilityPolicy><HasLegalHold>false</HasLegalHold></Properties></Container></Containers><NextMarker /></EnumerationResults>"
     },
@@ -80,7 +80,7 @@
         "x-ms-client-request-id": "c4b94b87-d65f-bcfb-5fec-45f678941c30",
         "x-ms-date": "Wed, 17 Feb 2021 20:05:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -93,7 +93,7 @@
         ],
         "x-ms-client-request-id": "c4b94b87-d65f-bcfb-5fec-45f678941c30",
         "x-ms-request-id": "da9647bd-201e-001a-1868-0519ce000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

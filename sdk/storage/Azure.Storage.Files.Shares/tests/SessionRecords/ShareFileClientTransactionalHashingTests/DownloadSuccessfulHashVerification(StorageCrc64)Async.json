@@ -11,7 +11,7 @@
         "x-ms-client-request-id": "4e2be2b5-60bb-efe8-0b67-35d4d4cd75b5",
         "x-ms-date": "Tue, 12 Oct 2021 05:47:06 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -23,7 +23,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "4e2be2b5-60bb-efe8-0b67-35d4d4cd75b5",
         "x-ms-request-id": "059591ed-901a-008f-7d2c-bf53a8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -44,7 +44,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         "x-ms-file-permission-key": "4010187179898695473*11459378189709739967",
         "x-ms-request-id": "059591ef-901a-008f-7e2c-bf53a8000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -82,7 +82,7 @@
         "x-ms-date": "Tue, 12 Oct 2021 05:47:06 GMT",
         "x-ms-range": "bytes=0-1023",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-write": "update"
       },
       "RequestBody": "dVHlL0BnhMQS26vN0/9LgGbuGPgxgOEMAEuJL8Fn\u002BRB2UxA9jo9pTl1mO\u002BC1GhwLHLRu5rR9g/Rw2C/03VUCquGaV3/vDfLWhcqaykQBV\u002BYvfRMM\u002BRJb\u002Bc8bzLZgdHAIZJH\u002BG8OcHA7Cl2Hq4riwb4FJxV9C9rHPPl6w00A8dRBakmazAzsikmEESmKxcRYWa101F64Qxm3gLt1l7EjOhiFQj1BS/WxFJjP\u002BPatOHcxHmWjjBl5iScv409RevKYYNsNAYeHFxG3w8PB6EojCkREQHVLg63/D7UaEWSmY5mmN5QfnDrzqgtT68hZt5zdDNkLCTp5TOEpEfHObQWtDWAmG7SyB2oJVJZt\u002B5vhpVgUOQSLn1ZjKOq28o5JITkFptpkN5voLwly/bSgD1VFS2yVtjf9JXIJxvLN\u002BxDbvDNZaFC9eW3ALAn7GJ2dvx2Vbasht2sFBIFoWmypHjf0l0GFRqMAi83\u002B1YoqAgjQbAvRNIllugjEVGfTVSMBGxHWAoVcGHR6kOXdJt3g3wJ0m\u002B5k1\u002BWqjtk0vPI/LTau\u002Bbp0U/\u002BHcFOTVqeniJcq53VhXrkwnEMsL3eoK1\u002BCP2evLiknbIsC8See0YFCBwZGCdl42dJ5el17SCSL20jwDRs/9F5qB3ruYm2RkcrB7ihtZh2GCWGVNbPPqCBmdxXeqsRqAg6n2AZijntg5\u002BiSuV34GnUvbge1qsKqnl9Wh\u002BtbtusGW\u002BgZxYoXJ3rmME3LOPLGalicszy8sFtP/TmrCAaQCTD9jGFx4lDvFEqI03Zw32VojBmOuweuRaeMychMbBtwVicYzaiRVIgHrZryN\u002BDk3yHUPnvtAVItU0q54RiInqQvFHlTVA242zuRhwlouA3Gq\u002B6meC2fh1DU73ph13NvfxLyxx9nkYcQG2dAW3pEwJc49zUt5iZ2j5EoemiXVwPIIgv6dfTuXxZnklzKXyvWkCrjKOA6QZToeDeOPxsafMRjdDlySkqiSpQexlfJrCxlUeo9sC4jjdx3EfnBYCP/TRGUZuryZEXgQN5IG39BHswHKOks3MyWQ\u002BZY\u002BzhM4Op0I3lCMUVFdu2kXW9P13JhMfMtujc2zmxFAicAlWkNk2P31/gGAumKwbX/iINdRmhz\u002B8lFIyazPVEI\u002BTMeRN2AlsoPWAN6XzMJpviBN0Xs57u6jJ2jyHA5QJaq\u002BQW6aHzUfvG1Ue5o\u002BZyWP3wuMgYLHBV3Z7RD3M5Z1hdsz2ItTz5/rLhQN5XNUZL9DYj0CxKMn9zwRwDEkJ4nW3/W/Co6aOxBsoFNuuSDphIhQtNBZcsA3DOFOQg5txgeKNgZ\u002BlVoxqCctlSNQuD0cJzyo1HK4fWw0h/6sS/kB/tpM44IZaw==",
@@ -97,7 +97,7 @@
         "x-ms-client-request-id": "5d30e97e-4a84-2d3d-c268-0ab16db17d43",
         "x-ms-request-id": "059591f0-901a-008f-7f2c-bf53a8000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -113,7 +113,7 @@
         "x-ms-date": "Tue, 12 Oct 2021 05:47:06 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -123,7 +123,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "1e2bbc44-81e8-efab-aa8a-4f6075707321",
         "x-ms-request-id": "059591f1-901a-008f-802c-bf53a8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

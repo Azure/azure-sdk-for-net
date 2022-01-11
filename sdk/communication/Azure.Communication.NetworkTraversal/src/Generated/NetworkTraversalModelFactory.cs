@@ -29,12 +29,13 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
+        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
         /// <returns> A new <see cref="NetworkTraversal.CommunicationIceServer"/> instance for mocking. </returns>
-        public static CommunicationIceServer CommunicationIceServer(IEnumerable<string> urls = null, string username = null, string credential = null)
+        public static CommunicationIceServer CommunicationIceServer(IEnumerable<string> urls = null, string username = null, string credential = null, RouteType routeType = default)
         {
             urls ??= new List<string>();
 
-            return new CommunicationIceServer(urls?.ToList(), username, credential);
+            return new CommunicationIceServer(urls?.ToList(), username, credential, routeType);
         }
     }
 }

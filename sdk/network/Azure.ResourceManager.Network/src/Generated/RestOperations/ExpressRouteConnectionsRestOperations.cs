@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Network
 {
     internal partial class ExpressRouteConnectionsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ExpressRouteConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public ExpressRouteConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,14 +68,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, <paramref name="connectionName"/>, or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, <paramref name="connectionName"/>, or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(putExpressRouteConnectionParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -109,14 +111,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, <paramref name="connectionName"/>, or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, <paramref name="connectionName"/>, or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -134,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(putExpressRouteConnectionParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -146,7 +153,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string expressRouteGatewayName, string connectionName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,13 +176,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the specified ExpressRouteConnection. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public async Task<Response<ExpressRouteConnectionData>> GetAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        public async Task<Response<ExpressRouteConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -189,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, expressRouteGatewayName, connectionName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, expressRouteGatewayName, connectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -208,13 +220,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the specified ExpressRouteConnection. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public Response<ExpressRouteConnectionData> Get(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        public Response<ExpressRouteConnectionData> Get(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -228,7 +245,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, expressRouteGatewayName, connectionName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, expressRouteGatewayName, connectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -246,7 +263,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string expressRouteGatewayName, string connectionName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -269,13 +286,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a connection to a ExpressRoute circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -289,7 +311,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, expressRouteGatewayName, connectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, expressRouteGatewayName, connectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -303,13 +325,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a connection to a ExpressRoute circuit. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -323,7 +350,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, expressRouteGatewayName, connectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, expressRouteGatewayName, connectionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -336,7 +363,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string expressRouteGatewayName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string expressRouteGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -358,12 +385,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists ExpressRouteConnections. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public async Task<Response<ExpressRouteConnectionList>> GetAllAsync(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="expressRouteGatewayName"/> is null. </exception>
+        public async Task<Response<ExpressRouteConnectionList>> ListAsync(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -373,7 +405,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, expressRouteGatewayName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, expressRouteGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -390,12 +422,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists ExpressRouteConnections. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public Response<ExpressRouteConnectionList> GetAll(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="expressRouteGatewayName"/> is null. </exception>
+        public Response<ExpressRouteConnectionList> List(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -405,7 +442,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, expressRouteGatewayName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, expressRouteGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

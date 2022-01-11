@@ -12,6 +12,7 @@ namespace Azure.Core.Pipeline
     {
         private readonly bool _isDistributedTracingEnabled;
         private readonly string? _resourceProviderNamespace;
+        private readonly HttpMessageSanitizer _sanitizer;
 
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
@@ -20,10 +21,11 @@ namespace Azure.Core.Pipeline
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
         private static readonly object? s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Core.Http");
 
-        public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace)
+        public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace, HttpMessageSanitizer httpMessageSanitizer)
         {
             _isDistributedTracingEnabled = isDistributedTracingEnabled;
             _resourceProviderNamespace = resourceProviderNamespace;
+            _sanitizer = httpMessageSanitizer;
         }
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -54,7 +56,7 @@ namespace Azure.Core.Pipeline
         {
             using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client);
             scope.AddAttribute("http.method", message.Request.Method.Method);
-            scope.AddAttribute("http.url", message.Request.Uri.ToString());
+            scope.AddAttribute("http.url", _sanitizer.SanitizeUrl(message.Request.Uri.ToString()));
             scope.AddAttribute("requestId", message.Request.ClientRequestId);
 
             if (_resourceProviderNamespace != null)

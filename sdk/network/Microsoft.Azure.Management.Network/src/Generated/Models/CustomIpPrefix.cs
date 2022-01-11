@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string cidr = default(string), string signedMessage = default(string), string authorizationMessage = default(string), CustomIpPrefix customIpPrefixParent = default(CustomIpPrefix), IList<CustomIpPrefix> childCustomIpPrefixes = default(IList<CustomIpPrefix>), string commissionedState = default(string), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string failedReason = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
+        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string cidr = default(string), string signedMessage = default(string), string authorizationMessage = default(string), SubResource customIpPrefixParent = default(SubResource), IList<SubResource> childCustomIpPrefixes = default(IList<SubResource>), string commissionedState = default(string), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string failedReason = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
@@ -121,13 +121,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customIpPrefixParent")]
-        public CustomIpPrefix CustomIpPrefixParent { get; set; }
+        public SubResource CustomIpPrefixParent { get; set; }
 
         /// <summary>
         /// Gets the list of all Children for IPv6 /48 CustomIpPrefix.
         /// </summary>
         [JsonProperty(PropertyName = "properties.childCustomIpPrefixes")]
-        public IList<CustomIpPrefix> ChildCustomIpPrefixes { get; private set; }
+        public IList<SubResource> ChildCustomIpPrefixes { get; private set; }
 
         /// <summary>
         /// Gets or sets the commissioned state of the Custom IP Prefix.

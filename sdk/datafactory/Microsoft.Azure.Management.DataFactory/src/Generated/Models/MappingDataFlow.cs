@@ -44,13 +44,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="transformations">List of transformations in data
         /// flow.</param>
         /// <param name="script">DataFlow script.</param>
-        public MappingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string))
+        /// <param name="scriptLines">Data flow script lines.</param>
+        public MappingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string), IList<string> scriptLines = default(IList<string>))
             : base(description, annotations, folder)
         {
             Sources = sources;
             Sinks = sinks;
             Transformations = transformations;
             Script = script;
+            ScriptLines = scriptLines;
             CustomInit();
         }
 
@@ -82,6 +84,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.script")]
         public string Script { get; set; }
+
+        /// <summary>
+        /// Gets or sets data flow script lines.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.scriptLines")]
+        public IList<string> ScriptLines { get; set; }
 
     }
 }

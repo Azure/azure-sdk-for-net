@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.IotCentral
     public partial interface IOperations
     {
         /// <summary>
-        /// Lists all of the available IoT Central application REST API
+        /// Lists all of the available IoT Central Resource Provider
         /// operations.
         /// </summary>
         /// <param name='customHeaders'>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.IotCentral
         /// </exception>
         Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the available IoT Central application REST API
+        /// Lists all of the available IoT Central Resource Provider
         /// operations.
         /// </summary>
         /// <param name='nextPageLink'>

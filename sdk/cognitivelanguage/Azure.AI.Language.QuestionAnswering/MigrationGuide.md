@@ -34,9 +34,9 @@ In the case of Question Answering, the modern client libraries have packages and
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a `QnAMakerRuntimeClient` along with `EndpointKeyServiceClientCredentials`:
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-var credential = new EndpointKeyServiceClientCredentials("{api-key}");
+EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{api-key}");
 
-var client = new QnAMakerRuntimeClient(credential)
+QnAMakerRuntimeClient client = new QnAMakerRuntimeClient(credential)
 {
     RuntimeEndpoint = "{endpoint}"
 };
@@ -45,10 +45,10 @@ var client = new QnAMakerRuntimeClient(credential)
 Now in `Azure.AI.Language.QuestionAnswering`, you create a `QuestionAnsweringClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-var endpoint = new Uri("{endpoint}");
-var credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-var client = new QuestionAnsweringClient(endpoint, credential);
+QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
 
 ### Querying a question
@@ -56,19 +56,17 @@ var client = new QuestionAnsweringClient(endpoint, credential);
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could query for a question using `QueryDTO`:
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-var queryDTO = new QueryDTO();
+QueryDTO queryDTO = new QueryDTO();
 queryDTO.Question = "{question}";
 
-var response = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
+QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
 ```
 
 Now in `Azure.AI.Language.QuestionAnswering` you use `client.QueryKnowledgeBaseAsync`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-var response = await client.QueryKnowledgeBaseAsync(
-    "{project-name}",
-    "{deployment-name}",
-    "{question}");
+QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+Response<AnswersResult> response = await client.GetAnswersAsync("{question}", project);
 ```
 
 ### Chatting
@@ -76,20 +74,20 @@ var response = await client.QueryKnowledgeBaseAsync(
  Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could chat using `QueryDTO` along with setting the `context` to have `previousQnaId`:
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
-var queryDTOFollowUp = new QueryDTO();
+QueryDTO queryDTOFollowUp = new QueryDTO();
 queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1);
 
-var responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
+QnASearchResultList responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
 ```
 
 Now in `Azure.AI.Language.QuestionAnswering`, you use `QueryKnowledgeBaseOptions` to set `projectName`, `deploymentName`, and `question` along with setting the `context` to have `previousQnaId`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
-var options = new QueryKnowledgeBaseOptions(
-    "{project-name}",
-    "{deployment-name}",
-    "{question}");
-options.Context = new KnowledgeBaseAnswerRequestContext(1);
+QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+AnswersOptions options = new AnswersOptions
+{
+    AnswerContext = new KnowledgeBaseAnswerContext(1)
+};
 
-var responseFollowUp = await client.QueryKnowledgeBaseAsync(options);
+Response<AnswersResult> responseFollowUp = await client.GetAnswersAsync("{question}", project, options);
 ```

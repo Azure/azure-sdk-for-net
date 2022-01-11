@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private const string NamePrefix = "test_ddos_";
         private Resources.ResourceGroup resourceGroup;
+        private Resources.Subscription _subscription;
 
         public DdosProtectionPlanTests(bool isAsync) : base(isAsync)
         {
@@ -30,10 +31,11 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
             resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix));
         }
 
-        public DdosProtectionPlanContainer GetContainer()
+        public DdosProtectionPlanCollection GetCollection()
         {
             return resourceGroup.GetDdosProtectionPlans();
         }
@@ -42,13 +44,13 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task DdosProtectionPlanApiTest()
         {
-            var container = GetContainer();
+            var container = GetCollection();
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
             DdosProtectionPlan ddosProtectionPlan = await container.CreateOrUpdate(name, new DdosProtectionPlanData(TestEnvironment.Location)).WaitForCompletionAsync();
 
-            Assert.True(await container.CheckIfExistsAsync(name));
+            Assert.True(await container.ExistsAsync(name));
 
             var ddosProtectionPlanData = ddosProtectionPlan.Data;
             ValidateCommon(ddosProtectionPlanData, name);
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests
             // patch
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await ddosProtectionPlan.UpdateTagsAsync(tags);
+            ddosProtectionPlan = await ddosProtectionPlan.UpdateAsync(tags);
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -98,13 +100,13 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await ddosProtectionPlan.DeleteAsync();
 
-            Assert.False(await container.CheckIfExistsAsync(name));
+            Assert.False(await container.ExistsAsync(name));
 
             ddosProtectionPlans = await container.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);
 
             // list all
-            ddosProtectionPlans = await ArmClient.DefaultSubscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
+            ddosProtectionPlans = await _subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);
         }
 

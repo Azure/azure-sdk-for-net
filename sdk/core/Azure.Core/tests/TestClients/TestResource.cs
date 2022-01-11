@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
@@ -15,7 +14,7 @@ namespace Azure.Core.Tests
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
-        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
+        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
 
         public virtual TestResource GetAnotherOperations()
         {

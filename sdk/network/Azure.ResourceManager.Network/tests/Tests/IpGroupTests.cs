@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -28,11 +29,12 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("IpGroupRG-"), new ResourceGroupData(Location.WestUS2));
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("IpGroupRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _ipGroupName = SessionRecording.GenerateAssetName("IpGroupRG-");
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (_resourceGroup.GetIpGroups().CheckIfExists(_ipGroupName))
+            if (_resourceGroup.GetIpGroups().Exists(_ipGroupName))
             {
                 var ipGroup = await _resourceGroup.GetIpGroups().GetAsync(_ipGroupName);
                 await ipGroup.Value.DeleteAsync();
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var container = _resourceGroup.GetIpGroups();
             var data = new IpGroupData();
-            data.Location = Location.WestUS2;
+            data.Location = AzureLocation.WestUS2;
             var ipGroup = await container.CreateOrUpdateAsync(ipGroupName, data);
             return ipGroup;
         }
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task CheckIfExist()
         {
             await CreateIpGroup(_ipGroupName);
-            Assert.IsTrue(_resourceGroup.GetIpGroups().CheckIfExists(_ipGroupName));
+            Assert.IsTrue(_resourceGroup.GetIpGroups().Exists(_ipGroupName));
         }
 
         [Test]

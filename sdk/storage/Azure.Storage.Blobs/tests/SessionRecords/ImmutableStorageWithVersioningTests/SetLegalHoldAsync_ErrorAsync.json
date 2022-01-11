@@ -12,7 +12,7 @@
         "x-ms-date": "Wed, 11 Aug 2021 19:42:36 GMT",
         "x-ms-legal-hold": "true",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -24,7 +24,7 @@
         "x-ms-client-request-id": "1a234d9f-e75e-0d2d-cae5-3dece881a87b",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "b1229de9-d01e-004a-6ce9-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",

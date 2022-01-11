@@ -18,6 +18,7 @@ namespace Azure.Communication.NetworkTraversal
             IReadOnlyList<string> urls = default;
             string username = default;
             string credential = default;
+            RouteType routeType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urls"))
@@ -40,8 +41,13 @@ namespace Azure.Communication.NetworkTraversal
                     credential = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("routeType"))
+                {
+                    routeType = new RouteType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new CommunicationIceServer(urls, username, credential);
+            return new CommunicationIceServer(urls, username, credential, routeType);
         }
     }
 }

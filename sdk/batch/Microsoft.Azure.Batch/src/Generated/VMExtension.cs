@@ -103,6 +103,14 @@ namespace Microsoft.Azure.Batch
             this.Type = type;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="VMExtension"/> class.
+        /// </summary>
+        protected VMExtension()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal VMExtension(Models.VMExtension protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

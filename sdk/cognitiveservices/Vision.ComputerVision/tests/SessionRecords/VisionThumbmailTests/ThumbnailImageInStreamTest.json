@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.GenerateThumbnail=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "1095"
+          "138"
         ],
         "apim-request-id": [
-          "909c00b8-45f1-4d82-b4f7-e2819e01d020"
+          "3a37b40a-d229-4c36-8251-68254af5b76c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:31 GMT"
+          "Thu, 04 Nov 2021 04:51:32 GMT"
         ],
         "Content-Length": [
           "2523"

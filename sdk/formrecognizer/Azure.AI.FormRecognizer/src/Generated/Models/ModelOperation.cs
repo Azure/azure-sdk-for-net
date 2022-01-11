@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -42,13 +43,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, DocumentAnalysisError error, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation)
+        internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, JsonElement error, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation)
         {
-            Error = error;
+            _error = error;
             Result = result;
         }
-
-        /// <summary> Encountered error. </summary>
-        public DocumentAnalysisError Error { get; }
     }
 }

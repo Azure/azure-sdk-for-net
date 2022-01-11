@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
 
             ValidateVault(managedHsm.Value.Data,
                 VaultName,
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = (await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
+                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = (await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
+                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 10,
                 Tags);
 
-            var retrievedVault = await ManagedHsmContainer.GetAsync(VaultName);
+            var retrievedVault = await ManagedHsmCollection.GetAsync(VaultName);
 
             ValidateVault(retrievedVault.Value.Data,
                 VaultName,
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await ManagedHsmContainer.GetAsync(VaultName);
+                await ManagedHsmCollection.GetAsync(VaultName);
             });
         }
 
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmContainer.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
 
             Assert.NotNull(managedHsm.Value);
             Assert.NotNull(managedHsm.Value.Id);
             resourceIds.Add(managedHsm.Value.Id);
             vaultList.Add(managedHsm.Value);
 
-            var vaults = ManagedHsmContainer.GetAllAsync();
+            var vaults = ManagedHsmCollection.GetAllAsync();
 
             await foreach (var v in vaults)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
 
             // Delete
             await managedHsm.Value.DeleteAsync();
@@ -211,18 +211,18 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Get deleted vault
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await ManagedHsmContainer.GetAsync(VaultName);
+                await ManagedHsmCollection.GetAsync(VaultName);
             });
 
             parameters.Properties.CreateMode = CreateMode.Recover;
 
             // Recover in recover mode
-            var recoveredVault2 = await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+            var recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
 
             Assert.True(recoveredVault2.Value.Data.IsEqual(managedHsm.Value.Data));
 
             // Get recovered vault
-            var getResult = await ManagedHsmContainer.GetAsync(VaultName);
+            var getResult = await ManagedHsmCollection.GetAsync(VaultName);
 
             // Delete
             await getResult.Value.DeleteAsync();

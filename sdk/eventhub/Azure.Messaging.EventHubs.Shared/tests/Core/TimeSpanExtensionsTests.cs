@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
 
@@ -27,6 +28,18 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { TimeSpan.FromSeconds(10.279), TimeSpan.FromSeconds(6.134), TimeSpan.FromSeconds(10.279 - 6.134) };
             yield return new object[] { TimeSpan.FromMilliseconds(50), TimeSpan.FromMilliseconds(25), TimeSpan.FromMilliseconds(25) };
             yield return new object[] { TimeSpan.FromMilliseconds(50.2), TimeSpan.FromMilliseconds(49.6), TimeSpan.Zero };
+            yield return new object[] { TimeSpan.FromMilliseconds(49.6), TimeSpan.FromMilliseconds(49.6), TimeSpan.Zero };
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TimeSpanExtensions.CalculateRemaining" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRemainingWithInfinite()
+        {
+            Assert.That(Timeout.InfiniteTimeSpan.CalculateRemaining(TimeSpan.FromDays(1)), Is.EqualTo(Timeout.InfiniteTimeSpan));
         }
 
         /// <summary>

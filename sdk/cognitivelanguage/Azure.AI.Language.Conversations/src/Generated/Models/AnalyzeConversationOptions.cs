@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
@@ -15,9 +14,6 @@ namespace Azure.AI.Language.Conversations
     /// <summary> The request body. </summary>
     public partial class AnalyzeConversationOptions
     {
-
-        /// <summary> The conversation utterance to be analyzed. </summary>
-        public string Query { get; }
         /// <summary> The name of the target project this request is sending to directly. </summary>
         public string DirectTarget { get; set; }
         /// <summary> The language to use in this request. This will be the language setting when communicating with all other target projects. </summary>
@@ -27,6 +23,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> If true, the query will be kept by the service for customers to further review, to improve the model quality. </summary>
         public bool? IsLoggingEnabled { get; set; }
         /// <summary> A dictionary representing the input for each target project. </summary>
-        public IDictionary<string, AnalyzeParameters> Parameters { get; }
+        public IDictionary<string, AnalysisParameters> Parameters { get; }
     }
 }

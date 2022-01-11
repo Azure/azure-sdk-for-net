@@ -285,9 +285,9 @@ namespace Azure.Communication.Identity
         /// <param name="teamsUserAadToken">AAD access token of a Teams User to acquire a new Communication Identity access token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<AccessToken> ExchangeTeamsUserAadToken(string teamsUserAadToken, CancellationToken cancellationToken = default)
+        public virtual Response<AccessToken> GetTokenForTeamsUser(string teamsUserAadToken, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeTeamsUserAadToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetTokenForTeamsUser)}");
             scope.Start();
             try
             {
@@ -304,9 +304,9 @@ namespace Azure.Communication.Identity
         /// <summary>Asynchronously exchange an AAD access token of a Teams User for a Communication Identity access token.</summary>
         /// <param name="teamsUserAadToken">AAD access token of a Teams User to acquire a new Communication Identity access token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<AccessToken>> ExchangeTeamsUserAadTokenAsync(String teamsUserAadToken, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessToken>> GetTokenForTeamsUserAsync(String teamsUserAadToken, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeTeamsUserAadToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetTokenForTeamsUser)}");
             scope.Start();
             try
             {

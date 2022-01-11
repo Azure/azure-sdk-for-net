@@ -25,4 +25,8 @@
     <Compile Include="..\..\Azure.Messaging.ServiceBus\tests\Infrastructure\ServiceBusScope.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Authorization\SharedAccessSignature.cs" LinkBase="Shared" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Transactions" />
+  </ItemGroup>
 </Project>  

@@ -101,7 +101,7 @@ namespace Azure.Core.Samples
             #endregion
         }
 
-#if NET5_0 || SNIPPET
+#if NET5_0_OR_GREATER || SNIPPET
         [Test]
         [Ignore("Only verifying that the sample builds")]
         public static void ListenToActivitySource()

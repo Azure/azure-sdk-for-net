@@ -3,70 +3,39 @@
 
 using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace Azure.IoT.ModelsRepository.Tests
 {
     public class MetadataSchedulerTests : ModelsRepositoryTestBase
     {
         [Test]
-        public async Task SchedulerBasicUsage()
+        public void SchedulerEnabledMetadata()
         {
-            var metadataOptions = new ModelsRepositoryClientMetadataOptions(TimeSpan.FromSeconds(1));
-            var metadataScheduler = new MetadataScheduler(metadataOptions);
-            metadataScheduler.HasElapsed().Should().BeTrue();
-            // For initial fetch, always return true.
-            metadataScheduler.HasElapsed().Should().BeTrue();
-            metadataScheduler.Reset();
-            metadataScheduler.HasElapsed().Should().BeFalse();
-            await Task.Delay(2000);
-            metadataScheduler.HasElapsed().Should().BeTrue();
-        }
-
-        [Test]
-        public void SchedulerContinuousElapse()
-        {
-            var metadataOptions = new ModelsRepositoryClientMetadataOptions(TimeSpan.Zero);
-            var metadataScheduler = new MetadataScheduler(metadataOptions);
-            metadataScheduler.HasElapsed().Should().BeTrue();
-            // For initial fetch, always return true.
-            metadataScheduler.HasElapsed().Should().BeTrue();
-            metadataScheduler.Reset();
-            metadataScheduler.HasElapsed().Should().BeTrue();
-            metadataScheduler.Reset();
-            metadataScheduler.HasElapsed().Should().BeTrue();
-        }
-
-        [Test]
-        public void SchedulerSingleElapse()
-        {
-            // Default Expiration is single elapse
+            // In this case the scheduler should support only an initial metadata fetch.
             var metadataOptions = new ModelsRepositoryClientMetadataOptions();
             var metadataScheduler = new MetadataScheduler(metadataOptions);
-            metadataScheduler.HasElapsed().Should().BeTrue();
+            metadataScheduler.ShouldFetchMetadata().Should().BeTrue();
             // For initial fetch, always return true.
-            metadataScheduler.HasElapsed().Should().BeTrue();
-            metadataScheduler.Reset();
-            metadataScheduler.HasElapsed().Should().BeFalse();
-            metadataScheduler.Reset();
-            metadataScheduler.HasElapsed().Should().BeFalse();
+            metadataScheduler.ShouldFetchMetadata().Should().BeTrue();
+            metadataScheduler.MarkAsFetched();
+            metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
+            metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
         }
 
         [Test]
-        public void SchedulerNeverElapse()
+        public void SchedulerDisabledMetadata()
         {
+            // In this case the scheduler should support no metadata fetching.
             var metadataOptions = new ModelsRepositoryClientMetadataOptions
             {
-                Enabled = false
+                IsMetadataProcessingEnabled = false
             };
             var metadataScheduler = new MetadataScheduler(metadataOptions);
-            metadataScheduler.HasElapsed().Should().BeFalse();
-            metadataScheduler.HasElapsed().Should().BeFalse();
-            metadataScheduler.Reset();
-            metadataScheduler.HasElapsed().Should().BeFalse();
-            metadataScheduler.Reset();
-            metadataScheduler.HasElapsed().Should().BeFalse();
+            metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
+            metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
+            metadataScheduler.MarkAsFetched();
+            metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
+            metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<Gallery> CreateGalleryAsync(string name)
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            var container = _resourceGroup.GetGalleries();
+            var collection = _resourceGroup.GetGalleries();
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var lro = await collection.CreateOrUpdateAsync(name, input);
             return lro.Value;
         }
 

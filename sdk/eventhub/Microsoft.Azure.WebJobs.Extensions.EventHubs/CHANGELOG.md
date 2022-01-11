@@ -1,5 +1,16 @@
 # Release History
 
+## 5.1.0-beta.1 (Unreleased)
+
+### Features Added
+- Add listener details
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 5.0.0 (2021-10-21)
 
 ### Features Added

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication Identity service.
@@ -6,7 +6,7 @@
       Microsoft Azure Communication Identity quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication Identity Service</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.1.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Identity Service;Microsoft;Azure;Azure Communication Service;Azure Communication Identity Service;Identity;Communication;$(PackageCommonTags)</PackageTags>
@@ -38,6 +38,9 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Common" />

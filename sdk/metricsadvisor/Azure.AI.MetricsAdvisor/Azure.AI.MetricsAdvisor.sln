@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{DECB7564-96C8-413F-8F87-998C1E8C077F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{1715D99D-E5B4-4970-93FA-FEE2AA7573D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DECB7564-96C8-413F-8F87-998C1E8C077F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DECB7564-96C8-413F-8F87-998C1E8C077F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DECB7564-96C8-413F-8F87-998C1E8C077F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1715D99D-E5B4-4970-93FA-FEE2AA7573D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1715D99D-E5B4-4970-93FA-FEE2AA7573D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1715D99D-E5B4-4970-93FA-FEE2AA7573D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1715D99D-E5B4-4970-93FA-FEE2AA7573D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-07-15-preview",
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "238",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0faddea12d06484685ebe747f49a4ca3-c0a2d8f985f9e444-00",
+        "traceparent": "00-dc73bc0f06cffc4e817030fd723bd84e-c6b3a01681a3a04b-00",
         "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210922.1",
-          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "67f043ce4c7cf8e00dfc0347c0285dfa",
         "x-ms-return-client-request-id": "true"
@@ -30,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "039007a3-6cb0-4edc-bbfb-a3932d4e800e",
-        "Content-Length": "1621",
+        "apim-request-id": "e5ef9efe-5399-4804-968a-e0a7ead69c3d",
+        "Content-Length": "1143",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTransaction=1",
-        "Date": "Wed, 22 Sep 2021 20:19:38 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
+        "Date": "Thu, 28 Oct 2021 21:15:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "300"
+        "x-envoy-upstream-service-time": "1369"
       },
       "ResponseBody": [
         "{\n",
@@ -47,8 +47,8 @@
         "        \u0022Make your battery last\u0022\n",
         "      ],\n",
         "      \u0022answer\u0022: \u0022**Make your battery last**\\n\\nFor info on how to care for your battery and power supply, conserve power, and make your Surface battery last longer, see [Surface battery and power](http://www.microsoft.com/surface/support/hardware-and-drivers/battery-and-power) on Surface.com.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9290999999999999,\n",
-        "      \u0022id\u0022: 27,\n",
+        "      \u0022confidenceScore\u0022: 0.9079,\n",
+        "      \u0022id\u0022: 136,\n",
         "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
         "      \u0022metadata\u0022: {\n",
         "        \u0022explicitlytaggedheading\u0022: \u0022make your battery last\u0022\n",
@@ -63,26 +63,12 @@
         "        \u0022Check the battery level\u0022\n",
         "      ],\n",
         "      \u0022answer\u0022: \u0022**Check the battery level**\\n\\nYou can check the battery level from the lock screen or the desktop:\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.3069,\n",
-        "      \u0022id\u0022: 24,\n",
+        "      \u0022confidenceScore\u0022: 0.48469999999999996,\n",
+        "      \u0022id\u0022: 133,\n",
         "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
         "      \u0022metadata\u0022: {\n",
         "        \u0022explicitlytaggedheading\u0022: \u0022check the battery level\u0022\n",
         "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: []\n",
-        "      }\n",
-        "    },\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Desktop taskbar.\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Desktop taskbar.**\\n\\nBattery status appears at the right side of the taskbar. Select the battery icon for info about the charging and battery status, including the percent remaining. \u272A\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.2548,\n",
-        "      \u0022id\u0022: 26,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {},\n",
         "      \u0022dialog\u0022: {\n",
         "        \u0022isContextOnly\u0022: false,\n",
         "        \u0022prompts\u0022: []\n",

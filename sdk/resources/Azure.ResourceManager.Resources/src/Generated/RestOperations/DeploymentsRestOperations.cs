@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentName, Deployment parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentName, DeploymentInput parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdateAtScope(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateAtScope(string scope, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
-        public async Task<Response<DeploymentExtendedData>> GetAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentData>> GetAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -313,13 +313,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentExtendedData value = default;
+                        DeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
+                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
+                    return Response.FromValue((DeploymentData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
-        public Response<DeploymentExtendedData> GetAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
+        public Response<DeploymentData> GetAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -347,13 +347,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentExtendedData value = default;
+                        DeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
+                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
+                    return Response.FromValue((DeploymentData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateValidateAtScopeRequest(string scope, string deploymentName, Deployment parameters)
+        internal Azure.Core.HttpMessage CreateValidateAtScopeRequest(string scope, string deploymentName, DeploymentInput parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> ValidateAtScopeAsync(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateAtScopeAsync(string scope, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response ValidateAtScope(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
+        public Response ValidateAtScope(string scope, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAtScopeRequest(string scope, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListAtScopeRequest(string scope, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -637,14 +637,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DeploymentListResult>> GetAtScopeAsync(string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentListResult>> ListAtScopeAsync(string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            using var message = CreateGetAtScopeRequest(scope, filter, top);
+            using var message = CreateListAtScopeRequest(scope, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -666,14 +666,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<DeploymentListResult> GetAtScope(string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DeploymentListResult> ListAtScope(string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            using var message = CreateGetAtScopeRequest(scope, filter, top);
+            using var message = CreateListAtScopeRequest(scope, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -684,80 +684,6 @@ namespace Azure.ResourceManager.Resources
                         value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal Azure.Core.HttpMessage CreateGetAtTenantScopeRequest(string deploymentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public async Task<Response<DeploymentExtendedData>> GetAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetAtTenantScopeRequest(deploymentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public Response<DeploymentExtendedData> GetAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetAtTenantScopeRequest(deploymentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -846,92 +772,6 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 202:
                     return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal Azure.Core.HttpMessage CreateGetAtManagementGroupScopeRequest(string groupId, string deploymentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(groupId, true);
-            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="groupId"> The management group ID. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
-        public async Task<Response<DeploymentExtendedData>> GetAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetAtManagementGroupScopeRequest(groupId, deploymentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="groupId"> The management group ID. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
-        public Response<DeploymentExtendedData> GetAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetAtManagementGroupScopeRequest(groupId, deploymentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1037,92 +877,6 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAtSubscriptionScopeRequest(string subscriptionId, string deploymentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentName"/> is null. </exception>
-        public async Task<Response<DeploymentExtendedData>> GetAtSubscriptionScopeAsync(string subscriptionId, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetAtSubscriptionScopeRequest(subscriptionId, deploymentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deploymentName"/> is null. </exception>
-        public Response<DeploymentExtendedData> GetAtSubscriptionScope(string subscriptionId, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetAtSubscriptionScopeRequest(subscriptionId, deploymentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal Azure.Core.HttpMessage CreateWhatIfAtSubscriptionScopeRequest(string subscriptionId, string deploymentName, DeploymentWhatIfProperties properties, string location)
         {
             var message = _pipeline.CreateMessage();
@@ -1213,104 +967,6 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 202:
                     return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deploymentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourcegroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="deploymentName"/> is null. </exception>
-        public async Task<Response<DeploymentExtendedData>> GetAsync(string subscriptionId, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deploymentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="deploymentName"/> is null. </exception>
-        public Response<DeploymentExtendedData> Get(string subscriptionId, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deploymentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentExtendedData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeploymentExtendedData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1496,7 +1152,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAtScopeNextPageRequest(string nextLink, string scope, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1517,7 +1173,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DeploymentListResult>> GetAtScopeNextPageAsync(string nextLink, string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1528,7 +1184,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            using var message = CreateGetAtScopeNextPageRequest(nextLink, scope, filter, top);
+            using var message = CreateListAtScopeNextPageRequest(nextLink, scope, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1551,7 +1207,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<DeploymentListResult> GetAtScopeNextPage(string nextLink, string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DeploymentListResult> ListAtScopeNextPage(string nextLink, string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1562,7 +1218,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            using var message = CreateGetAtScopeNextPageRequest(nextLink, scope, filter, top);
+            using var message = CreateListAtScopeNextPageRequest(nextLink, scope, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

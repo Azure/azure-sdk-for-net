@@ -1,4 +1,4 @@
-# Ask a question
+# Analyze a conversation
 
 This sample demonstrates how to analyze an utterance. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
@@ -16,11 +16,17 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+{
+    IsLoggingEnabled = true,
+    Verbose = true,
+};
+
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -28,11 +34,17 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+{
+    IsLoggingEnabled = true,
+    Verbose = true,
+};
+
+Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject,
+    options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```

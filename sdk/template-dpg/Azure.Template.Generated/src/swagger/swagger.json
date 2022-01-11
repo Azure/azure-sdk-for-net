@@ -1,0 +1,153 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "title": "Template Service",
+    "description": "Template Service",
+    "version": "1.0.0"
+  },
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}",
+    "useSchemePrefix": false,
+    "positionInOperation": "first",
+    "parameters": [
+      {
+        "$ref": "#/parameters/endpoint"
+      }
+    ]
+  },
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/template/resources": {
+      "put": {
+        "operationId": "Create",
+        "description": "Create or update resource.",
+        "parameters": [
+          {
+            "name": "resource",
+            "description": "Information about the resource",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "ListResources",
+        "description": "Retrieves the list of resources.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceListResult"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/template/resources/{resourceId}": {
+      "delete": {
+        "operationId": "Delete",
+        "description": "Delete resource.",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The id of the resource."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetResource",
+        "description": "Retrieves information about the resource.",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The id of the resource."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Resource": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "description": "."
+    },
+    "ResourceListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "description": "The list of resources"
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "The URI to fetch the next page of Resource."
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "description": "The List resource operation response."
+    }
+  },
+  "parameters": {
+    "endpoint": {
+      "name": "endpoint",
+      "description": "The endpoint of your template service.",
+      "x-ms-parameter-location": "client",
+      "required": true,
+      "type": "string",
+      "in": "path",
+      "x-ms-skip-url-encoding": true,
+      "format": "url"
+    }
+  }
+}

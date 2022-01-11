@@ -1,5 +1,16 @@
 # Release History
 
+## 3.1.0-beta.1 (Unreleased)
+
+### Features Added
+- Support end-to-end distributed tracing and correlation for `CloudEvents` schema.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 3.0.0 (2021-10-21)
 
 ### Features Added

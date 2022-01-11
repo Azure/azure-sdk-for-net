@@ -38,26 +38,19 @@ Console.WriteLine($"Initialized client pointing to a local path: {client.Reposit
 
 ### Repository metadata
 
-Models repositories that implement Azure IoT conventions can **optionally** include a `metadata.json` file at the root of the repository. The `metadata.json` file provides key attributees of a repository including the features that it provides. A client can use the repository metadata to make decisions around how to optimally handle an operation.
+Models repositories that implement Azure IoT conventions can **optionally** include a `metadata.json` file at the root of the repository.
+The `metadata.json` file provides key attributes of a repository including the features that it provides.
+A client can use the repository metadata to make decisions around how to optimally handle an operation.
 
-The following snippet shows how to configure the timespan in which the `ModelsRepositoryClient` considers metadata stale.
+The following snippet shows how to configure the client to disable repository metadata processing:
 
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
-// ModelsRepositoryClientOptions supports configuration for how the client consumes repository
-// metadata within the ModelsRepositoryClientOptions.Metadata property.
-// Specifying an expiration in the metadata options will set the minimum time span for which the client
-// will consider the initial fetched metadata state as stale.
-// When the client metadata state is stale, the next service operation that can make use of metadata
-// will first fetch and refresh the client metadata state prior to executing the desired service operation.
+// ModelsRepositoryClientOptions supports configuration enabling consumption of repository
+// metadata within ModelsRepositoryClientOptions.RepositoryMetadata.
+// Fetching repository metadata is enabled by default.
+// This can be disabled as shown in the following snippet
 var customClientOptions = new ModelsRepositoryClientOptions();
-customClientOptions.Metadata.Expiration = TimeSpan.FromDays(1);
-client = new ModelsRepositoryClient(options: customClientOptions);
-Console.WriteLine($"Initialized client with custom metadata expiration " +
-    $"{customClientOptions.Metadata.Expiration} pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
-
-// Fetching metadata can be disabled by setting the ModelsRepositoryClientOptions.Metadata.Enabled property to false.
-customClientOptions = new ModelsRepositoryClientOptions();
-customClientOptions.Metadata.Enabled = false;
+customClientOptions.RepositoryMetadata.IsMetadataProcessingEnabled = false;
 client = new ModelsRepositoryClient(options: customClientOptions);
 Console.WriteLine($"Initialized client with disabled metadata fetching pointing " +
     $"to the global endpoint: {client.RepositoryUri.AbsoluteUri}.");
@@ -84,15 +77,16 @@ After publishing, your model(s) will be available for consumption from the globa
 // Global endpoint client
 var client = new ModelsRepositoryClient();
 
-// The output of GetModelsAsync() will include at least the definition for the target dtmi.
-// If the model dependency resolution configuration is not disabled, then models in which the
-// target dtmi depends on will also be included in the returned IDictionary<string, string>.
+// The returned ModelResult from GetModelAsync() will include at least the definition for the target dtmi
+// within the contained content dictionary.
+// If model dependency resolution is enabled (the default), then models in which the
+// target dtmi depends on will also be included.
 var dtmi = "dtmi:com:example:TemperatureController;1";
-IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
 
 // In this case the above dtmi has 2 model dependencies.
 // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
-Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
+Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 ```
 
 GitHub pull-request workflows are a core aspect of the IoT Models Repository service. To submit models, the user is expected to fork and clone the global [models repository project][modelsrepository_github_repo] then iterate against the local copy. Changes would then be pushed to the fork (ideally in a new branch) and a PR created against the global repository.
@@ -103,35 +97,15 @@ To support this workflow and similar use cases, the client supports initializati
 // Local sample repository client
 var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
 
-// The output of GetModelsAsync() will include at least the definition for the target dtmi.
+// The output of GetModelAsync() will include at least the definition for the target dtmi.
 // If the model dependency resolution configuration is not disabled, then models in which the
-// target dtmi depends on will also be included in the returned IDictionary<string, string>.
+// target dtmi depends on will also be included in the returned ModelResult.Content dictionary.
 var dtmi = "dtmi:com:example:TemperatureController;1";
-IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
 
 // In this case the above dtmi has 2 model dependencies.
 // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
-Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
-```
-
-You are also able to get definitions for multiple root models at a time by leveraging
-the `GetModels` overload that supports an `IEnumerable`.
-
-```C# Snippet:ModelsRepositorySamplesGetMultipleModelsFromGlobalRepoAsync
-// Global endpoint client
-var client = new ModelsRepositoryClient();
-
-// When given an IEnumerable of dtmis, the output of GetModelsAsync() will include at 
-// least the definitions of each dtmi enumerated in the IEnumerable.
-// If the model dependency resolution configuration is not disabled, then models in which each
-// enumerated dtmi depends on will also be included in the returned IDictionary<string, string>.
-var dtmis = new[] { "dtmi:com:example:TemperatureController;1", "dtmi:com:example:azuresphere:sampledevice;1" };
-IDictionary<string, string> models = await client.GetModelsAsync(dtmis).ConfigureAwait(false);
-
-// In this case the dtmi "dtmi:com:example:TemperatureController;1" has 2 model dependencies
-// and the dtmi "dtmi:com:example:azuresphere:sampledevice;1" has no additional dependencies.
-// The returned IDictionary will include 4 models.
-Console.WriteLine($"Dtmis {string.Join(", ", dtmis)} resolved in {models.Count} interfaces.");
+Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 ```
 
 By default model dependency resolution is enabled. This can be changed by overriding the default
@@ -142,16 +116,16 @@ value for the `dependencyResolution` parameter of the `GetModels` operation.
 var client = new ModelsRepositoryClient();
 
 // In this example model dependency resolution is disabled by passing in ModelDependencyResolution.Disabled
-// as the value for the dependencyResolution parameter of GetModelsAsync(). By default the parameter has a value
+// as the value for the dependencyResolution parameter of GetModelAsync(). By default the parameter has a value
 // of ModelDependencyResolution.Enabled.
 // When model dependency resolution is disabled, only the input dtmi(s) will be processed and
 // model dependencies (if any) will be ignored.
 var dtmi = "dtmi:com:example:TemperatureController;1";
-IDictionary<string, string> models = await client.GetModelsAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
 
 // In this case the above dtmi has 2 model dependencies but are not returned
 // due to disabling model dependency resolution.
-Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
+Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 ```
 
 ## Digital Twins Model Parser Integration
@@ -163,10 +137,10 @@ The following snippet shows first fetching model definitions from the Azure IoT 
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
 var client = new ModelsRepositoryClient();
 var dtmi = "dtmi:com:example:TemperatureController;1";
-IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
 var parser = new ModelParser();
-IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(models.Values.ToArray());
-Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResult.Count} entities.");
+IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(result.Content.Values);
+Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces with {parseResult.Count} entities.");
 ```
 
 Alternatively, the following snippet shows parsing a model, then fetching dependent model definitions during parsing.
@@ -175,14 +149,14 @@ This is achieved by configuring the `ModelParser` to use the sample [ParserDtmiR
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
 var client = new ModelsRepositoryClient();
 var dtmi = "dtmi:com:example:TemperatureController;1";
-IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
 var parser = new ModelParser
 {
     // Usage of the ModelsRepositoryClientExtensions.ParserDtmiResolver extension.
     DtmiResolver = client.ParserDtmiResolver
 };
-IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(models.Values.Take(1).ToArray());
-Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResult.Count} entities.");
+IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(result.Content.Values);
+Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces with {parseResult.Count} entities.");
 ```
 
 ## DtmiConventions utility functions

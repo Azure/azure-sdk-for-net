@@ -34,7 +34,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, mode, useLegacyTransport: true)
         {
             Sanitizer = new StorageRecordedTestSanitizer();
             Tenants = new TenantConfigurationBuilder(this);
@@ -141,47 +141,6 @@ namespace Azure.Storage.Test.Shared
             else
             {
                 Assert.Inconclusive("Copy may have completed too quickly to abort.");
-            }
-        }
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
-            await Delay(Mode, milliseconds, playbackDelayMilliseconds);
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
-        {
-            if (mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(milliseconds);
-            }
-            else if (playbackDelayMilliseconds != null)
-            {
-                await Task.Delay(playbackDelayMilliseconds.Value);
             }
         }
 

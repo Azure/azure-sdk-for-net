@@ -508,6 +508,40 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateMongoDBCollectionToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieves continuous backup information for a Mongodb collection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Cosmos DB collection name.
+        /// </param>
+        /// <param name='location'>
+        /// The name of the continuous backup restore location.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BackupInformation>> RetrieveContinuousBackupInformationWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, ContinuousBackupRestoreLocation location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or updates Azure Cosmos DB MongoDB database
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -814,5 +848,39 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateMongoDBCollectionToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves continuous backup information for a Mongodb collection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Cosmos DB collection name.
+        /// </param>
+        /// <param name='location'>
+        /// The name of the continuous backup restore location.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BackupInformation>> BeginRetrieveContinuousBackupInformationWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, ContinuousBackupRestoreLocation location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

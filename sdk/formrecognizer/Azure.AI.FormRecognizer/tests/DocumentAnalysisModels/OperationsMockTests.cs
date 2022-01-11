@@ -129,7 +129,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InvalidSomething", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Invalid Something."));
-            Assert.IsTrue(ex.Message.Contains("Error 0"));
+            Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InvalidSomething", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Invalid Something."));
-            Assert.IsTrue(ex.Message.Contains("Error 0"));
+            Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InvalidSomething", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Invalid Something."));
-            Assert.IsTrue(ex.Message.Contains("Error 0"));
+            Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
         }
     }
 }

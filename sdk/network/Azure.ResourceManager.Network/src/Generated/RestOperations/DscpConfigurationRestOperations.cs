@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Network
 {
     internal partial class DscpConfigurationRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DscpConfigurationRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public DscpConfigurationRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string dscpConfigurationName, DscpConfigurationData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string dscpConfigurationName, DscpConfigurationData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,13 +66,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters supplied to the create or update dscp configuration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="dscpConfigurationName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dscpConfigurationName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -89,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, dscpConfigurationName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dscpConfigurationName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,13 +104,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters supplied to the create or update dscp configuration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="dscpConfigurationName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dscpConfigurationName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -122,7 +129,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, dscpConfigurationName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dscpConfigurationName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -134,7 +141,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string dscpConfigurationName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string dscpConfigurationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,12 +162,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="dscpConfigurationName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dscpConfigurationName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -170,7 +182,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, dscpConfigurationName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dscpConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -184,12 +196,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="dscpConfigurationName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dscpConfigurationName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -199,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, dscpConfigurationName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dscpConfigurationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -212,7 +229,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string dscpConfigurationName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string dscpConfigurationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -233,12 +250,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="dscpConfigurationName"/> is null. </exception>
-        public async Task<Response<DscpConfigurationData>> GetAsync(string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dscpConfigurationName"/> is null. </exception>
+        public async Task<Response<DscpConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -248,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, dscpConfigurationName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, dscpConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -267,12 +289,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="dscpConfigurationName"/> is null. </exception>
-        public Response<DscpConfigurationData> Get(string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dscpConfigurationName"/> is null. </exception>
+        public Response<DscpConfigurationData> Get(string subscriptionId, string resourceGroupName, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -282,7 +309,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, dscpConfigurationName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, dscpConfigurationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -300,7 +327,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -320,17 +347,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DscpConfigurationListResult>> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<DscpConfigurationListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -347,17 +379,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets a DSCP Configuration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DscpConfigurationListResult> GetAll(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<DscpConfigurationListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -373,7 +410,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest()
+        internal HttpMessage CreateListAllRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -391,10 +428,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all dscp configurations in a subscription. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DscpConfigurationListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DscpConfigurationListResult>> ListAllAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListAllRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -411,10 +455,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all dscp configurations in a subscription. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DscpConfigurationListResult> GetBySubscription(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DscpConfigurationListResult> ListAll(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListAllRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -430,7 +481,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -446,21 +497,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a DSCP Configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DscpConfigurationListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<DscpConfigurationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,21 +534,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a DSCP Configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DscpConfigurationListResult> GetAllNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<DscpConfigurationListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -508,7 +569,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -524,16 +585,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all dscp configurations in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DscpConfigurationListResult>> GetBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DscpConfigurationListResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListAllNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -551,16 +617,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all dscp configurations in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DscpConfigurationListResult> GetBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DscpConfigurationListResult> ListAllNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListAllNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

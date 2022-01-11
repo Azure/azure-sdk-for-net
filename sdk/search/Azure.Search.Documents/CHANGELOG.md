@@ -1,16 +1,23 @@
 # Release History
 
-## 11.4.0-beta.5 (Unreleased)
+## 11.4.0-beta.6 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- Renamed `IndexerStateHighWaterMark` to `IndexerChangeTrackingState`.
-- Renamed the property `HighWaterMark` to `ChangeTrackingState` in `IndexerState`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.4.0-beta.5 (2021-11-09)
+
+### Features Added
+- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview). `SearchOptions` now support specifying `SemanticSettings` to influence the search behavior.
+
+### Breaking Changes
+- Renamed `IndexerStateHighWaterMark` to `IndexerChangeTrackingState`.
+- Renamed the property `HighWaterMark` to `ChangeTrackingState` in `IndexerState`.
 
 ## 11.4.0-beta.4 (2021-10-05)
 

@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -686,7 +686,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -898,7 +898,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1085,7 +1085,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1274,7 +1274,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1468,7 +1468,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1648,7 +1648,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1857,7 +1857,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2066,7 +2066,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2250,7 +2250,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2444,7 +2444,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2647,7 +2647,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2836,7 +2836,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3054,7 +3054,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3272,7 +3272,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3465,7 +3465,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3654,7 +3654,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3848,7 +3848,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4028,7 +4028,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -4237,7 +4237,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4446,7 +4446,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4630,7 +4630,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -39,7 +39,7 @@ namespace SignalRServiceExtension.Tests
             var executor = new Mock<ITriggeredFunctionExecutor>().Object;
             var listenerFactoryContext =
                 new ListenerFactoryContext(new FunctionDescriptor(), executor, CancellationToken.None);
-            var parameterInfo = this.GetType().GetMethod(nameof(TestFunction), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
+            var parameterInfo = GetType().GetMethod(nameof(TestFunction), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             var dispatcher = new TestTriggerDispatcher();
             var hub = Guid.NewGuid().ToString();
             var method = Guid.NewGuid().ToString();
@@ -104,7 +104,7 @@ namespace SignalRServiceExtension.Tests
 
         private SignalRTriggerBinding CreateBinding(string functionName, params string[] parameterNames)
         {
-            var parameterInfo = this.GetType().GetMethod(functionName, BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
+            var parameterInfo = GetType().GetMethod(functionName, BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             var dispatcher = new TestTriggerDispatcher();
             return new SignalRTriggerBinding(parameterInfo, new SignalRTriggerAttribute(string.Empty, string.Empty, string.Empty, parameterNames), dispatcher, AccessKeys, null);
         }

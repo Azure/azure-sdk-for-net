@@ -45,7 +45,11 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// application. Optional; if not specified, defaults to a blank
         /// blueprint and allows the application to be defined from
         /// scratch.</param>
-        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), AppSkuInfo sku = default(AppSkuInfo), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string))
+        /// <param name="state">The current state of the application. Possible
+        /// values include: 'created', 'suspended'</param>
+        /// <param name="identity">The managed identities for the IoT Central
+        /// application.</param>
+        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), AppSkuInfo sku = default(AppSkuInfo), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string), string state = default(string), SystemAssignedServiceIdentity identity = default(SystemAssignedServiceIdentity))
         {
             Tags = tags;
             Sku = sku;
@@ -53,6 +57,8 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             DisplayName = displayName;
             Subdomain = subdomain;
             Template = template;
+            State = state;
+            Identity = identity;
             CustomInit();
         }
 
@@ -101,6 +107,20 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         public string Template { get; set; }
 
         /// <summary>
+        /// Gets or sets the current state of the application. Possible values
+        /// include: 'created', 'suspended'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed identities for the IoT Central
+        /// application.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public SystemAssignedServiceIdentity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -111,6 +131,10 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

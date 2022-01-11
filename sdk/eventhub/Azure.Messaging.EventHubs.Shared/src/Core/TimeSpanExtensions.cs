@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 
 namespace Azure.Messaging.EventHubs.Core
 {
     /// <summary>
-    ///   The set of extensions for the <see cref="TimeSpan" />
-    ///   class.
+    ///   The set of extensions for the <see cref="TimeSpan" /> class.
     /// </summary>
     ///
     internal static class TimeSpanExtensions
@@ -25,17 +25,17 @@ namespace Azure.Messaging.EventHubs.Core
         public static TimeSpan CalculateRemaining(this TimeSpan instance,
                                                   TimeSpan elapsed)
         {
-            if ((instance == TimeSpan.Zero) || (elapsed >= instance))
-            {
-                return TimeSpan.Zero;
-            }
-
-            if (elapsed == TimeSpan.Zero)
+            if ((instance == Timeout.InfiniteTimeSpan) || (instance == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
             {
                 return instance;
             }
 
-            return TimeSpan.FromMilliseconds(Math.Max(instance.TotalMilliseconds - elapsed.TotalMilliseconds, 0));
+            if (elapsed >= instance)
+            {
+                return TimeSpan.Zero;
+            }
+
+            return TimeSpan.FromMilliseconds(instance.TotalMilliseconds - elapsed.TotalMilliseconds);
         }
     }
 }

@@ -35,30 +35,26 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// Initializes a new instance of the ServerForUpdate class.
         /// </summary>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
-        /// <param name="storageProfile">Storage profile of a server.</param>
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login.</param>
-        /// <param name="sslEnforcement">Enable ssl enforcement or not when
-        /// connect to server. Possible values include: 'Enabled',
-        /// 'Disabled'</param>
-        /// <param name="delegatedSubnetArguments">Delegated subnet
-        /// arguments.</param>
-        /// <param name="haEnabled">Enable HA or not for a server. Possible
-        /// values include: 'Enabled', 'Disabled'</param>
+        /// <param name="storage">Storage related properties of a
+        /// server.</param>
+        /// <param name="backup">Backup related properties of a server.</param>
+        /// <param name="highAvailability">High availability related properties
+        /// of a server.</param>
         /// <param name="maintenanceWindow">Maintenance window of a
         /// server.</param>
-        /// <param name="replicationRole">The replication role of the
-        /// server.</param>
+        /// <param name="replicationRole">The replication role of the server.
+        /// Possible values include: 'None', 'Source', 'Replica'</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs.</param>
-        public ServerForUpdate(Sku sku = default(Sku), StorageProfile storageProfile = default(StorageProfile), string administratorLoginPassword = default(string), string sslEnforcement = default(string), DelegatedSubnetArguments delegatedSubnetArguments = default(DelegatedSubnetArguments), string haEnabled = default(string), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string replicationRole = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerForUpdate(Sku sku = default(Sku), string administratorLoginPassword = default(string), Storage storage = default(Storage), Backup backup = default(Backup), HighAvailability highAvailability = default(HighAvailability), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string replicationRole = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
-            StorageProfile = storageProfile;
             AdministratorLoginPassword = administratorLoginPassword;
-            SslEnforcement = sslEnforcement;
-            DelegatedSubnetArguments = delegatedSubnetArguments;
-            HaEnabled = haEnabled;
+            Storage = storage;
+            Backup = backup;
+            HighAvailability = highAvailability;
             MaintenanceWindow = maintenanceWindow;
             ReplicationRole = replicationRole;
             Tags = tags;
@@ -77,36 +73,28 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets storage profile of a server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageProfile")]
-        public StorageProfile StorageProfile { get; set; }
-
-        /// <summary>
         /// Gets or sets the password of the administrator login.
         /// </summary>
         [JsonProperty(PropertyName = "properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
 
         /// <summary>
-        /// Gets or sets enable ssl enforcement or not when connect to server.
-        /// Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets storage related properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sslEnforcement")]
-        public string SslEnforcement { get; set; }
+        [JsonProperty(PropertyName = "properties.storage")]
+        public Storage Storage { get; set; }
 
         /// <summary>
-        /// Gets or sets delegated subnet arguments.
+        /// Gets or sets backup related properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.delegatedSubnetArguments")]
-        public DelegatedSubnetArguments DelegatedSubnetArguments { get; set; }
+        [JsonProperty(PropertyName = "properties.backup")]
+        public Backup Backup { get; set; }
 
         /// <summary>
-        /// Gets or sets enable HA or not for a server. Possible values
-        /// include: 'Enabled', 'Disabled'
+        /// Gets or sets high availability related properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.haEnabled")]
-        public string HaEnabled { get; set; }
+        [JsonProperty(PropertyName = "properties.highAvailability")]
+        public HighAvailability HighAvailability { get; set; }
 
         /// <summary>
         /// Gets or sets maintenance window of a server.
@@ -115,7 +103,8 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public MaintenanceWindow MaintenanceWindow { get; set; }
 
         /// <summary>
-        /// Gets or sets the replication role of the server.
+        /// Gets or sets the replication role of the server. Possible values
+        /// include: 'None', 'Source', 'Replica'
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicationRole")]
         public string ReplicationRole { get; set; }

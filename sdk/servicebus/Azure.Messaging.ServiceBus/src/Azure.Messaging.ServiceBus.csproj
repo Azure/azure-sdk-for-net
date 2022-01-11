@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Service Bus is a fully managed enterprise integration message broker. Service Bus can decouple applications and services. Service Bus offers a reliable and secure platform for asynchronous transfer of data and state. This client library allows for both sending and receiving messages using Azure Service Bus. For more information about Service Bus, see https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview</Description>
-    <Version>7.5.0-beta.2</Version>
+    <Version>7.6.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>7.3.0</ApiCompatVersion>
+    <ApiCompatVersion>7.5.0</ApiCompatVersion>
     <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -19,7 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+  <!--    
+      TEMP: Move Core to a project reference until the
+            MessageWithMetadata are shipped in Azure.Core.
+  <PackageReference Include="Azure.Core" />
+  -->
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
@@ -56,6 +60,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
 
 </Project>

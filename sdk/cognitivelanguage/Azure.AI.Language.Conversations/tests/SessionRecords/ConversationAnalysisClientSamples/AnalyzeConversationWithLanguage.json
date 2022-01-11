@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-07-15-preview",
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "81",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210928.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "b6c36aa69c35f0b1e69bd562a7a37336",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,7 +18,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e62d29fe-8222-4ab2-8981-c60ab014d85f",
+        "apim-request-id": "5d566342-0b74-485c-82be-2332659d541b",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -27,38 +27,36 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 18:12:18 GMT",
+        "Date": "Sun, 24 Oct 2021 11:11:01 GMT",
         "pragma": "no-cache",
-        "request-id": "e62d29fe-8222-4ab2-8981-c60ab014d85f",
+        "request-id": "5d566342-0b74-485c-82be-2332659d541b",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "628"
+        "x-envoy-upstream-service-time": "52"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022query\u0022: \u0022Tendremos 2 platos de nigiri de salm\u00F3n braseado.\u0022,\n",
-        "  \u0022prediction\u0022: {\n",
-        "    \u0022intents\u0022: [\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022Order\u0022,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      }\n",
-        "    ],\n",
-        "    \u0022entities\u0022: [\n",
-        "      {\n",
-        "        \u0022category\u0022: \u0022OrderItem\u0022,\n",
-        "        \u0022text\u0022: \u00222 platos de nigiri de salm\u00F3n braseado\u0022,\n",
-        "        \u0022offset\u0022: 10,\n",
-        "        \u0022length\u0022: 37,\n",
-        "        \u0022confidenceScore\u0022: 1\n",
-        "      }\n",
-        "    ],\n",
-        "    \u0022topIntent\u0022: \u0022Order\u0022,\n",
-        "    \u0022projectType\u0022: \u0022conversation\u0022\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "query": "Tendremos 2 platos de nigiri de salm\u00F3n braseado.",
+        "prediction": {
+          "topIntent": "Order",
+          "projectKind": "conversation",
+          "intents": [
+            {
+              "category": "Order",
+              "confidenceScore": 1
+            }
+          ],
+          "entities": [
+            {
+              "category": "OrderItem",
+              "text": "2 platos de nigiri de salm\u00F3n braseado",
+              "offset": 10,
+              "length": 37,
+              "confidenceScore": 1
+            }
+          ]
+        }
+      }
     }
   ],
   "Variables": {

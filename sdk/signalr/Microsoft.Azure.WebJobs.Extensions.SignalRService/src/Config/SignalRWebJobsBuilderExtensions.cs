@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -25,7 +26,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
 
             builder.AddExtension<SignalRConfigProvider>();
-            builder.Services.AddSingleton<IServiceManagerStore, ServiceManagerStore>();
+            builder.Services
+                .AddSingleton<IServiceManagerStore, ServiceManagerStore>()
+                .AddAzureClientsCore();
             return builder;
         }
     }

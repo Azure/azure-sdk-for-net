@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     public partial class LuisTargetIntentResult
     {

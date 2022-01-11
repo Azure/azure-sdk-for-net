@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> The type of the project. </summary>
     public readonly partial struct ProjectKind : IEquatable<ProjectKind>

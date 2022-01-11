@@ -10,7 +10,7 @@
 
     </Description>
     <AssemblyTitle>Azure Video Analyzer Edge SDK</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageTags>Azure Video Analyzer Edge</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -23,12 +23,16 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Generated\Models\" />

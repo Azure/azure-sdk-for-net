@@ -15,15 +15,20 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A Class representing a DiskAccess along with the instance operations that can be performed on it. </summary>
     public partial class DiskAccess : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DiskAccess"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DiskAccessesRestOperations _restClient;
+        private readonly DiskAccessesRestOperations _diskAccessesRestClient;
         private readonly DiskAccessData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DiskAccess"/> class for mocking. </summary>
@@ -39,7 +44,7 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DiskAccess"/> class. </summary>
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         internal DiskAccess(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="DiskAccess"/> class. </summary>
@@ -60,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         internal DiskAccess(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _diskAccessesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DiskAccess(this, response.Value), response.GetRawResponse());
@@ -112,7 +117,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _diskAccessesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskAccess(this, response.Value), response.GetRawResponse());
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -149,8 +154,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskAccessDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _diskAccessesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskAccessDeleteOperation(_clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +176,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DiskAccessDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _diskAccessesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DiskAccessDeleteOperation(_clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -202,8 +207,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _diskAccessesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskAccess(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -231,8 +236,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _diskAccessesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DiskAccess(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -260,8 +265,8 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _diskAccessesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskAccess(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -289,8 +294,8 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _diskAccessesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DiskAccess(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -317,8 +322,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _diskAccessesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskAccess(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -345,44 +350,9 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _diskAccessesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DiskAccess(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-        /// <summary> Gets the private link resources possible under disk access resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DiskAccess.GetPrivateLinkResources");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetPrivateLinkResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the private link resources possible under disk access resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DiskAccess.GetPrivateLinkResources");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetPrivateLinkResources(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -407,8 +377,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskAccessUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
+                var response = await _diskAccessesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskAccessUpdateOperation(this, _clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -436,8 +406,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken);
-                var operation = new DiskAccessUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
+                var response = _diskAccessesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken);
+                var operation = new DiskAccessUpdateOperation(this, _clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -449,11 +419,50 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of PrivateEndpointConnections in the DiskAccess. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DiskAccess. </returns>
-        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
+        /// <summary> Gets the private link resources possible under disk access resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            return new PrivateEndpointConnectionContainer(this);
+            using var scope = _clientDiagnostics.CreateScope("DiskAccess.GetPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                var response = await _diskAccessesRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
+        /// <summary> Gets the private link resources possible under disk access resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskAccess.GetPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                var response = _diskAccessesRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #region PrivateEndpointConnection
+
+        /// <summary> Gets a collection of PrivateEndpointConnections in the DiskAccess. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DiskAccess. </returns>
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        {
+            return new PrivateEndpointConnectionCollection(this);
+        }
+        #endregion
     }
 }

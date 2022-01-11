@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Analytics.Purview.Tests;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -18,10 +19,12 @@ namespace Azure.Analytics.Purview.Administration.Tests
     {
         public MetadataRolesClientTestBase(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
 
         public MetadataRolesClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
         public PurviewMetadataRolesClient GetMetadataPolicyClient()
         {

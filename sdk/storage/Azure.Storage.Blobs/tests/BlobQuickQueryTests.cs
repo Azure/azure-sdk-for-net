@@ -45,6 +45,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n", s);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.Details.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag.ToString()}\"");
         }
 
         [RecordedTest]

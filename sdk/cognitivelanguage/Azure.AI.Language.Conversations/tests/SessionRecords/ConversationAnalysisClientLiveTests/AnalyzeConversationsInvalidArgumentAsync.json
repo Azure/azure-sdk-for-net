@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-07-15-preview",
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "12",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7e4629f7dc9e1745888f0067505ba55a-9bda69d07927fa48-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-81b3e1c86781f04b81950819c164971f-60118095e224424c-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "025f9b484f871620a7b53535ea316e45",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,7 +18,7 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "236c1bc6-952c-4cc7-9cde-c299973538d8",
+        "apim-request-id": "36a396ee-0f71-4417-8dd4-a4acf016173c",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -27,13 +27,13 @@
           "private"
         ],
         "Content-Type": "application/json",
-        "Date": "Wed, 29 Sep 2021 11:16:40 GMT",
+        "Date": "Sun, 24 Oct 2021 11:10:59 GMT",
         "pragma": "no-cache",
-        "request-id": "236c1bc6-952c-4cc7-9cde-c299973538d8",
+        "request-id": "36a396ee-0f71-4417-8dd4-a4acf016173c",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "56"
       },
       "ResponseBody": [
         "{\n",

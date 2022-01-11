@@ -70,6 +70,14 @@ namespace Microsoft.Azure.Batch
             this.Path = path;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="OutputFileBlobContainerDestination"/> class.
+        /// </summary>
+        protected OutputFileBlobContainerDestination()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal OutputFileBlobContainerDestination(Models.OutputFileBlobContainerDestination protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

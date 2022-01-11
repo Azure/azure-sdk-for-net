@@ -98,17 +98,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,17 +146,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -174,7 +184,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -221,14 +232,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -266,7 +282,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -296,14 +313,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -344,7 +366,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -370,7 +393,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -379,6 +403,73 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestWithHttpMessagesAsync(string url, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Use this interface to get the result of a Read operation, employing
+        /// the state-of-the-art Optical Character Recognition (OCR) algorithms
+        /// optimized for text-heavy documents. When you use the Read
+        /// interface, the response contains a field called
+        /// 'Operation-Location'. The 'Operation-Location' field contains the
+        /// URL that you must use for your 'GetReadResult' operation to access
+        /// OCR results.​
+        /// </summary>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image.
+        /// </param>
+        /// <param name='language'>
+        /// The BCP-47 language code of the text in the document. Read supports
+        /// auto language identification and multi-language documents, so only
+        /// provide a language code if you would like to force the document to
+        /// be processed in that specific language. See
+        /// https://aka.ms/ocr-languages for list of supported languages.
+        /// Possible values include: 'af', 'ast', 'bi', 'br', 'ca', 'ceb',
+        /// 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et', 'eu',
+        /// 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl',
+        /// 'gv', 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv',
+        /// 'kaa', 'kac', 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms',
+        /// 'mww', 'nap', 'nl', 'no', 'oc', 'pl', 'pt', 'quc', 'rm', 'sco',
+        /// 'sl', 'sq', 'sv', 'sw', 'tet', 'tr', 'tt', 'uz', 'vo', 'wae',
+        /// 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
+        /// </param>
+        /// <param name='pages'>
+        /// Custom page numbers for multi-page documents(PDF/TIFF), input the
+        /// number of the pages you want to get OCR result. For a range of
+        /// pages, use a hyphen. Separate each page or range with a comma.
+        /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the OCR model used for
+        /// text extraction. Accepted values are: "latest", "latest-preview",
+        /// "2021-04-12". Defaults to "latest".
+        /// </param>
+        /// <param name='readingOrder'>
+        /// Optional parameter to specify which reading order algorithm should
+        /// be applied when ordering the extract text elements. Can be either
+        /// 'basic' or 'natural'. Will default to 'basic' if not specified
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// This interface is used for getting OCR results of Read operation.
+        /// The URL to this interface should be retrieved from
+        /// 'Operation-Location' field returned from Read interface.
+        /// </summary>
+        /// <param name='operationId'>
+        /// Id of read operation returned in the response of the 'Read'
+        /// interface.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ReadOperationResult>> GetReadResultWithHttpMessagesAsync(System.Guid operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation extracts a rich set of visual features based on the
@@ -421,17 +512,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -457,7 +553,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -490,17 +587,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -523,7 +625,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -564,7 +667,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -594,14 +698,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -639,7 +748,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -669,14 +779,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// not specified, the default value is "en". See
+        /// https://aka.ms/cv-languages for list of supported languages.
+        /// Possible values include: 'ar', 'az', 'bg', 'bs', 'ca', 'cs', 'cy',
+        /// 'da', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'ga', 'gl',
+        /// 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'lv',
+        /// 'mk', 'ms', 'nb', 'nl', 'pl', 'prs', 'pt', 'pt-BR', 'pt-PT', 'ro',
+        /// 'ru', 'sk', 'sl', 'sr-Cyrl', 'sr-Latn', 'sv', 'th', 'tr', 'uk',
+        /// 'vi', 'zh', 'zh-Hans', 'zh-Hant'
         /// </param>
         /// <param name='modelVersion'>
         /// Optional parameter to specify the version of the AI model. Accepted
-        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// values are: "latest", "2021-04-01", "2021-05-01". Defaults to
+        /// "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -685,68 +800,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Use this interface to get the result of a Read operation, employing
-        /// the state-of-the-art Optical Character Recognition (OCR) algorithms
-        /// optimized for text-heavy documents. When you use the Read
-        /// interface, the response contains a field called
-        /// 'Operation-Location'. The 'Operation-Location' field contains the
-        /// URL that you must use for your 'GetReadResult' operation to access
-        /// OCR results.​
-        /// </summary>
-        /// <param name='url'>
-        /// Publicly reachable URL of an image.
-        /// </param>
-        /// <param name='language'>
-        /// The BCP-47 language code of the text in the document. Read supports
-        /// auto language identification and multi-language documents, so only
-        /// provide a language code if you would like to force the document to
-        /// be processed in that specific language. See
-        /// https://aka.ms/ocr-languages for list of supported languages.
-        /// Possible values include: 'af', 'ast', 'bi', 'br', 'ca', 'ceb',
-        /// 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et', 'eu',
-        /// 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl',
-        /// 'gv', 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv',
-        /// 'kaa', 'kac', 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms',
-        /// 'mww', 'nap', 'nl', 'no', 'oc', 'pl', 'pt', 'quc', 'rm', 'sco',
-        /// 'sl', 'sq', 'sv', 'sw', 'tet', 'tr', 'tt', 'uz', 'vo', 'wae',
-        /// 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
-        /// </param>
-        /// <param name='pages'>
-        /// Custom page numbers for multi-page documents(PDF/TIFF), input the
-        /// number of the pages you want to get OCR result. For a range of
-        /// pages, use a hyphen. Separate each page or range with a comma.
-        /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the OCR model used for
-        /// text extraction. Accepted values are: "latest", "latest-preview",
-        /// "2021-04-12". Defaults to "latest".
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// This interface is used for getting OCR results of Read operation.
-        /// The URL to this interface should be retrieved from
-        /// 'Operation-Location' field returned from Read interface.
-        /// </summary>
-        /// <param name='operationId'>
-        /// Id of read operation returned in the response of the 'Read'
-        /// interface.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<ReadOperationResult>> GetReadResultWithHttpMessagesAsync(System.Guid operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Use this interface to get the result of a Read operation, employing
@@ -780,13 +833,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// number of the pages you want to get OCR result. For a range of
         /// pages, use a hyphen. Separate each page or range with a comma.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the OCR model used for
+        /// text extraction. Accepted values are: "latest", "latest-preview",
+        /// "2021-04-12". Defaults to "latest".
+        /// </param>
+        /// <param name='readingOrder'>
+        /// Optional parameter to specify which reading order algorithm should
+        /// be applied when ordering the extract text elements. Can be either
+        /// 'basic' or 'natural'. Will default to 'basic' if not specified
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

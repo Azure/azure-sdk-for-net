@@ -72,9 +72,9 @@ namespace Azure.Core.Tests.Management
         public void ValidateInstrumentGetContainer()
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            var testResources = client.GetTestResourceContainer();
+            var testResources = client.GetTestResourceCollection();
 
-            Assert.AreEqual("TestResourceContainerProxy", testResources.GetType().Name);
+            Assert.AreEqual("TestResourceCollectionProxy", testResources.GetType().Name);
             Assert.AreEqual("success", testResources.Method());
         }
 
@@ -93,8 +93,20 @@ namespace Azure.Core.Tests.Management
         public async Task ValidateInstrumentPageable()
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            var testResources = client.GetTestResourceContainer();
+            var testResources = client.GetTestResourceCollection();
             await foreach (var item in testResources.GetAllAsync())
+            {
+                Assert.AreEqual("TestResourceProxy", item.GetType().Name);
+                Assert.AreEqual("success", item.Method());
+            }
+        }
+
+        [Test]
+        public async Task ValidateInstrumentEnumerable()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            var testResources = client.GetTestResourceCollection();
+            await foreach (var item in testResources)
             {
                 Assert.AreEqual("TestResourceProxy", item.GetType().Name);
                 Assert.AreEqual("success", item.Method());

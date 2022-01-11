@@ -52,12 +52,10 @@ namespace Azure.IoT.ModelsRepository.Tests
             defaultOptions.Version.Should().Be(ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11);
 
             // Default MetadataOptions values
-            defaultOptions.Metadata.Expiration.Should().Be(ModelsRepositoryClientMetadataOptions.DefaultMetadataExpiration);
-            defaultOptions.Metadata.Enabled.Should().Be(true);
+            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled.Should().BeTrue();
 
             // Ensure MetadataOptions properties are settable
-            defaultOptions.Metadata.Expiration = TimeSpan.FromMinutes(15);
-            defaultOptions.Metadata.Enabled = false;
+            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled = false;
         }
     }
 }

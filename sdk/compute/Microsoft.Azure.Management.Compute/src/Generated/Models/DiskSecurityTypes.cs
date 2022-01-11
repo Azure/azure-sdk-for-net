@@ -21,5 +21,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual Trusted Platform Module (vTPM)
         /// </summary>
         public const string TrustedLaunch = "TrustedLaunch";
+        /// <summary>
+        /// Indicates Confidential VM disk with only VM guest state encrypted
+        /// </summary>
+        public const string ConfidentialVMVMGuestStateOnlyEncryptedWithPlatformKey = "ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey";
+        /// <summary>
+        /// Indicates Confidential VM disk with both OS disk and VM guest state
+        /// encrypted with a platform managed key
+        /// </summary>
+        public const string ConfidentialVMDiskEncryptedWithPlatformKey = "ConfidentialVM_DiskEncryptedWithPlatformKey";
+        /// <summary>
+        /// Indicates Confidential VM disk with both OS disk and VM guest state
+        /// encrypted with a customer managed key
+        /// </summary>
+        public const string ConfidentialVMDiskEncryptedWithCustomerKey = "ConfidentialVM_DiskEncryptedWithCustomerKey";
     }
 }

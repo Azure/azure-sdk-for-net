@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -20,15 +19,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversation
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject);
 #else
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -47,15 +46,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject);
 #else
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");

@@ -14,7 +14,7 @@
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "3435042b-76ed-3db1-7d3a-275db6f47829",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "3435042b-76ed-3db1-7d3a-275db6f47829",
         "x-ms-request-id": "38053113-e01e-0029-1e5d-051bdd000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "c8573875-fcbc-6c43-25b7-4ec7c66a6123",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "M6a0oXuh8FoPLR2B3j5ukdtqw/dl8ldxRAbz3QuGl3ED3ioPQNauDes+r0GcPVACodlPO0hA5EFPQl10rRJPiZasfQAUXlEFu7YLJ0IV1Aa28TsxN1wow/rowP14OmDZ7iar8MBQ7UOHSYCSNLz+OW5WvrvXHVE5g7oFK55UjIFVMTgbaeNGZQP4qu7clo496oaPInukAdHUcm0FSsKlM7z/PAKE4s+KD1i333NjXewryEEXxWoFsTBmRvd1QRtBU3Yx3VqLuAe2BBMi7SJecRSB2YKBjW1S+YvSHpzXFM49doz8MoCRnw86YMBW4sMNCNXj9GeYv8UJ3uPPuJpr3/BE5XeWYj+U7zpyRyyt+xfHxRXG9B9npLbG81Ocwed1zoHQEf1MdqaVTgQtJniYW+PMCPOEpOrQ3UDA0G/s9y1S/Xir3ekaek9vMKUbOn49Lpdv0Lnz8CqW/zS8i6Y3qVfW2igA7X75sY2kFHNFtaPBg6HXfCZ0XwxNFd21Xe+oOIdNRF9WPUAZdh8sT9u2UUqQ+wgEXywwYnobstigRFSe+9zs93BDa0VgvgYHSA8xl8OTJWLno9laHeHkOotoeDLKjVT/ylnZTI/Co6EmKRpr6hoUDR7yt1cDkdqPXzG590XUPLq7MsxqutnSJAA4M/PHeU9wVGsT2Nb8/Dh/Su1eCKtbUuxgsLhOqVJFH5JXyl7mx+XhSaPawGTjvzWU6nDsdBtU3eEHZ8mXIqsYzrhDpDHamIIHfL8IgJGIfPCCub7iWat3A+1832AcSib4wfKrnxoEulLt5PdbS1xPfurYFGnsNXQNzKFDXbkh6jKYEL6f3N3Wff9s9XS0G7eRLWB2RDW9C4t9ndJ5wV2Yy/rEwzudr6IMApZpf0AAWLHqsS9Zq6b92wQyIj8KXLyi0yl68Fh79H2+aUKeU4xLfEQhjg8tPyBTxug2ao1iAqXax6sXhmhYbr2xm0FkX4d456X66M6sdJQIJipwRInvW2ecw4vgM/bcyCBSe6Te72ZgvoLoaBnWLVMXD18+6CozwT/ax5v7l7OuHR+uWvjwKTfDD4YGB/JNxZY4ySSXnd/1HrlkBCfKZSbPOkv6KNJaJuUoe9mkLLpNjQEFw86PF38/uDs+iyUP+KpfN8ynU53D3aI/biIGUfL/F3YmxaFYPyLLunCXHJvAGIIvRPTtpTpkQeUrT6hdOWZJP3Su6TIIBveq3JksLMEHf1af1wz9EXE8wYS7Le96boAKTdwmES9PJj78Q8mhNxUkI9BSvWJZSy4DcieuTdkIL20YIt7k4W0nULDOAM2nmopulwofJ7AesAKuI54Hodll9BNciBU2P0JiK22xiktgW9edP7XO6A==",
       "StatusCode": 201,
@@ -67,7 +67,7 @@
         "x-ms-content-crc64": "NgxzRZQ83p0=",
         "x-ms-request-id": "3805311a-e01e-0029-235d-051bdd000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T18:47:14.8784206Z"
       },
       "ResponseBody": []
@@ -87,7 +87,7 @@
         ],
         "x-ms-client-request-id": "0728c510-065e-0b2c-798d-4c25e8f608b4",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<KeyInfo><Expiry>2021-02-17T19:47:14Z</Expiry></KeyInfo>",
       "StatusCode": 200,
@@ -101,12 +101,12 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "0728c510-065e-0b2c-798d-4c25e8f608b4",
         "x-ms-request-id": "38053121-e01e-0029-295d-051bdd000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-02-17T18:47:14Z</SignedStart><SignedExpiry>2021-02-17T19:47:14Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-06-12</SignedVersion><Value>IMgK4COn1X/05heifJx8OSLHCM+5rH1469k5wguq3hc=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-6e45fb76-2342-1ed4-da84-b96981da547c/test-blob-bf98dbae-ba6f-2ebf-4010-6b2aa50b3749?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-17T18%3A47%3A14Z&ske=2021-02-17T19%3A47%3A14Z&sks=b&skv=2020-06-12&sv=2020-12-06&st=2021-02-17T17%3A47%3A14Z&se=2021-02-17T19%3A47%3A14Z&sr=c&sp=r&sig=Sanitized&comp=tags",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-6e45fb76-2342-1ed4-da84-b96981da547c/test-blob-bf98dbae-ba6f-2ebf-4010-6b2aa50b3749?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-17T18%3A47%3A14Z&ske=2021-02-17T19%3A47%3A14Z&sks=b&skv=2020-06-12&sv=2021-04-10&st=2021-02-17T17%3A47%3A14Z&se=2021-02-17T19%3A47%3A14Z&sr=c&sp=r&sig=Sanitized&comp=tags",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -118,7 +118,7 @@
         ],
         "x-ms-client-request-id": "01b7a778-5a42-8fc5-df00-25005634208d",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<Tags><TagSet><Tag><Key>tagKey0</Key><Value>tagValue0</Value></Tag><Tag><Key>tagKey1</Key><Value>tagValue1</Value></Tag></TagSet></Tags>",
       "StatusCode": 403,
@@ -133,7 +133,7 @@
         "x-ms-client-request-id": "01b7a778-5a42-8fc5-df00-25005634208d",
         "x-ms-error-code": "AuthorizationPermissionMismatch",
         "x-ms-request-id": "af195dc9-901e-0051-185d-05b825000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
@@ -155,7 +155,7 @@
         ],
         "x-ms-client-request-id": "40ad48fc-073f-f271-ed43-21ac86837ba8",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -168,7 +168,7 @@
         ],
         "x-ms-client-request-id": "40ad48fc-073f-f271-ed43-21ac86837ba8",
         "x-ms-request-id": "38053137-e01e-0029-3b5d-051bdd000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

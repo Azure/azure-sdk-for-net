@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "95ad28f0-d417-4a78-c115-0eb8bea64d1e",
         "x-ms-date": "Wed, 17 Feb 2021 22:40:22 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "95ad28f0-d417-4a78-c115-0eb8bea64d1e",
         "x-ms-request-id": "64b209a2-401e-0069-407d-054613000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-lease-action": "renew",
         "x-ms-lease-id": "6b885158-f819-f86c-56b8-6a67b6e4a15f",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "6c607fda-e21e-ec05-c5db-5396a2c6a3ac",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "64b209ec-401e-0069-757d-054613000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -87,7 +87,7 @@
         "x-ms-client-request-id": "368cfb5d-3583-a541-217a-c503f6134133",
         "x-ms-date": "Wed, 17 Feb 2021 22:40:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -100,7 +100,7 @@
         ],
         "x-ms-client-request-id": "368cfb5d-3583-a541-217a-c503f6134133",
         "x-ms-request-id": "64b20a38-401e-0069-337d-054613000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

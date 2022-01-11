@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.Web;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -22,42 +23,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
 
             var jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
-
             AddJsonPathSanitizer("$..refresh_token", _ => JToken.FromObject(jwtSanitizedValue));
 
-            FormEncodedBodySanitizers.Add("access_token");
-            FormEncodedBodySanitizers.Add("refresh_token");
-        }
-
-        public override string SanitizeTextBody(string contentType, string body)
-        {
-            string jsonSanitizedBody = base.SanitizeTextBody(contentType, body);
-            try
+            BodyKeySanitizers.Add(new BodyKeySanitizer(jwtSanitizedValue)
             {
-                if (contentType == "application/x-www-form-urlencoded")
-                {
-                    NameValueCollection queryParams = HttpUtility.ParseQueryString(jsonSanitizedBody);
-                    for (int i = 0; i < queryParams.Keys.Count; i++)
-                    {
-                        string key = queryParams.Keys[i];
-                        foreach (string paramToSanitize in FormEncodedBodySanitizers)
-                        {
-                            if (key == paramToSanitize)
-                            {
-                                queryParams[key] = SanitizeValue;
-                            }
-                        }
-                    }
-
-                    return queryParams.ToString();
-                }
-
-                return jsonSanitizedBody;
-            }
-            catch
+                JsonPath = "$..refresh_token"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
             {
-                return jsonSanitizedBody;
-            }
+                GroupForReplace = "group"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }

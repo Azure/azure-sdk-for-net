@@ -21,7 +21,7 @@ namespace Azure.AI.Translation.Document
             DateTimeOffset lastActionDateTimeUtc = default;
             DocumentTranslationStatus status = default;
             string to = default;
-            Optional<DocumentTranslationError> error = default;
+            Optional<JsonElement> error = default;
             float progress = default;
             string id = default;
             Optional<long> characterCharged = default;
@@ -64,12 +64,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    error = DocumentTranslationError.DeserializeDocumentTranslationError(property.Value);
+                    error = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("progress"))

@@ -439,10 +439,14 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             for (int i = 0; i < PagedSecretCount; i++)
             {
                 KeyVaultSecret secret = await Client.SetSecretAsync(secretName + i, i.ToString());
-                deletedSecrets.Add(secret);
-                await Client.StartDeleteSecretAsync(secret.Name);
-
                 RegisterForCleanup(secret.Name);
+
+                deletedSecrets.Add(secret);
+                await TestRetryHelper.RetryAsync(async () =>
+                {
+                    // Try a few times since it sometimes fails when trying to delete right away.
+                    return await Client.StartDeleteSecretAsync(secret.Name);
+                }, maxIterations: 3);
             }
 
             List<Task> deletingSecrets = new List<Task>();

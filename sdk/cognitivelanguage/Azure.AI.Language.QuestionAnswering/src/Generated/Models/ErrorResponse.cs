@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Error response. </summary>
     internal partial class ErrorResponse

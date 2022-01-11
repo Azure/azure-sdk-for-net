@@ -63,9 +63,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='restorePointName'>
         /// The name of the restore point.
         /// </param>
-        /// <param name='excludeDisks'>
-        /// List of disk resource ids that the customer wishes to exclude from the
-        /// restore point. If no disks are specified, all disks will be included.
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create restore point operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -73,10 +72,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RestorePoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestorePoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<RestorePoint> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, excludeDisks, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<RestorePoint> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -321,9 +320,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='restorePointName'>
         /// The name of the restore point.
         /// </param>
-        /// <param name='excludeDisks'>
-        /// List of disk resource ids that the customer wishes to exclude from the
-        /// restore point. If no disks are specified, all disks will be included.
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create restore point operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -346,7 +344,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RestorePoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestorePoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -364,12 +362,15 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "restorePointName");
             }
-            string apiVersion = "2021-07-01";
-            RestorePoint parameters = new RestorePoint();
-            if (excludeDisks != null)
+            if (parameters == null)
             {
-                parameters.ExcludeDisks = excludeDisks;
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -380,8 +381,8 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("restorePointCollectionName", restorePointCollectionName);
                 tracingParameters.Add("restorePointName", restorePointName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }

@@ -34,7 +34,7 @@
         },
         "QUESTIONANSWERING_ENDPOINT": {
             "type": "string",
-            "value": ""
+            "value": "https://wuppe.api.cognitive.microsoft.com"
         },
         "QUESTIONANSWERING_KEY": {
             "type": "string",
@@ -42,7 +42,7 @@
         },
         "QUESTIONANSWERING_PROJECT": {
             "type": "string",
-            "value": ""
+            "value": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c"
         }
     }
 }

@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
     public partial interface IEdgeModulesOperations
     {
         /// <summary>
-        /// List edge module resources.
+        /// List all existing edge module resources.
         /// </summary>
         /// <remarks>
-        /// List all of the existing edge module resources for a given Video
-        /// Analyzer account.
+        /// List all existing edge module resources, along with their JSON
+        /// representations.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -36,16 +36,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <param name='accountName'>
         /// The Azure Video Analyzer account name.
         /// </param>
-        /// <param name='filter'>
-        /// Restricts the set of items returned.
-        /// </param>
         /// <param name='top'>
         /// Specifies a non-negative integer n that limits the number of items
         /// returned from a collection. The service returns the number of
         /// available items up to but not greater than the specified value n.
-        /// </param>
-        /// <param name='orderby'>
-        /// Specifies the key by which the result collection should be ordered.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -62,13 +56,12 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EdgeModuleEntity>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string filter = default(string), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EdgeModuleEntity>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves an existing edge module resource.
         /// </summary>
         /// <remarks>
-        /// Retrieves a specific existing edge module resource in the given
-        /// Video Analyzer account.
+        /// Retrieves an existing edge module resource with the given name.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -77,7 +70,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module to retrieve.
+        /// The Edge Module name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -117,7 +110,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module to create or update.
+        /// The Edge Module name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -151,7 +144,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module to be deleted.
+        /// The Edge Module name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -188,8 +181,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module used to create a new provisioning
-        /// token.
+        /// The Edge Module name.
         /// </param>
         /// <param name='expirationDate'>
         /// The desired expiration date of the registration token. The Azure
@@ -213,11 +205,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// </exception>
         Task<AzureOperationResponse<EdgeModuleProvisioningToken>> ListProvisioningTokenWithHttpMessagesAsync(string resourceGroupName, string accountName, string edgeModuleName, System.DateTime expirationDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List edge module resources.
+        /// List all existing edge module resources.
         /// </summary>
         /// <remarks>
-        /// List all of the existing edge module resources for a given Video
-        /// Analyzer account.
+        /// List all existing edge module resources, along with their JSON
+        /// representations.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

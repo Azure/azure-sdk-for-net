@@ -187,7 +187,8 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
-        internal readonly List<(Task Task, CancellationTokenSource Cts, ReceiverManager ReceiverManager)> _tasks = new();
+        internal List<(Task Task, CancellationTokenSource Cts)> TaskTuples { get; private set; } = new();
+
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
         private CancellationTokenSource _handlerCts = new();
         private readonly int _processorCount = Environment.ProcessorCount;
@@ -774,6 +775,7 @@ namespace Azure.Messaging.ServiceBus
                         // do this before the synchronous Wait call as that does not respect the TCS.
                         if (linkedHandlerTcs.IsCancellationRequested)
                         {
+                            linkedHandlerTcs.Dispose();
                             linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
                             break;
                         }
@@ -787,6 +789,7 @@ namespace Azure.Messaging.ServiceBus
                             }
                             catch (OperationCanceledException)
                             {
+                                linkedHandlerTcs.Dispose();
                                 // reset the linkedHandlerTcs if it was already cancelled due to user updating the concurrency
                                 linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
                                 // allow the loop to wake up when tcs is signaled
@@ -799,16 +802,28 @@ namespace Azure.Messaging.ServiceBus
                         // other than TaskCanceledExceptions
                         var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-                        _tasks.Add(
+                        TaskTuples.Add(
                             (
                                 ReceiveAndProcessMessagesAsync(receiverManager, linkedCts.Token),
-                                linkedCts,
-                                receiverManager)
+                                linkedCts)
                         );
 
-                        if (_tasks.Count > _maxConcurrentCalls)
+                        if (TaskTuples.Count > _maxConcurrentCalls)
                         {
-                            _tasks.RemoveAll(t => t.Task.IsCompleted);
+                            List<(Task Task, CancellationTokenSource Cts)> remaining = new();
+                            foreach (var tuple in TaskTuples)
+                            {
+                                if (tuple.Task.IsCompleted)
+                                {
+                                    tuple.Cts.Dispose();
+                                }
+                                else
+                                {
+                                    remaining.Add(tuple);
+                                }
+                            }
+
+                            TaskTuples = remaining;
                         }
                     }
                 }
@@ -856,16 +871,16 @@ namespace Azure.Messaging.ServiceBus
                 {
                     // await all tasks using WhenAll so that we ensure every task finishes even if there are exceptions
                     // (rather than try/catch each await)
-                    await Task.WhenAll(_tasks.Select(t => t.Task)).ConfigureAwait(false);
+                    await Task.WhenAll(TaskTuples.Select(t => t.Task)).ConfigureAwait(false);
                 }
                 finally
                 {
-                    foreach (var (_, tcs, _) in _tasks)
+                    foreach (var (_, cts) in TaskTuples)
                     {
-                        tcs.Dispose();
+                        cts.Dispose();
                     }
 
-                    _tasks.Clear();
+                    TaskTuples.Clear();
 
                     linkedHandlerTcs.Dispose();
                 }
@@ -1016,20 +1031,12 @@ namespace Azure.Messaging.ServiceBus
             // decreasing concurrency
             else if (diff < 0)
             {
-                var activeTasks = _tasks.Where(t => !t.Task.IsCompleted).ToList();
+                var activeTasks = TaskTuples.Where(t => !t.Task.IsCompleted).ToList();
                 int excessTasks = activeTasks.Count - _maxConcurrentCalls;
 
                 // cancel excess tasks
                 for (int i = 0; i < excessTasks; i++)
                 {
-                    if (IsSessionProcessor)
-                    {
-                        // Session managers have CTS that are managed internally when a new
-                        // session is accepted. Cancel these in addition to the CTS that we pass
-                        // from the processor. We can't combine them because sessions should not always
-                        // be canceled when the linkedToken is canceled (i.e. when StopProcessingAsync is called).
-                        ((SessionReceiverManager) activeTasks[i].ReceiverManager).CancelSession();
-                    }
                     activeTasks[i].Cts.Cancel();
                 }
 

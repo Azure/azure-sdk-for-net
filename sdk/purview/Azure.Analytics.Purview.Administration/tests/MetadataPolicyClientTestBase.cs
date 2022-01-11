@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net.Http;
+using Azure.Analytics.Purview.Tests;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
@@ -11,10 +12,12 @@ namespace Azure.Analytics.Purview.Administration.Tests
     {
         public MetadataPolicyClientTestBase(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
 
         public MetadataPolicyClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
         public PurviewMetadataPolicyClient GetMetadataPolicyClient(string collectionName)
         {

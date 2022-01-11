@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -28,10 +27,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysisClient_BadRequest
             try
             {
+                ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
                 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                    "invalid-project",
-                    "production",
-                    "We'll have 2 plates of seared salmon nigiri.");
+                    "We'll have 2 plates of seared salmon nigiri.",
+                    conversationsProject);
             }
             catch (RequestFailedException ex)
             {

@@ -18,7 +18,7 @@ namespace Azure.Management.Dns.Tests
         private bool setupRun = false;
 
         public ScenarioTestsZones()
-            : base(true)
+            : base(true)//, RecordedTestMode.Record)
         {
             resourceGroup = null;
             location = "West US";
@@ -30,14 +30,14 @@ namespace Azure.Management.Dns.Tests
         {
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
             {
-                InitializeClients();
+                await InitializeClients();
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-Zones-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 setupRun = true;
             }
             else if (setupRun)
             {
-                initNewRecord();
+                await initNewRecord();
             }
         }
 

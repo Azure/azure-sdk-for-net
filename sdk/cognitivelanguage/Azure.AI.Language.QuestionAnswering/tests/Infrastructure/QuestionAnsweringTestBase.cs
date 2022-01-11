@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
@@ -10,8 +11,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
-        QuestionAnsweringClientOptions.ServiceVersion.V2021_07_15_Preview,
-        QuestionAnsweringClientOptions.ServiceVersion.V2021_05_01_preview
+        QuestionAnsweringClientOptions.ServiceVersion.V2021_10_01
     )]
     public abstract class QuestionAnsweringTestBase<TClient> : RecordedTestBase<QuestionAnsweringTestEnvironment> where TClient : class
     {
@@ -38,9 +38,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         /// <summary>
         /// Creates the <see cref="Client"/> once tests begin.
         /// </summary>
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             Client = CreateClient();
         }

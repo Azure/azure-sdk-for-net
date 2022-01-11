@@ -66,6 +66,7 @@ namespace Azure.Data.Tables.Tests
             { "ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
+            { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
             { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
         };
 
@@ -112,19 +113,8 @@ namespace Azure.Data.Tables.Tests
                 _ => TestEnvironment.StorageConnectionString,
             };
             var options = InstrumentClientOptions(new TableClientOptions());
-            service = _endpointType switch
-            {
-                TableEndpointType.StorageAAD => InstrumentClient(
-                    new TableServiceClient(
-                        new Uri(ServiceUri),
-                        TestEnvironment.Credential,
-                        options)),
-                _ => InstrumentClient(
-                    new TableServiceClient(
-                        new Uri(ServiceUri),
-                        new TableSharedKeyCredential(AccountName, AccountKey),
-                        options))
-            };
+
+            service = CreateService(ServiceUri, options);
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
@@ -132,6 +122,23 @@ namespace Azure.Data.Tables.Tests
 
             client = InstrumentClient(service.GetTableClient(tableName));
             connectionStringClient = InstrumentClient(new TableClient(ConnectionString, tableName, options));
+        }
+
+        internal TableServiceClient CreateService(string serviceUri, TableClientOptions options)
+        {
+            return _endpointType switch
+            {
+                TableEndpointType.StorageAAD => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        TestEnvironment.Credential,
+                        options)),
+                _ => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        new TableSharedKeyCredential(AccountName, AccountKey),
+                        options))
+            };
         }
 
         [TearDown]

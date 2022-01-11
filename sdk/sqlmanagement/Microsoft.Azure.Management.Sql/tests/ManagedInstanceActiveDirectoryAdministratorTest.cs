@@ -15,7 +15,7 @@ namespace Sql.Tests
 {
 	public class ManagedInstanceActiveDirectoryAdministratorTest
 	{
-		[Fact]
+		[Fact(Skip = "Needs to be executed manually due to setup difficulty.")]
 		public void TestSetManagedInstanceActiveDirectoryAdministrator()
 		{
 			string aadAdmin = "aadadmin";
@@ -27,24 +27,9 @@ namespace Sql.Tests
 				Guid tenantId = new Guid(TestEnvironmentUtilities.GetTenantId());
 
 				SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-				ResourceGroup resourceGroup= context.CreateResourceGroup();
+				ResourceGroup resourceGroup = context.CreateResourceGroup();
 
-				// Create vnet and get the subnet id
-				VirtualNetwork vnet = ManagedInstanceTestFixture.CreateVirtualNetwork(context, resourceGroup, TestEnvironmentUtilities.DefaultLocationId);
-
-				Sku sku = new Sku();
-				sku.Name = "MIGP8G4";
-				sku.Tier = "GeneralPurpose";
-				ManagedInstance instance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name,
-					"crud-tests-" + managedInstanceName, new ManagedInstance()
-					{
-						AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
-						AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
-						Sku = sku,
-						SubnetId = vnet.Subnets[0].Id,
-						Tags = new Dictionary<string, string>(),
-						Location = TestEnvironmentUtilities.DefaultLocationId,
-					});
+				ManagedInstance instance = context.CreateManagedInstance(resourceGroup);
 
 				Assert.NotNull(instance);
 

@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 using Microsoft.Extensions.Configuration;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
+namespace Microsoft.Extensions.Hosting
 {
     /// <summary>
     /// Extension methods for Azure Web PubSub integration.

@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "cfddbe7f-d718-c144-696e-67d5c2f38227",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "cfddbe7f-d718-c144-696e-67d5c2f38227",
         "x-ms-request-id": "5a560a03-401e-00a2-1f7b-054546000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -52,7 +52,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "5487f5a6-cade-2313-8ede-160a57d32364",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -67,7 +67,7 @@
         "x-ms-client-request-id": "db2dd89f-af3f-b599-aab9-4039c13a6995",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "5a560a84-401e-00a2-187b-054546000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -89,7 +89,7 @@
         "x-ms-client-request-id": "7f6b8ad0-48a6-8c24-2e53-bc3bc75a49ef",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -102,7 +102,7 @@
         ],
         "x-ms-client-request-id": "7f6b8ad0-48a6-8c24-2e53-bc3bc75a49ef",
         "x-ms-request-id": "5a560aff-401e-00a2-0f7b-054546000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -121,7 +121,7 @@
         "x-ms-client-request-id": "35eb3a32-343f-bb7c-ebe7-d917ce600745",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -136,7 +136,7 @@
         ],
         "x-ms-client-request-id": "35eb3a32-343f-bb7c-ebe7-d917ce600745",
         "x-ms-request-id": "9751b776-901e-0055-0e7b-056fd4000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -158,7 +158,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "bf2c95d3-12f0-da20-1041-98ad490725af",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -173,7 +173,7 @@
         "x-ms-client-request-id": "c8c48507-17c9-2016-1910-24fd9ccf72e3",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "9751b7a2-901e-0055-347b-056fd4000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -195,7 +195,7 @@
         "x-ms-client-request-id": "c3a61a0d-5c43-a0e5-5d71-30ed25e93ebc",
         "x-ms-date": "Wed, 17 Feb 2021 22:22:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -208,7 +208,7 @@
         ],
         "x-ms-client-request-id": "c3a61a0d-5c43-a0e5-5d71-30ed25e93ebc",
         "x-ms-request-id": "9751b7c9-901e-0055-597b-056fd4000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

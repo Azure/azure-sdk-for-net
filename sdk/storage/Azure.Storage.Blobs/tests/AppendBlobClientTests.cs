@@ -225,7 +225,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
             Assert.AreEqual(1, blobs.Count);
             Assert.AreEqual(blobName, blobs.First().Name);
@@ -713,12 +714,18 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             // Act
+            Response<BlobAppendInfo> response;
             using (var stream = new MemoryStream(data))
             {
-                await blob.AppendBlockAsync(stream);
+                response = await blob.AppendBlockAsync(stream);
             }
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Check if block was appeneded correctly by Downloading the block
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
             var dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
@@ -1125,7 +1132,10 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, options);
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, options);
+
+                // Ensure that we grab the whole ETag value from the service without removing the quotes
+                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             }
         }
 
@@ -1684,12 +1694,17 @@ namespace Azure.Storage.Blobs.Test
             await appendBlob.CreateAsync();
 
             // Act
-            await appendBlob.SealAsync();
+            Response<BlobInfo> response = await appendBlob.SealAsync();
             Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
             Response<BlobDownloadInfo> downloadResponse = await appendBlob.DownloadAsync();
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the blob is correctly sealed
             Assert.IsTrue(propertiesResponse.Value.IsSealed);
             Assert.IsTrue(downloadResponse.Value.Details.IsSealed);
             Assert.IsTrue(blobs.First().Properties.IsSealed);

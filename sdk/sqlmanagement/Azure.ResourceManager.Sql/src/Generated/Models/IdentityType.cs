@@ -15,17 +15,26 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="IdentityType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IdentityType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NoneValue = "None";
         private const string SystemAssignedValue = "SystemAssigned";
+        private const string UserAssignedValue = "UserAssigned";
+        private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
+        /// <summary> None. </summary>
+        public static IdentityType None { get; } = new IdentityType(NoneValue);
         /// <summary> SystemAssigned. </summary>
         public static IdentityType SystemAssigned { get; } = new IdentityType(SystemAssignedValue);
+        /// <summary> UserAssigned. </summary>
+        public static IdentityType UserAssigned { get; } = new IdentityType(UserAssignedValue);
+        /// <summary> SystemAssigned,UserAssigned. </summary>
+        public static IdentityType SystemAssignedUserAssigned { get; } = new IdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="IdentityType"/> values are the same. </summary>
         public static bool operator ==(IdentityType left, IdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityType"/> values are not the same. </summary>

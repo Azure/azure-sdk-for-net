@@ -204,6 +204,14 @@ namespace Microsoft.Azure.Batch
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudJob"/> class.
+        /// </summary>
+        protected CloudJob()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal CloudJob(
             BatchClient parentBatchClient,
             Models.CloudJob protocolObject,

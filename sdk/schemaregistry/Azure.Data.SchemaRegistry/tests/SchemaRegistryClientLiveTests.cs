@@ -73,12 +73,36 @@ namespace Azure.Data.SchemaRegistry.Tests
             AssertPropertiesAreEqual(registerProperties, schema.Properties);
         }
 
+        [RecordedTest]
+        public void CanCreateRegisterRequestForUnknownFormatType()
+        {
+            var client = CreateClient();
+            var schemaName = "test1";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var format = new SchemaFormat("JSON");
+            Assert.That(
+                async () => await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format),
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415));
+        }
+
+        [RecordedTest]
+        public void CanCreateGetSchemaPropertiesRequestForUnknownFormatType()
+        {
+            var client = CreateClient();
+            var schemaName = "test1";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var format = new SchemaFormat("JSON");
+            Assert.That(
+                async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format),
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415));
+        }
+
         private void AssertSchema(SchemaRegistrySchema schema)
         {
             AssertSchemaProperties(schema.Properties);
             Assert.AreEqual(
                 Regex.Replace(SchemaContent, @"\s+", string.Empty),
-                Regex.Replace(schema.Content, @"\s+", string.Empty));
+                Regex.Replace(schema.Definition, @"\s+", string.Empty));
         }
 
         private void AssertSchemaProperties(SchemaProperties properties)
@@ -86,11 +110,13 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.Id);
             Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
+            Assert.AreEqual(SchemaFormat.Avro, properties.Format);
         }
 
         private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema)
         {
             Assert.AreEqual(registeredSchema.Id, schema.Id);
+            Assert.AreEqual(registeredSchema.Format, schema.Format);
         }
     }
 }

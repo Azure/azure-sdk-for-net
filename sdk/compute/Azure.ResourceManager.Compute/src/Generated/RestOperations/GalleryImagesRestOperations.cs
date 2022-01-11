@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class GalleryImagesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public GalleryImagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public GalleryImagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,14 +64,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a gallery image definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be created. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImage));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, galleryName, galleryImageName, galleryImage);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -107,14 +108,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a gallery image definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be created. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -132,7 +138,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImage));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, galleryName, galleryImageName, galleryImage);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImage);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,14 +178,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a gallery image definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be updated. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -197,7 +208,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImage));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, galleryName, galleryImageName, galleryImage);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -209,14 +220,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a gallery image definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be updated. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
-        public Response Update(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -234,7 +250,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImage));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, galleryName, galleryImageName, galleryImage);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImage);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -245,7 +261,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName, string galleryImageName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -268,13 +284,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Retrieves information about a gallery image definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which the Image Definitions are to be retrieved. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public async Task<Response<GalleryImageData>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
+        public async Task<Response<GalleryImageData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -288,7 +309,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -307,13 +328,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Retrieves information about a gallery image definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which the Image Definitions are to be retrieved. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public Response<GalleryImageData> Get(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
+        public Response<GalleryImageData> Get(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -327,7 +353,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -345,7 +371,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string galleryName, string galleryImageName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -368,13 +394,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery image. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be deleted. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -388,7 +419,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -402,13 +433,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery image. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be deleted. </param>
         /// <param name="galleryImageName"> The name of the gallery image definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -422,7 +458,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -435,7 +471,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByGalleryRequest(string resourceGroupName, string galleryName)
+        internal HttpMessage CreateListByGalleryRequest(string subscriptionId, string resourceGroupName, string galleryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -457,12 +493,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List gallery image definitions in a gallery. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public async Task<Response<GalleryImageList>> GetAllByGalleryAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        public async Task<Response<GalleryImageList>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -472,7 +513,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryRequest(resourceGroupName, galleryName);
+            using var message = CreateListByGalleryRequest(subscriptionId, resourceGroupName, galleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -489,12 +530,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List gallery image definitions in a gallery. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public Response<GalleryImageList> GetAllByGallery(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        public Response<GalleryImageList> ListByGallery(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -504,7 +550,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryRequest(resourceGroupName, galleryName);
+            using var message = CreateListByGalleryRequest(subscriptionId, resourceGroupName, galleryName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -520,7 +566,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByGalleryNextPageRequest(string nextLink, string resourceGroupName, string galleryName)
+        internal HttpMessage CreateListByGalleryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string galleryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -536,15 +582,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List gallery image definitions in a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
-        public async Task<Response<GalleryImageList>> GetAllByGalleryNextPageAsync(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        public async Task<Response<GalleryImageList>> ListByGalleryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -555,7 +606,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
+            using var message = CreateListByGalleryNextPageRequest(nextLink, subscriptionId, resourceGroupName, galleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -573,15 +624,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List gallery image definitions in a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
-        public Response<GalleryImageList> GetAllByGalleryNextPage(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        public Response<GalleryImageList> ListByGalleryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -592,7 +648,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetAllByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
+            using var message = CreateListByGalleryNextPageRequest(nextLink, subscriptionId, resourceGroupName, galleryName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OSFamilyListResult(IEnumerable<OSFamily> value)
+        internal OSFamilyListResult(IEnumerable<OSFamilyData> value)
         {
             if (value == null)
             {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal OSFamilyListResult(IReadOnlyList<OSFamily> value, string nextLink)
+        internal OSFamilyListResult(IReadOnlyList<OSFamilyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<OSFamily> Value { get; }
+        public IReadOnlyList<OSFamilyData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

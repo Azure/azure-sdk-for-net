@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
@@ -9,7 +10,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-#endregion Snippet:Readme_AuthClient
+#endregion
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Tests.Samples
             #endregion
 
             #region Snippet:Create_ResourceGroup
-            Subscription subscription = armClient.DefaultSubscription;
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             string rgName = "QuickStartRG";
 
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup resourceGroup = rgCreateLro.Value;
             #endregion
 
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
             #region Snippet:Create_NetworkInterface
             string nicName = vmName + "_nic";
-            NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
+            NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
             {
                 Name = "Primary",
                 Primary = true,
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Tests.Samples
             vmData.OsProfile.AdminUsername = "admin-username";
             vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
             vmData.OsProfile.ComputerName = "computer-name";
-            //vmData.AvailabilitySet = new WritableSubResource(); // Uncomment when package is updated
+            vmData.AvailabilitySet = new WritableSubResource();
             vmData.AvailabilitySet.Id = aset.Id;
             NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
             nicReference.Id = nic.Id;

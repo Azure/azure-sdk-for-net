@@ -10,24 +10,34 @@ using Microsoft.Azure.SignalR.Management;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class ServiceHubContextStore : IInternalServiceHubContextStore
+    internal sealed class ServiceHubContextStore : IInternalServiceHubContextStore
     {
-        private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> store = new(StringComparer.OrdinalIgnoreCase);
-        private readonly IServiceEndpointManager endpointManager;
+        private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> _store = new(StringComparer.OrdinalIgnoreCase);
+        private readonly ConcurrentDictionary<string, Lazy<Task<object>>> _stronglyTypedStore = new(StringComparer.OrdinalIgnoreCase);
+        private readonly IServiceEndpointManager _endpointManager;
+        private readonly ServiceManager _serviceManager;
 
-        public IServiceManager ServiceManager { get; }
+        public AccessKey[] AccessKeys => _endpointManager.Endpoints.Keys.Select(endpoint => endpoint.AccessKey).ToArray();
 
-        public AccessKey[] AccessKeys => endpointManager.Endpoints.Keys.Select(endpoint => endpoint.AccessKey).ToArray();
+        public IServiceManager ServiceManager => _serviceManager as IServiceManager;
 
-        public ServiceHubContextStore(IServiceEndpointManager endpointManager, IServiceManager serviceManager)
+        public ServiceHubContextStore(IServiceEndpointManager endpointManager, ServiceManager serviceManager)
         {
-            this.endpointManager = endpointManager;
-            ServiceManager = serviceManager;
+            _serviceManager = serviceManager;
+            _endpointManager = endpointManager;
+        }
+
+        public async ValueTask<ServiceHubContext<T>> GetAsync<T>(string hubName) where T : class
+        {
+            // The GetAsync for strongly typed hub is more simple than that for weak typed hub, as it removes codes to handle transient errors. The creation of service hub context should not contain transient errors.
+            var lazy = _stronglyTypedStore.GetOrAdd(hubName, new Lazy<Task<object>>(async () => await _serviceManager.CreateHubContextAsync<T>(hubName, default).ConfigureAwait(false)));
+            var hubContext = await lazy.Value.ConfigureAwait(false);
+            return (ServiceHubContext<T>)hubContext;
         }
 
         public ValueTask<IServiceHubContext> GetAsync(string hubName)
         {
-            var pair = store.GetOrAdd(hubName,
+            var pair = _store.GetOrAdd(hubName,
                 (new Lazy<Task<IServiceHubContext>>(
                     () => ServiceManager.CreateHubContextAsync(hubName)), default));
             return GetAsyncCore(hubName, pair);
@@ -50,14 +60,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             try
             {
                 var value = await pair.Lazy.Value.ConfigureAwait(false);
-                store.TryUpdate(hubName, (null, value), pair);
+                _store.TryUpdate(hubName, (null, value), pair);
                 return value;
             }
             catch (Exception)
             {
-                store.TryRemove(hubName, out _);
+                // Allow to retry for transient errors.
+                _store.TryRemove(hubName, out _);
                 throw;
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            _serviceManager.Dispose();
+            foreach (var tuple in _store.Values)
+            {
+                if (tuple.Value is not null)
+                {
+                    await tuple.Value.DisposeAsync().ConfigureAwait(false);
+                }
+                if (tuple.Lazy is not null && tuple.Lazy.IsValueCreated)
+                {
+                    await (await tuple.Lazy.Value.ConfigureAwait(false)).DisposeAsync().ConfigureAwait(false);
+                }
+            }
+            foreach (var lazy in _stronglyTypedStore.Values)
+            {
+                if (lazy.IsValueCreated)
+                {
+                    // The IAsyncDisposable interface doesn't apply to ServiceHubContext<T> on netstandard2.0 yet.
+                    ((IDisposable)await lazy.Value.ConfigureAwait(false)).Dispose();
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            DisposeAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }

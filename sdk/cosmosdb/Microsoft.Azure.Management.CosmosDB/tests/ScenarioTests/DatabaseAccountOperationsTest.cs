@@ -2,44 +2,41 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
-using System.Net;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.CosmosDB;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    public class DatabaseAccountOperationsTests
+    public class DatabaseAccountOperationsTests : IClassFixture<TestFixture>
     {
+        public TestFixture fixture;
+
+        public DatabaseAccountOperationsTests(TestFixture fixture)
+        {
+            this.fixture = fixture;
+        }
+
         [Fact]
         public void DatabaseAccountCRUDTests()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType()))
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
-                ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
+                fixture.Init(context);
 
-                string resourceGroupName = CosmosDBTestUtilities.CreateResourceGroup(resourcesClient);
-                string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
+                var databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
+                var accountClient = this.fixture.CosmosDBManagementClient.DatabaseAccounts;
 
-                List<Location> locations = new List<Location>();
-                locations.Add(new Location(locationName: "East US 2"));
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                // Create and check
+                var parameters = new DatabaseAccountCreateUpdateParameters
                 {
-                    Location = "EAST US 2",
+                    Location = this.fixture.Location,
                     Tags = new Dictionary<string, string>
-                    {
+                     {
                         {"key1","value1"},
                         {"key2","value2"}
-                    },
+                     },
                     Kind = "MongoDB",
                     ConsistencyPolicy = new ConsistencyPolicy
                     {
@@ -47,7 +44,7 @@ namespace CosmosDB.Tests.ScenarioTests
                         MaxStalenessPrefix = 300,
                         MaxIntervalInSeconds = 1000
                     },
-                    Locations = locations,
+                    Locations = new List<Location> { new Location(locationName: this.fixture.Location) },
                     IpRules = new List<IpAddressOrRange>
                     {
                         new IpAddressOrRange("23.43.230.120")
@@ -64,18 +61,26 @@ namespace CosmosDB.Tests.ScenarioTests
                     CreateMode = CreateMode.Default
                 };
 
-                DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-
-                VerifyCosmosDBAccount(databaseAccount, databaseAccountCreateUpdateParameters);
+                var databaseAccount = accountClient.CreateOrUpdateWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    parameters
+                ).GetAwaiter().GetResult().Body;
+                VerifyCosmosDBAccount(databaseAccount, parameters);
                 Assert.Equal(databaseAccountName, databaseAccount.Name);
 
-                DatabaseAccountGetResults readDatabaseAccount = cosmosDBManagementClient.DatabaseAccounts.GetWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
-                VerifyCosmosDBAccount(readDatabaseAccount, databaseAccountCreateUpdateParameters);
+                // Read and check
+                var readDatabaseAccount = accountClient.GetWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
+                VerifyCosmosDBAccount(readDatabaseAccount, parameters);
                 Assert.Equal(databaseAccountName, readDatabaseAccount.Name);
 
-                DatabaseAccountUpdateParameters databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters
+                // Update and check
+                var databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters
                 {
-                    Location = "EAST US 2",
+                    Location = this.fixture.Location,
                     Tags = new Dictionary<string, string>
                     {
                         {"key3","value3"},
@@ -87,7 +92,7 @@ namespace CosmosDB.Tests.ScenarioTests
                         MaxStalenessPrefix = 1300,
                         MaxIntervalInSeconds = 12000
                     },
-                    Locations = locations,
+                    Locations = new List<Location> { new Location(locationName: this.fixture.Location) },
                     IpRules = new List<IpAddressOrRange>
                     {
                         new IpAddressOrRange("23.43.230.120")
@@ -103,122 +108,104 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                DatabaseAccountGetResults updatedDatabaseAccount = cosmosDBManagementClient.DatabaseAccounts.UpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountUpdateParameters).GetAwaiter().GetResult().Body;
-
+                var updatedDatabaseAccount = accountClient.UpdateWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseAccountUpdateParameters
+                ).GetAwaiter().GetResult().Body;
                 VerifyCosmosDBAccount(updatedDatabaseAccount, databaseAccountUpdateParameters);
                 Assert.Equal(databaseAccountName, databaseAccount.Name);
 
-                IEnumerable<DatabaseAccountGetResults> databaseAccounts = cosmosDBManagementClient.DatabaseAccounts.ListWithHttpMessagesAsync().GetAwaiter().GetResult().Body;
+                // List database accounts, should not be empty
+                var databaseAccounts = accountClient.ListWithHttpMessagesAsync().GetAwaiter().GetResult().Body;
                 Assert.NotNull(databaseAccounts);
 
-                IEnumerable<DatabaseAccountGetResults> databaseAccountsByResourceGroupName = cosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName).GetAwaiter().GetResult().Body;
+                var databaseAccountsByResourceGroupName = accountClient.ListByResourceGroupWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(databaseAccountsByResourceGroupName);
 
-                DatabaseAccountListKeysResult databaseAccountListKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                var databaseAccountListKeysResult = accountClient.ListKeysWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
 
                 Assert.NotNull(databaseAccountListKeysResult.PrimaryMasterKey);
                 Assert.NotNull(databaseAccountListKeysResult.SecondaryMasterKey);
                 Assert.NotNull(databaseAccountListKeysResult.PrimaryReadonlyMasterKey);
                 Assert.NotNull(databaseAccountListKeysResult.SecondaryReadonlyMasterKey);
 
-                DatabaseAccountListConnectionStringsResult databaseAccountListConnectionStringsResult = cosmosDBManagementClient.DatabaseAccounts.ListConnectionStringsWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                var databaseAccountListConnectionStringsResult = accountClient.ListConnectionStringsWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(databaseAccountListConnectionStringsResult);
 
-                DatabaseAccountListReadOnlyKeysResult databaseAccountGetReadOnlyKeysResult = cosmosDBManagementClient.DatabaseAccounts.GetReadOnlyKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                var databaseAccountGetReadOnlyKeysResult = accountClient.GetReadOnlyKeysWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(databaseAccountGetReadOnlyKeysResult);
 
-                DatabaseAccountListReadOnlyKeysResult databaseAccountListReadOnlyKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListReadOnlyKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                var databaseAccountListReadOnlyKeysResult = accountClient.ListReadOnlyKeysWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(databaseAccountListReadOnlyKeysResult);
 
-                cosmosDBManagementClient.DatabaseAccounts.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, databaseAccountName, new DatabaseAccountRegenerateKeyParameters { KeyKind = "primary" });
-                cosmosDBManagementClient.DatabaseAccounts.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, databaseAccountName, new DatabaseAccountRegenerateKeyParameters { KeyKind = "secondary" });
-                cosmosDBManagementClient.DatabaseAccounts.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, databaseAccountName, new DatabaseAccountRegenerateKeyParameters { KeyKind = "primaryReadonly" });
-                cosmosDBManagementClient.DatabaseAccounts.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, databaseAccountName, new DatabaseAccountRegenerateKeyParameters { KeyKind = "secondaryReadonly" });
+                accountClient.RegenerateKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    new DatabaseAccountRegenerateKeyParameters { KeyKind = "primary" }
+                );
+                accountClient.RegenerateKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    new DatabaseAccountRegenerateKeyParameters { KeyKind = "secondary" }
+                );
+                accountClient.RegenerateKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    new DatabaseAccountRegenerateKeyParameters { KeyKind = "primaryReadonly" }
+                );
+                accountClient.RegenerateKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    new DatabaseAccountRegenerateKeyParameters { KeyKind = "secondaryReadonly" }
+                );
 
-                DatabaseAccountListKeysResult databaseAccountListRegeneratedKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                var databaseAccountListRegeneratedKeysResult = accountClient.ListKeysWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
 
-                cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
+                accountClient.DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName);
             }
         }
 
         [Fact]
-        public async Task RestorableSqlDatabaseResourceFeedTest()
+        public void DatabaseAccountLocationsTest()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType()))
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
-                ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
-
-                string resourceGroupName = CosmosDBTestUtilities.CreateResourceGroup(resourcesClient);
-                string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
-
-                List<Location> locations = new List<Location>();
-                locations.Add(new Location(locationName: "East US 2"));
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                fixture.Init(context);
+                IEnumerable<LocationGetResult> locationGetResults = this.fixture.CosmosDBManagementClient.Locations.ListWithHttpMessagesAsync().GetAwaiter().GetResult().Body;
+                Assert.True(locationGetResults.Count() > 0);
+                string locationName = "";
+                foreach (LocationGetResult locationGetResult in locationGetResults)
                 {
-                    Location = "EAST US 2",
-                    Tags = new Dictionary<string, string>
-                    {
-                        {"key1","value1"},
-                        {"key2","value2"}
-                    },
-                    Kind = "MongoDB",
-                    ConsistencyPolicy = new ConsistencyPolicy
-                    {
-                        DefaultConsistencyLevel = DefaultConsistencyLevel.BoundedStaleness,
-                        MaxStalenessPrefix = 300,
-                        MaxIntervalInSeconds = 1000
-                    },
-                    Locations = locations,
-                    CreateMode = CreateMode.Default
-                };
+                    Assert.NotNull(locationGetResult.Name);
+                    Assert.NotNull(locationGetResult.Properties.BackupStorageRedundancies);
+                    Assert.NotNull(locationGetResult.Properties.IsResidencyRestricted);
+                    Assert.NotNull(locationGetResult.Properties.SupportsAvailabilityZone);
+                    locationName = locationGetResult.Name;
+                }
 
-                DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                Assert.NotNull(databaseAccount);
-
-                List<DatabaseAccountGetResults> databaseFeedResult = (await cosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName)).ToList();
-                Assert.Single(databaseFeedResult);
-
-                DatabaseAccountUpdateParameters databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters
-                {
-                    Location = "EAST US 2",
-                    Tags = new Dictionary<string, string>
-                    {
-                        {"key3","value3"},
-                        {"key4","value4"}
-                    },
-                    ConsistencyPolicy = new ConsistencyPolicy
-                    {
-                        DefaultConsistencyLevel = DefaultConsistencyLevel.Session,
-                        MaxStalenessPrefix = 1300,
-                        MaxIntervalInSeconds = 12000
-                    },
-                    Locations = locations,
-                    IpRules = new List<IpAddressOrRange>
-                    {
-                        new IpAddressOrRange("23.43.230.120")
-                    },
-                    IsVirtualNetworkFilterEnabled = false,
-                    EnableAutomaticFailover = true,
-                    DisableKeyBasedMetadataWriteAccess = true,
-                    NetworkAclBypass = NetworkAclBypass.AzureServices,
-                    NetworkAclBypassResourceIds = new List<string>
-                    {
-                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName",
-                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName2"
-                    }
-                };
-                DatabaseAccountGetResults updatedDatabaseAccount = cosmosDBManagementClient.DatabaseAccounts.UpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountUpdateParameters).GetAwaiter().GetResult().Body;
-                Assert.NotNull(updatedDatabaseAccount);
-
-                databaseFeedResult = (await cosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName)).ToList();
-                Assert.Single(databaseFeedResult);
-
-                await cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
+                LocationGetResult currentLocationGetResult = this.fixture.CosmosDBManagementClient.Locations.GetWithHttpMessagesAsync(locationName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(currentLocationGetResult.Name);
+                Assert.NotNull(currentLocationGetResult.Properties.BackupStorageRedundancies);
+                Assert.NotNull(currentLocationGetResult.Properties.IsResidencyRestricted);
+                Assert.NotNull(currentLocationGetResult.Properties.SupportsAvailabilityZone);
             }
         }
 

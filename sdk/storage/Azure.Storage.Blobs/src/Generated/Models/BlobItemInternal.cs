@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="snapshot"></param>
         /// <param name="properties"> Properties of a blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/>, or <paramref name="properties"/> is null. </exception>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, BlobPropertiesInternal properties)
+        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, BlobPropertiesInternal properties)
         {
             if (name == null)
             {
@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="blobTags"> Blob tags. </param>
         /// <param name="hasVersionsOnly"></param>
         /// <param name="orMetadata"> Dictionary of &lt;string&gt;. </param>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, bool? hasVersionsOnly, IReadOnlyDictionary<string, string> orMetadata)
+        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, bool? hasVersionsOnly, IReadOnlyDictionary<string, string> orMetadata)
         {
             Name = name;
             Deleted = deleted;
@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Gets the name. </summary>
-        public string Name { get; }
+        public BlobName Name { get; }
         /// <summary> Gets the deleted. </summary>
         public bool Deleted { get; }
         /// <summary> Gets the snapshot. </summary>

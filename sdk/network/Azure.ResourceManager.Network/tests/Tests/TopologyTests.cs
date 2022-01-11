@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Network.Tests
             //Create NetworkWatcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName2, networkWatcherName, properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(resourceGroupName2, networkWatcherName, properties);
 
             TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };
 
             //Get the current network topology of the resourceGroupName1
-            var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
-            Response<Topology> getTopology = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.GetTopologyAsync(tpProperties);
+            var networkWatcherCollection = GetNetworkWatcherCollection("NetworkWatcherRG");
+            Response<Topology> getTopology = await networkWatcherCollection.Get("NetworkWatcher_westus2").Value.GetTopologyAsync(tpProperties);
 
             //Getting infromation about VM from topology
             TopologyResource vmResource = getTopology.Value.Resources[0];

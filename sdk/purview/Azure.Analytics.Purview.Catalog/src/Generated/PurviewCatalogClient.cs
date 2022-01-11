@@ -16,16 +16,15 @@ namespace Azure.Analytics.Purview.Catalog
     /// <summary> The PurviewCatalog service client. </summary>
     public partial class PurviewCatalogClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewCatalogClient for mocking. </summary>
         protected PurviewCatalogClient()
@@ -47,19 +46,18 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new PurviewCatalogClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Gets data using search. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -111,15 +109,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SearchAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateSearchRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -130,7 +128,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Gets data using search. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -182,15 +180,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Search(RequestContent content, RequestOptions options = null)
+        public virtual Response Search(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateSearchRequest(content, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -201,7 +199,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -226,15 +224,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SuggestAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSuggestRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateSuggestRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -245,7 +243,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -270,15 +268,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Suggest(RequestContent content, RequestOptions options = null)
+        public virtual Response Suggest(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSuggestRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateSuggestRequest(content, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -289,7 +287,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Browse entities by path or entity type. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -316,15 +314,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> BrowseAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> BrowseAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBrowseRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateBrowseRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -335,7 +333,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Browse entities by path or entity type. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -362,15 +360,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Browse(RequestContent content, RequestOptions options = null)
+        public virtual Response Browse(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBrowseRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateBrowseRequest(content, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -381,7 +379,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get auto complete options. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -406,15 +404,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAutoCompleteRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                using HttpMessage message = CreateAutoCompleteRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -425,7 +423,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get auto complete options. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -450,15 +448,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response AutoComplete(RequestContent content, RequestOptions options = null)
+        public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAutoCompleteRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                using HttpMessage message = CreateAutoCompleteRequest(content, context);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -467,9 +465,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        internal HttpMessage CreateSearchRequest(RequestContent content)
+        internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -485,9 +483,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateSuggestRequest(RequestContent content)
+        internal HttpMessage CreateSuggestRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -503,9 +501,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateBrowseRequest(RequestContent content)
+        internal HttpMessage CreateBrowseRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -521,9 +519,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateAutoCompleteRequest(RequestContent content)
+        internal HttpMessage CreateAutoCompleteRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();

@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// The requirements to validate customer address where the device needs to
     /// be shipped.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ValidateAddress")]
     public partial class ValidateAddress : ValidationInputRequest
     {
         /// <summary>
@@ -35,8 +34,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
         /// <param name="deviceType">Device type to be used for the job.
-        /// Possible values include: 'DataBox', 'DataBoxDisk',
-        /// 'DataBoxHeavy'</param>
+        /// Possible values include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'</param>
         /// <param name="transportPreferences">Preferences related to the
         /// shipment logistics of the sku.</param>
         public ValidateAddress(ShippingAddress shippingAddress, SkuName deviceType, TransportPreferences transportPreferences = default(TransportPreferences))
@@ -60,7 +59,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets device type to be used for the job. Possible values
-        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'
+        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'
         /// </summary>
         [JsonProperty(PropertyName = "deviceType")]
         public SkuName DeviceType { get; set; }

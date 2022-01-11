@@ -206,8 +206,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        [Ignore("#10044: Re-enable failing Storage tests")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_02_12)]
         public async Task ListSharesSegmentAsync_Premium()
         {
             // Arrange
@@ -220,20 +219,17 @@ namespace Azure.Storage.Files.Shares.Tests
                 shareName: shareName);
             ShareClient share = test.Share;
 
-            var shares = new List<ShareItem>();
-            await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
-            {
-                shares.AddRange(page.Values);
-            }
+            IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+            ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).FirstOrDefault();
 
             // Assert
-            ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).First();
             Assert.IsNotNull(premiumShareItem.Properties.ETag);
             Assert.IsNotNull(premiumShareItem.Properties.LastModified);
             Assert.IsNotNull(premiumShareItem.Properties.NextAllowedQuotaDowngradeTime);
             Assert.IsNotNull(premiumShareItem.Properties.ProvisionedEgressMBps);
             Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIngressMBps);
             Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIops);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedBandwidthMiBps);
             Assert.IsNotNull(premiumShareItem.Properties.QuotaInGB);
         }
 

@@ -36,6 +36,9 @@
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared\Core" />
   </ItemGroup>

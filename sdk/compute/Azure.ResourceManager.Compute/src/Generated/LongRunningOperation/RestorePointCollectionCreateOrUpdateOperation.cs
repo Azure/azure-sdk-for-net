@@ -16,25 +16,25 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The operation to create or update the restore point collection. Please refer to https://aka.ms/RestorePoints for more details. When updating a restore point collection, only tags may be modified. </summary>
-    public partial class RestorePointCollectionCreateOrUpdateOperation : Operation<RestorePointCollection>
+    public partial class RestorePointCollectionCreateOrUpdateOperation : Operation<RestorePointGroup>
     {
-        private readonly OperationOrResponseInternals<RestorePointCollection> _operation;
+        private readonly OperationOrResponseInternals<RestorePointGroup> _operation;
 
         /// <summary> Initializes a new instance of RestorePointCollectionCreateOrUpdateOperation for mocking. </summary>
         protected RestorePointCollectionCreateOrUpdateOperation()
         {
         }
 
-        internal RestorePointCollectionCreateOrUpdateOperation(ArmResource operationsBase, Response<RestorePointCollectionData> response)
+        internal RestorePointCollectionCreateOrUpdateOperation(ArmResource operationsBase, Response<RestorePointGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<RestorePointCollection>(Response.FromValue(new RestorePointCollection(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<RestorePointGroup>(Response.FromValue(new RestorePointGroup(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override RestorePointCollection Value => _operation.Value;
+        public override RestorePointGroup Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Compute.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestorePointCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<RestorePointGroup>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestorePointCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<RestorePointGroup>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

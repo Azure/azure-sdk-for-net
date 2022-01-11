@@ -1,92 +1,50 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/mgmt-group-5126?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210728.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "eaa50d54ba6732b7f06c5007cb26223d",
+        "traceparent": "00-0dff81914f827648a4dc1d6053311ffd-1c82a0a8dc17e140-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211014.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "97895862ab8732a4c583b2cf98cc9a9f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "468",
+        "client-request-id": "384a585f-d07f-476a-9c69-b0e7ac14d805",
+        "Content-Length": "565",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Jul 2021 23:29:11 GMT",
+        "Date": "Thu, 14 Oct 2021 02:46:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "03977dc0-3d52-4549-9415-5a9bdecc2cc7",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "03977dc0-3d52-4549-9415-5a9bdecc2cc7",
-        "x-ms-routing-request-id": "WESTUS2:20210728T232912Z:03977dc0-3d52-4549-9415-5a9bdecc2cc7"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "authorizationSource": "RoleBased",
-        "managedByTenants": [],
-        "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
-        },
-        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
-        "state": "Enabled",
-        "subscriptionPolicies": {
-          "locationPlacementId": "Internal_2014-09-01",
-          "quotaId": "Internal_2014-09-01",
-          "spendingLimit": "Off"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/mgmt-group-3600?api-version=2021-04-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-24c2792a142ab641b3a78a17a03c5d59-32db8920beabc541-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210728.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "4fb7085f14561b8c360e2db7da4e200e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "88f061a3-6790-40c7-9203-e99ed1e4d76b",
-        "Content-Length": "563",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Jul 2021 23:29:11 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "request-id": "88f061a3-6790-40c7-9203-e99ed1e4d76b",
+        "request-id": "384a585f-d07f-476a-9c69-b0e7ac14d805",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "x-ba-restapi": "1.0.3.1628",
+        "x-ba-restapi": "1.0.3.1640",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "88f061a3-6790-40c7-9203-e99ed1e4d76b",
-        "x-ms-ratelimit-remaining-tenant-reads": "11972",
-        "x-ms-request-id": "westus2:88f061a3-6790-40c7-9203-e99ed1e4d76b",
-        "x-ms-routing-request-id": "WESTUS2:20210728T232912Z:88f061a3-6790-40c7-9203-e99ed1e4d76b"
+        "x-ms-correlation-request-id": "384a585f-d07f-476a-9c69-b0e7ac14d805",
+        "x-ms-ratelimit-remaining-tenant-reads": "11941",
+        "x-ms-request-id": "southeastasia:384a585f-d07f-476a-9c69-b0e7ac14d805",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211014T024611Z:384a585f-d07f-476a-9c69-b0e7ac14d805"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.Management/managementGroups/mgmt-group-3600",
+        "id": "/providers/Microsoft.Management/managementGroups/mgmt-group-5126",
         "type": "Microsoft.Management/managementGroups",
-        "name": "mgmt-group-3600",
+        "name": "mgmt-group-5126",
         "properties": {
           "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-          "displayName": "mgmt-group-3600",
+          "displayName": "mgmt-group-5126",
           "details": {
-            "version": 5,
-            "updatedTime": "2021-07-28T23:28:51.73385Z",
-            "updatedBy": "3b10dae3-28cf-49a7-a8df-8fbae3e77f27",
+            "version": 1,
+            "updatedTime": "2021-10-14T02:45:20.3090375Z",
+            "updatedBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
             "parent": {
               "id": "/providers/Microsoft.Management/managementGroups/72f988bf-86f1-41af-91ab-2d7cd011db47",
               "name": "72f988bf-86f1-41af-91ab-2d7cd011db47",
@@ -97,14 +55,17 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/mgmt-group-3600x?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/mgmt-group-5126x?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-52a90f09c54ce34fbc5c40310560ba5b-a17fe6b57993e143-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210728.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "1facb58e51056e2d621f6a51146d8cd8",
+        "traceparent": "00-31ceeb9a9109a74887a86fee066c3bf5-e757ec8e40155545-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211014.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "e3ee8dfcaf4e84ebde7b78ced91e817e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -114,27 +75,27 @@
         "Connection": "close",
         "Content-Length": "416",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Jul 2021 23:29:11 GMT",
+        "Date": "Thu, 14 Oct 2021 02:46:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "51819eab-0818-4272-8676-c2f307a33658",
+        "x-ms-correlation-request-id": "70b3d015-bff9-4570-9755-65e6e9d7721e",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "51819eab-0818-4272-8676-c2f307a33658",
-        "x-ms-routing-request-id": "WESTUS2:20210728T232912Z:51819eab-0818-4272-8676-c2f307a33658"
+        "x-ms-request-id": "70b3d015-bff9-4570-9755-65e6e9d7721e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211014T024611Z:70b3d015-bff9-4570-9755-65e6e9d7721e"
       },
       "ResponseBody": {
         "error": {
           "code": "AuthorizationFailed",
-          "message": "The client \u00273b10dae3-28cf-49a7-a8df-8fbae3e77f27\u0027 with object id \u00273b10dae3-28cf-49a7-a8df-8fbae3e77f27\u0027 does not have authorization to perform action \u0027Microsoft.Management/managementGroups/read\u0027 over scope \u0027/providers/Microsoft.Management/managementGroups/mgmt-group-3600x\u0027 or the scope is invalid. If access was recently granted, please refresh your credentials."
+          "message": "The client \u00277b8faa77-f564-4284-9992-813b178ef8e0\u0027 with object id \u00277b8faa77-f564-4284-9992-813b178ef8e0\u0027 does not have authorization to perform action \u0027Microsoft.Management/managementGroups/read\u0027 over scope \u0027/providers/Microsoft.Management/managementGroups/mgmt-group-5126x\u0027 or the scope is invalid. If access was recently granted, please refresh your credentials."
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "915105786",
-    "RESOURCE_MANAGER_URL": null,
+    "RandomSeed": "1652115549",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

@@ -93,8 +93,9 @@ namespace Compute.Tests
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmSize: vmSize);
                     RestorePoint getRP = GetRP(rgName, rpcName, rpName);
-                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
+                    VerifyRestorePointDetails(getRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmSize: vmSize);
+                    VerifyDiskRestorePoint(rgName, rpcName, rpName);
 
                     // get RPC without $expand=restorePoints
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
@@ -110,6 +111,7 @@ namespace Compute.Tests
                     RestorePoint rpInRpc = returnedRpc.RestorePoints[0];
                     VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmSize: vmSize);
+                    VerifyDiskRestorePoint(rgName, rpcName, rpName);
 
                     // delete the restore point
                     DeleteRP(rgName, rpcName, rpName);
@@ -236,7 +238,8 @@ namespace Compute.Tests
             string osDiskName = osDisk.Name;
             ApiEntityReference diskToExcludeEntityRef = new ApiEntityReference() { Id = diskToExclude };
             List<ApiEntityReference> disksToExclude = new List<ApiEntityReference> { diskToExcludeEntityRef };
-            return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, disksToExclude);
+            RestorePoint inputRestorePoint = new RestorePoint() { ExcludeDisks = disksToExclude };
+            return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, inputRestorePoint);
         }
 
         // Verify restore point properties.
@@ -248,10 +251,6 @@ namespace Compute.Tests
         {
             Assert.Equal(restorePointName, restorePoint.Name);
             Assert.NotNull(restorePoint.Id);
-            Assert.NotNull(restorePoint.ProvisioningDetails.CreationTime);
-            Assert.NotNull(restorePoint.ProvisioningDetails.StatusCode);
-            Assert.NotNull(restorePoint.ProvisioningDetails.StatusMessage);
-            Assert.NotNull(restorePoint.ProvisioningDetails.TotalUsedSizeInBytes);
             Assert.Equal(ProvisioningState.Succeeded.ToString(), restorePoint.ProvisioningState);
             Assert.Equal(ConsistencyModeTypes.ApplicationConsistent, restorePoint.ConsistencyMode);
             RestorePointSourceVMStorageProfile storageProfile = restorePoint.SourceMetadata.StorageProfile;
@@ -273,6 +272,33 @@ namespace Compute.Tests
                 m_CrpClient.RestorePointCollections.CreateOrUpdate(rgName, rpcName,
                 inputRpc);
             return restorePointCollection;
+        }
+
+        // Verify disk restore points.
+        private void VerifyDiskRestorePoint(string rgName, string rpcName, string rpName)
+        {
+            IPage<DiskRestorePoint> listDiskRestorePoint = m_CrpClient.DiskRestorePoint.ListByRestorePoint(rgName, rpcName, rpName);
+            GrantAccessData accessData = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
+            foreach (DiskRestorePoint drp in listDiskRestorePoint)
+            {
+                var getDrp = m_CrpClient.DiskRestorePoint.Get(rgName, rpcName, rpName, drp.Name);
+                ValidateDiskRestorePoint(getDrp, drp.Name);
+
+                AccessUri accessUri = m_CrpClient.DiskRestorePoint.GrantAccess(rgName, rpcName, rpName, getDrp.Name, accessData);
+                Assert.NotNull(accessUri.AccessSAS);
+
+                getDrp = m_CrpClient.DiskRestorePoint.Get(rgName, rpcName, rpName, drp.Name);
+                ValidateDiskRestorePoint(getDrp, drp.Name);
+
+                m_CrpClient.DiskRestorePoint.RevokeAccess(rgName, rpcName, rpName, drp.Name);
+            }
+        }
+
+        private void ValidateDiskRestorePoint(DiskRestorePoint drp, string rpName)
+        {
+            Assert.NotNull(drp);
+            Assert.NotNull(drp.Id);
+            Assert.Equal(rpName, drp.Name);
         }
     }
 }

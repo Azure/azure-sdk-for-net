@@ -175,16 +175,13 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
-            if (ScaleUnits != null)
+            if (ScaleUnits > 50)
             {
-                if (ScaleUnits > 50)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ScaleUnits", 50);
-                }
-                if (ScaleUnits < 2)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ScaleUnits", 2);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ScaleUnits", 50);
+            }
+            if (ScaleUnits < 2)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ScaleUnits", 2);
             }
         }
     }

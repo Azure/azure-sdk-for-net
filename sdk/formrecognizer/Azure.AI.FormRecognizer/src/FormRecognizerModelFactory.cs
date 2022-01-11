@@ -708,30 +708,6 @@ namespace Azure.AI.FormRecognizer.Models
             return new DocTypeInfo(description, fieldSchema, fieldConfidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="target"> Target of the error. </param>
-        /// <param name="details"> List of detailed errors. </param>
-        /// <param name="innererror"> Detailed error. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentAnalysisError"/> instance for mocking. </returns>
-        internal static DocumentAnalysisError DocumentAnalysisError(string code = null, string message = null, string target = null, IEnumerable<DocumentAnalysisError> details = null, DocumentAnalysisInnerError innererror = null)
-        {
-            details ??= new List<DocumentAnalysisError>();
-
-            return new DocumentAnalysisError(code, message, target, details?.ToList(), innererror);
-        }
-
-        /// <summary> Initializes a new instance of DocumentAnalysisInnerError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="innererror"> Detailed error. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentAnalysisInnerError"/> instance for mocking. </returns>
-        internal static DocumentAnalysisInnerError DocumentAnalysisInnerError(string code = null, string message = null, DocumentAnalysisInnerError innererror = null)
-        {
-            return new DocumentAnalysisInnerError(code, message, innererror);
-        }
-
         /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
@@ -744,22 +720,6 @@ namespace Azure.AI.FormRecognizer.Models
         internal static ModelOperationInfo ModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null)
         {
             return new ModelOperationInfo(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation);
-        }
-
-        /// <summary> Initializes a new instance of ModelOperation. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ModelOperation"/> instance for mocking. </returns>
-        internal static ModelOperation ModelOperation(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, DocumentAnalysisError error = null, DocumentModel result = null)
-        {
-            return new ModelOperation(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, error, result);
         }
 
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>

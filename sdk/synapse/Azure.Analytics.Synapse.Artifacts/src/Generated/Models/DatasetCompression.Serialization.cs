@@ -20,7 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteObjectValue(Type);
+            if (Optional.IsDefined(Level))
+            {
+                writer.WritePropertyName("level");
+                writer.WriteObjectValue(Level);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -31,32 +36,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "BZip2": return DatasetBZip2Compression.DeserializeDatasetBZip2Compression(element);
-                    case "Deflate": return DatasetDeflateCompression.DeserializeDatasetDeflateCompression(element);
-                    case "GZip": return DatasetGZipCompression.DeserializeDatasetGZipCompression(element);
-                    case "Tar": return DatasetTarCompression.DeserializeDatasetTarCompression(element);
-                    case "TarGZip": return DatasetTarGZipCompression.DeserializeDatasetTarGZipCompression(element);
-                    case "ZipDeflate": return DatasetZipDeflateCompression.DeserializeDatasetZipDeflateCompression(element);
-                }
-            }
-            string type = default;
+            object type = default;
+            Optional<object> level = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("level"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    level = property.Value.GetObject();
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetCompression(type, additionalProperties);
+            return new DatasetCompression(type, level.Value, additionalProperties);
         }
 
         internal partial class DatasetCompressionConverter : JsonConverter<DatasetCompression>

@@ -88,7 +88,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
                 {
                     Assert.Equal(System.Net.HttpStatusCode.GatewayTimeout, e.Response.StatusCode);
                     Assert.Equal("GatewayTimeout", e.Body.Error.Code);
-                    Assert.Equal("ServiceError", e.Body.Error.Innererror.Code);
+                    Assert.Equal("GatewayTimeout", e.Body.Error.Innererror.Code);
                 }
                 catch (Exception e)
                 {
@@ -96,6 +96,29 @@ namespace OperationalInsights.Data.Test.ScenarioTests
                 }
             }
         }
+
+        [Fact]
+        public async Task GetPartialError()
+        {
+            using var ctx = MockContext.Start(this.GetType());
+            OperationalInsightsDataClient client = GetClient(ctx);
+            string query = $"set truncationmaxrecords=1; Perf";
+
+            var response = await client.QueryWithHttpMessagesAsync(query, PastHourTimespan);
+
+            Assert.Equal(System.Net.HttpStatusCode.OK, response.Response.StatusCode);
+            Assert.Equal("OK", response.Response.ReasonPhrase);
+            Assert.True(response.Body.Tables.Count > 0, "Table count isn't greater than 0");
+            Assert.False(String.IsNullOrWhiteSpace(response.Body.Tables[0].Name), "Table name was null/empty");
+            Assert.True(response.Body.Tables[0].Columns.Count > 0, "Column count isn't greater than 0");
+            Assert.True(response.Body.Tables[0].Rows.Count > 0, "Row count isn't greater than 0");
+
+            Assert.NotNull(response.Body.Error);
+            Assert.Equal("PartialError", response.Body.Error.Code);
+            Assert.True(response.Body.Error.Details.Count > 0, "Error Details count isn't greater than 0");
+            Assert.StartsWith("Query result set has exceeded the internal record count limit",
+                response.Body.Error.Details[0].InnerError.Message);
+    }
 
         private OperationalInsightsDataClient GetClient(MockContext ctx, string workspaceId = DefaultWorkspaceId, string apiKey = DefaultApiKey)
         {

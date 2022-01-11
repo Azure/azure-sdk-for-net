@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=invalid-project\u0026deploymentName=production\u0026api-version=2021-07-15-preview",
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=invalid-project\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210928.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "238b0aada316157815639f13573875c0",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,7 +17,7 @@
       },
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "c5975590-86af-4ad0-a38a-a6939e1c688c",
+        "apim-request-id": "6bf6a000-3c55-4bf9-aaec-9d0cb934a829",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -26,13 +26,13 @@
           "private"
         ],
         "Content-Type": "application/json",
-        "Date": "Tue, 28 Sep 2021 18:12:20 GMT",
+        "Date": "Sun, 24 Oct 2021 11:11:02 GMT",
         "pragma": "no-cache",
-        "request-id": "c5975590-86af-4ad0-a38a-a6939e1c688c",
+        "request-id": "6bf6a000-3c55-4bf9-aaec-9d0cb934a829",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "205"
+        "x-envoy-upstream-service-time": "155"
       },
       "ResponseBody": [
         "{\n",

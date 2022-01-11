@@ -1189,9 +1189,9 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="count">The requested number of random bytes.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="RandomBytes"/> containing random values from a managed hardware security module (HSM).</returns>
+        /// <returns>A byte array containing random values from a managed hardware security module (HSM).</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
-        public virtual Response<RandomBytes> GetRandomBytes(int count, CancellationToken cancellationToken = default)
+        public virtual Response<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default)
         {
             // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
             Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
@@ -1201,7 +1201,8 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath);
+                Response<RandomBytes> response = _pipeline.SendRequest(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1215,9 +1216,9 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="count">The requested number of random bytes.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="RandomBytes"/> containing random values from a managed hardware security module (HSM).</returns>
+        /// <returns>A byte array containing random values from a managed hardware security module (HSM).</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
-        public virtual async Task<Response<RandomBytes>> GetRandomBytesAsync(int count, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<byte[]>> GetRandomBytesAsync(int count, CancellationToken cancellationToken = default)
         {
             // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
             Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
@@ -1227,7 +1228,8 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath).ConfigureAwait(false);
+                Response<RandomBytes> response = await _pipeline.SendRequestAsync(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1240,7 +1242,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Releases the latest version of a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
-        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
         /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
@@ -1248,18 +1250,18 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/release permission.
         /// </remarks>
         /// <returns>The key release result containing the released key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
-            ReleaseKey(name, null, target, options, cancellationToken);
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKey(name, null, targetAttestationToken, options, cancellationToken);
 
         /// <summary>
         /// Releases a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="version">Optional version of the key to release.</param>
-        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
         /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
@@ -1267,13 +1269,13 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/release permission.
         /// </remarks>
         /// <returns>The key release result containing the released key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string version, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(target, nameof(target));
+            Argument.AssertNotNullOrEmpty(targetAttestationToken, nameof(targetAttestationToken));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute("key", name);
@@ -1281,7 +1283,7 @@ namespace Azure.Security.KeyVault.Keys
             scope.Start();
 
             options ??= new();
-            options.Target = target;
+            options.TargetAttestationToken = targetAttestationToken;
 
             try
             {
@@ -1298,7 +1300,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Releases the latest version of a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
-        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
         /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
@@ -1306,18 +1308,18 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/release permission.
         /// </remarks>
         /// <returns>The key release result containing the released key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
-            ReleaseKeyAsync(name, null, target, options, cancellationToken);
+        public virtual Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKeyAsync(name, null, targetAttestationToken, options, cancellationToken);
 
         /// <summary>
         /// Releases a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="version">Optional version of the key to release.</param>
-        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
         /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
@@ -1325,13 +1327,13 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/release permission.
         /// </remarks>
         /// <returns>The key release result containing the released key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string version, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(target, nameof(target));
+            Argument.AssertNotNullOrEmpty(targetAttestationToken, nameof(targetAttestationToken));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute("key", name);
@@ -1339,7 +1341,7 @@ namespace Azure.Security.KeyVault.Keys
             scope.Start();
 
             options ??= new();
-            options.Target = target;
+            options.TargetAttestationToken = targetAttestationToken;
 
             try
             {
@@ -1355,12 +1357,12 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Get a <see cref="CryptographyClient"/> for the given key.
         /// </summary>
-        /// <param name="name">The name of the key used to perform cryptographic operations.</param>
-        /// <param name="version">Optional version of the key used to perform cryptographic operations.</param>
+        /// <param name="keyName">The name of the key used to perform cryptographic operations.</param>
+        /// <param name="keyVersion">Optional version of the key used to perform cryptographic operations.</param>
         /// <returns>A <see cref="CryptographyClient"/> using the same options and pipeline as this <see cref="KeyClient"/>.</returns>
         /// <remarks>
         /// <para>
-        /// Given a key <paramref name="name"/> and optional <paramref name="version"/>, a new <see cref="CryptographyClient"/> will be created
+        /// Given a key <paramref name="keyName"/> and optional <paramref name="keyVersion"/>, a new <see cref="CryptographyClient"/> will be created
         /// using the same <see cref="VaultUri"/> and options passed to this <see cref="KeyClient"/>, including the <see cref="KeyClientOptions.ServiceVersion"/>,
         /// <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, and other options.
         /// </para>
@@ -1369,16 +1371,17 @@ namespace Azure.Security.KeyVault.Keys
         /// <see cref="JsonWebKey"/> you already have acquired, you can create a <see cref="CryptographyClient"/> directly with any of those alternatives.
         /// </para>
         /// </remarks>
-        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public virtual CryptographyClient GetCryptographyClient(string name, string version = null)
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> is null.</exception>
+        public virtual CryptographyClient GetCryptographyClient(string keyName, string keyVersion = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            Uri keyUri = CreateKeyUri(VaultUri, name, version);
+            Uri keyUri = CreateKeyUri(VaultUri, keyName, keyVersion);
             KeyVaultPipeline pipeline = new(keyUri, _pipeline.ApiVersion, _pipeline.HttpPipeline, _pipeline.Diagnostics);
 
-            return new(keyUri, pipeline);
+            // Allow the CryptographyClient to try to download and cache the key for public key operations.
+            return new(keyUri, pipeline, forceRemote: false);
         }
 
         /// <summary>

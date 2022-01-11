@@ -32,12 +32,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentOperationCanPollFromNewObject()
         {
             var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
-            var modelId = Recording.GenerateId();
 
-            await using var _ = await CreateDisposableBuildModelAsync(modelId);
-
-            var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Blank);
-            var operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, uri);
+            var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceiptJpg);
+            var operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", uri);
             Assert.IsNotNull(operation.GetRawResponse());
 
             var sameOperation = InstrumentOperation(new AnalyzeDocumentOperation(operation.Id, nonInstrumentedClient));
