@@ -13,7 +13,7 @@ namespace Azure.Identity
         public static string ClientId => Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
         public static string ClientSecret => Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
         public static string ClientCertificatePath => Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
-        public static string ClientCertificateSendX5c => Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_SEND_X5C");
+        public static string ClientCertificateEnableSni => Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_ENABLE_SNI");
 
         public static string IdentityEndpoint => Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
         public static string IdentityHeader => Environment.GetEnvironmentVariable("IDENTITY_HEADER");
