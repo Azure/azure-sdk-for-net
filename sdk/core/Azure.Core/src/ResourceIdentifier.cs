@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace Azure.Core
@@ -83,10 +84,6 @@ namespace Azure.Core
                 Init(null, ResourceType.Tenant, string.Empty, false, SpecialType.None);
                 return;
             }
-
-            if (!resourceId.StartsWith(SubscriptionStart, StringComparison.OrdinalIgnoreCase) &&
-                !resourceId.StartsWith(ProviderStart, StringComparison.OrdinalIgnoreCase))
-                throw new FormatException($"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
         }
 
         private ResourceIdentifier(ResourceIdentifier? parent, ResourceType resourceType, string resourceName, bool isProviderResource, SpecialType specialType)
@@ -137,28 +134,37 @@ namespace Azure.Core
             _initialized = true;
         }
 
+        private void Init()
+        {
+            ReadOnlySpan<char> remaining = _stringValue.AsSpan();
+
+            if (!remaining.StartsWith(SubscriptionStart.AsSpan(), StringComparison.OrdinalIgnoreCase) &&
+                !remaining.StartsWith(ProviderStart.AsSpan(), StringComparison.OrdinalIgnoreCase))
+                throw new FormatException($"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
+
+            //trim trailing '/' off the end if it exists
+            remaining = remaining[remaining.Length - 1] == Separator ? remaining.Slice(1, remaining.Length - 2) : remaining.Slice(1);
+
+            ReadOnlySpan<char> nextWord = PopNextWord(ref remaining);
+
+            //we know we at least have 1 ResourceIdentifier in the tree here
+            ResourceIdentifierParts nextParts = GetNextParts(Root, ref remaining, ref nextWord);
+            while (!nextWord.IsEmpty)
+            {
+                //continue to get the next ResourceIdentifier in the tree until we reach the end which will be 'this'
+                ResourceIdentifier newParent = new ResourceIdentifier(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
+                nextParts = GetNextParts(newParent, ref remaining, ref nextWord);
+            }
+
+            //initialize ourselves last
+            Init(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
+        }
+
         private T GetValue<T>(ref T value)
         {
             if (!_initialized)
             {
-                ReadOnlySpan<char> remaining = _stringValue.AsSpan();
-
-                //trim trailing '/' off the end if it exists
-                remaining = remaining[remaining.Length - 1] == Separator ? remaining.Slice(1, remaining.Length - 2) : remaining.Slice(1);
-
-                ReadOnlySpan<char> nextWord = PopNextWord(ref remaining);
-
-                //we know we at least have 1 ResourceIdentifier in the tree here
-                ResourceIdentifierParts nextParts = GetNextParts(Root, ref remaining, ref nextWord);
-                while (!nextWord.IsEmpty)
-                {
-                    //continue to get the next ResourceIdentifier in the tree until we reach the end which will be 'this'
-                    ResourceIdentifier newParent = new ResourceIdentifier(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
-                    nextParts = GetNextParts(newParent, ref remaining, ref nextWord);
-                }
-
-                //initialize ourselves last
-                Init(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
+                Init();
             }
 
             return value;
@@ -181,7 +187,7 @@ namespace Azure.Core
 
             specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
 
-            return JoinWithSeparator(parent.ResourceType.ToString(), resourceTypeName);
+            return parent.ResourceType.AppendChild(resourceTypeName.ToString());
         }
 
         private static ResourceIdentifierParts GetNextParts(ResourceIdentifier parent, ref ReadOnlySpan<char> remaining, ref ReadOnlySpan<char> nextWord)
@@ -201,7 +207,7 @@ namespace Azure.Core
 
                 nextWord = secondWord;
                 SpecialType specialType = firstWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-                var resourceType = JoinWithSeparator(parent.ResourceType.ToString(), firstWord);
+                var resourceType =parent.ResourceType.AppendChild(firstWord.ToString());
                 return new ResourceIdentifierParts(parent, new ResourceType(resourceType), string.Empty, false, specialType);
             }
 
@@ -225,7 +231,7 @@ namespace Azure.Core
                 {
                     nextWord = PopNextWord(ref remaining);
                     SpecialType specialType = thirdWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-                    return new ResourceIdentifierParts(parent, JoinWithSeparator(secondWord, thirdWord), fourthWord.ToString(), true, specialType);
+                    return new ResourceIdentifierParts(parent, new ResourceType(secondWord.ToString(), thirdWord.ToString()), fourthWord.ToString(), true, specialType);
                 }
             }
             else
@@ -472,7 +478,7 @@ namespace Azure.Core
         {
             ValidateProviderResourceParameters(providerNamespace, resourceType, resourceName);
             SpecialType specialType = resourceType.Equals(LocationsKey, StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-            return new ResourceIdentifier(this, new ResourceType($"{providerNamespace}/{resourceType}"), resourceName, true, specialType);
+            return new ResourceIdentifier(this, new ResourceType(providerNamespace, resourceType), resourceName, true, specialType);
         }
 
         /// <summary>
@@ -508,22 +514,5 @@ namespace Azure.Core
             if (segment.Contains(Separator))
                 throw new ArgumentOutOfRangeException(parameterName, $"{parameterName} must be a single path segment");
         }
-
-#if NETCOREAPP3_1_OR_GREATER
-        private static string JoinWithSeparator(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
-        {
-            return string.Concat(a, SeparatorString, b);
-        }
-#else
-        private static string JoinWithSeparator(string a, ReadOnlySpan<char> b)
-        {
-            return string.Concat(a, SeparatorString, b.ToString());
-        }
-
-        private static string JoinWithSeparator(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
-        {
-            return string.Concat(a.ToString(), SeparatorString, b.ToString());
-        }
-#endif
     }
 }

@@ -32,5 +32,14 @@ namespace Azure.Core.Perf
             x = id.Parent.Parent.Name;
             return id;
         }
+
+        [Benchmark]
+        public string CreateAppendProviderAndChild()
+        {
+            var id = new ResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg");
+            id = id.AppendProviderResource("Microsoft.Compute", "virtualMachines", "myVm");
+            id = id.AppendChildResource("children", "myChild");
+            return id;
+        }
     }
 }

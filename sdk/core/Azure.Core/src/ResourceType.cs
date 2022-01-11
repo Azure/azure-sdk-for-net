@@ -12,13 +12,18 @@ namespace Azure.Core
     /// <remarks> See https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types for more info. </remarks>
     public readonly struct ResourceType : IEquatable<ResourceType>
     {
-        internal static string Tenant = "Microsoft.Resources/tenants";
-        internal static string Subscription = "Microsoft.Resources/subscriptions";
-        internal static string ResourceGroup = "Microsoft.Resources/resourceGroups";
-        internal static string Provider = "Microsoft.Resources/providers";
+        internal static ResourceType Tenant = new ResourceType(ResourceNamespace, "tenants", "Microsoft.Resources/tenants");
+        internal static ResourceType Subscription = new ResourceType(ResourceNamespace, "subscriptions", "Microsoft.Resources/subscriptions");
+        internal static ResourceType ResourceGroup = new ResourceType(ResourceNamespace, "resourceGroups", "Microsoft.Resources/resourceGroups");
+        internal static ResourceType Provider = new ResourceType(ResourceNamespace, "providers", "Microsoft.Resources/providers");
+        internal const string ResourceNamespace = "Microsoft.Resources";
 
         private readonly string _stringValue;
-        private readonly int _namespaceSeparatorIndex;
+
+        /// <summary>
+        /// The resource type for the root of the resource hierarchy.
+        /// </summary>
+        public static ResourceType Root { get; } = new ResourceType(string.Empty, string.Empty, string.Empty);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
@@ -28,28 +33,49 @@ namespace Azure.Core
         {
             Argument.AssertNotNullOrWhiteSpace(resourceType, nameof(resourceType));
 
-            _namespaceSeparatorIndex = resourceType.IndexOf(ResourceIdentifier.Separator);
-            if (_namespaceSeparatorIndex == -1 || resourceType.Length < 3)
+            int index = resourceType.IndexOf(ResourceIdentifier.Separator);
+            if (index == -1 || resourceType.Length < 3)
                 throw new ArgumentOutOfRangeException(nameof(resourceType));
 
             _stringValue = resourceType;
+            Namespace = resourceType.Substring(0, index);
+            Type = resourceType.Substring(index + 1);
+        }
+
+        internal ResourceType(string providerNamespace, string name)
+        {
+            Namespace = providerNamespace;
+            Type = name;
+            _stringValue = $"{Namespace}/{Type}";
+        }
+
+        private ResourceType(string providerNamespace, string name, string fullName)
+        {
+            Namespace = providerNamespace;
+            Type = name;
+            _stringValue = fullName;
+        }
+
+        internal ResourceType AppendChild(string childType)
+        {
+            return new ResourceType(Namespace, $"{Type}{ResourceIdentifier.Separator}{childType}");
         }
 
         /// <summary>
         /// Gets the last resource type name.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string GetLastType() => _stringValue.Substring(_stringValue.LastIndexOf(ResourceIdentifier.Separator) + 1);
+        public string GetLastType() => Type.Substring(Type.LastIndexOf(ResourceIdentifier.Separator) + 1);
 
         /// <summary>
         /// Gets the resource type Namespace.
         /// </summary>
-        public string Namespace => _stringValue.Substring(0, _namespaceSeparatorIndex);
+        public string Namespace { get; }
 
         /// <summary>
         /// Gets the resource Type.
         /// </summary>
-        public string Type => _stringValue.Substring(_namespaceSeparatorIndex + 1);
+        public string Type { get; }
 
         /// <summary>
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
@@ -98,7 +124,7 @@ namespace Azure.Core
         /// <returns> True if they are equals, otherwise false. </returns>
         public bool Equals(ResourceType other)
         {
-            return string.Equals(_stringValue, other._stringValue, StringComparison.OrdinalIgnoreCase);
+            return _stringValue.Equals(other._stringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
