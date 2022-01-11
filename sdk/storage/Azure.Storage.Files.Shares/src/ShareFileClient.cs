@@ -4100,9 +4100,13 @@ namespace Azure.Storage.Files.Shares
 
                     string fileLastWriteTime = null;
 
-                    if (options?.PreserveFileLastWrittenOn ?? false)
+                    if (options?.FileLastWrittenOn == FileLastWrittenOn.Preserve)
                     {
                         fileLastWriteTime = Constants.File.Preserve;
+                    }
+                    else if (options?.FileLastWrittenOn == FileLastWrittenOn.Now)
+                    {
+                        fileLastWriteTime = Constants.File.FileTimeNow;
                     }
 
                     if (async)
@@ -4193,7 +4197,7 @@ namespace Azure.Storage.Files.Shares
                 sourceRange: sourceRange,
                 conditions: options?.Conditions,
                 sourceAuthentication: options?.SourceAuthentication,
-                fileLastWrittenOn: options?.PreserveFileLastWrittenOn,
+                fileLastWrittenOn: options?.FileLastWrittenOn,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4240,7 +4244,7 @@ namespace Azure.Storage.Files.Shares
                 sourceRange: sourceRange,
                 conditions: options?.Conditions,
                 sourceAuthentication: options?.SourceAuthentication,
-                fileLastWrittenOn: options?.PreserveFileLastWrittenOn,
+                fileLastWrittenOn: options?.FileLastWrittenOn,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4464,8 +4468,8 @@ namespace Azure.Storage.Files.Shares
         /// Optional. Source authentication used to access the source blob.
         /// </param>
         /// <param name="fileLastWrittenOn">
-        /// The last write time of the file.  If not provided, the current FileLastWrittenOn associated with the
-        /// file will be preserved.
+        /// Optional.  Specifies if the file last write time should be set to the current time,
+        /// or the last write time currently associated with the file should be preserved.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -4488,7 +4492,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange sourceRange,
             ShareFileRequestConditions conditions,
             HttpAuthorization sourceAuthentication,
-            bool? fileLastWrittenOn,
+            FileLastWrittenOn? fileLastWrittenOn,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4509,9 +4513,13 @@ namespace Azure.Storage.Files.Shares
 
                     string fileLastWriteTime = null;
 
-                    if (fileLastWrittenOn ?? false)
+                    if (fileLastWrittenOn == FileLastWrittenOn.Preserve)
                     {
                         fileLastWriteTime = Constants.File.Preserve;
+                    }
+                    else if (fileLastWrittenOn == FileLastWrittenOn.Now)
+                    {
+                        fileLastWriteTime = Constants.File.FileTimeNow;
                     }
 
                     if (async)

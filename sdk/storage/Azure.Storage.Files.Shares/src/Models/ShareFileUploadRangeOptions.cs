@@ -32,9 +32,9 @@ namespace Azure.Storage.Files.Shares.Models
         public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
         /// <summary>
-        /// If the current file last write time should be preseved.
-        /// If false, the file last write time will be reset to the current time.
+        /// Optional.  Specifies if the file last write time should be set to the current time,
+        /// or the last write time currently associated with the file should be preserved.
         /// </summary>
-        public bool PreserveFileLastWrittenOn { get; set; }
+        public FileLastWrittenOn? FileLastWrittenOn { get; set; }
     }
 }
