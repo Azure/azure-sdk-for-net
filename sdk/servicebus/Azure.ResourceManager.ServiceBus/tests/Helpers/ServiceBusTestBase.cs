@@ -9,12 +9,13 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
     public class ServiceBusTestBase: ManagementRecordedTestBase<ServiceBusManagementTestEnvironment>
     {
-        public static Location DefaultLocation => Location.EastUS2;
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }

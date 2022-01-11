@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
             string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, Location.WestUS2, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             // 1.CheckIfExist

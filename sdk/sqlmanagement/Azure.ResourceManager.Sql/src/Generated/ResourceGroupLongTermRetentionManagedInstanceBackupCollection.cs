@@ -367,6 +367,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ResourceGroupLongTermRetentionManagedInstanceBackup, ManagedInstanceLongTermRetentionBackupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ResourceGroupLongTermRetentionManagedInstanceBackup, ManagedInstanceLongTermRetentionBackupData> Construct() { }
     }
 }

@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Shared.Tests", "Azure.Messaging.EventHubs.Shared\tests\Azure.Messaging.EventHubs.Shared.Tests.csproj", "{3733A11A-6CA1-4759-8BEA-F64504BFBF59}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.Perf", "Azure.Messaging.EventHubs.Processor\perf\Azure.Messaging.EventHubs.Processor.Perf.csproj", "{E9EF4740-4B32-401C-BE22-70CE11C62629}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{3733A11A-6CA1-4759-8BEA-F64504BFBF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3733A11A-6CA1-4759-8BEA-F64504BFBF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3733A11A-6CA1-4759-8BEA-F64504BFBF59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

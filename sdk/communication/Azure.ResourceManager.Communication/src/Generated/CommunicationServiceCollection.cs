@@ -402,6 +402,6 @@ namespace Azure.ResourceManager.Communication
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CommunicationService, CommunicationServiceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, CommunicationService, CommunicationServiceData> Construct() { }
     }
 }

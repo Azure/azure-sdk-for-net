@@ -341,6 +341,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkVirtualApplianceSku, NetworkVirtualApplianceSkuData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkVirtualApplianceSku, NetworkVirtualApplianceSkuData> Construct() { }
     }
 }

@@ -78,6 +78,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "skus",
     "structs",
     "uints",
     "unformattable",
@@ -95,10 +96,16 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
+    },
+    {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
-        "skus",
         "vmss",
         "unattend",
         "ssdlrs",
@@ -153,13 +160,13 @@
         "Eaptls",
         "Fqdns",
         "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "Ipconfiguration",
         "Mbps",
         "Nics",
         "Owasp",
         "Pfsmm",
         "Snat",
-        "Skus",
         "Sstp",
         "TLSDHEDSS",
         "TLSDHERSA",
@@ -182,12 +189,6 @@
         "setsas",
         "mhsm",
         "mhsmip"
-      ]
-    },
-    {
-      "filename": "**/sdk/webpubsub/**/*.cs",
-      "words": [
-        "skus"
       ]
     },
     {
@@ -243,8 +244,13 @@
         "Ragrs",
         "Ragzrs",
         "Rehydrated",
-        "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagepool/**/*.cs",
+      "words": [
+        "Iscsi"
       ]
     },
     {
@@ -297,7 +303,6 @@
       "filename": "**/sdk/websites/**/*.cs",
       "words": [
         "Ipssl",
-        "Skus",
         "Kube",
         "Metadatas",
         "Unparked",

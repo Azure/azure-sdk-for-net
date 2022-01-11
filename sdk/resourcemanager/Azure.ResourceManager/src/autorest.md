@@ -36,6 +36,8 @@ directive:
   - remove-model: "OperationListResult"
   - remove-model: "OperationStatusResult"
   - remove-model: "locationData"
+  - remove-model: "CheckNameAvailabilityRequest"
+  - remove-model: "CheckNameAvailabilityResponse"
   - from: types.json
     where: $.definitions['Resource']
     transform: >

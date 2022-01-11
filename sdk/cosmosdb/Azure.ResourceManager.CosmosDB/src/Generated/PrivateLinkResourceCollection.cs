@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -264,6 +263,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLinkResource, PrivateLinkResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLinkResource, PrivateLinkResourceData> Construct() { }
     }
 }

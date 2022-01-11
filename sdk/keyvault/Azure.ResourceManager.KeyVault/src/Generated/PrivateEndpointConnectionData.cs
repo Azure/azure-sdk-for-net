@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources.Models;
 

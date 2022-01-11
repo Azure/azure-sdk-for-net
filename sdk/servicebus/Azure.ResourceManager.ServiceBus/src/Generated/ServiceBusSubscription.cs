@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of ServiceBusRules in the ServiceBusSubscription. </summary>
         /// <returns> An object representing collection of ServiceBusRules and their operations over a ServiceBusSubscription. </returns>
-        public ServiceBusRuleCollection GetServiceBusRules()
+        public virtual ServiceBusRuleCollection GetServiceBusRules()
         {
             return new ServiceBusRuleCollection(this);
         }
