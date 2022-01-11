@@ -11,13 +11,13 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.ConfidentialLedger
 {
-    [CodeGenSuppress("ConfidentialLedgerIdentityServiceClient", typeof(Uri), typeof(TokenCredential), typeof(ConfidentialLedgerClientOptions))]
+    [CodeGenSuppress("ConfidentialLedgerIdentityServiceClient", typeof(Uri), typeof(TokenCredential), typeof(ConfidentialLedgerClientsOptions))]
     public partial class ConfidentialLedgerIdentityServiceClient
     {
         /// <summary> Initializes a new instance of ConfidentialLedgerIdentityServiceClient. </summary>
         /// <param name="identityServiceUri"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerIdentityServiceClient(Uri identityServiceUri, ConfidentialLedgerClientOptions options = null)
+        public ConfidentialLedgerIdentityServiceClient(Uri identityServiceUri, ConfidentialLedgerClientsOptions options = null)
         {
             if (identityServiceUri == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.Security.ConfidentialLedger
             {
                 // Do nothing.
             }
-            options ??= new ConfidentialLedgerClientOptions();
+            options ??= new ConfidentialLedgerClientsOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _identityServiceUri = identityServiceUri;

@@ -18,7 +18,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
     public class ConfidentialLedgerClientLiveTests : RecordedTestBase<ConfidentialLedgerEnvironment>
     {
         private TokenCredential Credential;
-        private ConfidentialLedgerClientOptions Options;
+        private ConfidentialLedgerClientsOptions Options;
         private ConfidentialLedgerClient Client;
         private ConfidentialLedgerIdentityServiceClient IdentityClient;
         private string transactionId;
@@ -39,7 +39,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             {
                 return true;
             };
-            Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+            Options = new ConfidentialLedgerClientsOptions { Transport = new HttpClientTransport(httpHandler) };
             if (TestEnvironment.Mode == RecordedTestMode.Playback)
             {
                 Options.OperationPollingInterval = TimeSpan.Zero;

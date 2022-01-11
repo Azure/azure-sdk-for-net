@@ -72,7 +72,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
 
             // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
-            var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+            var options = new ConfidentialLedgerClientsOptions { Transport = new HttpClientTransport(httpHandler) };
 #if SNIPPET
             var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
 #else

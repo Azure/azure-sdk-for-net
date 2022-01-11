@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Security.ConfidentialLedger
 {
     /// <summary> Client options for ConfidentialLedgerClient. </summary>
-    public partial class ConfidentialLedgerClientOptions
+    public partial class ConfidentialLedgerClientsOptions
     {
         /// <summary>
         /// The default polling interval for client methods that return an <see cref="Operation"/> when waitForCompletion is <c>true</c>.

@@ -3,4 +3,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Usage", "AZC0016:Invalid ServiceVersion member name.", Justification = "Generated code: https://github.com/Azure/autorest.csharp/issues/1524", Scope = "type", Target = "~T:Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion")]
+[assembly: SuppressMessage("Usage", "AZC0016:Invalid ServiceVersion member name.", Justification = "Generated code: https://github.com/Azure/autorest.csharp/issues/1524", Scope = "type", Target = "~T:Azure.Security.ConfidentialLedger.ConfidentialLedgerClientsOptions.ServiceVersion")]
