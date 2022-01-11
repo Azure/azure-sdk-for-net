@@ -3,7 +3,7 @@
 The [Azure.Core package][azure_core_package] contains types shared by the latest Azure SDK client libraries. This `Newtonsoft.Json` compatibility library:
 
 - Contains converters dependent upon the [Newtonsoft.Json][newtonsoft_json_package] package.
-- Enables `Newtonsoft.Json` usage for serializing and deserializing model types from the following client libraries:
+- Enables `Newtonsoft.Json` usage for serializing and deserializing model types with the following client libraries:
   - [Azure.DigitalTwins.Core][azure_digital_twins_core_package]
   - [Azure.Search.Documents][azure_search_documents_package]
 
