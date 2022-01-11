@@ -141,10 +141,7 @@ namespace Azure.Core
                 }
             }
 
-            bool Equals(ReadOnlySpan<char> a, string b)
-            {
-                return a.CompareTo(b.AsSpan(), StringComparison.OrdinalIgnoreCase) == 0;
-            }
+            bool Equals(ReadOnlySpan<char> a, string b) => a.CompareTo(b.AsSpan(), StringComparison.OrdinalIgnoreCase) == 0;
 
             ReadOnlySpan<char> firstWord = PopNextWord(ref remaining);
 

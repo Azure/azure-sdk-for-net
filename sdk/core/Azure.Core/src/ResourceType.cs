@@ -18,6 +18,7 @@ namespace Azure.Core
         internal static string Provider = "Microsoft.Resources/providers";
 
         private readonly string _stringValue;
+        private readonly int _namespaceSeparatorIndex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
@@ -27,30 +28,28 @@ namespace Azure.Core
         {
             Argument.AssertNotNullOrWhiteSpace(resourceType, nameof(resourceType));
 
-            int index = resourceType.IndexOf(ResourceIdentifier.Separator);
-            if (index == -1 || resourceType.Length < 3)
+            _namespaceSeparatorIndex = resourceType.IndexOf(ResourceIdentifier.Separator);
+            if (_namespaceSeparatorIndex == -1 || resourceType.Length < 3)
                 throw new ArgumentOutOfRangeException(nameof(resourceType));
 
             _stringValue = resourceType;
-            Namespace = resourceType.Substring(0, index);
-            Type = resourceType.Substring(index + 1);
         }
 
         /// <summary>
         /// Gets the last resource type name.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string GetLastType() => Type.Substring(Type.LastIndexOf(ResourceIdentifier.Separator) + 1);
+        public string GetLastType() => _stringValue.Substring(_stringValue.LastIndexOf(ResourceIdentifier.Separator) + 1);
 
         /// <summary>
         /// Gets the resource type Namespace.
         /// </summary>
-        public string Namespace { get; }
+        public string Namespace => _stringValue.Substring(0, _namespaceSeparatorIndex);
 
         /// <summary>
         /// Gets the resource Type.
         /// </summary>
-        public string Type { get; }
+        public string Type => _stringValue.Substring(_namespaceSeparatorIndex + 1);
 
         /// <summary>
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
