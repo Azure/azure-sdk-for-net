@@ -15,26 +15,25 @@ namespace Azure.Core
     {
         private enum SpecialType
         {
+            None,
             Subscription,
             ResourceGroup,
             Location,
-            Provider
+            Provider,
         }
 
         private readonly ref struct ResourceIdentifierParts
         {
-            public ResourceIdentifierParts(ReadOnlySpan<char> resourceType, ReadOnlySpan<char> resourceName, bool isProviderResource, SpecialType? specialType)
+            public ResourceIdentifierParts(string resourceType, ReadOnlySpan<char> resourceName, SpecialType specialType)
             {
                 ResourceType = resourceType;
                 ResourceName = resourceName;
-                IsProviderResource = isProviderResource;
                 SpecialType = specialType;
             }
 
-            public ReadOnlySpan<char> ResourceType { get; }
+            public string ResourceType { get; }
             public ReadOnlySpan<char> ResourceName { get; }
-            public bool IsProviderResource { get; }
-            public SpecialType? SpecialType { get; }
+            public SpecialType SpecialType { get; }
         }
 
         internal const char Separator = '/';
@@ -48,14 +47,13 @@ namespace Azure.Core
         private const string SubscriptionStart = "/subscriptions/";
         private const string ProviderStart = "/providers/";
 
-        private string? _stringValue;
+        private readonly string _stringValue;
+        private readonly int _parentIndex = -1;
 
         /// <summary>
         /// The root of the resource hierarchy.
         /// </summary>
         public static readonly ResourceIdentifier Root = new(RootStringValue);
-
-        private readonly int _parentIndex = -1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
@@ -66,14 +64,14 @@ namespace Azure.Core
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
             _stringValue = resourceId;
 
-            ReadOnlySpan<char> remaining = resourceId.AsSpan();
-
             if (resourceId == RootStringValue)
             {
                 Name = String.Empty;
                 ResourceType = new ResourceType(ResourceType.Tenant);
                 return;
             }
+
+            ReadOnlySpan<char> remaining = resourceId.AsSpan();
 
             if (!remaining.StartsWith(SubscriptionStart.AsSpan()) && !remaining.StartsWith(ProviderStart.AsSpan()))
                 throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
@@ -82,7 +80,7 @@ namespace Azure.Core
 
             //we know we at least have 1 ResourceIdentifier in the tree here
             ResourceIdentifierParts nextParts;
-            ReadOnlySpan<char> parentResourceType = ResourceType.Tenant.AsSpan();
+            string parentResourceType = ResourceType.Tenant;
             do
             {
                 _parentIndex = resourceId.Length - remaining.Length - 1;
@@ -113,20 +111,19 @@ namespace Azure.Core
             } while (!remaining.IsEmpty);
 
             Name = nextParts.ResourceName.ToString();
-            ResourceType = new ResourceType(nextParts.ResourceType.ToString());
-            IsProviderResource = nextParts.IsProviderResource;
+            ResourceType = new ResourceType(nextParts.ResourceType);
         }
 
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly
-        private static ResourceIdentifierParts GetNextParts(ReadOnlySpan<char> parentResourceType, ref ReadOnlySpan<char> remaining)
+        private static ResourceIdentifierParts GetNextParts(string parentResourceType, ref ReadOnlySpan<char> remaining)
         {
             static ReadOnlySpan<char> PopNextWord(ref ReadOnlySpan<char> remaining, bool onlyIfNotProviders = false)
             {
                 int index = remaining.IndexOf(Separator);
                 if (index < 0)
                 {
-                    ReadOnlySpan<char> result = remaining.Slice(0);
-                    remaining = ReadOnlySpan<char>.Empty;
+                    ReadOnlySpan<char> result = remaining;
+                    remaining = default;
                     return result;
                 }
                 else
@@ -134,14 +131,21 @@ namespace Azure.Core
                     ReadOnlySpan<char> result = remaining.Slice(0, index);
                     if (onlyIfNotProviders && result.SequenceEqual(ProvidersKey.AsSpan()))
                     {
-                        return ReadOnlySpan<char>.Empty;
+                        return default;
                     }
                     remaining = remaining.Slice(index + 1);
                     return result;
                 }
             }
 
-            bool Equals(ReadOnlySpan<char> a, string b) => a.CompareTo(b.AsSpan(), StringComparison.OrdinalIgnoreCase) == 0;
+            string Concat(ReadOnlySpan<char> s, ReadOnlySpan<char> s1)
+            {
+                using ValueStringBuilder builder = new(s.Length + s1.Length + 1);
+                builder.Append(s);
+                builder.Append("/");
+                builder.Append(s1);
+                return builder.ToString();
+            }
 
             ReadOnlySpan<char> firstWord = PopNextWord(ref remaining);
 
@@ -155,11 +159,11 @@ namespace Azure.Core
                     throw new ArgumentOutOfRangeException("resourceId", $"The ResourceIdentifier is missing the key for {firstWord.ToString()}.");
                 }
 
-                return new ResourceIdentifierParts(ResourceType.ResourceGroup.AsSpan(), secondWord, false, SpecialType.ResourceGroup);
+                return new ResourceIdentifierParts(ResourceType.ResourceGroup, secondWord, SpecialType.ResourceGroup);
             }
             // /subscription/subscriptionId
             else if (firstWord.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) &&
-                    Equals(parentResourceType, ResourceType.Tenant))
+                    String.Equals(parentResourceType, ResourceType.Tenant, StringComparison.OrdinalIgnoreCase))
             {
                 ReadOnlySpan<char> subscriptionName = PopNextWord(ref remaining);
 
@@ -168,7 +172,7 @@ namespace Azure.Core
                     throw new ArgumentOutOfRangeException("resourceId", $"The ResourceIdentifier is missing the key for {firstWord.ToString()}.");
                 }
 
-                return new ResourceIdentifierParts(ResourceType.Subscription.AsSpan(), subscriptionName, false, SpecialType.Subscription);
+                return new ResourceIdentifierParts(ResourceType.Subscription, subscriptionName, SpecialType.Subscription);
             }
             // /provider/Provider.Namespace
             // /provider/Provider.Namespace/resourceTypeName/resourceName
@@ -179,27 +183,27 @@ namespace Azure.Core
                 ReadOnlySpan<char> secondWord = PopNextWord(ref remaining, onlyIfNotProviders: true);
                 if (secondWord.IsEmpty)
                 {
-                    if (!Equals(parentResourceType, ResourceType.Subscription) &&
-                        !Equals(parentResourceType, ResourceType.Tenant))
+                    if (!String.Equals(parentResourceType, ResourceType.Subscription, StringComparison.OrdinalIgnoreCase) &&
+                        !String.Equals(parentResourceType, ResourceType.Tenant, StringComparison.OrdinalIgnoreCase))
                     {
                         throw new ArgumentOutOfRangeException("resourceId", $"Provider resource can only come after the root or {SubscriptionsKey}.");
                     }
 
-                    return new ResourceIdentifierParts(ResourceType.Provider.AsSpan(), providerNamespace, true, SpecialType.Provider);
+                    return new ResourceIdentifierParts(ResourceType.Provider, providerNamespace, SpecialType.Provider);
                 }
 
                 ReadOnlySpan<char> resourceName = PopNextWord(ref remaining, onlyIfNotProviders: true);
                 if (!resourceName.IsEmpty)
                 {
-                    SpecialType? specialType = secondWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : null;
-                    return new ResourceIdentifierParts($"{providerNamespace.ToString()}/{secondWord.ToString()}".AsSpan(), resourceName, true, specialType);
+                    SpecialType specialType = secondWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
+                    return new ResourceIdentifierParts(Concat(providerNamespace, secondWord), resourceName, specialType);
                 }
             }
             // /provider/Provider.Namespace/resourceTypeName/resourceName | /location/locationName/
             else if (firstWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 ReadOnlySpan<char> locationName = PopNextWord(ref remaining);
-                return new ResourceIdentifierParts($"{parentResourceType.ToString()}/{firstWord.ToString()}".AsSpan(), locationName, false, SpecialType.Location);
+                return new ResourceIdentifierParts(Concat(parentResourceType.AsSpan(), firstWord), locationName, SpecialType.Location);
             }
             // /subscription/subscriptionId | /resourceTypeName2/resourceName2
             // /resourcegroup/resourcegroupname | /resourceTypeName2/resourceName2
@@ -208,17 +212,12 @@ namespace Azure.Core
             {
                 ReadOnlySpan<char> resourceName2 = PopNextWord(ref remaining, onlyIfNotProviders: true);
 
-                return new ResourceIdentifierParts($"{parentResourceType.ToString()}/{firstWord.ToString()}".AsSpan(), resourceName2, false, null);
+                return new ResourceIdentifierParts(Concat(parentResourceType.AsSpan(), firstWord), resourceName2, SpecialType.None);
             }
 
             throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
         }
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
-
-        /// <summary>
-        /// Cache the string representation of this resource, so traversal only needs to occur once.
-        /// </summary>
-        private string StringValue => _stringValue ??= ToResourceString();
 
         /// <summary>
         /// The resource type of the resource.
@@ -233,7 +232,8 @@ namespace Azure.Core
         /// <summary>
         /// The immediate parent containing this resource.
         /// </summary>
-        public ResourceIdentifier? Parent {
+        public ResourceIdentifier? Parent
+        {
             get
             {
                 if (_parentIndex > 0)
@@ -249,11 +249,6 @@ namespace Azure.Core
                 return Root;
             }
         }
-
-        /// <summary>
-        /// Determines whether this resource is in the same namespace as its parent.
-        /// </summary>
-        internal bool IsProviderResource { get; }
 
         /// <summary>
         /// Gets the subscription id if it exists otherwise null.
@@ -275,35 +270,13 @@ namespace Azure.Core
         /// </summary>
         public string? ResourceGroupName { get; private set; }
 
-        private string ToResourceString()
-        {
-            if (Parent is null)
-                return string.Empty;
-
-            string initial = Parent == Root ? string.Empty : Parent.StringValue;
-
-            StringBuilder builder = new StringBuilder(initial);
-            if (!IsProviderResource)
-            {
-                builder.Append($"/{ResourceType.GetLastType()}");
-                if (!string.IsNullOrWhiteSpace(Name))
-                    builder.Append($"/{Name}");
-            }
-            else
-            {
-                builder.Append($"/providers/{ResourceType}/{Name}");
-            }
-
-            return builder.ToString();
-        }
-
         /// <summary>
         /// Return the string representation of the resource identifier.
         /// </summary>
         /// <returns> The string representation of this resource identifier. </returns>
         public override string ToString()
         {
-            return StringValue;
+            return _stringValue;
         }
 
         /// <summary>
@@ -316,7 +289,7 @@ namespace Azure.Core
             if (other is null)
                 return false;
 
-            return StringValue.Equals(other.StringValue, StringComparison.OrdinalIgnoreCase);
+            return _stringValue.Equals(other._stringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -331,7 +304,7 @@ namespace Azure.Core
             if (other is null)
                 return 1;
 
-            return string.Compare(StringValue, other.StringValue, StringComparison.OrdinalIgnoreCase);
+            return string.Compare(_stringValue, other._stringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
@@ -353,14 +326,14 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return StringComparer.OrdinalIgnoreCase.GetHashCode(StringValue);
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(_stringValue);
         }
 
         /// <summary>
         /// Convert a resource identifier to a string.
         /// </summary>
         /// <param name="id"> The resource identifier. </param>
-        public static implicit operator string?(ResourceIdentifier id) => id?.StringValue;
+        public static implicit operator string?(ResourceIdentifier id) => id?._stringValue;
 
         /// <summary>
         /// Operator overloading for '=='.

@@ -19,6 +19,8 @@ namespace Azure.Core
 
         private readonly string _stringValue;
         private readonly int _namespaceSeparatorIndex;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
         /// </summary>
         /// <param name="resourceType"> The resource type string to convert. </param>

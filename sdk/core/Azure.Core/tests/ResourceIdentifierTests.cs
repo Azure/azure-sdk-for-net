@@ -32,7 +32,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Microsoft.Compute/locations/publishers", id.ResourceType.ToString());
             Assert.AreEqual("128technology", id.Name);
             Assert.IsNull(id.Provider);
-            Assert.AreEqual(false, id.IsProviderResource);
             ValidateLocationBaseResource(id.Parent, LocationInDifferentNamespace, true, "Microsoft.Compute/locations", "db1ab6f0-4769-4b27-930e-01e2ef9c123c");
         }
 
@@ -47,7 +46,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType", id.ResourceType.ToString());
             Assert.AreEqual("myResourceName", id.Name);
             Assert.IsNull(id.Provider);
-            Assert.AreEqual(false, id.IsProviderResource);
             ValidateLocationBaseResource(id.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
         }
 
@@ -62,7 +60,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType/mySingletonResource", id.ResourceType.ToString());
             Assert.AreEqual(string.Empty, id.Name);
             Assert.IsNull(id.Provider);
-            Assert.AreEqual(false, id.IsProviderResource);
 
             var parentId = id.Parent;
             Assert.AreEqual($"{LocationBaseResourceId}/myResourceType/myResourceName", parentId.ToString());
@@ -71,7 +68,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Microsoft.Resources/subscriptions/locations/myResourceType", parentId.ResourceType.ToString());
             Assert.AreEqual("myResourceName", parentId.Name);
             Assert.IsNull(parentId.Provider);
-            Assert.AreEqual(false, parentId.IsProviderResource);
 
             ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
         }
@@ -87,7 +83,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("myProvider/myResourceType", id.ResourceType.ToString());
             Assert.AreEqual("myResourceName", id.Name);
             Assert.IsNull(id.Provider);
-            Assert.AreEqual(true, id.IsProviderResource);
 
             ValidateLocationBaseResource(id.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
         }
@@ -103,7 +98,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("myProvider/myResourceType/myChildResource", id.ResourceType.ToString());
             Assert.AreEqual("myChildResourceName", id.Name);
             Assert.IsNull(id.Provider);
-            Assert.AreEqual(false, id.IsProviderResource);
 
             var parentId = id.Parent;
             Assert.AreEqual($"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName", parentId.ToString());
@@ -112,7 +106,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("myProvider/myResourceType", parentId.ResourceType.ToString());
             Assert.AreEqual("myResourceName", parentId.Name);
             Assert.IsNull(parentId.Provider);
-            Assert.AreEqual(true, parentId.IsProviderResource);
 
             ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
         }
@@ -128,7 +121,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("mySecondNamespace/myChildResource", id.ResourceType.ToString());
             Assert.AreEqual("myChildResourceName", id.Name);
             Assert.IsNull(id.Provider);
-            Assert.AreEqual(true, id.IsProviderResource);
 
             var parentId = id.Parent;
             Assert.AreEqual($"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName", parentId.ToString());
@@ -137,7 +129,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("myProvider/myResourceType", parentId.ResourceType.ToString());
             Assert.AreEqual("myResourceName", parentId.Name);
             Assert.IsNull(parentId.Provider);
-            Assert.AreEqual(true, parentId.IsProviderResource);
 
             ValidateLocationBaseResource(parentId.Parent, LocationBaseResourceId, false, "Microsoft.Resources/subscriptions/locations", "17fecd63-33d8-4e43-ac6f-0aafa111b38d");
         }
@@ -868,7 +859,6 @@ namespace Azure.Core.Tests
         protected void ValidateLocationBaseResource(ResourceIdentifier locationResource, string expectedId, bool expectedChild, string expectedResourcetype, string expectedSubGuid)
         {
             Assert.AreEqual(expectedId, locationResource.ToString());
-            Assert.AreEqual(expectedChild, locationResource.IsProviderResource);
             Assert.AreEqual("westus2", locationResource.Location.ToString());
             Assert.AreEqual("westus2", locationResource.Name);
             Assert.IsNull(locationResource.Provider);
@@ -880,7 +870,6 @@ namespace Azure.Core.Tests
         protected void ValidateSubscriptionResource(ResourceIdentifier subscriptionResource, string subscriptionId)
         {
             Assert.AreEqual($"/subscriptions/{subscriptionId}", subscriptionResource.ToString());
-            Assert.AreEqual(false, subscriptionResource.IsProviderResource);
             Assert.IsNull(subscriptionResource.Location);
             Assert.IsNull(subscriptionResource.Provider);
             Assert.AreEqual(subscriptionId, subscriptionResource.Name);
@@ -892,7 +881,6 @@ namespace Azure.Core.Tests
         protected void ValidateTenantResource(ResourceIdentifier tenantResource)
         {
             Assert.AreEqual("/", tenantResource.ToString());
-            Assert.AreEqual(false, tenantResource.IsProviderResource);
             Assert.IsNull(tenantResource.Location);
             Assert.IsNull(tenantResource.Provider);
             Assert.AreEqual(string.Empty, tenantResource.Name);
