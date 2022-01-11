@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="version"/>, or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10", string fileRangeWriteFromUrl = "update")
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08", string fileRangeWriteFromUrl = "update")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.version = version ?? throw new ArgumentNullException(nameof(version));
@@ -1504,7 +1504,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, IDictionary<string, string> metadata, CopyFileSmbInfo copyFileSmbInfo)
+        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, IDictionary<string, string> metadata, CopyFileSmbInfo copyFileSmbInfo, FileHttpHeaders fileHttpHeaders)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1559,6 +1559,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
+            if (fileHttpHeaders?.FileContentType != null)
+            {
+                request.Headers.Add("x-ms-content-type", fileHttpHeaders.FileContentType);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1574,16 +1578,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
+        /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, metadata, copyFileSmbInfo);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, metadata, copyFileSmbInfo, fileHttpHeaders);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileRenameHeaders(message.Response);
             switch (message.Response.Status)
@@ -1606,16 +1611,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
+        /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public ResponseWithHeaders<FileRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, metadata, copyFileSmbInfo);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, metadata, copyFileSmbInfo, fileHttpHeaders);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileRenameHeaders(message.Response);
             switch (message.Response.Status)
