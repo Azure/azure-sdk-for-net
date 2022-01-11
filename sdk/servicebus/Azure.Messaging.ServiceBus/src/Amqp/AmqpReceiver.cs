@@ -1367,8 +1367,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override async Task OpenLinkAsync(CancellationToken cancellationToken)
         {
             _ = await _retryPolicy.RunOperation(
-                async (receiveLink, timeout, _) =>
-                    await receiveLink.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false),
+                static async (receiveLink, timeout, token) =>
+                    await receiveLink.GetOrCreateAsync(timeout, token).ConfigureAwait(false),
                 _receiveLink,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
