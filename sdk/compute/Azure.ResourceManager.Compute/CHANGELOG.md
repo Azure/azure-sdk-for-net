@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+- Class `OSFamilyCollection` and `OSVersionCollection` now implement the `IEnumerable<T>` and `IAsyncEnumerable<T>`
+- Class `VirtualMachineExtensionImageCollection` now implements the `IEnumerable<T>`
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
+- Constructor of `OSFamilyCollection`, `OSVersionCollection` no longer accept `location` as their first parameter
+- Constructor of `VirtualMachineExtensionImageCollection` no longer accepts `location` and `publisher` as its first two parameters
+- Method `GetOSFamilies` and `GetOSVersions` in `SubscriptionExtensions` now accept an extra parameter `location`
+- Method `GetVirtualMachineExtensionImages` in `SubscriptionExtensions` now accepts two extra parameters `location` and `publisher`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
 
 ## 1.0.0-beta.4 (2021-12-07)
 
@@ -175,10 +196,11 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.Linq;
+using Azure.Core;
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 
-var location = Location.WestUS;
+var location = AzureLocation.WestUS;
 // Create ResourceGroup
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
@@ -280,7 +302,7 @@ var vmExtension = new VirtualMachineExtension
 
 After upgrade:
 ```C# Snippet:Changelog_CreateVMExtension
-var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",

@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string location, string orderName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string location, string orderName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(orderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string location, string orderName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string location, string orderName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(orderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -281,6 +282,6 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OrderResource, OrderResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, OrderResource, OrderResourceData> Construct() { }
     }
 }

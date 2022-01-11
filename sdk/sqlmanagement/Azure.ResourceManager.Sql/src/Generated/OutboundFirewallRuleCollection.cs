@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
             if (outboundRuleFqdn == null)
             {
                 throw new ArgumentNullException(nameof(outboundRuleFqdn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
             if (outboundRuleFqdn == null)
             {
                 throw new ArgumentNullException(nameof(outboundRuleFqdn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OutboundFirewallRule, OutboundFirewallRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, OutboundFirewallRule, OutboundFirewallRuleData> Construct() { }
     }
 }

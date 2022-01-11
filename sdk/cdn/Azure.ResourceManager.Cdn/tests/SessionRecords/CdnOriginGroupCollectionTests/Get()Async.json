@@ -5442,7 +5442,7 @@
         "properties": {
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
             }
           ]
         }
@@ -5476,7 +5476,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
             }
           ],
           "resourceState": "Creating",
@@ -7386,7 +7386,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
             }
           ],
           "resourceState": "Active",
@@ -7435,7 +7435,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-5995/providers/Microsoft.Cdn/profiles/profile-4961/endpoints/endpoint-9929/origins/testOrigin"
             }
           ],
           "resourceState": "Active",

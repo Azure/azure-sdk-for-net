@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string appSettingKey, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (appSettingKey == null)
             {
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (appSettingKey == null)
             {
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -306,6 +305,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteConfigAppsetting, ApiKeyVaultReferenceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteConfigAppsetting, ApiKeyVaultReferenceData> Construct() { }
     }
 }

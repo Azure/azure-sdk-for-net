@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
@@ -238,14 +237,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +262,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -386,6 +385,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagementGroupPolicyDefinition, PolicyDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagementGroupPolicyDefinition, PolicyDefinitionData> Construct() { }
     }
 }

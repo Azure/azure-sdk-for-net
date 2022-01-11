@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.Exists");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -234,6 +234,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerfarmHybridConnectionNamespaceRelay, HybridConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerfarmHybridConnectionNamespaceRelay, HybridConnectionData> Construct() { }
     }
 }

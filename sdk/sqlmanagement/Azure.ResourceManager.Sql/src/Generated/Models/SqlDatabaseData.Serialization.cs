@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -158,11 +156,11 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<Sku> sku = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -193,7 +191,7 @@ namespace Azure.ResourceManager.Sql
             Optional<DatabaseReadScale> readScale = default;
             Optional<int> highAvailabilityReplicaCount = default;
             Optional<SecondaryType> secondaryType = default;
-            Optional<Models.Sku> currentSku = default;
+            Optional<Sku> currentSku = default;
             Optional<int> autoPauseDelay = default;
             Optional<CurrentBackupStorageRedundancy> currentBackupStorageRedundancy = default;
             Optional<RequestedBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
@@ -212,7 +210,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -486,7 +484,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentSku = Models.Sku.DeserializeSku(property0.Value);
+                            currentSku = Sku.DeserializeSku(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"))

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.2 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
 
 ## 1.0.0-beta.1 (2021-12-01)
 
@@ -94,6 +105,7 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.Core;
 
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";
@@ -102,7 +114,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
-EventHubNamespaceData parameters = new EventHubNamespaceData(Location.WestUS)
+EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
 {
     Sku = new Models.Sku(SkuName.Standard)
     {

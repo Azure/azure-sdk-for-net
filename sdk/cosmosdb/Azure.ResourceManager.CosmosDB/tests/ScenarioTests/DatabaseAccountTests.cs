@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
 
-            bool ifExists = await DatabaseAccountCollection.CheckIfExistsAsync(_databaseAccountName);
+            bool ifExists = await DatabaseAccountCollection.ExistsAsync(_databaseAccountName);
             Assert.AreEqual(true, ifExists);
 
             DatabaseAccount account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 new FailoverPolicy()
                 {
-                    LocationName = Resources.Models.Location.WestUS,
+                    LocationName = AzureLocation.WestUS,
                     FailoverPriority = 0
                 }
             };
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var metrics = await account.GetMetricsAsync(filter).ToEnumerableAsync();
             Assert.IsNotNull(metrics);
 
-            var regionMetrics = await account.GetMetricsDatabaseAccountRegionsAsync(Resources.Models.Location.WestUS, filter).ToEnumerableAsync();
+            var regionMetrics = await account.GetMetricsDatabaseAccountRegionsAsync(AzureLocation.WestUS, filter).ToEnumerableAsync();
             Assert.IsNotNull(regionMetrics);
         }
 

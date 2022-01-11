@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -230,14 +229,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (peConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(peConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +255,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (peConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(peConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -369,6 +368,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateEndpointConnection, PrivateEndpointConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateEndpointConnection, PrivateEndpointConnectionData> Construct() { }
     }
 }

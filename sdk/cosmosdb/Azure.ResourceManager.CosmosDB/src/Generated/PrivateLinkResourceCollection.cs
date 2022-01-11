@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -156,14 +155,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +180,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -264,6 +263,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLinkResource, PrivateLinkResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLinkResource, PrivateLinkResourceData> Construct() { }
     }
 }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string targetGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string targetGroupName, CancellationToken cancellationToken = default)
         {
             if (targetGroupName == null)
             {
                 throw new ArgumentNullException(nameof(targetGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
             if (targetGroupName == null)
             {
                 throw new ArgumentNullException(nameof(targetGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, JobTargetGroup, JobTargetGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, JobTargetGroup, JobTargetGroupData> Construct() { }
     }
 }

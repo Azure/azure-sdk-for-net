@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             if (privateDnsZoneGroupName == null)
             {
                 throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             if (privateDnsZoneGroupName == null)
             {
                 throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateDnsZoneGroup, PrivateDnsZoneGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateDnsZoneGroup, PrivateDnsZoneGroupData> Construct() { }
     }
 }

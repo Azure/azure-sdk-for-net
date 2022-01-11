@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             var collection = await GetAvailabilitySetCollectionAsync();
             var setName = Recording.GenerateAssetName("testAS-");
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Compute.Tests
             });
             var lro = await collection.CreateOrUpdateAsync(setName, input);
             var availabilitySet = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(setName));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(setName + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(setName));
+            Assert.IsFalse(await collection.ExistsAsync(setName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]

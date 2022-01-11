@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string schemaName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string schemaName, CancellationToken cancellationToken = default)
         {
             if (schemaName == null)
             {
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             if (schemaName == null)
             {
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -308,6 +307,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerDatabaseSchema, DatabaseSchemaData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerDatabaseSchema, DatabaseSchemaData> Construct() { }
     }
 }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, HubVirtualNetworkConnection, HubVirtualNetworkConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, HubVirtualNetworkConnection, HubVirtualNetworkConnectionData> Construct() { }
     }
 }

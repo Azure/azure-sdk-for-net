@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string diagnosticCategory, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             if (diagnosticCategory == null)
             {
                 throw new ArgumentNullException(nameof(diagnosticCategory));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             if (diagnosticCategory == null)
             {
                 throw new ArgumentNullException(nameof(diagnosticCategory));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -306,6 +305,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotDiagnostic, DiagnosticCategoryData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotDiagnostic, DiagnosticCategoryData> Construct() { }
     }
 }

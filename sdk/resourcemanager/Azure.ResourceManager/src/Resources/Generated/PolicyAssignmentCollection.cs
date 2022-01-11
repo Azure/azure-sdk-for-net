@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
@@ -244,14 +243,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentName == null)
             {
                 throw new ArgumentNullException(nameof(policyAssignmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -269,14 +268,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentName == null)
             {
                 throw new ArgumentNullException(nameof(policyAssignmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -419,7 +418,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = _policyAssignmentsRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken);
+                        var response = _policyAssignmentsRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -434,7 +433,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = _policyAssignmentsRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken);
+                        var response = _policyAssignmentsRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -576,7 +575,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = await _policyAssignmentsRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _policyAssignmentsRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -591,7 +590,7 @@ namespace Azure.ResourceManager.Resources
                     scope.Start();
                     try
                     {
-                        var response = await _policyAssignmentsRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.Types.Last(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _policyAssignmentsRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -620,6 +619,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PolicyAssignment, PolicyAssignmentData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PolicyAssignment, PolicyAssignmentData> Construct() { }
     }
 }

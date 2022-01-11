@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string tableName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -308,6 +307,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagedInstanceDatabaseSchemaTable, DatabaseTableData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceDatabaseSchemaTable, DatabaseTableData> Construct() { }
     }
 }

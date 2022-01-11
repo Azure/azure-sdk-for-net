@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -230,14 +229,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (hostName == null)
             {
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +255,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (hostName == null)
             {
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -369,6 +368,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DedicatedHost, DedicatedHostData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DedicatedHost, DedicatedHostData> Construct() { }
     }
 }

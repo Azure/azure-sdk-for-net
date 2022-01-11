@@ -4,6 +4,7 @@
 #region Snippet:Manage_ConfigurationStores_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
                 Console.WriteLine(configurationStore.Data.Name);
             }
 
-            if (await configurationStoreCollection.CheckIfExistsAsync("myApp"))
+            if (await configurationStoreCollection.ExistsAsync("myApp"))
             {
                 Console.WriteLine("ConfigurationStore 'myApp' exists.");
             }
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 

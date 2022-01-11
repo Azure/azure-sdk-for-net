@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -156,14 +155,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +180,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -264,6 +263,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLink, PrivateLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLink, PrivateLinkData> Construct() { }
     }
 }

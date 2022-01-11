@@ -13,6 +13,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate if created successfully
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
-            Assert.IsTrue(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
             VerifyNamespaceProperties(eventHubNamespace, true);
 
             //delete namespace
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate if deleted successfully
             eventHubNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
             Assert.IsNull(eventHubNamespace);
-            Assert.IsFalse(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
         [Test]
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 1);
             Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);

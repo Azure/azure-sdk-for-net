@@ -14,7 +14,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Resources management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager -Version 1.0.0-beta.6
+Install-Package Azure.ResourceManager -Version 1.0.0-beta.7
 ```
 
 ### Prerequisites
@@ -39,6 +39,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 
 // Code omitted for brevity
 
@@ -270,7 +271,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;

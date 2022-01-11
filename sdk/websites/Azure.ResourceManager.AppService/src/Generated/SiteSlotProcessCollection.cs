@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string processId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string processId, CancellationToken cancellationToken = default)
         {
             if (processId == null)
             {
                 throw new ArgumentNullException(nameof(processId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string processId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
             if (processId == null)
             {
                 throw new ArgumentNullException(nameof(processId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -306,6 +305,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotProcess, ProcessInfoData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotProcess, ProcessInfoData> Construct() { }
     }
 }

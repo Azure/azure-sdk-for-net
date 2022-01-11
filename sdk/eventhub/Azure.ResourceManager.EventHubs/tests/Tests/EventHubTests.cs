@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate if created successfully
             eventHub = await _eventHubCollection.GetIfExistsAsync(eventhubName);
             Assert.NotNull(eventHub);
-            Assert.IsTrue(await _eventHubCollection.CheckIfExistsAsync(eventhubName));
+            Assert.IsTrue(await _eventHubCollection.ExistsAsync(eventhubName));
 
             //delete eventhub
             await eventHub.DeleteAsync();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate
             eventHub = await _eventHubCollection.GetIfExistsAsync(eventhubName);
             Assert.Null(eventHub);
-            Assert.IsFalse(await _eventHubCollection.CheckIfExistsAsync(eventhubName));
+            Assert.IsFalse(await _eventHubCollection.ExistsAsync(eventhubName));
         }
 
         [Test]
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 0);
         }

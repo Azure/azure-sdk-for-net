@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (localNetworkGatewayName == null)
             {
                 throw new ArgumentNullException(nameof(localNetworkGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (localNetworkGatewayName == null)
             {
                 throw new ArgumentNullException(nameof(localNetworkGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, LocalNetworkGateway, LocalNetworkGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, LocalNetworkGateway, LocalNetworkGatewayData> Construct() { }
     }
 }

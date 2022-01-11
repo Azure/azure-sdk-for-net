@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -230,14 +229,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (runCommandName == null)
             {
                 throw new ArgumentNullException(nameof(runCommandName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +255,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (runCommandName == null)
             {
                 throw new ArgumentNullException(nameof(runCommandName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -371,6 +370,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualMachineScaleSetVirtualMachineRunCommand, VirtualMachineRunCommandData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualMachineScaleSetVirtualMachineRunCommand, VirtualMachineRunCommandData> Construct() { }
     }
 }

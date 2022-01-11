@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string stepName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string stepName, CancellationToken cancellationToken = default)
         {
             if (stepName == null)
             {
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
             if (stepName == null)
             {
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -306,6 +305,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerJobAgentJobVersionStep, JobStepData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerJobAgentJobVersionStep, JobStepData> Construct() { }
     }
 }

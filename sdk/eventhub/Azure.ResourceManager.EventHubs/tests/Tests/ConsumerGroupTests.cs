@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate if created successfully
             consumerGroup = await _consumerGroupCollection.GetIfExistsAsync(consumerGroupName);
             Assert.NotNull(consumerGroup);
-            Assert.IsTrue(await _consumerGroupCollection.CheckIfExistsAsync(consumerGroupName));
+            Assert.IsTrue(await _consumerGroupCollection.ExistsAsync(consumerGroupName));
 
             //delete consumer group
             await consumerGroup.DeleteAsync();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate
             consumerGroup = await _consumerGroupCollection.GetIfExistsAsync(consumerGroupName);
             Assert.Null(consumerGroup);
-            Assert.IsFalse(await _consumerGroupCollection.CheckIfExistsAsync(consumerGroupName));
+            Assert.IsFalse(await _consumerGroupCollection.ExistsAsync(consumerGroupName));
         }
 
         [Test]

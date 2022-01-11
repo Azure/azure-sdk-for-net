@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -279,6 +279,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SitePremierAddon, PremierAddOnData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SitePremierAddon, PremierAddOnData> Construct() { }
     }
 }

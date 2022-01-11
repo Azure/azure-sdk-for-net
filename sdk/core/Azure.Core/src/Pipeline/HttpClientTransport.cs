@@ -593,12 +593,16 @@ namespace Azure.Core.Pipeline
             return httpHandler;
         }
 
-        internal override void DisposeInternal()
+        /// <summary>
+        /// Disposes the underlying <see cref="HttpClient"/>.
+        /// </summary>
+        public void Dispose()
         {
             if (this != Shared)
             {
                 Client.Dispose();
             }
+            GC.SuppressFinalize(this);
         }
 
         private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)

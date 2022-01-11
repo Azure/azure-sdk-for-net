@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string hubName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string hubName, CancellationToken cancellationToken = default)
         {
             if (hubName == null)
             {
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string hubName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string hubName, CancellationToken cancellationToken = default)
         {
             if (hubName == null)
             {
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WebPubSubHub, WebPubSubHubData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, WebPubSubHub, WebPubSubHubData> Construct() { }
     }
 }

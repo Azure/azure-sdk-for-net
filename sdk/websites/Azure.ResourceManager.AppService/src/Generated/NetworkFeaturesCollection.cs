@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string view, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string view, CancellationToken cancellationToken = default)
         {
             if (view == null)
             {
                 throw new ArgumentNullException(nameof(view));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.Exists");
             scope.Start();
             try
             {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string view, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string view, CancellationToken cancellationToken = default)
         {
             if (view == null)
             {
                 throw new ArgumentNullException(nameof(view));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -204,6 +204,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkFeatures, NetworkFeaturesData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkFeatures, NetworkFeaturesData> Construct() { }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
-            bool ifExists = await SqlUserDefinedFunctionCollection.CheckIfExistsAsync(_userDefinedFunctionName);
+            bool ifExists = await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName);
             Assert.True(ifExists);
 
             SqlUserDefinedFunction userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             SqlUserDefinedFunctionCreateUpdateOptions updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(userDefinedFunction.Id, _userDefinedFunctionName, userDefinedFunction.Data.Type,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                Resources.Models.Location.WestUS, userDefinedFunction.Data.Resource, new CreateUpdateOptions());
-            updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+                AzureLocation.WestUS, userDefinedFunction.Data.Resource, new CreateUpdateOptions());
+            updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(AzureLocation.WestUS, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
             {
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<SqlUserDefinedFunction> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
         {
             _userDefinedFunctionName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlUserDefinedFunctionCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(Resources.Models.Location.WestUS,
+            SqlUserDefinedFunctionCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(AzureLocation.WestUS,
                 new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
                 {
                     Body = @"function () {

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -215,14 +214,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string ruleSetName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (ruleSetName == null)
             {
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.Exists");
             scope.Start();
             try
             {
@@ -240,14 +239,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             if (ruleSetName == null)
             {
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -353,6 +352,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AfdRuleSet, AfdRuleSetData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdRuleSet, AfdRuleSetData> Construct() { }
     }
 }

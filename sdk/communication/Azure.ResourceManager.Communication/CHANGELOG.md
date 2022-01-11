@@ -1,7 +1,81 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.1 (2022-01-06)
+
+### Features Added
+
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
+
+### Breaking Changes
+
+Guidance to migrate from previous version of Azure Management SDK
+
+### General New Features
+
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
+    - HTTP pipeline with custom policies
+    - Better error-handling
+    - Support uniform telemetry across all languages
+
+> NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+
+#### Management Client Changes
+
+Example: Create A Communication Service Instance:
+
+Before upgrade:
+```C# 
+using Azure.Identity;
+using Azure.ResourceManager.Communication;
+using Azure.ResourceManager.Communication.Models;
+using System;
+using System.Threading.Tasks;
+
+string subscriptionId = "_SUBSCRIPTION_ID_";
+CommunicationManagementClient communicationServiceClient = new CommunicationManagementClient(subscriptionId, new InteractiveBrowserCredential());
+var resourceGroupName = "myResourceGroupName";
+var resourceName = "myResource";
+var resource = new CommunicationServiceResource { Location = "Global", DataLocation = "UnitedStates" };
+var operation = await communicationServiceClient.CommunicationService.StartCreateOrUpdateAsync(resourceGroupName, resourceName, resource);
+await operation.WaitForCompletionAsync(); 
+```
+
+After upgrade:
+```C#
+using System;
+using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+string rgName = "myRgName";
+Location location = Location.WestUS2;
+ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroup resourceGroup = lro.Value;
+var collection = resourceGroup.GetCommunicationServices();
+string communicationServiceName = "myCommunicationService";
+CommunicationServiceData data = new CommunicationServiceData()
+{
+    Location = "global",
+    DataLocation = "UnitedStates",
+};
+var communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+CommunicationService communicationService = communicationServiceLro.Value;
+```
 
 ## 1.0.0 (2021-03-29)
 This is the first stable release of the management library for Azure Communication Services. 

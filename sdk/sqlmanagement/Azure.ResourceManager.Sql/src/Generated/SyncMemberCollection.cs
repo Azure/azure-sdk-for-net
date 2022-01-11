@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string syncMemberName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string syncMemberName, CancellationToken cancellationToken = default)
         {
             if (syncMemberName == null)
             {
                 throw new ArgumentNullException(nameof(syncMemberName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
             if (syncMemberName == null)
             {
                 throw new ArgumentNullException(nameof(syncMemberName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SyncMember, SyncMemberData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SyncMember, SyncMemberData> Construct() { }
     }
 }

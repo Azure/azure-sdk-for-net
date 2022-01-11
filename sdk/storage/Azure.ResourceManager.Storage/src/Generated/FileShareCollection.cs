@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Storage.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
             try
             {
@@ -264,14 +263,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -383,6 +382,6 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, FileShare, FileShareData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, FileShare, FileShareData> Construct() { }
     }
 }

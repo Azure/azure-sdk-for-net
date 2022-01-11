@@ -12,6 +12,8 @@ using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using Azure.ResourceManager.Network.Models;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Storage.Tests
 {
     public class StorageAccountTests : StorageTestBase
@@ -73,14 +75,14 @@ namespace Azure.ResourceManager.Storage.Tests
             AssertStorageAccountEqual(account1, account2);
             StorageAccount account3 = await storageAccountCollection.GetIfExistsAsync(accountName + "1");
             Assert.IsNull(account3);
-            Assert.IsTrue(await storageAccountCollection.CheckIfExistsAsync(accountName));
-            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName + "1"));
+            Assert.IsTrue(await storageAccountCollection.ExistsAsync(accountName));
+            Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName + "1"));
 
             //delete storage account
             await account1.DeleteAsync();
 
             //validate if deleted successfully
-            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName));
+            Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName));
             StorageAccount account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }
@@ -884,7 +886,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.PremiumLRS), kind: Kind.StorageV2, location: Location.EastUS2);
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.PremiumLRS), kind: Kind.StorageV2, location: AzureLocation.EastUS2);
             parameters.ExtendedLocation = new Models.ExtendedLocation
             {
                 Type = Storage.Models.ExtendedLocationTypes.EdgeZone,
@@ -980,7 +982,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //get available locations
-            IEnumerable<Location> locationList = await account.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locationList = await account.GetAvailableLocationsAsync();
             Assert.NotNull(locationList);
         }
 
