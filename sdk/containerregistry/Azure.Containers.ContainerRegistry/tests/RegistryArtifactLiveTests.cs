@@ -271,7 +271,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync(ArtifactTagOrderBy.LastUpdatedOnDescending);
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync(ArtifactTagOrder.LastUpdatedOnDescending);
 
             // Assert
             await foreach (ArtifactTagProperties tag in tags)
