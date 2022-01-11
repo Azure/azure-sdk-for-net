@@ -381,6 +381,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         IReportsOperations Reports { get; }
 
         /// <summary>
+        /// Gets the IGlobalSchemaOperations.
+        /// </summary>
+        IGlobalSchemaOperations GlobalSchema { get; }
+
+        /// <summary>
         /// Gets the ITenantSettingsOperations.
         /// </summary>
         ITenantSettingsOperations TenantSettings { get; }

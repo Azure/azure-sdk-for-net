@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -23,12 +24,12 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ApiSchemaOperations operations.
+    /// GlobalSchemaOperations operations.
     /// </summary>
-    internal partial class ApiSchemaOperations : IServiceOperations<ApiManagementClient>, IApiSchemaOperations
+    internal partial class GlobalSchemaOperations : IServiceOperations<ApiManagementClient>, IGlobalSchemaOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ApiSchemaOperations class.
+        /// Initializes a new instance of the GlobalSchemaOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ApiSchemaOperations(ApiManagementClient client)
+        internal GlobalSchemaOperations(ApiManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get the schema configuration at the API level.
+        /// Lists a collection of schemas registered with service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -59,23 +60,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API Management
-        /// service instance. Non-current revision has ;rev=n as a suffix where n is
-        /// the revision number.
-        /// </param>
-        /// <param name='filter'>
-        /// |     Field     |     Usage     |     Supported operators     |
-        /// Supported functions
-        /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
-        /// contentType | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-        /// startswith, endswith |&lt;/br&gt;
-        /// </param>
-        /// <param name='top'>
-        /// Number of records to return.
-        /// </param>
-        /// <param name='skip'>
-        /// Number of records to skip.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -98,7 +84,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SchemaContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string filter = default(string), int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GlobalSchemaContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<GlobalSchemaContract> odataQuery = default(ODataQuery<GlobalSchemaContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -123,39 +109,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (apiId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
-            }
-            if (apiId != null)
-            {
-                if (apiId.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
-                }
-                if (apiId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
-                }
-            }
-            if (top != null)
-            {
-                if (top < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
-                }
-            }
-            if (skip != null)
-            {
-                if (skip < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
-                }
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -171,34 +124,26 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiId", apiId);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByApi", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByService", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter))
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (Client.ApiVersion != null)
             {
@@ -292,7 +237,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SchemaContract>>();
+            var _result = new AzureOperationResponse<IPage<GlobalSchemaContract>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -305,7 +250,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SchemaContract>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<GlobalSchemaContract>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -325,7 +270,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Gets the entity state (Etag) version of the schema specified by its
+        /// Gets the entity state (Etag) version of the Schema specified by its
         /// identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -333,11 +278,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API Management
-        /// service instance. Non-current revision has ;rev=n as a suffix where n is
-        /// the revision number.
         /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management service
@@ -361,7 +301,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<ApiSchemaGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<GlobalSchemaGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -384,25 +324,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (!System.Text.RegularExpressions.Regex.IsMatch(serviceName, "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
-                }
-            }
-            if (apiId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
-            }
-            if (apiId != null)
-            {
-                if (apiId.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
-                }
-                if (apiId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (schemaId == null)
@@ -437,17 +358,15 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("schemaId", schemaId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntityTag", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{schemaId}", System.Uri.EscapeDataString(schemaId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -543,7 +462,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<ApiSchemaGetEntityTagHeaders>();
+            var _result = new AzureOperationHeaderResponse<GlobalSchemaGetEntityTagHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -552,7 +471,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiSchemaGetEntityTagHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GlobalSchemaGetEntityTagHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -571,18 +490,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Get the schema configuration at the API level.
+        /// Gets the details of the Schema specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API Management
-        /// service instance. Non-current revision has ;rev=n as a suffix where n is
-        /// the revision number.
         /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management service
@@ -609,7 +523,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SchemaContract,ApiSchemaGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GlobalSchemaContract,GlobalSchemaGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -632,25 +546,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (!System.Text.RegularExpressions.Regex.IsMatch(serviceName, "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
-                }
-            }
-            if (apiId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
-            }
-            if (apiId != null)
-            {
-                if (apiId.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
-                }
-                if (apiId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (schemaId == null)
@@ -685,17 +580,15 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("schemaId", schemaId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{schemaId}", System.Uri.EscapeDataString(schemaId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -791,7 +684,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SchemaContract,ApiSchemaGetHeaders>();
+            var _result = new AzureOperationResponse<GlobalSchemaContract,GlobalSchemaGetHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -804,7 +697,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SchemaContract>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GlobalSchemaContract>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -818,7 +711,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiSchemaGetHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GlobalSchemaGetHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -837,7 +730,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates schema configuration for the API.
+        /// Creates new or updates existing specified Schema of the API Management
+        /// service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -845,17 +739,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API Management
-        /// service instance. Non-current revision has ;rev=n as a suffix where n is
-        /// the revision number.
-        /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
         /// <param name='parameters'>
-        /// The schema contents to apply.
+        /// Create or update parameters.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. Not required when creating an entity, but required when
@@ -867,26 +756,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SchemaContract,ApiSchemaCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GlobalSchemaContract,GlobalSchemaCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, GlobalSchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SchemaContract,ApiSchemaCreateOrUpdateHeaders> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<GlobalSchemaContract,GlobalSchemaCreateOrUpdateHeaders> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, schemaId, parameters, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes the schema configuration at the Api.
+        /// Deletes specific Schema.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API Management
-        /// service instance. Non-current revision has ;rev=n as a suffix where n is
-        /// the revision number.
         /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management service
@@ -896,9 +780,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// ETag of the Entity. ETag should match the current entity state from the
         /// header response of the GET request or it should be * for unconditional
         /// update.
-        /// </param>
-        /// <param name='force'>
-        /// If true removes all references to the schema before deleting it.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -918,7 +799,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, string ifMatch, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -941,25 +822,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (!System.Text.RegularExpressions.Regex.IsMatch(serviceName, "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
-                }
-            }
-            if (apiId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
-            }
-            if (apiId != null)
-            {
-                if (apiId.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
-                }
-                if (apiId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (schemaId == null)
@@ -998,26 +860,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("schemaId", schemaId);
-                tracingParameters.Add("force", force);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{schemaId}", System.Uri.EscapeDataString(schemaId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (force != null)
-            {
-                _queryParameters.Add(string.Format("force={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(force, Client.SerializationSettings).Trim('"'))));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -1133,7 +988,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates schema configuration for the API.
+        /// Creates new or updates existing specified Schema of the API Management
+        /// service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1141,17 +997,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API Management
-        /// service instance. Non-current revision has ;rev=n as a suffix where n is
-        /// the revision number.
-        /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
         /// <param name='parameters'>
-        /// The schema contents to apply.
+        /// Create or update parameters.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. Not required when creating an entity, but required when
@@ -1178,7 +1029,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SchemaContract,ApiSchemaCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GlobalSchemaContract,GlobalSchemaCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, GlobalSchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1201,25 +1052,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (!System.Text.RegularExpressions.Regex.IsMatch(serviceName, "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
-                }
-            }
-            if (apiId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
-            }
-            if (apiId != null)
-            {
-                if (apiId.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
-                }
-                if (apiId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (schemaId == null)
@@ -1262,7 +1094,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("schemaId", schemaId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("ifMatch", ifMatch);
@@ -1271,10 +1102,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{schemaId}", System.Uri.EscapeDataString(schemaId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -1384,7 +1214,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SchemaContract,ApiSchemaCreateOrUpdateHeaders>();
+            var _result = new AzureOperationResponse<GlobalSchemaContract,GlobalSchemaCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1397,7 +1227,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SchemaContract>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GlobalSchemaContract>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1415,7 +1245,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SchemaContract>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GlobalSchemaContract>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1429,7 +1259,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiSchemaCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GlobalSchemaCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -1448,7 +1278,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Get the schema configuration at the API level.
+        /// Lists a collection of schemas registered with service instance.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1474,7 +1304,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SchemaContract>>> ListByApiNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GlobalSchemaContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1489,7 +1319,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByApiNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByServiceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -1583,7 +1413,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SchemaContract>>();
+            var _result = new AzureOperationResponse<IPage<GlobalSchemaContract>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1596,7 +1426,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SchemaContract>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<GlobalSchemaContract>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

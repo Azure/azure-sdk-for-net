@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Schema Contract details.
+    /// API Schema Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SchemaContract : Resource
@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="value">Json escaped string defining the document
         /// representing the Schema. Used for schemas other than
         /// Swagger/OpenAPI.</param>
-        /// <param name="definitions">Types definitions. Used for OpenAPI v2
-        /// (Swagger) schemas only, null otherwise.</param>
-        /// <param name="components">Types definitions. Used for OpenAPI v3
-        /// schemas only, null otherwise.</param>
+        /// <param name="definitions">Types definitions. Used for
+        /// Swagger/OpenAPI v1 schemas only, null otherwise.</param>
+        /// <param name="components">Types definitions. Used for
+        /// Swagger/OpenAPI v2/v3 schemas only, null otherwise.</param>
         public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), string value = default(string), object definitions = default(object), object components = default(object))
             : base(id, name, type)
         {
@@ -93,15 +93,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets or sets types definitions. Used for OpenAPI v2 (Swagger)
-        /// schemas only, null otherwise.
+        /// Gets or sets types definitions. Used for Swagger/OpenAPI v1 schemas
+        /// only, null otherwise.
         /// </summary>
         [JsonProperty(PropertyName = "properties.document.definitions")]
         public object Definitions { get; set; }
 
         /// <summary>
-        /// Gets or sets types definitions. Used for OpenAPI v3 schemas only,
-        /// null otherwise.
+        /// Gets or sets types definitions. Used for Swagger/OpenAPI v2/v3
+        /// schemas only, null otherwise.
         /// </summary>
         [JsonProperty(PropertyName = "properties.document.components")]
         public object Components { get; set; }

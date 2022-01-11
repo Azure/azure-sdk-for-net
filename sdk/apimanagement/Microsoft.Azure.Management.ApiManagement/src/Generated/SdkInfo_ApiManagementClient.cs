@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 new Tuple<string, string, string>("ApiManagement", "GatewayApi", "2021-08-01"),
                 new Tuple<string, string, string>("ApiManagement", "GatewayCertificateAuthority", "2021-08-01"),
                 new Tuple<string, string, string>("ApiManagement", "GatewayHostnameConfiguration", "2021-08-01"),
+                new Tuple<string, string, string>("ApiManagement", "GlobalSchema", "2021-08-01"),
                 new Tuple<string, string, string>("ApiManagement", "Group", "2021-08-01"),
                 new Tuple<string, string, string>("ApiManagement", "GroupUser", "2021-08-01"),
                 new Tuple<string, string, string>("ApiManagement", "IdentityProvider", "2021-08-01"),

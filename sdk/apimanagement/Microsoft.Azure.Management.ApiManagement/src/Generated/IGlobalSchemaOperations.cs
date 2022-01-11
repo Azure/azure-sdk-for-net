@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,12 +20,12 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ApiSchemaOperations operations.
+    /// GlobalSchemaOperations operations.
     /// </summary>
-    public partial interface IApiSchemaOperations
+    public partial interface IGlobalSchemaOperations
     {
         /// <summary>
-        /// Get the schema configuration at the API level.
+        /// Lists a collection of schemas registered with service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -32,23 +33,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
-        /// <param name='filter'>
-        /// |     Field     |     Usage     |     Supported operators     |
-        /// Supported functions
-        /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
-        /// contentType | filter | ge, le, eq, ne, gt, lt | substringof,
-        /// contains, startswith, endswith |&lt;/br&gt;
-        /// </param>
-        /// <param name='top'>
-        /// Number of records to return.
-        /// </param>
-        /// <param name='skip'>
-        /// Number of records to skip.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,9 +51,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SchemaContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string filter = default(string), int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GlobalSchemaContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<GlobalSchemaContract> odataQuery = default(ODataQuery<GlobalSchemaContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the entity state (Etag) version of the schema specified by its
+        /// Gets the entity state (Etag) version of the Schema specified by its
         /// identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -76,11 +62,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management
         /// service instance.
@@ -97,20 +78,15 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ApiSchemaGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<GlobalSchemaGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the schema configuration at the API level.
+        /// Gets the details of the Schema specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
         /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management
@@ -131,9 +107,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SchemaContract,ApiSchemaGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GlobalSchemaContract,GlobalSchemaGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates schema configuration for the API.
+        /// Creates new or updates existing specified Schema of the API
+        /// Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -141,17 +118,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
         /// <param name='parameters'>
-        /// The schema contents to apply.
+        /// Create or update parameters.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. Not required when creating an entity, but
@@ -172,20 +144,15 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SchemaContract,ApiSchemaCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GlobalSchemaContract,GlobalSchemaCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, GlobalSchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the schema configuration at the Api.
+        /// Deletes specific Schema.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
         /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management
@@ -196,9 +163,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the header response of the GET request or it should be * for
         /// unconditional update.
         /// </param>
-        /// <param name='force'>
-        /// If true removes all references to the schema before deleting it.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -211,9 +175,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, string ifMatch, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates schema configuration for the API.
+        /// Creates new or updates existing specified Schema of the API
+        /// Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -221,17 +186,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
         /// <param name='schemaId'>
         /// Schema id identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
         /// <param name='parameters'>
-        /// The schema contents to apply.
+        /// Create or update parameters.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. Not required when creating an entity, but
@@ -252,9 +212,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SchemaContract,ApiSchemaCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GlobalSchemaContract,GlobalSchemaCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string schemaId, GlobalSchemaContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the schema configuration at the API level.
+        /// Lists a collection of schemas registered with service instance.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -274,6 +234,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SchemaContract>>> ListByApiNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GlobalSchemaContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

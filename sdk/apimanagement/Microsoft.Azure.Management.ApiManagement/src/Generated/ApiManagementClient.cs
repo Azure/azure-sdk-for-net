@@ -384,6 +384,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IReportsOperations Reports { get; private set; }
 
         /// <summary>
+        /// Gets the IGlobalSchemaOperations.
+        /// </summary>
+        public virtual IGlobalSchemaOperations GlobalSchema { get; private set; }
+
+        /// <summary>
         /// Gets the ITenantSettingsOperations.
         /// </summary>
         public virtual ITenantSettingsOperations TenantSettings { get; private set; }
@@ -750,6 +755,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             QuotaByPeriodKeys = new QuotaByPeriodKeysOperations(this);
             Region = new RegionOperations(this);
             Reports = new ReportsOperations(this);
+            GlobalSchema = new GlobalSchemaOperations(this);
             TenantSettings = new TenantSettingsOperations(this);
             ApiManagementSkus = new ApiManagementSkusOperations(this);
             Subscription = new SubscriptionOperations(this);
