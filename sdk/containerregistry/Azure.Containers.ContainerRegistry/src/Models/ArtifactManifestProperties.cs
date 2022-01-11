@@ -25,6 +25,9 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanList { get; set;  }
         /// <summary> Whether or not this tag can be read. </summary>
         public bool? CanRead { get; set; }
+        /// <summary> Image size. </summary>
+        [CodeGenMember("Size")]
+        public long? SizeInBytes { get; }
         /// <summary> Quarantine state. </summary>
         internal string QuarantineState { get; }
         /// <summary> Quarantine details. </summary>
