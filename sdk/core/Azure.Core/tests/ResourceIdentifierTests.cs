@@ -750,7 +750,7 @@ namespace Azure.Core.Tests
         [TestCase("/providers")]
         public void InvalidTenantID(string id)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = new ResourceIdentifier(id); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _ = new ResourceIdentifier(id).Name; });
         }
 
         [TestCase("")]
@@ -764,11 +764,11 @@ namespace Azure.Core.Tests
         {
             if (invalidID == String.Empty)
             {
-                Assert.Throws<ArgumentException>(() => { ResourceIdentifier subject = new ResourceIdentifier(invalidID); });
+                Assert.Throws<ArgumentException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
             }
             else
             {
-                Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = new ResourceIdentifier(invalidID); });
+                Assert.Throws<ArgumentOutOfRangeException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
             }
         }
 
@@ -853,7 +853,7 @@ namespace Azure.Core.Tests
         [TestCase("/providers/Company.MyProvider/myResources/myResourceName/providers/incomplete", Description = "Too few parts for tenant resource")]
         public void ThrowsOnInvalidUri(string resourceId)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(new TestDelegate(() => ConvertToResourceId(resourceId)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => _ = new ResourceIdentifier(resourceId).Name);
         }
 
         protected void ValidateLocationBaseResource(ResourceIdentifier locationResource, string expectedId, bool expectedChild, string expectedResourcetype, string expectedSubGuid)
@@ -886,12 +886,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(string.Empty, tenantResource.Name);
             Assert.IsNull(tenantResource.SubscriptionId);
             Assert.AreEqual("Microsoft.Resources/tenants", tenantResource.ResourceType.ToString());
-        }
-
-        public ResourceIdentifier ConvertToResourceId(string resourceId)
-        {
-            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
-            return subject;
         }
 
         [TestCase(TrackedResourceId, TrackedResourceId, true)]

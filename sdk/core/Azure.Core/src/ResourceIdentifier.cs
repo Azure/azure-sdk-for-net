@@ -19,7 +19,7 @@ namespace Azure.Core
             Subscription,
             ResourceGroup,
             Location,
-            Provider,
+            Provider
         }
 
         private readonly ref struct ResourceIdentifierParts
@@ -48,7 +48,13 @@ namespace Azure.Core
         private const string ProviderStart = "/providers/";
 
         private readonly string _stringValue;
-        private readonly int _parentIndex = -1;
+        private int _parentIndex = -1;
+        private ResourceType _resourceType;
+        private string? _name;
+        private string? _subscriptionId;
+        private string? _provider;
+        private AzureLocation? _location;
+        private string? _resourceGroupName;
 
         /// <summary>
         /// The root of the resource hierarchy.
@@ -66,15 +72,26 @@ namespace Azure.Core
 
             if (resourceId == RootStringValue)
             {
-                Name = String.Empty;
-                ResourceType = new ResourceType(ResourceType.Tenant);
+                _name = String.Empty;
+                _resourceType = new ResourceType(ResourceType.Tenant);
                 return;
             }
 
-            ReadOnlySpan<char> remaining = resourceId.AsSpan();
-
-            if (!remaining.StartsWith(SubscriptionStart.AsSpan()) && !remaining.StartsWith(ProviderStart.AsSpan()))
+            if (!_stringValue.StartsWith(SubscriptionStart, StringComparison.OrdinalIgnoreCase) &&
+                !_stringValue.StartsWith(ProviderStart, StringComparison.OrdinalIgnoreCase))
+            {
                 throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
+            }
+        }
+
+        private void Init()
+        {
+            if (_name != null)
+            {
+                return;
+            }
+
+            ReadOnlySpan<char> remaining = _stringValue.AsSpan();
 
             remaining = remaining.Slice(1);
 
@@ -83,7 +100,7 @@ namespace Azure.Core
             string parentResourceType = ResourceType.Tenant;
             do
             {
-                _parentIndex = resourceId.Length - remaining.Length - 1;
+                _parentIndex = _stringValue.Length - remaining.Length - 1;
 
                 //continue to get the next ResourceIdentifier in the tree until we reach the end which will be 'this'
                 nextParts = GetNextParts(parentResourceType, ref remaining);
@@ -92,26 +109,26 @@ namespace Azure.Core
                 switch (nextParts.SpecialType)
                 {
                     case SpecialType.ResourceGroup:
-                        ResourceGroupName = nextParts.ResourceName.ToString();
+                        _resourceGroupName = nextParts.ResourceName.ToString();
                         break;
                     case SpecialType.Subscription:
                         if (!Guid.TryParse(nextParts.ResourceName.ToString(), out _))
-                            throw new ArgumentOutOfRangeException(nameof(resourceId), $"The GUID for subscription is invalid {nextParts.ResourceName.ToString()}.");
-                        SubscriptionId = nextParts.ResourceName.ToString();
+                            throw new ArgumentOutOfRangeException("resourceId", $"The GUID for subscription is invalid {nextParts.ResourceName.ToString()}.");
+                        _subscriptionId = nextParts.ResourceName.ToString();
                         break;
                     case SpecialType.Provider:
-                        Provider = nextParts.ResourceName.ToString();
+                        _provider = nextParts.ResourceName.ToString();
                         break;
                     case SpecialType.Location:
-                        Location = nextParts.ResourceName.ToString();
+                        _location = nextParts.ResourceName.ToString();
                         break;
                 }
 
                 parentResourceType = nextParts.ResourceType;
             } while (!remaining.IsEmpty);
 
-            Name = nextParts.ResourceName.ToString();
-            ResourceType = new ResourceType(nextParts.ResourceType);
+            _name = nextParts.ResourceName.ToString();
+            _resourceType = new ResourceType(nextParts.ResourceType);
         }
 
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly
@@ -222,12 +239,26 @@ namespace Azure.Core
         /// <summary>
         /// The resource type of the resource.
         /// </summary>
-        public ResourceType ResourceType { get; }
+        public ResourceType ResourceType
+        {
+            get
+            {
+                Init();
+                return _resourceType;
+            }
+        }
 
         /// <summary>
         /// The name of the resource.
         /// </summary>
-        public string Name { get; }
+        public string Name
+        {
+            get
+            {
+                Init();
+                return _name!;
+            }
+        }
 
         /// <summary>
         /// The immediate parent containing this resource.
@@ -236,6 +267,7 @@ namespace Azure.Core
         {
             get
             {
+                Init();
                 if (_parentIndex > 0)
                 {
                     return new ResourceIdentifier(_stringValue!.Substring(0, _parentIndex));
@@ -253,22 +285,50 @@ namespace Azure.Core
         /// <summary>
         /// Gets the subscription id if it exists otherwise null.
         /// </summary>
-        public string? SubscriptionId { get; private set; }
+        public string? SubscriptionId
+        {
+            get
+            {
+                Init();
+                return _subscriptionId;
+            }
+        }
 
         /// <summary>
         /// Gets the provider namespace if it exists otherwise null.
         /// </summary>
-        public string? Provider { get; private set; }
+        public string? Provider
+        {
+            get
+            {
+                Init();
+                return _provider;
+            }
+        }
 
         /// <summary>
         /// Gets the location if it exists otherwise null.
         /// </summary>
-        public AzureLocation? Location { get; private set; }
+        public AzureLocation? Location
+        {
+            get
+            {
+                Init();
+                return _location;
+            }
+        }
 
         /// <summary>
         /// The name of the resource group if it exists otherwise null.
         /// </summary>
-        public string? ResourceGroupName { get; private set; }
+        public string? ResourceGroupName
+        {
+            get
+            {
+                Init();
+                return _resourceGroupName;
+            }
+        }
 
         /// <summary>
         /// Return the string representation of the resource identifier.
@@ -416,7 +476,6 @@ namespace Azure.Core
         /// <param name="resourceName"> The name of the resource.</param>
         /// <returns> The combined resource id. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CA1822
         public ResourceIdentifier AppendProviderResource(string providerNamespace, string resourceType, string resourceName)
         {
             ValidateProviderResourceParameters(providerNamespace, resourceType, resourceName);
@@ -436,7 +495,6 @@ namespace Azure.Core
             ValidateChildResourceParameters(childResourceType, childResourceName);
             return new ResourceIdentifier($"{_stringValue}/{childResourceType}/{childResourceName}");
         }
-#pragma warning restore CA1822
 
         private static void ValidateProviderResourceParameters(string providerNamespace, string resourceType, string resourceName)
         {
