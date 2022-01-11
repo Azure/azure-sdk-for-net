@@ -40,15 +40,12 @@ namespace Azure.Core
             public SpecialType SpecialType { get; }
         }
 
-        internal const char Separator = '/';
-        internal const string SeparatorString = "/";
-
+        private const char Separator = '/';
         private const string RootStringValue = "/";
         private const string ProvidersKey = "providers";
         private const string SubscriptionsKey = "subscriptions";
         private const string LocationsKey = "locations";
         private const string ResourceGroupKey = "resourcegroups";
-
         private const string SubscriptionStart = "/subscriptions/";
         private const string ProviderStart = "/providers/";
 
@@ -72,6 +69,13 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
         /// </summary>
         /// <param name="resourceId"> The id string to create the ResourceIdentifier from. </param>
+        /// <remarks>
+        /// For more information on ResourceIdentifier format see the following.
+        /// ResourceGroup level id https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#resourceid
+        /// Subscription level id https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#subscriptionresourceid
+        /// Tenant level id https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#tenantresourceid
+        /// Extension id https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#extensionresourceid
+        /// </remarks>
         public ResourceIdentifier(string resourceId)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
