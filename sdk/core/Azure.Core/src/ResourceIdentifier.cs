@@ -269,8 +269,8 @@ namespace Azure.Core
         /// Compre this resource identifier to the given resource identifier.
         /// </summary>
         /// <param name="other"> The resource identifier to compare to. </param>
-        /// <returns> 0 if the resource identifiers are equivalent, -1 if this resource identifier
-        /// should be ordered before the given resource identifier, 1 if this resource identifier
+        /// <returns> 0 if the resource identifiers are equivalent, less than 0 if this resource identifier
+        /// should be ordered before the given resource identifier, greater than 0 if this resource identifier
         /// should be ordered after the given resource identifier. </returns>
         public int CompareTo(ResourceIdentifier? other)
         {
