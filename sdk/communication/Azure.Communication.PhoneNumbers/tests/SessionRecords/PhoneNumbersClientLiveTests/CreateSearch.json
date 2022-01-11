@@ -1,7 +1,7 @@
 {
     "Entries": [
         {
-            "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2022-01-11-preview",
+            "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2022-01-11-preview2",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -28,13 +28,13 @@
             "StatusCode": 202,
             "ResponseHeaders": {
                 "Access-Control-Expose-Headers": "Location,Operation-Location,operation-id,search-id",
-                "api-supported-versions": "2022-01-11-preview",
+                "api-supported-versions": "2022-01-11-preview2",
                 "Content-Length": "0",
                 "Date": "Tue, 22 Jun 2021 22:03:01 GMT",
-                "Location": "/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview",
+                "Location": "/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview2",
                 "MS-CV": "6AFU\u002B4U1N0qatRJAK9xv6A.0",
                 "operation-id": "search_6eb18b50-5e15-403f-aa89-ed15c0880d37",
-                "Operation-Location": "/phoneNumbers/operations/search_6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview",
+                "Operation-Location": "/phoneNumbers/operations/search_6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview2",
                 "Request-Context": "appId=",
                 "search-id": "6eb18b50-5e15-403f-aa89-ed15c0880d37",
                 "X-Azure-Ref": "0E17SYAAAAAAt/4JZlH2SSrpuvxM/S75gWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
@@ -44,7 +44,7 @@
             "ResponseBody": []
         },
         {
-            "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview",
+            "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview2",
             "RequestMethod": "GET",
             "RequestHeaders": {
                 "Authorization": "Sanitized",
@@ -61,10 +61,10 @@
             "StatusCode": 200,
             "ResponseHeaders": {
                 "Access-Control-Expose-Headers": "Location",
-                "api-supported-versions": "2022-01-11-preview",
+                "api-supported-versions": "2022-01-11-preview2",
                 "Content-Type": "application/json; charset=utf-8",
                 "Date": "Tue, 22 Jun 2021 22:03:03 GMT",
-                "Location": "/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview",
+                "Location": "/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview2",
                 "MS-CV": "Rv6P\u002BllzA062BF4mH0UvVA.0",
                 "Request-Context": "appId=",
                 "Transfer-Encoding": "chunked",
@@ -74,7 +74,7 @@
             },
             "ResponseBody": {
                 "status": "succeeded",
-                "resourceLocation": "/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview",
+                "resourceLocation": "/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview2",
                 "createdDateTime": "2021-06-22T22:03:01.1278213\u002B00:00",
                 "id": "search_6eb18b50-5e15-403f-aa89-ed15c0880d37",
                 "operationType": "search",
@@ -82,7 +82,7 @@
             }
         },
         {
-            "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview",
+            "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/searchResults/6eb18b50-5e15-403f-aa89-ed15c0880d37?api-version=2022-01-11-preview2",
             "RequestMethod": "GET",
             "RequestHeaders": {
                 "Authorization": "Sanitized",
@@ -98,7 +98,7 @@
             "RequestBody": null,
             "StatusCode": 200,
             "ResponseHeaders": {
-                "api-supported-versions": "2022-01-11-preview",
+                "api-supported-versions": "2022-01-11-preview2",
                 "Content-Type": "application/json; charset=utf-8",
                 "Date": "Tue, 22 Jun 2021 22:03:04 GMT",
                 "MS-CV": "TAYujIAyUkCytHMLJTHiFQ.0",

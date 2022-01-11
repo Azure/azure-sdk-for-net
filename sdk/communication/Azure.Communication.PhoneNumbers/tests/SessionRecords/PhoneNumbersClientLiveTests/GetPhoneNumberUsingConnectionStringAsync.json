@@ -1,30 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/Sanitized?api-version=2022-01-11-preview",
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/Sanitized?api-version=2022-01-11-preview2",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-15d4e3e811eff24b9cdd8b6a6c65952e-674128589835d443-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.2-alpha.20211217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "0f61015caa882550acae16fb8e13c703",
+        "traceparent": "00-2f677edbf7822c4c9c385aabe3fa2560-54ec28c2c5e9d04d-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.2-alpha.20220111.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "fdfe7e5c805724746242ca72f49abde4",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 20 Dec 2021 21:00:04 GMT",
+        "x-ms-date": "Tue, 11 Jan 2022 19:02:52 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-01-11-preview",
+        "api-supported-versions": "2021-03-07, 2022-01-11-preview2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Dec 2021 21:00:11 GMT",
-        "MS-CV": "Y/hJD5/PlU668y09sWryaw.0",
+        "Date": "Tue, 11 Jan 2022 19:02:54 GMT",
+        "MS-CV": "bi/ItCwOe0yL6gcORd99Tg.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "01O7AYQAAAAAvZaXhVE6HTbJty0BA00qwTEFYMzExMDAwMTA4MDE3ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Azure-Ref": "0XdTdYQAAAAANYrcpoyWjTIN2N91jMxziTEFYMzExMDAwMTA4MDE3ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "7445ms"
+        "X-Processing-Time": "1500ms"
       },
       "ResponseBody": {
         "id": "Sanitized",
@@ -33,7 +33,7 @@
         "phoneNumberType": "tollFree",
         "capabilities": {
           "calling": "outbound",
-          "sms": "inbound\u002Boutbound"
+          "sms": "outbound"
         },
         "assignmentType": "application",
         "purchaseDate": "2021-06-23T23:38:41.0997634\u002B00:00",
@@ -46,7 +46,8 @@
     }
   ],
   "Variables": {
+    "AZURE_PHONE_NUMBER": "\u002B14255550123",
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "2033045726"
+    "RandomSeed": "532785363"
   }
 }
