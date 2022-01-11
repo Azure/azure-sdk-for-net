@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase("/subscriptions/6b085460-5f00-477e-ba44-1035046e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest", false)]
         [TestCase("", true)]
-        [TestCase(" ", true)]
+        [TestCase(" ", false)]
         [TestCase(null, true)]
         public void CheckUserTrueConstructor(string resourceID, bool invalidParameter)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase("/subscriptions/6b085460-5f00-477e-ba44-1035046e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest", false)]
         [TestCase("", true)]
-        [TestCase(" ", true)]
+        [TestCase(" ", false)]
         [TestCase(null, true)]
         public void CheckUserFalseConstructor(string resourceID, bool invalidParameter)
         {
