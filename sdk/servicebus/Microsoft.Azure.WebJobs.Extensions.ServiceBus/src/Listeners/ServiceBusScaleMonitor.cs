@@ -28,6 +28,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly ILogger<ServiceBusScaleMonitor> _logger;
 
         private DateTime _nextWarningTime;
+        private long lastSequenceNumber;
 
         public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
         {
@@ -62,25 +63,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             try
             {
-                // Peek the first message in the queue without removing it from the queue
-                // PeekAsync remembers the sequence number of the last message, so the second call returns the second message instead of the first one
-                // Use PeekBySequenceNumberAsync with fromSequenceNumber = 0 to always get the first available message
-                do
+                var receivedMessages = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: lastSequenceNumber).ConfigureAwait(false);
+                foreach (var receivedMessage in receivedMessages)
                 {
-                    var receivedMessages = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: 0).ConfigureAwait(false);
-                    if (receivedMessages.Count == 0)
+                    if (MessageWasNotScheduledOrDeferred(receivedMessage))
                     {
+                        activeMessage = receivedMessage;
                         break;
                     }
-                    foreach (var receivedMessage in receivedMessages)
-                    {
-                        if (MessageWasNotScheduledOrDeferred(receivedMessage))
-                        {
-                            activeMessage = receivedMessage;
-                            break;
-                        }
-                    }
-                } while (activeMessage == null);
+
+                    lastSequenceNumber = receivedMessage.SequenceNumber;
+                }
 
                 if (_serviceBusEntityType == ServiceBusEntityType.Queue)
                 {
