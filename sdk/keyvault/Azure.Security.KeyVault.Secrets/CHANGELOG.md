@@ -4,7 +4,7 @@
 
 ### Other Changes
 
-- Use operation helpers for long-running operations.
+- Bug fixes
 
 ## 4.3.0-beta.2 (2021-10-14)
 
