@@ -293,7 +293,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var stopWatch = ValueStopwatch.StartNew();
-                var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                var connection = await ActiveConnection.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var link = await CreateManagementLinkAsync(
@@ -343,7 +343,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var stopWatch = ValueStopwatch.StartNew();
             var receiverEndpoint = new Uri(ServiceEndpoint, entityPath);
 
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            var connection = await ActiveConnection.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             ReceivingAmqpLink link = await CreateReceivingLinkAsync(
@@ -386,7 +386,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var stopWatch = ValueStopwatch.StartNew();
 
-            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             SendingAmqpLink link = await CreateSendingLinkAsync(
