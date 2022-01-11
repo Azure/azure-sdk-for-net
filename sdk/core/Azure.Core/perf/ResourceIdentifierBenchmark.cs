@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using BenchmarkDotNet.Attributes;
 
-namespace Azure.Template.Perf
+namespace Azure.Core.Perf
 {
     [InProcess]
     [MemoryDiagnoser]
