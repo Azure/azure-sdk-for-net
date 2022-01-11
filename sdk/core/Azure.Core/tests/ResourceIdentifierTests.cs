@@ -750,7 +750,7 @@ namespace Azure.Core.Tests
         [TestCase("/providers")]
         public void InvalidTenantID(string id)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _ = new ResourceIdentifier(id).Name; });
+            Assert.Throws<FormatException>(() => { _ = new ResourceIdentifier(id).Name; });
         }
 
         [TestCase("")]
@@ -768,7 +768,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                Assert.Throws<ArgumentOutOfRangeException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
+                Assert.Throws<FormatException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
             }
         }
 
@@ -853,7 +853,7 @@ namespace Azure.Core.Tests
         [TestCase("/providers/Company.MyProvider/myResources/myResourceName/providers/incomplete", Description = "Too few parts for tenant resource")]
         public void ThrowsOnInvalidUri(string resourceId)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => _ = new ResourceIdentifier(resourceId).Name);
+            Assert.Throws<FormatException>(() => _ = new ResourceIdentifier(resourceId).Name);
         }
 
         protected void ValidateLocationBaseResource(ResourceIdentifier locationResource, string expectedId, bool expectedChild, string expectedResourcetype, string expectedSubGuid)

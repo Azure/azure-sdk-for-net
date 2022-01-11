@@ -80,7 +80,7 @@ namespace Azure.Core
             if (!_stringValue.StartsWith(SubscriptionStart, StringComparison.OrdinalIgnoreCase) &&
                 !_stringValue.StartsWith(ProviderStart, StringComparison.OrdinalIgnoreCase))
             {
-                throw new ArgumentOutOfRangeException(nameof(resourceId), $"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
+                throw new FormatException($"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Core
                         break;
                     case SpecialType.Subscription:
                         if (!Guid.TryParse(nextParts.ResourceName.ToString(), out _))
-                            throw new ArgumentOutOfRangeException("resourceId", $"The GUID for subscription is invalid {nextParts.ResourceName.ToString()}.");
+                            throw new FormatException($"The GUID for subscription is invalid {nextParts.ResourceName.ToString()}.");
                         _subscriptionId = nextParts.ResourceName.ToString();
                         break;
                     case SpecialType.Provider:
@@ -131,7 +131,6 @@ namespace Azure.Core
             _resourceType = new ResourceType(nextParts.ResourceType);
         }
 
-#pragma warning disable CA2208 // Instantiate argument exceptions correctly
         private static ResourceIdentifierParts GetNextParts(string parentResourceType, ref ReadOnlySpan<char> remaining)
         {
             static ReadOnlySpan<char> PopNextWord(ref ReadOnlySpan<char> remaining, bool onlyIfNotProviders = false)
@@ -173,7 +172,7 @@ namespace Azure.Core
 
                 if (secondWord.IsEmpty)
                 {
-                    throw new ArgumentOutOfRangeException("resourceId", $"The ResourceIdentifier is missing the key for {firstWord.ToString()}.");
+                    throw new FormatException($"The ResourceIdentifier is missing the key for {firstWord.ToString()}.");
                 }
 
                 return new ResourceIdentifierParts(ResourceType.ResourceGroup, secondWord, SpecialType.ResourceGroup);
@@ -186,7 +185,7 @@ namespace Azure.Core
 
                 if (subscriptionName.IsEmpty)
                 {
-                    throw new ArgumentOutOfRangeException("resourceId", $"The ResourceIdentifier is missing the key for {firstWord.ToString()}.");
+                    throw new FormatException($"The ResourceIdentifier is missing the key for {firstWord.ToString()}.");
                 }
 
                 return new ResourceIdentifierParts(ResourceType.Subscription, subscriptionName, SpecialType.Subscription);
@@ -203,7 +202,7 @@ namespace Azure.Core
                     if (!String.Equals(parentResourceType, ResourceType.Subscription, StringComparison.OrdinalIgnoreCase) &&
                         !String.Equals(parentResourceType, ResourceType.Tenant, StringComparison.OrdinalIgnoreCase))
                     {
-                        throw new ArgumentOutOfRangeException("resourceId", $"Provider resource can only come after the root or {SubscriptionsKey}.");
+                        throw new FormatException($"Provider resource can only come after the root or {SubscriptionsKey}.");
                     }
 
                     return new ResourceIdentifierParts(ResourceType.Provider, providerNamespace, SpecialType.Provider);
@@ -232,9 +231,8 @@ namespace Azure.Core
                 return new ResourceIdentifierParts(Concat(parentResourceType.AsSpan(), firstWord), resourceName2, SpecialType.None);
             }
 
-            throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+            throw new FormatException("Invalid resource id.");
         }
-#pragma warning restore CA2208 // Instantiate argument exceptions correctly
 
         /// <summary>
         /// The resource type of the resource.
