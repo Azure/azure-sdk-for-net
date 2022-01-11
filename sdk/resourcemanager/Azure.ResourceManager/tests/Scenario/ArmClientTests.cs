@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Tests
             options.AddPolicy(tracker, HttpPipelinePosition.PerCall);
             var client = GetArmClient(options);
             var subscription = await client.GetDefaultSubscriptionAsync();
-            _ = await subscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
+            _ = await subscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
             Assert.AreEqual(ResourceGroupVersion.Default.ToString(), tracker.VersionUsed);
         }
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Tests
             var client2 = GetArmClient(options2);
             var subscription1 = await client1.GetDefaultSubscriptionAsync();
             var subscription2 = await client2.GetDefaultSubscriptionAsync();
-            _ = await subscription1.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
-            _ = await subscription2.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS));
+            _ = await subscription1.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
+            _ = await subscription2.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
             Assert.AreEqual(versionOverride, tracker1.VersionUsed);
             Assert.AreEqual(ResourceGroupVersion.Default.ToString(), tracker2.VersionUsed);

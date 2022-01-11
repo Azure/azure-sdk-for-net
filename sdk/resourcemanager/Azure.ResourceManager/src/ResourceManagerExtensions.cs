@@ -88,5 +88,19 @@ namespace Azure.ResourceManager.Core
             response.Headers.TryGetValue("x-ms-correlation-request-id", out correlationId);
             return correlationId;
         }
+
+        internal static ResourceIdentifier GetSubscriptionResourceIdentifier(this ResourceIdentifier id)
+        {
+            if (id.ResourceType == Subscription.ResourceType)
+                return id;
+
+            ResourceIdentifier parent = id.Parent;
+            while (parent != null && parent.ResourceType != Subscription.ResourceType)
+            {
+                parent = parent.Parent;
+            }
+
+            return parent?.ResourceType == Subscription.ResourceType ? parent : null;
+        }
     }
 }
