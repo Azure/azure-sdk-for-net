@@ -55,24 +55,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Compares this <see cref="SystemAssignedIdentity"/> with another instance.
-        /// </summary>
-        /// <param name="other"> <see cref="SystemAssignedIdentity"/> object to compare. </param>
-        /// <returns> -1 for less than, 0 for equals, 1 for greater than. </returns>
-        public int CompareTo(SystemAssignedIdentity other)
-        {
-            if (other == null)
-                return 1;
-
-            int compareResult = 0;
-            if ((compareResult = TenantId.GetValueOrDefault().CompareTo(other.TenantId.GetValueOrDefault())) == 0 &&
-                (compareResult = PrincipalId.GetValueOrDefault().CompareTo(other.PrincipalId.GetValueOrDefault())) == 0)
-                return 0;
-
-            return compareResult;
-        }
-
-        /// <summary>
         /// Compares this <see cref="SystemAssignedIdentity"/> instance with another object and determines if they are equals.
         /// </summary>
         /// <param name="other"> <see cref="SystemAssignedIdentity"/> object to compare. </param>

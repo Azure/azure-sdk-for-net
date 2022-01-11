@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         [RecordedTest]
         public async Task CreateDeleteResourcePool()
         {
-            ResourceGroup _resourceGroup = await CreateResourceGroupAsync();
             string resourcePoolName = Recording.GenerateAssetName("testresourcepool");
             _resourcePoolCollection = _resourceGroup.GetResourcePools();
             var _extendedLocation = new ExtendedLocation()

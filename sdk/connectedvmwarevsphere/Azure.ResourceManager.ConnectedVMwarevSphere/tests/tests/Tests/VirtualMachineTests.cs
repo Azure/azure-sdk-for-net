@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         [RecordedTest]
         public async Task CreateDeleteVirtualMachine()
         {
-            ResourceGroup _resourceGroup = await CreateResourceGroupAsync();
             string vmName = Recording.GenerateAssetName("testvm");
             _virtualMachineCollection = _resourceGroup.GetVirtualMachines();
             var _extendedLocation = new ExtendedLocation()

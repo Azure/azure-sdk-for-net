@@ -7,9 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Models
 {
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.Models
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         [InitializationConstructor]
-        protected TrackedResource(Location location)
+        protected TrackedResource(AzureLocation location)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         [SerializationConstructor]
-        protected TrackedResource(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location) : base(id, name, type)
+        protected TrackedResource(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location) : base(id, name, type)
         {
             Tags = tags;
             Location = location;
@@ -42,6 +40,6 @@ namespace Azure.ResourceManager.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public Location Location { get; set; }
+        public AzureLocation Location { get; set; }
     }
 }

@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         [RecordedTest]
         public async Task CreateDeleteVirtualNetwork()
         {
-            ResourceGroup _resourceGroup = await CreateResourceGroupAsync();
             string vnetName = Recording.GenerateAssetName("testvnet");
             _virtualNetworkCollection = _resourceGroup.GetVirtualNetworks();
             var _extendedLocation = new ExtendedLocation()

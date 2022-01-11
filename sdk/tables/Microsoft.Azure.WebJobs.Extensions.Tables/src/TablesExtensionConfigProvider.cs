@@ -23,15 +23,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     {
         private readonly TablesAccountProvider _accountProvider;
         private readonly INameResolver _nameResolver;
+        private readonly IConverterManager _converterManager;
 
         // Property names on TableAttribute
         private const string RowKeyProperty = nameof(TableAttribute.RowKey);
-        private const string PartitionKeyProperty = nameof(TableAttribute.PartitionKey);
 
-        public TablesExtensionConfigProvider(TablesAccountProvider accountProvider, INameResolver nameResolver)
+        public TablesExtensionConfigProvider(TablesAccountProvider accountProvider, INameResolver nameResolver, IConverterManager converterManager)
         {
             _accountProvider = accountProvider;
             _nameResolver = nameResolver;
+            _converterManager = converterManager;
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -41,27 +42,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 throw new ArgumentNullException(nameof(context));
             }
 
-            // rules for single entity.
-            var original = new TableAttributeBindingProvider(_nameResolver, _accountProvider);
-
-            var builder = new JObjectBuilder(this);
-
             var binding = context.AddBindingRule<TableAttribute>();
 
             binding
-                .AddConverter<JObject, ITableEntity>(JObjectToTableEntityConverterFunc)
-                .AddOpenConverter<object, ITableEntity>(typeof(ObjectToITableEntityConverter<>));
+                .AddConverter<JObject, TableEntity>(CreateTableEntityFromJObject)
+                .AddConverter<TableEntity, JObject>(ConvertEntityToJObject)
+                .AddConverter<ITableEntity, TableEntity>(entity =>
+                {
+                    if (entity is not TableEntity tableEntity)
+                    {
+                        throw new InvalidOperationException($"Expected ITableEntity instance to have TableEntity type but was {entity.GetType()}");
+                    }
+
+                    return tableEntity;
+                })
+                .AddConverter<TableEntity, ITableEntity>(entity => entity)
+                .AddOpenConverter<object, TableEntity>(typeof(PocoToTableEntityConverter<>))
+                .AddOpenConverter<TableEntity, object>(typeof(TableEntityToPocoConverter<>));
 
             binding.WhenIsNull(RowKeyProperty)
                 .SetPostResolveHook(ToParameterDescriptorForCollector)
-                .BindToInput<TableClient>(builder);
+                .BindToInput<TableClient>(CreateTableClient);
 
-            binding.BindToCollector<ITableEntity>(BuildFromTableAttribute);
+            binding.BindToCollector<TableEntity>(CreateTableWriter);
 
-            binding.WhenIsNotNull(PartitionKeyProperty).WhenIsNotNull(RowKeyProperty)
-                .BindToInput<JObject>(builder);
-            binding.BindToInput<JArray>(builder);
-            binding.Bind(original);
+            binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
+            binding.BindToInput<JArray>(CreateJArray);
         }
 
         // Get the storage table from the attribute.
@@ -95,21 +101,64 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return nameResolver.ResolveWholeString(name);
         }
 
-        private IAsyncCollector<ITableEntity> BuildFromTableAttribute(TableAttribute attribute)
+        private IAsyncCollector<TableEntity> CreateTableWriter(TableAttribute attribute)
         {
             var table = GetTable(attribute);
 
-            var writer = new TableEntityWriter<ITableEntity>(table);
-            return writer;
+            return new TableEntityWriter(table, attribute.PartitionKey, attribute.RowKey);
         }
 
-        public ITableEntity JObjectToTableEntityConverterFunc(JObject source, TableAttribute attribute)
+        private async Task<TableClient> CreateTableClient(TableAttribute attribute, CancellationToken cancellationToken)
         {
-            if (source == null)
+            var table = GetTable(attribute);
+            await table.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
+
+            return table;
+        }
+
+        // Used as an alternative to binding to IQueryable.
+        private async Task<JArray> CreateJArray(TableAttribute attribute, CancellationToken cancellation)
+        {
+            var table = GetTable(attribute);
+
+            string filter = attribute.Filter;
+            if (!string.IsNullOrEmpty(attribute.PartitionKey))
             {
-                return null;
+                var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    filter = $"{partitionKeyPredicate} and {filter}";
+                }
+                else
+                {
+                    filter = partitionKeyPredicate;
+                }
             }
-            return CreateTableEntityFromJObject(attribute.PartitionKey, attribute.RowKey, source);
+
+            int? maxPerPage = null;
+            if (attribute.Take > 0)
+            {
+                maxPerPage = attribute.Take;
+            }
+
+            int countRemaining = attribute.Take;
+
+            JArray entityArray = new JArray();
+            var entities = table.QueryAsync<TableEntity>(
+                filter: filter,
+                maxPerPage: maxPerPage,
+                cancellationToken: cancellation).ConfigureAwait(false);
+
+            await foreach (var entity in entities)
+            {
+                countRemaining--;
+                entityArray.Add(ConvertEntityToJObject(entity));
+                if (countRemaining == 0)
+                {
+                    break;
+                }
+            }
+            return entityArray;
         }
 
         private static JObject ConvertEntityToJObject(TableEntity tableEntity)
@@ -117,147 +166,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             JObject jsonObject = new JObject();
             foreach (var entityProperty in tableEntity)
             {
-                JToken value = JToken.FromObject(entityProperty.Value);
+                // V4 compatibility
+                if (string.Compare(entityProperty.Key, "odata.etag", StringComparison.OrdinalIgnoreCase) == 0 ||
+                    string.Compare(entityProperty.Key, "timestamp", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    continue;
+                }
 
-                jsonObject.Add(entityProperty.Key, value);
+                jsonObject.Add(entityProperty.Key, new JValue(entityProperty.Value));
             }
             return jsonObject;
         }
 
-        private static TableEntity CreateTableEntityFromJObject(string partitionKey, string rowKey, JObject entity)
+        private static TableEntity CreateTableEntityFromJObject(JObject entity)
         {
-            // any key values specified on the entity override any values
-            // specified in the binding
-            JProperty keyProperty = entity.Properties().SingleOrDefault(p => string.Compare(p.Name, "partitionKey", StringComparison.OrdinalIgnoreCase) == 0);
-            if (keyProperty != null)
-            {
-                partitionKey = (string)keyProperty.Value;
-                entity.Remove(keyProperty.Name);
-            }
-
-            keyProperty = entity.Properties().SingleOrDefault(p => string.Compare(p.Name, "rowKey", StringComparison.OrdinalIgnoreCase) == 0);
-            if (keyProperty != null)
-            {
-                rowKey = (string)keyProperty.Value;
-                entity.Remove(keyProperty.Name);
-            }
-
-            TableEntity tableEntity = new TableEntity(partitionKey, rowKey);
+            TableEntity tableEntity = new TableEntity();
             foreach (JProperty property in entity.Properties())
             {
-                // TODO: validation?
-                tableEntity[property.Name] = ((JValue)property.Value).Value;
+                var key = property.Name;
+                if (key == nameof(TableEntity.ETag))
+                {
+                    key = PocoTypeBinder.ETagKeyName;
+                }
+
+                if (property.Value is JValue value)
+                {
+                    tableEntity[key] = value.Value;
+                }
+                else
+                {
+                    tableEntity[key] = property.Value.ToString();
+                }
             }
 
             return tableEntity;
-        }
-
-        // Provide some common builder rules.
-        private class JObjectBuilder :
-            IAsyncConverter<TableAttribute, TableClient>,
-            IAsyncConverter<TableAttribute, JObject>,
-            IAsyncConverter<TableAttribute, JArray>
-        {
-            private readonly TablesExtensionConfigProvider _bindingProvider;
-
-            public JObjectBuilder(TablesExtensionConfigProvider bindingProvider)
-            {
-                _bindingProvider = bindingProvider;
-            }
-
-            async Task<TableClient> IAsyncConverter<TableAttribute, TableClient>.ConvertAsync(TableAttribute attribute, CancellationToken cancellation)
-            {
-                var table = _bindingProvider.GetTable(attribute);
-                await table.CreateIfNotExistsAsync(CancellationToken.None).ConfigureAwait(false);
-
-                return table;
-            }
-
-            async Task<JObject> IAsyncConverter<TableAttribute, JObject>.ConvertAsync(TableAttribute attribute, CancellationToken cancellation)
-            {
-                var table = _bindingProvider.GetTable(attribute);
-
-                try
-                {
-                    var result = await table.GetEntityAsync<TableEntity>(
-                        attribute.PartitionKey,
-                        attribute.RowKey,
-                        cancellationToken: CancellationToken.None).ConfigureAwait(false);
-                    return ConvertEntityToJObject(result);
-                }
-                catch (RequestFailedException e) when
-                    (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
-                {
-                    return null;
-                }
-            }
-
-            // Build a JArray.
-            // Used as an alternative to binding to IQueryable.
-            async Task<JArray> IAsyncConverter<TableAttribute, JArray>.ConvertAsync(TableAttribute attribute, CancellationToken cancellation)
-            {
-                var table = _bindingProvider.GetTable(attribute);
-
-                string filter = attribute.Filter;
-                if (!string.IsNullOrEmpty(attribute.PartitionKey))
-                {
-                    var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
-                    if (!string.IsNullOrEmpty(attribute.Filter))
-                    {
-                        filter = $"{partitionKeyPredicate} and {attribute.Filter}";
-                    }
-                    else
-                    {
-                        filter = partitionKeyPredicate;
-                    }
-                }
-
-                int? maxPerPage = null;
-                if (attribute.Take > 0)
-                {
-                    maxPerPage = attribute.Take;
-                }
-
-                int countRemaining = attribute.Take;
-
-                JArray entityArray = new JArray();
-                var entities = table.QueryAsync<TableEntity>(
-                    filter: filter,
-                    maxPerPage: maxPerPage,
-                    cancellationToken: cancellation).ConfigureAwait(false);
-
-                await foreach (var entity in entities)
-                {
-                    countRemaining--;
-                    entityArray.Add(ConvertEntityToJObject(entity));
-                    if (countRemaining == 0)
-                    {
-                        break;
-                    }
-                }
-                return entityArray;
-            }
-        }
-
-        // Convert from T --> ITableEntity
-        private class ObjectToITableEntityConverter<TElement>
-            : IConverter<TElement, ITableEntity>
-        {
-            private static readonly IConverter<TElement, TableEntity> Converter = new PocoToTableEntityConverter<TElement>();
-
-            public ObjectToITableEntityConverter()
-            {
-                // JObject case should have been claimed by another converter.
-                // So we can statically enforce an ITableEntity compatible contract
-                var t = typeof(TElement);
-                TableClientHelpers.VerifyContainsProperty(t, "RowKey");
-                TableClientHelpers.VerifyContainsProperty(t, "PartitionKey");
-            }
-
-            public ITableEntity Convert(TElement item)
-            {
-                return Converter.Convert(item);
-            }
         }
     }
 }

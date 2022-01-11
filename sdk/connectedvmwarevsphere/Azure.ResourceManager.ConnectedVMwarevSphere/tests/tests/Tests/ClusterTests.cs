@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         [RecordedTest]
         public async Task CreateDeleteCluster()
         {
-            ResourceGroup _resourceGroup = await CreateResourceGroupAsync();
             string clusterName = Recording.GenerateAssetName("testcluster");
             _clusterCollection = _resourceGroup.GetVMwareClusters();
             var _extendedLocation = new ExtendedLocation()
@@ -41,6 +40,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
+            _clusterId = cluster1.Id;
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetCluster()
+        {
+            _clusterCollection = _resourceGroup.GetVMwareClusters();
+            // get cluster
+            VMwareCluster cluster1 = await _clusterCollection.GetAsync(_clusterId);
+            Assert.IsNotNull(cluster1);
         }
     }
 }

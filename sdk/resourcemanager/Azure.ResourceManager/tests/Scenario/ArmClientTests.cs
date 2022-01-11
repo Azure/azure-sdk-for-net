@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Tests
             int index = 0;
             foreach (GenericResource operations in genericResourceOperationsList)
             {
-                Assert.AreEqual(ids[index], operations.Id.StringValue);
+                Assert.AreEqual(ids[index], operations.Id.ToString());
                 index++;
             }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Tests
             index = 0;
             foreach (GenericResource operations in genericResourceOperationsList)
             {
-                Assert.AreEqual(ids[index], operations.Id.StringValue);
+                Assert.AreEqual(ids[index], operations.Id.ToString());
                 index++;
             }
         }
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.Tests
         public void GetGenericResourcesOperationsTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/providers/Microsoft.Compute/virtualMachines/myVm";
-            Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.StringValue);
+            Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.ToString());
         }
 
         [RecordedTest]
         public void GetGenericResourceOperationsSingleIDTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
-            Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.StringValue);
+            Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.ToString());
         }
 
         [RecordedTest]

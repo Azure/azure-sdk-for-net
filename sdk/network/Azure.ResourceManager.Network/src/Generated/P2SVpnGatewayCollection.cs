@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, P2SVpnGateway, P2SVpnGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, P2SVpnGateway, P2SVpnGatewayData> Construct() { }
     }
 }

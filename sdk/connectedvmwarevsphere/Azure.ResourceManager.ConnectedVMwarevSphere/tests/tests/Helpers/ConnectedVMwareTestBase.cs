@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
     [ClientTestFixture]
     public class ConnectedVMwareTestBase : ManagementRecordedTestBase<ConnectedVMwareManagementTestEnvironment>
     {
+        public ResourceGroup _resourceGroup;
         public static Location DefaultLocation => Location.EastUS;
         public const string DefaultLocationString = "eastus";
         public const string EXTENDED_LOCATION_TYPE = "CustomLocation";
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
         public const string VcenterId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/service-sdk-test-vcenter";
         public string _resourcePoolId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/azcli-test-resource-pool";
         public string _vmTemplateId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/azcli-test-vm-template";
+        public string _clusterId = null;
 
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
@@ -44,10 +46,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-        }
-
-        public async Task<ResourceGroup> CreateResourceGroupAsync()
-        {
             string resourceGroupName = Recording.GenerateAssetName("testArcVMwareRG-");
             ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
@@ -58,7 +56,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
                         { "test", "env" }
                     }
                 });
-            return operation.Value;
+            _resourceGroup = operation.Value;
+        }
+
+        [TearDown]
+        public async Task DeleteCommonClient()
+        {
+            await _resourceGroup.DeleteAsync();
         }
     }
 }

@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CdnWebApplicationFirewallPolicy, CdnWebApplicationFirewallPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, CdnWebApplicationFirewallPolicy, CdnWebApplicationFirewallPolicyData> Construct() { }
     }
 }

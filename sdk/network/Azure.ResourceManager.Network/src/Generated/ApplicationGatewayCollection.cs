@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ApplicationGateway, ApplicationGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ApplicationGateway, ApplicationGatewayData> Construct() { }
     }
 }

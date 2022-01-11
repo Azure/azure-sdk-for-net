@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Core;
 
@@ -383,6 +382,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, MachineExtension, MachineExtensionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, MachineExtension, MachineExtensionData> Construct() { }
     }
 }

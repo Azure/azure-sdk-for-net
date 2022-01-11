@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         [RecordedTest]
         public async Task CreateDeleteVirtualMachineTemplate()
         {
-            ResourceGroup _resourceGroup = await CreateResourceGroupAsync();
             string vmtemplateName = Recording.GenerateAssetName("testvmtemplate");
             _virtualMachineTemplateCollection = _resourceGroup.GetVirtualMachineTemplates();
             var _extendedLocation = new ExtendedLocation()

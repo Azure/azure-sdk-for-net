@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         [RecordedTest]
         public async Task CreateDeleteHost()
         {
-            ResourceGroup _resourceGroup = await CreateResourceGroupAsync();
             string hostName = Recording.GenerateAssetName("testhost");
             _hostCollection = _resourceGroup.GetVMwareHosts();
             var _extendedLocation = new ExtendedLocation()

@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         [RecordedTest]
         public async Task CreateDeleteDatastore()
         {
-            ResourceGroup _resourceGroup = await CreateResourceGroupAsync();
             string datastoreName = Recording.GenerateAssetName("testdatastore");
             _datastoreCollection = _resourceGroup.GetVMwareDatastores();
             var _extendedLocation = new ExtendedLocation()

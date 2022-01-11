@@ -436,6 +436,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagedInstance, ManagedInstanceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstance, ManagedInstanceData> Construct() { }
     }
 }

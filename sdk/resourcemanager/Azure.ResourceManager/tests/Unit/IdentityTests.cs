@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.Tests
             {
                 if (resourceID is null)
                     Assert.Throws<ArgumentNullException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                else if (resourceID == String.Empty)
+                    Assert.Throws<ArgumentException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
                 else
                     Assert.Throws<ArgumentOutOfRangeException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
             }
@@ -63,6 +65,8 @@ namespace Azure.ResourceManager.Tests
             {
                 if (resourceID is null)
                     Assert.Throws<ArgumentNullException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                else if(resourceID == String.Empty)
+                    Assert.Throws<ArgumentException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
                 else
                     Assert.Throws<ArgumentOutOfRangeException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
             }
