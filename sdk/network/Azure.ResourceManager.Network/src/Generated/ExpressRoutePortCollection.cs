@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ExpressRoutePort, ExpressRoutePortData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRoutePort, ExpressRoutePortData> Construct() { }
     }
 }

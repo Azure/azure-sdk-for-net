@@ -4834,7 +4834,7 @@
         "properties": {
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1660/providers/Microsoft.Cdn/profiles/profile-2912/endpoints/endpoint-4438/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1660/providers/Microsoft.Cdn/profiles/profile-2912/endpoints/endpoint-4438/origins/testOrigin"
             }
           ]
         }
@@ -4868,7 +4868,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1660/providers/Microsoft.Cdn/profiles/profile-2912/endpoints/endpoint-4438/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1660/providers/Microsoft.Cdn/profiles/profile-2912/endpoints/endpoint-4438/origins/testOrigin"
             }
           ],
           "resourceState": "Creating",
@@ -6588,7 +6588,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1660/providers/Microsoft.Cdn/profiles/profile-2912/endpoints/endpoint-4438/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1660/providers/Microsoft.Cdn/profiles/profile-2912/endpoints/endpoint-4438/origins/testOrigin"
             }
           ],
           "resourceState": "Active",

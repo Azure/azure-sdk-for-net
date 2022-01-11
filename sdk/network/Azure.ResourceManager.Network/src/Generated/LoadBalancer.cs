@@ -15,7 +15,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -326,7 +325,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of BackendAddressPools in the LoadBalancer. </summary>
         /// <returns> An object representing collection of BackendAddressPools and their operations over a LoadBalancer. </returns>
-        public BackendAddressPoolCollection GetBackendAddressPools()
+        public virtual BackendAddressPoolCollection GetBackendAddressPools()
         {
             return new BackendAddressPoolCollection(this);
         }
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of FrontendIPConfigurations in the LoadBalancer. </summary>
         /// <returns> An object representing collection of FrontendIPConfigurations and their operations over a LoadBalancer. </returns>
-        public FrontendIPConfigurationCollection GetFrontendIPConfigurations()
+        public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
         {
             return new FrontendIPConfigurationCollection(this);
         }
@@ -346,7 +345,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of InboundNatRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of InboundNatRules and their operations over a LoadBalancer. </returns>
-        public InboundNatRuleCollection GetInboundNatRules()
+        public virtual InboundNatRuleCollection GetInboundNatRules()
         {
             return new InboundNatRuleCollection(this);
         }
@@ -356,7 +355,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of LoadBalancingRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of LoadBalancingRules and their operations over a LoadBalancer. </returns>
-        public LoadBalancingRuleCollection GetLoadBalancingRules()
+        public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
         {
             return new LoadBalancingRuleCollection(this);
         }
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of OutboundRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of OutboundRules and their operations over a LoadBalancer. </returns>
-        public OutboundRuleCollection GetOutboundRules()
+        public virtual OutboundRuleCollection GetOutboundRules()
         {
             return new OutboundRuleCollection(this);
         }
@@ -376,7 +375,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of Probes in the LoadBalancer. </summary>
         /// <returns> An object representing collection of Probes and their operations over a LoadBalancer. </returns>
-        public ProbeCollection GetProbes()
+        public virtual ProbeCollection GetProbes()
         {
             return new ProbeCollection(this);
         }

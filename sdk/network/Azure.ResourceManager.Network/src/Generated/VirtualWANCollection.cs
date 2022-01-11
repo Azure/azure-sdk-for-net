@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualWAN, VirtualWANData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualWAN, VirtualWANData> Construct() { }
     }
 }

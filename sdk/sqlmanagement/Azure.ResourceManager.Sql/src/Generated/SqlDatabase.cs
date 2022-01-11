@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -1776,7 +1775,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
-        public DataMaskingPolicy GetDataMaskingPolicy()
+        public virtual DataMaskingPolicy GetDataMaskingPolicy()
         {
             return new DataMaskingPolicy(this, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
         }
@@ -1786,7 +1785,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of GeoBackupPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of GeoBackupPolicies and their operations over a SqlDatabase. </returns>
-        public GeoBackupPolicyCollection GetGeoBackupPolicies()
+        public virtual GeoBackupPolicyCollection GetGeoBackupPolicies()
         {
             return new GeoBackupPolicyCollection(this);
         }
@@ -1796,7 +1795,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ReplicationLinks in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ReplicationLinks and their operations over a SqlDatabase. </returns>
-        public ReplicationLinkCollection GetReplicationLinks()
+        public virtual ReplicationLinkCollection GetReplicationLinks()
         {
             return new ReplicationLinkCollection(this);
         }
@@ -1806,7 +1805,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ExtendedDatabaseBlobAuditingPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ExtendedDatabaseBlobAuditingPolicies and their operations over a SqlDatabase. </returns>
-        public ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
+        public virtual ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
         {
             return new ExtendedDatabaseBlobAuditingPolicyCollection(this);
         }
@@ -1816,7 +1815,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of DatabaseBlobAuditingPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of DatabaseBlobAuditingPolicies and their operations over a SqlDatabase. </returns>
-        public DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
+        public virtual DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
         {
             return new DatabaseBlobAuditingPolicyCollection(this);
         }
@@ -1826,7 +1825,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDatabaseAdvisors in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ServerDatabaseAdvisors and their operations over a SqlDatabase. </returns>
-        public ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
+        public virtual ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
         {
             return new ServerDatabaseAdvisorCollection(this);
         }
@@ -1836,7 +1835,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
-        public DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
+        public virtual DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
         {
             return new DatabaseAutomaticTuning(this, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
@@ -1846,7 +1845,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDatabaseSchemas in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ServerDatabaseSchemas and their operations over a SqlDatabase. </returns>
-        public ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
+        public virtual ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
         {
             return new ServerDatabaseSchemaCollection(this);
         }
@@ -1856,7 +1855,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of DatabaseSecurityAlertPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of DatabaseSecurityAlertPolicies and their operations over a SqlDatabase. </returns>
-        public DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
+        public virtual DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
         {
             return new DatabaseSecurityAlertPolicyCollection(this);
         }
@@ -1866,7 +1865,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDatabaseVulnerabilityAssessments in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ServerDatabaseVulnerabilityAssessments and their operations over a SqlDatabase. </returns>
-        public ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
+        public virtual ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
         {
             return new ServerDatabaseVulnerabilityAssessmentCollection(this);
         }
@@ -1876,7 +1875,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of DataWarehouseUserActivities in the SqlDatabase. </summary>
         /// <returns> An object representing collection of DataWarehouseUserActivities and their operations over a SqlDatabase. </returns>
-        public DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
+        public virtual DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
         {
             return new DataWarehouseUserActivitiesCollection(this);
         }
@@ -1886,7 +1885,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of LongTermRetentionPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of LongTermRetentionPolicies and their operations over a SqlDatabase. </returns>
-        public LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
+        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
         {
             return new LongTermRetentionPolicyCollection(this);
         }
@@ -1896,7 +1895,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
-        public MaintenanceWindowOptions GetMaintenanceWindowOptions()
+        public virtual MaintenanceWindowOptions GetMaintenanceWindowOptions()
         {
             return new MaintenanceWindowOptions(this, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
         }
@@ -1906,7 +1905,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
-        public MaintenanceWindows GetMaintenanceWindows()
+        public virtual MaintenanceWindows GetMaintenanceWindows()
         {
             return new MaintenanceWindows(this, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
         }
@@ -1916,7 +1915,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RestorePoints in the SqlDatabase. </summary>
         /// <returns> An object representing collection of RestorePoints and their operations over a SqlDatabase. </returns>
-        public RestorePointCollection GetRestorePoints()
+        public virtual RestorePointCollection GetRestorePoints()
         {
             return new RestorePointCollection(this);
         }
@@ -1926,7 +1925,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of SyncGroups in the SqlDatabase. </summary>
         /// <returns> An object representing collection of SyncGroups and their operations over a SqlDatabase. </returns>
-        public SyncGroupCollection GetSyncGroups()
+        public virtual SyncGroupCollection GetSyncGroups()
         {
             return new SyncGroupCollection(this);
         }
@@ -1936,7 +1935,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of WorkloadGroups in the SqlDatabase. </summary>
         /// <returns> An object representing collection of WorkloadGroups and their operations over a SqlDatabase. </returns>
-        public WorkloadGroupCollection GetWorkloadGroups()
+        public virtual WorkloadGroupCollection GetWorkloadGroups()
         {
             return new WorkloadGroupCollection(this);
         }
@@ -1946,7 +1945,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptions in the SqlDatabase. </summary>
         /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptions and their operations over a SqlDatabase. </returns>
-        public LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
+        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
         {
             return new LogicalDatabaseTransparentDataEncryptionCollection(this);
         }
@@ -1956,7 +1955,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of BackupShortTermRetentionPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of BackupShortTermRetentionPolicies and their operations over a SqlDatabase. </returns>
-        public BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
+        public virtual BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
         {
             return new BackupShortTermRetentionPolicyCollection(this);
         }
@@ -1966,7 +1965,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of LedgerDigestUploads in the SqlDatabase. </summary>
         /// <returns> An object representing collection of LedgerDigestUploads and their operations over a SqlDatabase. </returns>
-        public LedgerDigestUploadsCollection GetLedgerDigestUploads()
+        public virtual LedgerDigestUploadsCollection GetLedgerDigestUploads()
         {
             return new LedgerDigestUploadsCollection(this);
         }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Storage.Models;
 
@@ -383,6 +382,6 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, FileShare, FileShareData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, FileShare, FileShareData> Construct() { }
     }
 }

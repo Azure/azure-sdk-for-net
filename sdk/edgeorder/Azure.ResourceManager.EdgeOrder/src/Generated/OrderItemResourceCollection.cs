@@ -440,6 +440,6 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, OrderItemResource, OrderItemResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, OrderItemResource, OrderItemResourceData> Construct() { }
     }
 }

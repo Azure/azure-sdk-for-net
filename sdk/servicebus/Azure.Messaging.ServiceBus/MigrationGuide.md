@@ -26,6 +26,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
     - [Cross-Entity transactions](#cross-entity-transactions)
   - [Plugins](#plugins)
   - [Additional samples](#additional-samples)
+  - [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Migration benefits
 
@@ -446,4 +447,24 @@ To achieve similar functionality with `Azure.Messaging.ServiceBus`, you can exte
 
 More examples can be found at:
 
--   [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples)
+- [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples)
+
+## Frequently asked questions
+
+**Why doesn't `Azure.Messaging.ServiceBus` support batch settlement of messages?**
+
+Batch settlement of messages is not implemented in the `Azure.Messaging.ServiceBus` client library because there is because there is no support for batch operations in Service Bus itself; previous Service Bus packages provided a client-side only implementation similar to:
+
+```C# Snippet:MigrationGuideBatchMessageSettlement
+var tasks = new List<Task>();
+
+foreach (ServiceBusReceivedMessage message in messages)
+{
+    tasks.Add(receiver.CompleteMessageAsync(message));
+}
+
+await Task.WhenAll(tasks);
+```
+
+For `Azure.Messaging.ServiceBus`, we felt that the client-side approach would introduce complexity and confusion around error scenarios due to the potential for partial success.  It also may hide a performance bottleneck, which we would like to avoid.  Since this pattern is fairly straight-forward to implement, we felt it was better applied in the application than hidden within the Azure SDK.
+

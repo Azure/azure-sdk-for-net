@@ -14,24 +14,6 @@ namespace Azure.ResourceManager.Tests
     {
         private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "UserAssignedIdentity");
 
-        [TestCase(0, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa97", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa99", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011eb47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa99")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db46", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa97")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db46", "de29bab1-49e1-4705-819b-4dfdbceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db46", "de29bab1-49e1-4705-819b-4dfddceaaa99")]
-        public void CompareTo(int answer, string clientId1, string principalId1, string clientId2, string principalId2)
-        {
-            UserAssignedIdentity identity1 = new UserAssignedIdentity(new Guid(clientId1), new Guid(principalId1));
-            UserAssignedIdentity identity2 = new UserAssignedIdentity(new Guid(clientId2), new Guid(principalId2));
-
-            Assert.AreEqual(answer, identity1.CompareTo(identity2));
-            Assert.AreEqual(answer * -1, identity2.CompareTo(identity1));
-        }
-
         [TestCase("72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
         public void EqualsMethodTrue(string clientId1, string principalId1, string clientId2, string principalId2)
         {
@@ -56,14 +38,6 @@ namespace Azure.ResourceManager.Tests
             UserAssignedIdentity identity1 = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
             UserAssignedIdentity identity2 = null;
             Assert.IsFalse(identity1.Equals(identity2));
-        }
-
-        [TestCase]
-        public void CompareToMethodOneIdentityNull()
-        {
-            UserAssignedIdentity identity1 = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
-            UserAssignedIdentity identity2 = null;
-            Assert.AreEqual(1, identity1.CompareTo(identity2));
         }
 
         public JsonElement DeserializerHelper(string filename)

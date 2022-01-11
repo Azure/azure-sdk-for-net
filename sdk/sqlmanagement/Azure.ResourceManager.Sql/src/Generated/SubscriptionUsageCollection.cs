@@ -356,6 +356,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SubscriptionUsage, SubscriptionUsageData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SubscriptionUsage, SubscriptionUsageData> Construct() { }
     }
 }

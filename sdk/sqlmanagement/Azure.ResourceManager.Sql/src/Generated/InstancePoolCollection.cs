@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, InstancePool, InstancePoolData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, InstancePool, InstancePoolData> Construct() { }
     }
 }
