@@ -42,7 +42,7 @@ directive:
     where: $.definitions.ZoneUpdate
     transform: >
       $["x-ms-client-name"] = "ZoneUpdateOptions";
-  - from: swagger-document
-      where: $.paths
-      transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}'].['get']
+  # - from: swagger-document
+  #   where: $['paths']['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}']
+  #   transform: delete $['get']
 ```

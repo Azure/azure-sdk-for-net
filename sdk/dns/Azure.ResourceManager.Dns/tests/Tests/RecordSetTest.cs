@@ -86,8 +86,7 @@ namespace Azure.Management.Dns.Tests
             //A
             RecordSetA aResult = await zone.GetRecordSetAs().GetAsync("@");
             RecordSetA aGet = await aResult.GetAsync();
-            Assert.AreEqual(aGet.Data.ARecords.Count, 1);
-            Assert.AreEqual("127.0.0.1", aGet.Data.ARecords[0].Ipv4Address);
+            Assert.AreEqual("127.0.0.1", aGet.Data.ARecord.Ipv4Address);
             //MX
             RecordSetMx mxResult = await zone.GetRecordSetMxes().GetAsync("MX");
             RecordSetMx mxGet = await mxResult.GetAsync();

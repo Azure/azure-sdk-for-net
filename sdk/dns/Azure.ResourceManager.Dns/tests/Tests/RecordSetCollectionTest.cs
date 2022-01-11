@@ -76,10 +76,9 @@ namespace Azure.Management.Dns.Tests
         public async Task Get()
         {
             RecordSetAaaa aaaaResult = await zone.GetRecordSetAaaas().GetAsync("Aaaa");
-            Assert.AreEqual("::1", aaaaResult.Data.AaaaRecords[0].Ipv6Address);
+            Assert.AreEqual("::1", aaaaResult.Data.AaaaRecord.Ipv6Address);
             RecordSetCaa recordSetCaa = await zone.GetRecordSetCaas().GetAsync("CAA1");
-            Assert.AreEqual(recordSetCaa.Data.CaaRecords.Count, 1);
-            Assert.AreEqual(recordSetCaa.Data.CaaRecords[0].Value, "dummydnsrecord1.microsoft.com");
+            Assert.AreEqual(recordSetCaa.Data.CaaRecord.Value, "dummydnsrecord1.microsoft.com");
         }
 
         [TestCase]
@@ -103,7 +102,7 @@ namespace Azure.Management.Dns.Tests
         {
             var list = await zone.GetRecordSetCaas().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(2, list.Count);
-            Assert.AreEqual("dummydnsrecord2.microsoft.com", list[1].Data.CaaRecords[0].Value);
+            Assert.AreEqual("dummydnsrecord2.microsoft.com", list[1].Data.CaaRecord.Value);
         }
         [OneTimeTearDown]
         public void CleanupResourceGroup()

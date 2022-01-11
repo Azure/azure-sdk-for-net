@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class ARecordData : IUtf8JsonSerializable
+    public partial class AaaaRecordSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsDefined(ARecord))
+            if (Optional.IsDefined(AaaaRecord))
             {
-                writer.WritePropertyName("ARecords");
+                writer.WritePropertyName("AAAARecords");
                 writer.WriteStartArray();
-                writer.WriteObjectValue(ARecord);
+                writer.WriteObjectValue(AaaaRecord);
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ARecordData DeserializeARecordData(JsonElement element)
+        internal static AaaaRecordSetData DeserializeAaaaRecordSetData(JsonElement element)
         {
             Optional<string> etag = default;
             ResourceIdentifier id = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<ARecord> aRecord = default;
+            Optional<AaaaRecord> aaaaRecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -145,26 +145,26 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("ARecords"))
+                        if (property0.NameEquals("AAAARecords"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ARecord> array = new List<ARecord>();
+                            List<AaaaRecord> array = new List<AaaaRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ARecord.DeserializeARecord(item));
+                                array.Add(AaaaRecord.DeserializeAaaaRecord(item));
                             }
-                            aRecord = array[0];
+                            aaaaRecord = array[0];
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ARecordData(id, name, type, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource, aRecord);
+            return new AaaaRecordSetData(id, name, type, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource, aaaaRecord);
         }
     }
 }

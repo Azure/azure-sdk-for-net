@@ -12,15 +12,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the RecordSet A data model. </summary>
-    public partial class ARecordData : Resource
+    /// <summary> A class representing the RecordSet CAA data model. </summary>
+    public partial class CaaRecordSetData : Resource
     {
-        /// <summary> Initializes a new instance of ARecordData. </summary>
-        public ARecordData()
+        /// <summary> Initializes a new instance of CaaRecordData. </summary>
+        public CaaRecordSetData()
         {
         }
 
-        /// <summary> Initializes a new instance of ARecordData. </summary>
+        /// <summary> Initializes a new instance of CaaRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="aRecord"> The list of A records in the record set. </param>
-        internal ARecordData(ResourceIdentifier id, string name, ResourceType type, string etag, IDictionary<string, string> metadata, long? tTL, string fqdn, string provisioningState, WritableSubResource targetResource, ARecord aRecord) : base(id, name, type)
+        /// <param name="caaRecord"> The CAA record in the record set. </param>
+        internal CaaRecordSetData(ResourceIdentifier id, string name, ResourceType type, string etag, IDictionary<string, string> metadata, long? tTL, string fqdn, string provisioningState, WritableSubResource targetResource, CaaRecord caaRecord) : base(id, name, type)
         {
             Etag = etag;
             Metadata = metadata;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
-            ARecord = aRecord;
+            CaaRecord = caaRecord;
         }
 
         /// <summary> The etag of the record set. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get; }
         /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
         public WritableSubResource TargetResource { get; set; }
-        /// <summary> The A record in the record set. </summary>
-        public ARecord ARecord { get; set; }
+        /// <summary> The CAA record in the record set. </summary>
+        public CaaRecord CaaRecord { get; set; }
     }
 }
