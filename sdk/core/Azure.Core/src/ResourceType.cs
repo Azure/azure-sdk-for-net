@@ -131,10 +131,5 @@ namespace Azure.Core
         {
             return StringComparer.OrdinalIgnoreCase.GetHashCode(_stringValue);
         }
-
-        internal ResourceType AppendChild(string child)
-        {
-            return new ResourceType($"{_stringValue}/{child}");
-        }
     }
 }

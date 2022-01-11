@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
 
 namespace Azure.Core
@@ -15,11 +14,11 @@ namespace Azure.Core
     {
         private enum SpecialType
         {
+            None,
             Subscription,
             ResourceGroup,
             Location,
             Provider,
-            None
         }
 
         private readonly struct ResourceIdentifierParts
@@ -41,6 +40,7 @@ namespace Azure.Core
         }
 
         internal const char Separator = '/';
+        internal const string SeparatorString = "/";
 
         private const string RootStringValue = "/";
         private const string ProvidersKey = "providers";
@@ -51,7 +51,7 @@ namespace Azure.Core
         private const string SubscriptionStart = "/subscriptions/";
         private const string ProviderStart = "/providers/";
 
-        private bool _initialied;
+        private bool _initialized;
         private string? _stringValue;
         private ResourceType _resourceType;
         private string _name = null!;
@@ -134,12 +134,12 @@ namespace Azure.Core
                 _stringValue = RootStringValue;
             }
 
-            _initialied = true;
+            _initialized = true;
         }
 
         private T GetValue<T>(ref T value)
         {
-            if (!_initialied)
+            if (!_initialized)
             {
                 ReadOnlySpan<char> remaining = _stringValue.AsSpan();
 
@@ -180,7 +180,8 @@ namespace Azure.Core
             }
 
             specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-            return parent.ResourceType.AppendChild(resourceTypeName.ToString());
+
+            return JoinWithSeparator(parent.ResourceType.ToString(), resourceTypeName);
         }
 
         private static ResourceIdentifierParts GetNextParts(ResourceIdentifier parent, ref ReadOnlySpan<char> remaining, ref ReadOnlySpan<char> nextWord)
@@ -200,7 +201,8 @@ namespace Azure.Core
 
                 nextWord = secondWord;
                 SpecialType specialType = firstWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-                return new ResourceIdentifierParts(parent, parent.ResourceType.AppendChild(firstWord.ToString()), string.Empty, false, specialType);
+                var resourceType = JoinWithSeparator(parent.ResourceType.ToString(), firstWord);
+                return new ResourceIdentifierParts(parent, new ResourceType(resourceType), string.Empty, false, specialType);
             }
 
             ReadOnlySpan<char> thirdWord = PopNextWord(ref remaining);
@@ -223,7 +225,7 @@ namespace Azure.Core
                 {
                     nextWord = PopNextWord(ref remaining);
                     SpecialType specialType = thirdWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-                    return new ResourceIdentifierParts(parent, new ResourceType($"{secondWord.ToString()}/{thirdWord.ToString()}"), fourthWord.ToString(), true, specialType);
+                    return new ResourceIdentifierParts(parent, JoinWithSeparator(secondWord, thirdWord), fourthWord.ToString(), true, specialType);
                 }
             }
             else
@@ -313,7 +315,8 @@ namespace Azure.Core
             }
             else
             {
-                builder.Append($"/providers/{ResourceType}/{Name}");
+                builder.Append(ProviderStart)
+                    .Append($"{ResourceType}/{Name}");
             }
 
             return builder.ToString();
@@ -505,5 +508,22 @@ namespace Azure.Core
             if (segment.Contains(Separator))
                 throw new ArgumentOutOfRangeException(parameterName, $"{parameterName} must be a single path segment");
         }
+
+#if NETCOREAPP3_1_OR_GREATER
+        private static string JoinWithSeparator(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
+        {
+            return string.Concat(a, SeparatorString, b);
+        }
+#else
+        private static string JoinWithSeparator(string a, ReadOnlySpan<char> b)
+        {
+            return string.Concat(a, SeparatorString, b.ToString());
+        }
+
+        private static string JoinWithSeparator(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
+        {
+            return string.Concat(a.ToString(), SeparatorString, b.ToString());
+        }
+#endif
     }
 }
