@@ -1,13 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Models;
+using NUnit.Framework;
+using Azure.Core;
+using System.Linq;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
@@ -15,18 +18,23 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
     public class DatastoreTests : ConnectedVMwareTestBase
     {
-        private VMwareDatastoreCollection _datastoreCollection;
         public DatastoreTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private async Task<VMwareDatastoreCollection> GetVMwareDatastoreCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetVMwareDatastores();
         }
 
         [AsyncOnly]
         [TestCase]
         [RecordedTest]
-        public async Task CreateDeleteDatastore()
+        public async Task CreateDelete()
         {
-            string datastoreName = Recording.GenerateAssetName("testdatastore");
-            _datastoreCollection = _resourceGroup.GetVMwareDatastores();
+            var datastoreName = Recording.GenerateAssetName("testdatastore");
+            var _datastoreCollection = await GetVMwareDatastoreCollectionAsync();
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
@@ -36,10 +44,119 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             datastoreBody.MoRefId = "datastore-11";
             datastoreBody.VCenterId = VcenterId;
             datastoreBody.ExtendedLocation = _extendedLocation;
-            //create datastore
+            // create datastore
             VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(datastoreName, datastoreBody)).Value;
             Assert.IsNotNull(datastore1);
             Assert.AreEqual(datastore1.Id.Name, datastoreName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task Get()
+        {
+            var datastoreName = Recording.GenerateAssetName("testdatastore");
+            var _datastoreCollection = await GetVMwareDatastoreCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var datastoreBody = new VMwareDatastoreData(DefaultLocation);
+            datastoreBody.MoRefId = "datastore-11";
+            datastoreBody.VCenterId = VcenterId;
+            datastoreBody.ExtendedLocation = _extendedLocation;
+            // create datastore
+            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(datastoreName, datastoreBody)).Value;
+            Assert.IsNotNull(datastore1);
+            Assert.AreEqual(datastore1.Id.Name, datastoreName);
+            // get datastore
+            datastore1 = await _datastoreCollection.GetAsync(datastoreName);
+            Assert.AreEqual(datastore1.Id.Name, datastoreName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task Exists()
+        {
+            var datastoreName = Recording.GenerateAssetName("testdatastore");
+            var _datastoreCollection = await GetVMwareDatastoreCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var datastoreBody = new VMwareDatastoreData(DefaultLocation);
+            datastoreBody.MoRefId = "datastore-11";
+            datastoreBody.VCenterId = VcenterId;
+            datastoreBody.ExtendedLocation = _extendedLocation;
+            // create datastore
+            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(datastoreName, datastoreBody)).Value;
+            Assert.IsNotNull(datastore1);
+            Assert.AreEqual(datastore1.Id.Name, datastoreName);
+            // check for exists datastore
+            datastore1 = await _datastoreCollection.GetIfExistsAsync(datastoreName);
+            Assert.AreEqual(datastore1.Id.Name, datastoreName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var datastoreName = Recording.GenerateAssetName("testdatastore");
+            var _datastoreCollection = await GetVMwareDatastoreCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var datastoreBody = new VMwareDatastoreData(DefaultLocation);
+            datastoreBody.MoRefId = "datastore-11";
+            datastoreBody.VCenterId = VcenterId;
+            datastoreBody.ExtendedLocation = _extendedLocation;
+            // create datastore
+            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(datastoreName, datastoreBody)).Value;
+            Assert.IsNotNull(datastore1);
+            Assert.AreEqual(datastore1.Id.Name, datastoreName);
+            int count = 0;
+            await foreach (var cluster in _datastoreCollection.GetAllAsync())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAllInSubscription()
+        {
+            var datastoreName = Recording.GenerateAssetName("testdatastore");
+            var _datastoreCollection = await GetVMwareDatastoreCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var datastoreBody = new VMwareDatastoreData(DefaultLocation);
+            datastoreBody.MoRefId = "datastore-11";
+            datastoreBody.VCenterId = VcenterId;
+            datastoreBody.ExtendedLocation = _extendedLocation;
+            // create datastore
+            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(datastoreName, datastoreBody)).Value;
+            Assert.IsNotNull(datastore1);
+            Assert.AreEqual(datastore1.Id.Name, datastoreName);
+            datastore1 = null;
+            await foreach (var datastore in DefaultSubscription.GetDatastoresAsync())
+            {
+                if (datastore.Data.Name == datastoreName)
+                {
+                    datastore1 = datastore;
+                }
+            }
+            Assert.NotNull(datastore1);
         }
     }
 }

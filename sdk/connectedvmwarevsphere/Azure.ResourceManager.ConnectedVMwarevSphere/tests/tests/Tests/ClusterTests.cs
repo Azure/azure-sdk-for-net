@@ -1,13 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Models;
+using NUnit.Framework;
+using Azure.Core;
+using System.Linq;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
@@ -15,18 +18,23 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
     public class ClusterTests : ConnectedVMwareTestBase
     {
-        private VMwareClusterCollection _clusterCollection;
         public ClusterTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private async Task<VMwareClusterCollection> GetVMwareClusterCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetVMwareClusters();
         }
 
         [AsyncOnly]
         [TestCase]
         [RecordedTest]
-        public async Task CreateDeleteCluster()
+        public async Task CreateDelete()
         {
-            string clusterName = Recording.GenerateAssetName("testcluster");
-            _clusterCollection = _resourceGroup.GetVMwareClusters();
+            var clusterName = Recording.GenerateAssetName("testcluster");
+            var _clusterCollection = await GetVMwareClusterCollectionAsync();
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
@@ -36,22 +44,119 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             clusterBody.MoRefId = "domain-c7";
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
-            //create cluster
+            // create cluster
             VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
-            _clusterId = cluster1.Id;
         }
 
         [AsyncOnly]
         [TestCase]
         [RecordedTest]
-        public async Task GetCluster()
+        public async Task Get()
         {
-            _clusterCollection = _resourceGroup.GetVMwareClusters();
-            // get cluster
-            VMwareCluster cluster1 = await _clusterCollection.GetAsync(_clusterId);
+            var clusterName = Recording.GenerateAssetName("testcluster");
+            var _clusterCollection = await GetVMwareClusterCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var clusterBody = new VMwareClusterData(DefaultLocation);
+            clusterBody.MoRefId = "domain-c7";
+            clusterBody.VCenterId = VcenterId;
+            clusterBody.ExtendedLocation = _extendedLocation;
+            // create cluster
+            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
+            Assert.AreEqual(cluster1.Id.Name, clusterName);
+            // get cluster
+            cluster1 = await _clusterCollection.GetAsync(clusterName);
+            Assert.AreEqual(cluster1.Id.Name, clusterName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task Exists()
+        {
+            var clusterName = Recording.GenerateAssetName("testcluster");
+            var _clusterCollection = await GetVMwareClusterCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var clusterBody = new VMwareClusterData(DefaultLocation);
+            clusterBody.MoRefId = "domain-c7";
+            clusterBody.VCenterId = VcenterId;
+            clusterBody.ExtendedLocation = _extendedLocation;
+            // create cluster
+            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(clusterName, clusterBody)).Value;
+            Assert.IsNotNull(cluster1);
+            Assert.AreEqual(cluster1.Id.Name, clusterName);
+            // check for exists cluster
+            cluster1 = await _clusterCollection.GetIfExistsAsync(clusterName);
+            Assert.AreEqual(cluster1.Id.Name, clusterName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var clusterName = Recording.GenerateAssetName("testcluster");
+            var _clusterCollection = await GetVMwareClusterCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var clusterBody = new VMwareClusterData(DefaultLocation);
+            clusterBody.MoRefId = "domain-c7";
+            clusterBody.VCenterId = VcenterId;
+            clusterBody.ExtendedLocation = _extendedLocation;
+            // create cluster
+            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(clusterName, clusterBody)).Value;
+            Assert.IsNotNull(cluster1);
+            Assert.AreEqual(cluster1.Id.Name, clusterName);
+            int count = 0;
+            await foreach (var cluster in _clusterCollection.GetAllAsync())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAllInSubscription()
+        {
+            var clusterName = Recording.GenerateAssetName("testcluster");
+            var _clusterCollection = await GetVMwareClusterCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var clusterBody = new VMwareClusterData(DefaultLocation);
+            clusterBody.MoRefId = "domain-c7";
+            clusterBody.VCenterId = VcenterId;
+            clusterBody.ExtendedLocation = _extendedLocation;
+            // create cluster
+            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(clusterName, clusterBody)).Value;
+            Assert.IsNotNull(cluster1);
+            Assert.AreEqual(cluster1.Id.Name, clusterName);
+            cluster1 = null;
+            await foreach (var cluster in DefaultSubscription.GetClustersAsync())
+            {
+                if (cluster.Data.Name == clusterName)
+                {
+                    cluster1 = cluster;
+                }
+            }
+            Assert.NotNull(cluster1);
         }
     }
 }

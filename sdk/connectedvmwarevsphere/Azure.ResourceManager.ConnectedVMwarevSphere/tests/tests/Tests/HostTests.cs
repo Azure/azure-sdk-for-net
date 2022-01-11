@@ -1,13 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Models;
+using NUnit.Framework;
+using Azure.Core;
+using System.Linq;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
@@ -15,18 +18,95 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
     public class HostTests : ConnectedVMwareTestBase
     {
-        private VMwareHostCollection _hostCollection;
         public HostTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private async Task<VMwareHostCollection> GetVMwareHostCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetVMwareHosts();
         }
 
         [AsyncOnly]
         [TestCase]
         [RecordedTest]
-        public async Task CreateDeleteHost()
+        public async Task CreateDelete()
         {
-            string hostName = Recording.GenerateAssetName("testhost");
-            _hostCollection = _resourceGroup.GetVMwareHosts();
+            var hostName = Recording.GenerateAssetName("testhost");
+            var _hostCollection = await GetVMwareHostCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var hostBody = new VMwareHostData(DefaultLocation);
+            hostBody.MoRefId = "host-112923";
+            hostBody.VCenterId = VcenterId;
+            hostBody.ExtendedLocation = _extendedLocation;
+            // create host
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(hostName, hostBody)).Value;
+            Assert.IsNotNull(host1);
+            Assert.AreEqual(host1.Id.Name, hostName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task Get()
+        {
+            var hostName = Recording.GenerateAssetName("testhost");
+            var _hostCollection = await GetVMwareHostCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var hostBody = new VMwareHostData(DefaultLocation);
+            hostBody.MoRefId = "host-27";
+            hostBody.VCenterId = VcenterId;
+            hostBody.ExtendedLocation = _extendedLocation;
+            // create host
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(hostName, hostBody)).Value;
+            Assert.IsNotNull(host1);
+            Assert.AreEqual(host1.Id.Name, hostName);
+            // get host
+            host1 = await _hostCollection.GetAsync(hostName);
+            Assert.AreEqual(host1.Id.Name, hostName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task Exists()
+        {
+            var hostName = Recording.GenerateAssetName("testhost");
+            var _hostCollection = await GetVMwareHostCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var hostBody = new VMwareHostData(DefaultLocation);
+            hostBody.MoRefId = "host-111894";
+            hostBody.VCenterId = VcenterId;
+            hostBody.ExtendedLocation = _extendedLocation;
+            // create host
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(hostName, hostBody)).Value;
+            Assert.IsNotNull(host1);
+            Assert.AreEqual(host1.Id.Name, hostName);
+            // check for exists host
+            host1 = await _hostCollection.GetIfExistsAsync(hostName);
+            Assert.AreEqual(host1.Id.Name, hostName);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var hostName = Recording.GenerateAssetName("testhost");
+            var _hostCollection = await GetVMwareHostCollectionAsync();
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
@@ -36,10 +116,47 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             hostBody.MoRefId = "host-33";
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
-            //create host
+            // create host
             VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
+            int count = 0;
+            await foreach (var host in _hostCollection.GetAllAsync())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
+        }
+
+        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAllInSubscription()
+        {
+            var hostName = Recording.GenerateAssetName("testhost");
+            var _hostCollection = await GetVMwareHostCollectionAsync();
+            var _extendedLocation = new ExtendedLocation()
+            {
+                Name = CustomLocationId,
+                Type = EXTENDED_LOCATION_TYPE
+            };
+            var hostBody = new VMwareHostData(DefaultLocation);
+            hostBody.MoRefId = "host-111900";
+            hostBody.VCenterId = VcenterId;
+            hostBody.ExtendedLocation = _extendedLocation;
+            // create host
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(hostName, hostBody)).Value;
+            Assert.IsNotNull(host1);
+            Assert.AreEqual(host1.Id.Name, hostName);
+            host1 = null;
+            await foreach (var host in DefaultSubscription.GetHostsAsync())
+            {
+                if (host.Data.Name == hostName)
+                {
+                    host1 = host;
+                }
+            }
+            Assert.NotNull(host1);
         }
     }
 }
