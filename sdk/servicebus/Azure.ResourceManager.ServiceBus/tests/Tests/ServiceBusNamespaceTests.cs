@@ -13,6 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
@@ -173,8 +174,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //get private link resource
-            IReadOnlyList<PrivateLinkResource> privateLinkResources = (await serviceBusNamespace.GetPrivateLinkResourcesAsync()).Value;
-            Assert.NotNull(privateLinkResources);
+            var privateLinkResources = serviceBusNamespace.GetPrivateLinkResourcesAsync().EnsureSyncEnumerable().ToList();
+            Assert.IsNotEmpty(privateLinkResources);
         }
 
         [Test]
