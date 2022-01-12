@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
         /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
-        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Identity identity, SystemData systemData, CustomLocationPropertiesAuthentication authentication, IList<string> clusterExtensionIds, string displayName, string hostResourceId, HostType? hostType, string @namespace, string provisioningState) : base(id, name, type, tags, location)
+        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, LocationIdentity identity, SystemData systemData, CustomLocationPropertiesAuthentication authentication, IList<string> clusterExtensionIds, string displayName, string hostResourceId, HostType? hostType, string @namespace, string provisioningState) : base(id, name, type, tags, location)
         {
             Identity = identity;
             SystemData = systemData;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary> Identity for the resource. </summary>
-        public Identity Identity { get; set; }
+        public LocationIdentity Identity { get; set; }
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
         public SystemData SystemData { get; }
         /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>

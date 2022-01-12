@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -535,7 +534,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, Identity identity, IDictionary<string, string> tags, CustomLocationPropertiesAuthentication authentication, IEnumerable<string> clusterExtensionIds, string displayName, string hostResourceId, HostType? hostType, string @namespace, string provisioningState)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, PatchableCustomLocations parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -552,33 +551,8 @@ namespace Azure.ResourceManager.ExtendedLocation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            PatchableCustomLocations patchableCustomLocations = new PatchableCustomLocations()
-            {
-                Identity = identity,
-                Authentication = authentication,
-                DisplayName = displayName,
-                HostResourceId = hostResourceId,
-                HostType = hostType,
-                Namespace = @namespace,
-                ProvisioningState = provisioningState
-            };
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    patchableCustomLocations.Tags.Add(value);
-                }
-            }
-            if (clusterExtensionIds != null)
-            {
-                foreach (var value in clusterExtensionIds)
-                {
-                    patchableCustomLocations.ClusterExtensionIds.Add(value);
-                }
-            }
-            var model = patchableCustomLocations;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
@@ -588,18 +562,10 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
-        /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
-        /// <param name="displayName"> Display name for the Custom Locations location. </param>
-        /// <param name="hostResourceId"> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </param>
-        /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
-        /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
-        /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
+        /// <param name="parameters"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<CustomLocationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, Identity identity = null, IDictionary<string, string> tags = null, CustomLocationPropertiesAuthentication authentication = null, IEnumerable<string> clusterExtensionIds = null, string displayName = null, string hostResourceId = null, HostType? hostType = null, string @namespace = null, string provisioningState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<CustomLocationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, PatchableCustomLocations parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -613,8 +579,12 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, identity, tags, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, @namespace, provisioningState);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -634,18 +604,10 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
-        /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
-        /// <param name="displayName"> Display name for the Custom Locations location. </param>
-        /// <param name="hostResourceId"> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </param>
-        /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
-        /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
-        /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
+        /// <param name="parameters"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public Response<CustomLocationData> Update(string subscriptionId, string resourceGroupName, string resourceName, Identity identity = null, IDictionary<string, string> tags = null, CustomLocationPropertiesAuthentication authentication = null, IEnumerable<string> clusterExtensionIds = null, string displayName = null, string hostResourceId = null, HostType? hostType = null, string @namespace = null, string provisioningState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<CustomLocationData> Update(string subscriptionId, string resourceGroupName, string resourceName, PatchableCustomLocations parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -659,8 +621,12 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, identity, tags, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, @namespace, provisioningState);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

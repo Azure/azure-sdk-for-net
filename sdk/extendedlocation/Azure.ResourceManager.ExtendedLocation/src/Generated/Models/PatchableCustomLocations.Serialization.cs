@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
-    internal partial class PatchableCustomLocations : IUtf8JsonSerializable
+    public partial class PatchableCustomLocations : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

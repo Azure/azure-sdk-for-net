@@ -377,142 +377,138 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// OperationId: CustomLocations_Update
         /// <summary> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </summary>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
-        /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
-        /// <param name="displayName"> Display name for the Custom Locations location. </param>
-        /// <param name="hostResourceId"> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </param>
-        /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
-        /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
-        /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
+        /// <param name="parameters"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CustomLocation>> UpdateAsync(Identity identity = null, IDictionary<string, string> tags = null, CustomLocationPropertiesAuthentication authentication = null, IEnumerable<string> clusterExtensionIds = null, string displayName = null, string hostResourceId = null, HostType? hostType = null, string @namespace = null, string provisioningState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<CustomLocation>> UpdateAsync(PatchableCustomLocations parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CustomLocation.Update");
             scope.Start();
             try
             {
-                var response = await _customLocationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identity, tags, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, namespace, provisioningState, cancellationToken).ConfigureAwait(false);
-return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
-}
-catch (Exception e)
-{
-scope.Failed(e);
-throw;
-}
-}
+                var response = await _customLocationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-/// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-/// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-/// OperationId: CustomLocations_Update
-/// <summary> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </summary>
-/// <param name="identity"> Identity for the resource. </param>
-/// <param name="tags"> Resource tags. </param>
-/// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
-/// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
-/// <param name="displayName"> Display name for the Custom Locations location. </param>
-/// <param name="hostResourceId"> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </param>
-/// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
-/// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
-/// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
-/// <param name="cancellationToken"> The cancellation token to use. </param>
-public virtual Response<Azure.ResourceManager.ExtendedLocation.CustomLocation> Update(Identity identity = null, IDictionary<string, string> tags = null, CustomLocationPropertiesAuthentication authentication = null, IEnumerable<string> clusterExtensionIds = null, string displayName = null, string hostResourceId = null, HostType? hostType = null, string @namespace = null, string provisioningState = null, CancellationToken cancellationToken = default)
-{
-    using var scope = _clientDiagnostics.CreateScope("CustomLocation.Update");
-    scope.Start();
-    try
-    {
-        var response = _customLocationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identity, tags, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, namespace, provisioningState, cancellationToken);
-return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
-}
-catch (Exception e)
-{
-    scope.Failed(e);
-    throw;
-}
-}
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// OperationId: CustomLocations_Update
+        /// <summary> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </summary>
+        /// <param name="parameters"> The updatable fields of an existing Custom Location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<CustomLocation> Update(PatchableCustomLocations parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-/// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}/enabledResourceTypes
-/// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-/// OperationId: CustomLocations_ListEnabledResourceTypes
-/// <summary> Gets the list of the Enabled Resource Types. </summary>
-/// <param name="cancellationToken"> The cancellation token to use. </param>
-/// <returns> An async collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
-public virtual AsyncPageable<EnabledResourceType> GetEnabledResourceTypesAsync(CancellationToken cancellationToken = default)
-{
-    async Task<Page<EnabledResourceType>> FirstPageFunc(int? pageSizeHint)
-    {
-        using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
-        scope.Start();
-        try
-        {
-            var response = await _customLocationsRestClient.ListEnabledResourceTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            using var scope = _clientDiagnostics.CreateScope("CustomLocation.Update");
+            scope.Start();
+            try
+            {
+                var response = _customLocationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        catch (Exception e)
-        {
-            scope.Failed(e);
-            throw;
-        }
-    }
-    async Task<Page<EnabledResourceType>> NextPageFunc(string nextLink, int? pageSizeHint)
-    {
-        using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
-        scope.Start();
-        try
-        {
-            var response = await _customLocationsRestClient.ListEnabledResourceTypesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-        }
-        catch (Exception e)
-        {
-            scope.Failed(e);
-            throw;
-        }
-    }
-    return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-}
 
-/// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}/enabledResourceTypes
-/// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-/// OperationId: CustomLocations_ListEnabledResourceTypes
-/// <summary> Gets the list of the Enabled Resource Types. </summary>
-/// <param name="cancellationToken"> The cancellation token to use. </param>
-/// <returns> A collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
-public virtual Pageable<EnabledResourceType> GetEnabledResourceTypes(CancellationToken cancellationToken = default)
-{
-    Page<EnabledResourceType> FirstPageFunc(int? pageSizeHint)
-    {
-        using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
-        scope.Start();
-        try
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}/enabledResourceTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// OperationId: CustomLocations_ListEnabledResourceTypes
+        /// <summary> Gets the list of the Enabled Resource Types. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EnabledResourceType> GetEnabledResourceTypesAsync(CancellationToken cancellationToken = default)
         {
-            var response = _customLocationsRestClient.ListEnabledResourceTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-            return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            async Task<Page<EnabledResourceType>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
+                scope.Start();
+                try
+                {
+                    var response = await _customLocationsRestClient.ListEnabledResourceTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<EnabledResourceType>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
+                scope.Start();
+                try
+                {
+                    var response = await _customLocationsRestClient.ListEnabledResourceTypesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
-        catch (Exception e)
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}/enabledResourceTypes
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// OperationId: CustomLocations_ListEnabledResourceTypes
+        /// <summary> Gets the list of the Enabled Resource Types. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EnabledResourceType> GetEnabledResourceTypes(CancellationToken cancellationToken = default)
         {
-            scope.Failed(e);
-            throw;
+            Page<EnabledResourceType> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
+                scope.Start();
+                try
+                {
+                    var response = _customLocationsRestClient.ListEnabledResourceTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<EnabledResourceType> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
+                scope.Start();
+                try
+                {
+                    var response = _customLocationsRestClient.ListEnabledResourceTypesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
-    Page<EnabledResourceType> NextPageFunc(string nextLink, int? pageSizeHint)
-    {
-        using var scope = _clientDiagnostics.CreateScope("CustomLocation.GetEnabledResourceTypes");
-        scope.Start();
-        try
-        {
-            var response = _customLocationsRestClient.ListEnabledResourceTypesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-            return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-        }
-        catch (Exception e)
-        {
-            scope.Failed(e);
-            throw;
-        }
-    }
-    return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-}
-}
 }

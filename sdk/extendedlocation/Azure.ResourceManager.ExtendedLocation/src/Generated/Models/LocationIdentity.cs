@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
     /// <summary> Identity for the resource. </summary>
-    public partial class Identity
+    public partial class LocationIdentity
     {
-        /// <summary> Initializes a new instance of Identity. </summary>
-        public Identity()
+        /// <summary> Initializes a new instance of LocationIdentity. </summary>
+        public LocationIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of Identity. </summary>
+        /// <summary> Initializes a new instance of LocationIdentity. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="type"> The identity type. </param>
-        internal Identity(string principalId, string tenantId, ResourceIdentityType? type)
+        internal LocationIdentity(string principalId, string tenantId, ResourceIdentityType? type)
         {
             PrincipalId = principalId;
             TenantId = tenantId;

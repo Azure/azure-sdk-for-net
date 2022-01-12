@@ -14,5 +14,10 @@ output-folder: Generated/
 clear-output-folder: true
 mgmt-debug:
   show-request-path: true
-
+modelerfour:
+  flatten-payloads: false
+directive:
+  - rename-model:
+      from: Identity
+      to: LocationIdentity
 ```

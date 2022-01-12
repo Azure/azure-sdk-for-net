@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
-    public partial class Identity : IUtf8JsonSerializable
+    public partial class LocationIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
             writer.WriteEndObject();
         }
 
-        internal static Identity DeserializeIdentity(JsonElement element)
+        internal static LocationIdentity DeserializeLocationIdentity(JsonElement element)
         {
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
                     continue;
                 }
             }
-            return new Identity(principalId.Value, tenantId.Value, Optional.ToNullable(type));
+            return new LocationIdentity(principalId.Value, tenantId.Value, Optional.ToNullable(type));
         }
     }
 }

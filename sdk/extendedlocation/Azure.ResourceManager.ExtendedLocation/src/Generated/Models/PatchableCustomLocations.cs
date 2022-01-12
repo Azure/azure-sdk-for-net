@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
     /// <summary> The Custom Locations patchable resource definition. </summary>
-    internal partial class PatchableCustomLocations
+    public partial class PatchableCustomLocations
     {
         /// <summary> Initializes a new instance of PatchableCustomLocations. </summary>
         public PatchableCustomLocations()
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         }
 
         /// <summary> Identity for the resource. </summary>
-        public Identity Identity { get; set; }
+        public LocationIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>

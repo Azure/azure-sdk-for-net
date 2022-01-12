@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ExtendedLocation
 
         internal static CustomLocationData DeserializeCustomLocationData(JsonElement element)
         {
-            Optional<Identity> identity = default;
+            Optional<LocationIdentity> identity = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ExtendedLocation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(property.Value);
+                    identity = LocationIdentity.DeserializeLocationIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemData"))
