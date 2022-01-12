@@ -1405,8 +1405,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //get all private link resources
-            Response<IReadOnlyList<PrivateLinkResource>> privateLinkResources = await account.GetPrivateLinkResourcesAsync();
-            Assert.NotNull(privateLinkResources.Value);
+            await foreach (var _ in account.GetPrivateLinkResourcesAsync())
+            {
+                return;
+            }
+
+            Assert.Fail($"{nameof(StorageAccount)}.{nameof(StorageAccount.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(PrivateLinkResource)}.");
         }
 
         [Test]

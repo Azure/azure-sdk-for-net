@@ -11,16 +11,16 @@ namespace Azure.AI.MetricsAdvisor
     /// The set of options that can be specified when creating a <see cref="MetricsAdvisorClient" /> or
     /// a <see cref="MetricsAdvisorAdministrationClient"/> to configure its behavior.
     /// </summary>
-    public class MetricsAdvisorClientOptions : ClientOptions
+    public class MetricsAdvisorClientsOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClientsOptions"/> class.
         /// </summary>
         /// <param name="version">The version of the service to send requests to.</param>
         /// <exception cref="ArgumentException"><paramref name="version"/> is <c>default</c>.</exception>
-        public MetricsAdvisorClientOptions(ServiceVersion version = LatestVersion)
+        public MetricsAdvisorClientsOptions(ServiceVersion version = LatestVersion)
         {
             if (version == default)
             {
