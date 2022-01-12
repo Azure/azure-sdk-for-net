@@ -65,6 +65,7 @@
     "finalizers",
     "illumos",
     "ints",
+    "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
