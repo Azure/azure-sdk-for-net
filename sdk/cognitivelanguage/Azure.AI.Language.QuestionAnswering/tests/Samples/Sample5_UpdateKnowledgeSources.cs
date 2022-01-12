@@ -25,7 +25,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region QuestionAnsweringProjectsClient_UpdateSources
             // Set request content parameters for updating our new project's sources
-            string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            string sourceUri = "{KnowledgeSourceUri}";
 #if !SNIPPET
             sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
 #endif
@@ -170,7 +170,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region QuestionAnsweringProjectsClient_UpdateSourcesAsync
             // Set request content parameters for updating our new project's sources
-            string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            string sourceUri = "{KnowledgeSourceUri}";
 #if !SNIPPET
             sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
 #endif
