@@ -12,11 +12,16 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
 
     /// <summary>
-    /// Defines values for ActionRuleStatus.
+    /// Defines values for DaysOfWeek.
     /// </summary>
-    public static class ActionRuleStatus
+    public static class DaysOfWeek
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        public const string Sunday = "Sunday";
+        public const string Monday = "Monday";
+        public const string Tuesday = "Tuesday";
+        public const string Wednesday = "Wednesday";
+        public const string Thursday = "Thursday";
+        public const string Friday = "Friday";
+        public const string Saturday = "Saturday";
     }
 }

@@ -16,32 +16,34 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Action rule object containing target scope, conditions and suppression
-    /// logic
+    /// Alert processing rule object containing target scopes, conditions and
+    /// scheduling logic.
     /// </summary>
-    public partial class ActionRule : ManagedResource
+    public partial class AlertProcessingRule : ManagedResource
     {
         /// <summary>
-        /// Initializes a new instance of the ActionRule class.
+        /// Initializes a new instance of the AlertProcessingRule class.
         /// </summary>
-        public ActionRule()
+        public AlertProcessingRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActionRule class.
+        /// Initializes a new instance of the AlertProcessingRule class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Azure resource Id</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="properties">action rule properties</param>
-        public ActionRule(string location, string id = default(string), string type = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ActionRuleProperties properties = default(ActionRuleProperties))
+        /// <param name="properties">Alert processing rule properties.</param>
+        /// <param name="systemData">Alert processing rule system data.</param>
+        public AlertProcessingRule(string location, string id = default(string), string type = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AlertProcessingRuleProperties properties = default(AlertProcessingRuleProperties), SystemData systemData = default(SystemData))
             : base(location, id, type, name, tags)
         {
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -51,10 +53,16 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets action rule properties
+        /// Gets or sets alert processing rule properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public ActionRuleProperties Properties { get; set; }
+        public AlertProcessingRuleProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets alert processing rule system data.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -65,6 +73,10 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         public override void Validate()
         {
             base.Validate();
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
         }
     }
 }

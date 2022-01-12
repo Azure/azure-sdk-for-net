@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CreateUpdate operation.
+    /// Recurrence object.
     /// </summary>
-    public partial class ActionRulesCreateUpdateHeaders
+    public partial class Recurrence
     {
         /// <summary>
-        /// Initializes a new instance of the ActionRulesCreateUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the Recurrence class.
         /// </summary>
-        public ActionRulesCreateUpdateHeaders()
+        public Recurrence()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActionRulesCreateUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the Recurrence class.
         /// </summary>
-        /// <param name="xMsRequestId">Service generated Request ID.</param>
-        public ActionRulesCreateUpdateHeaders(string xMsRequestId = default(string))
+        /// <param name="startTime">Start time for recurrence.</param>
+        /// <param name="endTime">End time for recurrence.</param>
+        public Recurrence(string startTime = default(string), string endTime = default(string))
         {
-            XMsRequestId = xMsRequestId;
+            StartTime = startTime;
+            EndTime = endTime;
             CustomInit();
         }
 
@@ -44,10 +44,16 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service generated Request ID.
+        /// Gets or sets start time for recurrence.
         /// </summary>
-        [JsonProperty(PropertyName = "x-ms-request-id")]
-        public string XMsRequestId { get; set; }
+        [JsonProperty(PropertyName = "startTime")]
+        public string StartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets end time for recurrence.
+        /// </summary>
+        [JsonProperty(PropertyName = "endTime")]
+        public string EndTime { get; set; }
 
     }
 }

@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
 
     /// <summary>
-    /// Defines values for ScopeType.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class ScopeType
+    public static class CreatedByType
     {
-        public const string ResourceGroup = "ResourceGroup";
-        public const string Resource = "Resource";
-        public const string Subscription = "Subscription";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

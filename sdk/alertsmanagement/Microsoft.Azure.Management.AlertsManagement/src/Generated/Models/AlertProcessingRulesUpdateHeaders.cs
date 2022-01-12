@@ -14,29 +14,27 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Aggregated property of each type
+    /// Defines headers for Update operation.
     /// </summary>
-    public partial class SmartGroupAggregatedProperty
+    public partial class AlertProcessingRulesUpdateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the SmartGroupAggregatedProperty
+        /// Initializes a new instance of the AlertProcessingRulesUpdateHeaders
         /// class.
         /// </summary>
-        public SmartGroupAggregatedProperty()
+        public AlertProcessingRulesUpdateHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SmartGroupAggregatedProperty
+        /// Initializes a new instance of the AlertProcessingRulesUpdateHeaders
         /// class.
         /// </summary>
-        /// <param name="name">Name of the type.</param>
-        /// <param name="count">Total number of items of type.</param>
-        public SmartGroupAggregatedProperty(string name = default(string), long? count = default(long?))
+        /// <param name="xMsRequestId">Service generated Request ID.</param>
+        public AlertProcessingRulesUpdateHeaders(string xMsRequestId = default(string))
         {
-            Name = name;
-            Count = count;
+            XMsRequestId = xMsRequestId;
             CustomInit();
         }
 
@@ -46,16 +44,10 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the type.
+        /// Gets or sets service generated Request ID.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets total number of items of type.
-        /// </summary>
-        [JsonProperty(PropertyName = "count")]
-        public long? Count { get; set; }
+        [JsonProperty(PropertyName = "x-ms-request-id")]
+        public string XMsRequestId { get; set; }
 
     }
 }

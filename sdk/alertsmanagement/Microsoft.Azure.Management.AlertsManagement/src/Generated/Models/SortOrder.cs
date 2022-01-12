@@ -12,14 +12,11 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
 
     /// <summary>
-    /// Defines values for SuppressionType.
+    /// Defines values for SortOrder.
     /// </summary>
-    public static class SuppressionType
+    public static class SortOrder
     {
-        public const string Always = "Always";
-        public const string Once = "Once";
-        public const string Daily = "Daily";
-        public const string Weekly = "Weekly";
-        public const string Monthly = "Monthly";
+        public const string Asc = "asc";
+        public const string Desc = "desc";
     }
 }
