@@ -67,21 +67,40 @@ namespace Azure.Monitor.Query.Tests
         [Test]
         public void CanGetMetricQueryResult()
         {
-            var client = new MetricsQueryClient(new Uri("https://management.azure.gov"), new MockCredential(), new MetricsQueryClientOptions());
-
             MetricTimeSeriesElement metricTimeSeriesElement = new Models.MetricTimeSeriesElement();
             Assert.IsNotNull(metricTimeSeriesElement);
+            Assert.AreEqual(0, metricTimeSeriesElement.Metadata.Count);
+            Assert.AreEqual(0, metricTimeSeriesElement.Values.Count);
             IEnumerable<MetricTimeSeriesElement> metricTimeSeriesElements = new[] { metricTimeSeriesElement };
 
             MetricUnit metricUnit = new MetricUnit("test");
             Assert.IsNotNull(metricUnit);
-            Assert.AreEqual(metricUnit.ToString(), "test");
+            Assert.AreEqual("test", metricUnit.ToString());
 
             MetricResult metricResult = new Models.MetricResult("https://management.azure.gov", "type", new LocalizableString("name"), metricUnit, metricTimeSeriesElements);
             Assert.IsNotNull(metricResult);
+            Assert.AreEqual(null, metricResult.Description);
+            Assert.AreEqual(null, metricResult.Error.Code);
+            Assert.AreEqual(null, metricResult.Error.Message);
+            Assert.AreEqual("https://management.azure.gov", metricResult.Id);
+            Assert.AreEqual("name", metricResult.Name);
+            Assert.AreEqual("type", metricResult.ResourceType);
+            Assert.AreEqual(1, metricResult.TimeSeries.Count);
+            Assert.AreEqual("test", metricResult.Unit.ToString());
             IEnumerable<MetricResult> metricResults = new[] { metricResult };
 
             MetricsQueryResult metricsQueryResult = new Models.MetricsQueryResult(null, TimeSpan.FromMinutes(3).ToString(), null, "namespace", "eastus", metricResults.ToList());
+            Assert.AreEqual(null, metricsQueryResult.Cost);
+            Assert.AreEqual(null, metricsQueryResult.Granularity);
+            Assert.AreEqual(1, metricsQueryResult.Metrics.Count);
+            Assert.AreEqual(null, metricsQueryResult.Metrics[0].Description);
+            Assert.AreEqual(null, metricsQueryResult.Metrics[0].Error.Code);
+            Assert.AreEqual(null, metricsQueryResult.Metrics[0].Error.Message);
+            Assert.AreEqual("https://management.azure.gov", metricsQueryResult.Metrics[0].Id);
+            Assert.AreEqual("name", metricsQueryResult.Metrics[0].Name);
+            Assert.AreEqual("type", metricsQueryResult.Metrics[0].ResourceType);
+            Assert.AreEqual("namespace", metricsQueryResult.Namespace);
+            Assert.AreEqual("eastus", metricsQueryResult.ResourceRegion);
             Assert.IsNotNull(metricsQueryResult);
         }
     }

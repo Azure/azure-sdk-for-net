@@ -22,30 +22,28 @@ namespace Azure.Monitor.Query.Models
         /// <param name="granularity"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
-        /// <param name="metrics"> the value of the collection. </param>
-        public static MetricsQueryResult MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IEnumerable<MetricResult> metrics)
+        /// <param name="metrics"> The value of the collection. </param>
+        public static MetricsQueryResult MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
         {
             return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics.ToArray());
         }
 
         /// <summary>
-        /// make a metric result
+        /// Enables the user to create an instance of a <see cref="MetricResult"/>.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="localizedName"></param>
-        /// <param name="unit"></param>
-        /// <param name="timeSeries"></param>
-        /// <returns></returns>
+        /// <param name="id"> The metric Id. </param>
+        /// <param name="resourceType"> The resource type of the metric resource. </param>
+        /// <param name="localizedName"> The name and the display name of the metric, i.e. it is localizable string. </param>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
         public static MetricResult MetricResult(string id, string resourceType, string localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
         {
             return new MetricResult(id, resourceType, new LocalizableString(localizedName), unit, timeSeries);
         }
 
         /// <summary>
-        /// todo
+        /// Enables the user to create an instance of a <see cref="MetricTimeSeriesElement"/>.
         /// </summary>
-        /// <returns></returns>
         public static MetricTimeSeriesElement MetricTimeSeriesElement()
         {
             return new MetricTimeSeriesElement();
@@ -56,7 +54,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        public static LogsQueryResult LogsQueryResult(IEnumerable<LogsTable> allTables, BinaryData statistics, BinaryData visualization, BinaryData error)
+        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, BinaryData statistics, BinaryData visualization, BinaryData error)
         {
             JsonElement statisticsJson = statistics.ToObjectFromJson<JsonElement>();
             JsonElement visualizationJson = visualization.ToObjectFromJson<JsonElement>();
