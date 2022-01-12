@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
+            var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             var op = await genericResources.CreateOrUpdateAsync(asetId, data);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
+            var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             return await genericResources.CreateOrUpdateAsync(asetId, data, false);
@@ -90,11 +90,10 @@ namespace Azure.ResourceManager.Tests
             //TODO: Add equal for Properties and Tags
         }
 
-        protected static async Task<int> GetResourceCountAsync(GenericResourceCollection genericResources, ResourceGroup rg = default)
+        protected static async Task<int> GetResourceCountAsync(AsyncPageable<GenericResource> genericResources)
         {
             int result = 0;
-            var pageable = rg == null ? genericResources.GetAllAsync() : genericResources.GetByResourceGroupAsync(rg.Id.Name);
-            await foreach (var resource in pageable)
+            await foreach (var resource in genericResources)
                 result++;
             return result;
         }
@@ -139,11 +138,11 @@ namespace Azure.ResourceManager.Tests
             return virtualNetwork;
         }
 
-        protected async Task<GenericResource> CreateGenericVirtualNetwork(Subscription subscription, ResourceGroup rg, string vnName)
+        protected async Task<GenericResource> CreateGenericVirtualNetwork(Subscription subscription, ResourceGroup rg, string vnName) // TODO: remove subscription parameter
         {
             GenericResourceData input = ConstructGenericVirtualNetworkData();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            ResourceCreateOrUpdateByIdOperation lro = await subscription.GetGenericResources().CreateOrUpdateAsync(vnId, input);
+            ResourceCreateOrUpdateByIdOperation lro = await Client.GetGenericResources().CreateOrUpdateAsync(vnId, input);
             return lro.Value;
         }
 
@@ -231,7 +230,11 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
             ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
-            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties);
+            ResourceLinkData data = new ResourceLinkData()
+            {
+                Properties = properties
+            };
+            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, data);
             return lro.Value;
         }
     }

@@ -15,25 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> Initializes a new instance of LocationExpanded. </summary>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="name"> The location name. </param>
-        /// <param name="type"> The location type. </param>
-        /// <param name="displayName"> The display name of the location. </param>
-        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
-        internal LocationExpanded(string id, string subscriptionId, string name, LocationType? type, string displayName, string regionalDisplayName, LocationMetadata metadata)
-        {
-            Id = id;
-            SubscriptionId = subscriptionId;
-            Name = name;
-            Type = type;
-            DisplayName = displayName;
-            RegionalDisplayName = regionalDisplayName;
-            Metadata = metadata;
-        }
-
         /// <summary> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </summary>
         public string Id { get; }
         /// <summary> The subscription ID. </summary>

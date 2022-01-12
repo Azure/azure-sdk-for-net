@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public async virtual Task<Response<Models.PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public virtual Response<Models.PredefinedTag> CreateOrUpdatePredefinedTag(string tagName, CancellationToken cancellationToken = default)
+        public virtual Response<PredefinedTag> CreateOrUpdatePredefinedTag(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.PredefinedTag> GetAllPredefinedTagsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PredefinedTag> GetAllPredefinedTagsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Models.PredefinedTag>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PredefinedTag>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<Models.PredefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PredefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.PredefinedTag> GetAllPredefinedTags(CancellationToken cancellationToken = default)
+        public virtual Pageable<PredefinedTag> GetAllPredefinedTags(CancellationToken cancellationToken = default)
         {
-            Page<Models.PredefinedTag> FirstPageFunc(int? pageSizeHint)
+            Page<PredefinedTag> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<Models.PredefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PredefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();

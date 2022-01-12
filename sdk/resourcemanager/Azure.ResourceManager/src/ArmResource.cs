@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class.
         /// </summary>
-        /// <param name="parentOperations"> The resource representing the parent resource. </param>
+        /// <param name="resource"> The resource that contains the ClientContext. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ArmResource(ArmResource parentOperations, ResourceIdentifier id)
-            : this(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri, parentOperations.Pipeline), id)
+        protected ArmResource(ArmResource resource, ResourceIdentifier id)
+            : this(new ClientContext(resource.ClientOptions, resource.Credential, resource.BaseUri, resource.Pipeline), id)
         {
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(this, Id);
+        protected internal TagResource TagResource => _tagResource ??= this.GetTagResource();
 
         /// <summary>
         /// Validate the resource identifier against current operations.

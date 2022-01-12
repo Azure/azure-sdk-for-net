@@ -15,19 +15,71 @@ using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 [assembly:CodeGenSuppressType("GenericResourceFilter")]
+[assembly:CodeGenSuppressType("GenericResource")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
-    [CodeGenSuppress("CreateResourceIdentifier", typeof(string))]
-    [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Delete", typeof(string), typeof(bool), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteAsync", typeof(string), typeof(bool), typeof(CancellationToken))]
-    [CodeGenSuppress("Update", typeof(string), typeof(GenericResourceData), typeof(bool), typeof(CancellationToken))]
-    [CodeGenSuppress("UpdateAsync", typeof(string), typeof(GenericResourceData), typeof(bool), typeof(CancellationToken))]
-    [CodeGenSuppress("ResourceType")]
     public partial class GenericResource : ArmResource
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ResourcesRestOperations _resourcesRestClient;
+        private readonly GenericResourceData _data;
+
+        /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class for mocking. </summary>
+        protected GenericResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref = "GenericResource"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="resource"> The resource that is the target of operations. </param>
+        internal GenericResource(ArmResource options, GenericResourceData resource) : base(options, resource.Id)
+        {
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal GenericResource(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class. </summary>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal GenericResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        }
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual GenericResourceData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
         /// <summary>
         /// Validate the resource identifier against current resource.
         /// </summary>

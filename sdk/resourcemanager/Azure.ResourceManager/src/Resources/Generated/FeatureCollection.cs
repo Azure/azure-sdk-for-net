@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(featureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(featureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Exists");
             scope.Start();
             try
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _featuresRestClient.List(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _featuresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _featuresRestClient.ListAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _featuresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

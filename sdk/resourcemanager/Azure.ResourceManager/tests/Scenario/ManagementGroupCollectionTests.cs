@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
-            Assert.IsTrue(await Client.GetManagementGroups().CheckIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetManagementGroups().CheckIfExistsAsync(_mgmtGroup.Data.Name + "x", cacheControl: "no-cache"));
+            Assert.IsTrue(await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name + "x", cacheControl: "no-cache"));
             Assert.AreEqual(403, ex.Status); //you get forbidden vs not found here for some reason by the service
         }
 

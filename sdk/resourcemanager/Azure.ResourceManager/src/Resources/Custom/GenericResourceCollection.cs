@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(resourceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(resourceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.Exists");
             scope.Start();
             try
             {

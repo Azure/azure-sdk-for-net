@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
             var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(asetid));
             InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
-            Assert.IsTrue(exception.Message.Equals($"An invalid resouce id was given {asetid}"));
+            Assert.AreEqual(exception.Message, $"An invalid resource id was given {asetid}");
         }
 
         [TestCase]

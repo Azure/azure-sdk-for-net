@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Management
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupCollection"/> class class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagementGroupCollection(ArmResource parent) : base(parent)
         {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Management
                 try
                 {
                     var response = _managementGroupsRestClient.List(cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Management
                 try
                 {
                     var response = _managementGroupsRestClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Management
                 try
                 {
                     var response = await _managementGroupsRestClient.ListAsync(cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Management
                 try
                 {
                     var response = await _managementGroupsRestClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

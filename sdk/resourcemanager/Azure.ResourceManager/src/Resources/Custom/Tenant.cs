@@ -26,8 +26,21 @@ namespace Azure.ResourceManager.Resources
     [CodeGenSuppress("GetAvailableLocationsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetTenants")]
     [CodeGenSuppress("CreateResourceIdentifier")]
+    // [CodeGenSuppress("_tenantsRestClient")] // TODO: not working for private member
     public partial class Tenant : ArmResource
     {
+        /// <summary> Initializes a new instance of the <see cref = "Tenant"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="resource"> The resource that is the target of operations. </param>
+        internal Tenant(ArmResource options, TenantData resource) : base(options, ResourceIdentifier.Root)
+        {
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Subscription"/> class.
         /// </summary>

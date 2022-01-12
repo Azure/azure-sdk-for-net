@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgOp.Value;
-            var deleteOp = await rg.DeleteAsync(false);
+            var deleteOp = await rg.DeleteAsync(waitForCompletion: false);
             var response = deleteOp.GetRawResponse();
             Assert.AreEqual(202, response.Status);
             await deleteOp.UpdateStatusAsync();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Tests
         public void StartDeleteNonExistantRg()
         {
             var rgOp = InstrumentClientExtension(Client.GetResourceGroup(new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/fake")));
-            var deleteOpTask = rgOp.DeleteAsync(false);
+            var deleteOpTask = rgOp.DeleteAsync(waitForCompletion: false);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await deleteOpTask);
             Assert.AreEqual(404, exception.Status);
         }
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
-            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.AddTagAsync(null, "value"));
-            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(null, "value"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
         }
 
         [TestCase]
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
-            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.RemoveTagAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.RemoveTagAsync(" "));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(" "));
         }
 
         [TestCase]
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.Tests
             var genericResources = subscription.GetGenericResources();
             var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
 
-            int countRg1 = await GetResourceCountAsync(genericResources, rg1);
-            int countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            int countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
+            int countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
             Assert.AreEqual(1, countRg1);
             Assert.AreEqual(0, countRg2);
 
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.Tests
             moveInfo.Resources.Add(aset.Id);
             _ = await rg1.MoveResourcesAsync(moveInfo);
 
-            countRg1 = await GetResourceCountAsync(genericResources, rg1);
-            countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
+            countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
             Assert.AreEqual(0, countRg1);
             Assert.AreEqual(1, countRg2);
 
@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.Tests
             var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
             GenericResource aset = await asetOp.WaitForCompletionAsync();
 
-            int countRg1 = await GetResourceCountAsync(genericResources, rg1);
-            int countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            int countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
+            int countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
             Assert.AreEqual(1, countRg1);
             Assert.AreEqual(0, countRg2);
 
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.Tests
             var moveOp = await rg1.MoveResourcesAsync(moveInfo, false);
             _ = await moveOp.WaitForCompletionResponseAsync();
 
-            countRg1 = await GetResourceCountAsync(genericResources, rg1);
-            countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
+            countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
             Assert.AreEqual(0, countRg1);
             Assert.AreEqual(1, countRg2);
 

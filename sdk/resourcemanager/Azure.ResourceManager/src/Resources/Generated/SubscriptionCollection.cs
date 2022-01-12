@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.Exists");
             scope.Start();
             try
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _subscriptionsRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _subscriptionsRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _subscriptionsRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _subscriptionsRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementLockObjectCollection"/> class class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementLockObjectCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagementLockObjectCollection(ArmResource parent) : base(parent)
         {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(lockName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(lockName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.Exists");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _managementLocksRestClient.ListByScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _managementLocksRestClient.ListByScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _managementLocksRestClient.ListByScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _managementLocksRestClient.ListByScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -335,6 +335,10 @@ namespace Azure.ResourceManager
             return genericResourceOperations;
         }
 
+        /// <summary> Gets a collection of GenericResources. </summary>
+        /// <returns> An object representing collection of GenericResources and their operations. </returns>
+        public virtual GenericResourceCollection GetGenericResources() => _tenant.GetGenericResources();
+
         /// <summary>
         /// Get the operations for an specific resource.
         /// </summary>
