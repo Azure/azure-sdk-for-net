@@ -84,9 +84,7 @@ namespace Azure
 
         /// <summary>
         /// Indicates whether the status code of the returned response is considered
-        /// an error code. This enables the caller to prevent the client from throwing
-        /// an exception when the service method takes a <see cref="RequestContext"/>
-        /// parameter, by passing <see cref="ErrorOptions.NoThrow"/>.
+        /// an error code.
         /// </summary>
         public virtual bool IsError { get; internal set; }
 
