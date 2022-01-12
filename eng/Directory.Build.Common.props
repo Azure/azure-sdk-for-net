@@ -143,7 +143,7 @@
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
     <PackageIcon>pkgicon.png</PackageIcon>
-    <PackageIconPath>$(RepoEngPath)/images/pkgicon.png</PackageIconPath>  
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>  
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
