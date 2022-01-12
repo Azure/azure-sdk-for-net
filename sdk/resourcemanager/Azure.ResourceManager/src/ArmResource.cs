@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Core
         protected virtual void ValidateResourceType(ResourceIdentifier identifier)
         {
 #if DEBUG
-            if (identifier?.ResourceType != ValidResourceType)
+            if (identifier.ResourceType != ValidResourceType)
                 throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");
 #endif
         }
