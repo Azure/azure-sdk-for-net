@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.19 (Unreleased)
+## 0.1.0-preview.19 (2022-01-11)
 
 ### Features Added
 
@@ -13,10 +13,6 @@
     - `ExceptionFormattingResponseClassifier`
     - `ResponseExtensions`
     - `ResponsePropertiesPolicy`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 0.1.0-preview.18 (2021-11-03)
 
