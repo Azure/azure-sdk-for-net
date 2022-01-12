@@ -33,13 +33,13 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public HealthApiClient(string endpoint, WebPubSubServiceClientsOptions options = null)
+        public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options = null)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            options ??= new WebPubSubServiceClientsOptions();
+            options ??= new WebPubSubServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
