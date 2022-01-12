@@ -3,6 +3,7 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
+- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_CERTIFICATE_ENABLE_SNI` environment variable.
 
 ### Breaking Changes
 
