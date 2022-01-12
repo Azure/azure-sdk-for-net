@@ -10,10 +10,14 @@ $azureCoreVer = [AzureEngSemanticVersion]::ParseVersionString($azureCorePkgInfo.
 $azureCoreVer.IsPreRelease = $false
 $azureCoreVerBase = $azureCoreVer.ToString()
 
+$currentDate = Get-Date -Format "yyyyMM"
+$currentDate = [DateTime]::ParseExact($currentDate, "yyyyMM", $null)
+$azureCoreMinDate = $currentDate.addMonths(-6).ToString("yyyyMM")\
+
 $azureCorePkg = Find-Package -Name 'Azure.Core' `
   -Source $NugetSource `
   -AllowPrereleaseVersions `
-  -MinimumVersion "$azureCoreVerBase-alpha.202106" `
+  -MinimumVersion "$azureCoreVerBase-alpha.$azureCoreMinDate" `
   -MaximumVersion "$azureCoreVerBase-alphab" `
   -Force
 
@@ -21,6 +25,8 @@ Write-Host "Azure.Core Version: $($azureCorePkg.Version)"
 $azureCoreVerExtension = $azureCorePkg.Version.Replace($azureCoreVerBase, "")
 $azureCoreVerDateStr = $azureCoreVerExtension.split(".")[1]
 $azureCoreVerDate = [DateTime]::ParseExact($azureCoreVerDateStr, "yyyyMMdd", $null)
+# Parsing Azure.Core's latest version and make the min version for other packages one month prior to that.
+# This will exclude stale packages that aren't being updated regularly
 $pkgMinVer = $azureCoreVerDate.addMonths(-1).ToString("yyyyMMdd")
 
 $SmokeTestPackageInfo = @()
@@ -42,8 +48,8 @@ foreach ($pkg in $trackTwoPackages) {
     $SmokeTestPackageInfo += $pkg
   }
   else {
-    Write-Host "Cannot find alpha version of package $($pkg.Name) after $pkgMinver and before $azureCoreVerDateStr"
-    Write-Host "This may be due to the package being stale or unpublished"
+    Write-Warning "Cannot find alpha version of package $($pkg.Name) after $pkgMinver and before $azureCoreVerDateStr"
+    Write-Warning "This may be due to the package being stale or unpublished"
     $latestPkg = Find-Package -Name $pkg.Name `
       -Source $NugetSource `
       -AllowPrereleaseVersions `
@@ -56,8 +62,8 @@ foreach ($pkg in $trackTwoPackages) {
     }
     else
     {
-      Write-Host "Did not find any matching package $($pkg.Name)"
-      Write-Host "This error may be due to package not being published"
+      Write-Warning "Did not find any matching package $($pkg.Name)"
+      Write-Warning "This error may be due to package not being published"
     }
   }
 }
