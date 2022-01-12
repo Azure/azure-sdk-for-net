@@ -20,22 +20,22 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
             QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("{QnAMakerSubscriptionKey}"), new HttpClient(), false)
             {
-                Endpoint = "https://westus.api.cognitive.microsoft.com"
+                Endpoint = "{QnaMakerEndpoint}"
             };
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
 
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
             Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp = await client.Knowledgebase.CreateAsync(new CreateKbDTO
             {
-                Name = "testqna", QnaList = new List<QnADTO>
+                Name = "{KnowledgeBaseName}", QnaList = new List<QnADTO>
                 {
                     new QnADTO
                     {
                         Questions = new List<string>
                         {
-                            "hi"
+                            "{Question}"
                         },
-                        Answer = "hello"
+                        Answer = "{Answer}"
                     }
                 }
             });
@@ -53,9 +53,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                             {
                                 Questions = new List<string>
                                 {
-                                    "bye"
+                                    "{Question}"
                                 },
-                                Answer = "goodbye"
+                                Answer = "{Answer}"
                             }
                         }
                     }
@@ -75,14 +75,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         private async Task Language_QnA_MigrationGuide_Authoring()
         {
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
-            Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+            Uri endpoint = new Uri("{LanguageQnaEndpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
             QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
-            string newProjectName = "testqna";
+            string newProjectName = "{ProjectName}";
             RequestContent creationRequestContent = RequestContent.Create(
                 new {
                         description = "This is the description for a test project",
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(true, "{ProjectName}", updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, "{ProjectName}", updateSourcesRequestContent);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeSource
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
@@ -135,23 +135,23 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(true, "{ProjectName}", updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(waitForCompletion: true, "{ProjectName}", updateQnasRequestContent);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
-            Operation<BinaryData> exportOperation = client.Export(true, "{ProjectName}", "{ExportFormat}");
+            Operation<BinaryData> exportOperation = client.Export(waitForCompletion: true, "{ProjectName}", "{ExportFormat}");
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(true, "{ProjectName}");
+            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(waitForCompletion: true, "{ProjectName}");
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
         }
 
         private async Task Language_QnA_MigrationGuide_Runtime()
         {
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-            Uri endpoint = new Uri("{endpoint}");
-            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+            Uri endpoint = new Uri("{LanguageQnaEndpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
             QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
             #endregion
@@ -159,38 +159,39 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 #pragma warning disable SA1509 // Opening braces should not be preceded by blank line
             {
                 #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-                QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
-                Response<AnswersResult> response = await client.GetAnswersAsync("{question}", project);
+                QuestionAnsweringProject project = new QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
+                Response<AnswersResult> response = await client.GetAnswersAsync("{Question}", project);
                 #endregion
             }
 
             {
                 #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
-                QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+                QuestionAnsweringProject project = new QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
                 AnswersOptions options = new AnswersOptions
                 {
                     AnswerContext = new KnowledgeBaseAnswerContext(1)
                 };
 
-                Response<AnswersResult> responseFollowUp = await client.GetAnswersAsync("{question}", project, options);
+                Response<AnswersResult> responseFollowUp = await client.GetAnswersAsync("{Question}", project, options);
                 #endregion
             }
 #pragma warning restore SA1509 // Opening braces should not be preceded by blank line
         }
+
         private async Task CognitiveServices_QnA_MigrationGuide_Runtime()
         {
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-            EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{api-key}");
+            EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{ApiKey}");
 
             QnAMakerRuntimeClient client = new QnAMakerRuntimeClient(credential)
             {
-                RuntimeEndpoint = "{endpoint}"
+                RuntimeEndpoint = "{QnaMakerEndpoint}"
             };
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
 
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
             QueryDTO queryDTO = new QueryDTO();
-            queryDTO.Question = "{question}";
+            queryDTO.Question = "{Question}";
 
             QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase

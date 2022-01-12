@@ -5,8 +5,8 @@ This sample demonstrates how to export and import Question Answering projects. T
 To export, import, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("LanguageEndpoint");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
 ```
@@ -20,9 +20,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 To export a Question Answering project, you will need to set your project name and choose an export format before calling c as shown below:
 
 ```C# Snippet:QuestionAnsweringProjectsClient_ExportProject
-string exportFormat = "json"; // can also be tsv or excel
-bool waitForCompletion = true;
-Operation<BinaryData> exportOperation = client.Export(waitForCompletion, exportedProjectName, exportFormat);
+Operation<BinaryData> exportOperation = client.Export(waitForCompletion: true, exportedProjectName, format: "json");
 
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -36,7 +34,6 @@ To import a project, you could provide the data of the exported project in the s
 ```C# Snippet:QuestionAnsweringProjectsClient_ImportProject
 // Set import project name and request content
 string importedProjectName = "importedProject";
-string importFormat = "json";
 RequestContent importRequestContent = RequestContent.Create(new
     {
     Metadata = new
@@ -55,7 +52,7 @@ RequestContent importRequestContent = RequestContent.Create(new
     }
 });
 
-Operation<BinaryData> importOperation = client.Import(waitForCompletion, importedProjectName, importRequestContent, importFormat);
+Operation<BinaryData> importOperation = client.Import(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
 
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
 ```
@@ -75,9 +72,7 @@ Console.WriteLine(projectDetails.Content);
 ### Exporting a Project
 
 ```C# Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
-string exportFormat = "json"; // can also be tsv or excel
-bool waitForCompletion = true;
-Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion, exportedProjectName, exportFormat);
+Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion: true, exportedProjectName, format : "json");
 
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -89,7 +84,6 @@ string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl")
 ```C# Snippet:QuestionAnsweringProjectsClient_ImportProjectAsync
 // Set import project name and request content
 string importedProjectName = "importedProject";
-string importFormat = "json";
 RequestContent importRequestContent = RequestContent.Create(new
 {
     Metadata = new
@@ -108,7 +102,7 @@ RequestContent importRequestContent = RequestContent.Create(new
     }
 });
 
-Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion, importedProjectName, importRequestContent, importFormat);
+Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
 ```
 

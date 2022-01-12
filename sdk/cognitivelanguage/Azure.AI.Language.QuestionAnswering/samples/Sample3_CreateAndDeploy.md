@@ -5,8 +5,8 @@ This sample demonstrates how to create and deploy Question Answering projects. T
 To create, deploy, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("LanguageEndpoint");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
 ```
@@ -21,7 +21,7 @@ To create a new Question Answering project, you will need to set your project na
 
 ```C# Snippet:QuestionAnsweringProjectsClient_CreateProject
 // Set project name and request content parameters
-string newProjectName = "NewFAQ";
+string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
     new {
         description = "This is the description for a test project",
@@ -53,8 +53,7 @@ The following snippet shows how to add a new knowledge base source to your proje
 
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
 // Set request content parameters for updating our new project's sources
-string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-bool waitForCompletion = true;
+string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -71,7 +70,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);
@@ -86,8 +85,8 @@ foreach (BinaryData source in sources)
 
 ```C# Snippet:QuestionAnsweringProjectsClient_DeployProject
 // Set deployment name and start operation
-string newDeploymentName = "production";
-Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion, newProjectName, newDeploymentName);
+string newDeploymentName = "{DeploymentName}";
+Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
 Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
@@ -135,7 +134,6 @@ await foreach (BinaryData project in projects)
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
 string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-bool waitForCompletion = true;
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -152,7 +150,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 
 Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
 
@@ -169,8 +167,8 @@ await foreach (BinaryData source in sources)
 
 ```C# Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
 // Set deployment name and start operation
-string newDeploymentName = "production";
-Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion, newProjectName, newDeploymentName);
+string newDeploymentName = "{DeploymentName}";
+Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: true, newProjectName, newDeploymentName);
 
 Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
 

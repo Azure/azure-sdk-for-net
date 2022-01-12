@@ -24,9 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             CreateProject(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProject
-            string exportFormat = "json"; // can also be tsv or excel
-            bool waitForCompletion = true;
-            Operation<BinaryData> exportOperation = client.Export(waitForCompletion, exportedProjectName, exportFormat);
+            Operation<BinaryData> exportOperation = client.Export(waitForCompletion: true, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -39,7 +37,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:QuestionAnsweringProjectsClient_ImportProject
             // Set import project name and request content
             string importedProjectName = "importedProject";
-            string importFormat = "json";
             RequestContent importRequestContent = RequestContent.Create(new
                 {
                 Metadata = new
@@ -58,7 +55,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = client.Import(waitForCompletion, importedProjectName, importRequestContent, importFormat);
+            Operation<BinaryData> importOperation = client.Import(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
 
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
@@ -86,9 +83,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             await CreateProjectAsync(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
-            string exportFormat = "json"; // can also be tsv or excel
-            bool waitForCompletion = true;
-            Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion, exportedProjectName, exportFormat);
+            Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion: true, exportedProjectName, format : "json");
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -101,7 +96,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:QuestionAnsweringProjectsClient_ImportProjectAsync
             // Set import project name and request content
             string importedProjectName = "importedProject";
-            string importFormat = "json";
             RequestContent importRequestContent = RequestContent.Create(new
             {
                 Metadata = new
@@ -120,7 +114,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion, importedProjectName, importRequestContent, importFormat);
+            Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 

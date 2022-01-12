@@ -43,19 +43,19 @@ In the case of Question Answering, the modern client libraries have packages and
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a `QnAMakerRuntimeClient` along with `EndpointKeyServiceClientCredentials`:
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{api-key}");
+EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{ApiKey}");
 
 QnAMakerRuntimeClient client = new QnAMakerRuntimeClient(credential)
 {
-    RuntimeEndpoint = "{endpoint}"
+    RuntimeEndpoint = "{QnaMakerEndpoint}"
 };
 ```
 
 Now in `Azure.AI.Language.QuestionAnswering`, you create a `QuestionAnsweringClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-Uri endpoint = new Uri("{endpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("{LanguageQnaEndpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
@@ -66,7 +66,7 @@ Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could 
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
 QueryDTO queryDTO = new QueryDTO();
-queryDTO.Question = "{question}";
+queryDTO.Question = "{Question}";
 
 QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
 ```
@@ -74,8 +74,8 @@ QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowle
 Now in `Azure.AI.Language.QuestionAnswering` you use `client.QueryKnowledgeBaseAsync`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
-Response<AnswersResult> response = await client.GetAnswersAsync("{question}", project);
+QuestionAnsweringProject project = new QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
+Response<AnswersResult> response = await client.GetAnswersAsync("{Question}", project);
 ```
 
 #### Chatting
@@ -92,13 +92,13 @@ QnASearchResultList responseFollowUp = await client.Runtime.GenerateAnswerAsync(
 Now in `Azure.AI.Language.QuestionAnswering`, you use `QueryKnowledgeBaseOptions` to set `projectName`, `deploymentName`, and `question` along with setting the `context` to have `previousQnaId`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
-QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+QuestionAnsweringProject project = new QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
 AnswersOptions options = new AnswersOptions
 {
     AnswerContext = new KnowledgeBaseAnswerContext(1)
 };
 
-Response<AnswersResult> responseFollowUp = await client.GetAnswersAsync("{question}", project, options);
+Response<AnswersResult> responseFollowUp = await client.GetAnswersAsync("{Question}", project, options);
 ```
 
 ### Authoring Client
@@ -110,15 +110,15 @@ Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
 QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("{QnAMakerSubscriptionKey}"), new HttpClient(), false)
 {
-    Endpoint = "https://westus.api.cognitive.microsoft.com"
+    Endpoint = "{QnaMakerEndpoint}"
 };
 ```
 
 Now in `Azure.AI.Language.QuestionAnswering.Projects`, you create a `QuestionAnsweringProjectsClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("{LanguageQnaEndpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
 ```
@@ -130,15 +130,15 @@ Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
 Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp = await client.Knowledgebase.CreateAsync(new CreateKbDTO
 {
-    Name = "testqna", QnaList = new List<QnADTO>
+    Name = "{KnowledgeBaseName}", QnaList = new List<QnADTO>
     {
         new QnADTO
         {
             Questions = new List<string>
             {
-                "hi"
+                "{Question}"
             },
-            Answer = "hello"
+            Answer = "{Answer}"
         }
     }
 });
@@ -147,7 +147,7 @@ Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp =
 Now in `Azure.AI.Language.QuestionAnswering.Projects`, you can create a new Question Answering project by defining a `RequestContent` instance with the needed project creation properties:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
-string newProjectName = "testqna";
+string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
     new {
             description = "This is the description for a test project",
@@ -179,9 +179,9 @@ Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp =
                 {
                     Questions = new List<string>
                     {
-                        "bye"
+                        "{Question}"
                     },
-                    Answer = "goodbye"
+                    Answer = "{Answer}"
                 }
             }
         }
@@ -208,7 +208,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(true, "{ProjectName}", updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, "{ProjectName}", updateSourcesRequestContent);
 ```
 
 You can also update a project's questions and answers directly as follows:
@@ -229,7 +229,7 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(true, "{ProjectName}", updateQnasRequestContent);
+Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(waitForCompletion: true, "{ProjectName}", updateQnasRequestContent);
 ```
 
 #### Exporting knowledge base
@@ -243,7 +243,7 @@ QnADocumentsDTO kbdata = await client.Knowledgebase.DownloadAsync("{KnowledgeBas
 Now you can export your Question Answering project:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
-Operation<BinaryData> exportOperation = client.Export(true, "{ProjectName}", "{ExportFormat}");
+Operation<BinaryData> exportOperation = client.Export(waitForCompletion: true, "{ProjectName}", "{ExportFormat}");
 ```
 
 #### Deleting knowledge base
@@ -257,5 +257,5 @@ await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
 Now in `Azure.AI.Language.QuestionAnswering.Projects`, you can delete a project using the `DeleteProjectAsync` method:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(true, "{ProjectName}");
+Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(waitForCompletion: true, "{ProjectName}");
 ```

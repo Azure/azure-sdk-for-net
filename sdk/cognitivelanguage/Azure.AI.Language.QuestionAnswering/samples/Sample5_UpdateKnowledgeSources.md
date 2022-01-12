@@ -5,8 +5,8 @@ This sample demonstrates how to update knowledge sources, question and answer pa
 To add knowledge sources, update question and answer pairs, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("LanguageEndpoint");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
 ```
@@ -21,8 +21,7 @@ To add a new knowledge source to your project, you can set up a `RequestContent`
 
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
 // Set request content parameters for updating our new project's sources
-string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-bool waitForCompletion = true;
+string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -39,7 +38,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);
@@ -55,8 +54,8 @@ foreach (BinaryData source in sources)
 Similarily, you can use the `UpdateQnas` method to add new question and answer pairs as follows:
 
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateQnas
-string question = "What is the easiest way to use azure services in my .NET project?";
-string answer = "Using Microsoft's Azure SDKs";
+string question = "{NewQuestion}";
+string answer = "{NewAnswer}";
 RequestContent updateQnasRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -72,7 +71,7 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion, testProjectName, updateQnasRequestContent);
+Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion: true, testProjectName, updateQnasRequestContent);
 
 // QnAs can be retrieved as follows
 Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
@@ -133,7 +132,7 @@ RequestContent addFeedbackRequestContent = RequestContent.Create(
             new
             {
                 userId = "userX",
-                userQuestion = "what do you mean?",
+                userQuestion = "{Follow-up Question}",
                 qnaId = 1
             }
         }
@@ -149,7 +148,6 @@ Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRe
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
 string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-bool waitForCompletion = true;
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -166,7 +164,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 
 Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
 
@@ -182,8 +180,8 @@ await foreach (BinaryData source in sources)
 ### Adding a qna pair
 
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateQnasAsync
-string question = "What is the easiest way to use azure services in my .NET project?";
-string answer = "Using Microsoft's Azure SDKs";
+string question = "{NewQuestion}";
+string answer = "{NewAnswer}";
 RequestContent updateQnasRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -199,7 +197,7 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion, testProjectName, updateQnasRequestContent);
+Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion: true, testProjectName, updateQnasRequestContent);
 await updateQnasOperation.WaitForCompletionAsync();
 
 // QnAs can be retrieved as follows
@@ -259,7 +257,7 @@ RequestContent addFeedbackRequestContent = RequestContent.Create(
             new
             {
                 userId = "userX",
-                userQuestion = "what do you mean?",
+                userQuestion = "{Follow-up question}",
                 qnaId = 1
             }
         }

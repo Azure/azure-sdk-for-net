@@ -21,7 +21,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringProjectsClient client = Client;
             #region Snippet:QuestionAnsweringProjectsClient_CreateProject
             // Set project name and request content parameters
-            string newProjectName = "NewFAQ";
+            string newProjectName = "{ProjectName}";
+#if !SNIPPET
+            newProjectName = "newFAQ";
+#endif
             RequestContent creationRequestContent = RequestContent.Create(
                 new {
                     description = "This is the description for a test project",
@@ -51,8 +54,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:QuestionAnsweringProjectsClient_UpdateSources
 
             // Set request content parameters for updating our new project's sources
-            string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-            bool waitForCompletion = true;
+            string sourceUri = "{KnowledgeSourceUri}";
+#if !SNIPPET
+            sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+#endif
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -69,7 +74,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 
             // Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = client.GetSources(newProjectName);
@@ -85,8 +90,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:QuestionAnsweringProjectsClient_DeployProject
             // Set deployment name and start operation
-            string newDeploymentName = "production";
-            Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion, newProjectName, newDeploymentName);
+            string newDeploymentName = "{DeploymentName}";
+#if !SNIPPET
+            newDeploymentName = "production";
+#endif
+            Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
 
             // Deployments can be retrieved as follows
             Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
@@ -112,6 +120,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
             // Set project name and request content parameters
             string newProjectName = "NewFAQ";
+#if !SNIPPET
+            newProjectName = "newFAQ";
+#endif
             RequestContent creationRequestContent = RequestContent.Create(
                 new
                 {
@@ -144,7 +155,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             // Set request content parameters for updating our new project's sources
             string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-            bool waitForCompletion = true;
+#if !SNIPPET
+            sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+#endif
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -161,7 +174,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 
             Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
 
@@ -179,8 +192,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
             // Set deployment name and start operation
-            string newDeploymentName = "production";
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion, newProjectName, newDeploymentName);
+            string newDeploymentName = "{DeploymentName}";
+#if !SNIPPET
+            newDeploymentName = "production";
+#endif
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: true, newProjectName, newDeploymentName);
 
             Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
 

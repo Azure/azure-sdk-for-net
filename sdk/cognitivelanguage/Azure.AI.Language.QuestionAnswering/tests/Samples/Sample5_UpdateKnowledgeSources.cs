@@ -26,7 +26,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region QuestionAnsweringProjectsClient_UpdateSources
             // Set request content parameters for updating our new project's sources
             string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-            bool waitForCompletion = true;
+#if !SNIPPET
+            sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+#endif
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -43,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, testProjectName, updateSourcesRequestContent);
 
             // Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = client.GetSources(testProjectName);
@@ -58,8 +60,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
 
             #region Snippet:QuestionAnsweringProjectsClient_UpdateQnas
-            string question = "What is the easiest way to use azure services in my .NET project?";
-            string answer = "Using Microsoft's Azure SDKs";
+
+            string question = "{NewQuestion}";
+            string answer = "{NewAnswer}";
+#if !SNIPPET
+            question = "What is the easiest way to use azure services in my .NET project?";
+            answer = "Using Microsoft's Azure SDKs";
+#endif
             RequestContent updateQnasRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -75,7 +82,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion, testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion: true, testProjectName, updateQnasRequestContent);
 
             // QnAs can be retrieved as follows
             Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
@@ -139,7 +146,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         new
                         {
                             userId = "userX",
-                            userQuestion = "what do you mean?",
+                            userQuestion = "{Follow-up Question}",
                             qnaId = 1
                         }
                     }
@@ -164,7 +171,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region QuestionAnsweringProjectsClient_UpdateSourcesAsync
             // Set request content parameters for updating our new project's sources
             string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-            bool waitForCompletion = true;
+#if !SNIPPET
+            sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+#endif
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -181,7 +190,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, testProjectName, updateSourcesRequestContent);
 
             // Wait for operation completion
             Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
@@ -201,8 +210,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
 
             #region Snippet:QuestionAnsweringProjectsClient_UpdateQnasAsync
-            string question = "What is the easiest way to use azure services in my .NET project?";
-            string answer = "Using Microsoft's Azure SDKs";
+            string question = "{NewQuestion}";
+            string answer = "{NewAnswer}";
+#if !SNIPPET
+            question = "What is the easiest way to use azure services in my .NET project?";
+            answer = "Using Microsoft's Azure SDKs";
+#endif
             RequestContent updateQnasRequestContent = RequestContent.Create(
                 new[] {
                     new {
@@ -218,7 +231,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion, testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion: true, testProjectName, updateQnasRequestContent);
             await updateQnasOperation.WaitForCompletionAsync();
 
             // QnAs can be retrieved as follows
@@ -283,7 +296,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         new
                         {
                             userId = "userX",
-                            userQuestion = "what do you mean?",
+                            userQuestion = "{Follow-up question}",
                             qnaId = 1
                         }
                     }

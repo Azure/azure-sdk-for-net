@@ -40,8 +40,8 @@ az cognitiveservices account keys list --resource-group <resource-group-name> --
 Once you've determined your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
 
 ```C# Snippet:QuestionAnsweringClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("{LanguageEndpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
@@ -51,8 +51,8 @@ QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credentia
 With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringProjectsClient`:
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+Uri endpoint = new Uri("LanguageEndpoint");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
 ```
@@ -94,8 +94,8 @@ The following examples show common scenarios using the `client` [created above](
 The only input required to a ask a question using an existing knowledge base is just the question itself:
 
 ```C# Snippet:QuestionAnsweringClient_GetAnswers
-string projectName = "FAQ";
-string deploymentName = "prod";
+string projectName = "{ProjectName}";
+string deploymentName = "{DeploymentName}";
 QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
 Response<AnswersResult> response = client.GetAnswers("How long should my Surface battery last?", project);
 
@@ -114,8 +114,8 @@ You can set additional properties on `QuestionAnsweringClientOptions` to limit t
 If your knowledge base is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
 
 ```C# Snippet:QuestionAnsweringClient_Chat
-string projectName = "FAQ";
-string deploymentName = "prod";
+string projectName = "{ProjectName}";
+string deploymentName = "{DeploymentName}";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
 KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
 QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
@@ -142,29 +142,27 @@ The following examples show common scenarios using the `QuestionAnsweringProject
 
 To create a new project, you must specify the project's name and a create a `RequestContent` instance with the parameters needed to set up the project.
 
-```C# Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
+```C# Snippet:QuestionAnsweringProjectsClient_CreateProject
 // Set project name and request content parameters
-string newProjectName = "NewFAQ";
+string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
-    new
-    {
+    new {
         description = "This is the description for a test project",
         language = "en",
         multilingualResource = false,
-        settings = new
-        {
+        settings = new {
             defaultAnswer = "No answer found for your question."
+            }
         }
-    }
     );
 
-Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
+Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
 
 // Projects can be retrieved as follows
-AsyncPageable<BinaryData> projects = client.GetProjectsAsync();
+Pageable<BinaryData> projects = client.GetProjects();
 
 Console.WriteLine("Projects: ");
-await foreach (BinaryData project in projects)
+foreach (BinaryData project in projects)
 {
     Console.WriteLine(project);
 }
@@ -174,17 +172,15 @@ await foreach (BinaryData project in projects)
 
 Your projects can be deployed using the `DeployProjectAsync` or the synchronous `DeployProject`. All you need to specify is the project's name and the deployment name that you wish to use. Please note that the service will not allow you to deploy empty projects.
 
-```C# Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
+```C# Snippet:QuestionAnsweringProjectsClient_DeployProject
 // Set deployment name and start operation
-string newDeploymentName = "production";
-Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion, newProjectName, newDeploymentName);
-
-Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
+string newDeploymentName = "{DeploymentName}";
+Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
-AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);
+Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
 Console.WriteLine("Deployments: ");
-await foreach (BinaryData deployment in deployments)
+foreach (BinaryData deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
@@ -194,10 +190,9 @@ await foreach (BinaryData deployment in deployments)
 
 One way to add content to your project is to add a knowledge source. The following example shows how you can set up a `RequestContent` instance to add a new knowledge source of the type "url".
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
+```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
 // Set request content parameters for updating our new project's sources
-string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
-bool waitForCompletion = true;
+string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -214,14 +209,12 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion, newProjectName, updateSourcesRequestContent);
-
-Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
-AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
+Pageable<BinaryData> sources = client.GetSources(newProjectName);
 Console.WriteLine("Sources: ");
-await foreach (BinaryData source in sources)
+foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
 }
