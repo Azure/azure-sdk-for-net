@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </remarks>
     ///
     /// <seealso cref="EventHubProducerClient" />
-    ///
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Unknown")]
     public class EventHubBufferedProducerClient : IAsyncDisposable
     {
         /// <summary>The maximum amount of time, in milliseconds, to allow for acquiring the semaphore guarding a partition's publishing eligibility.</summary>

@@ -14,6 +14,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -408,8 +409,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
 
             //get private link resource
-            IReadOnlyList<PrivateLinkResource> privateLinkResources = (await eventHubNamespace.GetPrivateLinkResourcesAsync()).Value;
-            Assert.NotNull(privateLinkResources);
+            var privateLinkResources = eventHubNamespace.GetPrivateLinkResourcesAsync().EnsureSyncEnumerable().ToList();
+            Assert.IsNotEmpty(privateLinkResources);
         }
     }
 }

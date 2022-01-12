@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </remarks>
     ///
     /// <seealso cref="EventHubBufferedProducerClient" />
-    ///
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Unknown")]
     public class EventHubProducerClient : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts that may be made to get a <see cref="TransportProducer" /> from the pool.</summary>

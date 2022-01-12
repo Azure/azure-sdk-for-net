@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs
     /// </remarks>
     ///
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Unknown")]
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
     {
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
