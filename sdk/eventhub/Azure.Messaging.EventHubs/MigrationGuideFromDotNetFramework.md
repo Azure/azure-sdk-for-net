@@ -80,7 +80,7 @@ In the `WindowsAzure.ServiceBus` library, publishing and reading events started 
 
 Using a connection string:
 
-```C# Snippet:EventHubs_Migrate_T1_CreateWithConnectionString
+```C#
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
@@ -131,7 +131,7 @@ This section will provide a high-level comparison of the most common publishing 
 
 In the `WindowsAzure.ServiceBus` library, to publish events and allow the Event Hubs service to automatically assign the partition, the `EventHubClient` was used as the publisher for a batch created with its default configuration.
 
-```C# Snippet:EventHubs_Migrate_T1_PublishWithAutomaticRouting
+```C#
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
@@ -194,7 +194,7 @@ finally
 
 In the `WindowsAzure.ServiceBus` library, to publish events and allow the Event Hubs service to automatically assign the partition, the `EventHubClient` was used as the publisher for a batch created with a partition key specified as an option.
 
-```C# Snippet:EventHubs_Migrate_T1_PublishWithAPartitionKey
+```C#
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
@@ -263,7 +263,7 @@ finally
 
 In the `WindowsAzure.ServiceBuss` library, to publish events and allow the Event Hubs service to automatically assign the partition, a `EventHubSender` is created using the `EventHubClient` and then used as the publisher for a batch created with its default configuration.
 
-```C# Snippet:EventHubs_Migrate_T1_PublishToSpecificPartition
+```C#
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
@@ -344,7 +344,7 @@ The `Azure.Messaging.EventHubs` library also provides multiple types for reading
 
 In `Microsoft.Azure.ServiceBus.EventProcessorHost`, the `EventProcessorHost` provides a framework that allows you to concentrate on writing your business logic to process events while the processor holds responsibility for concerns such as resiliency, balancing work between multiple instances of your program, and supporting the creation of checkpoints to preserve state. Developers would have to create and register a concrete implementation of `IEventProcessor` to begin consuming events.
 
-```C# Snippet:EventHubs_Migrate_T1_SimpleEventProcessor
+```C#
 public class SimpleEventProcessor : IEventProcessor
 {
     public Task CloseAsync(PartitionContext context, CloseReason reason)
@@ -378,7 +378,7 @@ public class SimpleEventProcessor : IEventProcessor
 }
 ```
 
-```C# Snippet:EventHubs_Migrate_T1_BasicEventProcessorHost
+```C#
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
 
 var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -563,7 +563,7 @@ finally
 
 In the `WindowsAzure.ServiceBus` library, to read events from a partition, a `EventHubReceiver` is created using the `EventHubClient` and events are read in a pull-based manner.
 
-```C# Snippet:EventHubs_Migrate_T1_ReadFromSpecificPartition
+```C#
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroupName = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
