@@ -103,7 +103,7 @@ foreach (BinaryData deployment in deployments)
 
 ```C# Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
 // Set project name and request content parameters
-string newProjectName = "NewFAQ";
+string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
     new
     {
@@ -133,7 +133,7 @@ await foreach (BinaryData project in projects)
 
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
-string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {

@@ -119,7 +119,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
             // Set project name and request content parameters
-            string newProjectName = "NewFAQ";
+            string newProjectName = "{ProjectName}";
 #if !SNIPPET
             newProjectName = "newFAQ";
 #endif
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 
             // Set request content parameters for updating our new project's sources
-            string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            string sourceUri = "{KnowledgeSourceUri}";
 #if !SNIPPET
             sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
 #endif

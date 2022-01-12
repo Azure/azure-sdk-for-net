@@ -147,7 +147,7 @@ Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRe
 
 ```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
-string sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
