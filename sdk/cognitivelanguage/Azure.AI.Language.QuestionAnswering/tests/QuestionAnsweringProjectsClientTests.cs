@@ -76,7 +76,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual("projectName", ex.ParamName);
         }
 
-        // These tests should be activated once the bug with the validation generation is fixed.
+        // TODO: These tests should be activated once the bug with the validation generation is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26291
 
         /*
         [Test]

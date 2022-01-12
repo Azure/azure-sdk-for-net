@@ -34,12 +34,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
   
-  <!--TODO: Switch out project reference with .core package reference when package is ready.-->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
-
-  <!--TODO: Switch out project reference with .core package reference when package is ready.-->
+  <!-- TODO: Switch out project reference with .core package reference when package is ready. https://github.com/Azure/azure-sdk-for-net/issues/26171 -->
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
