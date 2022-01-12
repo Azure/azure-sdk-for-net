@@ -387,7 +387,7 @@ namespace Azure.Storage
 
             // newPosition is less than _position, but within _buffer.
             long beginningOfBuffer = _position - _bufferPosition;
-            if (newPosition < _position && newPosition > beginningOfBuffer)
+            if (newPosition < _position && newPosition >= beginningOfBuffer)
             {
                 _bufferPosition = (int)(newPosition - beginningOfBuffer);
                 _position = newPosition;
