@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             return InstrumentClient(new RoleAssignmentsClient(
                 new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new AccessControlClientsOptions())
+                InstrumentClientOptions(new AccessControlClientOptions())
             ));
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             return InstrumentClient(new RoleDefinitionsClient(
                 new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new AccessControlClientsOptions())
+                InstrumentClientOptions(new AccessControlClientOptions())
             ));
         }
 

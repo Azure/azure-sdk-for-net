@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Generate the resource identifier of a <see cref="ResourceLink"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string linkId)
         {
-            var resourceId = $"/{linkId}";
+            var resourceId = $"{linkId}";
             return new ResourceIdentifier(resourceId);
         }
         private readonly ClientDiagnostics _clientDiagnostics;

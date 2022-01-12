@@ -11,7 +11,6 @@ using Azure.Core;
 namespace Azure.Messaging.WebPubSub
 {
     /// <summary> Provides the client configuration options for connecting to Azure WebPubSub service. </summary>
-    [CodeGenType("WebPubSubServiceClientsOptions")]
     public partial class WebPubSubServiceClientOptions : ClientOptions
     {
         /// <summary>

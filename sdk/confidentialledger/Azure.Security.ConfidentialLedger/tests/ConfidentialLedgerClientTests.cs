@@ -22,7 +22,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 new ConfidentialLedgerClient(
                     new("https://client.name"),
                     new MockCredential(),
-                    new ConfidentialLedgerClientsOptions
+                    new ConfidentialLedgerClientOptions
                     {
                         Retry = { Delay = TimeSpan.Zero, MaxRetries = 0},
                         Transport = new MockTransport(

@@ -39,7 +39,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BoundariesClient(Uri endpoint, TokenCredential credential, FarmBeatsClientsOptions options = null)
+        public BoundariesClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -49,7 +49,7 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new FarmBeatsClientsOptions();
+            options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;

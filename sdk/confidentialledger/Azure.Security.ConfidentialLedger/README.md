@@ -87,7 +87,7 @@ var httpHandler = new HttpClientHandler();
 httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
 
 // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
-var options = new ConfidentialLedgerClientsOptions { Transport = new HttpClientTransport(httpHandler) };
+var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
 var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
 ```
 

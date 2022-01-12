@@ -12,7 +12,6 @@ using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -28,12 +27,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Ignore("not supported yet in 2021-11-01")]
         public async Task GetAvailableClusterRegions()
         {
-            var availableClusters = new List<AvailableCluster>();
-            await foreach (var availableCluster in DefaultSubscription.GetAvailableClusterRegionClustersAsync())
-            {
-                availableClusters.Add(availableCluster);
-            }
-            Assert.IsNotEmpty(availableClusters);
+            IReadOnlyList<AvailableCluster> availableClusters = (await DefaultSubscription.GetAvailableClusterRegionClustersAsync()).Value;
+            Assert.NotNull(availableClusters);
         }
 
         [Test]
@@ -56,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(cluster.Data.Name, clusterName);
 
             //get the namespace under cluster
-            IReadOnlyList<SubResource> namespaceIds = cluster.GetNamespacesAsync().EnsureSyncEnumerable().ToList();
+            IReadOnlyList<SubResource> namspaceIds = (await cluster.GetNamespacesAsync()).Value;
 
             //update the cluster
             cluster.Data.Tags.Add("key", "value");

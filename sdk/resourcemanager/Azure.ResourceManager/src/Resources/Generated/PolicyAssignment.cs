@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Generate the resource identifier of a <see cref="PolicyAssignment"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyAssignmentName)
         {
-            var resourceId = $"/{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}";
+            var resourceId = $"{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}";
             return new ResourceIdentifier(resourceId);
         }
         private readonly ClientDiagnostics _clientDiagnostics;

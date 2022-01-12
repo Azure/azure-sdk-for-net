@@ -1,8 +1,8 @@
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    public partial class AccessControlClientsOptions : Azure.Core.ClientOptions
+    public partial class AccessControlClientOptions : Azure.Core.ClientOptions
     {
-        public AccessControlClientsOptions(Azure.Analytics.Synapse.AccessControl.AccessControlClientsOptions.ServiceVersion version = Azure.Analytics.Synapse.AccessControl.AccessControlClientsOptions.ServiceVersion.V2020_12_01) { }
+        public AccessControlClientOptions(Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion version = Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion.V2020_12_01) { }
         public enum ServiceVersion
         {
             V2020_12_01 = 1,
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.AccessControl
     public partial class RoleAssignmentsClient
     {
         protected RoleAssignmentsClient() { }
-        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientsOptions options = null) { }
+        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessResponse> CheckPrincipalAccess(Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessRequest checkAccessRequest) { throw null; }
         public virtual Azure.Response CheckPrincipalAccess(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.AccessControl
     public partial class RoleDefinitionsClient
     {
         protected RoleDefinitionsClient() { }
-        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientsOptions options = null) { }
+        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetRoleDefinitionById(string roleDefinitionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, Azure.RequestContext context = null) { throw null; }

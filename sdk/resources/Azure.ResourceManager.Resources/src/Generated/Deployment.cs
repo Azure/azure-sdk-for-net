@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Generate the resource identifier of a <see cref="Deployment"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName)
         {
-            var resourceId = $"/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";
+            var resourceId = $"{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";
             return new ResourceIdentifier(resourceId);
         }
         private readonly ClientDiagnostics _clientDiagnostics;

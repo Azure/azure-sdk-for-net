@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, AccessControlClientsOptions options = null)
+        public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new AccessControlClientsOptions();
+            options ??= new AccessControlClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;

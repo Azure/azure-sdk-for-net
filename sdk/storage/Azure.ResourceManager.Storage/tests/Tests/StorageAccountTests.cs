@@ -13,7 +13,6 @@ using Azure.ResourceManager.Resources.Models;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using Azure.ResourceManager.Network.Models;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -1406,8 +1405,8 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //get all private link resources
-            var privateLinkResources = account.GetPrivateLinkResourcesAsync().EnsureSyncEnumerable().ToList();
-            Assert.IsNotEmpty(privateLinkResources);
+            Response<IReadOnlyList<PrivateLinkResource>> privateLinkResources = await account.GetPrivateLinkResourcesAsync();
+            Assert.NotNull(privateLinkResources.Value);
         }
 
         [Test]

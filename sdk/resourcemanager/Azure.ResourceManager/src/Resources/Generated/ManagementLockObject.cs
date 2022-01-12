@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Generate the resource identifier of a <see cref="ManagementLockObject"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string lockName)
         {
-            var resourceId = $"/{scope}/providers/Microsoft.Authorization/locks/{lockName}";
+            var resourceId = $"{scope}/providers/Microsoft.Authorization/locks/{lockName}";
             return new ResourceIdentifier(resourceId);
         }
         private readonly ClientDiagnostics _clientDiagnostics;
