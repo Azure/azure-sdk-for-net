@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             }
             if (sortOrder != null)
             {
-                _queryParameters.Add(string.Format("sortOrder={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(sortOrder, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("sortOrder={0}", System.Uri.EscapeDataString(sortOrder)));
             }
             if (select != null)
             {

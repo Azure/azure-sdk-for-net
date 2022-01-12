@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/alertsmanagement/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2021-08 --csharp-sdks-folder=C:\\Repos\\sdk\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "0fe46ea84880c3232c7a86db0c73f30975b11b0b";
+      public static readonly String GithubCommidId = "691920cda83cc0b89a8c821d0bb285100fad22b4";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
