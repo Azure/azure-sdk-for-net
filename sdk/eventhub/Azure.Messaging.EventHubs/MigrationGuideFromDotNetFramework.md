@@ -89,7 +89,7 @@ EventHubClient client = EventHubClient.CreateFromConnectionString(connectionStri
 
 Using Azure Active Directory:
 
-See [Role based access sample with WindowsAzure.ServiceBus SDK](https://github.com/Azure/azure-event-hubs/tree/master/samples/DotNet/Microsoft.ServiceBus/RBAC/EventHubsSenderReceiverRbac) that uses the `MessageFactory` to create an instance of `EventHubClient` that will authenticate using Azure Active Directory.
+The sample [Role based access sample with WindowsAzure.ServiceBus SDK](https://github.com/Azure/azure-event-hubs/tree/master/samples/DotNet/Microsoft.ServiceBus/RBAC/EventHubsSenderReceiverRbac) demonstrates using the `MessageFactory` to create an instance of `EventHubClient` that will authenticate using Azure Active Directory.
 
 In the `Azure.Messaging.EventHubs` library, there is no longer a higher-level client that serves as a factory. Instead, the producers and consumers are created directly using the `EventHubProducerClient` or `EventHubConsumerClient` for standard cases. A full description of the client types available can be found above in the [Client hierarchy](#client-hierarchy) section.
 
