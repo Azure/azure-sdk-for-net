@@ -10,7 +10,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.Linq;
-using System.Text;
 
 namespace Azure.ResourceManager.Core
 {
@@ -64,11 +63,9 @@ namespace Azure.ResourceManager.Core
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
             Pipeline = clientContext.Pipeline;
-            #if DEBUG
             #pragma warning disable CA2214
             ValidateResourceType(id);
             #pragma warning restore CA2214
-            #endif
         }
 
         private Tenant Tenant => _tenant ??= new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
@@ -116,8 +113,11 @@ namespace Azure.ResourceManager.Core
         /// <param name="identifier"> The resource identifier. </param>
         protected virtual void ValidateResourceType(ResourceIdentifier identifier)
         {
-            if (identifier?.ResourceType != ValidResourceType)
+            Argument.AssertNotNull(identifier, nameof(identifier));
+#if DEBUG
+            if (identifier.ResourceType != ValidResourceType)
                 throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");
+#endif
         }
 
         /// <summary>
