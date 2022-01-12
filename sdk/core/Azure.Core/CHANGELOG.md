@@ -8,6 +8,8 @@
 - Added `IsError` property to `Response`.  This will indicate whether the message's `ResponseClassifier` considers the response to be an error.
 - Added `RequestFailedException` constructor that takes a `Response`.
 - Added types `AzureLocation`, `ResourceIdentifier`, and `ResourceType`.
+- Added `HttpPipelineTransportOptions` type.  This type contains a `ServerCertificateCustomValidationCallback` property that allows callers to set a `Func<ServerCertificateCustomValidationArgs, bool>` delegate.  If set, the delegate will be called when validating the server side TLS certificate.
+- Added a new static overload for `HttpPipelineBuilder.Build` that takes an `HttpPipelineTransportOptions` instance.  This overload creates an `HttpPipeline` with the default transport configuration and the `HttpPipelineTransportOptions` applied. It returns a `DisposableHttpPipeline` that implements `IDisposable`. Note: The `HttpPipelineTransportOptions` will not be applied if a custom `Transport` has been set in the `ClientOptions`. In the case that transport options were provided but not applied, an event is logged `(PipelineTransportOptionsNotApplied`). 
 
 ### Breaking Changes
 
