@@ -107,6 +107,9 @@ namespace Azure.Storage
         public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
         public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
 
+        internal const string StorageScope = "https://storage.azure.com/.default";
+        internal const string DiskComputeScope = "https://disk.compute.azure.com/.default";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

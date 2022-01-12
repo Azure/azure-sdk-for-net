@@ -1,3 +1,24 @@
+namespace Azure.Storage
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageAudience : System.IEquatable<Azure.Storage.StorageAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageAudience(string value) { throw null; }
+        public static Azure.Storage.StorageAudience DiskCompute { get { throw null; } }
+        public static Azure.Storage.StorageAudience Storage { get { throw null; } }
+        public bool Equals(Azure.Storage.StorageAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.StorageAudience left, Azure.Storage.StorageAudience right) { throw null; }
+        public static implicit operator Azure.Storage.StorageAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.StorageAudience left, Azure.Storage.StorageAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
 namespace Azure.Storage.Blobs
 {
     public partial class BlobClient : Azure.Storage.Blobs.Specialized.BlobBaseClient
@@ -56,6 +77,7 @@ namespace Azure.Storage.Blobs
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
+        public Azure.Storage.StorageAudience? StorageAudience { get { throw null; } set { } }
         public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
