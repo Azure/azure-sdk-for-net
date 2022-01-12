@@ -83,8 +83,10 @@ namespace Azure
         public abstract void Dispose();
 
         /// <summary>
-        /// Indicates whether the Azure service that returned this response defines
-        /// its status code as an error code.
+        /// Indicates whether the status code of the returned response is considered
+        /// an error code. This enables the caller to prevent the client from throwing
+        /// an exception when the service method takes a <see cref="RequestContext"/>
+        /// parameter, by passing <see cref="ErrorOptions.NoThrow"/>.
         /// </summary>
         public virtual bool IsError { get; internal set; }
 
