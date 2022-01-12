@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
@@ -20,17 +21,6 @@ namespace Azure.ResourceManager.Resources
         public static Deployment GetDeployment(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Deployment(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region DeploymentOperation
-        /// <summary> Gets an object representing a DeploymentOperation along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentOperation" /> object. </returns>
-        public static DeploymentOperation GetDeploymentOperation(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeploymentOperation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

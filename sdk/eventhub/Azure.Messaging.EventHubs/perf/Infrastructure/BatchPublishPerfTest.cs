@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf
 {
@@ -112,12 +110,13 @@ namespace Azure.Messaging.EventHubs.Perf
                 await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
                 return Options.BatchSize;
             }
-            catch (EventHubsException e) when (cancellationToken.IsCancellationRequested && e.IsTransient)
+            catch (EventHubsException ex) when (cancellationToken.IsCancellationRequested && ex.IsTransient)
             {
-                // If SendAsync() is cancelled during a retry loop, the most recent exception is thrown.
+                // If SendAsync() is canceled during a retry loop, the most recent exception is thrown.
                 // If the exception is transient, it should be wrapped in an OperationCanceledException
-                // which is ignored by the perf framework.
-                throw new OperationCanceledException("EventHubsException thrown during cancellation", e);
+                // which is ignored by the performance  framework.
+
+                throw new OperationCanceledException("EventHubsException thrown during cancellation", ex);
             }
         }
 

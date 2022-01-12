@@ -1,14 +1,10 @@
 # Release History
 
-## 4.8.0-beta.1 (Unreleased)
+## 4.8.0 (2022-01-11)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added new properties to Communication events
+- Added strongly typed models for Resource events
 
 ## 4.7.0 (2021-10-05)
 

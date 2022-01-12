@@ -50,6 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Flowlet": return Flowlet.DeserializeFlowlet(element);
                     case "MappingDataFlow": return MappingDataFlow.DeserializeMappingDataFlow(element);
                 }
             }

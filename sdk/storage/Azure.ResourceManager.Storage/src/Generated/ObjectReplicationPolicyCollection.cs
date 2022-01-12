@@ -14,17 +14,17 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of ObjectReplicationPolicy and their operations over a StorageAccount. </summary>
+    /// <summary> A class representing collection of ObjectReplicationPolicy and their operations over its parent. </summary>
     public partial class ObjectReplicationPolicyCollection : ArmCollection, IEnumerable<ObjectReplicationPolicy>, IAsyncEnumerable<ObjectReplicationPolicy>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ObjectReplicationPoliciesRestOperations _restClient;
+        private readonly ObjectReplicationPoliciesRestOperations _objectReplicationPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyCollection"/> class for mocking. </summary>
         protected ObjectReplicationPolicyCollection()
@@ -36,22 +36,7 @@ namespace Azure.ResourceManager.Storage
         internal ObjectReplicationPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ObjectReplicationPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<ObjectReplicationPolicy> IEnumerable<ObjectReplicationPolicy>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ObjectReplicationPolicy> IAsyncEnumerable<ObjectReplicationPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _objectReplicationPoliciesRestClient = new ObjectReplicationPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,7 +65,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, properties, cancellationToken);
+                var response = _objectReplicationPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, properties, cancellationToken);
                 var operation = new ObjectReplicationPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -114,7 +99,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _objectReplicationPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, properties, cancellationToken).ConfigureAwait(false);
                 var operation = new ObjectReplicationPolicyCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,21 +112,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual Response<ObjectReplicationPolicy> Get(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
+            if (objectReplicationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (objectReplicationPolicyId == null)
-                {
-                    throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken);
+                var response = _objectReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ObjectReplicationPolicy(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +139,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public async virtual Task<Response<ObjectReplicationPolicy>> GetAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
+            if (objectReplicationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (objectReplicationPolicyId == null)
-                {
-                    throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _objectReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ObjectReplicationPolicy(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +168,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual Response<ObjectReplicationPolicy> GetIfExists(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
+            if (objectReplicationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (objectReplicationPolicyId == null)
-                {
-                    throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken);
+                var response = _objectReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
@@ -207,19 +195,20 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public async virtual Task<Response<ObjectReplicationPolicy>> GetIfExistsAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExists");
+            if (objectReplicationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (objectReplicationPolicyId == null)
-                {
-                    throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _objectReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse())
                     : Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
@@ -233,18 +222,19 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        public virtual Response<bool> Exists(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.CheckIfExists");
+            if (objectReplicationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Exists");
             scope.Start();
             try
             {
-                if (objectReplicationPolicyId == null)
-                {
-                    throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-                }
-
                 var response = GetIfExists(objectReplicationPolicyId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +247,19 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.CheckIfExists");
+            if (objectReplicationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {
-                if (objectReplicationPolicyId == null)
-                {
-                    throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-                }
-
                 var response = await GetIfExistsAsync(objectReplicationPolicyId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +281,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _objectReplicationPoliciesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ObjectReplicationPolicy(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,7 +304,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _objectReplicationPoliciesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ObjectReplicationPolicy(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,7 +316,22 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        IEnumerator<ObjectReplicationPolicy> IEnumerable<ObjectReplicationPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ObjectReplicationPolicy> IAsyncEnumerable<ObjectReplicationPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ObjectReplicationPolicy, ObjectReplicationPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ObjectReplicationPolicy, ObjectReplicationPolicyData> Construct() { }
     }
 }

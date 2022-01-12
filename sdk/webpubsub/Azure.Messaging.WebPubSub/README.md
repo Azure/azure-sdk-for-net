@@ -7,14 +7,15 @@ You can use this library in your app server side to manage the WebSocket client 
 ![overflow](https://user-images.githubusercontent.com/668244/140014067-25a00959-04dc-47e8-ac25-6957bd0a71ce.png)
 
 Use this library to:
-- Send messages to hubs and groups. 
+
+- Send messages to hubs and groups.
 - Send messages to particular users and connections.
 - Organize users and connections into groups.
 - Close connections
 - Grant, revoke, and check permissions for an existing connection
 
 Details about the terms used here are described in [Key concepts](#key-concepts) section.
- 
+
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/src) |
 [Package](https://www.nuget.org/packages/Azure.Messaging.WebPubSub) |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
@@ -28,7 +29,7 @@ Details about the terms used here are described in [Key concepts](#key-concepts)
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.WebPubSub --prerelease
+dotnet add package Azure.Messaging.WebPubSub
 ```
 
 ### Prerequisites
@@ -41,6 +42,7 @@ dotnet add package Azure.Messaging.WebPubSub --prerelease
 In order to interact with the service, you'll need to create an instance of the `WebPubSubServiceClient` class. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal.
 
 ```C# Snippet:WebPubSubAuthenticate
+// Create a WebPubSubServiceClient that will authenticate using a key credential.
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 ```
 
@@ -102,13 +104,14 @@ serviceClient.SendToAll(RequestContent.Create(stream), ContentType.ApplicationOc
 ## Troubleshooting
 
 ### Setting up console logging
+
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
 
 ## Next steps
 
 Please take a look at the
 [samples][samples_ref]
-directory for detailed examples on how to use this library. 
+directory for detailed examples on how to use this library.
 
 You can also find [more samples here][awps_sample].
 

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureWebCategoryListResult DeserializeAzureWebCategoryListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AzureWebCategory>> value = default;
+            Optional<IReadOnlyList<AzureWebCategoryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureWebCategory> array = new List<AzureWebCategory>();
+                    List<AzureWebCategoryData> array = new List<AzureWebCategoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureWebCategory.DeserializeAzureWebCategory(item));
+                        array.Add(AzureWebCategoryData.DeserializeAzureWebCategoryData(item));
                     }
                     value = array;
                     continue;

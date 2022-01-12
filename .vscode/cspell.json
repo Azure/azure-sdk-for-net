@@ -43,8 +43,6 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/sqlmanagement/*/api/*.cs",
-    "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
@@ -58,6 +56,7 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dotnetcli",
     "dont",
     "dtmf",
     "epsg",
@@ -79,6 +78,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "skus",
     "structs",
     "uints",
     "unformattable",
@@ -96,10 +96,16 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
+    },
+    {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
-        "skus",
         "vmss",
         "unattend",
         "ssdlrs",
@@ -116,8 +122,25 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
-        "nigiri"
+        "nigiri",
+        "qnas"
       ]
+    },
+    {
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
+      "words": [
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse"
+      ]
+    },
+    {
+      "filename": "**/sdk/deviceupdate/**/*.cs",
+      "words": ["Fqdns"]
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
@@ -137,13 +160,13 @@
         "Eaptls",
         "Fqdns",
         "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "Ipconfiguration",
         "Mbps",
         "Nics",
         "Owasp",
         "Pfsmm",
         "Snat",
-        "Skus",
         "Sstp",
         "TLSDHEDSS",
         "TLSDHERSA",
@@ -153,6 +176,7 @@
         "Vnets",
         "Vxlan",
         "WAFV",
+        "Wans"
       ]
     },
     {
@@ -170,6 +194,19 @@
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": ["Puid"]
+    },
+    {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "Droppeded",
+        "CIAS",
+        "Vcores",
+        "Unrestorable",
+        "Stdev",
+        "Ntext",
+        "Nvarchar",
+        "Stdev"
+      ]
     },
     {
       "filename": "**/sdk/search/**/*.cs",
@@ -207,8 +244,48 @@
         "Ragrs",
         "Ragzrs",
         "Rehydrated",
-        "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagepool/**/*.cs",
+      "words": [
+        "Iscsi"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "adla",
+        "adls",
+        "byoa",
+        "distcp",
+        "eloqua",
+        "exfiltration",
+        "fqdns",
+        "hana",
+        "hcatalog",
+        "hdfs",
+        "informix",
+        "magento",
+        "netezza",
+        "oozie",
+        "responsys",
+        "sasl",
+        "ssis",
+        "ssisdb",
+        "sybase",
+        "sybase",
+        "teradata",
+        "usql",
+        "vertica",
+        "xero"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
       ]
     },
     {
@@ -220,6 +297,20 @@
         "Eugps",
         "Plregon",
         "Usuk"
+      ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
       ]
     }
   ],

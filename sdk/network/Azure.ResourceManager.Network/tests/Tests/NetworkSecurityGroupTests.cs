@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("656", getNsgResponse.Value.Data.SecurityRules[1].SourcePortRange);
 
             // List Default Security Groups
-            AsyncPageable<SecurityRuleData> listDefaultSecurityGroupsAP = getNsgResponse.Value.GetDefaultSecurityRulesAsync();
-            List<SecurityRuleData> listDefaultSecurityGroups = await listDefaultSecurityGroupsAP.ToEnumerableAsync();
+            AsyncPageable<DefaultSecurityRule> listDefaultSecurityGroupsAP = getNsgResponse.Value.GetDefaultSecurityRules().GetAllAsync();
+            List<DefaultSecurityRule> listDefaultSecurityGroups = await listDefaultSecurityGroupsAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listDefaultSecurityGroups);
 
             // Get Defaul Security Group

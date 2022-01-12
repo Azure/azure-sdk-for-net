@@ -86,10 +86,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         public int? ClusterId { get; private set; }
 
         /// <summary>
-        /// Gets the hosts
+        /// Gets or sets the hosts
         /// </summary>
         [JsonProperty(PropertyName = "properties.hosts")]
-        public IList<string> Hosts { get; private set; }
+        public IList<string> Hosts { get; set; }
 
         /// <summary>
         /// Validate the object.

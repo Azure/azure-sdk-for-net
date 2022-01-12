@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="portVif">Port Vif which segment is associated
         /// with.</param>
         /// <param name="status">Segment status. Possible values include:
-        /// 'SUCCESS, FAILURE'</param>
+        /// 'SUCCESS', 'FAILURE'</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
         /// 'Updating'</param>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         public IList<WorkloadNetworkSegmentPortVif> PortVif { get; private set; }
 
         /// <summary>
-        /// Gets segment status. Possible values include: 'SUCCESS, FAILURE'
+        /// Gets segment status. Possible values include: 'SUCCESS', 'FAILURE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }

@@ -17,15 +17,11 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected override HttpPipelineTransport GetTransport(bool https = false)
-        {
-            if (https)
-            {
-                return new HttpWebRequestTransport(request => request.ServerCertificateValidationCallback += (_, _, _, _) => true);
-            }
-
-            return new HttpWebRequestTransport();
-        }
+        protected override HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null) =>
+            options == null ?
+                https ?
+                    new HttpWebRequestTransport(request => request.ServerCertificateValidationCallback += (_, _, _, _) => true) : new HttpWebRequestTransport()
+                : new HttpWebRequestTransport(options);
 
         [Test]
         public async Task LimitsAreSetOnDefaultHttpWebRequest()

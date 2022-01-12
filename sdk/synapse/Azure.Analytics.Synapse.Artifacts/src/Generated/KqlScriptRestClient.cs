@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.Reset(endpoint);
             uri.AppendPath("/kqlScripts/", false);
             uri.AppendPath(kqlScriptName, true);
-            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.Reset(endpoint);
             uri.AppendPath("/kqlScripts/", false);
             uri.AppendPath(kqlScriptName, true);
-            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -187,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.Reset(endpoint);
             uri.AppendPath("/kqlScripts/", false);
             uri.AppendPath(kqlScriptName, true);
-            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -251,7 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/kqlScripts/", false);
             uri.AppendPath(kqlScriptName, true);
             uri.AppendPath("/rename", false);
-            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

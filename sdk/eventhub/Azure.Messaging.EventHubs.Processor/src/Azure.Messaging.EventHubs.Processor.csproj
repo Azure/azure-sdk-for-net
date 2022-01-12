@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.7.0-beta.1</Version>
+    <Version>5.7.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>5.6.2</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
@@ -13,8 +13,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!--
+        TEMP: Move Core to a project reference until the MessageWithMetadata are shipped in Azure.Core.
+
     <PackageReference Include="Azure.Core" />
+    -->
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <!-- END TEMP -->
+
+    <!--
+      TEMP: Move Event Hubs to a project reference until the
+            changes for processor defaults for the load balancing strategy,
+            load balancing interval, and ownership expiration are published.
+
     <PackageReference Include="Azure.Messaging.EventHubs" />
+    -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
+    <!-- END TEMP -->
+
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />

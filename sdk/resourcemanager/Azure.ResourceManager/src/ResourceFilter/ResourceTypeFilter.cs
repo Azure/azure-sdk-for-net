@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager
 {
@@ -18,9 +19,6 @@ namespace Azure.ResourceManager
         /// <exception cref="ArgumentNullException"> If <see cref="ResourceType"/> is null. </exception>
         public ResourceTypeFilter(ResourceType resourceType)
         {
-            if (resourceType is null)
-                throw new ArgumentNullException(nameof(resourceType));
-
             ResourceType = resourceType;
         }
 

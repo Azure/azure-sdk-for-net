@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Network
 {
     internal partial class VpnSitesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VpnSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public VpnSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string vpnSiteName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vpnSiteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,12 +62,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a VPN site. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
-        public async Task<Response<VpnSiteData>> GetAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
+        public async Task<Response<VpnSiteData>> GetAsync(string subscriptionId, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, vpnSiteName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vpnSiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -99,12 +101,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a VPN site. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
-        public Response<VpnSiteData> Get(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
+        public Response<VpnSiteData> Get(string subscriptionId, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, vpnSiteName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vpnSiteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string vpnSiteName, VpnSiteData vpnSiteParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vpnSiteName, VpnSiteData vpnSiteParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,13 +164,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a VpnSite resource if it doesn&apos;t exist else updates the existing VpnSite. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -177,7 +189,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, vpnSiteName, vpnSiteParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vpnSiteName, vpnSiteParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -190,13 +202,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a VpnSite resource if it doesn&apos;t exist else updates the existing VpnSite. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -210,7 +227,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteParameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, vpnSiteName, vpnSiteParameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vpnSiteName, vpnSiteParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -222,7 +239,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -247,13 +264,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates VpnSite tags. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public async Task<Response<VpnSiteData>> UpdateTagsAsync(string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
+        public async Task<Response<VpnSiteData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -267,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteParameters));
             }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, vpnSiteName, vpnSiteParameters);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, vpnSiteName, vpnSiteParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -284,13 +306,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates VpnSite tags. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public Response<VpnSiteData> UpdateTags(string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
+        public Response<VpnSiteData> UpdateTags(string subscriptionId, string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -304,7 +331,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteParameters));
             }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, vpnSiteName, vpnSiteParameters);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, vpnSiteName, vpnSiteParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -320,7 +347,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string vpnSiteName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vpnSiteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -341,12 +368,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a VpnSite. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -356,7 +388,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, vpnSiteName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vpnSiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -370,12 +402,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a VpnSite. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -385,7 +422,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, vpnSiteName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vpnSiteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -398,7 +435,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -418,17 +455,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the vpnSites in a resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ListVpnSitesResult>> GetAllByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<ListVpnSitesResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -445,17 +487,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the vpnSites in a resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ListVpnSitesResult> GetAllByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<ListVpnSitesResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -471,7 +518,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllRequest()
+        internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -489,10 +536,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the VpnSites in a subscription. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ListVpnSitesResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<ListVpnSitesResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -509,10 +563,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the VpnSites in a subscription. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListVpnSitesResult> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<ListVpnSitesResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -528,7 +589,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -544,21 +605,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the vpnSites in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ListVpnSitesResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<ListVpnSitesResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -576,21 +642,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the vpnSites in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ListVpnSitesResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<ListVpnSitesResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -606,7 +677,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -622,16 +693,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the VpnSites in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ListVpnSitesResult>> GetAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<ListVpnSitesResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -649,16 +725,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the VpnSites in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ListVpnSitesResult> GetAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<ListVpnSitesResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

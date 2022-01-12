@@ -390,11 +390,6 @@ namespace Microsoft.Azure.Management.Synapse
         IKustoOperations KustoOperations { get; }
 
         /// <summary>
-        /// Gets the IKustoPoolOperations.
-        /// </summary>
-        IKustoPoolOperations KustoPool { get; }
-
-        /// <summary>
         /// Gets the IKustoPoolsOperations.
         /// </summary>
         IKustoPoolsOperations KustoPools { get; }

@@ -75,7 +75,7 @@ namespace Networks.Tests
                 var ipConfigName = GetNameById(idItem, "ipConfigurations");
                 var ipName = GetNameById(idItem, "publicIPAddresses");
 
-				// Verify that NICs contain refernce to publicip, nsg and dns settings
+				// Verify that NICs contain reference to publicIp, nsg and dns settings
 				var listNicPerVmss = networkManagementClient.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName, virtualMachineScaleSetName).ToList();
 				Assert.NotNull(listNicPerVmss);
 
@@ -115,4 +115,3 @@ namespace Networks.Tests
 		}
     }
 }
-

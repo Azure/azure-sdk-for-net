@@ -1,6 +1,16 @@
 # Release History
 
-## 7.1.0 (2021-11-03)
+## 7.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 7.0.1 (2021-11-03)
 
 Correction patch to support v3.2 Cognitive Services Computer Vision API endpoints.
 

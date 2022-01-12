@@ -19,8 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         private readonly bool _validateSignature;
 
-        // Now it's only used in test, but when the trigger started to support AAD,
-        // It can be configurable in public.
+        // Now it's only used in test
         internal SignalRRequestResolver(bool validateSignature = true)
         {
             _validateSignature = validateSignature;
@@ -51,6 +50,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
             foreach (var accessKey in accessKeys)
             {
+                // Skip validation for aad access key.
+                if (accessKey is AadAccessKey)
+                {
+                    return true;
+                }
                 var accessToken = accessKey.Value;
                 if (!string.IsNullOrEmpty(accessToken) &&
                      request.Headers.TryGetValues(Constants.AsrsSignature, out var values))

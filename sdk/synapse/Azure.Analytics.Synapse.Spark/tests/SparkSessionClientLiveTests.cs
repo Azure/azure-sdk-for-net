@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             // Start the Spark session
             SparkSessionOptions createParams = SparkTestUtilities.CreateSparkSessionRequestParameters(Recording);
             SparkSessionOperation sessionOperation = await client.StartCreateSparkSessionAsync(createParams);
-            SparkSessionOperation anotherSessionOperation = new SparkSessionOperation(int.Parse(sessionOperation.Id), client);
+            SparkSessionOperation anotherSessionOperation = InstrumentOperation(new SparkSessionOperation(int.Parse(sessionOperation.Id), client));
             SparkSession sessionCreateResponse = await anotherSessionOperation.WaitForCompletionAsync();
 
             // Verify the Spark session completes successfully
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
                     Code = @"print(""Hello world"")"
             };
             SparkStatementOperation statementOperation = await client.StartCreateSparkStatementAsync(sessionCreateResponse.Id, sparkStatementOptions);
-            SparkStatementOperation anotherStatementOperation = new SparkStatementOperation(int.Parse(sessionOperation.Id), int.Parse(statementOperation.Id), client);
+            SparkStatementOperation anotherStatementOperation = InstrumentOperation(new SparkStatementOperation(int.Parse(sessionOperation.Id), int.Parse(statementOperation.Id), client));
             SparkStatement createStatementResponse = await anotherStatementOperation.WaitForCompletionAsync();
             Assert.NotNull(createStatementResponse);
 

@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class GalleryApplicationVersionsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public GalleryApplicationVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public GalleryApplicationVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,15 +66,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version is to be created. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryApplicationVersion"> Parameters supplied to the create or update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersion));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -114,15 +115,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version is to be created. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryApplicationVersion"> Parameters supplied to the create or update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -144,7 +150,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersion));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -186,15 +192,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version is to be updated. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -216,7 +227,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersion));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -228,15 +239,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version is to be updated. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public Response Update(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -258,7 +274,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersion));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -269,7 +285,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -298,15 +314,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Retrieves information about a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public async Task<Response<GalleryApplicationVersionData>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        public async Task<Response<GalleryApplicationVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -324,7 +345,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -343,15 +364,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Retrieves information about a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public Response<GalleryApplicationVersionData> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        public Response<GalleryApplicationVersionData> Get(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -369,7 +395,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -387,7 +413,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -412,14 +438,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -437,7 +468,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -451,14 +482,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery Application Version. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -476,7 +512,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -489,7 +525,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByGalleryApplicationRequest(string resourceGroupName, string galleryName, string galleryApplicationName)
+        internal HttpMessage CreateListByGalleryApplicationRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -513,13 +549,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List gallery Application Versions in a gallery Application Definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
-        public async Task<Response<GalleryApplicationVersionList>> GetAllByGalleryApplicationAsync(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        public async Task<Response<GalleryApplicationVersionList>> ListByGalleryApplicationAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -533,7 +574,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var message = CreateGetAllByGalleryApplicationRequest(resourceGroupName, galleryName, galleryApplicationName);
+            using var message = CreateListByGalleryApplicationRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -550,13 +591,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List gallery Application Versions in a gallery Application Definition. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
-        public Response<GalleryApplicationVersionList> GetAllByGalleryApplication(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        public Response<GalleryApplicationVersionList> ListByGalleryApplication(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -570,7 +616,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var message = CreateGetAllByGalleryApplicationRequest(resourceGroupName, galleryName, galleryApplicationName);
+            using var message = CreateListByGalleryApplicationRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -586,7 +632,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByGalleryApplicationNextPageRequest(string nextLink, string resourceGroupName, string galleryName, string galleryApplicationName)
+        internal HttpMessage CreateListByGalleryApplicationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -602,16 +648,21 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List gallery Application Versions in a gallery Application Definition. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
-        public async Task<Response<GalleryApplicationVersionList>> GetAllByGalleryApplicationNextPageAsync(string nextLink, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        public async Task<Response<GalleryApplicationVersionList>> ListByGalleryApplicationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -626,7 +677,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var message = CreateGetAllByGalleryApplicationNextPageRequest(nextLink, resourceGroupName, galleryName, galleryApplicationName);
+            using var message = CreateListByGalleryApplicationNextPageRequest(nextLink, subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -644,16 +695,21 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List gallery Application Versions in a gallery Application Definition. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
-        public Response<GalleryApplicationVersionList> GetAllByGalleryApplicationNextPage(string nextLink, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        public Response<GalleryApplicationVersionList> ListByGalleryApplicationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -668,7 +724,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var message = CreateGetAllByGalleryApplicationNextPageRequest(nextLink, resourceGroupName, galleryName, galleryApplicationName);
+            using var message = CreateListByGalleryApplicationNextPageRequest(nextLink, subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

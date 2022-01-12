@@ -144,10 +144,10 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRelatedTermsAsync(string termGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTermsByGlossaryName(string glossaryName, int? limit = default(int?), int? offset = default(int?), bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = default(int?), int? offset = default(int?), bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> ImportGlossaryTermsViaCsv(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(string glossaryName, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> ImportGlossaryTermsViaCsv(bool waitForCompletion, string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportGlossaryTermsViaCsvAsync(bool waitForCompletion, string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(bool waitForCompletion, string glossaryName, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(bool waitForCompletion, string glossaryName, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response PartialUpdateGlossary(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateGlossaryAsync(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response PartialUpdateGlossaryCategory(string categoryGuid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -180,8 +180,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string guid, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Get(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetPurviewRelationship(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Update(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }

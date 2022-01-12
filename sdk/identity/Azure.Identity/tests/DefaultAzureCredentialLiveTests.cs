@@ -17,7 +17,8 @@ namespace Azure.Identity.Tests
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
-        public DefaultAzureCredentialLiveTests(bool isAsync) : base(isAsync)
+        // need to use legacy transport until https://github.com/Azure/azure-sdk-tools/issues/2369 is addressed
+        public DefaultAzureCredentialLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
             TestDiagnostics = false;
         }
@@ -32,6 +33,7 @@ namespace Azure.Identity.Tests
                 ExcludeManagedIdentityCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeAzureCliCredential = true,
             });
 
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
@@ -69,6 +71,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCredential = true,
+                ExcludeAzureCliCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -106,6 +109,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeAzureCliCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 

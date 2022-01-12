@@ -1,4 +1,6 @@
-﻿#if NETCOREAPP3_0_OR_GREATER
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Azure.WebPubSub.AspNetCore;
@@ -46,4 +48,3 @@ namespace Microsoft.AspNetCore.Builder
         }
     }
 }
-#endif

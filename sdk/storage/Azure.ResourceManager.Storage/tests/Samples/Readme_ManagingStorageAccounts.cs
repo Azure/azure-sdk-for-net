@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
+using Azure.Core;
 #endregion
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #endregion
             #region Snippet:Managing_StorageAccounts_GetResourceGroupCollection
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             {
                 Console.WriteLine(storageAccount.Id.Name);
             }
-            if (await accountCollection.CheckIfExistsAsync("bar"))
+            if (await accountCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("storage account 'bar' exists");
             }

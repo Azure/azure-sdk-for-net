@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 using Azure.Core.Amqp;
@@ -19,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusReceivedMessage
+    public class ServiceBusReceivedMessage : MessageWithMetadata
     {
         /// <summary>
         /// Creates a new message from the specified payload.
@@ -66,6 +67,17 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the body of the message.
         /// </summary>
         public BinaryData Body => AmqpMessage.GetBody();
+
+        /// <summary>
+        /// Hidden property that shadows the <see cref="Body"/> property. This is added
+        /// in order to inherit from <see cref="MessageWithMetadata"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => Body;
+            set => throw new NotImplementedException("Data cannot be set on a ServiceBusReceivedMessage");
+        }
 
         /// <summary>
         /// Gets the MessageId to identify the message.
@@ -166,7 +178,19 @@ namespace Azure.Messaging.ServiceBus
         ///   Optionally describes the payload of the message, with a descriptor following the format of
         ///   RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public string ContentType => AmqpMessage.Properties.ContentType;
+        public override string ContentType
+        {
+            get => AmqpMessage.Properties.ContentType;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            set => throw new NotImplementedException("Content type cannot be set on a ServiceBusReceivedMessage");
+        }
+
+        /// <summary>
+        /// Hidden property that indicates that the <see cref="ServiceBusReceivedMessage"/> is read-only. This is part of
+        /// the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => true;
 
         /// <summary>Gets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>
@@ -405,6 +429,31 @@ namespace Azure.Messaging.ServiceBus
                     return description as string;
                 }
                 return null;
+            }
+        }
+
+        /// <summary>Gets the state of the message.</summary>
+        /// <value>The state of the message. </value>
+        /// <remarks>
+        ///    The state of the message can be Active, Deferred, or Scheduled. Deferred messages have Deferred state,
+        ///    scheduled messages have Scheduled state, all other messages have Active state.
+        /// </remarks>
+        public ServiceBusMessageState State
+        {
+            get
+            {
+                if (AmqpMessage.MessageAnnotations.TryGetValue(
+                    AmqpMessageConstants.MessageStateName,
+                    out object val))
+                {
+                    return (ServiceBusMessageState)val;
+                }
+
+                return ServiceBusMessageState.Active;
+            }
+            internal set
+            {
+                AmqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = value;
             }
         }
 

@@ -201,6 +201,22 @@ public static async Task Run(
 }
 ```
 
+### Binding to ServiceBusClient
+
+There may be times when you want to bind to the same `ServiceBusClient` that the trigger is using. This can be useful if you need to dynamically create a sender based on the message that is received.
+
+```C# Snippet:ServiceBusBindingToClient
+[FunctionName("BindingToClient")]
+public static async Task Run(
+    [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")]
+    ServiceBusReceivedMessage message,
+    ServiceBusClient client)
+{
+    ServiceBusSender sender = client.CreateSender(message.To);
+    await sender.SendMessageAsync(new ServiceBusMessage(message));
+}
+```
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.

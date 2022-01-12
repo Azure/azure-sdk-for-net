@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <returns>The zero-based index of the selected partition from the available set.</returns>
         ///
         public virtual string AssignForPartitionKey(string partitionKey,
-                                                 string[] partitions)
+                                                    string[] partitions)
         {
             var hashValue = GenerateHashCode(partitionKey);
             return partitions[Math.Abs(hashValue % partitions.Length)];

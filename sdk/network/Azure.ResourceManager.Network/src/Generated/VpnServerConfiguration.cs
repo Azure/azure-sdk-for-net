@@ -15,15 +15,20 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a VpnServerConfiguration along with the instance operations that can be performed on it. </summary>
     public partial class VpnServerConfiguration : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VpnServerConfiguration"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VpnServerConfigurationsRestOperations _restClient;
+        private readonly VpnServerConfigurationsRestOperations _vpnServerConfigurationsRestClient;
         private readonly VpnServerConfigurationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VpnServerConfiguration"/> class for mocking. </summary>
@@ -34,12 +39,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VpnServerConfiguration"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VpnServerConfiguration(ArmResource options, VpnServerConfigurationData resource) : base(options, resource.Id)
+        internal VpnServerConfiguration(ArmResource options, VpnServerConfigurationData resource) : base(options, new ResourceIdentifier(resource.Id))
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VpnServerConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnServerConfigurationsRestClient = new VpnServerConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VpnServerConfiguration"/> class. </summary>
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal VpnServerConfiguration(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VpnServerConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnServerConfigurationsRestClient = new VpnServerConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VpnServerConfiguration"/> class. </summary>
@@ -60,7 +65,7 @@ namespace Azure.ResourceManager.Network
         internal VpnServerConfiguration(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VpnServerConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnServerConfigurationsRestClient = new VpnServerConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _vpnServerConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VpnServerConfiguration(this, response.Value), response.GetRawResponse());
@@ -112,7 +117,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _vpnServerConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VpnServerConfiguration(this, response.Value), response.GetRawResponse());
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -149,8 +154,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnServerConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _vpnServerConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VpnServerConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _vpnServerConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,8 +176,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VpnServerConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _vpnServerConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new VpnServerConfigurationDeleteOperation(_clientDiagnostics, Pipeline, _vpnServerConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,22 +188,23 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
+
         /// <summary> Updates VpnServerConfiguration tags. </summary>
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public virtual async Task<Response<VpnServerConfiguration>> UpdateTagsAsync(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VpnServerConfiguration>> UpdateAsync(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (vpnServerConfigurationParameters == null)
             {
                 throw new ArgumentNullException(nameof(vpnServerConfigurationParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnServerConfiguration.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("VpnServerConfiguration.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, vpnServerConfigurationParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _vpnServerConfigurationsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnServerConfigurationParameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VpnServerConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,18 +218,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public virtual Response<VpnServerConfiguration> UpdateTags(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VpnServerConfiguration> Update(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (vpnServerConfigurationParameters == null)
             {
                 throw new ArgumentNullException(nameof(vpnServerConfigurationParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnServerConfiguration.UpdateTags");
+            using var scope = _clientDiagnostics.CreateScope("VpnServerConfiguration.Update");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, vpnServerConfigurationParameters, cancellationToken);
+                var response = _vpnServerConfigurationsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnServerConfigurationParameters, cancellationToken);
                 return Response.FromValue(new VpnServerConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

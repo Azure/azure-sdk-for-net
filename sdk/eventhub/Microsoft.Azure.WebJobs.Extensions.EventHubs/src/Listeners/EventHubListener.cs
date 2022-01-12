@@ -29,6 +29,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
         private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger _logger;
+        private string _details;
 
         public EventHubListener(
             string functionId,
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _singleDispatch = singleDispatch;
             _checkpointStore = checkpointStore;
             _options = options;
+            _logger = _loggerFactory.CreateLogger<EventHubListener>();
 
             _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
                 () => new EventHubsScaleMonitor(
@@ -53,6 +56,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     consumerClient,
                     checkpointStore,
                     _loggerFactory.CreateLogger<EventHubsScaleMonitor>()));
+
+            _details = $"'namespace='{eventProcessorHost?.FullyQualifiedNamespace}', eventHub='{eventProcessorHost?.EventHubName}', " +
+                $"consumerGroup='{eventProcessorHost?.ConsumerGroup}', functionId='{functionId}', singleDispatch='{singleDispatch}'";
         }
 
         /// <summary>
@@ -71,11 +77,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         {
             await _checkpointStore.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
             await _eventProcessorHost.StartProcessingAsync(this, _checkpointStore, cancellationToken).ConfigureAwait(false);
+
+            _logger.LogDebug($"EventHub listener started ({_details})");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await _eventProcessorHost.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+
+            _logger.LogDebug($"EventHub listener stopped ({_details})");
         }
 
         IEventProcessor IEventProcessorFactory.CreateEventProcessor()

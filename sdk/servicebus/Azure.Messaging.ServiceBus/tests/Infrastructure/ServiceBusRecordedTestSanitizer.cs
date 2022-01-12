@@ -4,30 +4,34 @@
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Messaging.ServiceBus.Tests.Infrastructure
 {
     public class ServiceBusRecordedTestSanitizer : RecordedTestSanitizer
     {
-        private static bool s_IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        // The authorization key needs to be exactly 44 ASCII encoded bytes.
+        private const string SanitizedKeyValue = "SanitizedSanitizedSanitizedSanitizedSanitize";
 
         public ServiceBusRecordedTestSanitizer()
         {
             SanitizedHeaders.Add("ServiceBusDlqSupplementaryAuthorization");
             SanitizedHeaders.Add("ServiceBusSupplementaryAuthorization");
-        }
-
-        // The authorization key needs to be exactly 44 ASCII encoded bytes.
-        private const string SanitizedKeyValue = "SanitizedSanitizedSanitizedSanitizedSanitize";
-        public override string SanitizeTextBody(string contentType, string body)
-        {
-            var sanitized = Regex.Replace(body, "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E", $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E");
-            sanitized = Regex.Replace(sanitized, "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E", $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E");
-            if (!s_IsWindows)
-            {
-                sanitized = sanitized.Replace("\n", "\r\n");
-            }
-            return sanitized;
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E",
+                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"));
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E",
+                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"));
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "[^\\r](?<break>\\n)",
+                    "\r\n")
+                {
+                    GroupForReplace = "break"
+                });
         }
     }
 }

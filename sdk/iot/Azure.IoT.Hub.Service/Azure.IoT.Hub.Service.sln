@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotHubClientSamples", "samples\IotHubClientSamples\IotHubClientSamples.csproj", "{8291D7B1-E485-4C04-9712-6DF1D4646C28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{DE1EBB40-4BB4-491B-9FE2-FB82948333D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8291D7B1-E485-4C04-9712-6DF1D4646C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8291D7B1-E485-4C04-9712-6DF1D4646C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8291D7B1-E485-4C04-9712-6DF1D4646C28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE1EBB40-4BB4-491B-9FE2-FB82948333D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE1EBB40-4BB4-491B-9FE2-FB82948333D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE1EBB40-4BB4-491B-9FE2-FB82948333D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE1EBB40-4BB4-491B-9FE2-FB82948333D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

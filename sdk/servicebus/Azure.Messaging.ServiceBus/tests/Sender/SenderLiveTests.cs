@@ -190,6 +190,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                 Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
 
                 await sender.CancelScheduledMessageAsync(seq);
                 msg = await receiver.PeekMessageAsync(seq);
@@ -211,6 +212,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                    Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
                 }
                 await sender.CancelScheduledMessagesAsync(sequenceNumbers: sequenceNums);
 
@@ -244,6 +246,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                    Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
                 }
                 await sender.CancelScheduledMessagesAsync(sequenceNumbers: new List<long>(sequenceNums));
 
@@ -277,6 +280,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                    Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
                 }
 
                 // use an enumerable

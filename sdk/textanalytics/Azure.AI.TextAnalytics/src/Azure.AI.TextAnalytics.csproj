@@ -4,7 +4,7 @@
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
     <Version>5.2.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.1.0</ApiCompatVersion>
+    <ApiCompatVersion>5.1.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- AZC0012 - Single word class names are too generic for Entity.cs class  -->
@@ -31,6 +31,8 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

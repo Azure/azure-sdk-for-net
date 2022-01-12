@@ -35,6 +35,7 @@ namespace Azure.Search.Documents
         /// <param name="sessionId"> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a &apos;_&apos; character. </param>
         /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called &apos;mylocation&apos; the parameter string would be &quot;mylocation--122.2,44.8&quot; (without the quotes). </param>
         /// <param name="scoringProfile"> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </param>
+        /// <param name="semanticConfigurationName"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
         /// <param name="searchText"> A full-text search query expression; Use &quot;*&quot; or omit this parameter to match all documents. </param>
         /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
@@ -46,7 +47,7 @@ namespace Azure.Search.Documents
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
         /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw)
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -61,6 +62,7 @@ namespace Azure.Search.Documents
             SessionId = sessionId;
             ScoringParameters = scoringParameters;
             ScoringProfile = scoringProfile;
+            SemanticConfigurationName = semanticConfigurationName;
             SearchText = searchText;
             SearchFieldsRaw = searchFieldsRaw;
             SearchMode = searchMode;

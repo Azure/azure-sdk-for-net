@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -15,6 +14,9 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     public class StorageTestEnvironment : TestEnvironment
     {
+        /// <summary>The environment variable name of the storage account connection string.</summary>
+        private const string StorageAccountConnectionStringEnvironmentVariable = "EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING";
+
         /// <summary>The singleton instance of the <see cref="StorageTestEnvironment" />, lazily created.</summary>
         private static readonly Lazy<StorageTestEnvironment> Singleton = new Lazy<StorageTestEnvironment>(() => new StorageTestEnvironment(), LazyThreadSafetyMode.ExecutionAndPublication);
 
@@ -27,27 +29,15 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static StorageTestEnvironment Instance => Singleton.Value;
 
-        /// <summary>The environment variable value for the storage account connection string, lazily evaluated.</summary>
-        private string StorageAccountConnectionString => GetOptionalVariable("EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING");
-
         /// <summary>
         ///   The storage account endpoint suffix of the cloud to use during Live tests.
         /// </summary>
+        ///
         public new string StorageEndpointSuffix => base.StorageEndpointSuffix ?? "core.windows.net";
-
-        /// <summary>
-        ///   Indicates whether or not an ephemeral storage account was created for the current test execution.
-        /// </summary>
-        ///
-        /// <value><c>true</c> if an Azure storage account was created; otherwise, <c>false</c>.</value>
-        ///
-        public bool ShouldRemoveStorageAccountAfterTestRunCompletion => (ActiveStorageAccount.IsValueCreated && ActiveStorageAccount.Value.ShouldRemoveAtCompletion);
 
         /// <summary>
         ///   The name of the Azure storage account to be used for Live tests.
         /// </summary>
-        ///
-        /// <value>The name will be determined by creating an ephemeral Azure storage account for the test execution.</value>
         ///
         public string StorageAccountName => ActiveStorageAccount.Value.Name;
 
@@ -69,28 +59,21 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   It tries to read the <see cref="StorageAccountConnectionString" />.
-        ///   If not found, it creates a new storage account on Azure.
+        ///   Ensures that the storage account is available and captures its properties.
         /// </summary>
         ///
         /// <returns>The active Azure storage account for this test run.</returns>
         ///
         private StorageProperties EnsureStorageAccount()
         {
-            if (!string.IsNullOrEmpty(StorageAccountConnectionString))
-            {
-                var connectionString = StorageAccountConnectionString;
-                var nameStart = (connectionString.IndexOf('=', connectionString.IndexOf("AccountName")) + 1);
-                var nameLength = (connectionString.IndexOf(';', nameStart) - nameStart);
+            // The call to "GetVariable" will validate the environment variable and bootstrap
+            // test resource creation if needed.
 
-                return new StorageProperties(connectionString.Substring(nameStart, nameLength), connectionString, shouldRemoveAtCompletion: false);
-            }
+            var connectionString = GetVariable(StorageAccountConnectionStringEnvironmentVariable);
+            var nameStart = (connectionString.IndexOf('=', connectionString.IndexOf("AccountName")) + 1);
+            var nameLength = (connectionString.IndexOf(';', nameStart) - nameStart);
 
-            return Task
-                .Run(async () => await StorageScope.CreateStorageAccountAsync().ConfigureAwait(false))
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+            return new StorageProperties(connectionString.Substring(nameStart, nameLength), connectionString);
         }
 
         /// <summary>
@@ -106,24 +89,18 @@ namespace Azure.Messaging.EventHubs.Tests
             /// <summary>The connection string to use for accessing the Azure storage account.</summary>
             public readonly string ConnectionString;
 
-            /// <summary>Flags whether the storage account was created for the current test run or was retrieved from environment variables.</summary>
-            public readonly bool ShouldRemoveAtCompletion;
-
             /// <summary>
             ///   Initializes a new instance of the <see cref="StorageProperties"/> struct.
             /// </summary>
             ///
             /// <param name="name">The name of the storage account.</param>
             /// <param name="connectionString">The connection string to use for accessing the Azure storage account.</param>
-            /// <param name="shouldRemoveAtCompletion">Sets whether the storage account was created or read from environment variables.</param>
             ///
             internal StorageProperties(string name,
-                                       string connectionString,
-                                       bool shouldRemoveAtCompletion)
+                                       string connectionString)
             {
                 Name = name;
                 ConnectionString = connectionString;
-                ShouldRemoveAtCompletion = shouldRemoveAtCompletion;
             }
         }
     }

@@ -40,12 +40,16 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// 'Cancelled', 'Pending', 'Creating', 'Updating', 'Deleting'</param>
         /// <param name="netAppVolume">An Azure NetApp Files volume</param>
         /// <param name="diskPoolVolume">An iSCSI volume</param>
-        public Datastore(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), NetAppVolume netAppVolume = default(NetAppVolume), DiskPoolVolume diskPoolVolume = default(DiskPoolVolume))
+        /// <param name="status">The operational status of the datastore.
+        /// Possible values include: 'Unknown', 'Accessible', 'Inaccessible',
+        /// 'Attached', 'Detached', 'LostCommunication', 'DeadOrError'</param>
+        public Datastore(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), NetAppVolume netAppVolume = default(NetAppVolume), DiskPoolVolume diskPoolVolume = default(DiskPoolVolume), string status = default(string))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
             NetAppVolume = netAppVolume;
             DiskPoolVolume = diskPoolVolume;
+            Status = status;
             CustomInit();
         }
 
@@ -73,6 +77,14 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskPoolVolume")]
         public DiskPoolVolume DiskPoolVolume { get; set; }
+
+        /// <summary>
+        /// Gets the operational status of the datastore. Possible values
+        /// include: 'Unknown', 'Accessible', 'Inaccessible', 'Attached',
+        /// 'Detached', 'LostCommunication', 'DeadOrError'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
 
         /// <summary>
         /// Validate the object.

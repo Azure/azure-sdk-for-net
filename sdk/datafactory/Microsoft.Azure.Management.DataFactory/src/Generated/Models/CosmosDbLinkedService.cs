@@ -83,7 +83,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public CosmosDbLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object accountEndpoint = default(object), object database = default(object), SecretBase accountKey = default(SecretBase), object servicePrincipalId = default(object), string servicePrincipalCredentialType = default(string), SecretBase servicePrincipalCredential = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), string connectionMode = default(string), object encryptedCredential = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public CosmosDbLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object accountEndpoint = default(object), object database = default(object), SecretBase accountKey = default(SecretBase), object servicePrincipalId = default(object), string servicePrincipalCredentialType = default(string), SecretBase servicePrincipalCredential = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), string connectionMode = default(string), object encryptedCredential = default(object), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -97,6 +99,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AzureCloudType = azureCloudType;
             ConnectionMode = connectionMode;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             CustomInit();
         }
 
@@ -198,6 +201,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncryptedCredential { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -206,6 +216,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
+            if (Credential != null)
+            {
+                Credential.Validate();
+            }
         }
     }
 }

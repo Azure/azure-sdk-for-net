@@ -97,7 +97,6 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
             // If iteration stopped due to cancellation, ensure that the expected exception is thrown.
 
             cancellationToken.ThrowIfCancellationRequested();
-
             return Options.BatchSize;
         }
     }

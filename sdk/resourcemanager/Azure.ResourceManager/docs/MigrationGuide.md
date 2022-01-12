@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
@@ -65,7 +66,7 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 string rgName = "QuickStartRG";
 
 ResourceGroupData rgData = new ResourceGroupData(location);
@@ -214,7 +215,7 @@ NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicna
 #### New
 ```C# Snippet:Create_NetworkInterface
 string nicName = vmName + "_nic";
-NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
+NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
 {
     Name = "Primary",
     Primary = true,
@@ -289,7 +290,7 @@ VirtualMachineData vmData = new VirtualMachineData(location);
 vmData.OsProfile.AdminUsername = "admin-username";
 vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
 vmData.OsProfile.ComputerName = "computer-name";
-//vmData.AvailabilitySet = new WritableSubResource(); // Uncomment when package is updated
+vmData.AvailabilitySet = new WritableSubResource();
 vmData.AvailabilitySet.Id = aset.Id;
 NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
 nicReference.Id = nic.Id;

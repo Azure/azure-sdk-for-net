@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

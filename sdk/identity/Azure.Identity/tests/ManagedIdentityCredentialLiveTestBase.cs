@@ -13,11 +13,12 @@ namespace Azure.Identity.Tests
     [NonParallelizable]
     public class ManagedIdentityCredentialLiveTestBase : IdentityRecordedTestBase
     {
-        public ManagedIdentityCredentialLiveTestBase(bool isAsync) : base(isAsync)
+        // need to use legacy transport until https://github.com/Azure/azure-sdk-tools/issues/2369 is addressed
+        public ManagedIdentityCredentialLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
         }
 
-        public ManagedIdentityCredentialLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public ManagedIdentityCredentialLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
         {
         }
 

@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             bindingData.Add(nameof(triggerEvent.Request), triggerEvent.Request);
             bindingData.Add(nameof(triggerEvent.ConnectionContext), triggerEvent.ConnectionContext);
-            bindingData.Add(nameof(triggerEvent.Message), triggerEvent.Message);
+            bindingData.Add(nameof(triggerEvent.Data), triggerEvent.Data);
             bindingData.Add(nameof(triggerEvent.DataType), triggerEvent.DataType);
             bindingData.Add(nameof(triggerEvent.Claims), triggerEvent.Claims);
             bindingData.Add(nameof(triggerEvent.Query), triggerEvent.Query);
@@ -112,8 +112,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             contract.Add(parameterInfo.Name, parameterInfo.ParameterType);
             SafeAddContract(() => contract.Add("Request", parameterInfo.ParameterType));
             SafeAddContract(() => contract.Add("ConnectionContext", typeof(WebPubSubConnectionContext)));
-            SafeAddContract(() => contract.Add("Message", typeof(BinaryData)));
-            SafeAddContract(() => contract.Add("DataType", typeof(MessageDataType)));
+            SafeAddContract(() => contract.Add("Data", typeof(BinaryData)));
+            SafeAddContract(() => contract.Add("DataType", typeof(WebPubSubDataType)));
             SafeAddContract(() => contract.Add("Claims", typeof(IDictionary<string, string[]>)));
             SafeAddContract(() => contract.Add("Query", typeof(IDictionary<string, string[]>)));
             SafeAddContract(() => contract.Add("Reason", typeof(string)));
@@ -191,9 +191,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             private static object ConvertTypeIfPossible(object source, Type target)
             {
-                if (source is BinaryData message)
+                if (source is BinaryData data)
                 {
-                    return message.Convert(target);
+                    return data.Convert(target);
                 }
                 if (target == typeof(JObject))
                 {

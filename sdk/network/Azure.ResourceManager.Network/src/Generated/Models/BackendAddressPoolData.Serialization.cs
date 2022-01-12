@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> location = default;
             Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
             Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
-            Optional<IReadOnlyList<NetworkInterfaceIPConfiguration>> backendIPConfigurations = default;
+            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
             Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
             Optional<WritableSubResource> outboundRule = default;
             Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkInterfaceIPConfiguration> array = new List<NetworkInterfaceIPConfiguration>();
+                            List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(item));
+                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
                             }
                             backendIPConfigurations = array;
                             continue;

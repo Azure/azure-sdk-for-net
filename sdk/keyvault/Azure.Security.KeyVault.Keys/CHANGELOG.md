@@ -1,14 +1,25 @@
 # Release History
 
-## 4.3.0-beta.3 (Unreleased)
+## 4.3.0-beta.5 (2022-01-11)
 
-### Features Added
+### Other Changes
 
-### Breaking Changes
+- Bug fixes
+
+## 4.3.0-beta.4 (2021-11-16)
 
 ### Bugs Fixed
 
-### Other Changes
+- Attempt to cache key locally from `KeyClient.GetCryptographyClient`. ([#25254](https://github.com/Azure/azure-sdk-for-net/issues/25254))
+
+## 4.3.0-beta.3 (2021-11-09)
+
+### Breaking Changes
+
+- Changed return type from `RandomBytes` to `byte[]` on `KeyClient.GetRandomBytes` and `GetRandomBytesAsync`.
+- Renamed `KeyReleasePolicy.Data` to `KeyReleasePolicy.EncodedPolicy` and changed property type from `byte[]` to `BinaryData`.
+- Renamed `name` and `version` parameters on `KeyClient.GetCryptographyClient` to `keyName` and `keyVersion`, respectively.
+- Renamed `target` parameter on `KeyClient.ReleaseKey` and `ReleaseKeyAsync` to `targetAttestationToken`.
 
 ## 4.3.0-beta.2 (2021-10-14)
 

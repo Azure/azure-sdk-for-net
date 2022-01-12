@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new FormRecognizerClient(fakeEndpoint, fakeCredential);
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential, new FormRecognizerClientOptions(){ Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed}});
         }
 
         /// <summary>

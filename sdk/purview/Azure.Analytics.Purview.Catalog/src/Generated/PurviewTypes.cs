@@ -16,16 +16,15 @@ namespace Azure.Analytics.Purview.Catalog
     /// <summary> The PurviewTypes service client. </summary>
     public partial class PurviewTypes
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewTypes for mocking. </summary>
         protected PurviewTypes()
@@ -34,7 +33,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -129,7 +128,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -141,7 +140,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -236,7 +235,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -248,7 +247,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -343,7 +342,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
+                using HttpMessage message = CreateGetClassificationDefByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -355,7 +354,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -450,7 +449,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
+                using HttpMessage message = CreateGetClassificationDefByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -462,7 +461,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -575,7 +574,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
+                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -587,7 +586,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -700,7 +699,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
+                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -712,7 +711,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -825,7 +824,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
+                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -837,7 +836,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -950,7 +949,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
+                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -962,7 +961,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1040,7 +1039,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1052,7 +1051,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1130,7 +1129,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1142,7 +1141,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1220,7 +1219,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByNameRequest(name);
+                using HttpMessage message = CreateGetEnumDefByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1232,7 +1231,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1310,7 +1309,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByNameRequest(name);
+                using HttpMessage message = CreateGetEnumDefByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1322,7 +1321,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1425,7 +1424,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1437,7 +1436,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1540,7 +1539,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1552,7 +1551,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1655,7 +1654,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
+                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1667,7 +1666,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1770,7 +1769,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
+                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1782,7 +1781,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1874,7 +1873,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetStructDefByGuidRequest(guid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1886,7 +1885,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1978,7 +1977,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetStructDefByGuidRequest(guid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1990,7 +1989,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2082,7 +2081,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByNameRequest(name);
+                using HttpMessage message = CreateGetStructDefByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2094,7 +2093,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2186,7 +2185,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByNameRequest(name);
+                using HttpMessage message = CreateGetStructDefByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -2198,7 +2197,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2331,7 +2330,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
+                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2343,7 +2342,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2476,7 +2475,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
+                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -2488,7 +2487,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2621,7 +2620,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
+                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2633,7 +2632,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2766,7 +2765,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
+                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -2778,7 +2777,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for type identified by its name. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2798,7 +2797,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeByNameRequest(name);
+                using HttpMessage message = CreateDeleteTypeByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2810,7 +2809,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for type identified by its name. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2830,7 +2829,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeByNameRequest(name);
+                using HttpMessage message = CreateDeleteTypeByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -2846,7 +2845,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3078,7 +3077,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
+                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3094,7 +3093,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3326,7 +3325,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
+                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -3341,7 +3340,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Any changes to the existing definitions will be discarded.
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -3787,7 +3786,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
+                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3802,7 +3801,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Any changes to the existing definitions will be discarded.
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4248,7 +4247,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
+                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4260,7 +4259,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Update all types in bulk, changes detected in the type definitions would be persisted. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4706,7 +4705,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
+                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4718,7 +4717,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Update all types in bulk, changes detected in the type definitions would be persisted. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -5164,7 +5163,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
+                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5176,7 +5175,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for all types in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -5409,7 +5408,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
+                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5421,7 +5420,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for all types in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -5654,7 +5653,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
+                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5670,7 +5669,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5696,7 +5695,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
+                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5712,7 +5711,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5738,7 +5737,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
+                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5750,7 +5749,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5842,7 +5841,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5854,7 +5853,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5946,7 +5945,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
+                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5958,7 +5957,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The name of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6050,7 +6049,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
+                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6062,7 +6061,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The name of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6154,7 +6153,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
+                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -6164,9 +6163,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        internal HttpMessage CreateGetClassificationDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6180,9 +6179,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetClassificationDefByNameRequest(string name)
+        internal HttpMessage CreateGetClassificationDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6196,9 +6195,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid)
+        internal HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6212,9 +6211,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetEntityDefinitionByNameRequest(string name)
+        internal HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6228,9 +6227,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetEnumDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetEnumDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6244,9 +6243,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetEnumDefByNameRequest(string name)
+        internal HttpMessage CreateGetEnumDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6260,9 +6259,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetRelationshipDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetRelationshipDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6276,9 +6275,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetRelationshipDefByNameRequest(string name)
+        internal HttpMessage CreateGetRelationshipDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6292,9 +6291,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetStructDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetStructDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6308,9 +6307,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetStructDefByNameRequest(string name)
+        internal HttpMessage CreateGetStructDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6324,9 +6323,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid)
+        internal HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6340,9 +6339,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetTypeDefinitionByNameRequest(string name)
+        internal HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6356,9 +6355,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateDeleteTypeByNameRequest(string name)
+        internal HttpMessage CreateDeleteTypeByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6372,9 +6371,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate, string type)
+        internal HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate, string type, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6395,9 +6394,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content)
+        internal HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6412,9 +6411,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content)
+        internal HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6429,9 +6428,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content)
+        internal HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6446,9 +6445,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate, string type)
+        internal HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate, string type, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6469,9 +6468,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6486,9 +6485,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetTermTemplateDefByNameRequest(string name)
+        internal HttpMessage CreateGetTermTemplateDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

@@ -16,16 +16,15 @@ namespace Azure.Analytics.Purview.Catalog
     /// <summary> The PurviewGlossaries service client. </summary>
     public partial class PurviewGlossaries
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewGlossaries for mocking. </summary>
         protected PurviewGlossaries()
@@ -37,7 +36,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -108,7 +107,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories);
+                using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -123,7 +122,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -194,7 +193,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories);
+                using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -206,7 +205,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create a glossary. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -330,7 +329,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryRequest(content);
+                using HttpMessage message = CreateCreateGlossaryRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -342,7 +341,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create a glossary. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -466,7 +465,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryRequest(content);
+                using HttpMessage message = CreateCreateGlossaryRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -478,7 +477,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create glossary category in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -610,7 +609,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content);
+                using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -622,7 +621,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create glossary category in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -754,7 +753,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content);
+                using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -766,7 +765,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create a glossary category. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -898,7 +897,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryCategoryRequest(content);
+                using HttpMessage message = CreateCreateGlossaryCategoryRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -910,7 +909,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create a glossary category. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1042,7 +1041,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryCategoryRequest(content);
+                using HttpMessage message = CreateCreateGlossaryCategoryRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1054,7 +1053,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get specific glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1130,7 +1129,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid);
+                using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1142,7 +1141,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get specific glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1218,7 +1217,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid);
+                using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1231,7 +1230,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1363,7 +1362,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content);
+                using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1376,7 +1375,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1508,7 +1507,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content);
+                using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1520,7 +1519,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a glossary category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -1540,7 +1539,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid);
+                using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1552,7 +1551,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a glossary category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -1572,7 +1571,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid);
+                using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1585,7 +1584,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the glossary category partially. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1661,7 +1660,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content);
+                using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1674,7 +1673,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the glossary category partially. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1750,7 +1749,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content);
+                using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1765,7 +1764,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1794,7 +1793,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1809,7 +1808,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1838,7 +1837,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1853,7 +1852,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1885,7 +1884,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1900,7 +1899,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1932,7 +1931,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1945,7 +1944,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary term. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2167,7 +2166,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy);
+                using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2180,7 +2179,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary term. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2402,7 +2401,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy);
+                using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -2415,7 +2414,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2536,7 +2535,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy);
+                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2549,7 +2548,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2670,7 +2669,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy);
+                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -2683,7 +2682,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2905,7 +2904,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content);
+                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2918,7 +2917,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -3140,7 +3139,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content);
+                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -3152,7 +3151,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a glossary term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -3172,7 +3171,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid);
+                using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3184,7 +3183,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a glossary term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -3204,7 +3203,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid);
+                using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -3218,7 +3217,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3339,7 +3338,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy);
+                using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3353,7 +3352,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3474,7 +3473,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy);
+                using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -3487,7 +3486,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create glossary terms in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -3709,7 +3708,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy);
+                using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3722,7 +3721,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create glossary terms in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -3944,7 +3943,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy);
+                using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -3959,7 +3958,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3996,7 +3995,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4011,7 +4010,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4048,7 +4047,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4061,7 +4060,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Assign the given term to the provided list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4098,7 +4097,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content);
+                using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4111,7 +4110,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Assign the given term to the provided list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4148,7 +4147,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content);
+                using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4161,7 +4160,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4198,7 +4197,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content);
+                using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4211,7 +4210,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4248,7 +4247,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content);
+                using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4261,7 +4260,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4298,7 +4297,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content);
+                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4311,7 +4310,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4348,7 +4347,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content);
+                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4363,7 +4362,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4395,7 +4394,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4410,7 +4409,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4442,7 +4441,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4454,7 +4453,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4526,7 +4525,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid);
+                using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4538,7 +4537,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4610,7 +4609,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid);
+                using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4623,7 +4622,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4747,7 +4746,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content);
+                using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4760,7 +4759,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -4884,7 +4883,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content);
+                using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4896,7 +4895,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -4916,7 +4915,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid);
+                using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4928,7 +4927,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -4948,7 +4947,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid);
+                using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -4963,7 +4962,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5039,7 +5038,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5054,7 +5053,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5130,7 +5129,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5145,7 +5144,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5174,7 +5173,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5189,7 +5188,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5218,7 +5217,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5231,7 +5230,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5305,7 +5304,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy);
+                using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5318,7 +5317,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5392,7 +5391,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy);
+                using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5406,7 +5405,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5478,7 +5477,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy);
+                using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5492,7 +5491,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5564,7 +5563,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy);
+                using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5580,7 +5579,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5701,7 +5700,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5717,7 +5716,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5838,7 +5837,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5853,7 +5852,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5885,7 +5884,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5900,7 +5899,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5932,7 +5931,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
+                using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -5944,7 +5943,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the status of import csv operation. </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5980,7 +5979,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid);
+                using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5992,7 +5991,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the status of import csv operation. </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6028,7 +6027,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid);
+                using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -6042,7 +6041,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
 #pragma warning disable AZC0002
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
@@ -6052,7 +6051,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy);
+                using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6066,7 +6065,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
 #pragma warning disable AZC0002
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
@@ -6076,7 +6075,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy);
+                using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -6091,7 +6090,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6212,7 +6211,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy);
+                using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6227,7 +6226,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6348,7 +6347,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy);
+                using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -6359,10 +6358,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6391,15 +6391,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context).ConfigureAwait(false);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6409,10 +6409,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6441,15 +6442,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -6459,10 +6460,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6491,15 +6493,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context).ConfigureAwait(false);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6509,10 +6511,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -6541,15 +6544,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -6558,9 +6561,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        internal HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories)
+        internal HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6589,9 +6592,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateCreateGlossaryRequest(RequestContent content)
+        internal HttpMessage CreateCreateGlossaryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6606,9 +6609,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent content)
+        internal HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6623,9 +6626,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent content)
+        internal HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6640,9 +6643,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid)
+        internal HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6656,9 +6659,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content)
+        internal HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6674,9 +6677,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid)
+        internal HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6690,9 +6693,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content)
+        internal HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6709,9 +6712,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6738,9 +6741,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6767,9 +6770,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateCreateGlossaryTermRequest(RequestContent content, bool? includeTermHierarchy)
+        internal HttpMessage CreateCreateGlossaryTermRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6788,9 +6791,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy)
+        internal HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6808,9 +6811,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content)
+        internal HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6826,9 +6829,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateDeleteGlossaryTermRequest(string termGuid)
+        internal HttpMessage CreateDeleteGlossaryTermRequest(string termGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6842,9 +6845,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy)
+        internal HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6865,9 +6868,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateCreateGlossaryTermsRequest(RequestContent content, bool? includeTermHierarchy)
+        internal HttpMessage CreateCreateGlossaryTermsRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6886,9 +6889,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6915,9 +6918,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent content)
+        internal HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6934,9 +6937,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content)
+        internal HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6953,9 +6956,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content)
+        internal HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6972,9 +6975,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7001,9 +7004,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryRequest(string glossaryGuid)
+        internal HttpMessage CreateGetGlossaryRequest(string glossaryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7017,9 +7020,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent content)
+        internal HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -7035,9 +7038,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid)
+        internal HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -7051,9 +7054,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7080,9 +7083,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7109,9 +7112,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy)
+        internal HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7130,9 +7133,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
+        internal HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -7153,9 +7156,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7186,9 +7189,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort)
+        internal HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7215,9 +7218,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
+        internal HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7239,9 +7242,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy)
+        internal HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7263,9 +7266,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid)
+        internal HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7280,9 +7283,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
+        internal HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7304,9 +7307,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy)
+        internal HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

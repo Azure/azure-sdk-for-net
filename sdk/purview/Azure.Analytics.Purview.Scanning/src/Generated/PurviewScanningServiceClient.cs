@@ -19,16 +19,15 @@ namespace Azure.Analytics.Purview.Scanning
     /// <summary> The PurviewScanningService service client. </summary>
     public partial class PurviewScanningServiceClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewScanningServiceClient for mocking. </summary>
         protected PurviewScanningServiceClient()
@@ -50,19 +49,18 @@ namespace Azure.Analytics.Purview.Scanning
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new PurviewScanningServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Gets key vault information. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -102,7 +100,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName);
+                using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -114,7 +112,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Gets key vault information. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -154,7 +152,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName);
+                using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -167,7 +165,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates an instance of a key vault connection. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -217,7 +215,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content);
+                using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -230,7 +228,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates an instance of a key vault connection. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -280,7 +278,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content);
+                using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -292,7 +290,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes the key vault connection associated with the account. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -332,7 +330,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName);
+                using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -344,7 +342,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes the key vault connection associated with the account. </summary>
         /// <param name="keyVaultName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -384,7 +382,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName);
+                using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -396,7 +394,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -436,7 +434,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName);
+                using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -448,7 +446,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -488,7 +486,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName);
+                using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -501,7 +499,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -551,7 +549,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content);
+                using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -564,7 +562,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -614,7 +612,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content);
+                using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -626,7 +624,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -666,7 +664,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName);
+                using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -678,7 +676,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a scan ruleset. </summary>
         /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -718,7 +716,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName);
+                using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -730,7 +728,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a system scan ruleset for a data source. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -770,7 +768,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType);
+                using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -782,7 +780,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a system scan ruleset for a data source. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -822,7 +820,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType);
+                using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -835,7 +833,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a scan ruleset by version. </summary>
         /// <param name="version"> The Integer to use. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -874,7 +872,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType);
+                using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -887,7 +885,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a scan ruleset by version. </summary>
         /// <param name="version"> The Integer to use. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -926,7 +924,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType);
+                using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -938,7 +936,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get the latest version of a system scan ruleset. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -977,7 +975,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType);
+                using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -989,7 +987,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get the latest version of a system scan ruleset. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1028,7 +1026,7 @@ namespace Azure.Analytics.Purview.Scanning
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType);
+                using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -1039,7 +1037,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List key vault connections in account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1086,8 +1084,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeyVaultReferencesRequest()
-                        : CreateGetKeyVaultReferencesNextPageRequest(nextLink);
+                        ? CreateGetKeyVaultReferencesRequest(context)
+                        : CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1096,7 +1094,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List key vault connections in account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1143,8 +1141,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeyVaultReferencesRequest()
-                        : CreateGetKeyVaultReferencesNextPageRequest(nextLink);
+                        ? CreateGetKeyVaultReferencesRequest(context)
+                        : CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1153,7 +1151,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List classification rules in Account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1197,8 +1195,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetClassificationRulesRequest()
-                        : CreateGetClassificationRulesNextPageRequest(nextLink);
+                        ? CreateGetClassificationRulesRequest(context)
+                        : CreateGetClassificationRulesNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1207,7 +1205,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List classification rules in Account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1251,8 +1249,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetClassificationRulesRequest()
-                        : CreateGetClassificationRulesNextPageRequest(nextLink);
+                        ? CreateGetClassificationRulesRequest(context)
+                        : CreateGetClassificationRulesNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1261,7 +1259,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List data sources in Data catalog. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1354,8 +1352,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataSourcesRequest()
-                        : CreateGetDataSourcesNextPageRequest(nextLink);
+                        ? CreateGetDataSourcesRequest(context)
+                        : CreateGetDataSourcesNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1364,7 +1362,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List data sources in Data catalog. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1457,8 +1455,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataSourcesRequest()
-                        : CreateGetDataSourcesNextPageRequest(nextLink);
+                        ? CreateGetDataSourcesRequest(context)
+                        : CreateGetDataSourcesNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1467,7 +1465,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List scan rulesets in Data catalog. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1514,8 +1512,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScanRulesetsRequest()
-                        : CreateGetScanRulesetsNextPageRequest(nextLink);
+                        ? CreateGetScanRulesetsRequest(context)
+                        : CreateGetScanRulesetsNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1524,7 +1522,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List scan rulesets in Data catalog. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1571,8 +1569,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScanRulesetsRequest()
-                        : CreateGetScanRulesetsNextPageRequest(nextLink);
+                        ? CreateGetScanRulesetsRequest(context)
+                        : CreateGetScanRulesetsNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1581,7 +1579,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List all system scan rulesets for an account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1628,8 +1626,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsRequest()
-                        : CreateGetSystemRulesetsNextPageRequest(nextLink);
+                        ? CreateGetSystemRulesetsRequest(context)
+                        : CreateGetSystemRulesetsNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1638,7 +1636,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List all system scan rulesets for an account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1685,8 +1683,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsRequest()
-                        : CreateGetSystemRulesetsNextPageRequest(nextLink);
+                        ? CreateGetSystemRulesetsRequest(context)
+                        : CreateGetSystemRulesetsNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1696,7 +1694,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> List system scan ruleset versions in Data catalog. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1743,8 +1741,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsVersionsRequest(dataSourceType)
-                        : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType);
+                        ? CreateGetSystemRulesetsVersionsRequest(dataSourceType, context)
+                        : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1754,7 +1752,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> List system scan ruleset versions in Data catalog. </summary>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1801,8 +1799,8 @@ namespace Azure.Analytics.Purview.Scanning
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsVersionsRequest(dataSourceType)
-                        : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType);
+                        ? CreateGetSystemRulesetsVersionsRequest(dataSourceType, context)
+                        : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1810,9 +1808,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        internal HttpMessage CreateGetKeyVaultReferenceRequest(string keyVaultName)
+        internal HttpMessage CreateGetKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1826,9 +1824,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateKeyVaultReferenceRequest(string keyVaultName, RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateKeyVaultReferenceRequest(string keyVaultName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1844,9 +1842,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateDeleteKeyVaultReferenceRequest(string keyVaultName)
+        internal HttpMessage CreateDeleteKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1860,9 +1858,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetKeyVaultReferencesRequest()
+        internal HttpMessage CreateGetKeyVaultReferencesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1875,9 +1873,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetClassificationRulesRequest()
+        internal HttpMessage CreateGetClassificationRulesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1890,9 +1888,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetDataSourcesRequest()
+        internal HttpMessage CreateGetDataSourcesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1905,9 +1903,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetScanRulesetRequest(string scanRulesetName)
+        internal HttpMessage CreateGetScanRulesetRequest(string scanRulesetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1921,9 +1919,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateScanRulesetRequest(string scanRulesetName, RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateScanRulesetRequest(string scanRulesetName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1939,9 +1937,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateDeleteScanRulesetRequest(string scanRulesetName)
+        internal HttpMessage CreateDeleteScanRulesetRequest(string scanRulesetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1955,9 +1953,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetScanRulesetsRequest()
+        internal HttpMessage CreateGetScanRulesetsRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1970,9 +1968,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetSystemRulesetsRequest()
+        internal HttpMessage CreateGetSystemRulesetsRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1985,9 +1983,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetSystemRulesetsForDataSourceRequest(string dataSourceType)
+        internal HttpMessage CreateGetSystemRulesetsForDataSourceRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2001,9 +1999,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetSystemRulesetsForVersionRequest(int version, string dataSourceType)
+        internal HttpMessage CreateGetSystemRulesetsForVersionRequest(int version, string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2021,9 +2019,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetLatestSystemRulesetsRequest(string dataSourceType)
+        internal HttpMessage CreateGetLatestSystemRulesetsRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2040,9 +2038,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetSystemRulesetsVersionsRequest(string dataSourceType)
+        internal HttpMessage CreateGetSystemRulesetsVersionsRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2059,9 +2057,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetKeyVaultReferencesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetKeyVaultReferencesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2073,9 +2071,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetClassificationRulesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetClassificationRulesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2087,9 +2085,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetDataSourcesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetDataSourcesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2101,9 +2099,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetScanRulesetsNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetScanRulesetsNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2115,9 +2113,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetSystemRulesetsNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetSystemRulesetsNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2129,9 +2127,9 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
-        internal HttpMessage CreateGetSystemRulesetsVersionsNextPageRequest(string nextLink, string dataSourceType)
+        internal HttpMessage CreateGetSystemRulesetsVersionsNextPageRequest(string nextLink, string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

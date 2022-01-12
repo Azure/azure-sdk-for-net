@@ -50,8 +50,8 @@ namespace Azure
         /// begin paging from the beginning.
         /// </param>
         /// <param name="pageSizeHint">
-        /// The size of <see cref="Page{T}"/>s that should be requested (from
-        /// service operations that support it).
+        /// The number of items per <see cref="Page{T}"/> that should be requested (from
+        /// service operations that support it). It's not guaranteed that the value will be respected.
         /// </param>
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.

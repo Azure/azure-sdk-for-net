@@ -3,43 +3,33 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
+    <PackageTags>Azure, WebPubSub</PackageTags>
     <Description>Azure Functions extension for the WebPubSub service</Description>
-    <Version>1.0.0-beta.5</Version>
-    <NoWarn>$(NoWarn);AZC0001;CS8632;CA1056</NoWarn>
+    <Version>1.2.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <NoWarn>$(NoWarn);AZC0001;CS8632;CA1056;CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Bindings\Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubStatusCode.cs" LinkBase="Bindings\Shared" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+
+    <!--
+	TODO: Changing to a PackageReference since we only want to depend on the already GA'ed version of WebPubSub.  Change back after release.
+	<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />
+	-->
+	<PackageReference Include="Azure.Messaging.WebPubSub" />
   </ItemGroup>
 </Project>

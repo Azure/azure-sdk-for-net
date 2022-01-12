@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class ApplicationsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,19 +28,16 @@ namespace Azure.ResourceManager.Resources
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public ApplicationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        public ApplicationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string resourceGroupName, string applicationName)
+        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,12 +58,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the managed application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public async Task<Response<ApplicationData>> GetAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public async Task<Response<ApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, applicationName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, applicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,12 +97,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the managed application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public Response<ApplicationData> Get(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public Response<ApplicationData> Get(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -111,7 +117,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, applicationName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, applicationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +135,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string applicationName)
+        internal Azure.Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string applicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -150,12 +156,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the managed application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -165,7 +176,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, applicationName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, applicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -178,12 +189,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the managed application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -193,7 +209,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, applicationName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, applicationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -205,7 +221,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string applicationName, ApplicationData parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ApplicationData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,13 +246,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a new managed application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -250,7 +271,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, applicationName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -263,13 +284,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a new managed application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -283,7 +309,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, applicationName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -295,7 +321,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string resourceGroupName, string applicationName, ApplicationPatchable parameters)
+        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ApplicationPatchable parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -323,13 +349,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates an existing managed application. The only value that can be updated via PATCH currently is the tags. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public async Task<Response<ApplicationData>> UpdateAsync(string resourceGroupName, string applicationName, ApplicationPatchable parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public async Task<Response<ApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ApplicationPatchable parameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -339,7 +370,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, applicationName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -356,13 +387,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates an existing managed application. The only value that can be updated via PATCH currently is the tags. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public Response<ApplicationData> Update(string resourceGroupName, string applicationName, ApplicationPatchable parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public Response<ApplicationData> Update(string subscriptionId, string resourceGroupName, string applicationName, ApplicationPatchable parameters = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -372,7 +408,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, applicationName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -388,7 +424,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -408,17 +444,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the applications within a resource group. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ApplicationListResult>> GetAllByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<ApplicationListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -435,17 +476,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the applications within a resource group. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ApplicationListResult> GetAllByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<ApplicationListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -461,7 +507,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllBySubscriptionRequest()
+        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -479,10 +525,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the applications within a subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ApplicationListResult>> GetAllBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<ApplicationListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -499,10 +552,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the applications within a subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ApplicationListResult> GetAllBySubscription(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<ApplicationListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -518,7 +578,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateRefreshPermissionsRequest(string resourceGroupName, string applicationName)
+        internal Azure.Core.HttpMessage CreateRefreshPermissionsRequest(string subscriptionId, string resourceGroupName, string applicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -540,12 +600,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Refresh Permissions for application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public async Task<Response> RefreshPermissionsAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public async Task<Response> RefreshPermissionsAsync(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -555,7 +620,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateRefreshPermissionsRequest(resourceGroupName, applicationName);
+            using var message = CreateRefreshPermissionsRequest(subscriptionId, resourceGroupName, applicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -567,12 +632,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Refresh Permissions for application. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public Response RefreshPermissions(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationName"/> is null. </exception>
+        public Response RefreshPermissions(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -582,7 +652,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(applicationName));
             }
 
-            using var message = CreateRefreshPermissionsRequest(resourceGroupName, applicationName);
+            using var message = CreateRefreshPermissionsRequest(subscriptionId, resourceGroupName, applicationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -593,7 +663,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -609,21 +679,26 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the applications within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ApplicationListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<ApplicationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -641,21 +716,26 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the applications within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ApplicationListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<ApplicationListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -671,7 +751,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink)
+        internal Azure.Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -687,16 +767,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the applications within a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ApplicationListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<ApplicationListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -714,16 +799,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the applications within a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ApplicationListResult> GetAllBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<ApplicationListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

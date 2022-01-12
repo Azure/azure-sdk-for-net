@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest an idea for this project.
+title: "[FEATURE REQ]"
+
+body:
+  - type: input
+    id: library
+    attributes:
+      label: Library name
+      description: Name of the Library package
+      placeholder: ex. Azure.Storage.Blobs
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: Please describe the feature.
+      description: What feature would you like to get added? What problem is it solving?
+      placeholder: Feature description
+    validations:
+      required: true

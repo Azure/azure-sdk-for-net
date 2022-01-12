@@ -36,7 +36,7 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(), maxRetries: 5);
+                ResponseClassifier.Shared, maxRetries: 5);
 
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(), maxRetries: 5);
+                ResponseClassifier.Shared, maxRetries: 5);
 
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
@@ -100,7 +100,7 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 maxRetries: 5);
 
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
@@ -134,7 +134,7 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 maxRetries: 5);
 
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 maxRetries: 5);
 
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
@@ -195,7 +195,7 @@ namespace Azure.Core.Tests
                 IsAsync ? await SendTestRequestAsync(pipeline, 0) : SendTestRequest(pipeline, 0),
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 maxRetries: 5);
 
             Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 0, 50));
@@ -238,7 +238,7 @@ namespace Azure.Core.Tests
                     {
                         throw new InvalidOperationException();
                     }
-                }, new ResponseClassifier(), maxRetries: 5);
+                }, ResponseClassifier.Shared, maxRetries: 5);
 
             await ReadAsync(reliableStream, _buffer, 0, 25);
             await ReadAsync(reliableStream, _buffer, 25, 25);
@@ -276,7 +276,7 @@ namespace Azure.Core.Tests
                     }
 
                     throw new InvalidOperationException();
-                }, new ResponseClassifier(), maxRetries: 3);
+                }, ResponseClassifier.Shared, maxRetries: 3);
 
             AggregateException aggregateException = Assert.ThrowsAsync<AggregateException>(() => ReadAsync(reliableStream, _buffer, 0, 4));
             StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);
@@ -294,7 +294,7 @@ namespace Azure.Core.Tests
             Assert.Throws<NotSupportedException>(() => _ = RetriableStream.Create(
                 _ => new MockReadStream(100, canSeek: false),
                 _ => default,
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 5).Length);
         }
 
@@ -304,7 +304,7 @@ namespace Azure.Core.Tests
             Assert.Throws<NotSupportedException>(() => _ = RetriableStream.Create(
                 _ => new NoLengthStream(canSeek: true),
                 _ => default,
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 5).Length);
         }
 
@@ -314,7 +314,7 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => RetriableStream.Create(
                 _ => throw new InvalidOperationException(),
                 _ => default,
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 5));
         }
 
@@ -324,7 +324,7 @@ namespace Azure.Core.Tests
             Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.CreateAsync(
                 _ => null,
                 _ => throw new InvalidOperationException(),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 5));
         }
 
@@ -334,7 +334,7 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => new MemoryStream(),
                 offset => new ValueTask<Stream>(new MemoryStream()),
-                new ResponseClassifier(), maxRetries: 5);
+                ResponseClassifier.Shared, maxRetries: 5);
 
             await reliableStream.FlushAsync();
         }

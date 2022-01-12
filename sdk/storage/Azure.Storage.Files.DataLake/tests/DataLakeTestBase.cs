@@ -17,21 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
-    [ClientTestFixture(
-        DataLakeClientOptions.ServiceVersion.V2019_02_02,
-        DataLakeClientOptions.ServiceVersion.V2019_07_07,
-        DataLakeClientOptions.ServiceVersion.V2019_12_12,
-        DataLakeClientOptions.ServiceVersion.V2020_02_10,
-        DataLakeClientOptions.ServiceVersion.V2020_04_08,
-        DataLakeClientOptions.ServiceVersion.V2020_06_12,
-        DataLakeClientOptions.ServiceVersion.V2020_08_04,
-        DataLakeClientOptions.ServiceVersion.V2020_10_02,
-        DataLakeClientOptions.ServiceVersion.V2020_12_06,
-        DataLakeClientOptions.ServiceVersion.V2021_02_12,
-        StorageVersionExtensions.LatestVersion,
-        StorageVersionExtensions.MaxVersion,
-        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+    [DataLakeClientTestFixture]
     public abstract class DataLakeTestBase : StorageTestBase<DataLakeTestEnvironment>
     {
         /// <summary>

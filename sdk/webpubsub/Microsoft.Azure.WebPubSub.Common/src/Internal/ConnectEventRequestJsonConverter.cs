@@ -14,7 +14,9 @@ namespace Microsoft.Azure.WebPubSub.Common
         {
             var element = JsonDocument.ParseValue(ref reader).RootElement;
 
+            // tricky part to create a temp request
             return new ConnectEventRequest(
+                null,
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.ClaimsProperty),
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.QueryProperty),
                 element.ReadToObject<string[]>(ConnectEventRequest.SubprotocolsProperty),

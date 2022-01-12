@@ -34,12 +34,14 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="reason">Reason why the SKU is not available.</param>
         /// <param name="subdomainName">The subdomain name to use.</param>
         /// <param name="type">The Type of the resource.</param>
-        public DomainAvailability(bool? isSubdomainAvailable = default(bool?), string reason = default(string), string subdomainName = default(string), string type = default(string))
+        /// <param name="kind">The Kind of the resource.</param>
+        public DomainAvailability(bool? isSubdomainAvailable = default(bool?), string reason = default(string), string subdomainName = default(string), string type = default(string), string kind = default(string))
         {
             IsSubdomainAvailable = isSubdomainAvailable;
             Reason = reason;
             SubdomainName = subdomainName;
             Type = type;
+            Kind = kind;
             CustomInit();
         }
 
@@ -71,6 +73,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Kind of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
 
     }
 }

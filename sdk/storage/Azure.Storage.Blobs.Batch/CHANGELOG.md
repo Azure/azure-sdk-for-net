@@ -1,14 +1,10 @@
 # Release History
 
-## 12.8.0-beta.2 (Unreleased)
+## 12.8.0-beta.3 (Unreleased)
+- Added support for service version 2021-04-10.
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.8.0-beta.2 (2021-11-30)
+- Added support for service vesrion 2021-02-12.
 
 ## 12.8.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.

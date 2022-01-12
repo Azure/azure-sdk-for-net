@@ -1,15 +1,21 @@
 # Release History
 
-## 12.11.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would modify the Dictionary instance passed by the caller for blob metadata.
+## 12.11.0-beta.3 (Unreleased)
+- Added support for service version 2021-04-10.
+- Added support for BlobContainerClient.FilterBlobsByTag().
+- Added support for BlobContainerClient.OpenWriteAsync().
+- Fixed bug where BlobSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() would result in a NullReferenceException when trying to overwrite a blob with client-side encryption enabled
 
 ### Other Changes
+
+## 12.11.0-beta.2 (2021-11-30)
+- Added support for service version 2021-02-12
+- Added support for listing system containers with BlobServiceClient.GetBlobContainers() and .GetBlobContainersAsync().
+- Added support for blob names container invalid XML characters.
+- Added support for updating the key encryption key on a client-side encrypted blob.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would modify the Dictionary instance passed by the caller for blob metadata.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would not respect StorageTransferOptions.InitialTransferSize.
 
 ## 12.11.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.

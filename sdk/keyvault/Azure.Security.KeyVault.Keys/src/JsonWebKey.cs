@@ -262,7 +262,7 @@ namespace Azure.Security.KeyVault.Keys
                     return D != null;
                 }
 
-                if (KeyType == KeyType.Oct)
+                if (KeyType == KeyType.Oct || KeyType == KeyType.OctHsm)
                 {
                     return K != null;
                 }

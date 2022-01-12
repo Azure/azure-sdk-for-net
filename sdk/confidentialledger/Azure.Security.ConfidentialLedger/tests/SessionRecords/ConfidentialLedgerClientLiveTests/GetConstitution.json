@@ -1,14 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://chriss-cl2.confidential-ledger.azure.com/app/governance/constitution?api-version=0.1-preview",
+      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=0.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.ConfidentialLedger/1.0.0-alpha.20210603.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210824.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "913db77379850554a627cccba979b3bd",
         "x-ms-return-client-request-id": "true"
@@ -16,9 +15,40 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Aug 2021 22:09:18 GMT",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "913db77379850554a627cccba979b3bd",
+        "x-ms-correlation-request-id": "37c6a108-65d7-4270-8190-ae0edb73915f",
+        "x-ms-image-digest": "sha256:cfd1fe780509aad0087f6cacc65bff18dd7ac4f9eff38afba2b63a29d033c639",
+        "x-ms-image-tag": "latest-20210802174905559-04aa2284",
+        "x-ms-machineName": "identityservice-6dbf458c55-sqlm5"
+      },
+      "ResponseBody": {
+        "ledgerTlsCertificate": "-----BEGIN CERTIFICATE-----\nMIIBezCCASCgAwIBAgIQLyPJdcq/69suz\u002BxDKJiUizAKBggqhkjOPQQDAjAWMRQw\nEgYDVQQDDAtDQ0YgTmV0d29yazAeFw0yMTAzMTEwMDAwMDBaFw0yMzA2MTEyMzU5\nNTlaMBYxFDASBgNVBAMMC0NDRiBOZXR3b3JrMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAEZQGlfAdHO0Oho9svJtDF\u002Bk1bHrr5ovZVaMriVKbh\u002BsXWipS4JtskCX4T\nW8/tvn8mGNJVfPM7nA62TZCxxm5Y56NQME4wDAYDVR0TBAUwAwEB/zAdBgNVHQ4E\nFgQUnWCB9yR6vxrJAYs0k67drBKAiqgwHwYDVR0jBBgwFoAUnWCB9yR6vxrJAYs0\nk67drBKAiqgwCgYIKoZIzj0EAwIDSQAwRgIhAMdUll14tgGweqASveLxl4HW2SBC\nllJvvz480pTy5uQ1AiEA0Spywkvu9t6qHYO\u002BJERRXCMWVTESPDJkMXGOMY/0xvs=\n-----END CERTIFICATE-----\n\u0000",
+        "ledgerId": "chrissconfidentialledger"
+      }
+    },
+    {
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/governance/constitution?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.ConfidentialLedger/1.0.0-alpha.20210824.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "68caa6ce392e04a618b16ee77862c19d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
         "Content-Length": "31381",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "2.118"
+        "x-ms-ccf-transaction-id": "2.267"
       },
       "ResponseBody": {
         "digest": "5e3a52df2faa3c42d482f5367c0f2bcddd251f1aaabf07d233ec6f2f5e69b977",
@@ -28,7 +58,7 @@
   ],
   "Variables": {
     "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com/",
-    "CONFIDENTIALLEDGER_URL": "https://chriss-CL2.confidential-ledger.azure.com",
+    "CONFIDENTIALLEDGER_URL": "https://chrissconfidentialledger.confidential-ledger.azure.com",
     "RandomSeed": "1047716920"
   }
 }

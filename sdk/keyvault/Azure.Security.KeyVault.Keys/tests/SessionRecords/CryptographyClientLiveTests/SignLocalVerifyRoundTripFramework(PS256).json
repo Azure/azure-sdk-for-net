@@ -5,7 +5,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Length": "0",
         "traceparent": "00-86c32f49b98b6146b2ef268cfd58c2df-5f97ca48f91d8544-00",
         "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "9212c8cc01be5e746347b46c2dbe0441",
@@ -100,7 +100,6 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "traceparent": "00-2e2f6e4b081f364398edf146d9bc8c0e-03b3483d8ff3c644-00",
         "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "22abc7fbd9fcc53db0734c9f26904438",
