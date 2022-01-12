@@ -208,7 +208,7 @@
 
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <PackageIcon>azureicon.png</PackageIcon>
-    <PackageIconPath>$(RepoEngPath)/images/azureicon.png</PackageIconPath>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
     <!-- Use a full key for the new client libraries and disable delay signing -->
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
