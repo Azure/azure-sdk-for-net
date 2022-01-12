@@ -175,7 +175,9 @@ jobs:
            -SDKType ${{ parameters.SDKType }}
            -SpellCheckPublicApiSurface
           pwsh: true
-          failOnStderr:  false
+          failOnStderr: false
+          env:
+            EnableSourceLink: false
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
