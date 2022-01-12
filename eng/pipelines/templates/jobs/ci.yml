@@ -102,6 +102,11 @@ jobs:
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
 
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'packages'
+
       - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
         displayName: 'Upload Package SBOM'
         inputs:
@@ -109,8 +114,8 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
         parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'packages'
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
+          ArtifactName: 'manifest'
 
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
