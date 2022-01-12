@@ -322,8 +322,8 @@ namespace Azure.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
-        public static implicit operator string (Azure.Core.AzureLocation other) { throw null; }
-        public static implicit operator Azure.Core.AzureLocation (string other) { throw null; }
+        public static implicit operator string (Azure.Core.AzureLocation location) { throw null; }
+        public static implicit operator Azure.Core.AzureLocation (string location) { throw null; }
         public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -578,8 +578,8 @@ namespace Azure.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string GetLastType() { throw null; }
         public static bool operator ==(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
-        public static implicit operator string (Azure.Core.ResourceType other) { throw null; }
-        public static implicit operator Azure.Core.ResourceType (string other) { throw null; }
+        public static implicit operator string (Azure.Core.ResourceType resourceType) { throw null; }
+        public static implicit operator Azure.Core.ResourceType (string resourceType) { throw null; }
         public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
