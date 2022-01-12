@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
@@ -12,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 {
     public class StaticSiteCollectionTests : AppServiceTestBase
     {
-        protected Location StaticSiteLocation => Location.EastUS2;
+        protected AzureLocation StaticSiteLocation => AzureLocation.EastUS2;
         public StaticSiteCollectionTests(bool isAsync)
            : base(isAsync)
         {
@@ -71,17 +72,17 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [TestCase]
         [RecordedTest]
         [Ignore("RepositoryToken is invalid.Please ensure the repository exists and the RepositoryToken is for an admin of the repository.")]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var container = await GetStaticSiteCollectionAsync();
             var staticSiteName = Recording.GenerateAssetName("testStaticSite");
             var input = ResourceDataHelper.GetBasicStaticSiteARMResourceData(StaticSiteLocation);
             var lro = await container.CreateOrUpdateAsync(staticSiteName, input);
             StaticSiteARMResource staticSiteARMResource = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(staticSiteName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(staticSiteName + "1"));
+            Assert.IsTrue(await container.ExistsAsync(staticSiteName));
+            Assert.IsFalse(await container.ExistsAsync(staticSiteName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
     }
 }

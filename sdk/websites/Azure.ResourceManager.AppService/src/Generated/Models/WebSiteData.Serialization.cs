@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -191,7 +189,7 @@ namespace Azure.ResourceManager.AppService
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -208,7 +206,7 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> isXenon = default;
             Optional<bool> hyperV = default;
             Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SiteConfig> siteConfig = default;
+            Optional<SiteConfigProperties> siteConfig = default;
             Optional<IReadOnlyList<string>> trafficManagerHostNames = default;
             Optional<bool> scmSiteAlsoStopped = default;
             Optional<string> targetSwapSlot = default;
@@ -439,7 +437,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            siteConfig = SiteConfig.DeserializeSiteConfig(property0.Value);
+                            siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagerHostNames"))

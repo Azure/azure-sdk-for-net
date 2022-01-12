@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -239,14 +238,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string functionAppName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string functionAppName, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
@@ -264,14 +263,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -383,6 +382,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, StaticSiteBuildUserProvidedFunctionApp, StaticSiteUserProvidedFunctionAppARMResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, StaticSiteBuildUserProvidedFunctionApp, StaticSiteUserProvidedFunctionAppARMResourceData> Construct() { }
     }
 }

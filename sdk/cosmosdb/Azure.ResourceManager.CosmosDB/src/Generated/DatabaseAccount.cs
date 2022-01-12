@@ -15,13 +15,18 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A Class representing a DatabaseAccount along with the instance operations that can be performed on it. </summary>
     public partial class DatabaseAccount : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DatabaseAccount"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseAccountsRestOperations _databaseAccountsRestClient;
         private readonly DatabaseRestOperations _databaseRestClient;
@@ -171,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -179,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -2138,7 +2143,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of SqlDatabases in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of SqlDatabases and their operations over a DatabaseAccount. </returns>
-        public SqlDatabaseCollection GetSqlDatabases()
+        public virtual SqlDatabaseCollection GetSqlDatabases()
         {
             return new SqlDatabaseCollection(this);
         }
@@ -2148,7 +2153,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of MongoDBDatabases in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of MongoDBDatabases and their operations over a DatabaseAccount. </returns>
-        public MongoDBDatabaseCollection GetMongoDBDatabases()
+        public virtual MongoDBDatabaseCollection GetMongoDBDatabases()
         {
             return new MongoDBDatabaseCollection(this);
         }
@@ -2158,7 +2163,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of CosmosTables in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of CosmosTables and their operations over a DatabaseAccount. </returns>
-        public CosmosTableCollection GetCosmosTables()
+        public virtual CosmosTableCollection GetCosmosTables()
         {
             return new CosmosTableCollection(this);
         }
@@ -2168,7 +2173,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of CassandraKeyspaces in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of CassandraKeyspaces and their operations over a DatabaseAccount. </returns>
-        public CassandraKeyspaceCollection GetCassandraKeyspaces()
+        public virtual CassandraKeyspaceCollection GetCassandraKeyspaces()
         {
             return new CassandraKeyspaceCollection(this);
         }
@@ -2178,7 +2183,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of GremlinDatabases in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of GremlinDatabases and their operations over a DatabaseAccount. </returns>
-        public GremlinDatabaseCollection GetGremlinDatabases()
+        public virtual GremlinDatabaseCollection GetGremlinDatabases()
         {
             return new GremlinDatabaseCollection(this);
         }
@@ -2188,7 +2193,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DatabaseAccount. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -2198,7 +2203,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of PrivateLinkResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a DatabaseAccount. </returns>
-        public PrivateLinkResourceCollection GetPrivateLinkResources()
+        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {
             return new PrivateLinkResourceCollection(this);
         }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkRuleName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkRuleName == null)
             {
                 throw new ArgumentNullException(nameof(virtualNetworkRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualNetworkRule, VirtualNetworkRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualNetworkRule, VirtualNetworkRuleData> Construct() { }
     }
 }

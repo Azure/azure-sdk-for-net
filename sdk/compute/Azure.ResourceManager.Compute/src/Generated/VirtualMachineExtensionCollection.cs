@@ -12,8 +12,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (vmExtensionName == null)
             {
                 throw new ArgumentNullException(nameof(vmExtensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionCollection.Exists");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (vmExtensionName == null)
             {
                 throw new ArgumentNullException(nameof(vmExtensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -324,6 +324,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualMachineExtension, VirtualMachineExtensionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualMachineExtension, VirtualMachineExtensionData> Construct() { }
     }
 }

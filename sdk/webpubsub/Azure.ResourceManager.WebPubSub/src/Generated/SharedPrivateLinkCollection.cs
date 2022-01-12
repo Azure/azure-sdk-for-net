@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
                 throw new ArgumentNullException(nameof(sharedPrivateLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
                 throw new ArgumentNullException(nameof(sharedPrivateLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SharedPrivateLink, SharedPrivateLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SharedPrivateLink, SharedPrivateLinkData> Construct() { }
     }
 }

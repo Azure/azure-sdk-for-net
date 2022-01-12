@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -204,9 +203,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -223,9 +222,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -337,6 +336,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DatabaseBlobAuditingPolicy, DatabaseBlobAuditingPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DatabaseBlobAuditingPolicy, DatabaseBlobAuditingPolicyData> Construct() { }
     }
 }

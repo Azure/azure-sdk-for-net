@@ -12,6 +12,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.ServiceBus.Tests.Helpers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //validate if created successfully
             serviceBusNamespace = await namespaceCollection.GetAsync(namespaceName);
-            Assert.IsTrue(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //delete namespace
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //validate if deleted successfully
             serviceBusNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
             Assert.IsNull(serviceBusNamespace);
-            Assert.IsFalse(await namespaceCollection.CheckIfExistsAsync(namespaceName));
+            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
         [Test]
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //delete endpoint connection and validate
             await privateEndpointConnection.DeleteAsync();
-            Assert.IsFalse(await privateEndpointConnectionCollection.CheckIfExistsAsync(connectionName));
+            Assert.IsFalse(await privateEndpointConnectionCollection.ExistsAsync(connectionName));
         }
 
         [Test]
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 1);
             Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);
@@ -375,9 +376,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //set network rule set
             string subscriptionId = DefaultSubscription.Id.ToString();
-            ResourceIdentifier subnetId1 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1");
-            ResourceIdentifier subnetId2 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2");
-            ResourceIdentifier subnetId3 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3");
+            ResourceIdentifier subnetId1 = new ResourceIdentifier(subscriptionId + "/resourceGroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1");
+            ResourceIdentifier subnetId2 = new ResourceIdentifier(subscriptionId + "/resourceGroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2");
+            ResourceIdentifier subnetId3 = new ResourceIdentifier(subscriptionId + "/resourceGroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3");
             NetworkRuleSetData parameter = new NetworkRuleSetData()
             {
                 DefaultAction = DefaultAction.Deny,
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create namespace with standard
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
-            ServiceBusNamespaceData createParameters2 = new ServiceBusNamespaceData(Location.EastUS);
+            ServiceBusNamespaceData createParameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS);
             createParameters2.Sku = new ServiceBusSku(SkuName.Standard)
             {
                 Tier = SkuTier.Standard

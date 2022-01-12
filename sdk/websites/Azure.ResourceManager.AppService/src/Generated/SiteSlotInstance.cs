@@ -14,13 +14,18 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A Class representing a SiteSlotInstance along with the instance operations that can be performed on it. </summary>
     public partial class SiteSlotInstance : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotInstance"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
         private readonly WebSiteInstanceStatusData _data;
@@ -132,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -140,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -149,7 +154,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotInstanceExtension along with the instance operations that can be performed on it in the SiteSlotInstance. </summary>
         /// <returns> Returns a <see cref="SiteSlotInstanceExtension" /> object. </returns>
-        public SiteSlotInstanceExtension GetSiteSlotInstanceExtension()
+        public virtual SiteSlotInstanceExtension GetSiteSlotInstanceExtension()
         {
             return new SiteSlotInstanceExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
@@ -159,7 +164,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotInstanceProcesses in the SiteSlotInstance. </summary>
         /// <returns> An object representing collection of SiteSlotInstanceProcesses and their operations over a SiteSlotInstance. </returns>
-        public SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
+        public virtual SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
         {
             return new SiteSlotInstanceProcessCollection(this);
         }

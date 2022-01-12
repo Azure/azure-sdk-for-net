@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string triggerName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -333,6 +332,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlTrigger, SqlTriggerData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlTrigger, SqlTriggerData> Construct() { }
     }
 }

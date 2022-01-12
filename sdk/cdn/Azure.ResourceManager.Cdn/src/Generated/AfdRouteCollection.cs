@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string routeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string routeName, CancellationToken cancellationToken = default)
         {
             if (routeName == null)
             {
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
             if (routeName == null)
             {
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AfdRoute, AfdRouteData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdRoute, AfdRouteData> Construct() { }
     }
 }

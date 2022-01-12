@@ -15,13 +15,18 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> A Class representing a ConfigurationStore along with the instance operations that can be performed on it. </summary>
     public partial class ConfigurationStore : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ConfigurationStore"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ConfigurationStoresRestOperations _configurationStoresRestClient;
         private readonly ConfigurationStoreData _data;
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -596,7 +601,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the ConfigurationStore. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a ConfigurationStore. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -606,7 +611,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Gets a collection of PrivateLinkResources in the ConfigurationStore. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a ConfigurationStore. </returns>
-        public PrivateLinkResourceCollection GetPrivateLinkResources()
+        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {
             return new PrivateLinkResourceCollection(this);
         }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string credentialName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string credentialName, CancellationToken cancellationToken = default)
         {
             if (credentialName == null)
             {
                 throw new ArgumentNullException(nameof(credentialName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string credentialName, CancellationToken cancellationToken = default)
         {
             if (credentialName == null)
             {
                 throw new ArgumentNullException(nameof(credentialName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, JobCredential, JobCredentialData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, JobCredential, JobCredentialData> Construct() { }
     }
 }

@@ -15,13 +15,18 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a VirtualHub along with the instance operations that can be performed on it. </summary>
     public partial class VirtualHub : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualHub"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualHubsRestOperations _virtualHubsRestClient;
         private readonly VirtualHubData _data;
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -284,7 +289,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of HubVirtualNetworkConnections in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a VirtualHub. </returns>
-        public HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
+        public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
         {
             return new HubVirtualNetworkConnectionCollection(this);
         }
@@ -294,7 +299,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of VirtualHubRouteTableV2s in the VirtualHub. </summary>
         /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHub. </returns>
-        public VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
+        public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
         {
             return new VirtualHubRouteTableV2Collection(this);
         }
@@ -304,7 +309,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of BgpConnections in the VirtualHub. </summary>
         /// <returns> An object representing collection of BgpConnections and their operations over a VirtualHub. </returns>
-        public BgpConnectionCollection GetBgpConnections()
+        public virtual BgpConnectionCollection GetBgpConnections()
         {
             return new BgpConnectionCollection(this);
         }
@@ -314,7 +319,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of HubIpConfigurations in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubIpConfigurations and their operations over a VirtualHub. </returns>
-        public HubIpConfigurationCollection GetHubIpConfigurations()
+        public virtual HubIpConfigurationCollection GetHubIpConfigurations()
         {
             return new HubIpConfigurationCollection(this);
         }
@@ -324,7 +329,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of HubRouteTables in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubRouteTables and their operations over a VirtualHub. </returns>
-        public HubRouteTableCollection GetHubRouteTables()
+        public virtual HubRouteTableCollection GetHubRouteTables()
         {
             return new HubRouteTableCollection(this);
         }

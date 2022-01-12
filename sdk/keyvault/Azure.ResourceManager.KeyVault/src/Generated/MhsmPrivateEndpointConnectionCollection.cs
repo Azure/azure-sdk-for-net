@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.KeyVault.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData> Construct() { }
     }
 }

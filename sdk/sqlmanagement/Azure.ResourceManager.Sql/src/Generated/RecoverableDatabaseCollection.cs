@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string databaseName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -276,6 +275,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RecoverableDatabase, RecoverableDatabaseData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, RecoverableDatabase, RecoverableDatabaseData> Construct() { }
     }
 }

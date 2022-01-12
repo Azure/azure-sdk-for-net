@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -137,9 +136,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
             scope.Start();
             try
             {
@@ -156,9 +155,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -270,6 +269,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagedInstanceOperation, ManagedInstanceOperationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceOperation, ManagedInstanceOperationData> Construct() { }
     }
 }

@@ -14,13 +14,18 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A Class representing a ServerDatabaseAdvisor along with the instance operations that can be performed on it. </summary>
     public partial class ServerDatabaseAdvisor : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerDatabaseAdvisor"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseAdvisorsRestOperations _databaseAdvisorsRestClient;
         private readonly AdvisorData _data;
@@ -132,7 +137,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -140,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -205,7 +210,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RecommendedActions in the ServerDatabaseAdvisor. </summary>
         /// <returns> An object representing collection of RecommendedActions and their operations over a ServerDatabaseAdvisor. </returns>
-        public RecommendedActionCollection GetRecommendedActions()
+        public virtual RecommendedActionCollection GetRecommendedActions()
         {
             return new RecommendedActionCollection(this);
         }

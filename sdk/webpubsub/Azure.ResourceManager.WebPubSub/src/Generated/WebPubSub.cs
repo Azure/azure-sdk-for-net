@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
@@ -22,6 +21,12 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A Class representing a WebPubSub along with the instance operations that can be performed on it. </summary>
     public partial class WebPubSub : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="WebPubSub"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
         private readonly WebPubSubPrivateLinkResourcesRestOperations _webPubSubPrivateLinkResourcesRestClient;
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -139,7 +144,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -558,7 +563,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<Models.Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
             scope.Start();
@@ -576,7 +581,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Models.Sku>> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<Sku>> GetSkus(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
             scope.Start();
@@ -672,7 +677,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Gets a collection of WebPubSubHubs in the WebPubSub. </summary>
         /// <returns> An object representing collection of WebPubSubHubs and their operations over a WebPubSub. </returns>
-        public WebPubSubHubCollection GetWebPubSubHubs()
+        public virtual WebPubSubHubCollection GetWebPubSubHubs()
         {
             return new WebPubSubHubCollection(this);
         }
@@ -682,7 +687,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the WebPubSub. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a WebPubSub. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -692,7 +697,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Gets a collection of SharedPrivateLinks in the WebPubSub. </summary>
         /// <returns> An object representing collection of SharedPrivateLinks and their operations over a WebPubSub. </returns>
-        public SharedPrivateLinkCollection GetSharedPrivateLinks()
+        public virtual SharedPrivateLinkCollection GetSharedPrivateLinks()
         {
             return new SharedPrivateLinkCollection(this);
         }

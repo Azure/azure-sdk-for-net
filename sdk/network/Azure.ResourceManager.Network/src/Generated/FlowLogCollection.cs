@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string flowLogName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string flowLogName, CancellationToken cancellationToken = default)
         {
             if (flowLogName == null)
             {
                 throw new ArgumentNullException(nameof(flowLogName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
             if (flowLogName == null)
             {
                 throw new ArgumentNullException(nameof(flowLogName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, FlowLog, FlowLogData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, FlowLog, FlowLogData> Construct() { }
     }
 }

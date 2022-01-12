@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string ipConfigName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string ipConfigName, CancellationToken cancellationToken = default)
         {
             if (ipConfigName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string ipConfigName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
             if (ipConfigName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, HubIpConfiguration, HubIpConfigurationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, HubIpConfiguration, HubIpConfigurationData> Construct() { }
     }
 }

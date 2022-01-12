@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string backupId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string backupId, CancellationToken cancellationToken = default)
         {
             if (backupId == null)
             {
                 throw new ArgumentNullException(nameof(backupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
             if (backupId == null)
             {
                 throw new ArgumentNullException(nameof(backupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -306,6 +305,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteBackup, BackupItemData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteBackup, BackupItemData> Construct() { }
     }
 }

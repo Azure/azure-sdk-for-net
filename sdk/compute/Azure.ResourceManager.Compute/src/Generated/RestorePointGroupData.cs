@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of RestorePointGroupData. </summary>
         /// <param name="location"> The location. </param>
-        public RestorePointGroupData(Location location) : base(location)
+        public RestorePointGroupData(AzureLocation location) : base(location)
         {
             RestorePoints = new ChangeTrackingList<RestorePointData>();
         }
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointCollectionId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
-        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, type, tags, location)
+        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, type, tags, location)
         {
             Source = source;
             ProvisioningState = provisioningState;

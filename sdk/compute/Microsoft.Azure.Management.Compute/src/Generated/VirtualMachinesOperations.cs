@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine.
         /// </param>
         /// <param name='forceDeletion'>
-        /// Optional parameter to force delete virtual machines.(Feature in Preview)
+        /// Optional parameter to force delete virtual machines.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2822,7 +2822,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine.
         /// </param>
         /// <param name='forceDeletion'>
-        /// Optional parameter to force delete virtual machines.(Feature in Preview)
+        /// Optional parameter to force delete virtual machines.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

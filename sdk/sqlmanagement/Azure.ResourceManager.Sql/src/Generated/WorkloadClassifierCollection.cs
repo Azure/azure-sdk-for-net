@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string workloadClassifierName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             if (workloadClassifierName == null)
             {
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             if (workloadClassifierName == null)
             {
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WorkloadClassifier, WorkloadClassifierData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, WorkloadClassifier, WorkloadClassifierData> Construct() { }
     }
 }

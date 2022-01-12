@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
             if (jobName == null)
             {
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             if (jobName == null)
             {
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlJob, SqlJobData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlJob, SqlJobData> Construct() { }
     }
 }

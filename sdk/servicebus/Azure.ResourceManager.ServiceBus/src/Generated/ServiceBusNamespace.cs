@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
@@ -22,6 +21,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A Class representing a ServiceBusNamespace along with the instance operations that can be performed on it. </summary>
     public partial class ServiceBusNamespace : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServiceBusNamespace"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -143,7 +148,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -504,7 +509,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it in the ServiceBusNamespace. </summary>
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
-        public NetworkRuleSet GetNetworkRuleSet()
+        public virtual NetworkRuleSet GetNetworkRuleSet()
         {
             return new NetworkRuleSet(this, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
@@ -514,7 +519,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a ServiceBusNamespace. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -524,7 +529,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of DisasterRecoveries in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of DisasterRecoveries and their operations over a ServiceBusNamespace. </returns>
-        public DisasterRecoveryCollection GetDisasterRecoveries()
+        public virtual DisasterRecoveryCollection GetDisasterRecoveries()
         {
             return new DisasterRecoveryCollection(this);
         }
@@ -534,7 +539,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of NamespaceAuthorizationRules in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of NamespaceAuthorizationRules and their operations over a ServiceBusNamespace. </returns>
-        public NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
+        public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
             return new NamespaceAuthorizationRuleCollection(this);
         }
@@ -544,7 +549,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of MigrationConfigProperties in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of MigrationConfigProperties and their operations over a ServiceBusNamespace. </returns>
-        public MigrationConfigPropertiesCollection GetMigrationConfigProperties()
+        public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
         {
             return new MigrationConfigPropertiesCollection(this);
         }
@@ -554,7 +559,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of ServiceBusQueues in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of ServiceBusQueues and their operations over a ServiceBusNamespace. </returns>
-        public ServiceBusQueueCollection GetServiceBusQueues()
+        public virtual ServiceBusQueueCollection GetServiceBusQueues()
         {
             return new ServiceBusQueueCollection(this);
         }
@@ -564,7 +569,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of ServiceBusTopics in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of ServiceBusTopics and their operations over a ServiceBusNamespace. </returns>
-        public ServiceBusTopicCollection GetServiceBusTopics()
+        public virtual ServiceBusTopicCollection GetServiceBusTopics()
         {
             return new ServiceBusTopicCollection(this);
         }

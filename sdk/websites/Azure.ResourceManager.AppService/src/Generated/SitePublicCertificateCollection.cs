@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string publicCertificateName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (publicCertificateName == null)
             {
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (publicCertificateName == null)
             {
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SitePublicCertificate, PublicCertificateData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SitePublicCertificate, PublicCertificateData> Construct() { }
     }
 }

@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {
@@ -194,14 +194,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -216,6 +216,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, HostingEnvironmentRecommendation, RecommendationRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, HostingEnvironmentRecommendation, RecommendationRuleData> Construct() { }
     }
 }

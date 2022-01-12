@@ -32,6 +32,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private readonly string _groupName;
         private readonly SchemaRegistryAvroObjectEncoderOptions _options;
         private const string AvroMimeType = "avro/binary";
+        private const int CacheCapacity = 128;
+        private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
 
         /// <summary>
         /// Initializes new instance of <see cref="SchemaRegistryAvroEncoder"/>.
@@ -44,12 +46,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         // TODO support backcompat for first beta
-        // private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
-        // private const int RecordFormatIndicatorLength = 4;
-        // private const int SchemaIdLength = 32;
-        // private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
-        private readonly ConcurrentDictionary<string, Schema> _idToSchemaMap = new();
-        private readonly ConcurrentDictionary<Schema, string> _schemaToIdMap = new();
+        private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
+        private const int RecordFormatIndicatorLength = 4;
+        private const int SchemaIdLength = 32;
+        private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
+        private readonly LruCache<string, Schema> _idToSchemaMap = new(CacheCapacity);
+        private readonly LruCache<Schema, string> _schemaToIdMap = new(CacheCapacity);
 
         private enum SupportedType
         {
@@ -74,7 +76,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
         private async Task<string> GetSchemaIdAsync(Schema schema, bool async, CancellationToken cancellationToken)
         {
-            if (_schemaToIdMap.TryGetValue(schema, out string schemaId))
+            if (_schemaToIdMap.TryGet(schema, out string schemaId))
             {
                 return schemaId;
             }
@@ -99,8 +101,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             string id = schemaProperties.Id;
 
-            _schemaToIdMap.TryAdd(schema, id);
-            _idToSchemaMap.TryAdd(id, schema);
+            _schemaToIdMap.AddOrUpdate(schema, id);
+            _idToSchemaMap.AddOrUpdate(id, schema);
             return id;
         }
 
@@ -157,7 +159,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
         private async Task<Schema> GetSchemaByIdAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
-            if (_idToSchemaMap.TryGetValue(schemaId, out Schema cachedSchema))
+            if (_idToSchemaMap.TryGet(schemaId, out Schema cachedSchema))
             {
                 return cachedSchema;
             }
@@ -172,8 +174,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 schemaDefinition = _client.GetSchema(schemaId, cancellationToken).Value.Definition;
             }
             var schema = Schema.Parse(schemaDefinition);
-            _idToSchemaMap.TryAdd(schemaId, schema);
-            _schemaToIdMap.TryAdd(schema, schemaId);
+            _idToSchemaMap.AddOrUpdate(schemaId, schema);
+            _schemaToIdMap.AddOrUpdate(schema, schemaId);
             return schema;
         }
 
@@ -283,24 +285,39 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             bool async,
             CancellationToken cancellationToken)
         {
-            string[] contentTypeArray = contentType.Split('+');
-            if (contentTypeArray.Length != 2)
+            string schemaId;
+            // Back Compat for first preview
+            ReadOnlyMemory<byte> memory = data.ToMemory();
+            var recordFormatIdentifier = memory.Slice(0, RecordFormatIndicatorLength).ToArray();
+            if (recordFormatIdentifier.SequenceEqual(EmptyRecordFormatIndicator))
             {
-                throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
+                byte[] schemaIdBytes = memory.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
+                schemaId = Utf8Encoding.GetString(schemaIdBytes);
+                data = new BinaryData(memory.Slice(PayloadStartPosition, memory.Length - PayloadStartPosition));
             }
-
-            if (contentTypeArray[0] != AvroMimeType)
+            else
             {
-                throw new InvalidOperationException("An avro encoder may only be used on content that is of 'avro/binary' type");
+                string[] contentTypeArray = contentType.Split('+');
+                if (contentTypeArray.Length != 2)
+                {
+                    throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
+                }
+
+                if (contentTypeArray[0] != AvroMimeType)
+                {
+                    throw new InvalidOperationException("An avro encoder may only be used on content that is of 'avro/binary' type");
+                }
+
+                schemaId = contentTypeArray[1];
             }
 
             if (async)
             {
-                return await DecodeAsync(data, contentTypeArray[1], returnType, cancellationToken).ConfigureAwait(false);
+                return await DecodeAsync(data, schemaId, returnType, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                return Decode(data, contentTypeArray[1], returnType, cancellationToken);
+                return Decode(data, schemaId, returnType, cancellationToken);
             }
         }
 

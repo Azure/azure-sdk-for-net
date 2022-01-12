@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -192,9 +191,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
             scope.Start();
             try
             {
@@ -211,9 +210,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -437,6 +436,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerJobAgentJobExecution, JobExecutionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerJobAgentJobExecution, JobExecutionData> Construct() { }
     }
 }

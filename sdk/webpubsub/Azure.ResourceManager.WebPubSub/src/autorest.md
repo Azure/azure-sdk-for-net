@@ -29,8 +29,6 @@ modelerfour:
       ResourceSku: WebPubSubSku
 model-namespace: false
 no-property-type-replacement: PrivateEndpoint
-list-exception:
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}/eventHandlers/eventHandlerName
 directive:
   # Change SharedPrivateLinkResource to SharedPrivateLink
   ## rename models

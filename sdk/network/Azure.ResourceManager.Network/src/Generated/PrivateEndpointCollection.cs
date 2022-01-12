@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (privateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (privateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(privateEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateEndpoint, PrivateEndpointData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateEndpoint, PrivateEndpointData> Construct() { }
     }
 }

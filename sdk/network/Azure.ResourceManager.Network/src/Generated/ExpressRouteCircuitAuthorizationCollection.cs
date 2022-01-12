@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string authorizationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string authorizationName, CancellationToken cancellationToken = default)
         {
             if (authorizationName == null)
             {
                 throw new ArgumentNullException(nameof(authorizationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
             if (authorizationName == null)
             {
                 throw new ArgumentNullException(nameof(authorizationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ExpressRouteCircuitAuthorization, ExpressRouteCircuitAuthorizationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRouteCircuitAuthorization, ExpressRouteCircuitAuthorizationData> Construct() { }
     }
 }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string jobAgentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string jobAgentName, CancellationToken cancellationToken = default)
         {
             if (jobAgentName == null)
             {
                 throw new ArgumentNullException(nameof(jobAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
             if (jobAgentName == null)
             {
                 throw new ArgumentNullException(nameof(jobAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -381,6 +380,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, JobAgent, JobAgentData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, JobAgent, JobAgentData> Construct() { }
     }
 }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string securityRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string securityRuleName, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
                 throw new ArgumentNullException(nameof(securityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string securityRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
                 throw new ArgumentNullException(nameof(securityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SecurityRule, SecurityRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SecurityRule, SecurityRuleData> Construct() { }
     }
 }

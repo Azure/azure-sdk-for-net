@@ -15,13 +15,18 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A Class representing a CdnEndpoint along with the instance operations that can be performed on it. </summary>
     public partial class CdnEndpoint : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="CdnEndpoint"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CdnEndpointsRestOperations _cdnEndpointsRestClient;
         private readonly CdnEndpointData _data;
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -748,7 +753,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of CdnOrigins in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnOrigins and their operations over a CdnEndpoint. </returns>
-        public CdnOriginCollection GetCdnOrigins()
+        public virtual CdnOriginCollection GetCdnOrigins()
         {
             return new CdnOriginCollection(this);
         }
@@ -758,7 +763,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of CdnOriginGroups in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnOriginGroups and their operations over a CdnEndpoint. </returns>
-        public CdnOriginGroupCollection GetCdnOriginGroups()
+        public virtual CdnOriginGroupCollection GetCdnOriginGroups()
         {
             return new CdnOriginGroupCollection(this);
         }
@@ -768,7 +773,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of CdnCustomDomains in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnCustomDomains and their operations over a CdnEndpoint. </returns>
-        public CdnCustomDomainCollection GetCdnCustomDomains()
+        public virtual CdnCustomDomainCollection GetCdnCustomDomains()
         {
             return new CdnCustomDomainCollection(this);
         }

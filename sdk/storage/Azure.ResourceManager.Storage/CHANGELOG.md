@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource` in `SubscriptionExtensions`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+- Fixed `DateTimeOffset` being serialized to local timezone format
 
 ## 1.0.0-beta.4 (2021-12-07)
 
@@ -86,6 +102,7 @@ storageManagementClient.StorageAccounts.Create(resourceGroupName, accountName, p
 After upgrade:
 ```C# Snippet:Create_Storage_Account
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -96,7 +113,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
 Models.Sku sku = new Models.Sku(SkuName.PremiumLRS);
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Models.Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);
+StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Models.Sku(SkuName.StandardGRS), Kind.Storage, AzureLocation.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
 StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;

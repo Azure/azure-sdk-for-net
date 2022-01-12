@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_Accounts_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -26,7 +27,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
@@ -38,7 +39,7 @@ Now that we have the resource group created, we can manage the accounts inside t
 ```C# Snippet:Managing_Accounts_CreateAnAccount
 // Get the account collection from the specific resource group and create an account
 string accountName = "myAccount";
-DeviceUpdateAccountData input = new DeviceUpdateAccountData(Location.WestUS2);
+DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
 DeviceUpdateAccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input);
 DeviceUpdateAccount account = lro.Value;
 ```

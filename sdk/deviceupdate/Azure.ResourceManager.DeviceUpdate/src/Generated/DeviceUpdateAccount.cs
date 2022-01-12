@@ -15,13 +15,18 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A Class representing a DeviceUpdateAccount along with the instance operations that can be performed on it. </summary>
     public partial class DeviceUpdateAccount : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DeviceUpdateAccount"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeviceUpdateAccountsRestOperations _deviceUpdateAccountsRestClient;
         private readonly DeviceUpdateAccountData _data;
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -360,7 +365,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Gets a collection of DeviceUpdateInstances in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of DeviceUpdateInstances and their operations over a DeviceUpdateAccount. </returns>
-        public DeviceUpdateInstanceCollection GetDeviceUpdateInstances()
+        public virtual DeviceUpdateInstanceCollection GetDeviceUpdateInstances()
         {
             return new DeviceUpdateInstanceCollection(this);
         }
@@ -370,7 +375,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DeviceUpdateAccount. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -380,7 +385,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Gets a collection of PrivateLinks in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of PrivateLinks and their operations over a DeviceUpdateAccount. </returns>
-        public PrivateLinkCollection GetPrivateLinks()
+        public virtual PrivateLinkCollection GetPrivateLinks()
         {
             return new PrivateLinkCollection(this);
         }
@@ -390,7 +395,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Gets a collection of PrivateEndpointConnectionProxies in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionProxies and their operations over a DeviceUpdateAccount. </returns>
-        public PrivateEndpointConnectionProxyCollection GetPrivateEndpointConnectionProxies()
+        public virtual PrivateEndpointConnectionProxyCollection GetPrivateEndpointConnectionProxies()
         {
             return new PrivateEndpointConnectionProxyCollection(this);
         }

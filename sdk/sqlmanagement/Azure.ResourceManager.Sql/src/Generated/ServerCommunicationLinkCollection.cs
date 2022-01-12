@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -237,14 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string communicationLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string communicationLinkName, CancellationToken cancellationToken = default)
         {
             if (communicationLinkName == null)
             {
                 throw new ArgumentNullException(nameof(communicationLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +261,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
             if (communicationLinkName == null)
             {
                 throw new ArgumentNullException(nameof(communicationLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -351,6 +350,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerCommunicationLink, ServerCommunicationLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerCommunicationLink, ServerCommunicationLinkData> Construct() { }
     }
 }

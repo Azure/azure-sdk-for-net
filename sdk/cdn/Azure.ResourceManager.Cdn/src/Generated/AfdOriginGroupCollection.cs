@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string originGroupName, CancellationToken cancellationToken = default)
         {
             if (originGroupName == null)
             {
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdOriginGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
             if (originGroupName == null)
             {
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginGroupCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdOriginGroupCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AfdOriginGroup, AfdOriginGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdOriginGroup, AfdOriginGroupData> Construct() { }
     }
 }

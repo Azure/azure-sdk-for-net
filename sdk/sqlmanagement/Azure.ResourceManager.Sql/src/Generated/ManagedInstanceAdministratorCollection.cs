@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -204,9 +203,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Exists");
             scope.Start();
             try
             {
@@ -223,9 +222,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -337,6 +336,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagedInstanceAdministrator, ManagedInstanceAdministratorData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceAdministrator, ManagedInstanceAdministratorData> Construct() { }
     }
 }

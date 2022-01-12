@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string instanceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string instanceName, CancellationToken cancellationToken = default)
         {
             if (instanceName == null)
             {
                 throw new ArgumentNullException(nameof(instanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string instanceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             if (instanceName == null)
             {
                 throw new ArgumentNullException(nameof(instanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeviceUpdateInstance, DeviceUpdateInstanceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeviceUpdateInstance, DeviceUpdateInstanceData> Construct() { }
     }
 }

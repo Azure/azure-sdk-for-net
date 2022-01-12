@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, CdnEndpoint, CdnEndpointData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, CdnEndpoint, CdnEndpointData> Construct() { }
     }
 }

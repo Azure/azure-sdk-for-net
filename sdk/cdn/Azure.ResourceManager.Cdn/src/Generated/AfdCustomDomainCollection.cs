@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AfdCustomDomain, AfdCustomDomainData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdCustomDomain, AfdCustomDomainData> Construct() { }
     }
 }

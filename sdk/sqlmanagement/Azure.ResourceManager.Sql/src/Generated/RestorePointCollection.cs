@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -162,14 +161,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string restorePointName, CancellationToken cancellationToken = default)
         {
             if (restorePointName == null)
             {
                 throw new ArgumentNullException(nameof(restorePointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             if (restorePointName == null)
             {
                 throw new ArgumentNullException(nameof(restorePointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -306,6 +305,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
     }
 }

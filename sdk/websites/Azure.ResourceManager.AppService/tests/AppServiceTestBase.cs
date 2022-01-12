@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -12,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Tests
 {
     public class AppServiceTestBase : ManagementRecordedTestBase<AppServiceTestEnviroment>
     {
-        protected Location DefaultLocation => Location.EastUS;
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription { get; private set; }
 

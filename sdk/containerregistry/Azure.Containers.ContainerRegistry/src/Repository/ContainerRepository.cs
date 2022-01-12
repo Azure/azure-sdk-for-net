@@ -203,10 +203,10 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> List the manifests associated with this repository and the properties of each.
         /// This is useful for determining the collection of artifacts associated with this repository, as each artifact is uniquely identified by its manifest. </summary>
-        /// <param name="orderBy"> Requested order of manifests in the collection. </param>
+        /// <param name="manifestOrder"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual AsyncPageable<ArtifactManifestProperties> GetManifestPropertiesCollectionAsync(ArtifactManifestOrderBy orderBy = ArtifactManifestOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactManifestProperties> GetManifestPropertiesCollectionAsync(ArtifactManifestOrder manifestOrder = ArtifactManifestOrder.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactManifestProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -214,7 +214,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = manifestOrder == ArtifactManifestOrder.None ? null : manifestOrder.ToSerialString();
                     var response = await _restClient.GetManifestsAsync(Name, last: null, n: pageSizeHint, orderby: order, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
@@ -231,7 +231,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = manifestOrder == ArtifactManifestOrder.None ? null : manifestOrder.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = await _restClient.GetManifestsNextPageAsync(uriReference, Name, last: null, n: null, orderby: order, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
@@ -248,10 +248,10 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> List the manifests associated with this repository and the properties of each.
         /// This is useful for determining the collection of artifacts associated with this repository, as each artifact is uniquely identified by its manifest. </summary>
-        /// <param name="orderBy"> Requested order of manifests in the collection. </param>
+        /// <param name="manifestOrder"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Pageable<ArtifactManifestProperties> GetManifestPropertiesCollection(ArtifactManifestOrderBy orderBy = ArtifactManifestOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactManifestProperties> GetManifestPropertiesCollection(ArtifactManifestOrder manifestOrder = ArtifactManifestOrder.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactManifestProperties> FirstPageFunc(int? pageSizeHint)
             {
@@ -259,7 +259,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = manifestOrder == ArtifactManifestOrder.None ? null : manifestOrder.ToSerialString();
                     var response = _restClient.GetManifests(Name, last: null, n: pageSizeHint, orderby: order, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
@@ -276,7 +276,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = manifestOrder == ArtifactManifestOrder.None ? null : manifestOrder.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = _restClient.GetManifestsNextPage(uriReference, Name, last: null, n: null, orderby: order, cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());

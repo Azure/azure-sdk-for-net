@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.ServiceBus.Models;
 
@@ -225,14 +224,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (authorizationRuleName == null)
             {
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +249,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (authorizationRuleName == null)
             {
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NamespaceTopicAuthorizationRule, ServiceBusAuthorizationRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NamespaceTopicAuthorizationRule, ServiceBusAuthorizationRuleData> Construct() { }
     }
 }

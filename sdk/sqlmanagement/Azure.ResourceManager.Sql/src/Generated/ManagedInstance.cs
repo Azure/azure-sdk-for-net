@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,6 +21,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedInstance along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstance : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedInstance"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedInstancesRestOperations _managedInstancesRestClient;
         private readonly ManagedDatabasesRestOperations _managedDatabasesRestClient;
@@ -147,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -155,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -826,7 +831,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedDatabases in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedDatabases and their operations over a ManagedInstance. </returns>
-        public ManagedDatabaseCollection GetManagedDatabases()
+        public virtual ManagedDatabaseCollection GetManagedDatabases()
         {
             return new ManagedDatabaseCollection(this);
         }
@@ -836,7 +841,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceAdministrators in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceAdministrators and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceAdministratorCollection GetManagedInstanceAdministrators()
+        public virtual ManagedInstanceAdministratorCollection GetManagedInstanceAdministrators()
         {
             return new ManagedInstanceAdministratorCollection(this);
         }
@@ -846,7 +851,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceAzureADOnlyAuthentications in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceAzureADOnlyAuthentications and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceAzureADOnlyAuthenticationCollection GetManagedInstanceAzureADOnlyAuthentications()
+        public virtual ManagedInstanceAzureADOnlyAuthenticationCollection GetManagedInstanceAzureADOnlyAuthentications()
         {
             return new ManagedInstanceAzureADOnlyAuthenticationCollection(this);
         }
@@ -856,7 +861,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceEncryptionProtectors in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceEncryptionProtectors and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceEncryptionProtectorCollection GetManagedInstanceEncryptionProtectors()
+        public virtual ManagedInstanceEncryptionProtectorCollection GetManagedInstanceEncryptionProtectors()
         {
             return new ManagedInstanceEncryptionProtectorCollection(this);
         }
@@ -866,7 +871,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceKeys in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceKeys and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceKeyCollection GetManagedInstanceKeys()
+        public virtual ManagedInstanceKeyCollection GetManagedInstanceKeys()
         {
             return new ManagedInstanceKeyCollection(this);
         }
@@ -876,7 +881,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceOperations in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceOperations and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceOperationCollection GetManagedInstanceOperations()
+        public virtual ManagedInstanceOperationCollection GetManagedInstanceOperations()
         {
             return new ManagedInstanceOperationCollection(this);
         }
@@ -886,7 +891,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstancePrivateEndpointConnections in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstancePrivateEndpointConnections and their operations over a ManagedInstance. </returns>
-        public ManagedInstancePrivateEndpointConnectionCollection GetManagedInstancePrivateEndpointConnections()
+        public virtual ManagedInstancePrivateEndpointConnectionCollection GetManagedInstancePrivateEndpointConnections()
         {
             return new ManagedInstancePrivateEndpointConnectionCollection(this);
         }
@@ -896,7 +901,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstancePrivateLinks in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstancePrivateLinks and their operations over a ManagedInstance. </returns>
-        public ManagedInstancePrivateLinkCollection GetManagedInstancePrivateLinks()
+        public virtual ManagedInstancePrivateLinkCollection GetManagedInstancePrivateLinks()
         {
             return new ManagedInstancePrivateLinkCollection(this);
         }
@@ -906,7 +911,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceVulnerabilityAssessments in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceVulnerabilityAssessments and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceVulnerabilityAssessmentCollection GetManagedInstanceVulnerabilityAssessments()
+        public virtual ManagedInstanceVulnerabilityAssessmentCollection GetManagedInstanceVulnerabilityAssessments()
         {
             return new ManagedInstanceVulnerabilityAssessmentCollection(this);
         }
@@ -916,7 +921,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedServerSecurityAlertPolicies in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedServerSecurityAlertPolicies and their operations over a ManagedInstance. </returns>
-        public ManagedServerSecurityAlertPolicyCollection GetManagedServerSecurityAlertPolicies()
+        public virtual ManagedServerSecurityAlertPolicyCollection GetManagedServerSecurityAlertPolicies()
         {
             return new ManagedServerSecurityAlertPolicyCollection(this);
         }
@@ -926,7 +931,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RecoverableManagedDatabases in the ManagedInstance. </summary>
         /// <returns> An object representing collection of RecoverableManagedDatabases and their operations over a ManagedInstance. </returns>
-        public RecoverableManagedDatabaseCollection GetRecoverableManagedDatabases()
+        public virtual RecoverableManagedDatabaseCollection GetRecoverableManagedDatabases()
         {
             return new RecoverableManagedDatabaseCollection(this);
         }
@@ -936,7 +941,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a SqlAgentConfiguration along with the instance operations that can be performed on it in the ManagedInstance. </summary>
         /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
-        public SqlAgentConfiguration GetSqlAgentConfiguration()
+        public virtual SqlAgentConfiguration GetSqlAgentConfiguration()
         {
             return new SqlAgentConfiguration(this, new ResourceIdentifier(Id.ToString() + "/sqlAgent/current"));
         }
@@ -946,7 +951,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RestorableDroppedManagedDatabases in the ManagedInstance. </summary>
         /// <returns> An object representing collection of RestorableDroppedManagedDatabases and their operations over a ManagedInstance. </returns>
-        public RestorableDroppedManagedDatabaseCollection GetRestorableDroppedManagedDatabases()
+        public virtual RestorableDroppedManagedDatabaseCollection GetRestorableDroppedManagedDatabases()
         {
             return new RestorableDroppedManagedDatabaseCollection(this);
         }
