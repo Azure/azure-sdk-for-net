@@ -13,9 +13,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
-#   naming:
-#     override:
-#       DataCollectionEndpoint: DataCollectionEndpointProperties
 
 mgmt-debug:
   show-request-path: true
@@ -33,27 +30,6 @@ directive:
   - rename-model:
       from: MetricAlertResource
       to: MetricAlert
-  - from: swagger-document
-    where: $.definitions.DataCollectionRuleAssociationProxyOnlyResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionRuleAssociation"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-#   - rename-model:
-#       from: DataCollectionRuleAssociation
-#       to: DataCollectionRuleAssociationProperties
-  - from: swagger-document
-    where: $.definitions.DataCollectionRuleAssociation
-    transform: $["x-ms-client-name"] = "DataCollectionRuleAssociationProperties"
-  - rename-model:
-      from: DataCollectionRuleAssociationProxyOnlyResource
-      to: DataCollectionRuleAssociation
   - rename-model:
       from: ActionGroup
       to: ActionGroupProperties
@@ -78,48 +54,6 @@ directive:
   - rename-model:
       from: AutoscaleSettingResource
       to: AutoscaleSetting
-  - from: swagger-document
-    where: $.definitions.DataCollectionEndpointResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionEndpoint"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-#   - rename-model:
-#       from: DataCollectionEndpoint
-#       to: DataCollectionEndpointProperties
-  - from: swagger-document
-    where: $.definitions.DataCollectionEndpoint
-    transform: $["x-ms-client-name"] = "DataCollectionEndpointProperties"
-  - rename-model:
-      from: DataCollectionEndpointResource
-      to: DataCollectionEndpoint
-  - from: swagger-document
-    where: $.definitions.DataCollectionRuleResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionRule"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-#   - rename-model:
-#       from: DataCollectionRule
-#       to: DataCollectionRuleProperties
-  - from: swagger-document
-    where: $.definitions.DataCollectionRule
-    transform: $["x-ms-client-name"] = "DataCollectionRuleProperties"
-  - rename-model:
-      from: DataCollectionRuleResource
-      to: DataCollectionRule
   - rename-model:
       from: DiagnosticSettingsCategory
       to: DiagnosticSettingsCategoryProperties
@@ -144,10 +78,73 @@ directive:
   - rename-model:
       from: VMInsightsOnboardingStatus
       to: VmInsightsOnboardingStatus
+# ----- Start Resolve Duplicating schema ------
+# ----- NOTICE: `Resource` hasn't resolved yet------
+# -- For DataCollectionRuleProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRuleResource.properties.properties
+    transform:  >
+        $ = {
+          "description": "Resource properties.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DataCollectionRule"
+            }
+          ],
+          "x-ms-client-flatten": false
+        }
 #   - rename-model:
-#       from: Resource
-#       to: MonitorResource
-  - from: activityLogAlerts_API.json
-    where: $.definitions.Resource
-    transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
+#       from: DataCollectionRule
+#       to: DataCollectionRuleProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRule
+    transform: $["x-ms-client-name"] = "DataCollectionRuleProperties"
+  - rename-model:
+      from: DataCollectionRuleResource
+      to: DataCollectionRule
+# -- For DataCollectionEndpointProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionEndpointResource.properties.properties
+    transform:  >
+        $ = {
+          "description": "Resource properties.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DataCollectionEndpoint"
+            }
+          ],
+          "x-ms-client-flatten": false
+        }
+#   - rename-model:
+#       from: DataCollectionEndpoint
+#       to: DataCollectionEndpointProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionEndpoint
+    transform: $["x-ms-client-name"] = "DataCollectionEndpointProperties"
+  - rename-model:
+      from: DataCollectionEndpointResource
+      to: DataCollectionEndpoint
+# -- For DataCollectionRuleAssociationProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRuleAssociationProxyOnlyResource.properties.properties
+    transform:  >
+        $ = {
+          "description": "Resource properties.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DataCollectionRuleAssociation"
+            }
+          ],
+          "x-ms-client-flatten": false
+        }
+#   - rename-model:
+#       from: DataCollectionRuleAssociation
+#       to: DataCollectionRuleAssociationProperties
+  - from: swagger-document
+    where: $.definitions.DataCollectionRuleAssociation
+    transform: $["x-ms-client-name"] = "DataCollectionRuleAssociationProperties"
+  - rename-model:
+      from: DataCollectionRuleAssociationProxyOnlyResource
+      to: DataCollectionRuleAssociation
+# ----- End Resolve Duplicating schema ------
 ```
