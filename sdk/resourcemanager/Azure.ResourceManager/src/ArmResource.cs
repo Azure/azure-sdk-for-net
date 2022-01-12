@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArmResource(ClientContext clientContext, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             ClientOptions = clientContext.ClientOptions;
             Id = id;
             Credential = clientContext.Credential;
@@ -113,9 +115,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="identifier"> The resource identifier. </param>
         protected virtual void ValidateResourceType(ResourceIdentifier identifier)
         {
-            Argument.AssertNotNull(identifier, nameof(identifier));
 #if DEBUG
-            if (identifier.ResourceType != ValidResourceType)
+            if (identifier?.ResourceType != ValidResourceType)
                 throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");
 #endif
         }
