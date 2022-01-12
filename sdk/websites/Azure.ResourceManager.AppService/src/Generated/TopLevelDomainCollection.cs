@@ -353,6 +353,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TopLevelDomain, TopLevelDomainData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, TopLevelDomain, TopLevelDomainData> Construct() { }
     }
 }

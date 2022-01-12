@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Profile, ProfileData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Profile, ProfileData> Construct() { }
     }
 }

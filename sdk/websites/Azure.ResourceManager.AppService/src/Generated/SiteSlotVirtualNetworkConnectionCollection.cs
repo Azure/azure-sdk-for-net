@@ -12,8 +12,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -334,6 +334,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotVirtualNetworkConnection, VnetInfoResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotVirtualNetworkConnection, VnetInfoResourceData> Construct() { }
     }
 }

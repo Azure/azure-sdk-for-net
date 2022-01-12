@@ -12,34 +12,8 @@ namespace Azure.ResourceManager.Models
     /// <summary>
     /// Representation of a publisher plan for marketplace RPs.
     /// </summary>
-    public sealed partial class Plan : IEquatable<Plan>, IComparable<Plan>
+    public sealed partial class Plan : IEquatable<Plan>
     {
-        /// <summary>
-        /// Compares this <see cref="Plan"/> with another instance.
-        /// </summary>
-        /// <param name="other"> <see cref="Plan"/> object to compare. </param>
-        /// <returns> -1 for less than, 0 for equals, 1 for greater than. </returns>
-        public int CompareTo(Plan other)
-        {
-            if (ReferenceEquals(other, null))
-                return 1;
-
-            if (ReferenceEquals(this, other))
-                return 0;
-
-            int compareResult = 0;
-            if ((compareResult = string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Product, other.Product, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(PromotionCode, other.PromotionCode, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Publisher, other.Publisher, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Version, other.Version, StringComparison.InvariantCultureIgnoreCase)) == 0)
-            {
-                return 0;
-            }
-
-            return compareResult;
-        }
-
         /// <summary>
         /// Compares this <see cref="Plan"/> instance with another object and determines if they are equals.
         /// </summary>
@@ -117,50 +91,6 @@ namespace Azure.ResourceManager.Models
         public static bool operator !=(Plan left, Plan right)
         {
             return !(left == right);
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Plan"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is less than the right. </returns>
-        public static bool operator <(Plan left, Plan right)
-        {
-            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Plan"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is less than or equal to the right. </returns>
-        public static bool operator <=(Plan left, Plan right)
-        {
-            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Plan"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is greater than the right. </returns>
-        public static bool operator >(Plan left, Plan right)
-        {
-            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
-        }
-
-        /// <summary>
-        /// Compares one <see cref="Plan"/> with another instance.
-        /// </summary>
-        /// <param name="left"> The object on the left side of the operator. </param>
-        /// <param name="right"> The object on the right side of the operator. </param>
-        /// <returns> True if the left object is greater than or equal to the right. </returns>
-        public static bool operator >=(Plan left, Plan right)
-        {
-            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }

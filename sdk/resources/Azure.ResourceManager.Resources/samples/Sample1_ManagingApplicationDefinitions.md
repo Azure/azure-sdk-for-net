@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_ApplicationDefinitions_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```

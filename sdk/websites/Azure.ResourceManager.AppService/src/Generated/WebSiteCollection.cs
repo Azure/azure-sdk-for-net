@@ -430,6 +430,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WebSite, WebSiteData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, WebSite, WebSiteData> Construct() { }
     }
 }

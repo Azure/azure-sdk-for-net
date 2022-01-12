@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, LoadBalancer, LoadBalancerData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, LoadBalancer, LoadBalancerData> Construct() { }
     }
 }

@@ -246,7 +246,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 // Act
-                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync(ArtifactManifestOrderBy.LastUpdatedOnDescending);
+                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync(ArtifactManifestOrder.LastUpdatedOnDescending);
 
                 // Assert
                 string digest = null;

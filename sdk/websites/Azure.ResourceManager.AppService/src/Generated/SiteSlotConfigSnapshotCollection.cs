@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -204,6 +204,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotConfigSnapshot, SiteConfigData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotConfigSnapshot, SiteConfigData> Construct() { }
     }
 }

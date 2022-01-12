@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -1148,7 +1147,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceDatabaseSchemas in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseSchemas and their operations over a ManagedDatabase. </returns>
-        public ManagedInstanceDatabaseSchemaCollection GetManagedInstanceDatabaseSchemas()
+        public virtual ManagedInstanceDatabaseSchemaCollection GetManagedInstanceDatabaseSchemas()
         {
             return new ManagedInstanceDatabaseSchemaCollection(this);
         }
@@ -1158,7 +1157,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceDatabaseVulnerabilityAssessments in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseVulnerabilityAssessments and their operations over a ManagedDatabase. </returns>
-        public ManagedInstanceDatabaseVulnerabilityAssessmentCollection GetManagedInstanceDatabaseVulnerabilityAssessments()
+        public virtual ManagedInstanceDatabaseVulnerabilityAssessmentCollection GetManagedInstanceDatabaseVulnerabilityAssessments()
         {
             return new ManagedInstanceDatabaseVulnerabilityAssessmentCollection(this);
         }
@@ -1168,7 +1167,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceDatabaseBackupShortTermRetentionPolicies in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseBackupShortTermRetentionPolicies and their operations over a ManagedDatabase. </returns>
-        public ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceDatabaseBackupShortTermRetentionPolicies()
+        public virtual ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceDatabaseBackupShortTermRetentionPolicies()
         {
             return new ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection(this);
         }
@@ -1178,7 +1177,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedDatabaseRestoreDetailsResults in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedDatabaseRestoreDetailsResults and their operations over a ManagedDatabase. </returns>
-        public ManagedDatabaseRestoreDetailsResultCollection GetManagedDatabaseRestoreDetailsResults()
+        public virtual ManagedDatabaseRestoreDetailsResultCollection GetManagedDatabaseRestoreDetailsResults()
         {
             return new ManagedDatabaseRestoreDetailsResultCollection(this);
         }
@@ -1188,7 +1187,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedDatabaseSecurityAlertPolicies in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedDatabaseSecurityAlertPolicies and their operations over a ManagedDatabase. </returns>
-        public ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
+        public virtual ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
         {
             return new ManagedDatabaseSecurityAlertPolicyCollection(this);
         }
@@ -1198,7 +1197,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedTransparentDataEncryptions in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedTransparentDataEncryptions and their operations over a ManagedDatabase. </returns>
-        public ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions()
+        public virtual ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions()
         {
             return new ManagedTransparentDataEncryptionCollection(this);
         }
@@ -1208,7 +1207,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceLongTermRetentionPolicies in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceLongTermRetentionPolicies and their operations over a ManagedDatabase. </returns>
-        public ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies()
+        public virtual ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies()
         {
             return new ManagedInstanceLongTermRetentionPolicyCollection(this);
         }

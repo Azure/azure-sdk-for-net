@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DiskEncryptionSet, DiskEncryptionSetData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DiskEncryptionSet, DiskEncryptionSetData> Construct() { }
     }
 }

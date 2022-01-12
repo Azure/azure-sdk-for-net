@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PublicIPPrefix, PublicIPPrefixData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PublicIPPrefix, PublicIPPrefixData> Construct() { }
     }
 }

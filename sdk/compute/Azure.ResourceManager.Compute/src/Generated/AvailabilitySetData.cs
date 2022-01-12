@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>
         /// <param name="location"> The location. </param>
-        public AvailabilitySetData(Location location) : base(location)
+        public AvailabilitySetData(AzureLocation location) : base(location)
         {
             VirtualMachines = new ChangeTrackingList<WritableSubResource>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal AvailabilitySetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(id, name, type, tags, location)
+        internal AvailabilitySetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(id, name, type, tags, location)
         {
             Sku = sku;
             PlatformUpdateDomainCount = platformUpdateDomainCount;

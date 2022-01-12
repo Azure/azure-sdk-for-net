@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VpnGateway, VpnGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VpnGateway, VpnGatewayData> Construct() { }
     }
 }
