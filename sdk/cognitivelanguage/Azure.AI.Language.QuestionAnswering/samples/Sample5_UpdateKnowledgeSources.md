@@ -19,9 +19,10 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 To add a new knowledge source to your project, you can set up a `RequestContent` instance with the appropriate parameters and call the `UpdateSources` method. In the following example, a source of type "url" is being added to our project.
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
+```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources_UpdateSample
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
+string testProjectName = "{ProjectName}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -38,10 +39,10 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, testProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
-Pageable<BinaryData> sources = client.GetSources(newProjectName);
+Pageable<BinaryData> sources = client.GetSources(testProjectName);
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
@@ -145,9 +146,10 @@ Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRe
 
 ### Adding a knowledge base source
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
+```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync_UpdateSample
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
+string testProjectName = "{ProjectName}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
     new[] {
         new {
@@ -164,12 +166,15 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, testProjectName, updateSourcesRequestContent);
 
-Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
+// Wait for operation completion
+Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
+
+Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
 
 // Knowledge Sources can be retrieved as follows
-AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
+AsyncPageable<BinaryData> sources = client.GetSourcesAsync(testProjectName);
 Console.WriteLine("Sources: ");
 await foreach (BinaryData source in sources)
 {

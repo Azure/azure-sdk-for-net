@@ -20,14 +20,15 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public void KnowledgeSources()
         {
             QuestionAnsweringProjectsClient client = Client;
-            string testProjectName = CreateTestProjectName();
-            CreateProject(testProjectName);
 
-            #region QuestionAnsweringProjectsClient_UpdateSources
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateSources_UpdateSample
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
+            string testProjectName = "{ProjectName}";
 #if !SNIPPET
             sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            testProjectName = CreateTestProjectName();
+            CreateProject(testProjectName);
 #endif
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
@@ -165,14 +166,15 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public async Task KnowledgeSourcesAsync()
         {
             QuestionAnsweringProjectsClient client = Client;
-            string testProjectName = CreateTestProjectName();
-            await CreateProjectAsync(testProjectName);
 
-            #region QuestionAnsweringProjectsClient_UpdateSourcesAsync
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync_UpdateSample
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
+            string testProjectName = "{ProjectName}";
 #if !SNIPPET
             sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
+            testProjectName = CreateTestProjectName();
+            CreateProject(testProjectName);
 #endif
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
