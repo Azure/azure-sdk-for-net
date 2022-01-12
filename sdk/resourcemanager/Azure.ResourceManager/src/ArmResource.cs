@@ -93,26 +93,11 @@ namespace Azure.ResourceManager.Core
         protected internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
-        /// Gets the valid Azure resource type for the current operations.
-        /// </summary>
-        /// <returns> A valid Azure resource type. </returns>
-        protected virtual ResourceType ValidResourceType { get; }
-
-        /// <summary>
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
         protected internal TagResource TagResource => _tagResource ??= new TagResource(this, Id);
 
-        /// <summary>
-        /// Validate the resource identifier against current operations.
-        /// </summary>
-        /// <param name="identifier"> The resource identifier. </param>
-        protected virtual void ValidateResourceType(ResourceIdentifier identifier)
-        {
-            if (identifier?.ResourceType != ValidResourceType)
-                throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");
-        }
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>

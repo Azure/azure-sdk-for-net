@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,9 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             RestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -44,10 +48,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected new Tenant Parent { get { return base.Parent as Tenant; } }
 
-        /// <summary>
-        /// Gets the valid resource type associated with the collection.
-        /// </summary>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Gets the operations that can be performed on the collection.

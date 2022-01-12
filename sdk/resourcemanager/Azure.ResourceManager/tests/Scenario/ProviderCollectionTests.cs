@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Tests
         public async Task GetEmptyException()
         {
             ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
-            //Assert.ThrowsAsync<ArgumentException>(async () => {await providerCollection.GetAsync(""); });
             Assert.ThrowsAsync<NullReferenceException>(async () => { await providerCollection.GetAsync(""); });
         }
 
