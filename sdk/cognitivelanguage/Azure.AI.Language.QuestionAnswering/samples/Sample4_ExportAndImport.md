@@ -5,7 +5,7 @@ This sample demonstrates how to export and import Question Answering projects. T
 To export, import, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("LanguageEndpoint");
+Uri endpoint = new Uri("{LanguageEndpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
@@ -33,7 +33,7 @@ To import a project, you could provide the data of the exported project in the s
 
 ```C# Snippet:QuestionAnsweringProjectsClient_ImportProject
 // Set import project name and request content
-string importedProjectName = "importedProject";
+string importedProjectName = "{ProjectNameToBeImported}";
 RequestContent importRequestContent = RequestContent.Create(new
     {
     Metadata = new
@@ -83,7 +83,7 @@ string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl")
 
 ```C# Snippet:QuestionAnsweringProjectsClient_ImportProjectAsync
 // Set import project name and request content
-string importedProjectName = "importedProject";
+string importedProjectName = "{ProjectNameToBeImported}";
 RequestContent importRequestContent = RequestContent.Create(new
 {
     Metadata = new

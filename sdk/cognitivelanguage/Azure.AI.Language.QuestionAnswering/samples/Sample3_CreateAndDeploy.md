@@ -5,7 +5,7 @@ This sample demonstrates how to create and deploy Question Answering projects. T
 To create, deploy, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("LanguageEndpoint");
+Uri endpoint = new Uri("{LanguageEndpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);

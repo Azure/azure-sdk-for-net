@@ -36,7 +36,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:QuestionAnsweringProjectsClient_ImportProject
             // Set import project name and request content
-            string importedProjectName = "importedProject";
+            string importedProjectName = "{ProjectNameToBeImported}";
+#if !SNIPPET
+            importedProjectName = "importedProject";
+#endif
             RequestContent importRequestContent = RequestContent.Create(new
                 {
                 Metadata = new
@@ -95,7 +98,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:QuestionAnsweringProjectsClient_ImportProjectAsync
             // Set import project name and request content
-            string importedProjectName = "importedProject";
+            string importedProjectName = "{ProjectNameToBeImported}";
+#if !SNIPPET
+            importedProjectName = "importedProject";
+#endif
             RequestContent importRequestContent = RequestContent.Create(new
             {
                 Metadata = new

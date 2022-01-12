@@ -51,7 +51,7 @@ QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credentia
 With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringProjectsClient`:
 
 ```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("LanguageEndpoint");
+Uri endpoint = new Uri("{LanguageEndpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
 QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
