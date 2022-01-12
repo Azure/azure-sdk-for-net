@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Analytics.Purview.Administration
 {
     /// <summary> Client options for PurviewAccountClient. </summary>
-    [CodeGenClient("PurviewAdministrationClientOptions")]
+    [CodeGenClient("PurviewAdministrationClientsOptions")]
     public partial class PurviewAccountClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2019_11_01_preview;

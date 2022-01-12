@@ -34,35 +34,6 @@ namespace Azure.Analytics.Purview.Administration
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewMetadataPolicyClient. </summary>
-        /// <param name="endpoint"> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
-        /// <param name="collectionName"> The String to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/>, or <paramref name="credential"/> is null. </exception>
-        public PurviewMetadataPolicyClient(Uri endpoint, string collectionName, TokenCredential credential, PurviewAdministrationClientsOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            options ??= new PurviewAdministrationClientsOptions();
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _collectionName = collectionName;
-        }
-
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
