@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal static MigrationConfigPropertiesData DeserializeMigrationConfigPropertiesData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -53,6 +54,11 @@ namespace Azure.ResourceManager.ServiceBus
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -113,7 +119,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new MigrationConfigPropertiesData(id, name, type, systemData, provisioningState.Value, Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value);
+            return new MigrationConfigPropertiesData(id, name, type, location.Value, systemData, provisioningState.Value, Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value);
         }
     }
 }

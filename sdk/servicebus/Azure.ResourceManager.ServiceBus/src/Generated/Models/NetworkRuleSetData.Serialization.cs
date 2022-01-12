@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal static NetworkRuleSetData DeserializeNetworkRuleSetData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,6 +81,11 @@ namespace Azure.ResourceManager.ServiceBus
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, systemData, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
+            return new NetworkRuleSetData(id, name, type, location.Value, systemData, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

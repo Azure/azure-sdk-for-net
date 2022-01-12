@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region NamespaceDisasterRecoveryConfigAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceDisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region MigrationConfigProperties
+        /// <summary> Gets an object representing a MigrationConfigProperties along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> object. </returns>
-        public static NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationConfigProperties" /> object. </returns>
+        public static MigrationConfigProperties GetMigrationConfigProperties(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MigrationConfigProperties(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region MigrationConfigProperties
-        /// <summary> Gets an object representing a MigrationConfigProperties along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceDisasterRecoveryConfigAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceDisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationConfigProperties" /> object. </returns>
-        public static MigrationConfigProperties GetMigrationConfigProperties(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> object. </returns>
+        public static NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MigrationConfigProperties(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

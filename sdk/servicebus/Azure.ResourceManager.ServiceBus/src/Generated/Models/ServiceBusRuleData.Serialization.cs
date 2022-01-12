@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal static ServiceBusRuleData DeserializeServiceBusRuleData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,6 +64,11 @@ namespace Azure.ResourceManager.ServiceBus
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -133,7 +139,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusRuleData(id, name, type, systemData, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value);
+            return new ServiceBusRuleData(id, name, type, location.Value, systemData, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value);
         }
     }
 }
