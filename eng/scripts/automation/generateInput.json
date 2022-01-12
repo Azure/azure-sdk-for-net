@@ -1,8 +1,0 @@
-{
-    "specFolder": "d:/project/azure-rest-api-specs/specification",
-    "headSha": "9dee51c3deb2b76628f6496665d53861cdb7efcf",
-    "headRef": "",
-    "repoHttpsUrl": "https://github.com/Azure/azure-rest-api-specs.git",
-    "relatedReadmeMdFile": "agrifood/resource-manager/readme.md",
-    "serviceType": "resource-manager"
-}
