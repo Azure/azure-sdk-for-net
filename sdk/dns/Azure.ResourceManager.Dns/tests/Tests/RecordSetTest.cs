@@ -90,7 +90,7 @@ namespace Azure.Management.Dns.Tests
             //MX
             RecordSetMx mxResult = await zone.GetRecordSetMxes().GetAsync("MX");
             RecordSetMx mxGet = await mxResult.GetAsync();
-            Assert.AreEqual("studiostokens.azurewebsites.net", mxGet.Data.MxRecords[0].Exchange);
+            Assert.AreEqual("studiostokens.azurewebsites.net", mxGet.Data.MxRecord.Exchange);
             //PTR
             RecordSetPtr ptrResult = await zone.GetRecordSetPtrs().GetAsync("PTR");
             RecordSetPtr ptrGet = await ptrResult.GetAsync();

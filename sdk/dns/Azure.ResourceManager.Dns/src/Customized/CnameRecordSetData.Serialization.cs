@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class CaaRecordSetData : IUtf8JsonSerializable
+    public partial class CnameRecordSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,18 +46,16 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsDefined(CaaRecord))
+            if (Optional.IsDefined(CnameRecord))
             {
-                writer.WritePropertyName("CAARecords");
-                writer.WriteStartArray();
-                writer.WriteObjectValue(CaaRecord);
-                writer.WriteEndArray();
+                writer.WritePropertyName("CNAMERecord");
+                writer.WriteObjectValue(CnameRecord);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CaaRecordSetData DeserializeCaaRecordSetData(JsonElement element)
+        internal static CnameRecordSetData DeserializeCnameRecordSetData(JsonElement element)
         {
             Optional<string> etag = default;
             ResourceIdentifier id = default;
@@ -68,7 +66,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<CaaRecord> caaRecord = default;
+            Optional<CnameRecord> cNAMERecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -145,26 +143,21 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("caaRecords"))
+                        if (property0.NameEquals("CNAMERecord"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CaaRecord> array = new List<CaaRecord>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(CaaRecord.DeserializeCaaRecord(item));
-                            }
-                            caaRecord = array[0];
+                            cNAMERecord = CnameRecord.DeserializeCnameRecord(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CaaRecordSetData(id, name, type, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource, caaRecord);
+            return new CnameRecordSetData(id, name, type, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource, cNAMERecord);
         }
     }
 }

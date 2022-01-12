@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<AaaaRecord> aaaaRecord = default;
+            Optional<AaaaRecord> aAAARecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Dns
                             {
                                 array.Add(AaaaRecord.DeserializeAaaaRecord(item));
                             }
-                            aaaaRecord = array[0];
+                            aAAARecord = array[0];
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AaaaRecordSetData(id, name, type, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource, aaaaRecord);
+            return new AaaaRecordSetData(id, name, type, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(tTL), fqdn.Value, provisioningState.Value, targetResource, aAAARecord);
         }
     }
 }
