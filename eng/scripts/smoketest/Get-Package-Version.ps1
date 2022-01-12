@@ -23,7 +23,7 @@ $azureCoreVerDateStr = $azureCoreVerExtension.split(".")[1]
 $azureCoreVerDate = [DateTime]::ParseExact($azureCoreVerDateStr, "yyyyMMdd", $null)
 $pkgMinVer = $azureCoreVerDate.addMonths(-1).ToString("yyyyMMdd")
 
-$SmokeTestPackageVersions = @{}
+$SmokeTestPackageInfo = @()
 foreach ($pkg in $trackTwoPackages) {
   $pkgVersion = [AzureEngSemanticVersion]::ParseVersionString($pkg.Version)
   $pkgVersion.IsPreRelease = $false
@@ -38,7 +38,8 @@ foreach ($pkg in $trackTwoPackages) {
 
   if ($pkgInfo) {
     Write-Host "Found $($pkgInfo.Name) $($pkgInfo.Version)"
-    $SmokeTestPackageVersions[$pkgInfo.Name] = $pkgInfo.Version
+    $pkg.DevVersion = $pkgInfo.Version
+    $SmokeTestPackageInfo += $pkg
   }
   else {
     Write-Host "Cannot find alpha version of package $($pkg.Name) after $pkgMinver and before $azureCoreVerDateStr"
@@ -50,7 +51,8 @@ foreach ($pkg in $trackTwoPackages) {
 
     if ($latestPkg) {
       Write-Host "Found latest version $($latestPkg.Name) $($latestPkg.Version)"
-      $SmokeTestPackageVersions[$latestPkg.Name] = $latestPkg.Version
+      $pkg.DevVersion = $latestPkg.Version
+      $SmokeTestPackageInfo += $pkg
     }
     else
     {
@@ -60,4 +62,6 @@ foreach ($pkg in $trackTwoPackages) {
   }
 }
 
-return $SmokeTestPackageVersions
+Write-Host "Smoke Test Package Info:"
+Write-Host $SmokeTestPackageInfo
+return $SmokeTestPackageInfo
