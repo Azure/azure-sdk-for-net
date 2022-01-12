@@ -78,7 +78,8 @@ stages:
             -  ${{ config }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace:
-          - Configuration=Debug/Release
+          - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+            - BuildConfiguration=Debug/Release
           - ${{ parameters.MatrixReplace }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
