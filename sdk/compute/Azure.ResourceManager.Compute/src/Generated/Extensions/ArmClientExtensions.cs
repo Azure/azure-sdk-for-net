@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="AvailabilitySet" /> object. </returns>
         public static AvailabilitySet GetAvailabilitySet(this ArmClient armClient, ResourceIdentifier id)
         {
+            AvailabilitySet.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AvailabilitySet(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="ProximityPlacementGroup" /> object. </returns>
         public static ProximityPlacementGroup GetProximityPlacementGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            ProximityPlacementGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ProximityPlacementGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DedicatedHostGroup" /> object. </returns>
         public static DedicatedHostGroup GetDedicatedHostGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            DedicatedHostGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DedicatedHostGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DedicatedHost" /> object. </returns>
         public static DedicatedHost GetDedicatedHost(this ArmClient armClient, ResourceIdentifier id)
         {
+            DedicatedHost.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DedicatedHost(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SshPublicKey" /> object. </returns>
         public static SshPublicKey GetSshPublicKey(this ArmClient armClient, ResourceIdentifier id)
         {
+            SshPublicKey.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SshPublicKey(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineExtensionImage" /> object. </returns>
         public static VirtualMachineExtensionImage GetVirtualMachineExtensionImage(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineExtensionImage.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineExtensionImage(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineExtension" /> object. </returns>
         public static VirtualMachineExtension GetVirtualMachineExtension(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineExtension.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineExtension(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -97,6 +104,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
         public static VirtualMachine GetVirtualMachine(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachine.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachine(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -108,6 +116,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSet" /> object. </returns>
         public static VirtualMachineScaleSet GetVirtualMachineScaleSet(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineScaleSet.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSet(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -119,6 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Image" /> object. </returns>
         public static Image GetImage(this ArmClient armClient, ResourceIdentifier id)
         {
+            Image.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Image(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -130,6 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RestorePointGroup" /> object. </returns>
         public static RestorePointGroup GetRestorePointGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            RestorePointGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorePointGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
         public static RestorePoint GetRestorePoint(this ArmClient armClient, ResourceIdentifier id)
         {
+            RestorePoint.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorePoint(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -152,6 +164,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CapacityReservationGroup" /> object. </returns>
         public static CapacityReservationGroup GetCapacityReservationGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            CapacityReservationGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CapacityReservationGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -163,6 +176,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CapacityReservation" /> object. </returns>
         public static CapacityReservation GetCapacityReservation(this ArmClient armClient, ResourceIdentifier id)
         {
+            CapacityReservation.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CapacityReservation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -174,6 +188,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetExtension" /> object. </returns>
         public static VirtualMachineScaleSetExtension GetVirtualMachineScaleSetExtension(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineScaleSetExtension.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetExtension(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -185,6 +200,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgrade" /> object. </returns>
         public static VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineScaleSetRollingUpgrade.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetRollingUpgrade(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -196,6 +212,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVMExtension" /> object. </returns>
         public static VirtualMachineScaleSetVMExtension GetVirtualMachineScaleSetVMExtension(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineScaleSetVMExtension.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetVMExtension(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -207,6 +224,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVm" /> object. </returns>
         public static VirtualMachineScaleSetVm GetVirtualMachineScaleSetVm(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineScaleSetVm.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetVm(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -218,6 +236,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineRunCommand" /> object. </returns>
         public static VirtualMachineRunCommand GetVirtualMachineRunCommand(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineRunCommand.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineRunCommand(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -229,6 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVirtualMachineRunCommand" /> object. </returns>
         public static VirtualMachineScaleSetVirtualMachineRunCommand GetVirtualMachineScaleSetVirtualMachineRunCommand(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualMachineScaleSetVirtualMachineRunCommand.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetVirtualMachineRunCommand(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -240,6 +260,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Disk" /> object. </returns>
         public static Disk GetDisk(this ArmClient armClient, ResourceIdentifier id)
         {
+            Disk.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Disk(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -251,6 +272,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Snapshot" /> object. </returns>
         public static Snapshot GetSnapshot(this ArmClient armClient, ResourceIdentifier id)
         {
+            Snapshot.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Snapshot(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -262,6 +284,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskEncryptionSet" /> object. </returns>
         public static DiskEncryptionSet GetDiskEncryptionSet(this ArmClient armClient, ResourceIdentifier id)
         {
+            DiskEncryptionSet.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiskEncryptionSet(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -273,6 +296,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskAccess" /> object. </returns>
         public static DiskAccess GetDiskAccess(this ArmClient armClient, ResourceIdentifier id)
         {
+            DiskAccess.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiskAccess(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -284,6 +308,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -295,6 +320,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskRestorePoint" /> object. </returns>
         public static DiskRestorePoint GetDiskRestorePoint(this ArmClient armClient, ResourceIdentifier id)
         {
+            DiskRestorePoint.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiskRestorePoint(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -306,6 +332,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Gallery" /> object. </returns>
         public static Gallery GetGallery(this ArmClient armClient, ResourceIdentifier id)
         {
+            Gallery.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Gallery(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -317,6 +344,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryImage" /> object. </returns>
         public static GalleryImage GetGalleryImage(this ArmClient armClient, ResourceIdentifier id)
         {
+            GalleryImage.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GalleryImage(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -328,6 +356,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryImageVersion" /> object. </returns>
         public static GalleryImageVersion GetGalleryImageVersion(this ArmClient armClient, ResourceIdentifier id)
         {
+            GalleryImageVersion.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GalleryImageVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -339,6 +368,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryApplication" /> object. </returns>
         public static GalleryApplication GetGalleryApplication(this ArmClient armClient, ResourceIdentifier id)
         {
+            GalleryApplication.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GalleryApplication(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -350,6 +380,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryApplicationVersion" /> object. </returns>
         public static GalleryApplicationVersion GetGalleryApplicationVersion(this ArmClient armClient, ResourceIdentifier id)
         {
+            GalleryApplicationVersion.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GalleryApplicationVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -361,6 +392,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGallery" /> object. </returns>
         public static SharedGallery GetSharedGallery(this ArmClient armClient, ResourceIdentifier id)
         {
+            SharedGallery.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGallery(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -372,6 +404,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGalleryImage" /> object. </returns>
         public static SharedGalleryImage GetSharedGalleryImage(this ArmClient armClient, ResourceIdentifier id)
         {
+            SharedGalleryImage.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGalleryImage(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -383,6 +416,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGalleryImageVersion" /> object. </returns>
         public static SharedGalleryImageVersion GetSharedGalleryImageVersion(this ArmClient armClient, ResourceIdentifier id)
         {
+            SharedGalleryImageVersion.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGalleryImageVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -394,6 +428,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RoleInstance" /> object. </returns>
         public static RoleInstance GetRoleInstance(this ArmClient armClient, ResourceIdentifier id)
         {
+            RoleInstance.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RoleInstance(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -405,6 +440,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudServiceRole" /> object. </returns>
         public static CloudServiceRole GetCloudServiceRole(this ArmClient armClient, ResourceIdentifier id)
         {
+            CloudServiceRole.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CloudServiceRole(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -416,6 +452,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudService" /> object. </returns>
         public static CloudService GetCloudService(this ArmClient armClient, ResourceIdentifier id)
         {
+            CloudService.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CloudService(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -427,6 +464,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="OsVersion" /> object. </returns>
         public static OsVersion GetOsVersion(this ArmClient armClient, ResourceIdentifier id)
         {
+            OsVersion.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OsVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -438,6 +476,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="OsFamily" /> object. </returns>
         public static OsFamily GetOsFamily(this ArmClient armClient, ResourceIdentifier id)
         {
+            OsFamily.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OsFamily(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

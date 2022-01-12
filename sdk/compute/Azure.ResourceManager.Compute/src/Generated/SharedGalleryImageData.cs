@@ -65,5 +65,7 @@ namespace Azure.ResourceManager.Compute
         public IReadOnlyList<GalleryImageFeature> Features { get; }
         /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
         public ImagePurchasePlan PurchasePlan { get; }
+        /// <summary> The resource identifier. </summary>
+        public ResourceIdentifier Id { get; internal set; }
     }
 }

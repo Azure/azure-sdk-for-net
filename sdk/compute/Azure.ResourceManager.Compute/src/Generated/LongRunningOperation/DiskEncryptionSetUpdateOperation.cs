@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
-            return new DiskEncryptionSet(_operationBase, data.Id, data);
+            return new DiskEncryptionSet(_operationBase, data);
         }
 
         async ValueTask<DiskEncryptionSet> IOperationSource<DiskEncryptionSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
-            return new DiskEncryptionSet(_operationBase, data.Id, data);
+            return new DiskEncryptionSet(_operationBase, data);
         }
     }
 }

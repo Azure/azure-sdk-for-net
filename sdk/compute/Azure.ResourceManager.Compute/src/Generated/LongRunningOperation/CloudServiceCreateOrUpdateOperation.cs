@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
-            return new CloudService(_operationBase, data.Id, data);
+            return new CloudService(_operationBase, data);
         }
 
         async ValueTask<CloudService> IOperationSource<CloudService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
-            return new CloudService(_operationBase, data.Id, data);
+            return new CloudService(_operationBase, data);
         }
     }
 }

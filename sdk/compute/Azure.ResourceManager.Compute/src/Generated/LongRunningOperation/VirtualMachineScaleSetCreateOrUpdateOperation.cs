@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement);
-            return new VirtualMachineScaleSet(_operationBase, data.Id, data);
+            return new VirtualMachineScaleSet(_operationBase, data);
         }
 
         async ValueTask<VirtualMachineScaleSet> IOperationSource<VirtualMachineScaleSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement);
-            return new VirtualMachineScaleSet(_operationBase, data.Id, data);
+            return new VirtualMachineScaleSet(_operationBase, data);
         }
     }
 }

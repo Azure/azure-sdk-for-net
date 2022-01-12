@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -34,5 +35,7 @@ namespace Azure.ResourceManager.Compute
         public DateTimeOffset? PublishedDate { get; }
         /// <summary> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeDate { get; }
+        /// <summary> The resource identifier. </summary>
+        public ResourceIdentifier Id { get; internal set; }
     }
 }

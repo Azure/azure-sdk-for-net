@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,10 +37,16 @@ namespace Azure.ResourceManager.Compute
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _sharedGalleryImageVersionsRestClient = new SharedGalleryImageVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SharedGalleryImage.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SharedGalleryImage.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SharedGalleryImage.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -64,7 +71,8 @@ namespace Azure.ResourceManager.Compute
                 var response = _sharedGalleryImageVersionsRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SharedGalleryImageVersion(Parent, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName), response.Value), response.GetRawResponse());
+                response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
+                return Response.FromValue(new SharedGalleryImageVersion(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,7 +102,8 @@ namespace Azure.ResourceManager.Compute
                 var response = await _sharedGalleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SharedGalleryImageVersion(Parent, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName), response.Value), response.GetRawResponse());
+                response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
+                return Response.FromValue(new SharedGalleryImageVersion(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,9 +128,10 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _sharedGalleryImageVersionsRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new SharedGalleryImageVersion(this, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName), response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse());
+                response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
+                return Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +156,10 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _sharedGalleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new SharedGalleryImageVersion(this, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName), response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse());
+                response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
+                return Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,7 +234,12 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _sharedGalleryImageVersionsRestClient.List(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImageVersion(Parent, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name), value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value =>
+                    {
+                        value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
+                        return new SharedGalleryImageVersion(Parent, value);
+                    }
+                    ), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -238,7 +254,12 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _sharedGalleryImageVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImageVersion(Parent, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name), value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value =>
+                    {
+                        value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
+                        return new SharedGalleryImageVersion(Parent, value);
+                    }
+                    ), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -265,7 +286,12 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _sharedGalleryImageVersionsRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImageVersion(Parent, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name), value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value =>
+                    {
+                        value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
+                        return new SharedGalleryImageVersion(Parent, value);
+                    }
+                    ), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -280,7 +306,12 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _sharedGalleryImageVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImageVersion(Parent, SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name), value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value =>
+                    {
+                        value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
+                        return new SharedGalleryImageVersion(Parent, value);
+                    }
+                    ), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

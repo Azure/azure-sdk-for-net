@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -33,10 +34,16 @@ namespace Azure.ResourceManager.Compute
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => RestorePointGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != RestorePointGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RestorePointGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -135,7 +142,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(Parent, response.Value.Id, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RestorePoint(Parent, response.Value.Id, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,9 +197,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorePoint(this, response.Value.Id, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,9 +224,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RestorePoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorePoint(this, response.Value.Id, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

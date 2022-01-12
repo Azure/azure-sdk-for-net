@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,10 +36,16 @@ namespace Azure.ResourceManager.Compute
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServiceRolesRestClient = new CloudServiceRolesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => CloudService.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != CloudService.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CloudService.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _cloudServiceRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServiceRole(Parent, response.Value.Id, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _cloudServiceRolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CloudServiceRole(Parent, response.Value.Id, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,9 +125,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CloudServiceRole>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudServiceRole(this, response.Value.Id, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudServiceRole>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,9 +152,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CloudServiceRole>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudServiceRole(this, response.Value.Id, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudServiceRole>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +228,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _cloudServiceRolesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -236,7 +243,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _cloudServiceRolesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -262,7 +269,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _cloudServiceRolesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -277,7 +284,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _cloudServiceRolesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRole(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -24,5 +25,8 @@ namespace Azure.ResourceManager.Compute
         internal SharedGalleryData(string name, string location, string uniqueId) : base(name, location, uniqueId)
         {
         }
+
+        /// <summary> The resource identifier. </summary>
+        public ResourceIdentifier Id { get; internal set; }
     }
 }

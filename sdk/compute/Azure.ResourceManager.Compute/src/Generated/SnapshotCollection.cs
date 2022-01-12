@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,10 +39,16 @@ namespace Azure.ResourceManager.Compute
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _snapshotsRestClient = new SnapshotsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -140,7 +147,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _snapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Snapshot(Parent, response.Value.Id, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Snapshot(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,7 +177,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _snapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Snapshot(Parent, response.Value.Id, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Snapshot(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,9 +202,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _snapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Snapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new Snapshot(this, response.Value.Id, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Snapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,9 +229,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _snapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Snapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new Snapshot(this, response.Value.Id, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Snapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +305,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _snapshotsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -313,7 +320,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _snapshotsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,7 +346,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _snapshotsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -354,7 +361,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _snapshotsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value.Id, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
