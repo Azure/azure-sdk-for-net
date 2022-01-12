@@ -78,6 +78,7 @@ stages:
             -  ${{ config }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace:
+          # For nightly/release pipelines we build and test release only
           - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
             - BuildConfiguration=Debug/Release
           - ${{ parameters.MatrixReplace }}
