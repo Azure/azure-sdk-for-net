@@ -535,16 +535,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region MigrationConfigProperties
-
-        /// <summary> Gets a collection of MigrationConfigProperties in the ServiceBusNamespace. </summary>
-        /// <returns> An object representing collection of MigrationConfigProperties and their operations over a ServiceBusNamespace. </returns>
-        public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
-        {
-            return new MigrationConfigPropertiesCollection(this);
-        }
-        #endregion
-
         #region NamespaceAuthorizationRule
 
         /// <summary> Gets a collection of NamespaceAuthorizationRules in the ServiceBusNamespace. </summary>
@@ -552,6 +542,16 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
             return new NamespaceAuthorizationRuleCollection(this);
+        }
+        #endregion
+
+        #region MigrationConfigProperties
+
+        /// <summary> Gets a collection of MigrationConfigProperties in the ServiceBusNamespace. </summary>
+        /// <returns> An object representing collection of MigrationConfigProperties and their operations over a ServiceBusNamespace. </returns>
+        public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
+        {
+            return new MigrationConfigPropertiesCollection(this);
         }
         #endregion
 

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the DisasterRecovery data model. </summary>
-    public partial class DisasterRecoveryData : ProxyResource
+    public partial class DisasterRecoveryData : Resource
     {
         /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
         public DisasterRecoveryData()
@@ -23,14 +23,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="alternateName"> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
-        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, ProvisioningStateDR? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role) : base(id, name, type, location)
+        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningStateDR? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role) : base(id, name, type)
         {
             SystemData = systemData;
             ProvisioningState = provisioningState;

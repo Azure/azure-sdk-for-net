@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusSubscription data model. </summary>
-    public partial class ServiceBusSubscriptionData : ProxyResource
+    public partial class ServiceBusSubscriptionData : Resource
     {
         /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
         public ServiceBusSubscriptionData()
@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="messageCount"> Number of messages. </param>
         /// <param name="createdAt"> Exact time the message was created. </param>
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
         /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
         /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
-        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, long? messageCount, DateTimeOffset? createdAt, DateTimeOffset? accessedAt, DateTimeOffset? updatedAt, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties) : base(id, name, type, location)
+        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, long? messageCount, DateTimeOffset? createdAt, DateTimeOffset? accessedAt, DateTimeOffset? updatedAt, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties) : base(id, name, type)
         {
             SystemData = systemData;
             MessageCount = messageCount;
