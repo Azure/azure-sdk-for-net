@@ -14,7 +14,7 @@ if ($SpellCheckPublicApiSurface -and -not (Get-Command 'npx')) {
 
 $servicesProj = Resolve-Path "$PSScriptRoot/../service.proj"
 
-dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope="$ServiceDirectory" /p:SDKType=$SDKType /restore $servicesProj
+dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope="$ServiceDirectory" /p:SDKType=$SDKType /restore $servicesProj /p:EnableSourceLink=false
 
 if ($SpellCheckPublicApiSurface) { 
     Write-Host "Spell check public API surface"
