@@ -1,12 +1,17 @@
 # Release History
 
-## 1.22.0-beta.1 (Unreleased)
+## 1.22.0 (2022-01-11)
 
 ### Features Added
 
 - Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
 - Added `IsError` property to `Response`.  This will indicate whether the message's `ResponseClassifier` considers the response to be an error.
 - Added `RequestFailedException` constructor that takes a `Response`.
+- Added `AzureLocation`. This class gives static references to known Azure regions.
+- Added `ResourceIdentifier`. This class allows users to load an Azure resource identifier string and parse out the pieces of that string such as which `SubscriptionId` does the resource belong to.
+- Added `ResourceType`. This class represents the ARM provider information for a given resource and is used by the `ResourceIdentifier` class.
+- Added `HttpPipelineTransportOptions` type.  This type contains a `ServerCertificateCustomValidationCallback` property that allows callers to set a `Func<ServerCertificateCustomValidationArgs, bool>` delegate.  If set, the delegate will be called to validate the server side TLS certificate.
+- Added a new static overload for `HttpPipelineBuilder.Build` that takes an `HttpPipelineTransportOptions` instance.  This overload creates an `HttpPipeline` with the default transport configuration and the `HttpPipelineTransportOptions` applied. It returns a `DisposableHttpPipeline` that implements `IDisposable`. Note: The `HttpPipelineTransportOptions` will not be applied if a custom `Transport` has been set in the `ClientOptions`. In the case that transport options were provided but not applied, an event is logged `(PipelineTransportOptionsNotApplied`). 
 
 ### Breaking Changes
 
@@ -19,7 +24,6 @@ options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 
 - Fixed a bug where requests were failing with `NotImplementedException` on Unity with .NET Framework scripting.
 
-### Other Changes
 
 ## 1.21.0 (2021-11-03)
 
