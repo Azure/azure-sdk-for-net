@@ -1,10 +1,20 @@
 # Release History
 
+## 4.3.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.3.0-beta.3 (2022-01-11)
 
 ### Other Changes
 
-- Use operation helpers for long-running operations.
+- Bug fixes
 
 ## 4.3.0-beta.2 (2021-10-14)
 
