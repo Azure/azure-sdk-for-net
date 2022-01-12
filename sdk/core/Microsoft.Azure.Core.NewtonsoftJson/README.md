@@ -3,7 +3,7 @@
 The [Azure.Core package][azure_core_package] contains types shared by the latest Azure SDK client libraries. This `Newtonsoft.Json` compatibility library:
 
 - Contains converters dependent upon the [Newtonsoft.Json][newtonsoft_json_package] package.
-- Enables `Newtonsoft.Json` usage for serializing and deserializing model types with the following client libraries:
+- Enables serialization and deserialization of custom model types using `Newtonsoft.Json`. Those custom model types may then be used with the following client libraries:
   - [Azure.DigitalTwins.Core][azure_digital_twins_core_package]
   - [Azure.Search.Documents][azure_search_documents_package]
 
@@ -33,7 +33,7 @@ The [Azure.Search.Documents package][azure_search_documents_package] is used in 
 
 ### Deserializing models
 
-Consider a model class containing information about movies:
+Consider a custom model class containing information about movies:
 
 ```C# Snippet:Microsoft_Azure_Core_NewtonsoftJson_Samples_Readme_Model
 public class Movie
