@@ -21,11 +21,6 @@ namespace Azure.Core
         private readonly string _stringValue;
 
         /// <summary>
-        /// The resource type for the root of the resource hierarchy.
-        /// </summary>
-        public static ResourceType Root { get; } = new ResourceType(string.Empty, string.Empty, string.Empty);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
         /// </summary>
         /// <param name="resourceType"> The resource type string to convert. </param>
