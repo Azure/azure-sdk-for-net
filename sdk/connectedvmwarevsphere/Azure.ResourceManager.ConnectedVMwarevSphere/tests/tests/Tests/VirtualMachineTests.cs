@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             return resourceGroup.GetVirtualMachines();
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task CreateDelete()
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(vm1.Id.Name, vmName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task Get()
@@ -85,7 +83,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(vm1.Id.Name, vmName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task Exists()
@@ -115,7 +112,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(vm1.Id.Name, vmName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task GetAll()

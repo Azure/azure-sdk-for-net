@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             return resourceGroup.GetVirtualNetworks();
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task CreateDelete()
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(vnet1.Id.Name, vnetName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task Get()
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(vnet1.Id.Name, vnetName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task Exists()
@@ -99,7 +96,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(vnet1.Id.Name, vnetName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task GetAll()
@@ -127,7 +123,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.GreaterOrEqual(count, 1);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task GetAllInSubscription()

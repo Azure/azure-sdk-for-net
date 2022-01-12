@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             return resourceGroup.GetVMwareHosts();
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task CreateDelete()
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(host1.Id.Name, hostName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task Get()
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(host1.Id.Name, hostName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task Exists()
@@ -100,7 +97,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.AreEqual(host1.Id.Name, hostName);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task GetAll()
@@ -128,7 +124,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.GreaterOrEqual(count, 1);
         }
 
-        [AsyncOnly]
         [TestCase]
         [RecordedTest]
         public async Task GetAllInSubscription()
