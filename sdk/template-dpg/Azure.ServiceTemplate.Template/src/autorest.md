@@ -11,6 +11,7 @@ input-file:
 namespace: Azure.ServiceTemplate.Template
 public-clients: true
 data-plane: true
-security: AADToken
-security-scopes: SecurityScopes
+securityTypes
+securityScopePrefix securityScopes
+securityHeaderNamePrefix securityHeaderName
 ```

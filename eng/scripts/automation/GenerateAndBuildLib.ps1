@@ -41,7 +41,8 @@ function New-DataPlanePackageFolder() {
       [string]$namespace,
       [string]$sdkPath = "",
       [string]$inputfiles = "", # input files, separated by semicolon if more than one
-      [string]$securityScope,
+      [string]$securityScope = "",
+      [string]$securityHeaderName = "",
       [string]$AUTOREST_CONFIG_FILE = "autorest.md",
       [string]$outputJsonFile = "output.json"
   )
@@ -92,7 +93,17 @@ function New-DataPlanePackageFolder() {
     }
 
     $libraryName = $namespaceArray[-1]
-    dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --includeCI true --force
+    $dotnetNewCmd = "dotnet new dataplane --libraryName $libraryName --swagger $inputfile --includeCI true --force"
+    if ($securityScope -ne "") {
+        $dotnetNewCmd = $dotnetNewCmd + " --securityScopes $securityScope";
+    }
+
+    if ($securityHeaderName -ne "") {
+        $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
+    }
+    # dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
+    Write-Host "Invote dotnet new command: $dotnetNewCmd"
+    Invoke-Expression $dotnetNewCmd
   }
 
   $outputJson = [PSCustomObject]@{

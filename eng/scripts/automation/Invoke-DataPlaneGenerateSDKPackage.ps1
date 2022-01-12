@@ -4,14 +4,15 @@ param (
   [string]$namespace,
   [string]$sdkPath,
   [string]$inputfiles="", #input files, separated by semicolon if more than one
-  [string]$securityScope,
+  [string]$securityScope="",
+  [string]$securityHeaderName="",
   [string]$AUTOREST_CONFIG_FILE = "autorest.md"
 )
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
 
 # Generate dataplane library
 $outputJsonFile = "newpackageoutput.json"
-New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -inputfiles $inputfiles -securityScope $securityScope -AUTOREST_CONFIG_FILE $AUTOREST_CONFIG_FILE -outputJsonFile $outputJsonFile
+New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -inputfiles $inputfiles -securityScope $securityScope -securityHeaderName $securityHeaderName -AUTOREST_CONFIG_FILE $AUTOREST_CONFIG_FILE -outputJsonFile $outputJsonFile
 if ( $? -ne $True) {
   Write-Error "Failed to create sdk project folder. exit code: $?"
   exit 1

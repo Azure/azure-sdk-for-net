@@ -55,9 +55,18 @@
     "securityScopes": {
       "type": "parameter",
       "datatype":"text",
-      "isRequired": true,
+      "isRequired": false,
       "description": "The Azure security scopes. ie. https://api.adu.microsoft.com/.default",
-      "replaces": "SecurityScopes"
+      "defaultValue": "",
+      "replaces": "securityScopes"
+    },
+    "securityHeaderName": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "The Azure security scopes. ie. https://api.adu.microsoft.com/.default",
+      "defaultValue": "",
+      "replaces": "securityHeaderName"
     },
     "tagVersion": {
       "type": "parameter",
@@ -82,6 +91,71 @@
       "valueTransform": "ProviderShortNameForm",
       "fileRename": "Template",
       "replaces": "Template"
+    },
+    "securityTypes": {
+      "type": "generated",
+      "generator": "switch",
+      "replaces": "securityTypes",
+      "parameters": {
+        "evaluator": "C++",
+        "datatype": "string",
+        "cases": [
+          {
+            "condition": "(securityScopes != \"\" && securityHeaderName != \"\")",
+            "value": "security:\r\n- AADToken\r\n- AzureKey"
+          },
+          {
+            "condition": "(securityScopes != \"\" && securityHeaderName == \"\")",
+            "value": "security: AADToken"
+          },
+          {
+            "condition": "(securityScopes == \"\" && securityHeaderName != \"\")",
+            "value": "security: AzureKey"
+          },
+          {
+            "condition": "(securityScopes == \"\" && securityHeaderName == \"\")",
+            "value": ""
+          }
+        ]
+      }
+    },
+    "securityScopePrefix": {
+      "type": "generated",
+      "generator": "switch",
+      "replaces": "securityScopePrefix",
+      "parameters": {
+        "evaluator": "C++",
+        "datatype": "string",
+        "cases": [
+          {
+            "condition": "(securityScopes == \"\")",
+            "value": ""
+          },
+          {
+            "condition": "(securityScopes != \"\")",
+            "value": "security-scopes:"
+          }
+        ]
+      }
+    },
+    "securityHeaderNamePrefix": {
+      "type": "generated",
+      "generator": "switch",
+      "replaces": "securityHeaderNamePrefix",
+      "parameters": {
+        "evaluator": "C++",
+        "datatype": "string",
+        "cases": [
+          {
+            "condition": "(securityHeaderName == \"\")",
+            "value": ""
+          },
+          {
+            "condition": "(securityHeaderName != '')",
+            "value": "security-header-name:"
+          }
+        ]
+      }
     },
     "tagPrefix": {
       "type": "generated",
