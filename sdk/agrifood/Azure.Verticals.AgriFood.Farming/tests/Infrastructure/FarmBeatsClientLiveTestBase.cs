@@ -12,10 +12,10 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
         {
         }
 
-        public FarmersClient GetFarmersClient(FarmBeatsClientOptions options = default)
+        public FarmersClient GetFarmersClient(FarmBeatsClientsOptions options = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            options ??= new FarmBeatsClientOptions();
+            options ??= new FarmBeatsClientsOptions();
 
             return InstrumentClient(new FarmersClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
