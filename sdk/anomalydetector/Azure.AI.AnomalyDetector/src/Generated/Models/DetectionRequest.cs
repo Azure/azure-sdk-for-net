@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Request to submit a detection. </summary>
+    /// <summary> Detection request. </summary>
     public partial class DetectionRequest
     {
         /// <summary> Initializes a new instance of DetectionRequest. </summary>
-        /// <param name="source"> source file link of the input variables, each variable will be a csv with two columns, the first column will be timestamp, the second column will be value.Besides these variable csv files, a extra meta.json can be included in th zip file if you would like to rename a variable.Be default, the file name of the variable will be used as the variable name. The variables used in detection should be consistent with variables in the model used for detection. </param>
-        /// <param name="startTime"> A require field, start time of data be used for detection, should be date-time. </param>
-        /// <param name="endTime"> A require field, end time of data be used for detection, should be date-time. </param>
+        /// <param name="source"> Source link to the input variables. Each variable should be a csv with two columns, `timestamp` and `value`. The file name of the variable will be used as its name. The variables used in detection should be exactly the same with those used in the training phase. </param>
+        /// <param name="startTime"> A required field, indicating the start time of data for detection. Should be date-time. </param>
+        /// <param name="endTime"> A required field, indicating the end time of data for detection. Should be date-time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public DetectionRequest(string source, DateTimeOffset startTime, DateTimeOffset endTime)
         {
@@ -29,11 +29,11 @@ namespace Azure.AI.AnomalyDetector.Models
             EndTime = endTime;
         }
 
-        /// <summary> source file link of the input variables, each variable will be a csv with two columns, the first column will be timestamp, the second column will be value.Besides these variable csv files, a extra meta.json can be included in th zip file if you would like to rename a variable.Be default, the file name of the variable will be used as the variable name. The variables used in detection should be consistent with variables in the model used for detection. </summary>
+        /// <summary> Source link to the input variables. Each variable should be a csv with two columns, `timestamp` and `value`. The file name of the variable will be used as its name. The variables used in detection should be exactly the same with those used in the training phase. </summary>
         public string Source { get; set; }
-        /// <summary> A require field, start time of data be used for detection, should be date-time. </summary>
+        /// <summary> A required field, indicating the start time of data for detection. Should be date-time. </summary>
         public DateTimeOffset StartTime { get; set; }
-        /// <summary> A require field, end time of data be used for detection, should be date-time. </summary>
+        /// <summary> A required field, indicating the end time of data for detection. Should be date-time. </summary>
         public DateTimeOffset EndTime { get; set; }
     }
 }
