@@ -124,21 +124,11 @@ namespace Azure.Core.TestFramework
                                                     $"https: {_proxyPortHttps}");
             }
 
-            // we need to use https when talking to test proxy admin endpoint so that we can establish the connection before any
-            // test related traffic happens which would send a Connection header for the first request. This can be switched to HTTP
-            // once https://github.com/Azure/azure-sdk-tools/issues/2303 is fixed
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate.Issuer == DevCertIssuer
-            };
-            var options = new TestProxyClientOptions
-            {
-                Transport = new HttpClientTransport(handler)
-            };
+            var options = new TestProxyClientOptions();
             Client = new TestProxyRestClient(
-                new ClientDiagnostics(options),
+                new ClientDiagnostics(new TestProxyClientOptions()),
                 HttpPipelineBuilder.Build(options),
-                new Uri($"https://{IpAddress}:{_proxyPortHttps}"));
+                new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
 
             // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy. Otherwise requests
             // start timing out. This only seems to happen when not specifying a port.

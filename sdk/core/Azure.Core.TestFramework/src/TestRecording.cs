@@ -113,7 +113,8 @@ namespace Azure.Core.TestFramework
                     var excludedHeaders = new List<string>(_matcher.LegacyExcludedHeaders)
                     {
                         "Content-Type",
-                        "Content-Length"
+                        "Content-Length",
+                        "Connection"
                     };
 
                     // temporary until custom matcher supports both excluded and ignored
@@ -149,6 +150,11 @@ namespace Azure.Core.TestFramework
             foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
+            }
+
+            foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
+            {
+                await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
             }
         }
 

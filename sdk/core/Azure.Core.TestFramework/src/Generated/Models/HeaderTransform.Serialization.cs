@@ -10,20 +10,15 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class BodyRegexSanitizer : IUtf8JsonSerializable
+    public partial class HeaderTransform : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("regex");
-            writer.WriteStringValue(Regex);
+            writer.WritePropertyName("key");
+            writer.WriteStringValue(Key);
             writer.WritePropertyName("value");
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(GroupForReplace))
-            {
-                writer.WritePropertyName("groupForReplace");
-                writer.WriteStringValue(GroupForReplace);
-            }
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition");
