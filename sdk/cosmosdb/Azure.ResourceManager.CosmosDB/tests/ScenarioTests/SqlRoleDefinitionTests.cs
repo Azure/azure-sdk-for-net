@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public virtual void GlobalTeardown()
         {
-            _sqlDatabase.Delete();
-            _databaseAccount.Delete();
+            _sqlDatabase.Delete(true);
+            _databaseAccount.Delete(true);
         }
 
         [SetUp]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             SqlRoleDefinition definition = await SqlRoleDefinitionCollection.GetIfExistsAsync(RoleDefinitionId);
             if (definition != null)
             {
-                await definition.DeleteAsync();
+                await definition.DeleteAsync(true);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 AssignableScopes = { SqlDatabaseActionScope },
                 Permissions = { new Permission { DataActions = { PermissionDataActionRead } } },
             };
-            definition = await (await SqlRoleDefinitionCollection.CreateOrUpdateAsync(RoleDefinitionId, updateParameters)).WaitForCompletionAsync();
+            definition = await (await SqlRoleDefinitionCollection.CreateOrUpdateAsync(true, RoleDefinitionId, updateParameters)).WaitForCompletionAsync();
             Assert.AreEqual(RoleDefinitionId, definition.Data.Name);
             Assert.That(definition.Data.AssignableScopes, Has.Count.EqualTo(2));
             Assert.AreEqual(SqlDatabaseActionScope, definition.Data.AssignableScopes[0]);
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        public async Task SqlRoleDefinitionDelete()
+        public async Task SqlRoleDefinitionDelete(true)
         {
             var definition = await CreateSqlRoleDefinition(SqlDatabaseActionScope, SqlRoleDefinitionCollection);
-            await definition.DeleteAsync();
+            await definition.DeleteAsync(true);
 
             definition = await SqlRoleDefinitionCollection.GetIfExistsAsync(RoleDefinitionId);
             Assert.Null(definition);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 AssignableScopes = { assignableScope },
                 Permissions = { new Permission { DataActions = { PermissionDataActionCreate } } },
             };
-            var definitionLro = await definitionCollection.CreateOrUpdateAsync(RoleDefinitionId, parameters);
+            var definitionLro = await definitionCollection.CreateOrUpdateAsync(true, RoleDefinitionId, parameters);
             return definitionLro.Value;
         }
 

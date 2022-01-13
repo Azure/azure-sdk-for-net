@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateUpdateParameters.Capabilities.Add(new Capability("EnableGremlin"));
             databaseAccountCreateUpdateParameters.ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.Eventual);
 
-            await WaitForCompletionAsync(await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
+            await WaitForCompletionAsync(await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(true, resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
         }
 
         [TestCase, Order(2)]

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete();
+                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(true);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             NotebookWorkspace workspace = await NotebookWorkspaceCollection.GetIfExistsAsync(WorkspaceName);
             if (workspace != null)
             {
-                await workspace.DeleteAsync();
+                await workspace.DeleteAsync(true);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyNotebookWorkspaces(workspace, workspace2);
 
-            workspace = await (await NotebookWorkspaceCollection.CreateOrUpdateAsync(WorkspaceName, new NotebookWorkspaceCreateUpdateParameters())).WaitForCompletionAsync();
+            workspace = await (await NotebookWorkspaceCollection.CreateOrUpdateAsync(true, WorkspaceName, new NotebookWorkspaceCreateUpdateParameters())).WaitForCompletionAsync();
             Assert.AreEqual(WorkspaceName, workspace.Data.Name);
             workspace2 = await NotebookWorkspaceCollection.GetAsync(WorkspaceName);
             VerifyNotebookWorkspaces(workspace, workspace2);
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        public async Task NotebookWorkspaceDelete()
+        public async Task NotebookWorkspaceDelete(true)
         {
             var workspace = await CreateNotebookWorkspace();
-            await workspace.DeleteAsync();
+            await workspace.DeleteAsync(true);
 
             workspace = await NotebookWorkspaceCollection.GetIfExistsAsync(WorkspaceName);
             Assert.Null(workspace);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         protected async Task<NotebookWorkspace> CreateNotebookWorkspace()
         {
-            return await NotebookWorkspaceCollection.CreateOrUpdate(WorkspaceName, new NotebookWorkspaceCreateUpdateParameters()).WaitForCompletionAsync();
+            return await NotebookWorkspaceCollection.CreateOrUpdate(true, WorkspaceName, new NotebookWorkspaceCreateUpdateParameters()).WaitForCompletionAsync();
         }
 
         private void VerifyNotebookWorkspaces(NotebookWorkspace expectedValue, NotebookWorkspace actualValue)

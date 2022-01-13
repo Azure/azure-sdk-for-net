@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountsCreateOrUpdateParameters.Location = location;
             databaseAccountsCreateOrUpdateParameters.Capabilities.Add(new Capability(capability));
             await WaitForCompletionAsync(
-                await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountsCreateOrUpdateParameters));
+                await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(true, resourceGroupName, databaseAccountName, databaseAccountsCreateOrUpdateParameters));
             var response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
             Assert.AreEqual(true, response.Value);
             Assert.AreEqual(200, response.GetRawResponse().Status);

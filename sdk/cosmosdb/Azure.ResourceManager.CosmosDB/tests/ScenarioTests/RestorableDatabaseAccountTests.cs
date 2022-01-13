@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_restorableDatabaseAccount != null)
             {
-                await _restorableDatabaseAccount.DeleteAsync();
+                await _restorableDatabaseAccount.DeleteAsync(true);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 BackupPolicy = new ContinuousModeBackupPolicy(),
             };
             _databaseAccountName = name;
-            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(_databaseAccountName, createOptions);
+            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(true, _databaseAccountName, createOptions);
             return accountLro.Value;
         }
     }

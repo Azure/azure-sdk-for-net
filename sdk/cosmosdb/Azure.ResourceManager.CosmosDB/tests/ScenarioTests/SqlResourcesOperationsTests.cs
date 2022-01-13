@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
             };
             DatabaseAccount databaseAccount = await WaitForCompletionAsync(
-                await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
+                await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(true, resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
             Assert.AreEqual(databaseAccount.Name, databaseAccountName);
             var isDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
             Assert.AreEqual(true, isDatabaseNameExists.Value);

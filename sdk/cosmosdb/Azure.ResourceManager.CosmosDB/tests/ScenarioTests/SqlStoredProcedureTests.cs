@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _sqlContainer.Delete();
-            _sqlDatabase.Delete();
-            _databaseAccount.Delete();
+            _sqlContainer.Delete(true);
+            _sqlDatabase.Delete(true);
+            _databaseAccount.Delete(true);
         }
 
         [SetUp]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             SqlStoredProcedure storedProcedure = await SqlStoredProcedureCollection.GetIfExistsAsync(_storedProcedureName);
             if (storedProcedure != null)
             {
-                await storedProcedure.DeleteAsync();
+                await storedProcedure.DeleteAsync(true);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, storedProcedure.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            storedProcedure = await (await SqlStoredProcedureCollection.CreateOrUpdateAsync(_storedProcedureName, updateOptions)).WaitForCompletionAsync();
+            storedProcedure = await (await SqlStoredProcedureCollection.CreateOrUpdateAsync(true, _storedProcedureName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.Id);
             storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlStoredProcedureDelete()
         {
             var storedProcedure = await CreateSqlStoredProcedure(null);
-            await storedProcedure.DeleteAsync();
+            await storedProcedure.DeleteAsync(true);
 
             storedProcedure = await SqlStoredProcedureCollection.GetIfExistsAsync(_storedProcedureName);
             Assert.Null(storedProcedure);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await SqlStoredProcedureCollection.CreateOrUpdateAsync(_storedProcedureName, sqlDatabaseCreateUpdateOptions);
+            var sqlContainerLro = await SqlStoredProcedureCollection.CreateOrUpdateAsync(true, _storedProcedureName, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 

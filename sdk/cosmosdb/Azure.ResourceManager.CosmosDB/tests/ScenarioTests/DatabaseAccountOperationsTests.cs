@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateOrUpdateParameters.DisableKeyBasedMetadataWriteAccess = false;
             DatabaseAccount databaseAccount1 =
                 await WaitForCompletionAsync(
-                    await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateOrUpdateParameters));
+                    await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(true, resourceGroupName, databaseAccountName, databaseAccountCreateOrUpdateParameters));
             var response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
             Assert.AreEqual(true, response.Value);
             Assert.AreEqual(200, response.GetRawResponse().Status);

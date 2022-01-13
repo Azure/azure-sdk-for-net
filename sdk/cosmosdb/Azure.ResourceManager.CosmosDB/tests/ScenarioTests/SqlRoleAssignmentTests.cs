@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public virtual void GlobalTeardown()
         {
-            _roleDefinition.Delete();
-            _sqlDatabase.Delete();
-            _databaseAccount.Delete();
+            _roleDefinition.Delete(true);
+            _sqlDatabase.Delete(true);
+            _databaseAccount.Delete(true);
         }
 
         [SetUp]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             SqlRoleAssignment assignment = await SqlRoleAssignmentCollection.GetIfExistsAsync(RoleAssignmentId);
             if (assignment != null)
             {
-                await assignment.DeleteAsync();
+                await assignment.DeleteAsync(true);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Scope = $"{SqlRoleAssignmentScope}/colls",
                 PrincipalId = PrincipalId2,
             };
-            assignment = await (await SqlRoleAssignmentCollection.CreateOrUpdateAsync(RoleAssignmentId, updateParameters)).WaitForCompletionAsync();
+            assignment = await (await SqlRoleAssignmentCollection.CreateOrUpdateAsync(true, RoleAssignmentId, updateParameters)).WaitForCompletionAsync();
             Assert.AreEqual(RoleAssignmentId, assignment.Data.Name);
             Assert.AreEqual(_roleDefinitionId, assignment.Data.RoleDefinitionId);
             Assert.AreEqual($"{SqlRoleAssignmentScope}/colls", assignment.Data.Scope);
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        public async Task SqlRoleAssignmentDelete()
+        public async Task SqlRoleAssignmentDelete(true)
         {
             var assignment = await CreateSqlRoleAssignment();
-            await assignment.DeleteAsync();
+            await assignment.DeleteAsync(true);
 
             assignment = await SqlRoleAssignmentCollection.GetIfExistsAsync(RoleAssignmentId);
             Assert.Null(assignment);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Scope = SqlRoleAssignmentScope,
                 PrincipalId = PrincipalId,
             };
-            var assignmentLro = await SqlRoleAssignmentCollection.CreateOrUpdateAsync(RoleAssignmentId, parameters);
+            var assignmentLro = await SqlRoleAssignmentCollection.CreateOrUpdateAsync(true, RoleAssignmentId, parameters);
             return assignmentLro.Value;
         }
 
