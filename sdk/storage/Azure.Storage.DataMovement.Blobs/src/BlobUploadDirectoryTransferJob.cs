@@ -57,14 +57,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="destinationClient"></param>
         /// <param name="overwrite"></param>
         /// <param name="uploadOptions"></param>
-        /// <param name="cancellationToken"></param>
         public BlobUploadDirectoryTransferJob(
             string jobId,
             string sourceLocalPath,
             bool overwrite,
             BlobVirtualDirectoryClient destinationClient,
-            BlobDirectoryUploadOptions uploadOptions,
-            CancellationToken cancellationToken)
+            BlobDirectoryUploadOptions uploadOptions)
             : base(jobId)
         {
             _sourceLocalPath = sourceLocalPath;
@@ -72,7 +70,6 @@ namespace Azure.Storage.DataMovement.Blobs
             _destinationBlobClient = destinationClient;
             _uploadOptions = uploadOptions;
             _overwrite = overwrite;
-            CancellationToken = cancellationToken;
         }
 
         /// <summary>
@@ -109,7 +106,9 @@ namespace Azure.Storage.DataMovement.Blobs
             // This would not support PIPE or FIFO files, that require to be open from both ends
             using (FileStream uploadStream = new FileStream(fullPathName, FileMode.Open, FileAccess.Read))
             {
-                response = await blockBlobClient.UploadAsync(uploadStream, blobUploadOptions, CancellationToken).ConfigureAwait(false);
+                response = await blockBlobClient.UploadAsync(
+                    uploadStream,
+                    blobUploadOptions).ConfigureAwait(false);
             }
             return response;
         }

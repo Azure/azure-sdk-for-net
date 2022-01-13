@@ -56,33 +56,29 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Transfer Options for the specific download job.
         /// See <see cref="StorageTransferOptions"/>.
         /// </param>
-        /// <param name="cancellationToken">
-        /// <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
         public BlobDownloadTransferJob(
             string jobId,
             BlobBaseClient sourceClient,
             string destinationPath,
-            BlobDownloadToOptions options,
-            CancellationToken cancellationToken)
+            BlobDownloadToOptions options)
             : base(jobId)
         {
             _sourceBlobClient = sourceClient;
             _destinationLocalPath = destinationPath;
             _options = options;
             //ProgressTracker = progressTracker;
-            CancellationToken = cancellationToken;
         }
 
         /// <summary>
         /// Creates Download TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Download operation</returns>
-        public override Task StartTransferTaskAsync()
+        public Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadToAsync(_destinationLocalPath, transferOptions:_options.TransferOptions, cancellationToken: CancellationToken);
+            return _sourceBlobClient.DownloadToAsync(
+                _destinationLocalPath,
+                transferOptions:_options.TransferOptions);
         }
     }
 }

@@ -19,36 +19,43 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public string JobId { get; set; }
         /// <summary>
-        /// Cancellation Token
+        /// Cancellation Token Source
+        ///
+        /// Will be initialized when the tasks are running.
+        ///
+        /// Will be disposed of once all tasks of the job have completed or have been cancelled.
         /// </summary>
-        public CancellationToken CancellationToken { get; set; }
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+
+        /// <summary>
+        /// Logger for the respective job
+        /// </summary>
+        internal TransferJobLogger Logger { get; set; }
+
+        /// <summary>
+        /// Plan file writer for hte respective job
+        /// </summary>
+        internal PlanJobWriter PlanJobWriter { get; set; }
 
         /// <summary>
         /// Create Storage Transfer Job.
         /// </summary>
-        public StorageTransferJob(string jobId)
+        public StorageTransferJob(string jobId, string loggerFolderPath = default)
         {
             JobId = jobId;
-        }
-
-        /// <summary>
-        /// Create next TransferItem/Task to be processed.
-        /// </summary>
-        /// <returns></returns>
-        public virtual Task StartTransferTaskAsync()
-        {
-            // TODO: remove stub
-            return Task.CompletedTask;
+            string folderPath = String.IsNullOrEmpty(loggerFolderPath) ? Constants.DataMovement.DefaultLogTransferFiles : loggerFolderPath;
+            // TODO; get loglevel from StorageTransferManager
+            Logger = new TransferJobLogger(folderPath,jobId);
         }
 
         /// <summary>
         /// Gets the status of the transfer job
         /// </summary>
         /// <returns>StorageTransferStatus with the value of the status of the job</returns>
-        public virtual StorageTransferStatus GetTransferStatus()
+        public virtual StorageJobTransferStatus GetTransferStatus()
         {
             // TODO: remove stub
-            return StorageTransferStatus.CompletedSuccessful;
+            return StorageJobTransferStatus.CompletedSuccessful;
         }
     }
 }

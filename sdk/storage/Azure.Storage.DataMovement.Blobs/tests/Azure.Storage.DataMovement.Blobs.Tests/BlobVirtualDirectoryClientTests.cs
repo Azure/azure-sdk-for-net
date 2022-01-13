@@ -80,7 +80,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var containerName = GetNewContainerName();
             var directoryName = GetNewBlobDirectoryName();
 
-            BlobVirtualDirectoryClient directory1 = InstrumentClient(new BlobVirtualDirectoryClient(connectionString.ToString(true), containerName, directoryName, GetOptions()));
+            BlobVirtualDirectoryClient directory1 = InstrumentClient(new BlobVirtualDirectoryClient(connectionString.ToString(true), containerName, directoryName, GetBlobClientOptions()));
             BlobVirtualDirectoryClient directory2 = InstrumentClient(new BlobVirtualDirectoryClient(connectionString.ToString(true), containerName, directoryName));
 
             var builder1 = new BlobUriBuilder(directory1.Uri);
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
 
             // Act
-            BlobVirtualDirectoryClient directoryClient = new BlobVirtualDirectoryClient(TestConfigDefault.ConnectionString, test.Container.Name, directoryName, GetOptions());
+            BlobVirtualDirectoryClient directoryClient = new BlobVirtualDirectoryClient(TestConfigDefault.ConnectionString, test.Container.Name, directoryName, GetBlobClientOptions());
             IList<BlobItem> listResponse = await directoryClient.GetBlobsAsync().ToListAsync();
 
             // Assert
@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Uri directoryUri = directoryClient.Uri;
 
             // Act
-            BlobVirtualDirectoryClient sasClient = InstrumentClient(new BlobVirtualDirectoryClient(directoryUri, new AzureSasCredential(sas), GetOptions()));
+            BlobVirtualDirectoryClient sasClient = InstrumentClient(new BlobVirtualDirectoryClient(directoryUri, new AzureSasCredential(sas), GetBlobClientOptions()));
             IList<BlobItem> blobItems = await sasClient.GetBlobsAsync().ToListAsync();
 
             // Assert
@@ -248,7 +248,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var sas = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, blobClient.AccountName).ToString();
 
             // Act
-            var sasClient = InstrumentClient(new BlobVirtualDirectoryClient(blobUri, new AzureSasCredential(sas), GetOptions()));
+            var sasClient = InstrumentClient(new BlobVirtualDirectoryClient(blobUri, new AzureSasCredential(sas), GetBlobClientOptions()));
             IList<BlobItem> blobItems = await sasClient.GetBlobsAsync().ToListAsync();
 
             // Assert

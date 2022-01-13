@@ -49,21 +49,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="sourceLocalPath"></param>
         /// <param name="destinationClient"></param>
         /// <param name="uploadOptions"></param>
-        /// <param name="token"></param>
         /// <returns>A guid of the job id</returns>
         public string ScheduleUpload(
             string sourceLocalPath,
             BlobClient destinationClient,
-            BlobUploadOptions uploadOptions = default,
-            CancellationToken token = default)
+            BlobUploadOptions uploadOptions = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
 
-            BlobUploadTransferJob transferJob = new BlobUploadTransferJob(jobId, sourceLocalPath, destinationClient, uploadOptions, token);
-            TotalJobs.Enqueue(transferJob);
+            BlobUploadTransferJob transferJob = new BlobUploadTransferJob(jobId, sourceLocalPath, destinationClient, uploadOptions);
+            TotalJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
 
             // TODO: remove stub
@@ -78,20 +76,18 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="sourceClient"></param>
         /// <param name="destinationLocalPath"></param>
         /// <param name="options"></param>
-        /// <param name="token"></param>
         /// <returns></returns>
         public string ScheduleDownload(
             BlobClient sourceClient,
             string destinationLocalPath,
-            BlobDownloadToOptions options = default,
-            CancellationToken token = default)
+            BlobDownloadToOptions options = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
-            BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
-            TotalJobs.Enqueue(transferJob);
+            BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(jobId, sourceClient, destinationLocalPath, options);
+            TotalJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
             return jobId;
         }
@@ -105,22 +101,20 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="destinationClient"></param>
         /// <param name="overwrite"></param>
         /// <param name="options"></param>
-        /// <param name="token"></param>
         /// <returns></returns>
         /// TODO: remove suppression
         public string ScheduleUploadDirectory(
             string sourceLocalPath,
             BlobVirtualDirectoryClient destinationClient,
             bool overwrite = false,
-            BlobDirectoryUploadOptions options = default,
-            CancellationToken token = default)
+            BlobDirectoryUploadOptions options = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
-            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, overwrite, destinationClient, options, token);
-            TotalJobs.Enqueue(transferJob);
+            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, overwrite, destinationClient, options);
+            TotalJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
             return jobId;
         }
@@ -133,25 +127,44 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="sourceClient"></param>
         /// <param name="destinationLocalPath"></param>
         /// <param name="options"></param>
-        /// <param name="token"></param>
         /// <returns></returns>
         /// TODO: remove suppression
         public string ScheduleDownloadDirectory(
             BlobVirtualDirectoryClient sourceClient,
             string destinationLocalPath,
-            BlobDirectoryDownloadOptions options = default,
-            CancellationToken token = default)
+            BlobDirectoryDownloadOptions options = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
-            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
-            TotalJobs.Enqueue(transferJob);
+            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(jobId, sourceClient, destinationLocalPath, options);
+            TotalJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
 
             return jobId;
         }
+
+        /*
+        /// <summary>
+        /// For those who have existing transfers that were paused
+        /// but now want to resume it can do so by passing the file path
+        /// to the plan file.
+        ///
+        /// The file will be read to see where the transfer left off
+        /// and continue from there.
+        ///
+        /// This Job will have the same job id as contained in the job file.
+        /// </summary>
+        /// <param name="planFilePath"></param>
+        /// <returns></returns>
+        public string ScheduleJobFromPlanFile(string planFilePath)
+        {
+            //TODO: stub
+            string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
+            return jobId;
+        }
+        */
 
         /// <summary>
         /// Returns storage job information if provided jobId.

@@ -42,26 +42,23 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="sourceClient"></param>
         /// <param name="destinationClient"></param>
         /// <param name="copyOptions"></param>
-        /// <param name="cancellationToken"></param>
         public BlobLocalCopyTransferJob(
             string jobId,
             BlobBaseClient sourceClient,
             BlobBaseClient destinationClient,
-            BlobSyncCopyOptions copyOptions,
-            CancellationToken cancellationToken)
+            BlobSyncCopyOptions copyOptions)
             : base(jobId)
         {
             _sourceBlobClient = sourceClient;
             _destinationBlobClient = destinationClient;
             _copyOptions = copyOptions;
-            CancellationToken = cancellationToken;
         }
 
         /// <summary>
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        public static Task StartTransferTaskAsync()
         {
             // TODO: implement download the blob and store it and upload to the destination.
             return Task.CompletedTask;

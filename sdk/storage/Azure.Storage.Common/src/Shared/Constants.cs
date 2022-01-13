@@ -648,5 +648,46 @@ namespace Azure.Storage
             internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
             internal const string QueryParameterKey = "timeout";
         }
+
+        /// <summary>
+        /// Constants of the Data Movement library
+        /// </summary>
+        internal static class DataMovement
+        {
+            /// <summary>
+            /// If there are multiple log files or job state files
+            ///
+            /// if limit is reached the customer should clear out their folder.
+            /// </summary>
+            internal const int DuplicateFileNameLimit = 100;
+
+            internal const string DefaultLogTransferFiles = ".azstoragedml";
+
+            /// <summary>
+            ///  Constants used for logger extensions
+            /// </summary>
+            internal static class Log
+            {
+                internal const string FileExtension = ".log";
+
+                /// <summary>
+                /// Log File information
+                /// </summary>
+                internal const string LogTime = "UTC Time: ";
+                internal const string LibraryVersion = "Azure.Storage.DataMovement Version: ";
+                internal const string OsEnvironment = "OS-Environment: ";
+                internal const string OsArchitecture = "OS-Architecture: ";
+                internal const string Closing = "Closing log ";
+            }
+
+            /// <summary>
+            /// Constants used for plan job transfer files
+            /// </summary>
+            internal static class PlanFile
+            {
+                // TBD
+                internal const string FileExtension = ".plan";
+            }
+        }
     }
 }

@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
     /// Defines the status of the <see cref="StorageTransferJob"/>.
     /// </summary>
-    public enum StorageTransferStatus
+    public enum StorageJobTransferStatus
     {
         /// <summary>
         /// The Job has been queued up but has not yet begun any transfers.

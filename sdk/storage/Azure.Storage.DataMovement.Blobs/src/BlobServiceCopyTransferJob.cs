@@ -42,32 +42,29 @@ namespace Azure.Storage.DataMovement
         /// <param name="destinationClient"></param>
         /// <param name="copyMethod"></param>
         /// <param name="copyFromUriOptions"></param>
-        /// <param name="cancellationToken"></param>
         public BlobServiceCopyTransferJob(
             string jobId,
             BlobBaseClient sourceClient,
             BlobBaseClient destinationClient,
             ServiceCopyMethod copyMethod,
-            BlobCopyFromUriOptions copyFromUriOptions,
-            CancellationToken cancellationToken)
+            BlobCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
             _sourceBlobClient = sourceClient;
             _destinationBlobClient = destinationClient;
             _copyMethod = copyMethod;
             _copyFromUriOptions = copyFromUriOptions;
-            CancellationToken = cancellationToken;
         }
 
         /// <summary>
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        public Task StartTransferTaskAsync()
         {
             // TODO: add other Copymethod Options
             // for now only do CopyMethod.ServiceSideAsyncCopy as a stub
-            return destinationBlobClient.StartCopyFromUriAsync(sourceBlobClient.Uri, cancellationToken: CancellationToken);
+            return destinationBlobClient.StartCopyFromUriAsync(sourceBlobClient.Uri);
         }
     }
 }

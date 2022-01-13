@@ -4,12 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.Blobs
+namespace Azure.Storage.DataMovement
 {
-    /// <summary>
-    /// Blob Local copy directory transfer job
-    /// </summary>
-    public class BlobLocalCopyDirectoryTransferJob
+    internal class DataMovementExtensions
     {
     }
 }

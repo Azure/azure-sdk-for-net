@@ -53,20 +53,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="sourceClient"></param>
         /// <param name="destinationPath"></param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
         public BlobDownloadDirectoryTransferJob(
             string jobId,
             BlobVirtualDirectoryClient sourceClient,
             string destinationPath,
-            BlobDirectoryDownloadOptions options,
-            CancellationToken cancellationToken)
+            BlobDirectoryDownloadOptions options)
             : base(jobId)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationLocalPath = destinationPath;
             _sourceBlobClient = sourceClient;
             _options = options;
-            CancellationToken = cancellationToken;
         }
 
         /// <summary>
@@ -92,8 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 response = await blockBlobClient.DownloadToAsync(
                     downloadPath,
                     conditions,
-                    Options.TransferOptions,
-                    CancellationToken)
+                    Options.TransferOptions)
                     .ConfigureAwait(false);
             }
             return response;

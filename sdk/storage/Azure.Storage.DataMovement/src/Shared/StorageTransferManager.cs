@@ -25,30 +25,20 @@ namespace Azure.Storage.DataMovement
     public class StorageTransferManager
     {
         /// <summary>
-        /// TransferItemScheduler
-        /// </summary>
-        private TransferJobScheduler _scheduler;
-
-        /// <summary>
-        /// TransferItemScheduler
-        /// </summary>
-        protected internal TransferJobScheduler Scheduler => _scheduler;
-
-        /// <summary>
         /// To hold the jobs to scan
         /// This is a weird thing to have because we have regular Blob Directory Upload / Download which will
         /// also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
         /// part of DMLib instead of scanning right before the job is benefical.
         /// </summary>
-        private ConcurrentQueue<StorageTransferJob> _totalJobs;
+        private List<StorageTransferJob> _totalJobs;
 
         /// <summary>
         /// To hold the jobs to scan
         /// </summary>
-        protected internal ConcurrentQueue<StorageTransferJob> TotalJobs => _totalJobs;
+        protected internal List<StorageTransferJob> TotalJobs => _totalJobs;
 
         // Not sure if we should keep the jobs that in in progress here
-        //private IList<StorageTransferJob> _jobsInProgress;
+        // private IList<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
 
@@ -62,6 +52,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private StorageTransferManagerOptions Options => _options;
 
+        /// <summary>
+        /// The current state of the StorageTransferMangager
+        /// </summary>
+        private StorageManagerTransferStatus _managerTransferStatus;
+
         ///<summary>
         /// Initializes a new instance of the <see cref="StorageTransferManager"/>
         /// class.
@@ -69,9 +64,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Directory path where transfer state is kept.</param>
         public StorageTransferManager(StorageTransferManagerOptions options = default)
         {
-            _scheduler = new TransferJobScheduler();
-            _totalJobs = new ConcurrentQueue<StorageTransferJob>();
+            _totalJobs = new List<StorageTransferJob>();
             _options = options;
+            _managerTransferStatus = StorageManagerTransferStatus.Idle;
         }
 
         /// <summary>
@@ -102,17 +97,40 @@ namespace Azure.Storage.DataMovement
         /// file we have a place where people can continue transfers
         public virtual void PauseTransfers()
         {
+            _managerTransferStatus = StorageManagerTransferStatus.Pausing;
+
+            foreach (StorageTransferJob job in _totalJobs)
+            {
+                job.CancellationTokenSource.Cancel(true);
+                //TODO: log cancellation of job
+                //Call job update transfer status
+            }
+            _managerTransferStatus = StorageManagerTransferStatus.Idle;
         }
 
         /// <summary>
         /// Cancel Transfers that are currently being processed.
         /// Removes all transfers that are being processed and waiting
         /// to be performed.
+        ///
+        /// In cancelling tasks, we are also removing all the transfer state
+        /// plan files of all the jobs because we are removing all jobs.
+        ///
+        /// In order to rerun the job, the customer must readd the job back in.
         /// </summary>
         public virtual void CancelTransfers()
         {
             // This would remove all transfers from the queue and not log the current progress
             // to the file. Maybe we would also remove the file too as a part of cleanup.
+            _managerTransferStatus = StorageManagerTransferStatus.Cancelling;
+            foreach (StorageTransferJob job in _totalJobs)
+            {
+                // Probably look to do this in parallel.
+                // TODO: catch any errors that fly up the stack and attempt
+                // to delete the other log or plan files, but throw the proper exception
+                // or list of files that could not be deleted.
+                job.PlanJobWriter.RemovePlanFile();
+            }
         }
 
         /// <summary>
@@ -121,6 +139,30 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public virtual void Clean()
         {
+            if (_managerTransferStatus == StorageManagerTransferStatus.InProgress)
+            {
+                // TODO: throw proper exception
+                throw new Exception("Please cancel or pause the transfer jobs before cleaning");
+            }
+            else if (_managerTransferStatus == StorageManagerTransferStatus.Pausing)
+            {
+                // TODO: throw proper exception
+                throw new Exception("Please wait until all transfer jobs have paused");
+            }
+            else if (_managerTransferStatus == StorageManagerTransferStatus.Cancelling)
+            {
+                throw new Exception("Please wait until all transfer jobs have cancelled");
+            }
+            _managerTransferStatus = StorageManagerTransferStatus.Cleaning;
+            foreach (StorageTransferJob job in _totalJobs)
+            {
+                // Probably look to do this in parallel.
+                // TODO: catch any errors that fly up the stack and attempt
+                // to delete the other log or plan files, but throw the proper exception
+                // or list of files that could not be deleted.
+                job.Logger.removeAllLogFiles();
+                job.PlanJobWriter.RemovePlanFile();
+            }
         }
     }
 }

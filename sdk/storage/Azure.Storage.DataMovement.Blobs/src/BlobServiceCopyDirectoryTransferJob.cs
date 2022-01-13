@@ -46,32 +46,29 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="destinationClient"></param>
         /// <param name="copyMethod"></param>
         /// <param name="copyFromUriOptions"></param>
-        /// <param name="cancellationToken"></param>
         public BlobServiceCopyDirectoryTransferJob(
             string jobId,
             Uri sourceDirectoryUri,
             BlobVirtualDirectoryClient destinationClient,
             ServiceCopyMethod copyMethod,
-            BlobDirectoryCopyFromUriOptions copyFromUriOptions,
-            CancellationToken cancellationToken)
+            BlobDirectoryCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
             _sourceDirectoryUri = sourceDirectoryUri;
             _destinationBlobClient = destinationClient;
             _copyMethod = copyMethod;
             _copyFromUriOptions = copyFromUriOptions;
-            CancellationToken = cancellationToken;
         }
-
+        /*
+        /// TODO: implement similar to the directory upload and download
         /// <summary>
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        public static Task StartTransferTaskAsync()
         {
-            // TODO: implement download the blob and store it and upload to the destination.
-            return Task.CompletedTask;
-            //return destinationBlobClient.StartCopyFromUriAsync(SourceDirectoryUri, CopyFromUriOptions, CancellationToken);
+            return _destinationBlobClient.StartCopyFromUriAsync(SourceDirectoryUri, CopyFromUriOptions);
         }
+        */
     }
 }

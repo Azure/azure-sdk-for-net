@@ -5,7 +5,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Azure;
 using Microsoft.VisualStudio.Threading;
@@ -18,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// Performs scanning or queues up scanning of the jobs in the queue
     /// Adds the job items to the queue
     /// </summary>
-    public class BlobJobTransferScheduler
+    public class BlobJobTransferScheduler : IDisposable
     {
         /// <summary>
         /// The maximum number of simultaneous workers for making service side list calls. Handles the amount of scanning
@@ -42,6 +44,12 @@ namespace Azure.Storage.DataMovement.Blobs
         internal ConcurrentQueue<Task> tasksToProcess;
 
         /// <summary>
+        /// TODO: Task runner to manage all the tasks running
+        /// we can do better than this.
+        /// </summary>
+        internal Task jobRunner;
+
+        /// <summary>
         /// Task Throttler to mananage thread performing list calls to the service.
         /// </summary>
         private TaskThrottler _storageServiceTaskThrottler;
@@ -62,6 +70,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Task Throttler to manage the threads performing list calls.
         /// </summary>
         internal TaskThrottler LocalTaskThrottler => _localTaskThrottler;
+
+        /// <summary>
+        /// Source of cancellation token.
+        /// </summary>
+        internal CancellationTokenSource _cancellationTokenSource;
 
         /// <summary>
         /// BlobJobTransferScheduler Constructor
@@ -99,6 +112,34 @@ namespace Azure.Storage.DataMovement.Blobs
             _localTaskThrottler = new TaskThrottler(_maxLocalListWorkerCount);
 
             tasksToProcess = new ConcurrentQueue<Task>();
+            jobRunner = RunJobsAsync();
+        }
+
+        /// <summary>
+        /// Handling cancelling tasks
+        /// </summary>
+        public void CancelTasks()
+        {
+            // TODO: handle the difference between pausing and cancelling jobs. Since cancelling
+            // jobs would mean we no longer hold the state of that job
+            if (_cancellationTokenSource != null)
+            {
+                _cancellationTokenSource.Cancel(true);
+            }
+        }
+
+        /// <summary>
+        /// Ensures disposing of the cancellationTokenSource
+        /// </summary>
+        public void Dispose()
+        {
+            if (_cancellationTokenSource != null)
+            {
+                _cancellationTokenSource.Cancel(true);
+                // TODO: Need to figure out a way to cancel the tasks in RunTasksAsync method before disposing
+                _cancellationTokenSource.Dispose();
+            }
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -114,7 +155,15 @@ namespace Azure.Storage.DataMovement.Blobs
             // TODO: look into possiblity of sending requests based on different priority
             // because if the job is for a different storage account
             // it might be worth sending that requests anyways cause it wouldn't slow down traffic for that storage account per say
-            tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+            if (tasksToProcess.IsEmpty)
+            {
+                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+                jobRunner.Start();
+            }
+            else
+            {
+                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+            }
         }
 
         /// <summary>
@@ -130,7 +179,15 @@ namespace Azure.Storage.DataMovement.Blobs
             // TODO: look into possiblity of sending requests based on different priority
             // because if the job is for a different storage account
             // it might be worth sending that requests anyways cause it wouldn't slow down traffic for that storage account per say
-            tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+            if (tasksToProcess.IsEmpty)
+            {
+                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+                jobRunner.Start();
+            }
+            else
+            {
+                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+            }
         }
 
         /// <summary>
@@ -158,7 +215,15 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 if (path.GetType() == typeof(FileInfo))
                 {
-                    tasksToProcess.Enqueue(job.GetSingleUploadTaskAsync(path.FullName));
+                    if (tasksToProcess.IsEmpty)
+                    {
+                        tasksToProcess.Enqueue(job.GetSingleUploadTaskAsync(path.FullName));
+                        jobRunner.Start();
+                    }
+                    else
+                    {
+                        tasksToProcess.Enqueue(job.GetSingleUploadTaskAsync(path.FullName));
+                    }
                 }
             }
         }
@@ -173,11 +238,20 @@ namespace Azure.Storage.DataMovement.Blobs
             // in the case that the customer decides to pause the job, and wants to resume later we have the continuation token
             // or we're getting throttled and we should take a break and continue later.
 
-            Pageable<BlobItem> blobs = job.SourceBlobClient.GetBlobs(cancellationToken: job.CancellationToken);
+            //TODO: add cancellation token here for enumeration
+            Pageable<BlobItem> blobs = job.SourceBlobClient.GetBlobs();
 
             foreach (BlobItem blob in blobs)
             {
-                tasksToProcess.Enqueue(job.GetSingleDownloadTaskAsync(blob.Name));
+                if (tasksToProcess.IsEmpty)
+                {
+                    tasksToProcess.Enqueue(job.GetSingleDownloadTaskAsync(blob.Name));
+                    jobRunner.Start();
+                }
+                else
+                {
+                    tasksToProcess.Enqueue(job.GetSingleDownloadTaskAsync(blob.Name));
+                }
             }
         }
 
@@ -192,43 +266,53 @@ namespace Azure.Storage.DataMovement.Blobs
             // of a Job.  The queue maintains the order of the Tasks
             // so we can keep appending to the end of the destination
             // stream when each segment finishes.
-            var runningTasks = new List<Task>();
-            while (!tasksToProcess.IsEmpty)
+
+            try
             {
-                Task currentTask;
-                if (tasksToProcess.TryDequeue(out currentTask))
+                _cancellationTokenSource = new CancellationTokenSource();
+                CancellationToken cancellationToken = _cancellationTokenSource.Token;
+                var runningTasks = new List<Task>();
+                while (!tasksToProcess.IsEmpty)
                 {
-                    // Create Task from given job type
-                    // TODO: remove this and call the according job type to create the task
-                    // Add Task
-                    runningTasks.Add(currentTask);
-
-                    // If we run out of workers
-                    if (runningTasks.Count >= _maxListServiceRequestWorkerCount)
+                    Task currentTask;
+                    if (tasksToProcess.TryDequeue(out currentTask))
                     {
-                        // Wait for at least one of them to finish
-                        await Task.WhenAny(runningTasks).ConfigureAwait(false);
+                        // Create Task from given job type
+                        // TODO: remove this and call the according job type to create the task
+                        // Add Task
+                        currentTask = currentTask.WithCancellation(cancellationToken);
+                        runningTasks.Add(currentTask);
 
-                        // Clear any completed blocks from the task list
-                        for (int i = 0; i < runningTasks.Count; i++)
+                        // If we run out of workers
+                        if (runningTasks.Count >= _maxListServiceRequestWorkerCount)
                         {
-                            Task runningTask = runningTasks[i];
-                            if (!runningTask.IsCompleted)
-                            {
-                                continue;
-                            }
+                            // Wait for at least one of them to finish
+                            await Task.WhenAny(runningTasks).ConfigureAwait(false);
 
-                            await runningTask.ConfigureAwait(false);
-                            runningTasks.RemoveAt(i);
-                            i--;
+                            // Clear any completed blocks from the task list
+                            for (int i = 0; i < runningTasks.Count; i++)
+                            {
+                                Task runningTask = runningTasks[i];
+                                if (!runningTask.IsCompleted)
+                                {
+                                    continue;
+                                }
+
+                                await runningTask.ConfigureAwait(false);
+                                runningTasks.RemoveAt(i);
+                                i--;
+                            }
                         }
                     }
                 }
+                // Wait for all the remaining blocks to finish staging and then
+                // commit the block list to complete the upload
+                await Task.WhenAll(runningTasks).ConfigureAwait(false);
             }
-
-            // Wait for all the remaining blocks to finish staging and then
-            // commit the block list to complete the upload
-            await Task.WhenAll(runningTasks).ConfigureAwait(false);
+            finally
+            {
+                _cancellationTokenSource.Dispose();
+            }
         }
     }
 }

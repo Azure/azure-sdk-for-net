@@ -50,33 +50,27 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="uploadOptions">
         /// Upload Transfer Options for the specific job.
         /// </param>
-        /// <param name="cancellationToken">
-        /// <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
         public BlobUploadTransferJob(
             string jobId,
             string sourceLocalPath,
             BlobClient destinationClient,
-            BlobUploadOptions uploadOptions,
-            CancellationToken cancellationToken)
+            BlobUploadOptions uploadOptions)
             : base(jobId)
         {
             _localPath = sourceLocalPath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationBlobClient = destinationClient;
             _uploadOptions = uploadOptions;
-            CancellationToken = cancellationToken;
         }
 
         /// <summary>
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        public Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return destinationBlobClient.UploadAsync(_localPath, _uploadOptions, CancellationToken);
+            return destinationBlobClient.UploadAsync(_localPath, _uploadOptions);
         }
     }
 }
