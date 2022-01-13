@@ -40,6 +40,7 @@ namespace Azure.ResourceManager
         public ArmClientOptions() { }
         public string Scope { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
+        public bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
     public abstract partial class GenericResourceFilter
     {
