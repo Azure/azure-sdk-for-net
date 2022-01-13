@@ -27,8 +27,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Ignore("not supported yet in 2021-11-01")]
         public async Task GetAvailableClusterRegions()
         {
-            IReadOnlyList<AvailableCluster> availableClusters = (await DefaultSubscription.GetAvailableClusterRegionClustersAsync()).Value;
-            Assert.NotNull(availableClusters);
+            await foreach (var _ in DefaultSubscription.GetAvailableClusterRegionClustersAsync())
+            {
+                return;
+            }
+
+            Assert.Fail($"{nameof(SubscriptionExtensions)}.{nameof(SubscriptionExtensions.GetAvailableClusterRegionClustersAsync)} has returned an empty collection of AvailableClusters.");
         }
 
         [Test]
@@ -51,7 +55,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(cluster.Data.Name, clusterName);
 
             //get the namespace under cluster
-            IReadOnlyList<SubResource> namspaceIds = (await cluster.GetNamespacesAsync()).Value;
+            SubResource subResource = null;
+            await foreach (var namespaceId in cluster.GetNamespacesAsync())
+            {
+                subResource = namespaceId;
+                break;
+            }
+
+            Assert.NotNull(subResource);
 
             //update the cluster
             cluster.Data.Tags.Add("key", "value");

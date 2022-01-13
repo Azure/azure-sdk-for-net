@@ -38,14 +38,6 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-        }
-
         private ResourcesRestOperations RestClient
         {
             get
