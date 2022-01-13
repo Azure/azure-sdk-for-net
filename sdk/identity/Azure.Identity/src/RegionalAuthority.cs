@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+using Azure.Core;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -14,46 +13,7 @@ namespace Azure.Identity
     /// </summary>
     internal readonly struct RegionalAuthority : IEquatable<RegionalAuthority>
     {
-        internal const string USWestValue = "westus";
-        internal const string USWest2Value = "westus2";
-        internal const string USCentralValue = "centralus";
-        internal const string USEastValue = "eastus";
-        internal const string USEast2Value = "eastus2";
-        internal const string USNorthCentralValue = "northcentralus";
-        internal const string USSouthCentralValue = "southcentralus";
-        internal const string USWestCentralValue = "westcentralus";
-        internal const string CanadaCentralValue = "canadacentral";
-        internal const string CanadaEastValue = "canadaeast";
-        internal const string BrazilSouthValue = "brazilsouth";
-        internal const string EuropeNorthValue = "northeurope";
-        internal const string EuropeWestValue = "westeurope";
-        internal const string UKSouthValue = "uksouth";
-        internal const string UKWestValue = "ukwest";
-        internal const string FranceCentralValue = "francecentral";
-        internal const string FranceSouthValue = "francesouth";
-        internal const string SwitzerlandNorthValue = "switzerlandnorth";
-        internal const string SwitzerlandWestValue = "switzerlandwest";
-        internal const string GermanyNorthValue = "germanynorth";
-        internal const string GermanyWestCentralValue = "germanywestcentral";
-        internal const string NorwayWestValue = "norwaywest";
         internal const string NorwayEastValue = "norwayeast";
-        internal const string AsiaEastValue = "eastasia";
-        internal const string AsiaSouthEastValue = "southeastasia";
-        internal const string JapanEastValue = "japaneast";
-        internal const string JapanWestValue = "japanwest";
-        internal const string AustraliaEastValue = "australiaeast";
-        internal const string AustraliaSouthEastValue = "australiasoutheast";
-        internal const string AustraliaCentralValue = "australiacentral";
-        internal const string AustraliaCentral2Value = "australiacentral2";
-        internal const string IndiaCentralValue = "centralindia";
-        internal const string IndiaSouthValue = "southindia";
-        internal const string IndiaWestValue = "westindia";
-        internal const string KoreaSouthValue = "koreasouth";
-        internal const string KoreaCentralValue = "koreacentral";
-        internal const string UAECentralValue = "uaecentral";
-        internal const string UAENorthValue = "uaenorth";
-        internal const string SouthAfricaNorthValue = "southafricanorth";
-        internal const string SouthAfricaWestValue = "southafricawest";
         internal const string ChinaNorthValue = "chinanorth";
         internal const string ChinaEastValue = "chinaeast";
         internal const string ChinaNorth2Value = "chinanorth2";
@@ -87,112 +47,112 @@ namespace Azure.Identity
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'westus' region.
         /// </summary>
-        public static RegionalAuthority USWest { get; } = new RegionalAuthority(USWestValue);
+        public static RegionalAuthority USWest { get; } = new RegionalAuthority(AzureLocation.WestUS);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'westus2' region.
         /// </summary>
-        public static RegionalAuthority USWest2 { get; } = new RegionalAuthority(USWest2Value);
+        public static RegionalAuthority USWest2 { get; } = new RegionalAuthority(AzureLocation.WestUS2);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'centralus' region.
         /// </summary>
-        public static RegionalAuthority USCentral { get; } = new RegionalAuthority(USCentralValue);
+        public static RegionalAuthority USCentral { get; } = new RegionalAuthority(AzureLocation.CentralUS);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'eastus' region.
         /// </summary>
-        public static RegionalAuthority USEast { get; } = new RegionalAuthority(USEastValue);
+        public static RegionalAuthority USEast { get; } = new RegionalAuthority(AzureLocation.EastUS);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'eastus2' region.
         /// </summary>
-        public static RegionalAuthority USEast2 { get; } = new RegionalAuthority(USEast2Value);
+        public static RegionalAuthority USEast2 { get; } = new RegionalAuthority(AzureLocation.EastUS2);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'northcentralus' region.
         /// </summary>
-        public static RegionalAuthority USNorthCentral { get; } = new RegionalAuthority(USNorthCentralValue);
+        public static RegionalAuthority USNorthCentral { get; } = new RegionalAuthority(AzureLocation.NorthCentralUS);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'southcentralus' region.
         /// </summary>
-        public static RegionalAuthority USSouthCentral { get; } = new RegionalAuthority(USSouthCentralValue);
+        public static RegionalAuthority USSouthCentral { get; } = new RegionalAuthority(AzureLocation.SouthCentralUS);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'westcentralus' region.
         /// </summary>
-        public static RegionalAuthority USWestCentral { get; } = new RegionalAuthority(USWestCentralValue);
+        public static RegionalAuthority USWestCentral { get; } = new RegionalAuthority(AzureLocation.WestCentralUS);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'canadacentral' region.
         /// </summary>
-        public static RegionalAuthority CanadaCentral { get; } = new RegionalAuthority(CanadaCentralValue);
+        public static RegionalAuthority CanadaCentral { get; } = new RegionalAuthority(AzureLocation.CanadaCentral);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'canadaeast' region.
         /// </summary>
-        public static RegionalAuthority CanadaEast { get; } = new RegionalAuthority(CanadaEastValue);
+        public static RegionalAuthority CanadaEast { get; } = new RegionalAuthority(AzureLocation.CanadaEast);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'brazilsouth' region.
         /// </summary>
-        public static RegionalAuthority BrazilSouth { get; } = new RegionalAuthority(BrazilSouthValue);
+        public static RegionalAuthority BrazilSouth { get; } = new RegionalAuthority(AzureLocation.BrazilSouth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'northeurope' region.
         /// </summary>
-        public static RegionalAuthority EuropeNorth { get; } = new RegionalAuthority(EuropeNorthValue);
+        public static RegionalAuthority EuropeNorth { get; } = new RegionalAuthority(AzureLocation.NorthEurope);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'westeurope' region.
         /// </summary>
-        public static RegionalAuthority EuropeWest { get; } = new RegionalAuthority(EuropeWestValue);
+        public static RegionalAuthority EuropeWest { get; } = new RegionalAuthority(AzureLocation.WestEurope);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'uksouth' region.
         /// </summary>
-        public static RegionalAuthority UKSouth { get; } = new RegionalAuthority(UKSouthValue);
+        public static RegionalAuthority UKSouth { get; } = new RegionalAuthority(AzureLocation.UKSouth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'ukwest' region.
         /// </summary>
-        public static RegionalAuthority UKWest { get; } = new RegionalAuthority(UKWestValue);
+        public static RegionalAuthority UKWest { get; } = new RegionalAuthority(AzureLocation.UKWest);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'francecentral' region.
         /// </summary>
-        public static RegionalAuthority FranceCentral { get; } = new RegionalAuthority(FranceCentralValue);
+        public static RegionalAuthority FranceCentral { get; } = new RegionalAuthority(AzureLocation.FranceCentral);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'francesouth' region.
         /// </summary>
-        public static RegionalAuthority FranceSouth { get; } = new RegionalAuthority(FranceSouthValue);
+        public static RegionalAuthority FranceSouth { get; } = new RegionalAuthority(AzureLocation.FranceSouth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'switzerlandnorth' region.
         /// </summary>
-        public static RegionalAuthority SwitzerlandNorth { get; } = new RegionalAuthority(SwitzerlandNorthValue);
+        public static RegionalAuthority SwitzerlandNorth { get; } = new RegionalAuthority(AzureLocation.SwitzerlandNorth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'switzerlandwest' region.
         /// </summary>
-        public static RegionalAuthority SwitzerlandWest { get; } = new RegionalAuthority(SwitzerlandWestValue);
+        public static RegionalAuthority SwitzerlandWest { get; } = new RegionalAuthority(AzureLocation.SwitzerlandWest);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'germanynorth' region.
         /// </summary>
-        public static RegionalAuthority GermanyNorth { get; } = new RegionalAuthority(GermanyNorthValue);
+        public static RegionalAuthority GermanyNorth { get; } = new RegionalAuthority(AzureLocation.GermanyNorth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'germanywestcentral' region.
         /// </summary>
-        public static RegionalAuthority GermanyWestCentral { get; } = new RegionalAuthority(GermanyWestCentralValue);
+        public static RegionalAuthority GermanyWestCentral { get; } = new RegionalAuthority(AzureLocation.GermanyWestCentral);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'norwaywest' region.
         /// </summary>
-        public static RegionalAuthority NorwayWest { get; } = new RegionalAuthority(NorwayWestValue);
+        public static RegionalAuthority NorwayWest { get; } = new RegionalAuthority(AzureLocation.NorwayWest);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'norwayeast' region.
@@ -202,87 +162,87 @@ namespace Azure.Identity
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'eastasia' region.
         /// </summary>
-        public static RegionalAuthority AsiaEast { get; } = new RegionalAuthority(AsiaEastValue);
+        public static RegionalAuthority AsiaEast { get; } = new RegionalAuthority(AzureLocation.EastAsia);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'southeastasia' region.
         /// </summary>
-        public static RegionalAuthority AsiaSouthEast { get; } = new RegionalAuthority(AsiaSouthEastValue);
+        public static RegionalAuthority AsiaSouthEast { get; } = new RegionalAuthority(AzureLocation.SoutheastAsia);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'japaneast' region.
         /// </summary>
-        public static RegionalAuthority JapanEast { get; } = new RegionalAuthority(JapanEastValue);
+        public static RegionalAuthority JapanEast { get; } = new RegionalAuthority(AzureLocation.JapanEast);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'japanwest' region.
         /// </summary>
-        public static RegionalAuthority JapanWest { get; } = new RegionalAuthority(JapanWestValue);
+        public static RegionalAuthority JapanWest { get; } = new RegionalAuthority(AzureLocation.JapanWest);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'australiaeast' region.
         /// </summary>
-        public static RegionalAuthority AustraliaEast { get; } = new RegionalAuthority(AustraliaEastValue);
+        public static RegionalAuthority AustraliaEast { get; } = new RegionalAuthority(AzureLocation.AustraliaEast);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'australiasoutheast' region.
         /// </summary>
-        public static RegionalAuthority AustraliaSouthEast { get; } = new RegionalAuthority(AustraliaSouthEastValue);
+        public static RegionalAuthority AustraliaSouthEast { get; } = new RegionalAuthority(AzureLocation.AustraliaSoutheast);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'australiacentral' region.
         /// </summary>
-        public static RegionalAuthority AustraliaCentral { get; } = new RegionalAuthority(AustraliaCentralValue);
+        public static RegionalAuthority AustraliaCentral { get; } = new RegionalAuthority(AzureLocation.AustraliaCentral);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'australiacentral2' region.
         /// </summary>
-        public static RegionalAuthority AustraliaCentral2 { get; } = new RegionalAuthority(AustraliaCentral2Value);
+        public static RegionalAuthority AustraliaCentral2 { get; } = new RegionalAuthority(AzureLocation.AustraliaCentral2);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'centralindia' region.
         /// </summary>
-        public static RegionalAuthority IndiaCentral { get; } = new RegionalAuthority(IndiaCentralValue);
+        public static RegionalAuthority IndiaCentral { get; } = new RegionalAuthority(AzureLocation.CentralIndia);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'southindia' region.
         /// </summary>
-        public static RegionalAuthority IndiaSouth { get; } = new RegionalAuthority(IndiaSouthValue);
+        public static RegionalAuthority IndiaSouth { get; } = new RegionalAuthority(AzureLocation.SouthIndia);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'westindia' region.
         /// </summary>
-        public static RegionalAuthority IndiaWest { get; } = new RegionalAuthority(IndiaWestValue);
+        public static RegionalAuthority IndiaWest { get; } = new RegionalAuthority(AzureLocation.WestIndia);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'koreasouth' region.
         /// </summary>
-        public static RegionalAuthority KoreaSouth { get; } = new RegionalAuthority(KoreaSouthValue);
+        public static RegionalAuthority KoreaSouth { get; } = new RegionalAuthority(AzureLocation.KoreaSouth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'koreacentral' region.
         /// </summary>
-        public static RegionalAuthority KoreaCentral { get; } = new RegionalAuthority(KoreaCentralValue);
+        public static RegionalAuthority KoreaCentral { get; } = new RegionalAuthority(AzureLocation.KoreaCentral);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'uaecentral' region.
         /// </summary>
-        public static RegionalAuthority UAECentral { get; } = new RegionalAuthority(UAECentralValue);
+        public static RegionalAuthority UAECentral { get; } = new RegionalAuthority(AzureLocation.UAECentral);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'uaenorth' region.
         /// </summary>
-        public static RegionalAuthority UAENorth { get; } = new RegionalAuthority(UAENorthValue);
+        public static RegionalAuthority UAENorth { get; } = new RegionalAuthority(AzureLocation.UAENorth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'southafricanorth' region.
         /// </summary>
-        public static RegionalAuthority SouthAfricaNorth { get; } = new RegionalAuthority(SouthAfricaNorthValue);
+        public static RegionalAuthority SouthAfricaNorth { get; } = new RegionalAuthority(AzureLocation.SouthAfricaNorth);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'southafricawest' region.
         /// </summary>
-        public static RegionalAuthority SouthAfricaWest { get; } = new RegionalAuthority(SouthAfricaWestValue);
+        public static RegionalAuthority SouthAfricaWest { get; } = new RegionalAuthority(AzureLocation.SouthAfricaWest);
 
         /// <summary>
         /// Uses the <see cref="RegionalAuthority"/> for the Azure 'chinanorth' region.
