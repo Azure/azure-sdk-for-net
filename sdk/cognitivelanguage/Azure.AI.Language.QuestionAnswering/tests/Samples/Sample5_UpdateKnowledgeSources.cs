@@ -46,7 +46,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
+            updateSourcesOperation.WaitForCompletion();
 
             // Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = client.GetSources(testProjectName);
@@ -192,7 +193,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
+            await updateSourcesOperation.WaitForCompletionAsync();
 
             // Wait for operation completion
             Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();

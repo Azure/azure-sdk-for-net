@@ -62,7 +62,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(true, testProjectName, updateSourcesRequestContent);
 
             string testDeploymentName = "production";
-            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(true, testProjectName, testDeploymentName);
+            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(false, testProjectName, testDeploymentName);
+
+            await deploymentOperation.WaitForCompletionAsync();
             AsyncPageable<BinaryData> deployments = Client.GetDeploymentsAsync(testProjectName);
 
             Assert.True(deploymentOperation.HasCompleted);
@@ -129,7 +131,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(true, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(false, testProjectName, updateSourcesRequestContent);
+
+            await updateSourcesOperation.WaitForCompletionAsync();
 
             AsyncPageable<BinaryData> sources = Client.GetSourcesAsync(testProjectName);
 
