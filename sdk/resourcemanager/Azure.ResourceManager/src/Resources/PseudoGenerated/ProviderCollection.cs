@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ProviderCollection : ArmCollection, IEnumerable<Provider>, IAsyncEnumerable<Provider>
     {
-        private const char Dash = '-';
-
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ProviderRestOperations _restClient;
 

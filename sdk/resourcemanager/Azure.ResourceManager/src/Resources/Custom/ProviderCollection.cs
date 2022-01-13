@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -98,32 +97,27 @@ namespace Azure.ResourceManager.Resources
         private static string GetMaxVersion(Provider results)
         {
             DateTime maxVersion = DateTime.MinValue;
+            string maxVersionStr = null;
             foreach (var type in results.Data.ResourceTypes)
             {
                 string strVersion = GetDateFromVersion(type.ApiVersions[0]);
                 DateTime current = DateTime.Parse(strVersion, CultureInfo.InvariantCulture);
-                maxVersion = current > maxVersion ? current : maxVersion;
+                if (current > maxVersion)
+                {
+                    maxVersion = current;
+                    maxVersionStr = strVersion;
+                }
             }
-            return maxVersion.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return maxVersionStr.ToString();
         }
 
         private static string GetDateFromVersion(string version)
         {
-            StringBuilder sb = new StringBuilder();
-            int dashCount = 0;
-
-            foreach (char c in version)
-            {
-                if (c == Dash)
-                    dashCount++;
-
-                if (dashCount > 2)
-                    break;
-
-                sb.Append(c);
-            }
-
-            return sb.ToString();
+            var span = version.AsSpan();
+            int firstDash = span.IndexOf('-');
+            var slice = span.Slice(0, firstDash + 1);
+            int end = slice.IndexOf('-');
+            return span.Slice(0, firstDash + end + 2).ToString();
         }
     }
 }
