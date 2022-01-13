@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(ConfigurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, ConfigurationStoreName, configurationStoreData)).WaitForCompletionAsync();
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task DeleteTest()
         {
-            await (await ConfigStore.DeleteAsync()).WaitForCompletionResponseAsync();
+            await (await ConfigStore.DeleteAsync(true)).WaitForCompletionResponseAsync();
             ConfigurationStore configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(ConfigurationStoreName);
 
             Assert.IsNull(configurationStore);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task UpdateTest()
         {
             ConfigurationStoreUpdateOptions configurationStoreUpdateOptions = new ConfigurationStoreUpdateOptions() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
-            ConfigurationStore configurationStore = await (await ConfigStore.UpdateAsync(configurationStoreUpdateOptions)).WaitForCompletionAsync();
+            ConfigurationStore configurationStore = await (await ConfigStore.UpdateAsync(true, configurationStoreUpdateOptions)).WaitForCompletionAsync();
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);
         }

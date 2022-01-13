@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
                 // Prepare VNet and Private Endpoint
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task DeleteTest()
         {
-            await (await Connection.DeleteAsync()).WaitForCompletionResponseAsync();
+            await (await Connection.DeleteAsync(true)).WaitForCompletionResponseAsync();
             PrivateEndpointConnection connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
 
             Assert.IsNull(connection);

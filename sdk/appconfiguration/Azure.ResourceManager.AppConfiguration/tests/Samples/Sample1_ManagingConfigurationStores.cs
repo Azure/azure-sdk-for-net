@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            ConfigurationStore configurationStore = await (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+            ConfigurationStore configurationStore = await (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
 
             #endregion
         }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
             ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
             ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
-            await (await configStore.DeleteAsync()).WaitForCompletionResponseAsync();
+            await (await configStore.DeleteAsync(true)).WaitForCompletionResponseAsync();
             #endregion
         }
 
