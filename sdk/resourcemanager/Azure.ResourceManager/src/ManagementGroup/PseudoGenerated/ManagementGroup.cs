@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Management
 #endif
         }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ManagementGroup"/> class.
-            /// </summary>
-            /// <param name="operations"> The operations to copy the client options from. </param>
-            /// <param name="resource"> The ManagementGroupData to use in these operations. </param>
-            internal ManagementGroup(ArmResource operations, ManagementGroupData resource)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagementGroup"/> class.
+        /// </summary>
+        /// <param name="operations"> The operations to copy the client options from. </param>
+        /// <param name="resource"> The ManagementGroupData to use in these operations. </param>
+        internal ManagementGroup(ArmResource operations, ManagementGroupData resource)
             : base(operations, resource.Id)
         {
             _data = resource;
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Management
 #endif
         }
 
-            /// <summary>
-            /// Gets the resource type definition for a ResourceType.
-            /// </summary>
+        /// <summary>
+        /// Gets the resource type definition for a ResourceType.
+        /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Management/managementGroups";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
