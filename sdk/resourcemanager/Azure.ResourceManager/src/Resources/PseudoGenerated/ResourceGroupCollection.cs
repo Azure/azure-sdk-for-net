@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Resources
         internal ResourceGroupCollection(Subscription subscription)
             : base(subscription)
         {
-            _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceGroup.ResourceType, out var version))
             {
-                _restClient ??= new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             }
             else
             {
-                _restClient ??= new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             }
 #if DEBUG
             ValidateResourceId(Id);

@@ -79,8 +79,9 @@ namespace Azure.ResourceManager.Tests
         public async Task LocalOneTimeSetup()
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
-            Subscription subscription = await GlobalClient.GetSubscriptions().GetIfExistsAsync(SessionEnvironment.SubscriptionId);
-            var op = InstrumentOperation(subscription.GetResourceGroups().Construct(_location).CreateOrUpdate(_rgName, waitForCompletion: false));
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            var op = InstrumentOperation(rgCollection.CreateOrUpdate(_rgName, new ResourceGroupData(_location), waitForCompletion: false));
             op.WaitForCompletion();
             await StopSessionRecordingAsync();
         }
