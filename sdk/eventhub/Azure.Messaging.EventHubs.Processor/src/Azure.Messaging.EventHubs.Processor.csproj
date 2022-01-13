@@ -18,7 +18,7 @@
 
     <PackageReference Include="Azure.Core" />
     -->
-    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <PackageReference Include="Azure.Core.Experimental" />
     <!-- END TEMP -->
 
     <!--
