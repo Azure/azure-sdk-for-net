@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StackHCI.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.StackHCI
     {
         /// <summary> Initializes a new instance of ClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public ClusterData(AzureLocation location) : base(location)
+        public ClusterData(Location location) : base(location)
         {
         }
 
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal ClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, Status? status, string cloudId, string cloudManagementEndpoint, string aadClientId, string aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, tags, location)
+        internal ClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ProvisioningState? provisioningState, Status? status, string cloudId, string cloudManagementEndpoint, string aadClientId, string aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;

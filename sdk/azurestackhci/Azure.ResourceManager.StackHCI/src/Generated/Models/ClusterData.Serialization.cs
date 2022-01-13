@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.StackHCI.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.StackHCI
         internal static ClusterData DeserializeClusterData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            Location location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
