@@ -174,7 +174,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 #if !SNIPPET
             sourceUri = "https://www.microsoft.com/en-in/software-download/faq";
             testProjectName = CreateTestProjectName();
-            CreateProject(testProjectName);
+            await CreateProjectAsync(testProjectName);
 #endif
             RequestContent updateSourcesRequestContent = RequestContent.Create(
                 new[] {
