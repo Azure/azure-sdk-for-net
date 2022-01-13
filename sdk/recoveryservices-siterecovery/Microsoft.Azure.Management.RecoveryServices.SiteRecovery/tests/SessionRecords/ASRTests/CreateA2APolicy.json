@@ -33,7 +33,7 @@
                     "no-cache"
                 ],
                 "Location": [
-                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationPolicies/a2aPolicy/operationresults/e55331e8-380c-4944-8892-539eeb956120?api-version=2021-08-01"
+                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationPolicies/a2aPolicy/operationresults/e55331e8-380c-4944-8892-539eeb956120?api-version=2021-11-01"
                 ],
                 "Retry-After": [
                     "30"
@@ -45,7 +45,7 @@
                     "8c1b0de5-4cff-44e3-b3a6-586485be0d46 3/20/2021 8:52:47 PM"
                 ],
                 "Azure-AsyncOperation": [
-                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationOperationStatus/e55331e8-380c-4944-8892-539eeb956120?api-version=2021-08-01"
+                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationOperationStatus/e55331e8-380c-4944-8892-539eeb956120?api-version=2021-11-01"
                 ],
                 "X-Content-Type-Options": [
                     "nosniff"

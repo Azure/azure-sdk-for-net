@@ -27,7 +27,7 @@
                     "no-cache"
                 ],
                 "Location": [
-                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationRecoveryPlans/rpTest1/operationresults/83b3a8a1-7b28-414d-bcc5-67eeb3f0520c?api-version=2021-08-01"
+                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationRecoveryPlans/rpTest1/operationresults/83b3a8a1-7b28-414d-bcc5-67eeb3f0520c?api-version=2021-11-01"
                 ],
                 "Retry-After": [
                     "30"
@@ -40,7 +40,7 @@
                     "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/83b3a8a1-7b28-414d-bcc5-67eeb3f0520c"
                 ],
                 "Azure-AsyncOperation": [
-                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/83b3a8a1-7b28-414d-bcc5-67eeb3f0520c?api-version=2021-08-01"
+                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/83b3a8a1-7b28-414d-bcc5-67eeb3f0520c?api-version=2021-11-01"
                 ],
                 "X-Content-Type-Options": [
                     "nosniff"
@@ -227,7 +227,7 @@
                     "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/2e64bfb9-5be2-4c21-afbd-96867f33306f"
                 ],
                 "Azure-AsyncOperation": [
-                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/83b3a8a1-7b28-414d-bcc5-67eeb3f0520c?api-version=2021-08-01"
+                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/83b3a8a1-7b28-414d-bcc5-67eeb3f0520c?api-version=2021-11-01"
                 ],
                 "X-Content-Type-Options": [
                     "nosniff"

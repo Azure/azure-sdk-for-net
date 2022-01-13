@@ -33,7 +33,7 @@
                     "no-cache"
                 ],
                 "Location": [
-                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping/operationresults/c3054bdd-4d12-4bfc-b30d-83c0be142d5e?api-version=2021-08-01"
+                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping/operationresults/c3054bdd-4d12-4bfc-b30d-83c0be142d5e?api-version=2021-11-01"
                 ],
                 "Retry-After": [
                     "30"
@@ -45,7 +45,7 @@
                     "47323cd6-0be7-4aa0-b7fc-5de5de6f7d16 3/18/2021 6:29:43 PM"
                 ],
                 "Azure-AsyncOperation": [
-                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/c3054bdd-4d12-4bfc-b30d-83c0be142d5e?api-version=2021-08-01"
+                    "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/c3054bdd-4d12-4bfc-b30d-83c0be142d5e?api-version=2021-11-01"
                 ],
                 "X-Content-Type-Options": [
                     "nosniff"
