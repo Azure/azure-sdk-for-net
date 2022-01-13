@@ -7,6 +7,18 @@ namespace Microsoft.AspNetCore.Builder
 }
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
+    public partial interface IWebPubSubServerBuilder
+    {
+        Microsoft.Extensions.DependencyInjection.IServiceCollection Services { get; }
+    }
+    public partial class ServiceEndpoint
+    {
+        public ServiceEndpoint(string connectionString, Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions clientOptions = null) { }
+        public ServiceEndpoint(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions clientOptions = null) { }
+        public ServiceEndpoint(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions clientOptions = null) { }
+        public Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions ClientOptions { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
+    }
     public abstract partial class WebPubSubHub
     {
         protected WebPubSubHub() { }
@@ -18,20 +30,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public partial class WebPubSubOptions
     {
         public WebPubSubOptions() { }
-        public Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubValidationOptions ValidationOptions { get { throw null; } set { } }
+        public Microsoft.Azure.WebPubSub.AspNetCore.ServiceEndpoint ServiceEndpoint { get { throw null; } set { } }
     }
-    public partial class WebPubSubValidationOptions
+    public partial class WebPubSubServiceClient<THub> : Azure.Messaging.WebPubSub.WebPubSubServiceClient where THub : Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubHub
     {
-        public WebPubSubValidationOptions(System.Collections.Generic.IEnumerable<string> connectionStrings) { }
-        public WebPubSubValidationOptions(params string[] connectionStrings) { }
-        public void Add(string connectionString) { }
+        protected WebPubSubServiceClient() { }
     }
 }
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static partial class WebPubSubDependencyInjectionExtensions
     {
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddWebPubSub(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddWebPubSub(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubOptions> configure) { throw null; }
+        public static Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder AddWebPubSub(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder AddWebPubSub(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubOptions> configure) { throw null; }
+        public static Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder AddWebPubSubServiceClient<THub>(this Microsoft.Azure.WebPubSub.AspNetCore.IWebPubSubServerBuilder builder) where THub : Microsoft.Azure.WebPubSub.AspNetCore.WebPubSubHub { throw null; }
     }
 }

@@ -27,7 +27,12 @@ namespace DataFactory.Tests.JsonSamples
              value: ""mykey""
           },
           tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
-          azureCloudType: ""AzurePublic""
+          azureCloudType: ""AzurePublic"",
+          servicePrincipalCredentialType: ""ServicePrincipalKey"",
+          servicePrincipalCredential: {
+             type: ""SecureString"",
+             value: ""mykey""
+          },
         }
     }
 }";
@@ -2673,6 +2678,25 @@ namespace DataFactory.Tests.JsonSamples
 				useEncryptedEndpoints: true,
 				useHostVerification: true,
 				usePeerVerification: true
+			}
+		}
+	}
+}
+";
+
+        [JsonSample]
+        public const string GoogleAdWordsConnectionPropertiesLinkedService = @"
+{
+	name: ""GoogleAdWordsLinkedService"",
+	properties: {
+		type: ""GoogleAdWords"",
+		typeProperties: {
+			connectionProperties: {
+				clientCustomerID: ""fakeClientCustomerID"",
+				developerToken: {
+					type: ""SecureString"",
+					value: ""some secret""
+				}
 			}
 		}
 	}

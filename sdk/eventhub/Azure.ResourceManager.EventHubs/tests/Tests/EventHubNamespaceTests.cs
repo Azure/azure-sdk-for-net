@@ -13,6 +13,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -407,8 +408,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
 
             //get private link resource
-            IReadOnlyList<PrivateLinkResource> privateLinkResources = (await eventHubNamespace.GetPrivateLinkResourcesAsync()).Value;
-            Assert.NotNull(privateLinkResources);
+            await foreach (var _ in eventHubNamespace.GetPrivateLinkResourcesAsync())
+            {
+                return;
+            }
+
+            Assert.Fail($"{nameof(EventHubNamespace)}.{nameof(EventHubNamespace.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(PrivateLinkResource)}.");
         }
     }
 }

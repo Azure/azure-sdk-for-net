@@ -6,10 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceData. </summary>
         /// <param name="location"> The location. </param>
-        public CassandraKeyspaceData(Location location) : base(location)
+        public CassandraKeyspaceData(AzureLocation location) : base(location)
         {
         }
 
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CassandraKeyspacePropertiesResource resource, CassandraKeyspacePropertiesOptions options) : base(id, name, type, tags, location)
+        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, CassandraKeyspacePropertiesResource resource, CassandraKeyspacePropertiesOptions options) : base(id, name, type, tags, location)
         {
             Resource = resource;
             Options = options;

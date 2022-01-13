@@ -13,6 +13,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 using SubResource = Azure.ResourceManager.Network.Models.SubResource;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -686,16 +687,21 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get available WAF rule sets (validate first result set/group)
             // TODO -- double async, we need to fix this
-            Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> availableWAFRuleSets = await _subscription.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync();
-            Assert.NotNull(availableWAFRuleSets);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value);
-            Assert.NotNull(availableWAFRuleSets.Value[0].Name);
-            Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetType);
-            Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetVersion);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value[0].RuleGroups);
-            Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].RuleGroupName);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value[0].RuleGroups[0].Rules);
-            // Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
+            ApplicationGatewayFirewallRuleSet availableWAFRuleSet = null;
+            await foreach (var namespaceId in _subscription.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync())
+            {
+                availableWAFRuleSet = namespaceId;
+                break;
+            }
+
+            Assert.NotNull(availableWAFRuleSet);
+            Assert.NotNull(availableWAFRuleSet.Name);
+            Assert.NotNull(availableWAFRuleSet.RuleSetType);
+            Assert.NotNull(availableWAFRuleSet.RuleSetVersion);
+            Assert.IsNotEmpty(availableWAFRuleSet.RuleGroups);
+            Assert.NotNull(availableWAFRuleSet.RuleGroups[0].RuleGroupName);
+            Assert.IsNotEmpty(availableWAFRuleSet.RuleGroups[0].Rules);
+            // Assert.NotNull(availableWAFRuleSet.RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options
             Response<ApplicationGatewayAvailableSslOptions> sslOptions = await _subscription.GetApplicationGatewayAvailableSslOptions().GetAsync();

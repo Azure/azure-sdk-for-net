@@ -130,7 +130,40 @@ namespace Azure.Data.Tables.Tests
                 InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
 
+            // Validate that we are not able to upsert an entity to the table.
+            var ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () =>
+                    await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+            }
+            else
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+            }
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public void ValidateSasCredentialsWithGenerateSasUri()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            // Build a shared access signature with only Read permissions using GenerateSasUri.
+            var sasBuilderClient = new TableClient(new Uri(ServiceUri), tableName, credential);
+            var sasUri = sasBuilderClient.GenerateSasUri(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+
+            // Create the TableServiceClient using the SAS URI.
+            TableClient sasTableclient = InstrumentClient(new TableClient(sasUri, InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
             Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
 
             // Validate that we are not able to upsert an entity to the table.

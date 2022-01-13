@@ -55,20 +55,5 @@ namespace Azure.Core.Pipeline
                 _ => new HttpClientTransport(options)
             };
         }
-
-        /// <summary>
-        /// Disposes the underlying transport.
-        /// </summary>
-        public void Dispose()
-        {
-            // TODO: When transport disposal is needed for a nested client scenario, this method should implement reference counting to ensure proper disposal.
-            DisposeInternal();
-        }
-
-        /// <summary>
-        /// Dispose implementation for implementors to override for freeing resources on Dispose.
-        /// This method should not be called directly.
-        /// </summary>
-        internal virtual void DisposeInternal() { }
     }
 }
