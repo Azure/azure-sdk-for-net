@@ -25,6 +25,8 @@ namespace Azure.AI.Personalizer
         internal MultiSlotRestClient MultiSlotRestClient { get; set; }
         internal MultiSlotEventsRestClient MultiSlotEventsRestClient { get; set; }
 
+        internal Models.ClientConfigurationRestClient ClientConfigurationRestClient { get; set; }
+
         /// <summary> Initializes a new instance of Personalizer Client for mocking. </summary>
         protected PersonalizerClient()
         {
@@ -54,6 +56,7 @@ namespace Azure.AI.Personalizer
             EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ClientConfigurationRestClient = new Models.ClientConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
@@ -99,6 +102,7 @@ namespace Azure.AI.Personalizer
             EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ClientConfigurationRestClient = new Models.ClientConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
@@ -132,6 +136,7 @@ namespace Azure.AI.Personalizer
             EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ClientConfigurationRestClient = new Models.ClientConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -151,6 +156,8 @@ namespace Azure.AI.Personalizer
                 }
                 else
                 {
+                    Models.PersonalizerClientProperties result = await ClientConfigurationRestClient.PostAsync(cancellationToken).ConfigureAwait(false);
+                    Console.WriteLine("InternalId: "+result.ApplicationID+"\nStorageBlobUri: "+result.ModelBlobUri+"\nLearningMode: "+result.ProtocolVersion+"\nExploration Percentage: "+result.InitialExplorationEpsilon+"\ninitialCommandline: "+result.InitialCommandLine);
                     return await RankRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
                 }
             }
@@ -182,6 +189,8 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerRankResult>> RankAsync(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<object> contextFeatures, CancellationToken cancellationToken = default)
         {
+            Models.PersonalizerClientProperties result = await ClientConfigurationRestClient.PostAsync(cancellationToken).ConfigureAwait(false);
+            Console.WriteLine("InternalId: " + result.ApplicationID + "\nStorageBlobUri: " + result.ModelBlobUri + "\nLearningMode: " + result.ProtocolVersion + "\nExploration Percentage: " + result.InitialExplorationEpsilon + "\ninitialCommandline: " + result.InitialCommandLine);
             PersonalizerRankOptions options = new PersonalizerRankOptions(actions, contextFeatures);
             return await RankAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -201,6 +210,8 @@ namespace Azure.AI.Personalizer
                 }
                 else
                 {
+                    Models.PersonalizerClientProperties result = ClientConfigurationRestClient.Post(cancellationToken);
+                    Console.WriteLine("InternalId: " + result.ApplicationID + "\nStorageBlobUri: " + result.ModelBlobUri + "\nLearningMode: " + result.ProtocolVersion + "\nExploration Percentage: " + result.InitialExplorationEpsilon + "\ninitialCommandline: " + result.InitialCommandLine);
                     return RankRestClient.Rank(options, cancellationToken);
                 }
             }
