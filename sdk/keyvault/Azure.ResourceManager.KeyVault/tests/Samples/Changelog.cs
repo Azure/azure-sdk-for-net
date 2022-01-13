@@ -8,6 +8,7 @@
             using Azure.ResourceManager.Resources;
             using Azure.ResourceManager.Resources.Models;
             using System;
+            using Azure.Core;
 #if !SNIPPET
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
             VaultCollection vaultCollection = resourceGroup.GetVaults();
-            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard)));
+            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard)));
 
             VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
             Vault vault = lro.Value;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         {
             #region Snippet:Changelog_CreateModel
             VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard));
-            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
+            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, properties);
             #endregion
         }
     }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    /// <summary> Client options for AccessControlClient. </summary>
+    /// <summary> Client options for AccessControlClient library clients. </summary>
     public partial class AccessControlClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2020_12_01;

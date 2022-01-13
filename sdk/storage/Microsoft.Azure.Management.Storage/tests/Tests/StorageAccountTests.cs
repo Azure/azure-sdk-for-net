@@ -2798,5 +2798,174 @@ namespace Storage.Tests
                 Assert.Equal(PublicNetworkAccess.Disabled, account.PublicNetworkAccess);
             }
         }
+
+        [Fact]
+        public void StorageAccountAllowedCopyScope()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account 
+                string accountName = TestUtilities.GenerateName("sto1");
+                var parameters1 = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    AllowedCopyScope = AllowedCopyScope.AAD
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters1);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Equal(AllowedCopyScope.AAD, account.AllowedCopyScope);
+
+                //Update account 
+                var parameter = new StorageAccountUpdateParameters
+                {
+                    AllowedCopyScope = AllowedCopyScope.PrivateLink
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Equal(AllowedCopyScope.PrivateLink, account.AllowedCopyScope);
+            }
+        }
+
+
+        [Fact]
+        public void StorageAccountSFTP_LocalUser()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account 
+                string accountName = TestUtilities.GenerateName("sto1");
+                var parameters1 = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    IsSftpEnabled = true,
+                    IsLocalUserEnabled = true,
+                    IsHnsEnabled = true
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters1);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.True(account.IsSftpEnabled);
+                Assert.True(account.IsLocalUserEnabled);
+
+                //Update account 
+                var parameter = new StorageAccountUpdateParameters
+                {
+                    IsSftpEnabled = false,
+                    IsLocalUserEnabled = false
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.False(account.IsSftpEnabled);
+                Assert.False(account.IsLocalUserEnabled);
+
+                parameter = new StorageAccountUpdateParameters
+                {
+                    IsLocalUserEnabled = true
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.False(account.IsSftpEnabled);
+                Assert.True(account.IsLocalUserEnabled);
+
+                parameter = new StorageAccountUpdateParameters
+                {
+                    IsSftpEnabled = true
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.True(account.IsSftpEnabled);
+                Assert.True(account.IsLocalUserEnabled);
+
+                // Create Local user 1
+                string userName1 = TestUtilities.GenerateName("user1");
+                LocalUser user1 = storageMgmtClient.LocalUsers.CreateOrUpdate(rgname, accountName, userName1,
+                    new LocalUser(homeDirectory: "/"));
+                Assert.Equal(userName1, user1.Name);
+                Assert.Equal("/", user1.HomeDirectory);
+                Assert.Null(user1.HasSharedKey);
+                Assert.Null(user1.HasSshKey);
+                Assert.Null(user1.HasSshPassword);
+
+                // Create Local user 2
+                string userName2 = TestUtilities.GenerateName("user2");
+                List<PermissionScope> permissionScopes = new List<PermissionScope>();
+                permissionScopes.Add(new PermissionScope("rw", "blob", "container1"));
+                permissionScopes.Add(new PermissionScope("rwd", "file", "share1"));
+                List<SshPublicKey> sshAuthorizedKeys = new List<SshPublicKey>();
+                sshAuthorizedKeys.Add(new SshPublicKey("key1 description", "ssh-rsa keykeykeykeykey="));
+                sshAuthorizedKeys.Add(new SshPublicKey("key2 description", "ssh-rsa keykeykeykeykey="));
+                LocalUser user2 = storageMgmtClient.LocalUsers.CreateOrUpdate(rgname, accountName, userName2,
+                    new LocalUser(permissionScopes: permissionScopes,
+                        homeDirectory: "/dir1/",
+                        sshAuthorizedKeys: sshAuthorizedKeys,
+                        hasSharedKey: true,
+                        hasSshKey: true,
+                        hasSshPassword: true));
+                Assert.Equal(userName2, user2.Name);
+                Assert.Equal("/dir1/", user2.HomeDirectory);
+                Assert.Equal(2, user2.PermissionScopes.Count);
+                Assert.Equal(2, user2.SshAuthorizedKeys.Count);
+                Assert.True(user2.HasSharedKey);
+                Assert.True(user2.HasSshKey);
+                Assert.True(user2.HasSshPassword);
+
+                // List local user
+                LocalUsers users = storageMgmtClient.LocalUsers.List(rgname, accountName);
+                Assert.Equal(2, users.Value.Count);
+                
+                // Get Single local user
+                user1 = storageMgmtClient.LocalUsers.Get(rgname, accountName, userName1);
+                Assert.Equal(userName1, user1.Name);
+                Assert.Equal("/", user1.HomeDirectory);
+                Assert.True(user1.HasSharedKey);
+                Assert.False(user1.HasSshKey);
+                Assert.False(user1.HasSshPassword);
+                user2 = storageMgmtClient.LocalUsers.Get(rgname, accountName, userName2);
+                Assert.Equal(userName2, user2.Name);
+                Assert.Equal("/dir1/", user2.HomeDirectory);
+                Assert.Equal(2, user2.PermissionScopes.Count);
+                Assert.Null(user2.SshAuthorizedKeys);
+                Assert.True(user2.HasSharedKey);
+                Assert.True(user2.HasSshKey);
+                Assert.True(user2.HasSshPassword);
+
+                // Get Key on local user
+                LocalUserKeys keys = storageMgmtClient.LocalUsers.ListKeys(rgname, accountName, userName2);
+                Assert.NotNull(keys.SharedKey);
+                Assert.Equal(2, keys.SshAuthorizedKeys.Count);
+
+                // re-generate sshPassword on local user
+                LocalUserRegeneratePasswordResult regeneratePasswordResult = storageMgmtClient.LocalUsers.RegeneratePassword(rgname, accountName, userName2);
+                Assert.NotNull(regeneratePasswordResult.SshPassword);
+
+                //Remove Localuser
+                storageMgmtClient.LocalUsers.Delete(rgname, accountName, userName1);
+                users = storageMgmtClient.LocalUsers.List(rgname, accountName);
+                Assert.Equal(1, users.Value.Count);
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a specific alert.
         /// </summary>

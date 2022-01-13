@@ -81,13 +81,13 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.0.1" />
-    <PackageReference Update="Azure.Core" Version="1.21.0" />
+    <PackageReference Update="Azure.Core" Version="1.22.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.18" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.19" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.0.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.3.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.6.2" />
-    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.7.0" />
+    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.8.1" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.5.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
     <PackageReference Update="Azure.Identity" Version="1.5.0" />
@@ -99,7 +99,7 @@
     <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.7" />
 
     <!-- Other approved packages -->
-    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.8" />
+    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.1.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.39.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
@@ -116,6 +116,7 @@
     These are dependencies for Track 2 integration packages
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
+    <PackageReference Update="Apache.Avro" Version="1.11.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="3.0.0" Condition="'$(TargetFramework)' == 'netcoreapp3.1'" />
@@ -150,8 +151,8 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211228.3" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210903.4" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220112.2" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20220111.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
@@ -265,7 +266,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20211216.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20220107.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

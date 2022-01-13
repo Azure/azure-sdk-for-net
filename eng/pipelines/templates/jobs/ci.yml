@@ -168,6 +168,8 @@ jobs:
           workingDirectory: '$(Agent.BuildDirectory)'
       - task: PowerShell@2
         displayName: "Verify generated code"
+        env:
+          EnableSourceLink: false
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
@@ -175,7 +177,7 @@ jobs:
            -SDKType ${{ parameters.SDKType }}
            -SpellCheckPublicApiSurface
           pwsh: true
-          failOnStderr:  false
+          failOnStderr: false
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml

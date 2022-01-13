@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of DeletedSite and their operations over its parent. </summary>
     public partial class DeletedSiteCollection : ArmCollection, IEnumerable<DeletedSite>, IAsyncEnumerable<DeletedSite>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GlobalRestOperations _globalRestClient;
@@ -40,10 +40,16 @@ namespace Azure.ResourceManager.AppService
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _globalRestClient = new GlobalRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _deletedWebAppsRestClient = new DeletedWebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -355,6 +361,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeletedSite, DeletedSiteData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeletedSite, DeletedSiteData> Construct() { }
     }
 }

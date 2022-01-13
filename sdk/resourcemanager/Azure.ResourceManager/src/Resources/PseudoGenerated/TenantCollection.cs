@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,9 +36,6 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext)
         {
         }
-
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
 
         private TenantsRestOperations RestClient => new TenantsRestOperations(Diagnostics, Pipeline, ClientOptions, BaseUri);
 
