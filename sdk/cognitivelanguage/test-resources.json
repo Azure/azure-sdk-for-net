@@ -26,7 +26,7 @@
         },
         "CONVERSATIONS_PROJECT": {
             "type": "string",
-            "value": ""
+            "value": "antischOne"
         },
         "CONVERSATIONS_URI": {
             "type": "string",
