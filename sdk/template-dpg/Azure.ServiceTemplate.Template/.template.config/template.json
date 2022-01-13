@@ -64,7 +64,7 @@
       "type": "parameter",
       "datatype":"text",
       "isRequired": false,
-      "description": "The Azure security scopes. ie. https://api.adu.microsoft.com/.default",
+      "description": "The Azure key header name.",
       "defaultValue": "",
       "replaces": "securityHeaderName"
     },
