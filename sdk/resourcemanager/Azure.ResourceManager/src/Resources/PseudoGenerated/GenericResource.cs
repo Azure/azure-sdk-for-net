@@ -62,14 +62,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The resource type for resources.
-        /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/resources";
-
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
-        /// <summary>
         /// Gets whether or not the current instance has data.
         /// </summary>
         public bool HasData { get; }
@@ -236,13 +228,6 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-            if (identifier is null)
-                throw new ArgumentNullException(nameof(identifier));
         }
 
         /// <summary>

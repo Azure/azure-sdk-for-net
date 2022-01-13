@@ -47,14 +47,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The resource type for tags.
-        /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Id.ResourceType;
-
-        /// <summary>
         /// Gets whether or not the current instance has data.
         /// </summary>
         public bool HasData { get; }

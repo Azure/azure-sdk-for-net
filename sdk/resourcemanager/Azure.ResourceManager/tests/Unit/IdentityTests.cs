@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase("/subscriptions/6b085460-5f00-477e-ba44-1035046e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest", false)]
         [TestCase("", true)]
-        [TestCase(" ", true)]
+        [TestCase(" ", false)]
         [TestCase(null, true)]
         public void CheckUserTrueConstructor(string resourceID, bool invalidParameter)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
                 else if (resourceID == String.Empty)
                     Assert.Throws<ArgumentException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
                 else
-                    Assert.Throws<ArgumentOutOfRangeException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                    Assert.Throws<FormatException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase("/subscriptions/6b085460-5f00-477e-ba44-1035046e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest", false)]
         [TestCase("", true)]
-        [TestCase(" ", true)]
+        [TestCase(" ", false)]
         [TestCase(null, true)]
         public void CheckUserFalseConstructor(string resourceID, bool invalidParameter)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Tests
                 else if(resourceID == String.Empty)
                     Assert.Throws<ArgumentException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
                 else
-                    Assert.Throws<ArgumentOutOfRangeException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                    Assert.Throws<FormatException>(() => { dict1[new ResourceIdentifier(resourceID)] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
             }
             else
             {

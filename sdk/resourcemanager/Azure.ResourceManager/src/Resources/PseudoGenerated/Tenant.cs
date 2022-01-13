@@ -3,9 +3,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Provider.ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -58,6 +61,9 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Provider.ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -84,10 +90,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the valid resource type for this operation class
-        /// </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Provides a way to reuse the protected client context.
@@ -242,6 +249,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A client to perform operations on the management group. </returns>
         internal ManagementGroup GetManagementGroup(ResourceIdentifier id)
         {
+            ManagementGroup.ValidateResourceId(id);
             return new ManagementGroup(this, id);
         }
 

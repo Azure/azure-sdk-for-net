@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,9 @@ namespace Azure.ResourceManager.Management
         internal ManagementGroupCollection(Tenant tenant)
             : base(tenant)
         {
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -44,8 +48,11 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         protected new Tenant Parent { get {return base.Parent as Tenant;} }
 
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
 
         private ManagementGroupsRestOperations RestClient => _restClient ??= new ManagementGroupsRestOperations(
             _clientDiagnostics,

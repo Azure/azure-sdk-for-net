@@ -159,6 +159,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the resourcegroup. </returns>
         public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
+            ResourceGroup.ValidateResourceId(id);
             return new ResourceGroup(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
@@ -169,6 +170,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the subscription. </returns>
         public virtual Subscription GetSubscription(ResourceIdentifier id)
         {
+            Subscription.ValidateResourceId(id);
             return new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
@@ -179,6 +181,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the feature. </returns>
         public virtual Feature GetFeature(ResourceIdentifier id)
         {
+            Feature.ValidateResourceId(id);
             return new Feature(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
@@ -189,6 +192,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the Provider. </returns>
         public virtual Provider GetProvider(ResourceIdentifier id)
         {
+            Provider.ValidateResourceId(id);
             return new Provider(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 

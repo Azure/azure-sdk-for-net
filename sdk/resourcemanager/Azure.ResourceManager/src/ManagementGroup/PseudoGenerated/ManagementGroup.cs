@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -39,14 +40,17 @@ namespace Azure.ResourceManager.Management
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ManagementGroupVersion.Default.ToString();
             _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ManagementGroup"/> class.
-        /// </summary>
-        /// <param name="operations"> The operations to copy the client options from. </param>
-        /// <param name="resource"> The ManagementGroupData to use in these operations. </param>
-        internal ManagementGroup(ArmResource operations, ManagementGroupData resource)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ManagementGroup"/> class.
+            /// </summary>
+            /// <param name="operations"> The operations to copy the client options from. </param>
+            /// <param name="resource"> The ManagementGroupData to use in these operations. </param>
+            internal ManagementGroup(ArmResource operations, ManagementGroupData resource)
             : base(operations, resource.Id)
         {
             _data = resource;
@@ -54,15 +58,21 @@ namespace Azure.ResourceManager.Management
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ManagementGroupVersion.Default.ToString();
             _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary>
-        /// Gets the resource type definition for a ResourceType.
-        /// </summary>
+            /// <summary>
+            /// Gets the resource type definition for a ResourceType.
+            /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Management/managementGroups";
 
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Gets whether or not the current instance has data.

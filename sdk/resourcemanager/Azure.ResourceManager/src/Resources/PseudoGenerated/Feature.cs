@@ -40,28 +40,31 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : FeatureVersion.Default.ToString();
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Feature"/> class.
-        /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The id of the resource group to use. </param>
-        internal Feature(ClientContext options, ResourceIdentifier id)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Feature"/> class.
+            /// </summary>
+            /// <param name="options"> The client parameters to use in these operations. </param>
+            /// <param name="id"> The id of the resource group to use. </param>
+            internal Feature(ClientContext options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : FeatureVersion.Default.ToString();
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary>
-        /// Gets the resource type definition for a ResourceType.
-        /// </summary>
+            /// <summary>
+            /// Gets the resource type definition for a ResourceType.
+            /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/features";
-
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -82,12 +85,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (identifier.ResourceType != $"{Id.ResourceType.Namespace}/features")
+            if (id.ResourceType.GetLastType() != "features")
             {
-                throw new InvalidOperationException($"Invalid resourcetype found when intializing FeatureOperations: {identifier.ResourceType}");
+                throw new InvalidOperationException($"Invalid resourcetype found when intializing FeatureOperations: {id.ResourceType}");
             }
         }
 

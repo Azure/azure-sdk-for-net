@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,6 +46,9 @@ namespace Azure.ResourceManager.AppService
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _globalRestClient = new GlobalRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeletedSite"/> class. </summary>
@@ -54,6 +58,9 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _globalRestClient = new GlobalRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeletedSite"/> class. </summary>
@@ -66,13 +73,13 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _globalRestClient = new GlobalRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/deletedSites";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,6 +94,12 @@ namespace Azure.ResourceManager.AppService
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
@@ -156,20 +169,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Global_GetDeletedWebAppSnapshots
         /// <summary> Description for Get all deleted apps for a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<Snapshot>>> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Snapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedSite.GetDeletedWebAppSnapshots");
-            scope.Start();
-            try
+            async Task<Page<Snapshot>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _globalRestClient.GetDeletedWebAppSnapshotsAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("DeletedSite.GetDeletedWebAppSnapshots");
+                scope.Start();
+                try
+                {
+                    var response = await _globalRestClient.GetDeletedWebAppSnapshotsAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
@@ -177,20 +195,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: Global_GetDeletedWebAppSnapshots
         /// <summary> Description for Get all deleted apps for a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Snapshot>> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Snapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedSite.GetDeletedWebAppSnapshots");
-            scope.Start();
-            try
+            Page<Snapshot> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _globalRestClient.GetDeletedWebAppSnapshots(Id.SubscriptionId, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("DeletedSite.GetDeletedWebAppSnapshots");
+                scope.Start();
+                try
+                {
+                    var response = _globalRestClient.GetDeletedWebAppSnapshots(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

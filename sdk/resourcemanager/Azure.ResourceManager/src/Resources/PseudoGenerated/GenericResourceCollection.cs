@@ -40,14 +40,6 @@ namespace Azure.ResourceManager.Resources
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-        }
-
         private ResourcesRestOperations RestClient
         {
             get

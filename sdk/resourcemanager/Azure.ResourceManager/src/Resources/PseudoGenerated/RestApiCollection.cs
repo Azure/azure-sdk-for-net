@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -43,10 +44,11 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _nameSpace = nameSpace;
             _providerCollection = new ProviderCollection(this, Id);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
         private RestOperations GetRestClient(CancellationToken cancellationToken = default)
         {
@@ -68,6 +70,12 @@ namespace Azure.ResourceManager.Resources
                 Pipeline,
                 ClientOptions,
                 BaseUri);
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceIdentifier.Root.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceIdentifier.Root.ResourceType), nameof(id));
         }
 
         /// <summary> Gets a list of operations. </summary>

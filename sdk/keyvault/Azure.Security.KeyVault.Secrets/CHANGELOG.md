@@ -1,5 +1,11 @@
 # Release History
 
+## 4.3.0-beta.4 (2022-01-12)
+
+### Other Changes
+
+- Package metadata fixed
+
 ## 4.3.0-beta.3 (2022-01-11)
 
 ### Other Changes

@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,6 +50,9 @@ namespace Azure.ResourceManager.Resources
             _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subVersion, BaseUri);
             var featureVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version) ? version : FeatureVersion.Default.ToString();
             _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, featureVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -66,6 +70,9 @@ namespace Azure.ResourceManager.Resources
             _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subVersion, BaseUri);
             var featureVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version) ? version : FeatureVersion.Default.ToString();
             _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, featureVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -81,10 +88,11 @@ namespace Azure.ResourceManager.Resources
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
-        /// <summary>
-        /// Gets the valid resource type for this operation class
-        /// </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Gets whether or not the current instance has data.

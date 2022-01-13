@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -35,6 +36,9 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
             _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -50,10 +54,16 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
             _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Gets the resource type definition for a ResourceType.

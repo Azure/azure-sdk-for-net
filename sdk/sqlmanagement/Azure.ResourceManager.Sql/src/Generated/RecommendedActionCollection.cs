@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of RecommendedAction and their operations over its parent. </summary>
-    public partial class RecommendedActionCollection : ArmCollection, IEnumerable<RecommendedAction>
+    public partial class RecommendedActionCollection : ArmCollection, IEnumerable<RecommendedAction>, IAsyncEnumerable<RecommendedAction>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseRecommendedActionsRestOperations _databaseRecommendedActionsRestClient;
@@ -35,10 +36,16 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _databaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServerDatabaseAdvisor.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServerDatabaseAdvisor.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseAdvisor.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -211,20 +218,25 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: DatabaseRecommendedActions_ListByDatabaseAdvisor
         /// <summary> Gets list of Database Recommended Actions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<RecommendedAction>> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecommendedAction> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
-            scope.Start();
-            try
+            Page<RecommendedAction> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _databaseRecommendedActionsRestClient.ListByDatabaseAdvisor(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Select(value => new RecommendedAction(Parent, value)).ToArray() as IReadOnlyList<RecommendedAction>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _databaseRecommendedActionsRestClient.ListByDatabaseAdvisor(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions
@@ -232,30 +244,40 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: DatabaseRecommendedActions_ListByDatabaseAdvisor
         /// <summary> Gets list of Database Recommended Actions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<RecommendedAction>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecommendedAction> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<RecommendedAction>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _databaseRecommendedActionsRestClient.ListByDatabaseAdvisorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Select(value => new RecommendedAction(Parent, value)).ToArray() as IReadOnlyList<RecommendedAction>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseRecommendedActionsRestClient.ListByDatabaseAdvisorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         IEnumerator<RecommendedAction> IEnumerable<RecommendedAction>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<RecommendedAction> IAsyncEnumerable<RecommendedAction>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
