@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLinkScope, PrivateLinkScopeData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLinkScope, PrivateLinkScopeData> Construct() { }
     }
 }

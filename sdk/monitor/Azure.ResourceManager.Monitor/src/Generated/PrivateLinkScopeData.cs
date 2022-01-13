@@ -7,9 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Monitor
     {
         /// <summary> Initializes a new instance of PrivateLinkScopeData. </summary>
         /// <param name="location"> The location. </param>
-        public PrivateLinkScopeData(Location location) : base(location)
+        public PrivateLinkScopeData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
         }
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        internal PrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string provisioningState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, type, tags, location)
+        internal PrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;

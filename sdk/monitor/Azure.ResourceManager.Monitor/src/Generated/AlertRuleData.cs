@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
         /// <param name="condition"> the condition that results in the alert rule being activated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namePropertiesName"/> or <paramref name="condition"/> is null. </exception>
-        public AlertRuleData(Location location, string namePropertiesName, bool isEnabled, RuleCondition condition) : base(location)
+        public AlertRuleData(AzureLocation location, string namePropertiesName, bool isEnabled, RuleCondition condition) : base(location)
         {
             if (namePropertiesName == null)
             {
@@ -55,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="action"> action that is performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedTime"> Last time the rule was updated in ISO8601 format. </param>
-        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedTime) : base(id, name, type, tags, location)
+        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedTime) : base(id, name, type, tags, location)
         {
             NamePropertiesName = namePropertiesName;
             Description = description;

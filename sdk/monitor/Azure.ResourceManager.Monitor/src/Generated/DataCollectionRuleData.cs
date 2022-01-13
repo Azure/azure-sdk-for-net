@@ -6,10 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
     {
         /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
         /// <param name="location"> The location. </param>
-        public DataCollectionRuleData(Location location) : base(location)
+        public DataCollectionRuleData(AzureLocation location) : base(location)
         {
         }
 
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="kind"> The kind of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, string etag, SystemData systemData) : base(id, name, type, tags, location)
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, string etag, SystemData systemData) : base(id, name, type, tags, location)
         {
             Properties = properties;
             Kind = kind;

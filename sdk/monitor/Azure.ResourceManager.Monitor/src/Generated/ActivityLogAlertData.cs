@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
     {
         /// <summary> Initializes a new instance of ActivityLogAlertData. </summary>
         /// <param name="location"> The location. </param>
-        public ActivityLogAlertData(Location location) : base(location)
+        public ActivityLogAlertData(AzureLocation location) : base(location)
         {
             Scopes = new ChangeTrackingList<string>();
         }
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="condition"> The condition that will cause this alert to activate. </param>
         /// <param name="actions"> The actions that will activate when the condition is met. </param>
         /// <param name="description"> A description of this activity log alert. </param>
-        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, IList<string> scopes, bool? enabled, ActivityLogAlertAllOfCondition condition, ActivityLogAlertActionList actions, string description) : base(id, name, type, tags, location)
+        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, bool? enabled, ActivityLogAlertAllOfCondition condition, ActivityLogAlertActionList actions, string description) : base(id, name, type, tags, location)
         {
             Scopes = scopes;
             Enabled = enabled;

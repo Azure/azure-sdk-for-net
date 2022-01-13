@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Monitor.Models;
 
@@ -379,6 +378,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DataCollectionRuleAssociation, DataCollectionRuleAssociationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DataCollectionRuleAssociation, DataCollectionRuleAssociationData> Construct() { }
     }
 }

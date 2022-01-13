@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profiles"/> is null. </exception>
-        public AutoscaleSettingData(Location location, IEnumerable<AutoscaleProfile> profiles) : base(location)
+        public AutoscaleSettingData(AzureLocation location, IEnumerable<AutoscaleProfile> profiles) : base(location)
         {
             if (profiles == null)
             {
@@ -46,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="namePropertiesName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceUri"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
-        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? enabled, string namePropertiesName, string targetResourceUri, string targetResourceLocation) : base(id, name, type, tags, location)
+        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? enabled, string namePropertiesName, string targetResourceUri, string targetResourceLocation) : base(id, name, type, tags, location)
         {
             Profiles = profiles;
             Notifications = notifications;

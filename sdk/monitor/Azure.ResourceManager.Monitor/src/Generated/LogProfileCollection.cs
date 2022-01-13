@@ -398,6 +398,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, LogProfile, LogProfileData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, LogProfile, LogProfileData> Construct() { }
     }
 }

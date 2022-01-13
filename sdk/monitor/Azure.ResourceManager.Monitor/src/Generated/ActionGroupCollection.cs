@@ -398,6 +398,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ActionGroup, ActionGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ActionGroup, ActionGroupData> Construct() { }
     }
 }

@@ -7,9 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Monitor
     {
         /// <summary> Initializes a new instance of ActionGroupData. </summary>
         /// <param name="location"> The location. </param>
-        public ActionGroupData(Location location) : base(location)
+        public ActionGroupData(AzureLocation location) : base(location)
         {
             EmailReceivers = new ChangeTrackingList<EmailReceiver>();
             SmsReceivers = new ChangeTrackingList<SmsReceiver>();
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
-        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, string identity, string groupShortName, bool? enabled, IList<EmailReceiver> emailReceivers, IList<SmsReceiver> smsReceivers, IList<WebhookReceiver> webhookReceivers, IList<ItsmReceiver> itsmReceivers, IList<AzureAppPushReceiver> azureAppPushReceivers, IList<AutomationRunbookReceiver> automationRunbookReceivers, IList<VoiceReceiver> voiceReceivers, IList<LogicAppReceiver> logicAppReceivers, IList<AzureFunctionReceiver> azureFunctionReceivers, IList<ArmRoleReceiver> armRoleReceivers, IList<EventHubReceiver> eventHubReceivers) : base(id, name, type, tags, location, kind, identity)
+        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, string identity, string groupShortName, bool? enabled, IList<EmailReceiver> emailReceivers, IList<SmsReceiver> smsReceivers, IList<WebhookReceiver> webhookReceivers, IList<ItsmReceiver> itsmReceivers, IList<AzureAppPushReceiver> azureAppPushReceivers, IList<AutomationRunbookReceiver> automationRunbookReceivers, IList<VoiceReceiver> voiceReceivers, IList<LogicAppReceiver> logicAppReceivers, IList<AzureFunctionReceiver> azureFunctionReceivers, IList<ArmRoleReceiver> armRoleReceivers, IList<EventHubReceiver> eventHubReceivers) : base(id, name, type, tags, location, kind, identity)
         {
             GroupShortName = groupShortName;
             Enabled = enabled;

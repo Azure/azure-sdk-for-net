@@ -400,6 +400,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, LogSearchRule, LogSearchRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, LogSearchRule, LogSearchRuleData> Construct() { }
     }
 }

@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         /// <summary> Initializes a new instance of AzureResource. </summary>
         /// <param name="location"> The location. </param>
-        public AzureResource(Location location) : base(location)
+        public AzureResource(AzureLocation location) : base(location)
         {
         }
 
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Azure resource kind. </param>
         /// <param name="identity"> Azure resource identity. </param>
-        internal AzureResource(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, string identity) : base(id, name, type, tags, location)
+        internal AzureResource(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, string identity) : base(id, name, type, tags, location)
         {
             Kind = kind;
             Identity = identity;

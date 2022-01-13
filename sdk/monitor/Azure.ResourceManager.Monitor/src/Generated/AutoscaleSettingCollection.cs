@@ -428,6 +428,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AutoscaleSetting, AutoscaleSettingData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AutoscaleSetting, AutoscaleSettingData> Construct() { }
     }
 }

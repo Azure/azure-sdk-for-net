@@ -398,6 +398,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ActivityLogAlert, ActivityLogAlertData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ActivityLogAlert, ActivityLogAlertData> Construct() { }
     }
 }

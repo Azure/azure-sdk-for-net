@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -28,7 +26,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="criteria"> defines the specific alert criteria information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="criteria"/> is null. </exception>
-        public MetricAlertData(Location location, int severity, bool enabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
+        public MetricAlertData(AzureLocation location, int severity, bool enabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
         {
             if (scopes == null)
             {
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedTime"> Last time the rule was updated in ISO8601 format. </param>
         /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
-        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string description, int severity, bool enabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? autoMitigate, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedTime, bool? isMigrated) : base(id, name, type, tags, location)
+        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool enabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? autoMitigate, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedTime, bool? isMigrated) : base(id, name, type, tags, location)
         {
             Description = description;
             Severity = severity;

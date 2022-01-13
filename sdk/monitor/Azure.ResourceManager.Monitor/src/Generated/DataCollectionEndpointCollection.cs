@@ -420,6 +420,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DataCollectionEndpoint, DataCollectionEndpointData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DataCollectionEndpoint, DataCollectionEndpointData> Construct() { }
     }
 }
