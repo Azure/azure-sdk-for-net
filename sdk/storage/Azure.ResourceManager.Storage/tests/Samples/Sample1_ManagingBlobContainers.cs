@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
+            StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
             storageAccount = await accountCreateOperation.WaitForCompletionAsync();
             #region Snippet:Managing_BlobContainers_GetBlobService
             BlobService blobService = storageAccount.GetBlobService();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
             string blobContainerName = "myBlobContainer";
             BlobContainerData blobContainerData = new BlobContainerData();
-            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(blobContainerName, blobContainerData);
+            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(true, blobContainerName, blobContainerData);
             BlobContainer blobContainer = blobContainerCreateOperation.Value;
             #endregion
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_BlobContainers_DeleteBlobContainer
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
             BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
-            await blobContainer.DeleteAsync();
+            await blobContainer.DeleteAsync(true);
             #endregion
         }
     }

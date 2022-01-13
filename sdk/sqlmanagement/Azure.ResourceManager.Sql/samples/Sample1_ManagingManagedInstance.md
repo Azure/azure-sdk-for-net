@@ -99,7 +99,7 @@ ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
     ZoneRedundant = false,
 };
 string managedInstanceName = "myManagedInstance";
-var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
+var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
 ManagedInstance managedInstance = managedInstanceLro.Value;
 ```
 
@@ -147,7 +147,7 @@ if (await managedInstanceCollection.ExistsAsync("bar"))
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
 ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
-await managedInstance.DeleteAsync();
+await managedInstance.DeleteAsync(true);
 ```
 
 ## Next steps

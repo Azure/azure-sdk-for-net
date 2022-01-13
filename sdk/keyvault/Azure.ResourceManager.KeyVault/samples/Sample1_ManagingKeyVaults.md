@@ -71,7 +71,7 @@ VaultProperties.AccessPolicies.Add(AccessPolicy);
 
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
 
-var rawVault = await vaultCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
+var rawVault = await vaultCollection.CreateOrUpdateAsync(true, vaultName, parameters).ConfigureAwait(false);
 Vault vault = await rawVault.WaitForCompletionAsync();
 ```
 
@@ -119,5 +119,5 @@ if (await vaultCollection.ExistsAsync("bar"))
 VaultCollection vaultCollection = resourceGroup.GetVaults();
 
 Vault vault = await vaultCollection.GetAsync("myVault");
-await vault.DeleteAsync();
+await vault.DeleteAsync(true);
 ```

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             SqlAgentConfigurationData data = new SqlAgentConfigurationData()
             {
             };
-            var agentConfig = await collection.CreateOrUpdateAsync(data);
+            var agentConfig = await collection.CreateOrUpdateAsync(true, data);
             Assert.IsNotNull(agentConfig);
             Assert.AreEqual("current", agentConfig.Value.Data.Name);
             Assert.AreEqual("Enabled", agentConfig.Value.Data.State.ToString());

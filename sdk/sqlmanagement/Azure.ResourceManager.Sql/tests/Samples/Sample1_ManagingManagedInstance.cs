@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 ZoneRedundant = false,
             };
             string managedInstanceName = "myManagedInstance";
-            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
+            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
             ManagedInstance managedInstance = managedInstanceLro.Value;
             #endregion
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
             ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
-            await managedInstance.DeleteAsync();
+            await managedInstance.DeleteAsync(true);
             #endregion
         }
     }

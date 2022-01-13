@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
 
             VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
 
-            var rawVault = await vaultCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
+            var rawVault = await vaultCollection.CreateOrUpdateAsync(true, vaultName, parameters).ConfigureAwait(false);
             Vault vault = await rawVault.WaitForCompletionAsync();
             #endregion
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             VaultCollection vaultCollection = resourceGroup.GetVaults();
 
             Vault vault = await vaultCollection.GetAsync("myVault");
-            await vault.DeleteAsync();
+            await vault.DeleteAsync(true);
             #endregion
         }
 

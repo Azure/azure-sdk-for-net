@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             string namespaceName = "myNamespace";
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
             AzureLocation location = AzureLocation.EastUS2;
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
             #endregion
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #region Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespace serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
-            await serviceBusNamespace.DeleteAsync();
+            await serviceBusNamespace.DeleteAsync(true);
             #endregion
         }
     }

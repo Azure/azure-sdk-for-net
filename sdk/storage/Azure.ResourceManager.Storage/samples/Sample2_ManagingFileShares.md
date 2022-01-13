@@ -43,7 +43,7 @@ StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(s
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
-StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
+StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
 StorageAccount storageAccount = accountCreateOperation.Value;
 ```
 
@@ -63,7 +63,7 @@ Now that we have the file service, we can manage the file shares inside this sto
 FileShareCollection fileShareCollection = fileService.GetFileShares();
 string fileShareName = "myFileShare";
 FileShareData fileShareData = new FileShareData();
-FileShareCreateOperation fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(fileShareName, fileShareData);
+FileShareCreateOperation fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(true, fileShareName, fileShareData);
 FileShare fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
 ```
 
@@ -106,7 +106,7 @@ if (await fileShareCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_FileShares_DeleteFileShare
 FileShareCollection fileShareCollection = fileService.GetFileShares();
 FileShare fileShare = await fileShareCollection.GetAsync("myFileShare");
-await fileShare.DeleteAsync();
+await fileShare.DeleteAsync(true);
 ```
 
 ## Next steps
