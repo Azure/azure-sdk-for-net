@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CosmosTableCollection(ArmResource parent) : base(parent)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public virtual TableResourceCreateUpdateTableOperation CreateOrUpdate(string tableName, TableCreateUpdateOptions createUpdateTableParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual TableResourceCreateUpdateTableOperation CreateOrUpdate(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public async virtual Task<TableResourceCreateUpdateTableOperation> CreateOrUpdateAsync(string tableName, TableCreateUpdateOptions createUpdateTableParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<TableResourceCreateUpdateTableOperation> CreateOrUpdateAsync(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _tableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CosmosTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CosmosTable>(null, response.GetRawResponse());
+                return Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _tableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CosmosTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CosmosTable>(null, response.GetRawResponse());
+                return Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.Exists");
             scope.Start();
             try
             {

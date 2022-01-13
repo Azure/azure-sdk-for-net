@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         DeviceUpdateInstance IOperationSource<DeviceUpdateInstance>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DeviceUpdateInstance(_operationBase, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement));
+            var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
+            return new DeviceUpdateInstance(_operationBase, data);
         }
 
         async ValueTask<DeviceUpdateInstance> IOperationSource<DeviceUpdateInstance>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DeviceUpdateInstance(_operationBase, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement));
+            var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
+            return new DeviceUpdateInstance(_operationBase, data);
         }
     }
 }

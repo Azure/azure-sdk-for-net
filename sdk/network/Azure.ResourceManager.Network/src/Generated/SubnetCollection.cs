@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of SubnetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubnetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SubnetCollection(ArmResource parent) : base(parent)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(string subnetName, SubnetData subnetParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             if (subnetName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(string subnetName, SubnetData subnetParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             if (subnetName == null)
             {
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _subnetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Subnet>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Subnet>(null, response.GetRawResponse());
+                return Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(subnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _subnetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Subnet>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Subnet>(null, response.GetRawResponse());
+                return Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(subnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();
             try
             {

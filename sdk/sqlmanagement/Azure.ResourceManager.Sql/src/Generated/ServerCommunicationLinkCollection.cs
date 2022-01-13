@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerCommunicationLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerCommunicationLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerCommunicationLinkCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServerCommunicationLinkCreateOrUpdateOperation CreateOrUpdate(string communicationLinkName, ServerCommunicationLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServerCommunicationLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string communicationLinkName, ServerCommunicationLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (communicationLinkName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerCommunicationLinkCreateOrUpdateOperation> CreateOrUpdateAsync(string communicationLinkName, ServerCommunicationLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServerCommunicationLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string communicationLinkName, ServerCommunicationLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (communicationLinkName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverCommunicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(communicationLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _serverCommunicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(communicationLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
             scope.Start();
             try
             {

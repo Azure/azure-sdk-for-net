@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ApplicationGateway IOperationSource<ApplicationGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ApplicationGateway(_operationBase, ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement));
+            var data = ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement);
+            return new ApplicationGateway(_operationBase, data);
         }
 
         async ValueTask<ApplicationGateway> IOperationSource<ApplicationGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ApplicationGateway(_operationBase, ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement));
+            var data = ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement);
+            return new ApplicationGateway(_operationBase, data);
         }
     }
 }

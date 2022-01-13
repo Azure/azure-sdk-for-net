@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDatabaseAdvisorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDatabaseAdvisorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseAdvisorCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _databaseAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.Exists");
             scope.Start();
             try
             {

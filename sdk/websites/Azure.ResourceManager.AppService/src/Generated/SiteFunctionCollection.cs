@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteFunctionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteFunctionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteFunctionCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
-        public virtual WebAppCreateFunctionOperation CreateOrUpdate(string functionName, FunctionEnvelopeData functionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateFunctionOperation CreateOrUpdate(bool waitForCompletion, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
             if (functionName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateFunctionOperation> CreateOrUpdateAsync(string functionName, FunctionEnvelopeData functionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateFunctionOperation> CreateOrUpdateAsync(bool waitForCompletion, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
             if (functionName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteFunction>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteFunction(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteFunction>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteFunction(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteFunction>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteFunction(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteFunction>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteFunction(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.Exists");
             scope.Start();
             try
             {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         AzureFirewall IOperationSource<AzureFirewall>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AzureFirewall(_operationBase, AzureFirewallData.DeserializeAzureFirewallData(document.RootElement));
+            var data = AzureFirewallData.DeserializeAzureFirewallData(document.RootElement);
+            return new AzureFirewall(_operationBase, data);
         }
 
         async ValueTask<AzureFirewall> IOperationSource<AzureFirewall>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AzureFirewall(_operationBase, AzureFirewallData.DeserializeAzureFirewallData(document.RootElement));
+            var data = AzureFirewallData.DeserializeAzureFirewallData(document.RootElement);
+            return new AzureFirewall(_operationBase, data);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecretCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdSecretCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdSecretCollection(ArmResource parent) : base(parent)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
-        public virtual AfdSecretCreateOperation CreateOrUpdate(string secretName, AfdSecretData secret, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdSecretCreateOperation CreateOrUpdate(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             if (secretName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
-        public async virtual Task<AfdSecretCreateOperation> CreateOrUpdateAsync(string secretName, AfdSecretData secret, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdSecretCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             if (secretName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecret>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _afdSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecret>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.Exists");
             scope.Start();
             try
             {

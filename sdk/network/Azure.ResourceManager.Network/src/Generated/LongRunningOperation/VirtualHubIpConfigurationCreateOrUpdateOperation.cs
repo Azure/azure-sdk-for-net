@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         HubIpConfiguration IOperationSource<HubIpConfiguration>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new HubIpConfiguration(_operationBase, HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement));
+            var data = HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement);
+            return new HubIpConfiguration(_operationBase, data);
         }
 
         async ValueTask<HubIpConfiguration> IOperationSource<HubIpConfiguration>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new HubIpConfiguration(_operationBase, HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement));
+            var data = HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement);
+            return new HubIpConfiguration(_operationBase, data);
         }
     }
 }

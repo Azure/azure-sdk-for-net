@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareDatastoreCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareDatastoreCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VMwareDatastoreCollection(ArmResource parent) : base(parent)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual DatastoreCreateOperation CreateOrUpdate(string datastoreName, VMwareDatastoreData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatastoreCreateOperation CreateOrUpdate(bool waitForCompletion, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
         {
             if (datastoreName == null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public async virtual Task<DatastoreCreateOperation> CreateOrUpdateAsync(string datastoreName, VMwareDatastoreData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatastoreCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
         {
             if (datastoreName == null)
             {
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _datastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VMwareDatastore>(null, response.GetRawResponse())
-                    : Response.FromValue(new VMwareDatastore(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VMwareDatastore>(null, response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastore(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,14 +216,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _datastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VMwareDatastore>(null, response.GetRawResponse())
-                    : Response.FromValue(new VMwareDatastore(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VMwareDatastore>(null, response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastore(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.Exists");
             scope.Start();
             try
             {

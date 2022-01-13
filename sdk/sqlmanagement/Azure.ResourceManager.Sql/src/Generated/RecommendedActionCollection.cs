@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecommendedActionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RecommendedActionCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RecommendedAction>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(recommendedActionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _databaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RecommendedAction>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(recommendedActionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.Exists");
             scope.Start();
             try
             {

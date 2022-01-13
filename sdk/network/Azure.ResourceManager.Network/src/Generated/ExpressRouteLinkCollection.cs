@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteLinkCollection(ArmResource parent) : base(parent)
         {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(linkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _expressRouteLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(linkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
             scope.Start();
             try
             {
