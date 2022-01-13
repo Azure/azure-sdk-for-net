@@ -173,13 +173,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //get private link resource
-            //get private link resource
             await foreach (var _ in serviceBusNamespace.GetPrivateLinkResourcesAsync())
             {
                 return;
             }
-
-            Assert.Fail($"{nameof(ServiceBusNamespace)}.{nameof(ServiceBusNamespace.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(PrivateLinkResource)}.");
         }
 
         [Test]
