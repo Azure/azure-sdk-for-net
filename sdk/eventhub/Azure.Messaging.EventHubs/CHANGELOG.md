@@ -1,12 +1,10 @@
 # Release History
 
-## 5.7.0-beta.2 (Unreleased)
+## 5.7.0-beta.2 (2022-01-13)
 
 ### Features Added
 
 - Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
-
-### Breaking Changes
 
 ### Bugs Fixed
 
