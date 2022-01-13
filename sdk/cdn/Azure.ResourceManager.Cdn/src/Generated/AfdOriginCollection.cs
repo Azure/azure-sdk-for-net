@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of AfdOrigin and their operations over its parent. </summary>
     public partial class AfdOriginCollection : ArmCollection, IEnumerable<AfdOrigin>, IAsyncEnumerable<AfdOrigin>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdOriginsRestOperations _afdOriginsRestClient;
@@ -37,10 +37,16 @@ namespace Azure.ResourceManager.Cdn
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => AfdOriginGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != AfdOriginGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AfdOriginGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 

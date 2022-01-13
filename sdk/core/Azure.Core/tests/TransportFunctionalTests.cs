@@ -1020,7 +1020,7 @@ namespace Azure.Core.Tests
                     {
                         certValidationCalled = true;
                         cert = args.Certificate;
-                        chain = args.X509Chain;
+                        chain = args.CertificateAuthorityChain;
                         return isValidCert;
                     };
                 }
@@ -1062,7 +1062,7 @@ namespace Azure.Core.Tests
                             () =>
                             {
                                 Assert.NotNull(cert, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Certificate)} should not be null");
-                                Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.X509Chain)} should not be null");
+                                Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.CertificateAuthorityChain)} should not be null");
                             });
                     }
                 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing collection of BlobContainer and their operations over its parent. </summary>
     public partial class BlobContainerCollection : ArmCollection, IEnumerable<BlobContainer>, IAsyncEnumerable<BlobContainer>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly BlobContainersRestOperations _blobContainersRestClient;
@@ -37,10 +37,16 @@ namespace Azure.ResourceManager.Storage
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _blobContainersRestClient = new BlobContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => BlobService.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != BlobService.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BlobService.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 

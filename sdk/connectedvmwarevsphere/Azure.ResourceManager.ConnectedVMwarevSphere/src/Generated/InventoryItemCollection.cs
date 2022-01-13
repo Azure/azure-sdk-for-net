@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of InventoryItem and their operations over its parent. </summary>
     public partial class InventoryItemCollection : ArmCollection, IEnumerable<InventoryItem>, IAsyncEnumerable<InventoryItem>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly InventoryItemsRestOperations _inventoryItemsRestClient;
@@ -37,10 +37,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _inventoryItemsRestClient = new InventoryItemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VCenter.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VCenter.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VCenter.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 

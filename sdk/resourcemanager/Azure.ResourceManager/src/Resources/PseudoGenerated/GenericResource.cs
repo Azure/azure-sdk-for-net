@@ -56,9 +56,6 @@ namespace Azure.ResourceManager.Resources
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
         /// <summary>
         /// Gets whether or not the current instance has data.
         /// </summary>
@@ -226,13 +223,6 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-            if (identifier is null)
-                throw new ArgumentNullException(nameof(identifier));
         }
 
         /// <summary>
