@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 },
             };
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
-            var vnet = await vnetContainer.CreateOrUpdateAsync(_vnetName, vnetData);
+            var vnet = await vnetContainer.CreateOrUpdateAsync(true, _vnetName, vnetData);
 
             //2.1 Create AppServicePlan
             //string appServicePlanName = "appServicePlan5952";

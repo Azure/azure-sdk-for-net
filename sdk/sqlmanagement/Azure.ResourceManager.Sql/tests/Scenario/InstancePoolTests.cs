@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
             string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
+            var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
 
             //3. create Virtual network
             string vnetName = SessionRecording.GenerateAssetName("vnet-");
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                     }
                 },
             };
-            var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+            var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             string subnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
             InstancePoolData data = new InstancePoolData(AzureLocation.WestUS2)
             {
