@@ -33,6 +33,8 @@ namespace Azure.ResourceManager
         /// <param name="apiVersion"> The api version to use. </param>
         public void SetApiVersion(ResourceType resourceType, string apiVersion)
         {
+            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+
             ResourceApiVersionOverrides[resourceType] = apiVersion;
         }
 

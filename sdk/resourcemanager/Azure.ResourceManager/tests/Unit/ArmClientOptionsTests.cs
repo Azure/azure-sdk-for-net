@@ -34,6 +34,14 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
+        public void ValidateInvalidVersionSet()
+        {
+            var options = new ArmClientOptions();
+            Assert.Throws<ArgumentException>(() => { options.SetApiVersion(new ResourceType("Microsoft.Compute/virtualMachines"), ""); });
+            Assert.Throws<ArgumentNullException>(() => { options.SetApiVersion(new ResourceType("Microsoft.Compute/virtualMachines"), null); });
+        }
+
+        [TestCase]
         public void TestTransportInClone()
         {
             var x = new ArmClientOptions();
