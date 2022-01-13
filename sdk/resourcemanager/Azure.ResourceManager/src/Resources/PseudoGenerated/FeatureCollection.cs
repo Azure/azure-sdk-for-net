@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,6 +40,9 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -46,8 +50,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected new Provider Parent { get {return base.Parent as Provider;} }
 
-        /// <inheritdoc />
-        protected override ResourceType ValidResourceType => Provider.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Provider.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Provider.ResourceType), nameof(id));
+        }
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

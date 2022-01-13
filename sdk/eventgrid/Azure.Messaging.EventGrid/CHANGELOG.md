@@ -1,14 +1,9 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 4.8.1 (2022-01-12)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix package icon
 
 ## 4.8.0 (2022-01-11)
 

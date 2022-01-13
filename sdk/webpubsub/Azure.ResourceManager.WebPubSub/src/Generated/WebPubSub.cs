@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -47,6 +48,9 @@ namespace Azure.ResourceManager.WebPubSub
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebPubSub"/> class. </summary>
@@ -57,6 +61,9 @@ namespace Azure.ResourceManager.WebPubSub
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebPubSub"/> class. </summary>
@@ -70,13 +77,13 @@ namespace Azure.ResourceManager.WebPubSub
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,6 +98,12 @@ namespace Azure.ResourceManager.WebPubSub
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary> Get the resource and its properties. </summary>
@@ -563,38 +576,48 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<Sku>>> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Sku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
-            scope.Start();
-            try
+            async Task<Page<Sku>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _webPubSubRestClient.ListSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = await _webPubSubRestClient.ListSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> List all available skus of the resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Sku>> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Sku> GetSkus(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
-            scope.Start();
-            try
+            Page<Sku> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _webPubSubRestClient.ListSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = _webPubSubRestClient.ListSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Get the private link resources that need to be created for a resource. </summary>

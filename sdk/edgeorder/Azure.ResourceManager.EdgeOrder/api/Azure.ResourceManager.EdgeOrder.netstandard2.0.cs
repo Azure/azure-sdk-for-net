@@ -6,7 +6,6 @@ namespace Azure.ResourceManager.EdgeOrder
         protected AddressResource() { }
         public virtual Azure.ResourceManager.EdgeOrder.AddressResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string addressName) { throw null; }
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.EdgeOrder
     public partial class AddressResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EdgeOrder.AddressResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.AddressResource>, System.Collections.IEnumerable
     {
         protected AddressResourceCollection() { }
-        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.EdgeOrder.Models.EdgeOrderManagementCreateAddressOperation CreateOrUpdate(string addressName, Azure.ResourceManager.EdgeOrder.AddressResourceData addressResource, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderManagementCreateAddressOperation> CreateOrUpdateAsync(string addressName, Azure.ResourceManager.EdgeOrder.AddressResourceData addressResource, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -63,7 +61,6 @@ namespace Azure.ResourceManager.EdgeOrder
         protected OrderItemResource() { }
         public virtual Azure.ResourceManager.EdgeOrder.OrderItemResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CancelOrderItem(Azure.ResourceManager.EdgeOrder.Models.CancellationReason cancellationReason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -87,7 +84,6 @@ namespace Azure.ResourceManager.EdgeOrder
     public partial class OrderItemResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EdgeOrder.OrderItemResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.OrderItemResource>, System.Collections.IEnumerable
     {
         protected OrderItemResourceCollection() { }
-        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.ResourceManager.EdgeOrder.Models.EdgeOrderManagementCreateOrderItemOperation CreateOrUpdate(string orderItemName, Azure.ResourceManager.EdgeOrder.OrderItemResourceData orderItemResource, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderManagementCreateOrderItemOperation> CreateOrUpdateAsync(string orderItemName, Azure.ResourceManager.EdgeOrder.OrderItemResourceData orderItemResource, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -119,7 +115,6 @@ namespace Azure.ResourceManager.EdgeOrder
         protected OrderResource() { }
         public virtual Azure.ResourceManager.EdgeOrder.OrderResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string location, string orderName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -129,7 +124,6 @@ namespace Azure.ResourceManager.EdgeOrder
     public partial class OrderResourceCollection : Azure.ResourceManager.Core.ArmCollection
     {
         protected OrderResourceCollection() { }
-        protected override Azure.Core.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> Exists(string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource> Get(string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

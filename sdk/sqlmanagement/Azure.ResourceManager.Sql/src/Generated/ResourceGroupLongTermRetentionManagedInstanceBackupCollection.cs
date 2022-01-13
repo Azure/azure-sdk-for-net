@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedInstanceLongTermRetentionBackup and their operations over its parent. </summary>
     public partial class ResourceGroupLongTermRetentionManagedInstanceBackupCollection : ArmCollection, IEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>, IAsyncEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LongTermRetentionManagedInstanceBackupsRestOperations _longTermRetentionManagedInstanceBackupsRestClient;
@@ -48,10 +48,16 @@ namespace Azure.ResourceManager.Sql
             _locationName = locationName;
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 

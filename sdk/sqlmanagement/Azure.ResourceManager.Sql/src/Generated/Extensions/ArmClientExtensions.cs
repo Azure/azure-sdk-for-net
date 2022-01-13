@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecoverableDatabase" /> object. </returns>
         public static RecoverableDatabase GetRecoverableDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
+            RecoverableDatabase.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RecoverableDatabase(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
         public static DataMaskingPolicy GetDataMaskingPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            DataMaskingPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataMaskingPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="GeoBackupPolicy" /> object. </returns>
         public static GeoBackupPolicy GetGeoBackupPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            GeoBackupPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GeoBackupPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
         public static SqlDatabase GetSqlDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
+            SqlDatabase.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlDatabase(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ElasticPool" /> object. </returns>
         public static ElasticPool GetElasticPool(this ArmClient armClient, ResourceIdentifier id)
         {
+            ElasticPool.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ElasticPool(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ReplicationLink" /> object. </returns>
         public static ReplicationLink GetReplicationLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            ReplicationLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ReplicationLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerCommunicationLink" /> object. </returns>
         public static ServerCommunicationLink GetServerCommunicationLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerCommunicationLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerCommunicationLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -97,6 +104,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServiceObjective" /> object. </returns>
         public static ServiceObjective GetServiceObjective(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServiceObjective.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceObjective(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -108,6 +116,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicy" /> object. </returns>
         public static ExtendedDatabaseBlobAuditingPolicy GetExtendedDatabaseBlobAuditingPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExtendedDatabaseBlobAuditingPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExtendedDatabaseBlobAuditingPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -119,6 +128,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicy" /> object. </returns>
         public static ExtendedServerBlobAuditingPolicy GetExtendedServerBlobAuditingPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExtendedServerBlobAuditingPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExtendedServerBlobAuditingPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -130,6 +140,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerBlobAuditingPolicy" /> object. </returns>
         public static ServerBlobAuditingPolicy GetServerBlobAuditingPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerBlobAuditingPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerBlobAuditingPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseBlobAuditingPolicy" /> object. </returns>
         public static DatabaseBlobAuditingPolicy GetDatabaseBlobAuditingPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            DatabaseBlobAuditingPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseBlobAuditingPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -152,6 +164,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseAdvisor" /> object. </returns>
         public static ServerDatabaseAdvisor GetServerDatabaseAdvisor(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseAdvisor.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseAdvisor(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -163,6 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAdvisor" /> object. </returns>
         public static ServerAdvisor GetServerAdvisor(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerAdvisor.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerAdvisor(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -174,6 +188,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
         public static DatabaseAutomaticTuning GetDatabaseAutomaticTuning(this ArmClient armClient, ResourceIdentifier id)
         {
+            DatabaseAutomaticTuning.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAutomaticTuning(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -185,6 +200,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumn" /> object. </returns>
         public static ServerDatabaseSchemaTableColumn GetServerDatabaseSchemaTableColumn(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseSchemaTableColumn.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseSchemaTableColumn(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -196,6 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> object. </returns>
         public static ManagedInstanceDatabaseSchemaTableColumn GetManagedInstanceDatabaseSchemaTableColumn(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseSchemaTableColumn.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseSchemaTableColumn(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -207,6 +224,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecommendedAction" /> object. </returns>
         public static RecommendedAction GetRecommendedAction(this ArmClient armClient, ResourceIdentifier id)
         {
+            RecommendedAction.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RecommendedAction(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -218,6 +236,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchema" /> object. </returns>
         public static ServerDatabaseSchema GetServerDatabaseSchema(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseSchema.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseSchema(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -229,6 +248,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchema" /> object. </returns>
         public static ManagedInstanceDatabaseSchema GetManagedInstanceDatabaseSchema(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseSchema.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseSchema(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -240,6 +260,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseSecurityAlertPolicy" /> object. </returns>
         public static DatabaseSecurityAlertPolicy GetDatabaseSecurityAlertPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            DatabaseSecurityAlertPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseSecurityAlertPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -251,6 +272,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTable" /> object. </returns>
         public static ServerDatabaseSchemaTable GetServerDatabaseSchemaTable(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseSchemaTable.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseSchemaTable(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -262,6 +284,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTable" /> object. </returns>
         public static ManagedInstanceDatabaseSchemaTable GetManagedInstanceDatabaseSchemaTable(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseSchemaTable.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseSchemaTable(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -273,6 +296,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
         public static ServerDatabaseVulnerabilityAssessmentRuleBaseline GetServerDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseVulnerabilityAssessmentRuleBaseline(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -284,6 +308,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
         public static ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -295,6 +320,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessment" /> object. </returns>
         public static ServerDatabaseVulnerabilityAssessment GetServerDatabaseVulnerabilityAssessment(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseVulnerabilityAssessment.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseVulnerabilityAssessment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -306,6 +332,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessment" /> object. </returns>
         public static ManagedInstanceDatabaseVulnerabilityAssessment GetManagedInstanceDatabaseVulnerabilityAssessment(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseVulnerabilityAssessment.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseVulnerabilityAssessment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -317,6 +344,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentScan" /> object. </returns>
         public static ServerDatabaseVulnerabilityAssessmentScan GetServerDatabaseVulnerabilityAssessmentScan(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseVulnerabilityAssessmentScan(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -328,6 +356,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan" /> object. </returns>
         public static ManagedInstanceDatabaseVulnerabilityAssessmentScan GetManagedInstanceDatabaseVulnerabilityAssessmentScan(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseVulnerabilityAssessmentScan(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -339,6 +368,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataWarehouseUserActivities" /> object. </returns>
         public static DataWarehouseUserActivities GetDataWarehouseUserActivities(this ArmClient armClient, ResourceIdentifier id)
         {
+            DataWarehouseUserActivities.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataWarehouseUserActivities(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -350,6 +380,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DeletedServer" /> object. </returns>
         public static DeletedServer GetDeletedServer(this ArmClient armClient, ResourceIdentifier id)
         {
+            DeletedServer.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeletedServer(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -361,6 +392,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="EncryptionProtector" /> object. </returns>
         public static EncryptionProtector GetEncryptionProtector(this ArmClient armClient, ResourceIdentifier id)
         {
+            EncryptionProtector.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EncryptionProtector(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -372,6 +404,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="FailoverGroup" /> object. </returns>
         public static FailoverGroup GetFailoverGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            FailoverGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new FailoverGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -383,6 +416,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="FirewallRule" /> object. </returns>
         public static FirewallRule GetFirewallRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            FirewallRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new FirewallRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -394,6 +428,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="InstanceFailoverGroup" /> object. </returns>
         public static InstanceFailoverGroup GetInstanceFailoverGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            InstanceFailoverGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new InstanceFailoverGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -405,6 +440,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="InstancePool" /> object. </returns>
         public static InstancePool GetInstancePool(this ArmClient armClient, ResourceIdentifier id)
         {
+            InstancePool.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new InstancePool(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -416,6 +452,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobAgent" /> object. </returns>
         public static JobAgent GetJobAgent(this ArmClient armClient, ResourceIdentifier id)
         {
+            JobAgent.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new JobAgent(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -427,6 +464,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobCredential" /> object. </returns>
         public static JobCredential GetJobCredential(this ArmClient armClient, ResourceIdentifier id)
         {
+            JobCredential.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new JobCredential(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -438,6 +476,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobExecution" /> object. </returns>
         public static ServerJobAgentJobExecution GetServerJobAgentJobExecution(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerJobAgentJobExecution.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerJobAgentJobExecution(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -449,6 +488,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStep" /> object. </returns>
         public static ServerJobAgentJobExecutionStep GetServerJobAgentJobExecutionStep(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerJobAgentJobExecutionStep.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerJobAgentJobExecutionStep(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -460,6 +500,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepTarget" /> object. </returns>
         public static ServerJobAgentJobExecutionStepTarget GetServerJobAgentJobExecutionStepTarget(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerJobAgentJobExecutionStepTarget.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerJobAgentJobExecutionStepTarget(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -471,6 +512,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlJob" /> object. </returns>
         public static SqlJob GetSqlJob(this ArmClient armClient, ResourceIdentifier id)
         {
+            SqlJob.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlJob(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -482,6 +524,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobVersionStep" /> object. </returns>
         public static ServerJobAgentJobVersionStep GetServerJobAgentJobVersionStep(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerJobAgentJobVersionStep.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerJobAgentJobVersionStep(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -493,6 +536,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobStep" /> object. </returns>
         public static ServerJobAgentJobStep GetServerJobAgentJobStep(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerJobAgentJobStep.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerJobAgentJobStep(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -504,6 +548,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobTargetGroup" /> object. </returns>
         public static JobTargetGroup GetJobTargetGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            JobTargetGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new JobTargetGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -515,6 +560,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobVersion" /> object. </returns>
         public static JobVersion GetJobVersion(this ArmClient armClient, ResourceIdentifier id)
         {
+            JobVersion.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new JobVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -526,6 +572,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackup" /> object. </returns>
         public static SubscriptionLongTermRetentionBackup GetSubscriptionLongTermRetentionBackup(this ArmClient armClient, ResourceIdentifier id)
         {
+            SubscriptionLongTermRetentionBackup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionLongTermRetentionBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -537,6 +584,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackup" /> object. </returns>
         public static ResourceGroupLongTermRetentionBackup GetResourceGroupLongTermRetentionBackup(this ArmClient armClient, ResourceIdentifier id)
         {
+            ResourceGroupLongTermRetentionBackup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroupLongTermRetentionBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -548,6 +596,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> object. </returns>
         public static SubscriptionLongTermRetentionManagedInstanceBackup GetSubscriptionLongTermRetentionManagedInstanceBackup(this ArmClient armClient, ResourceIdentifier id)
         {
+            SubscriptionLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionLongTermRetentionManagedInstanceBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -559,6 +608,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> object. </returns>
         public static ResourceGroupLongTermRetentionManagedInstanceBackup GetResourceGroupLongTermRetentionManagedInstanceBackup(this ArmClient armClient, ResourceIdentifier id)
         {
+            ResourceGroupLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceGroupLongTermRetentionManagedInstanceBackup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -570,6 +620,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LongTermRetentionPolicy" /> object. </returns>
         public static LongTermRetentionPolicy GetLongTermRetentionPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            LongTermRetentionPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LongTermRetentionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -581,6 +632,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
         public static MaintenanceWindowOptions GetMaintenanceWindowOptions(this ArmClient armClient, ResourceIdentifier id)
         {
+            MaintenanceWindowOptions.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MaintenanceWindowOptions(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -592,6 +644,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
         public static MaintenanceWindows GetMaintenanceWindows(this ArmClient armClient, ResourceIdentifier id)
         {
+            MaintenanceWindows.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MaintenanceWindows(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -603,6 +656,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy" /> object. </returns>
         public static ManagedInstanceDatabaseBackupShortTermRetentionPolicy GetManagedInstanceDatabaseBackupShortTermRetentionPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseBackupShortTermRetentionPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -614,6 +668,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> object. </returns>
         public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicy GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -625,6 +680,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailsResult" /> object. </returns>
         public static ManagedDatabaseRestoreDetailsResult GetManagedDatabaseRestoreDetailsResult(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedDatabaseRestoreDetailsResult.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedDatabaseRestoreDetailsResult(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -636,6 +692,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabase" /> object. </returns>
         public static ManagedDatabase GetManagedDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedDatabase.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedDatabase(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -647,6 +704,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicy" /> object. </returns>
         public static ManagedDatabaseSecurityAlertPolicy GetManagedDatabaseSecurityAlertPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedDatabaseSecurityAlertPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedDatabaseSecurityAlertPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -658,6 +716,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
         public static ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -669,6 +728,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
         public static ServerDatabaseSchemaTableColumnSensitivityLabel GetServerDatabaseSchemaTableColumnSensitivityLabel(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDatabaseSchemaTableColumnSensitivityLabel(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -680,6 +740,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedTransparentDataEncryption" /> object. </returns>
         public static ManagedTransparentDataEncryption GetManagedTransparentDataEncryption(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedTransparentDataEncryption.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedTransparentDataEncryption(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -691,6 +752,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceAdministrator" /> object. </returns>
         public static ManagedInstanceAdministrator GetManagedInstanceAdministrator(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceAdministrator.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceAdministrator(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -702,6 +764,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthentication" /> object. </returns>
         public static ManagedInstanceAzureADOnlyAuthentication GetManagedInstanceAzureADOnlyAuthentication(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceAzureADOnlyAuthentication.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceAzureADOnlyAuthentication(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -713,6 +776,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtector" /> object. </returns>
         public static ManagedInstanceEncryptionProtector GetManagedInstanceEncryptionProtector(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceEncryptionProtector.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceEncryptionProtector(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -724,6 +788,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceKey" /> object. </returns>
         public static ManagedInstanceKey GetManagedInstanceKey(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceKey.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceKey(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -735,6 +800,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicy" /> object. </returns>
         public static ManagedInstanceLongTermRetentionPolicy GetManagedInstanceLongTermRetentionPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceLongTermRetentionPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceLongTermRetentionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -746,6 +812,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceOperation" /> object. </returns>
         public static ManagedInstanceOperation GetManagedInstanceOperation(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceOperation.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceOperation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -757,6 +824,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnection" /> object. </returns>
         public static ManagedInstancePrivateEndpointConnection GetManagedInstancePrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstancePrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstancePrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -768,6 +836,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstancePrivateLink" /> object. </returns>
         public static ManagedInstancePrivateLink GetManagedInstancePrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstancePrivateLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstancePrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -779,6 +848,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstance" /> object. </returns>
         public static ManagedInstance GetManagedInstance(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstance.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstance(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -790,6 +860,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessment" /> object. </returns>
         public static ManagedInstanceVulnerabilityAssessment GetManagedInstanceVulnerabilityAssessment(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedInstanceVulnerabilityAssessment.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedInstanceVulnerabilityAssessment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -801,6 +872,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicy" /> object. </returns>
         public static ManagedServerSecurityAlertPolicy GetManagedServerSecurityAlertPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedServerSecurityAlertPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedServerSecurityAlertPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -812,6 +884,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -823,6 +896,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
         public static PrivateLinkResource GetPrivateLinkResource(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateLinkResource.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkResource(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -834,6 +908,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecoverableManagedDatabase" /> object. </returns>
         public static RecoverableManagedDatabase GetRecoverableManagedDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
+            RecoverableManagedDatabase.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RecoverableManagedDatabase(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -845,6 +920,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
         public static RestorePoint GetRestorePoint(this ArmClient armClient, ResourceIdentifier id)
         {
+            RestorePoint.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorePoint(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -856,6 +932,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
         public static ServerAutomaticTuning GetServerAutomaticTuning(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerAutomaticTuning.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerAutomaticTuning(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -867,6 +944,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAzureADAdministrator" /> object. </returns>
         public static ServerAzureADAdministrator GetServerAzureADAdministrator(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerAzureADAdministrator.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerAzureADAdministrator(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -878,6 +956,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAzureADOnlyAuthentication" /> object. </returns>
         public static ServerAzureADOnlyAuthentication GetServerAzureADOnlyAuthentication(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerAzureADOnlyAuthentication.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerAzureADOnlyAuthentication(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -889,6 +968,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDevOpsAuditingSettings" /> object. </returns>
         public static ServerDevOpsAuditingSettings GetServerDevOpsAuditingSettings(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDevOpsAuditingSettings.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDevOpsAuditingSettings(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -900,6 +980,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDnsAlias" /> object. </returns>
         public static ServerDnsAlias GetServerDnsAlias(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerDnsAlias.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerDnsAlias(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -911,6 +992,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerKey" /> object. </returns>
         public static ServerKey GetServerKey(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerKey.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerKey(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -922,6 +1004,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerSecurityAlertPolicy" /> object. </returns>
         public static ServerSecurityAlertPolicy GetServerSecurityAlertPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerSecurityAlertPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerSecurityAlertPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -933,6 +1016,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerTrustGroup" /> object. </returns>
         public static ServerTrustGroup GetServerTrustGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerTrustGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerTrustGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -944,6 +1028,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessment" /> object. </returns>
         public static ServerVulnerabilityAssessment GetServerVulnerabilityAssessment(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerVulnerabilityAssessment.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerVulnerabilityAssessment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -955,6 +1040,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
         public static SqlAgentConfiguration GetSqlAgentConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
+            SqlAgentConfiguration.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlAgentConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -966,6 +1052,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionUsage" /> object. </returns>
         public static SubscriptionUsage GetSubscriptionUsage(this ArmClient armClient, ResourceIdentifier id)
         {
+            SubscriptionUsage.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionUsage(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -977,6 +1064,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncAgent" /> object. </returns>
         public static SyncAgent GetSyncAgent(this ArmClient armClient, ResourceIdentifier id)
         {
+            SyncAgent.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SyncAgent(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -988,6 +1076,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncGroup" /> object. </returns>
         public static SyncGroup GetSyncGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            SyncGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SyncGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -999,6 +1088,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncMember" /> object. </returns>
         public static SyncMember GetSyncMember(this ArmClient armClient, ResourceIdentifier id)
         {
+            SyncMember.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SyncMember(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1010,6 +1100,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlTimeZone" /> object. </returns>
         public static SqlTimeZone GetSqlTimeZone(this ArmClient armClient, ResourceIdentifier id)
         {
+            SqlTimeZone.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlTimeZone(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1021,6 +1112,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="VirtualCluster" /> object. </returns>
         public static VirtualCluster GetVirtualCluster(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualCluster.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualCluster(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1032,6 +1124,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="VirtualNetworkRule" /> object. </returns>
         public static VirtualNetworkRule GetVirtualNetworkRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualNetworkRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetworkRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1043,6 +1136,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="WorkloadClassifier" /> object. </returns>
         public static WorkloadClassifier GetWorkloadClassifier(this ArmClient armClient, ResourceIdentifier id)
         {
+            WorkloadClassifier.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadClassifier(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1054,6 +1148,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="WorkloadGroup" /> object. </returns>
         public static WorkloadGroup GetWorkloadGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            WorkloadGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1065,6 +1160,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryption" /> object. </returns>
         public static LogicalDatabaseTransparentDataEncryption GetLogicalDatabaseTransparentDataEncryption(this ArmClient armClient, ResourceIdentifier id)
         {
+            LogicalDatabaseTransparentDataEncryption.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LogicalDatabaseTransparentDataEncryption(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1076,6 +1172,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="BackupShortTermRetentionPolicy" /> object. </returns>
         public static BackupShortTermRetentionPolicy GetBackupShortTermRetentionPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            BackupShortTermRetentionPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new BackupShortTermRetentionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1087,6 +1184,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LedgerDigestUploads" /> object. </returns>
         public static LedgerDigestUploads GetLedgerDigestUploads(this ArmClient armClient, ResourceIdentifier id)
         {
+            LedgerDigestUploads.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LedgerDigestUploads(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1098,6 +1196,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="OutboundFirewallRule" /> object. </returns>
         public static OutboundFirewallRule GetOutboundFirewallRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            OutboundFirewallRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OutboundFirewallRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1109,6 +1208,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorableDroppedDatabase" /> object. </returns>
         public static RestorableDroppedDatabase GetRestorableDroppedDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
+            RestorableDroppedDatabase.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorableDroppedDatabase(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1120,6 +1220,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorableDroppedManagedDatabase" /> object. </returns>
         public static RestorableDroppedManagedDatabase GetRestorableDroppedManagedDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
+            RestorableDroppedManagedDatabase.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorableDroppedManagedDatabase(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1131,6 +1232,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServer" /> object. </returns>
         public static SqlServer GetSqlServer(this ArmClient armClient, ResourceIdentifier id)
         {
+            SqlServer.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlServer(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -1142,6 +1244,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerConnectionPolicy" /> object. </returns>
         public static ServerConnectionPolicy GetServerConnectionPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServerConnectionPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServerConnectionPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
