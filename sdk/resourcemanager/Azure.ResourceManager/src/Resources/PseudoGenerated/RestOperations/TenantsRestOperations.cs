@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        public TenantsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string apiVersion, Uri endpoint = null)
+        public TenantsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = "2019-11-01")
         {
             endpoint ??= new Uri("https://management.azure.com");
 

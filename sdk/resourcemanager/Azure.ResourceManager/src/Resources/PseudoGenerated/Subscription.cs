@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
@@ -43,13 +42,25 @@ namespace Azure.ResourceManager.Resources
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Subscription(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext,  id)
+            : base(clientContext, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var subVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : SubscriptionVersion.Default.ToString();
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subVersion, BaseUri);
-            var featureVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version) ? version : FeatureVersion.Default.ToString();
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, featureVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            {
+                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            }
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version))
+            {
+                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -66,10 +77,22 @@ namespace Azure.ResourceManager.Resources
             _data = subscriptionData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var subVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : SubscriptionVersion.Default.ToString();
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subVersion, BaseUri);
-            var featureVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version) ? version : FeatureVersion.Default.ToString();
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, featureVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            {
+                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            }
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(Feature.ResourceType, out version))
+            {
+                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
 #if DEBUG
             ValidateResourceId(Id);
 #endif

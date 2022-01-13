@@ -29,8 +29,14 @@ namespace Azure.ResourceManager.Resources
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : TagResourceVersion.Default.ToString();
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            {
+                _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TagResource"/> class. </summary>
@@ -42,8 +48,14 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : TagResourceVersion.Default.ToString();
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            {
+                _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
         }
 
         /// <summary>

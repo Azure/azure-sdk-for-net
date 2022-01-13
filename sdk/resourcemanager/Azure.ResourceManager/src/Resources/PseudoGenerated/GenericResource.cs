@@ -39,8 +39,14 @@ namespace Azure.ResourceManager.Resources
             : base(operations, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Id.ResourceType, out var version) ? version : GenericResourceVersion.Default.ToString();
-            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(Id.ResourceType, out var version))
+            {
+                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
@@ -56,8 +62,14 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(Id.ResourceType, out var version) ? version : GenericResourceVersion.Default.ToString();
-            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(Id.ResourceType, out var version))
+            {
+                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 

@@ -34,8 +34,14 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
-            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            {
+                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -52,8 +58,14 @@ namespace Azure.ResourceManager.Resources
             _data = providerData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            var apiVersion = ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version) ? version : ProviderVersion.Default.ToString();
-            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, apiVersion, BaseUri);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            {
+                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
 #if DEBUG
             ValidateResourceId(Id);
 #endif

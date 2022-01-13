@@ -37,6 +37,15 @@ namespace Azure.ResourceManager.Resources
         internal ResourceGroupCollection(Subscription subscription)
             : base(subscription)
         {
+            _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceGroup.ResourceType, out var version))
+            {
+                _restClient ??= new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            }
+            else
+            {
+                _restClient ??= new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            }
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -53,16 +62,6 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected new Subscription Parent { get {return base.Parent as Subscription;} }
 
-        private ResourceGroupsRestOperations RestClient => _restClient ??= new ResourceGroupsRestOperations(
-            Diagnostics,
-            Pipeline,
-            ClientOptions,
-            Id.SubscriptionId,
-            ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceGroup.ResourceType, out var version) ? version : ResourceGroupVersion.Default.ToString(),
-            BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
-
         /// <summary>
         /// Returns the resource from Azure if it exists.
         /// </summary>
@@ -72,12 +71,12 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<ResourceGroup> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
             scope.Start();
 
             try
             {
-                var response = RestClient.Get(resourceGroupName, cancellationToken);
+                var response = _restClient.Get(resourceGroupName, cancellationToken);
                 return response.Value == null
                    ? Response.FromValue<ResourceGroup>(null, response.GetRawResponse())
                    : Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
@@ -98,12 +97,12 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<ResourceGroup>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
             scope.Start();
 
             try
             {
-                var response = await RestClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                      ? Response.FromValue<ResourceGroup>(null, response.GetRawResponse())
                      : Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -195,12 +194,12 @@ namespace Azure.ResourceManager.Resources
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
             scope.Start();
 
             try
             {
-                var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
+                var originalResponse = _restClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
                 var operation = new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -230,12 +229,12 @@ namespace Azure.ResourceManager.Resources
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
             scope.Start();
 
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -260,11 +259,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(filter, top, cancellationToken);
+                    var response = _restClient.List(filter, top, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -275,11 +274,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, filter, top, cancellationToken);
+                    var response = _restClient.ListNextPage(nextLink, filter, top, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -303,11 +302,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(filter, top, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListAsync(filter, top, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -318,11 +317,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, filter, top, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListNextPageAsync(nextLink, filter, top, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,14 +342,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceGroupName cannot be null or a whitespace. </exception>
         public Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Get");
             scope.Start();
 
             try
             {
-                var result = RestClient.Get(resourceGroupName, cancellationToken);
+                var result = _restClient.Get(resourceGroupName, cancellationToken);
                 if (result.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(result.GetRawResponse());
 
                 return Response.FromValue(new ResourceGroup(Parent, result), result.GetRawResponse());
             }
@@ -370,14 +369,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceGroupName cannot be null or a whitespace. </exception>
         public virtual async Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Get");
             scope.Start();
 
             try
             {
-                var response = await RestClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new ResourceGroup(Parent, response), response.GetRawResponse());
             }

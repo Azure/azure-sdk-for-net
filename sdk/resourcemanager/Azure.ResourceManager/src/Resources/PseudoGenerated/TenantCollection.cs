@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class TenantCollection : ArmCollection, IEnumerable<Tenant>, IAsyncEnumerable<Tenant>
     {
-        private ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly TenantsRestOperations _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TenantCollection"/> class for mocking.
@@ -36,16 +37,16 @@ namespace Azure.ResourceManager.Resources
         internal TenantCollection(ClientContext clientContext)
             : base(clientContext)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(Tenant.ResourceType, out var version))
+            {
+                _restClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            }
+            else
+            {
+                _restClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            }
         }
-
-        private TenantsRestOperations RestClient => new TenantsRestOperations(
-            Diagnostics,
-            Pipeline,
-            ClientOptions,
-            ClientOptions.ResourceApiVersionOverrides.TryGetValue(Tenant.ResourceType, out var version) ? version : TenantVersion.Default.ToString(),
-            BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -53,11 +54,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Tenant>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListAsync(cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -68,11 +69,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Tenant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Tenant> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(cancellationToken);
+                    var response = _restClient.List(cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -105,11 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Tenant> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
+                    var response = _restClient.ListNextPage(nextLink, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -95,7 +95,15 @@ namespace Azure.ResourceManager.Tests
             var subscription = await client.GetDefaultSubscriptionAsync();
             _ = await subscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
-            Assert.AreEqual(ResourceGroupVersion.Default.ToString(), tracker.VersionUsed);
+            Assert.AreEqual(GetDefaultResourceGroupVersion(), tracker.VersionUsed);
+        }
+
+        private static string GetDefaultResourceGroupVersion()
+        {
+            var ctor = typeof(ResourceGroupsRestOperations).GetConstructors().First();
+            var param = ctor.GetParameters().Last();
+            var defaultRgVersion = param.DefaultValue as string;
+            return defaultRgVersion;
         }
 
         [RecordedTest]
@@ -117,7 +125,7 @@ namespace Azure.ResourceManager.Tests
             _ = await subscription2.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
             Assert.AreEqual(versionOverride, tracker1.VersionUsed);
-            Assert.AreEqual(ResourceGroupVersion.Default.ToString(), tracker2.VersionUsed);
+            Assert.AreEqual(GetDefaultResourceGroupVersion(), tracker2.VersionUsed);
         }
 
         [RecordedTest]
