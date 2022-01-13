@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
+        /// The resource type for tags.
+        /// </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
+
+        /// <summary>
         /// Gets whether or not the current instance has data.
         /// </summary>
         public bool HasData { get; }

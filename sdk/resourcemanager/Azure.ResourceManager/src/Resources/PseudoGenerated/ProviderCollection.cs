@@ -44,6 +44,14 @@ namespace Azure.ResourceManager.Resources
 #endif
         }
 
+        internal ProviderCollection(ArmResource operations, ResourceIdentifier id)
+            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), id)
+        {
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != Subscription.ResourceType)

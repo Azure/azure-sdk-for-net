@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources
                     Pipeline,
                     ClientOptions,
                     subscription,
-                    ClientOptions.ResourceApiVersionOverrides.TryGetValue(GenericResource.ResourceType, out var version) ? version : GenericResourceVersion.Default.ToString(),
+                    GenericResourceVersion.Default.ToString(),
                     BaseUri);
             }
         }
