@@ -83,13 +83,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Examples - QuestionAnsweringClient
+## Examples 
+
+### QuestionAnsweringClient
 
 The Azure.AI.Language.QuestionAnswering client library provides both synchronous and asynchronous APIs.
 
 The following examples show common scenarios using the `client` [created above](#create-a-questionansweringclient).
 
-### Ask a question
+#### Ask a question
 
 The only input required to a ask a question using an existing knowledge base is just the question itself:
 
@@ -109,7 +111,7 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 
 You can set additional properties on `QuestionAnsweringClientOptions` to limit the number of answers, specify a minimum confidence score, and more.
 
-### Ask a follow-up question
+#### Ask a follow-up question
 
 If your knowledge base is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
 
@@ -134,11 +136,11 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 }
 ```
 
-## Examples - QuestionAnsweringProjectsClient
+### QuestionAnsweringProjectsClient
 
 The following examples show common scenarios using the `QuestionAnsweringProjectsClient` instance [created in this section](#create-a-questionansweringprojectsclient).
 
-### Create a new project
+#### Create a new project
 
 To create a new project, you must specify the project's name and a create a `RequestContent` instance with the parameters needed to set up the project.
 
@@ -168,7 +170,7 @@ foreach (BinaryData project in projects)
 }
 ```
 
-### Deploy your project
+#### Deploy your project
 
 Your projects can be deployed using the `DeployProjectAsync` or the synchronous `DeployProject`. All you need to specify is the project's name and the deployment name that you wish to use. Please note that the service will not allow you to deploy empty projects.
 
@@ -186,7 +188,7 @@ foreach (BinaryData deployment in deployments)
 }
 ```
 
-### Add a knowledge source
+#### Add a knowledge source
 
 One way to add content to your project is to add a knowledge source. The following example shows how you can set up a `RequestContent` instance to add a new knowledge source of the type "url".
 
