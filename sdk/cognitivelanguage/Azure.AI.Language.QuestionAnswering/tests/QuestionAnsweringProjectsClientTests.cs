@@ -14,9 +14,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
         public QuestionAnsweringProjectsClient Client => new(Endpoint, new AzureKeyCredential("5d757e79a27f40f896d1dc0c04fb3d09"));
 
-        // private String SampleProjectName = "sampleProjectName";
+        // private string SampleProjectName = "sampleProjectName";
 
-        // private String SampleDeploymentName = "sampleDeploymentName";
+        // private string SampleDeploymentName = "sampleDeploymentName";
 
         [Test]
         public void QuestionAnswerProjectsClientEndpointNull()

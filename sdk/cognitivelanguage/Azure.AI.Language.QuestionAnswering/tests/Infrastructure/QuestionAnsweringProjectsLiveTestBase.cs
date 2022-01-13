@@ -19,7 +19,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
         protected string CreateTestProjectName()
         {
-            Recording.DisableIdReuse();
             return "TestProject" + Recording.GenerateId();
         }
 
