@@ -258,7 +258,7 @@ finally
 
 #### Publishing events to a specific partition
 
-In the `WindowsAzure.ServiceBuss` library, to publish events and allow the Event Hubs service to automatically assign the partition, a `EventHubSender` is created using the `EventHubClient` and then used as the publisher for a batch created with its default configuration.
+In the `WindowsAzure.ServiceBus` library, to publish events and allow the Event Hubs service to automatically assign the partition, a `EventHubSender` is created using the `EventHubClient` and then used as the publisher for a batch created with its default configuration.
 
 ```C#
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
