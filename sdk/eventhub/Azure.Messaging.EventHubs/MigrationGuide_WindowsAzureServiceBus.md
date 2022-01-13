@@ -359,14 +359,8 @@ public class SimpleEventProcessor : IEventProcessor
     {
         foreach (var eventData in messages)
         {
-            var data = Encoding.UTF8.GetString(
-                eventData.Body.Array,
-                eventData.Body.Offset,
-                eventData.Body.Count);
-
-            Debug.WriteLine(
-                $"Event received for partition: '{context.PartitionId}', " +
-                $"Data: '{data}'");
+            byte[] eventBody = eventData.GetBytes();
+            Debug.WriteLine($"Event from partition { context.PartitionId } with length { eventBody.Length }.");
         }
 
         return Task.CompletedTask;
@@ -577,7 +571,8 @@ try
 
     foreach (var eventData in events)
     {
-       Debug.WriteLine($"Read event of length { eventData.Body.Count } from { firstPartition }");
+       byte[] eventBody = eventData.GetBytes();
+       Debug.WriteLine($"Read event of length { eventBody.Length } from { firstPartition }");
     }
 }
 finally
