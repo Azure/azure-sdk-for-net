@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dns
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RecordSetsRestOperations _recordSetsRestClient;
-        private readonly RecordSetData _data;
+        private readonly TxtRecordSetData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RecordSetTxt"/> class for mocking. </summary>
         protected RecordSetTxt()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Initializes a new instance of the <see cref = "RecordSetTxt"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal RecordSetTxt(ArmResource options, RecordSetData resource) : base(options, resource.Id)
+        internal RecordSetTxt(ArmResource options, TxtRecordSetData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RecordSetData Data
+        public virtual TxtRecordSetData Data
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType().ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetsRestClient.GetTxtRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RecordSetTxt(this, response.Value), response.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType().ToRecordType(), Id.Name, cancellationToken);
+                var response = _recordSetsRestClient.GetTxtRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecordSetTxt(this, response.Value), response.GetRawResponse());
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType().ToRecordType(), Id.Name, parameters, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetsRestClient.UpdateTxtRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RecordSetTxt(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType().ToRecordType(), Id.Name, parameters, ifMatch, cancellationToken);
+                var response = _recordSetsRestClient.UpdateTxtRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch, cancellationToken);
                 return Response.FromValue(new RecordSetTxt(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

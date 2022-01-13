@@ -85,7 +85,7 @@ namespace Azure.Management.Dns.Tests
         public async Task GetIfExists()
         {
             var result = await zone.GetRecordSetPtrs().GetIfExistsAsync("PTR");
-            Assert.AreEqual("invaliddummyrecord.test.outlook.com",result.Value.Data.PtrRecords[0].Ptrdname);
+            Assert.AreEqual("invaliddummyrecord.test.outlook.com",result.Value.Data.PtrRecord.Ptrdname);
             var nullResult = await zone.GetRecordSetPtrs().GetIfExistsAsync("PTR" + "dummy");
             Assert.AreEqual(404, nullResult.GetRawResponse().Status);
         }

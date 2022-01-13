@@ -94,7 +94,7 @@ namespace Azure.Management.Dns.Tests
             //PTR
             RecordSetPtr ptrResult = await zone.GetRecordSetPtrs().GetAsync("PTR");
             RecordSetPtr ptrGet = await ptrResult.GetAsync();
-            Assert.AreEqual("invaliddummyrecord.test.outlook.com", ptrGet.Data.PtrRecords[0].Ptrdname);
+            Assert.AreEqual("invaliddummyrecord.test.outlook.com", ptrGet.Data.PtrRecord.Ptrdname);
             //SOA
             RecordSetSoa soaResult = await zone.GetRecordSetSoas().GetAsync("@");
             RecordSetSoa soaGet = await soaResult.GetAsync();
@@ -113,13 +113,13 @@ namespace Azure.Management.Dns.Tests
             RecordSetData recordSrvSetData = new RecordSetData() { TTL = 600 };
             recordSrvSetData.SrvRecords.Add(new SrvRecord(100, 1, 443, "new.sipdir.online.lync.com."));
             recordSetSrv = await recordSetSrv.UpdateAsync(recordSrvSetData);
-            Assert.AreEqual("new.sipdir.online.lync.com.", recordSetSrv.Data.SrvRecords[0].Target);
+            Assert.AreEqual("new.sipdir.online.lync.com.", recordSetSrv.Data.SrvRecord.Target);
             //TXT
             RecordSetTxt recordSetTxt = await zone.GetRecordSetTxts().GetAsync("text");
             RecordSetData recordTxtSetData = new RecordSetData() { TTL = 600 };
             recordTxtSetData.TxtRecords.Add(new TxtRecord(new List<string>() { "updatedtext","helloworld" }));
             recordSetTxt = await recordSetTxt.UpdateAsync(recordTxtSetData);
-            Assert.AreEqual("updatedtext", recordSetTxt.Data.TxtRecords[0].Value[0]);
+            Assert.AreEqual("updatedtext", recordSetTxt.Data.TxtRecord.Value[0]);
         }
 
         [TestCase]
