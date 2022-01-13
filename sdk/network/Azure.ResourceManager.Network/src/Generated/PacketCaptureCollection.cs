@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PacketCaptureCreateOperation CreateOrUpdate(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PacketCaptureCreateOperation CreateOrUpdate(bool waitForCompletion, string packetCaptureName, PacketCaptureInput parameters, CancellationToken cancellationToken = default)
         {
             if (packetCaptureName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PacketCaptureCreateOperation> CreateOrUpdateAsync(string packetCaptureName, PacketCaptureInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PacketCaptureCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string packetCaptureName, PacketCaptureInput parameters, CancellationToken cancellationToken = default)
         {
             if (packetCaptureName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _packetCapturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PacketCapture>(null, response.GetRawResponse())
-                    : Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PacketCapture>(null, response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _packetCapturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PacketCapture>(null, response.GetRawResponse())
-                    : Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PacketCapture>(null, response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedDatabaseCreateOrUpdateOperation CreateOrUpdate(string databaseName, ManagedDatabaseData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedDatabaseCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedDatabaseCreateOrUpdateOperation> CreateOrUpdateAsync(string databaseName, ManagedDatabaseData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedDatabaseCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
         {
             if (databaseName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

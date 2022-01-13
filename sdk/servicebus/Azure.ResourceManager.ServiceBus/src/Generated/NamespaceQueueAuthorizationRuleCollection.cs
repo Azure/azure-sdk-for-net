@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual QueueAuthorizationRuleCreateOrUpdateOperation CreateOrUpdate(string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual QueueAuthorizationRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (authorizationRuleName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<QueueAuthorizationRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<QueueAuthorizationRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (authorizationRuleName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _queueAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NamespaceQueueAuthorizationRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new NamespaceQueueAuthorizationRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NamespaceQueueAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceQueueAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _queueAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NamespaceQueueAuthorizationRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new NamespaceQueueAuthorizationRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NamespaceQueueAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceQueueAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

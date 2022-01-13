@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _loadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

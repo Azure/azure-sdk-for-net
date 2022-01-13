@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _databaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "SiteConfigWeb"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteConfigWeb(ArmResource options, SiteConfigData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SiteConfigWeb(ArmResource options, SiteConfigData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateConfigurationOperation> CreateOrUpdateAsync(SiteConfigData siteConfig, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateOrUpdateConfigurationOperation> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateConfigurationOperation CreateOrUpdate(SiteConfigData siteConfig, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateOrUpdateConfigurationOperation CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {

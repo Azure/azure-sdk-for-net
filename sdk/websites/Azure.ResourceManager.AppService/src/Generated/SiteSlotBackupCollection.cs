@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetBackupStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetBackupStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

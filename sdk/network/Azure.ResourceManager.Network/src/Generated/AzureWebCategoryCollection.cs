@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AzureWebCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AzureWebCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

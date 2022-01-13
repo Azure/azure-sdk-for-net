@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ConsumerGroupCreateOrUpdateOperation CreateOrUpdate(string consumerGroupName, ConsumerGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ConsumerGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (consumerGroupName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ConsumerGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string consumerGroupName, ConsumerGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ConsumerGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (consumerGroupName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _consumerGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ConsumerGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConsumerGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ConsumerGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ConsumerGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _consumerGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ConsumerGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConsumerGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ConsumerGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ConsumerGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

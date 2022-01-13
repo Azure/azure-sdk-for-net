@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public virtual GalleryCreateOrUpdateOperation CreateOrUpdate(string galleryName, GalleryData gallery, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public async virtual Task<GalleryCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryName, GalleryData gallery, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Gallery>(null, response.GetRawResponse())
-                    : Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Gallery>(null, response.GetRawResponse());
+                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Gallery>(null, response.GetRawResponse())
-                    : Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Gallery>(null, response.GetRawResponse());
+                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

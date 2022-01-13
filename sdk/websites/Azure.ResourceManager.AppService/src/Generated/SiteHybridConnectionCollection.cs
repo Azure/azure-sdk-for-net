@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateRelayServiceConnectionOperation CreateOrUpdate(string entityName, RelayServiceConnectionEntityData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateOrUpdateRelayServiceConnectionOperation CreateOrUpdate(bool waitForCompletion, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateRelayServiceConnectionOperation> CreateOrUpdateAsync(string entityName, RelayServiceConnectionEntityData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateOrUpdateRelayServiceConnectionOperation> CreateOrUpdateAsync(bool waitForCompletion, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

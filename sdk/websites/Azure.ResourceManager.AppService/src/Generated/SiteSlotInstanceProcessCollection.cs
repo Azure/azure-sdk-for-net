@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetInstanceProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotInstanceProcess(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcess(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetInstanceProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotInstanceProcess(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcess(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

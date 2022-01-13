@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<JobVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _jobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<JobVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

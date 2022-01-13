@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "InstanceFailoverGroup"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal InstanceFailoverGroup(ArmResource options, InstanceFailoverGroupData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal InstanceFailoverGroup(ArmResource options, InstanceFailoverGroupData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a failover group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<InstanceFailoverGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InstanceFailoverGroupDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroup.Delete");
             scope.Start();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a failover group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual InstanceFailoverGroupDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InstanceFailoverGroupDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroup.Delete");
             scope.Start();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Fails over from the current primary managed instance to this managed instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<InstanceFailoverGroupFailoverOperation> FailoverAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InstanceFailoverGroupFailoverOperation> FailoverAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroup.Failover");
             scope.Start();
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Fails over from the current primary managed instance to this managed instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual InstanceFailoverGroupFailoverOperation Failover(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InstanceFailoverGroupFailoverOperation Failover(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroup.Failover");
             scope.Start();
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Fails over from the current primary managed instance to this managed instance. This operation might result in data loss. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<InstanceFailoverGroupForceFailoverAllowDataLossOperation> ForceFailoverAllowDataLossAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InstanceFailoverGroupForceFailoverAllowDataLossOperation> ForceFailoverAllowDataLossAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroup.ForceFailoverAllowDataLoss");
             scope.Start();
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Fails over from the current primary managed instance to this managed instance. This operation might result in data loss. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual InstanceFailoverGroupForceFailoverAllowDataLossOperation ForceFailoverAllowDataLoss(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InstanceFailoverGroupForceFailoverAllowDataLossOperation ForceFailoverAllowDataLoss(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroup.ForceFailoverAllowDataLoss");
             scope.Start();

@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetwork"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualNetwork(ArmResource options, VirtualNetworkData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VirtualNetwork(ArmResource options, VirtualNetworkData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualNetworksRestClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkDeleteOperation> DeleteAsync(bool? force = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkDeleteOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Delete");
             scope.Start();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkDeleteOperation Delete(bool? force = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkDeleteOperation Delete(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Delete");
             scope.Start();

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         SyncGroup IOperationSource<SyncGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SyncGroup(_operationBase, SyncGroupData.DeserializeSyncGroupData(document.RootElement));
+            var data = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
+            return new SyncGroup(_operationBase, data);
         }
 
         async ValueTask<SyncGroup> IOperationSource<SyncGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SyncGroup(_operationBase, SyncGroupData.DeserializeSyncGroupData(document.RootElement));
+            var data = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
+            return new SyncGroup(_operationBase, data);
         }
     }
 }

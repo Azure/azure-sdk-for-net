@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual FirewallRuleCreateOrUpdateOperation CreateOrUpdate(string firewallRuleName, FirewallRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual FirewallRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string firewallRuleName, FirewallRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallRuleName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<FirewallRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string firewallRuleName, FirewallRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<FirewallRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string firewallRuleName, FirewallRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallRuleName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _firewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<FirewallRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FirewallRule>(null, response.GetRawResponse());
+                return Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _firewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<FirewallRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FirewallRule>(null, response.GetRawResponse());
+                return Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

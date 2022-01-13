@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DisasterRecoveryConfigCreateOrUpdateOperation CreateOrUpdate(string @alias, DisasterRecoveryData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DisasterRecoveryConfigCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (@alias == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DisasterRecoveryConfigCreateOrUpdateOperation> CreateOrUpdateAsync(string @alias, DisasterRecoveryData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DisasterRecoveryConfigCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (@alias == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DisasterRecovery>(null, response.GetRawResponse())
-                    : Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DisasterRecovery>(null, response.GetRawResponse())
-                    : Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

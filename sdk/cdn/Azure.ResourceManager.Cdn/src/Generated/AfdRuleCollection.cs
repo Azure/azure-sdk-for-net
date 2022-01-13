@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="rule"/> is null. </exception>
-        public virtual AfdRuleCreateOperation CreateOrUpdate(string ruleName, AfdRuleData rule, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdRuleCreateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, AfdRuleData rule, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="rule"/> is null. </exception>
-        public async virtual Task<AfdRuleCreateOperation> CreateOrUpdateAsync(string ruleName, AfdRuleData rule, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdRuleCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, AfdRuleData rule, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AfdRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdRule>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AfdRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdRule>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

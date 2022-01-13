@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of RestorableDatabaseAccountCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         internal RestorableDatabaseAccountCollection(ArmResource parent, string location) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -124,9 +125,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _restorableDatabaseAccountsRestClient.GetByLocation(Id.SubscriptionId, _location, instanceId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RestorableDatabaseAccount>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorableDatabaseAccount>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,9 +152,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _restorableDatabaseAccountsRestClient.GetByLocationAsync(Id.SubscriptionId, _location, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RestorableDatabaseAccount>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorableDatabaseAccount>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorableDatabaseAccount(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

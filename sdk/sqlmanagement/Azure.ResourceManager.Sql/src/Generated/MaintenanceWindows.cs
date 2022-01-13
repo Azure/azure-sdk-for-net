@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "MaintenanceWindows"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal MaintenanceWindows(ArmResource options, MaintenanceWindowsData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal MaintenanceWindows(ArmResource options, MaintenanceWindowsData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _maintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<MaintenanceWindowCreateOrUpdateOperation> CreateOrUpdateAsync(string maintenanceWindowName, MaintenanceWindowsData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<MaintenanceWindowCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
             if (maintenanceWindowName == null)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual MaintenanceWindowCreateOrUpdateOperation CreateOrUpdate(string maintenanceWindowName, MaintenanceWindowsData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual MaintenanceWindowCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
             if (maintenanceWindowName == null)
             {

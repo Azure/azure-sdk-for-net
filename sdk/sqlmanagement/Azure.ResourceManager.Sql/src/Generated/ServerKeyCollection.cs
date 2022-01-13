@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServerKeyCreateOrUpdateOperation CreateOrUpdate(string keyName, ServerKeyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServerKeyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
             if (keyName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerKeyCreateOrUpdateOperation> CreateOrUpdateAsync(string keyName, ServerKeyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServerKeyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
             if (keyName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerKey>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerKey(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerKey>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerKey>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerKey(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerKey>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

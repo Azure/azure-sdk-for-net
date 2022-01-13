@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

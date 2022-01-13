@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "InstancePool"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal InstancePool(ArmResource options, InstancePoolData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal InstancePool(ArmResource options, InstancePoolData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _instancePoolsRestClient = new InstancePoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes an instance pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<InstancePoolDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InstancePoolDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstancePool.Delete");
             scope.Start();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes an instance pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual InstancePoolDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InstancePoolDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InstancePool.Delete");
             scope.Start();
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<InstancePoolUpdateOperation> UpdateAsync(InstancePoolUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InstancePoolUpdateOperation> UpdateAsync(bool waitForCompletion, InstancePoolUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual InstancePoolUpdateOperation Update(InstancePoolUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InstancePoolUpdateOperation Update(bool waitForCompletion, InstancePoolUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {

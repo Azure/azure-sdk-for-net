@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         SecurityRule IOperationSource<SecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
+            var data = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);
+            return new SecurityRule(_operationBase, data);
         }
 
         async ValueTask<SecurityRule> IOperationSource<SecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
+            var data = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);
+            return new SecurityRule(_operationBase, data);
         }
     }
 }

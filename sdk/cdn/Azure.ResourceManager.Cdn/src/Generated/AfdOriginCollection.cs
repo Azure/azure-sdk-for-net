@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public virtual AfdOriginCreateOperation CreateOrUpdate(string originName, AfdOriginData origin, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdOriginCreateOperation CreateOrUpdate(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             if (originName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public async virtual Task<AfdOriginCreateOperation> CreateOrUpdateAsync(string originName, AfdOriginData origin, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdOriginCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             if (originName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdOriginsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AfdOrigin>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdOrigin>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdOriginsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AfdOrigin>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdOrigin>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
-        public virtual DomainCreateOrUpdateOwnershipIdentifierOperation CreateOrUpdate(string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DomainCreateOrUpdateOwnershipIdentifierOperation CreateOrUpdate(bool waitForCompletion, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
-        public async virtual Task<DomainCreateOrUpdateOwnershipIdentifierOperation> CreateOrUpdateAsync(string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DomainCreateOrUpdateOwnershipIdentifierOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _domainsRestClient.GetOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DomainOwnershipIdentifier>(null, response.GetRawResponse())
-                    : Response.FromValue(new DomainOwnershipIdentifier(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DomainOwnershipIdentifier>(null, response.GetRawResponse());
+                return Response.FromValue(new DomainOwnershipIdentifier(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _domainsRestClient.GetOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DomainOwnershipIdentifier>(null, response.GetRawResponse())
-                    : Response.FromValue(new DomainOwnershipIdentifier(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DomainOwnershipIdentifier>(null, response.GetRawResponse());
+                return Response.FromValue(new DomainOwnershipIdentifier(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

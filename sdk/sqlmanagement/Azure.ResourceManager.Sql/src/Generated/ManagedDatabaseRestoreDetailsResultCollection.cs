@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedDatabaseRestoreDetailsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedDatabaseRestoreDetailsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

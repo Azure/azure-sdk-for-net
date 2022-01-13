@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobVersionStep(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _jobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobVersionStep(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

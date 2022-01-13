@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentMultiRolePool"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal HostingEnvironmentMultiRolePool(ArmResource options, WorkerPoolResourceData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal HostingEnvironmentMultiRolePool(ArmResource options, WorkerPoolResourceData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public async virtual Task<AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation> CreateOrUpdateAsync(WorkerPoolResourceData multiRolePoolEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation> CreateOrUpdateAsync(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (multiRolePoolEnvelope == null)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public virtual AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation CreateOrUpdate(WorkerPoolResourceData multiRolePoolEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation CreateOrUpdate(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (multiRolePoolEnvelope == null)
             {

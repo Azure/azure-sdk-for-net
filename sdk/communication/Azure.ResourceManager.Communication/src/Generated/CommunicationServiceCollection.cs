@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public virtual CommunicationServiceCreateOrUpdateOperation CreateOrUpdate(string communicationServiceName, CommunicationServiceData parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CommunicationServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (communicationServiceName == null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public async virtual Task<CommunicationServiceCreateOrUpdateOperation> CreateOrUpdateAsync(string communicationServiceName, CommunicationServiceData parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CommunicationServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (communicationServiceName == null)
             {
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = _communicationServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CommunicationService>(null, response.GetRawResponse())
-                    : Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CommunicationService>(null, response.GetRawResponse());
+                return Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = await _communicationServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CommunicationService>(null, response.GetRawResponse())
-                    : Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CommunicationService>(null, response.GetRawResponse());
+                return Response.FromValue(new CommunicationService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

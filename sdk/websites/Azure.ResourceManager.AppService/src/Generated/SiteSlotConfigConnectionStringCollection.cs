@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigConnectionString>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigConnectionString>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigConnectionString>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigConnectionString>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

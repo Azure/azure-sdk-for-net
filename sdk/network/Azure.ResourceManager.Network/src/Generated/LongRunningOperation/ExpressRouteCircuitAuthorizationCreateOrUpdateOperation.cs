@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteCircuitAuthorization IOperationSource<ExpressRouteCircuitAuthorization>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteCircuitAuthorization(_operationBase, ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement));
+            var data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement);
+            return new ExpressRouteCircuitAuthorization(_operationBase, data);
         }
 
         async ValueTask<ExpressRouteCircuitAuthorization> IOperationSource<ExpressRouteCircuitAuthorization>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteCircuitAuthorization(_operationBase, ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement));
+            var data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement);
+            return new ExpressRouteCircuitAuthorization(_operationBase, data);
         }
     }
 }

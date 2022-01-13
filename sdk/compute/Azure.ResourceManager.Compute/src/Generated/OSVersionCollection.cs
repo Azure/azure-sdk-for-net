@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of OSVersionCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         internal OSVersionCollection(ArmResource parent, string location) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -124,9 +125,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<OSVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OSVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,9 +152,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<OSVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OSVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

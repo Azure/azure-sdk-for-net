@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfaceIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkInterfaceIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

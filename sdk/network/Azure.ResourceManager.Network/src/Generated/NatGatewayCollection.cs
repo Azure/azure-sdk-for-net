@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NatGatewayCreateOrUpdateOperation CreateOrUpdate(string natGatewayName, NatGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NatGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string natGatewayName, NatGatewayData parameters, CancellationToken cancellationToken = default)
         {
             if (natGatewayName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NatGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(string natGatewayName, NatGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NatGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string natGatewayName, NatGatewayData parameters, CancellationToken cancellationToken = default)
         {
             if (natGatewayName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _natGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NatGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NatGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _natGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NatGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NatGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

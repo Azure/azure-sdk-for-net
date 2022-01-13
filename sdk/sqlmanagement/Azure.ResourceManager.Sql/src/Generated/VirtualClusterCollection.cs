@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _virtualClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _virtualClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

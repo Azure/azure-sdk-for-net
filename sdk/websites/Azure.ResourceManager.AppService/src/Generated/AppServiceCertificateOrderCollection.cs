@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public virtual AppServiceCertificateOrderCreateOrUpdateOperation CreateOrUpdate(string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AppServiceCertificateOrderCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             if (certificateOrderName == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async virtual Task<AppServiceCertificateOrderCreateOrUpdateOperation> CreateOrUpdateAsync(string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AppServiceCertificateOrderCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             if (certificateOrderName == null)
             {
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceCertificateOrdersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse())
-                    : Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceCertificateOrdersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse())
-                    : Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrder(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

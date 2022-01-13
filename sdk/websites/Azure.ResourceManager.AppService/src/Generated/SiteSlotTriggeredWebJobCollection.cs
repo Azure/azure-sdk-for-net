@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotTriggeredWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotTriggeredWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotTriggeredWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotTriggeredWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotTriggeredWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotTriggeredWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

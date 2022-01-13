@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _dataWarehouseUserActivitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _dataWarehouseUserActivitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

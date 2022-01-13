@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachine"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualMachine(ArmResource options, VirtualMachineData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VirtualMachine(ArmResource options, VirtualMachineData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualMachinesRestClient = new VirtualMachinesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineDeleteOperation> DeleteAsync(bool? force = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineDeleteOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Delete");
             scope.Start();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineDeleteOperation Delete(bool? force = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineDeleteOperation Delete(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Delete");
             scope.Start();
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineUpdateOperation> UpdateAsync(VirtualMachineUpdate body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineUpdateOperation> UpdateAsync(bool waitForCompletion, VirtualMachineUpdate body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Update");
             scope.Start();
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineUpdateOperation Update(VirtualMachineUpdate body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineUpdateOperation Update(bool waitForCompletion, VirtualMachineUpdate body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Update");
             scope.Start();
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="body"> Virtualmachine stop action payload. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineStopOperation> StopAsync(StopVirtualMachineOptions body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineStopOperation> StopAsync(bool waitForCompletion, StopVirtualMachineOptions body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Stop");
             scope.Start();
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="body"> Virtualmachine stop action payload. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineStopOperation Stop(StopVirtualMachineOptions body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineStopOperation Stop(bool waitForCompletion, StopVirtualMachineOptions body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Stop");
             scope.Start();
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Start virtual machine. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineStartOperation> StartAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineStartOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Start");
             scope.Start();
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Start virtual machine. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineStartOperation Start(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineStartOperation Start(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Start");
             scope.Start();
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Restart virtual machine. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineRestartOperation> RestartAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineRestartOperation> RestartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Restart");
             scope.Start();
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Restart virtual machine. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineRestartOperation Restart(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineRestartOperation Restart(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachine.Restart");
             scope.Start();

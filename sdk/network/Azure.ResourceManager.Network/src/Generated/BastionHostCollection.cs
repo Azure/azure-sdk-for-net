@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual BastionHostCreateOrUpdateOperation CreateOrUpdate(string bastionHostName, BastionHostData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual BastionHostCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
         {
             if (bastionHostName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<BastionHostCreateOrUpdateOperation> CreateOrUpdateAsync(string bastionHostName, BastionHostData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<BastionHostCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
         {
             if (bastionHostName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _bastionHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<BastionHost>(null, response.GetRawResponse())
-                    : Response.FromValue(new BastionHost(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<BastionHost>(null, response.GetRawResponse());
+                return Response.FromValue(new BastionHost(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _bastionHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<BastionHost>(null, response.GetRawResponse())
-                    : Response.FromValue(new BastionHost(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<BastionHost>(null, response.GetRawResponse());
+                return Response.FromValue(new BastionHost(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRoutePortsLocationsRestClient.Get(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRoutePortsLocationsRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public virtual InboundNatRuleCreateOrUpdateOperation CreateOrUpdate(string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InboundNatRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             if (inboundNatRuleName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public async virtual Task<InboundNatRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InboundNatRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             if (inboundNatRuleName == null)
             {
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _inboundNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<InboundNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<InboundNatRule>(null, response.GetRawResponse());
+                return Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _inboundNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<InboundNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<InboundNatRule>(null, response.GetRawResponse());
+                return Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

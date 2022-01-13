@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DeploymentCreateOrUpdateAtScopeOperation CreateOrUpdate(string deploymentName, DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeploymentCreateOrUpdateAtScopeOperation CreateOrUpdate(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DeploymentCreateOrUpdateAtScopeOperation> CreateOrUpdateAsync(string deploymentName, DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentCreateOrUpdateAtScopeOperation> CreateOrUpdateAsync(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _deploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Deployment>(null, response.GetRawResponse())
-                    : Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Deployment>(null, response.GetRawResponse());
+                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _deploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Deployment>(null, response.GetRawResponse())
-                    : Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Deployment>(null, response.GetRawResponse());
+                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

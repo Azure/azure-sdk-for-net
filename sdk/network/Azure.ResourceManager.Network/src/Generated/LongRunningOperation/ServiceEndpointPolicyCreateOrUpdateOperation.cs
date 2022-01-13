@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ServiceEndpointPolicy IOperationSource<ServiceEndpointPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServiceEndpointPolicy(_operationBase, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement));
+            var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement);
+            return new ServiceEndpointPolicy(_operationBase, data);
         }
 
         async ValueTask<ServiceEndpointPolicy> IOperationSource<ServiceEndpointPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServiceEndpointPolicy(_operationBase, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement));
+            var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement);
+            return new ServiceEndpointPolicy(_operationBase, data);
         }
     }
 }

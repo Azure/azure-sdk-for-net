@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual ClusterCreateOperation CreateOrUpdate(string clusterName, VMwareClusterData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ClusterCreateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<ClusterCreateOperation> CreateOrUpdateAsync(string clusterName, VMwareClusterData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ClusterCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
             if (clusterName == null)
             {
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _clustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VMwareCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VMwareCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VMwareCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VMwareCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _clustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VMwareCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VMwareCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VMwareCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VMwareCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

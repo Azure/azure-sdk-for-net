@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ImageCreateOrUpdateOperation CreateOrUpdate(string imageName, ImageData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ImageCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string imageName, ImageData parameters, CancellationToken cancellationToken = default)
         {
             if (imageName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ImageCreateOrUpdateOperation> CreateOrUpdateAsync(string imageName, ImageData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ImageCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string imageName, ImageData parameters, CancellationToken cancellationToken = default)
         {
             if (imageName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _imagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Image>(null, response.GetRawResponse())
-                    : Response.FromValue(new Image(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Image>(null, response.GetRawResponse());
+                return Response.FromValue(new Image(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _imagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Image>(null, response.GetRawResponse())
-                    : Response.FromValue(new Image(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Image>(null, response.GetRawResponse());
+                return Response.FromValue(new Image(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

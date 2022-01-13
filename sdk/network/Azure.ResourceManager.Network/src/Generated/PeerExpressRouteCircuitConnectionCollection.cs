@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _peerExpressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

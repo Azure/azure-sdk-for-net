@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Initializes a new instance of the <see cref = "DisasterRecovery"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DisasterRecovery(ArmResource options, DisasterRecoveryData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DisasterRecovery(ArmResource options, DisasterRecoveryData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DisasterRecoveryConfigDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DisasterRecoveryConfigDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DisasterRecovery.Delete");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DisasterRecoveryConfigDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DisasterRecoveryConfigDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DisasterRecovery.Delete");
             scope.Start();

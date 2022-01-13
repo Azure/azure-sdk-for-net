@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

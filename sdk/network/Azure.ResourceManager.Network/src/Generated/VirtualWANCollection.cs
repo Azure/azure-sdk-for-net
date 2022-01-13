@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public virtual VirtualWanCreateOrUpdateOperation CreateOrUpdate(string virtualWANName, VirtualWANData wANParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualWanCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
         {
             if (virtualWANName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public async virtual Task<VirtualWanCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualWANName, VirtualWANData wANParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualWanCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
         {
             if (virtualWANName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualWAN>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualWAN>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualWAN>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualWAN>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SyncAgentCreateOrUpdateOperation CreateOrUpdate(string syncAgentName, SyncAgentData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SyncAgentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
         {
             if (syncAgentName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SyncAgentCreateOrUpdateOperation> CreateOrUpdateAsync(string syncAgentName, SyncAgentData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SyncAgentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
         {
             if (syncAgentName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _syncAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SyncAgent>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncAgent(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SyncAgent>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncAgent(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _syncAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SyncAgent>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncAgent(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SyncAgent>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncAgent(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

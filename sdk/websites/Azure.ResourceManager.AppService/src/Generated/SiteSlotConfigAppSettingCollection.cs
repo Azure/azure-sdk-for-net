@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
-        public virtual CdnCustomDomainCreateOperation CreateOrUpdate(string customDomainName, CustomDomainOptions customDomainProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CdnCustomDomainCreateOperation CreateOrUpdate(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
-        public async virtual Task<CdnCustomDomainCreateOperation> CreateOrUpdateAsync(string customDomainName, CustomDomainOptions customDomainProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CdnCustomDomainCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _cdnCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _cdnCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

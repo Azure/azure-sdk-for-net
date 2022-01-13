@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _restorableDroppedManagedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RestorableDroppedManagedDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorableDroppedManagedDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorableDroppedManagedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedManagedDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _restorableDroppedManagedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RestorableDroppedManagedDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorableDroppedManagedDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorableDroppedManagedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedManagedDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

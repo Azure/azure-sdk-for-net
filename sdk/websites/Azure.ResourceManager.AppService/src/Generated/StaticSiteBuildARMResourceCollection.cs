@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.GetStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

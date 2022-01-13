@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

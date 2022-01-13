@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _diagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _diagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "SqlAgentConfiguration"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SqlAgentConfiguration(ArmResource options, SqlAgentConfigurationData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SqlAgentConfiguration(ArmResource options, SqlAgentConfigurationData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _sqlAgentRestClient = new SqlAgentRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlAgentCreateOrUpdateOperation> CreateOrUpdateAsync(SqlAgentConfigurationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlAgentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SqlAgentCreateOrUpdateOperation CreateOrUpdate(SqlAgentConfigurationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlAgentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {

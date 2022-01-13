@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public virtual DiskPoolCreateOrUpdateOperation CreateOrUpdate(string diskPoolName, DiskPoolCreate diskPoolCreatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
             if (diskPoolName == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public async virtual Task<DiskPoolCreateOrUpdateOperation> CreateOrUpdateAsync(string diskPoolName, DiskPoolCreate diskPoolCreatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
             if (diskPoolName == null)
             {
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DiskPool>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiskPool>(null, response.GetRawResponse());
+                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DiskPool>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiskPool>(null, response.GetRawResponse());
+                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

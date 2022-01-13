@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public virtual TableResourceCreateUpdateTableOperation CreateOrUpdate(string tableName, TableCreateUpdateOptions createUpdateTableParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual TableResourceCreateUpdateTableOperation CreateOrUpdate(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public async virtual Task<TableResourceCreateUpdateTableOperation> CreateOrUpdateAsync(string tableName, TableCreateUpdateOptions createUpdateTableParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<TableResourceCreateUpdateTableOperation> CreateOrUpdateAsync(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _tableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CosmosTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CosmosTable>(null, response.GetRawResponse());
+                return Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _tableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CosmosTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CosmosTable>(null, response.GetRawResponse());
+                return Response.FromValue(new CosmosTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

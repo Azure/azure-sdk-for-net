@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _replicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ReplicationLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _replicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ReplicationLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

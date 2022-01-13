@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerProbesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Probe>(null, response.GetRawResponse())
-                    : Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Probe>(null, response.GetRawResponse());
+                return Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _loadBalancerProbesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Probe>(null, response.GetRawResponse())
-                    : Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Probe>(null, response.GetRawResponse());
+                return Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

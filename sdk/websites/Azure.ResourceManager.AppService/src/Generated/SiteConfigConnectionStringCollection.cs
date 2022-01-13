@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

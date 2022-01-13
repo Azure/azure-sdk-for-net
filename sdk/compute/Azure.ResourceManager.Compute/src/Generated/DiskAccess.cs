@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of the <see cref = "DiskAccess"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DiskAccess(ArmResource options, DiskAccessData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DiskAccess(ArmResource options, DiskAccessData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a disk access resource. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskAccessDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskAccessDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskAccess.Delete");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a disk access resource. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskAccessDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskAccessDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskAccess.Delete");
             scope.Start();
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
-        public async virtual Task<DiskAccessUpdateOperation> UpdateAsync(DiskAccessUpdate diskAccess, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskAccessUpdateOperation> UpdateAsync(bool waitForCompletion, DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccess == null)
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
-        public virtual DiskAccessUpdateOperation Update(DiskAccessUpdate diskAccess, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskAccessUpdateOperation Update(bool waitForCompletion, DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccess == null)
             {

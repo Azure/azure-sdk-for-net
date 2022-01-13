@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RecommendedAction>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _databaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RecommendedAction>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

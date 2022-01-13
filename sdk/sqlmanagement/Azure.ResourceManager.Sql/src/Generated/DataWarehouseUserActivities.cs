@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "DataWarehouseUserActivities"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DataWarehouseUserActivities(ArmResource options, DataWarehouseUserActivitiesData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DataWarehouseUserActivities(ArmResource options, DataWarehouseUserActivitiesData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _dataWarehouseUserActivitiesRestClient = new DataWarehouseUserActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG

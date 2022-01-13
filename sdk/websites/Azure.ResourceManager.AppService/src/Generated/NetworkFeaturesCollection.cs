@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkFeatures>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkFeatures>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkFeatures>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkFeatures>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

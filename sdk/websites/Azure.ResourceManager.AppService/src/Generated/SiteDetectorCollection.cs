@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _diagnosticsRestClient.GetSiteDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _diagnosticsRestClient.GetSiteDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

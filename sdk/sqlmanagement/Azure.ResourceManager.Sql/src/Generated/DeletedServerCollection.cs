@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of DeletedServerCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal DeletedServerCollection(ArmResource parent, string locationName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -130,9 +131,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _deletedServersRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeletedServer>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,9 +158,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _deletedServersRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeletedServer>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

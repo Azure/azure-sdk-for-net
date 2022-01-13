@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of the <see cref = "Deployment"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Deployment(ArmResource options, DeploymentData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal Deployment(ArmResource options, DeploymentData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _deploymentOperationsRestClient = new DeploymentRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DeploymentDeleteAtScopeOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentDeleteAtScopeOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DeploymentDeleteAtScopeOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeploymentDeleteAtScopeOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DeploymentValidateAtScopeOperation> ValidateAsync(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentValidateAtScopeOperation> ValidateAsync(bool waitForCompletion, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DeploymentValidateAtScopeOperation Validate(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeploymentValidateAtScopeOperation Validate(bool waitForCompletion, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<DeploymentWhatIfAtTenantScopeOperation> WhatIfAsync(string location, DeploymentWhatIfProperties properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentWhatIfAtTenantScopeOperation> WhatIfAsync(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public virtual DeploymentWhatIfAtTenantScopeOperation WhatIf(string location, DeploymentWhatIfProperties properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeploymentWhatIfAtTenantScopeOperation WhatIf(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {

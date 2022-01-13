@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual IpGroupCreateOrUpdateOperation CreateOrUpdate(string ipGroupsName, IpGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual IpGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (ipGroupsName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<IpGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string ipGroupsName, IpGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<IpGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (ipGroupsName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ipGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<IpGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IpGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _ipGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<IpGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IpGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

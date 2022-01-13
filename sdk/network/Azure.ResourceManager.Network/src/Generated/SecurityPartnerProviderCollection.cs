@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SecurityPartnerProviderCreateOrUpdateOperation CreateOrUpdate(string securityPartnerProviderName, SecurityPartnerProviderData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SecurityPartnerProviderCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string securityPartnerProviderName, SecurityPartnerProviderData parameters, CancellationToken cancellationToken = default)
         {
             if (securityPartnerProviderName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SecurityPartnerProviderCreateOrUpdateOperation> CreateOrUpdateAsync(string securityPartnerProviderName, SecurityPartnerProviderData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SecurityPartnerProviderCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityPartnerProviderName, SecurityPartnerProviderData parameters, CancellationToken cancellationToken = default)
         {
             if (securityPartnerProviderName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _securityPartnerProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _securityPartnerProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

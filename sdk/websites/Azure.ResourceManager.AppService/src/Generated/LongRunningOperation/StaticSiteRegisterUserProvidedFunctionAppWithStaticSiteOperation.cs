@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         AppService.StaticSiteUserProvidedFunctionApp IOperationSource<AppService.StaticSiteUserProvidedFunctionApp>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AppService.StaticSiteUserProvidedFunctionApp(_operationBase, StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement));
+            var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
+            return new StaticSiteUserProvidedFunctionApp(_operationBase, data);
         }
 
         async ValueTask<AppService.StaticSiteUserProvidedFunctionApp> IOperationSource<AppService.StaticSiteUserProvidedFunctionApp>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AppService.StaticSiteUserProvidedFunctionApp(_operationBase, StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement));
+            var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
+            return new StaticSiteUserProvidedFunctionApp(_operationBase, data);
         }
     }
 }

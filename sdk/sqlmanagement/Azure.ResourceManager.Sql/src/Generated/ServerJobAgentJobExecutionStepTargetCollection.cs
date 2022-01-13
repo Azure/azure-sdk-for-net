@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobTargetExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _jobTargetExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<OutboundRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OutboundRule>(null, response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _loadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<OutboundRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OutboundRule>(null, response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

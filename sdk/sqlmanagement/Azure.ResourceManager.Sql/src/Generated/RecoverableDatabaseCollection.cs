@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _recoverableDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _recoverableDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

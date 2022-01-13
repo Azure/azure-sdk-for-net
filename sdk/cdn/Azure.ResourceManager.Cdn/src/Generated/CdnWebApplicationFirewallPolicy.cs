@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Initializes a new instance of the <see cref = "CdnWebApplicationFirewallPolicy"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal CdnWebApplicationFirewallPolicy(ArmResource options, CdnWebApplicationFirewallPolicyData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal CdnWebApplicationFirewallPolicy(ArmResource options, CdnWebApplicationFirewallPolicyData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _policiesRestClient = new PoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes Policy. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PolicyDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicyDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Delete");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes Policy. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PolicyDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PolicyDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Delete");
             scope.Start();
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public async virtual Task<PolicyUpdateOperation> UpdateAsync(CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicyUpdateOperation> UpdateAsync(bool waitForCompletion, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
         {
             if (cdnWebApplicationFirewallPolicyPatchParameters == null)
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public virtual PolicyUpdateOperation Update(CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PolicyUpdateOperation Update(bool waitForCompletion, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
         {
             if (cdnWebApplicationFirewallPolicyPatchParameters == null)
             {

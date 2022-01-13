@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _recommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _recommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

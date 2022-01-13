@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetAppSettingKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetAppSettingKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

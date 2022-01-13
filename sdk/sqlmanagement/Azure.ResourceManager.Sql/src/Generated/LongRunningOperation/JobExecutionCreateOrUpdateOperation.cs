@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerJobAgentJobExecution IOperationSource<ServerJobAgentJobExecution>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerJobAgentJobExecution(_operationBase, JobExecutionData.DeserializeJobExecutionData(document.RootElement));
+            var data = JobExecutionData.DeserializeJobExecutionData(document.RootElement);
+            return new ServerJobAgentJobExecution(_operationBase, data);
         }
 
         async ValueTask<ServerJobAgentJobExecution> IOperationSource<ServerJobAgentJobExecution>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerJobAgentJobExecution(_operationBase, JobExecutionData.DeserializeJobExecutionData(document.RootElement));
+            var data = JobExecutionData.DeserializeJobExecutionData(document.RootElement);
+            return new ServerJobAgentJobExecution(_operationBase, data);
         }
     }
 }

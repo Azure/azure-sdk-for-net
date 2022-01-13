@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JobStepCreateOrUpdateOperation CreateOrUpdate(string stepName, JobStepData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual JobStepCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
             if (stepName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JobStepCreateOrUpdateOperation> CreateOrUpdateAsync(string stepName, JobStepData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<JobStepCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
             if (stepName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobStepsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, stepName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobStep>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobStep(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _jobStepsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobStep>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobStep(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

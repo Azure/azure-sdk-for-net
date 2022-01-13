@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CloudServiceRole>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudServiceRole>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CloudServiceRole>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudServiceRole>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

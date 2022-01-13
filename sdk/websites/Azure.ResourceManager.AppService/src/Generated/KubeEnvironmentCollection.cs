@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public virtual KubeEnvironmentCreateOrUpdateOperation CreateOrUpdate(string name, KubeEnvironmentData kubeEnvironmentEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual KubeEnvironmentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, KubeEnvironmentData kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public async virtual Task<KubeEnvironmentCreateOrUpdateOperation> CreateOrUpdateAsync(string name, KubeEnvironmentData kubeEnvironmentEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<KubeEnvironmentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, KubeEnvironmentData kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _kubeEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<KubeEnvironment>(null, response.GetRawResponse())
-                    : Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<KubeEnvironment>(null, response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _kubeEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<KubeEnvironment>(null, response.GetRawResponse())
-                    : Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<KubeEnvironment>(null, response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

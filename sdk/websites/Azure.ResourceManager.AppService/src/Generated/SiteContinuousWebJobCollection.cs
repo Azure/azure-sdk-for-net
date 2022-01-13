@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

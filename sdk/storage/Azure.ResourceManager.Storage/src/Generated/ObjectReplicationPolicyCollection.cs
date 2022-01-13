@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ObjectReplicationPolicyCreateOrUpdateOperation CreateOrUpdate(string objectReplicationPolicyId, ObjectReplicationPolicyData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ObjectReplicationPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string objectReplicationPolicyId, ObjectReplicationPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (objectReplicationPolicyId == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<ObjectReplicationPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string objectReplicationPolicyId, ObjectReplicationPolicyData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ObjectReplicationPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string objectReplicationPolicyId, ObjectReplicationPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (objectReplicationPolicyId == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _objectReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _objectReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

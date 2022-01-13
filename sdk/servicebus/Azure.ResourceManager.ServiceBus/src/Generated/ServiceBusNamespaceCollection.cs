@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NamespaceCreateOrUpdateOperation CreateOrUpdate(string namespaceName, ServiceBusNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NamespaceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string namespaceName, ServiceBusNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(string namespaceName, ServiceBusNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string namespaceName, ServiceBusNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _namespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _namespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

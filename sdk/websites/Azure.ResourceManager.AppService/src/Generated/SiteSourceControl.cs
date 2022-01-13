@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSourceControl"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSourceControl(ArmResource options, SiteSourceControlData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SiteSourceControl(ArmResource options, SiteSourceControlData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppDeleteSourceControlOperation> DeleteAsync(string additionalFlags = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppDeleteSourceControlOperation> DeleteAsync(bool waitForCompletion, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSourceControl.Delete");
             scope.Start();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppDeleteSourceControlOperation Delete(string additionalFlags = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppDeleteSourceControlOperation Delete(bool waitForCompletion, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSourceControl.Delete");
             scope.Start();
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateSourceControlOperation> CreateOrUpdateAsync(SiteSourceControlData siteSourceControl, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateOrUpdateSourceControlOperation> CreateOrUpdateAsync(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (siteSourceControl == null)
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateSourceControlOperation CreateOrUpdate(SiteSourceControlData siteSourceControl, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateOrUpdateSourceControlOperation CreateOrUpdate(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (siteSourceControl == null)
             {

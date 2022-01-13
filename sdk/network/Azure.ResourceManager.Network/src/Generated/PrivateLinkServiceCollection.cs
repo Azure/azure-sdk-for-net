@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PrivateLinkServiceCreateOrUpdateOperation CreateOrUpdate(string serviceName, PrivateLinkServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PrivateLinkServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (serviceName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PrivateLinkServiceCreateOrUpdateOperation> CreateOrUpdateAsync(string serviceName, PrivateLinkServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PrivateLinkServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (serviceName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _privateLinkServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLinkService>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLinkService>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _privateLinkServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLinkService>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLinkService>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

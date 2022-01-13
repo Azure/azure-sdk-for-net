@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

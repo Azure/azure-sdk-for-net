@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual IpAllocationCreateOrUpdateOperation CreateOrUpdate(string ipAllocationName, IpAllocationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual IpAllocationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ipAllocationName, IpAllocationData parameters, CancellationToken cancellationToken = default)
         {
             if (ipAllocationName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<IpAllocationCreateOrUpdateOperation> CreateOrUpdateAsync(string ipAllocationName, IpAllocationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<IpAllocationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ipAllocationName, IpAllocationData parameters, CancellationToken cancellationToken = default)
         {
             if (ipAllocationName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ipAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<IpAllocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IpAllocation>(null, response.GetRawResponse());
+                return Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _ipAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<IpAllocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IpAllocation>(null, response.GetRawResponse());
+                return Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

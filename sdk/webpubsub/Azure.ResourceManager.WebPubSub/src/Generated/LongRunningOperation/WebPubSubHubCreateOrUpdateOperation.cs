@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
         WebPubSubHub IOperationSource<WebPubSubHub>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new WebPubSubHub(_operationBase, WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement));
+            var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
+            return new WebPubSubHub(_operationBase, data);
         }
 
         async ValueTask<WebPubSubHub> IOperationSource<WebPubSubHub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new WebPubSubHub(_operationBase, WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement));
+            var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
+            return new WebPubSubHub(_operationBase, data);
         }
     }
 }

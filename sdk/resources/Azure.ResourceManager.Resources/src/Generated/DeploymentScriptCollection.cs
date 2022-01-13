@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public virtual DeploymentScriptCreateOperation CreateOrUpdate(string scriptName, DeploymentScriptData deploymentScript, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeploymentScriptCreateOperation CreateOrUpdate(bool waitForCompletion, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             if (scriptName == null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public async virtual Task<DeploymentScriptCreateOperation> CreateOrUpdateAsync(string scriptName, DeploymentScriptData deploymentScript, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentScriptCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             if (scriptName == null)
             {
@@ -189,9 +189,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _deploymentScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeploymentScript>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeploymentScript>(null, response.GetRawResponse());
+                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _deploymentScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeploymentScript>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeploymentScript>(null, response.GetRawResponse());
+                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

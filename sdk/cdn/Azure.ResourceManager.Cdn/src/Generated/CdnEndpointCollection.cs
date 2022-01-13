@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointInput"/> is null. </exception>
-        public virtual CdnEndpointCreateOperation CreateOrUpdate(string endpointName, CdnEndpointData endpointInput, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CdnEndpointCreateOperation CreateOrUpdate(bool waitForCompletion, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointInput"/> is null. </exception>
-        public async virtual Task<CdnEndpointCreateOperation> CreateOrUpdateAsync(string endpointName, CdnEndpointData endpointInput, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CdnEndpointCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _cdnEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CdnEndpoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CdnEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _cdnEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CdnEndpoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CdnEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

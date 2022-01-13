@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationGatewaysRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

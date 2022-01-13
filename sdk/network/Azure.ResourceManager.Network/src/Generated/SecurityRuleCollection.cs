@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public virtual SecurityRuleCreateOrUpdateOperation CreateOrUpdate(string securityRuleName, SecurityRuleData securityRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SecurityRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public async virtual Task<SecurityRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string securityRuleName, SecurityRuleData securityRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SecurityRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _securityRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SecurityRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SecurityRule>(null, response.GetRawResponse());
+                return Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _securityRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SecurityRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SecurityRule>(null, response.GetRawResponse());
+                return Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

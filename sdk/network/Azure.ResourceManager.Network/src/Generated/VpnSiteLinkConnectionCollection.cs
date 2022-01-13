@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _vpnSiteLinkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _vpnSiteLinkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

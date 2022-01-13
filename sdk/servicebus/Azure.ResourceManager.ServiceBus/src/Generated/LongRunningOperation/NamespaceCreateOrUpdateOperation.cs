@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
         ServiceBusNamespace IOperationSource<ServiceBusNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServiceBusNamespace(_operationBase, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement));
+            var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
+            return new ServiceBusNamespace(_operationBase, data);
         }
 
         async ValueTask<ServiceBusNamespace> IOperationSource<ServiceBusNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServiceBusNamespace(_operationBase, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement));
+            var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
+            return new ServiceBusNamespace(_operationBase, data);
         }
     }
 }

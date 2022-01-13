@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SharedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(string sharedPrivateLinkName, SharedPrivateLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SharedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SharedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(string sharedPrivateLinkName, SharedPrivateLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SharedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _sharedPrivateLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = await _sharedPrivateLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetConfigurationSnapshotSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigSnapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigSnapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigSnapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetConfigurationSnapshotSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigSnapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigSnapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigSnapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

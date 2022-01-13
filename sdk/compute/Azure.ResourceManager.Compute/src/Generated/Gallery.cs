@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of the <see cref = "Gallery"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Gallery(ArmResource options, GalleryData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal Gallery(ArmResource options, GalleryData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Delete a Shared Image Gallery. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<GalleryDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Gallery.Delete");
             scope.Start();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Delete a Shared Image Gallery. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual GalleryDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Gallery.Delete");
             scope.Start();
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
-        public async virtual Task<GalleryUpdateOperation> UpdateAsync(GalleryUpdate gallery, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryUpdateOperation> UpdateAsync(bool waitForCompletion, GalleryUpdate gallery, CancellationToken cancellationToken = default)
         {
             if (gallery == null)
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
-        public virtual GalleryUpdateOperation Update(GalleryUpdate gallery, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryUpdateOperation Update(bool waitForCompletion, GalleryUpdate gallery, CancellationToken cancellationToken = default)
         {
             if (gallery == null)
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public async virtual Task<GallerySharingProfileUpdateOperation> UpdateGallerySharingProfileAsync(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GallerySharingProfileUpdateOperation> UpdateGallerySharingProfileAsync(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
             if (sharingUpdate == null)
             {
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public virtual GallerySharingProfileUpdateOperation UpdateGallerySharingProfile(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GallerySharingProfileUpdateOperation UpdateGallerySharingProfile(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
             if (sharingUpdate == null)
             {

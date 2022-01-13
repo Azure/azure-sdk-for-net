@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _diagnosticsRestClient.GetSiteAnalysis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteDiagnosticAnalysis>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDiagnosticAnalysis>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _diagnosticsRestClient.GetSiteAnalysisAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteDiagnosticAnalysis>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDiagnosticAnalysis>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

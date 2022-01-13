@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetTriggeredWebJobHistorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetTriggeredWebJobHistorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public virtual VirtualHubRouteTableV2SCreateOrUpdateOperation CreateOrUpdate(string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualHubRouteTableV2SCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public async virtual Task<VirtualHubRouteTableV2SCreateOrUpdateOperation> CreateOrUpdateAsync(string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubRouteTableV2SCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRouteTableV2sRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualHubRouteTableV2>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualHubRouteTableV2>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRouteTableV2sRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualHubRouteTableV2>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualHubRouteTableV2>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

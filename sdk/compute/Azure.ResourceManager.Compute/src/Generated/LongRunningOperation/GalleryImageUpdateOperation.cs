@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         GalleryImage IOperationSource<GalleryImage>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new GalleryImage(_operationBase, GalleryImageData.DeserializeGalleryImageData(document.RootElement));
+            var data = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
+            return new GalleryImage(_operationBase, data);
         }
 
         async ValueTask<GalleryImage> IOperationSource<GalleryImage>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new GalleryImage(_operationBase, GalleryImageData.DeserializeGalleryImageData(document.RootElement));
+            var data = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
+            return new GalleryImage(_operationBase, data);
         }
     }
 }

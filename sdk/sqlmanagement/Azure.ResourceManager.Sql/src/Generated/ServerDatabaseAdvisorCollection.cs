@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _databaseAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseAdvisor>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

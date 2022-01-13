@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
-        public virtual CassandraResourceCreateUpdateCassandraTableOperation CreateOrUpdate(string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CassandraResourceCreateUpdateCassandraTableOperation CreateOrUpdate(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
-        public async virtual Task<CassandraResourceCreateUpdateCassandraTableOperation> CreateOrUpdateAsync(string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CassandraResourceCreateUpdateCassandraTableOperation> CreateOrUpdateAsync(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
         {
             if (tableName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraResourcesRestClient.GetCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CassandraTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CassandraTable>(null, response.GetRawResponse());
+                return Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraResourcesRestClient.GetCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CassandraTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CassandraTable>(null, response.GetRawResponse());
+                return Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

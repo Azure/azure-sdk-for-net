@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual FirewallPolicyCreateOrUpdateOperation CreateOrUpdate(string firewallPolicyName, FirewallPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual FirewallPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string firewallPolicyName, FirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallPolicyName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<FirewallPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string firewallPolicyName, FirewallPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<FirewallPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string firewallPolicyName, FirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallPolicyName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _firewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, firewallPolicyName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<FirewallPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new FirewallPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FirewallPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new FirewallPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _firewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, firewallPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<FirewallPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new FirewallPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FirewallPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new FirewallPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

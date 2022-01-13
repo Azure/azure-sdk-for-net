@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TopLevelDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TopLevelDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

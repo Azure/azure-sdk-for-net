@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteInstanceProcessModule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteInstanceProcessModule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteInstanceProcessModule>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteInstanceProcessModule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteInstanceProcessModule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteInstanceProcessModule>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

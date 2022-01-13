@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of the <see cref = "GalleryApplication"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal GalleryApplication(ArmResource options, GalleryApplicationData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal GalleryApplication(ArmResource options, GalleryApplicationData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _galleryApplicationsRestClient = new GalleryApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Delete a gallery Application. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<GalleryApplicationDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Delete");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Delete a gallery Application. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual GalleryApplicationDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Delete");
             scope.Start();
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<GalleryApplicationUpdateOperation> UpdateAsync(GalleryApplicationUpdate galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationUpdateOperation> UpdateAsync(bool waitForCompletion, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
         {
             if (galleryApplication == null)
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public virtual GalleryApplicationUpdateOperation Update(GalleryApplicationUpdate galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationUpdateOperation Update(bool waitForCompletion, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
         {
             if (galleryApplication == null)
             {

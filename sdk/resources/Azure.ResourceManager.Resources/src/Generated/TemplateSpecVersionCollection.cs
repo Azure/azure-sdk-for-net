@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public virtual TemplateSpecVersionCreateOrUpdateOperation CreateOrUpdate(string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual TemplateSpecVersionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             if (templateSpecVersion == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public async virtual Task<TemplateSpecVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<TemplateSpecVersionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             if (templateSpecVersion == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _templateSpecVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _templateSpecVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

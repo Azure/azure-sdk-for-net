@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

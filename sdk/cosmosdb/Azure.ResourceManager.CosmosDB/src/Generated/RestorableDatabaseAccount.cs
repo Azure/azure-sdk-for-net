@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of the <see cref = "RestorableDatabaseAccount"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal RestorableDatabaseAccount(ArmResource options, RestorableDatabaseAccountData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal RestorableDatabaseAccount(ArmResource options, RestorableDatabaseAccountData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);

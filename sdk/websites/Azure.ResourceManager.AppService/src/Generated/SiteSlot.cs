@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlot"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSlot(ArmResource options, WebSiteData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SiteSlot(ArmResource options, WebSiteData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppDeleteSlotOperation> DeleteAsync(bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppDeleteSlotOperation> DeleteAsync(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.Delete");
             scope.Start();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppDeleteSlotOperation Delete(bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppDeleteSlotOperation Delete(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.Delete");
             scope.Start();
@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppListPublishingCredentialsSlotOperation> GetPublishingCredentialsSlotAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppListPublishingCredentialsSlotOperation> GetPublishingCredentialsSlotAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetPublishingCredentialsSlot");
             scope.Start();
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppListPublishingCredentialsSlotOperation GetPublishingCredentialsSlot(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppListPublishingCredentialsSlotOperation GetPublishingCredentialsSlot(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetPublishingCredentialsSlot");
             scope.Start();
@@ -2202,7 +2202,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppStartWebSiteNetworkTraceOperationSlotOperation> StartWebSiteNetworkTraceOperationSlotAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppStartWebSiteNetworkTraceOperationSlotOperation> StartWebSiteNetworkTraceOperationSlotAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.StartWebSiteNetworkTraceOperationSlot");
             scope.Start();
@@ -2230,7 +2230,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppStartWebSiteNetworkTraceOperationSlotOperation StartWebSiteNetworkTraceOperationSlot(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppStartWebSiteNetworkTraceOperationSlotOperation StartWebSiteNetworkTraceOperationSlot(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.StartWebSiteNetworkTraceOperationSlot");
             scope.Start();
@@ -2893,7 +2893,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<WebAppRestoreFromBackupBlobSlotOperation> RestoreFromBackupBlobSlotAsync(RestoreRequest request, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppRestoreFromBackupBlobSlotOperation> RestoreFromBackupBlobSlotAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -2925,7 +2925,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual WebAppRestoreFromBackupBlobSlotOperation RestoreFromBackupBlobSlot(RestoreRequest request, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppRestoreFromBackupBlobSlotOperation RestoreFromBackupBlobSlot(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -2957,7 +2957,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<WebAppRestoreFromDeletedAppSlotOperation> RestoreFromDeletedAppSlotAsync(DeletedAppRestoreRequest restoreRequest, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppRestoreFromDeletedAppSlotOperation> RestoreFromDeletedAppSlotAsync(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -2989,7 +2989,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public virtual WebAppRestoreFromDeletedAppSlotOperation RestoreFromDeletedAppSlot(DeletedAppRestoreRequest restoreRequest, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppRestoreFromDeletedAppSlotOperation RestoreFromDeletedAppSlot(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -3021,7 +3021,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<WebAppRestoreSnapshotSlotOperation> RestoreSnapshotSlotAsync(SnapshotRestoreRequest restoreRequest, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppRestoreSnapshotSlotOperation> RestoreSnapshotSlotAsync(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -3053,7 +3053,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public virtual WebAppRestoreSnapshotSlotOperation RestoreSnapshotSlot(SnapshotRestoreRequest restoreRequest, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppRestoreSnapshotSlotOperation RestoreSnapshotSlot(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -3181,7 +3181,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public async virtual Task<WebAppSwapSlotOperation> SwapSlotAsync(CsmSlotEntity slotSwapEntity, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppSwapSlotOperation> SwapSlotAsync(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (slotSwapEntity == null)
             {
@@ -3213,7 +3213,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public virtual WebAppSwapSlotOperation SwapSlot(CsmSlotEntity slotSwapEntity, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppSwapSlotOperation SwapSlot(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (slotSwapEntity == null)
             {
@@ -3452,7 +3452,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppStartNetworkTraceSlotOperation> StartNetworkTraceSlotAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppStartNetworkTraceSlotOperation> StartNetworkTraceSlotAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.StartNetworkTraceSlot");
             scope.Start();
@@ -3480,7 +3480,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppStartNetworkTraceSlotOperation StartNetworkTraceSlot(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppStartNetworkTraceSlotOperation StartNetworkTraceSlot(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteSlot.StartNetworkTraceSlot");
             scope.Start();

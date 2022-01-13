@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         VirtualNetworkRule IOperationSource<VirtualNetworkRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualNetworkRule(_operationBase, VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement));
+            var data = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+            return new VirtualNetworkRule(_operationBase, data);
         }
 
         async ValueTask<VirtualNetworkRule> IOperationSource<VirtualNetworkRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualNetworkRule(_operationBase, VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement));
+            var data = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+            return new VirtualNetworkRule(_operationBase, data);
         }
     }
 }

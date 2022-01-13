@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PublicIPAddressCreateOrUpdateOperation CreateOrUpdate(string publicIpAddressName, PublicIPAddressData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PublicIPAddressCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string publicIpAddressName, PublicIPAddressData parameters, CancellationToken cancellationToken = default)
         {
             if (publicIpAddressName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PublicIPAddressCreateOrUpdateOperation> CreateOrUpdateAsync(string publicIpAddressName, PublicIPAddressData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PublicIPAddressCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string publicIpAddressName, PublicIPAddressData parameters, CancellationToken cancellationToken = default)
         {
             if (publicIpAddressName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _publicIPAddressesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, publicIpAddressName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PublicIPAddress>(null, response.GetRawResponse())
-                    : Response.FromValue(new PublicIPAddress(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PublicIPAddress>(null, response.GetRawResponse());
+                return Response.FromValue(new PublicIPAddress(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _publicIPAddressesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, publicIpAddressName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PublicIPAddress>(null, response.GetRawResponse())
-                    : Response.FromValue(new PublicIPAddress(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PublicIPAddress>(null, response.GetRawResponse());
+                return Response.FromValue(new PublicIPAddress(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

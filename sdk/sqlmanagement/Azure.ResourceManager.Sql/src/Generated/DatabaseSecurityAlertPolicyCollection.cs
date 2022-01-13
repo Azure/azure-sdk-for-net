@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseSecurityAlertPolicyCreateOrUpdateOperation CreateOrUpdate(SecurityAlertPolicyName securityAlertPolicyName, DatabaseSecurityAlertPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseSecurityAlertPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, DatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseSecurityAlertPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(SecurityAlertPolicyName securityAlertPolicyName, DatabaseSecurityAlertPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseSecurityAlertPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, DatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DatabaseSecurityAlertPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new DatabaseSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DatabaseSecurityAlertPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new DatabaseSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _databaseSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DatabaseSecurityAlertPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new DatabaseSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DatabaseSecurityAlertPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new DatabaseSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

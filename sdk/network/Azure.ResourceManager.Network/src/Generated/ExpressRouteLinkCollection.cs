@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

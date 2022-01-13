@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         GuestAgent IOperationSource<GuestAgent>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new GuestAgent(_operationBase, GuestAgentData.DeserializeGuestAgentData(document.RootElement));
+            var data = GuestAgentData.DeserializeGuestAgentData(document.RootElement);
+            return new GuestAgent(_operationBase, data);
         }
 
         async ValueTask<GuestAgent> IOperationSource<GuestAgent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new GuestAgent(_operationBase, GuestAgentData.DeserializeGuestAgentData(document.RootElement));
+            var data = GuestAgentData.DeserializeGuestAgentData(document.RootElement);
+            return new GuestAgent(_operationBase, data);
         }
     }
 }

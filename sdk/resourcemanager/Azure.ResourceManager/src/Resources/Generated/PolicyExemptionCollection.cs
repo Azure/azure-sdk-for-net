@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicyExemptionCreateOrUpdateOperation CreateOrUpdate(string policyExemptionName, PolicyExemptionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PolicyExemptionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             if (policyExemptionName == null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicyExemptionCreateOrUpdateOperation> CreateOrUpdateAsync(string policyExemptionName, PolicyExemptionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicyExemptionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             if (policyExemptionName == null)
             {
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyExemptionsRestClient.Get(Id, policyExemptionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PolicyExemption>(null, response.GetRawResponse())
-                    : Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PolicyExemption>(null, response.GetRawResponse());
+                return Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyExemptionsRestClient.GetAsync(Id, policyExemptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PolicyExemption>(null, response.GetRawResponse())
-                    : Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PolicyExemption>(null, response.GetRawResponse());
+                return Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of the <see cref = "RoleInstance"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal RoleInstance(ArmResource options, RoleInstanceData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal RoleInstance(ArmResource options, RoleInstanceData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a role instance from a cloud service. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServiceRoleInstanceDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceRoleInstanceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Delete");
             scope.Start();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a role instance from a cloud service. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServiceRoleInstanceDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CloudServiceRoleInstanceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Delete");
             scope.Start();
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServiceRoleInstanceRestartOperation> RestartAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceRoleInstanceRestartOperation> RestartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Restart");
             scope.Start();
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServiceRoleInstanceRestartOperation Restart(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CloudServiceRoleInstanceRestartOperation Restart(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Restart");
             scope.Start();
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServiceRoleInstanceReimageOperation> ReimageAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceRoleInstanceReimageOperation> ReimageAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Reimage");
             scope.Start();
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServiceRoleInstanceReimageOperation Reimage(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CloudServiceRoleInstanceReimageOperation Reimage(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Reimage");
             scope.Start();
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServiceRoleInstanceRebuildOperation> RebuildAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceRoleInstanceRebuildOperation> RebuildAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Rebuild");
             scope.Start();
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServiceRoleInstanceRebuildOperation Rebuild(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CloudServiceRoleInstanceRebuildOperation Rebuild(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RoleInstance.Rebuild");
             scope.Start();

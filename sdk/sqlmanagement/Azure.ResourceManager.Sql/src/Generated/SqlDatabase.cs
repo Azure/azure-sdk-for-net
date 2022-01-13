@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "SqlDatabase"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SqlDatabase(ArmResource options, SqlDatabaseData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SqlDatabase(ArmResource options, SqlDatabaseData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseColumnsRestClient = new DatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseUpdateOperation> UpdateAsync(DatabaseUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseUpdateOperation> UpdateAsync(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseUpdateOperation Update(DatabaseUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseUpdateOperation Update(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseFailoverOperation> FailoverAsync(ReplicaType? replicaType = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseFailoverOperation> FailoverAsync(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseFailoverOperation Failover(ReplicaType? replicaType = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseFailoverOperation Failover(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Pauses a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabasePauseOperation> PauseAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabasePauseOperation> PauseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Pauses a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabasePauseOperation Pause(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabasePauseOperation Pause(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Resumes a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseResumeOperation> ResumeAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseResumeOperation> ResumeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Resumes a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseResumeOperation Resume(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseResumeOperation Resume(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Upgrades a data warehouse. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseUpgradeDataWarehouseOperation> UpgradeDataWarehouseAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseUpgradeDataWarehouseOperation> UpgradeDataWarehouseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Upgrades a data warehouse. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseUpgradeDataWarehouseOperation UpgradeDataWarehouse(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseUpgradeDataWarehouseOperation UpgradeDataWarehouse(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseImportOperation> ImportAsync(ImportExistingDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseImportOperation> ImportAsync(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseImportOperation Import(ImportExistingDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseImportOperation Import(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseExportOperation> ExportAsync(ExportDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseExportOperation> ExportAsync(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseExportOperation Export(ExportDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseExportOperation Export(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RestorePointCreateOperation> CreateRestorePointAsync(CreateDatabaseRestorePointDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<RestorePointCreateOperation> CreateRestorePointAsync(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual RestorePointCreateOperation CreateRestorePoint(CreateDatabaseRestorePointDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual RestorePointCreateOperation CreateRestorePoint(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1431,7 +1431,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseExtensionCreateOrUpdateOperation> CreateOrUpdateDatabaseExtensionAsync(string extensionName, DatabaseExtensions parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseExtensionCreateOrUpdateOperation> CreateOrUpdateDatabaseExtensionAsync(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseExtensionCreateOrUpdateOperation CreateOrUpdateDatabaseExtension(string extensionName, DatabaseExtensions parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseExtensionCreateOrUpdateOperation CreateOrUpdateDatabaseExtension(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {

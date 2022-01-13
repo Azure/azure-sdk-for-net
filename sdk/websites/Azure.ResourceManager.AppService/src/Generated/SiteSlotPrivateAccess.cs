@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotPrivateAccess"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteSlotPrivateAccess(ArmResource options, PrivateAccessData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SiteSlotPrivateAccess(ArmResource options, PrivateAccessData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
-        public async virtual Task<WebAppPutPrivateAccessVnetSlotOperation> CreateOrUpdateAsync(PrivateAccessData access, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppPutPrivateAccessVnetSlotOperation> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (access == null)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
-        public virtual WebAppPutPrivateAccessVnetSlotOperation CreateOrUpdate(PrivateAccessData access, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppPutPrivateAccessVnetSlotOperation CreateOrUpdate(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (access == null)
             {

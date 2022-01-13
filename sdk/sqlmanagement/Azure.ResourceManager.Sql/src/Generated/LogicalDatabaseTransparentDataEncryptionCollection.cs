@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual TransparentDataEncryptionCreateOrUpdateOperation CreateOrUpdate(TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual TransparentDataEncryptionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<TransparentDataEncryptionCreateOrUpdateOperation> CreateOrUpdateAsync(TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<TransparentDataEncryptionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _transparentDataEncryptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse())
-                    : Response.FromValue(new LogicalDatabaseTransparentDataEncryption(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse());
+                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _transparentDataEncryptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse())
-                    : Response.FromValue(new LogicalDatabaseTransparentDataEncryption(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse());
+                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

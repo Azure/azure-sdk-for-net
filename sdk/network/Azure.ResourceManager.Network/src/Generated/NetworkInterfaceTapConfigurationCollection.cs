@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> or <paramref name="tapConfigurationParameters"/> is null. </exception>
-        public virtual NetworkInterfaceTapConfigurationCreateOrUpdateOperation CreateOrUpdate(string tapConfigurationName, NetworkInterfaceTapConfigurationData tapConfigurationParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceTapConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string tapConfigurationName, NetworkInterfaceTapConfigurationData tapConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (tapConfigurationName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> or <paramref name="tapConfigurationParameters"/> is null. </exception>
-        public async virtual Task<NetworkInterfaceTapConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(string tapConfigurationName, NetworkInterfaceTapConfigurationData tapConfigurationParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceTapConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string tapConfigurationName, NetworkInterfaceTapConfigurationData tapConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (tapConfigurationName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfaceTapConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkInterfaceTapConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
