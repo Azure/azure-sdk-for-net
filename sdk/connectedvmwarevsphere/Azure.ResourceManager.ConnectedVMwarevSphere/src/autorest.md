@@ -15,6 +15,8 @@ no-property-type-replacement:
 skip-csproj: true
 mgmt-debug:
   show-request-path: true
+modelerfour:
+  flatten-payloads: false
 directive:
   - rename-model:
       from: Identity
