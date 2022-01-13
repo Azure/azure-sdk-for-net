@@ -7,18 +7,30 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
-require: https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/readme.md
+title: CdnManagementClient
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/Microsoft.Cdn/stable/2020-09-01/cdn.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/Microsoft.Cdn/stable/2020-09-01/cdnwebapplicationfirewall.json
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
-modelerfour:
-  lenient-model-deduplication: true
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - AfdCustomDomainHttpsParametersSecret
 directive:
+  - from: swagger-document
+    where: $.definitions.DeliveryRuleAction.properties.name
+    transform: >
+        $['x-ms-enum'] = {
+            "name": "DeliveryRuleActionName",
+            "modelAsString": true
+        }
+  - from: swagger-document
+    where: $.definitions.CdnEndpoint
+    transform: >
+        $['x-ms-client-name'] = 'LinkedCdnEndpoint'
   - from: swagger-document
     where: $.definitions
     transform: >
