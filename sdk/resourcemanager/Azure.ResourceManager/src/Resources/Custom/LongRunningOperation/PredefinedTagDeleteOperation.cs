@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The operation type for the delete API. </summary>
     public partial class PredefinedTagDeleteOperation : Operation
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationInternals _operation;
 
         /// <summary> Initializes a new instance of PredefinedTagDeleteOperation for mocking. </summary>
         protected PredefinedTagDeleteOperation()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal PredefinedTagDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PredefinedTagDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PredefinedTagDeleteOperation");
         }
 
         /// <inheritdoc />

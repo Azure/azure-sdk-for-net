@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Updates a resource by ID. </summary>
     public partial class ResourceUpdateByIdOperation : Operation<GenericResource>, IOperationSource<GenericResource>
     {
-        private readonly OperationOrResponseInternals<GenericResource> _operation;
+        private readonly OperationInternals<GenericResource> _operation;
         private readonly ArmResource _parentOperation;
 
         /// <summary> Initializes a new instance of ResourceUpdateByIdOperation for mocking. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceUpdateByIdOperation(ArmResource parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceUpdateByIdOperation");
+            _operation = new OperationInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceUpdateByIdOperation");
             _parentOperation = parentOperation;
         }
         /// <inheritdoc />

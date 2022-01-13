@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Management.Models
     /// </summary>
     public partial class ManagementGroupDeleteOperation : Operation
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationInternals _operation;
 
         /// <summary> Initializes a new instance of ManagementGroupDeleteOperation for mocking. </summary>
         protected ManagementGroupDeleteOperation()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Management.Models
 
         internal ManagementGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupDeleteOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

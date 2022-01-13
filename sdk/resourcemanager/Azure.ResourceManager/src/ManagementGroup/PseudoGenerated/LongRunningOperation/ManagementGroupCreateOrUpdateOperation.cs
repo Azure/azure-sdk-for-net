@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Management.Models
     /// </summary>
     public partial class ManagementGroupCreateOrUpdateOperation : Operation<ManagementGroup>, IOperationSource<ManagementGroup>
     {
-        private readonly OperationOrResponseInternals<ManagementGroup> _operation;
+        private readonly OperationInternals<ManagementGroup> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Management.Models
 
         internal ManagementGroupCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<ManagementGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupCreateOrUpdateOperation");
+            _operation = new OperationInternals<ManagementGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
         /// <inheritdoc />

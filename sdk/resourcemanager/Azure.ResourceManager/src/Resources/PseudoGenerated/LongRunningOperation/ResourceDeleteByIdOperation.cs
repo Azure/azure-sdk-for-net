@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deletes a resource by ID. </summary>
     public partial class ResourceDeleteByIdOperation : Operation
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationInternals _operation;
 
         /// <summary> Initializes a new instance of ResourceDeleteByIdOperation for mocking. </summary>
         protected ResourceDeleteByIdOperation()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceDeleteByIdOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals( clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceDeleteByIdOperation");
+            _operation = new OperationInternals( clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceDeleteByIdOperation");
         }
         /// <inheritdoc />
         public override string Id => "";
