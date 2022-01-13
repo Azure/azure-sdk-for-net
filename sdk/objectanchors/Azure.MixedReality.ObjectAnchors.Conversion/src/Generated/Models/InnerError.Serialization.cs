@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    internal partial class Error
+    internal partial class InnerError
     {
-        internal static Error DeserializeError(JsonElement element)
+        internal static InnerError DeserializeInnerError(JsonElement element)
         {
             Optional<string> code = default;
-            Optional<string> message = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -23,13 +23,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("innererror"))
                 {
-                    message = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    innererror = DeserializeInnerError(property.Value);
                     continue;
                 }
             }
-            return new Error(code.Value, message.Value);
+            return new InnerError(code.Value, innererror.Value);
         }
     }
 }

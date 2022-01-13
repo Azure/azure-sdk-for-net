@@ -26,15 +26,16 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        public IngestionJobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.2-preview.1")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public IngestionJobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.3-preview.0")
         {
             this.endpoint = endpoint ?? new Uri("");
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(Guid accountId, Guid jobId, string xMrcCv, AssetConversionProperties body)
+        internal HttpMessage CreateCreateRequest(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -45,35 +46,35 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             uri.AppendPath(accountId, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {
                 request.Headers.Add("x-mrc-cv", xMrcCv);
             }
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Creates a job request. </summary>
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
-        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="body"> The Azure Object Anchors ingestion request. </param>
+        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders>> CreateAsync(Guid accountId, Guid jobId, string xMrcCv = null, AssetConversionProperties body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders>> CreateAsync(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(accountId, jobId, xMrcCv, body);
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateCreateRequest(accountId, jobId, body, xMrcCv);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new IngestionJobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -93,12 +94,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary> Creates a job request. </summary>
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
-        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="body"> The Azure Object Anchors ingestion request. </param>
+        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders> Create(Guid accountId, Guid jobId, string xMrcCv = null, AssetConversionProperties body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders> Create(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(accountId, jobId, xMrcCv, body);
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateCreateRequest(accountId, jobId, body, xMrcCv);
             _pipeline.Send(message, cancellationToken);
             var headers = new IngestionJobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -126,10 +133,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             uri.AppendPath(accountId, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {

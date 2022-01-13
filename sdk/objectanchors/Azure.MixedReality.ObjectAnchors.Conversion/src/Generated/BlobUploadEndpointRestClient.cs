@@ -26,10 +26,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        public BlobUploadEndpointRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.2-preview.1")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public BlobUploadEndpointRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.3-preview.0")
         {
             this.endpoint = endpoint ?? new Uri("");
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -44,10 +45,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             uri.AppendPath("/accounts/", false);
             uri.AppendPath(accountId, true);
             uri.AppendPath("/blobUploadEndpoint", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {
