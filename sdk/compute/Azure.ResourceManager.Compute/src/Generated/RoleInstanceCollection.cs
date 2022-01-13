@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of RoleInstance and their operations over its parent. </summary>
     public partial class RoleInstanceCollection : ArmCollection, IEnumerable<RoleInstance>, IAsyncEnumerable<RoleInstance>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServiceRoleInstancesRestOperations _cloudServiceRoleInstancesRestClient;
@@ -37,10 +37,16 @@ namespace Azure.ResourceManager.Compute
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => CloudService.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != CloudService.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CloudService.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 

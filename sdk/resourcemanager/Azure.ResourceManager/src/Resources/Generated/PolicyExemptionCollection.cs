@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicyExemption and their operations over its parent. </summary>
     public partial class PolicyExemptionCollection : ArmCollection, IEnumerable<PolicyExemption>, IAsyncEnumerable<PolicyExemption>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyExemptionsRestOperations _policyExemptionsRestClient;
@@ -38,15 +37,6 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _policyExemptionsRestClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <summary> Verify that the input resource Id is a valid collection for this type. </summary>
-        /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
         }
 
         // Collection level operations.

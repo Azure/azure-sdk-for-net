@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.ExtendedLocation
 {
     /// <summary> A class representing collection of CustomLocation and their operations over its parent. </summary>
     public partial class CustomLocationCollection : ArmCollection, IEnumerable<CustomLocation>, IAsyncEnumerable<CustomLocation>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CustomLocationsRestOperations _customLocationsRestClient;
@@ -39,10 +39,16 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _customLocationsRestClient = new CustomLocationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 

@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicyAssignment and their operations over its parent. </summary>
     public partial class PolicyAssignmentCollection : ArmCollection, IEnumerable<PolicyAssignment>, IAsyncEnumerable<PolicyAssignment>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyAssignmentsRestOperations _policyAssignmentsRestClient;
@@ -38,15 +37,6 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <summary> Verify that the input resource Id is a valid collection for this type. </summary>
-        /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
         }
 
         // Collection level operations.

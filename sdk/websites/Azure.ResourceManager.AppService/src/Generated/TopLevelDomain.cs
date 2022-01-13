@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,6 +46,9 @@ namespace Azure.ResourceManager.AppService
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomain"/> class. </summary>
@@ -54,6 +58,9 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomain"/> class. </summary>
@@ -66,13 +73,13 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DomainRegistration/topLevelDomains";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,6 +94,12 @@ namespace Azure.ResourceManager.AppService
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
@@ -157,6 +170,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
         /// <returns> An async collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
@@ -204,6 +218,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
         /// <returns> A collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {

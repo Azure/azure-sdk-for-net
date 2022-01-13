@@ -75,19 +75,19 @@ namespace Azure.Core
         /// <summary>
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
         /// </summary>
-        /// <param name="other"> String to be converted into a <see cref="ResourceType"/> object. </param>
-        public static implicit operator ResourceType(string other)
+        /// <param name="resourceType"> String to be converted into a <see cref="ResourceType"/> object. </param>
+        public static implicit operator ResourceType(string resourceType)
         {
-            return new ResourceType(other);
+            return new ResourceType(resourceType);
         }
 
         /// <summary>
         /// Implicit operator for initializing a string from a <see cref="ResourceType"/>.
         /// </summary>
-        /// <param name="other"> <see cref="ResourceType"/> to be converted into a string. </param>
-        public static implicit operator string(ResourceType other)
+        /// <param name="resourceType"> <see cref="ResourceType"/> to be converted into a string. </param>
+        public static implicit operator string(ResourceType resourceType)
         {
-            return other._stringValue;
+            return resourceType._stringValue;
         }
 
         /// <summary>
