@@ -26,5 +26,5 @@ extends:
     ServiceDirectory: template-dpg
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Template.Generated
-      safeName: AzureTemplateGenerated
+    - name: Azure.ServiceTemplate.Template
+      safeName: AzureServiceTemplateTemplate

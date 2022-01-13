@@ -60,7 +60,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 **Note**: 
 - Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 - namespace is the shipped package name, it should be Azure.<group>.<service>
-- inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink, e.g. https://github.com/dpokluda/azure-rest-api-specs/blob/be397aa65510bd4e8f87da539af2b0025f6f44ca/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2020-09-01/deviceupdate.json".
+- inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink, e.g. https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json.
 
 - Both AADToken and AzureKey authentication are supported. If your service support AADToken, just set the parameter **securityScope**(the security scope), and if your service support AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service support two authentications.
 
@@ -84,7 +84,7 @@ sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryN
 ```
 e.g.
 ```
-dotnet new dataplane --libraryName DeviceUpdate --swagger https://github.com/dpokluda/azure-rest-api-specs/blob/be397aa65510bd4e8f87da539af2b0025f6f44ca/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2020-09-01/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
+dotnet new dataplane --libraryName DeviceUpdate --swagger https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2021-06-01-preview/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
 ```
 
 #### 3. update the solution file if needed
@@ -113,7 +113,7 @@ After you run the GenerateCode command, you should find a **Generated** folder i
 
 ### Export public API
 
-If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [sdk\template-dpg\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.ServiceTemplate/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
+If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [sdk\template-dpg\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
 
 e.g. Running the script for a project in `sdk\deviceupdate` would look like this: 
 ```
@@ -149,13 +149,13 @@ You will update all the <operation>.md and README.md files under Azure.<group>.<
 
 ### Snippets
 
-Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/tests/Samples/TemplateServiceSamples.HelloWorld.cs#L30) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.ServiceTemplate.Template/README.md#create-resource). Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
+Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/tests/Samples/TemplateClientSamples.cs#L32) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/README.md#create-resource). Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
 
 ### README
 
 README.md file instructions are listed in `Azure.<group>.<service>/README.md` file. Please add/update the README.md file as per your library.
 
-**Learn more:** to understand more about README, see the [README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.ServiceTemplate.Template/README.md). Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) is an example.
+**Learn more:** to understand more about README, see the [README.md](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/README.md). Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) is an example.
 
 ### Changelog
 
@@ -163,6 +163,6 @@ Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.
 
 ### Customize
 
-In Azure.<group>.<service> project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger. After you run the GenerateCode command, you should find a Generated folder in your project. Inside the Generated folder you'll find the <Service>Client and <Service>ClientOptions which you can use to interact with the service.
+In Azure.<group>.<service> project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger. After you run the GenerateCode command, you should find a Generated folder in your project. Inside the Generated folder you'll find the <Service>Client and <Service>ClientOptions which you can use to interact with the service.
 
 **Learn more**: the [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
