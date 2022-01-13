@@ -16,12 +16,15 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
+        private IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal ConcurrentDictionary<string, string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();
+
         /// <summary>
         /// Gets the ApiVersions object
         /// </summary>
         public string Scope { get; set; } = "https://management.core.windows.net/.default";
-
-        internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         /// <summary>
         /// Sets the api version to use for a given resource type.
@@ -33,8 +36,15 @@ namespace Azure.ResourceManager
             ResourceApiVersionOverrides[resourceType] = apiVersion;
         }
 
-        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
-        internal ConcurrentDictionary<string,string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();
+        /// <summary>
+        /// Gets the api version override if it has been set for the current client options.
+        /// </summary>
+        /// <param name="resourceType"> The resource type to get the version for. </param>
+        /// <param name="apiVersion"> The api version to variable to set. </param>
+        public bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
+        {
+            return ResourceApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
+        }
 
         internal ArmClientOptions Clone()
         {

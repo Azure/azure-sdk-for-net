@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.Tests
             var x = new ArmClientOptions();
             var y = x.Clone();
             Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
-            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersionOverrides, y.ResourceApiVersionOverrides));
 
             var clientX = GetArmClient(x);
             var clientY = GetArmClient(y);
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.Tests
             clientX = GetArmClient(x);
             subX = await clientX.GetDefaultSubscriptionAsync();
             Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
-            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersionOverrides, y.ResourceApiVersionOverrides));
             versionX = await subX.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
             versionY = await subY.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
             Assert.AreNotEqual(versionX, versionY);

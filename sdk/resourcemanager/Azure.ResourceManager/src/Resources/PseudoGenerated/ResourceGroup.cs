@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
             {
                 _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources
             {
                 _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             }
-            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out version))
+            if (ClientOptions.TryGetApiVersion(ResourceType, out version))
             {
                 _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources
             : base(operations, resource.Id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
             {
                 _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources
             {
                 _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             }
-            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out version))
+            if (ClientOptions.TryGetApiVersion(ResourceType, out version))
             {
                 _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             }

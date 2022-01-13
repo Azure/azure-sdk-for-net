@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Tests
             var options = new ArmClientOptions();
             options.SetApiVersion(vmType, "foo");
             options.SetApiVersion(vmType, "bar");
-            Assert.AreEqual("bar", options.ResourceApiVersionOverrides[vmType]);
+            options.TryGetApiVersion(vmType, out var actualVersion);
+            Assert.AreEqual("bar", actualVersion);
         }
 
         [TestCase]
@@ -28,7 +29,6 @@ namespace Azure.ResourceManager.Tests
             Assert.IsFalse(ReferenceEquals(options1, options2));
             Assert.IsFalse(ReferenceEquals(options1.Diagnostics, options2.Diagnostics));
             Assert.IsFalse(ReferenceEquals(options1.Retry, options2.Retry));
-            Assert.IsFalse(ReferenceEquals(options1.ResourceApiVersionOverrides, options2.ResourceApiVersionOverrides));
             Assert.IsFalse(ReferenceEquals(options1.ResourceApiVersions, options2.ResourceApiVersions));
             Assert.IsFalse(ReferenceEquals(options1.NamespaceVersions, options2.NamespaceVersions));
         }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Management
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
             {
                 _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Management
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ResourceType, out var version))
+            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
             {
                 _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
             }

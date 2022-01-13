@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Management
             : base(tenant)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.ResourceApiVersionOverrides.TryGetValue(ManagementGroup.ResourceType, out var version))
+            if (ClientOptions.TryGetApiVersion(ManagementGroup.ResourceType, out var version))
             {
                 _restClient ??= new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
             }
