@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of BgpConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BgpConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal BgpConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BgpConnectionCollection.Exists");
             scope.Start();
             try
             {

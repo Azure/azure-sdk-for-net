@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotSiteextensionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotSiteextensionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotSiteextensionCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteExtensionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteExtensionId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.Exists");
             scope.Start();
             try
             {

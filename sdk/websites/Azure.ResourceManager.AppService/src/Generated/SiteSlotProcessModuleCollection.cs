@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotProcessModuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotProcessModuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotProcessModuleCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.Exists");
             scope.Start();
             try
             {

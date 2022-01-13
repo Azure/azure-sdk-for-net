@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentRecommendationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HostingEnvironmentRecommendationCollection(ArmResource parent) : base(parent)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {

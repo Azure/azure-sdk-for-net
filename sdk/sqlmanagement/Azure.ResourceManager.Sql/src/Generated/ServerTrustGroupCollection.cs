@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerTrustGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerTrustGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverTrustGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverTrustGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
             scope.Start();
             try
             {

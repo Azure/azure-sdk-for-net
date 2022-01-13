@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of ServerfarmHybridConnectionNamespaceRelayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerfarmHybridConnectionNamespaceRelayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerfarmHybridConnectionNamespaceRelayCollection(ArmResource parent) : base(parent)
         {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.Exists");
             scope.Start();
             try
             {

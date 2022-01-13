@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorePointGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RestorePointGroupCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(restorePointCollectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(restorePointCollectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorePointGroupCollection.Exists");
             scope.Start();
             try
             {

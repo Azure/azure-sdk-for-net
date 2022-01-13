@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ConnectionMonitorCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionMonitorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionMonitorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.Exists");
             scope.Start();
             try
             {

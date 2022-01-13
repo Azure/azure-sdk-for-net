@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CosmosTableCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateLinkCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.Exists");
             scope.Start();
             try
             {

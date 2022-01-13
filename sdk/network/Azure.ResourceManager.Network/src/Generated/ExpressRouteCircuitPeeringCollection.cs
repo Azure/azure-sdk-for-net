@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteCircuitPeeringCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringCollection.Exists");
             scope.Start();
             try
             {

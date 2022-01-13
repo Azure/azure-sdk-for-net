@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of StorageQueueCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageQueueCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StorageQueueCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
             try
             {

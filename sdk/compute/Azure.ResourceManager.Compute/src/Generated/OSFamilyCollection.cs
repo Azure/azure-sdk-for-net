@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of OSFamilyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OSFamilyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osFamilyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osFamilyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Exists");
             scope.Start();
             try
             {

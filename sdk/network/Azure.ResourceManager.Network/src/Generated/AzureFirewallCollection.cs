@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureFirewallCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AzureFirewallCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(azureFirewallName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(azureFirewallName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AzureFirewallCollection.Exists");
             scope.Start();
             try
             {

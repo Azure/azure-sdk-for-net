@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotConfigSnapshotCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigSnapshotCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotConfigSnapshotCollection(ArmResource parent) : base(parent)
         {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(snapshotId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(snapshotId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.Exists");
             scope.Start();
             try
             {

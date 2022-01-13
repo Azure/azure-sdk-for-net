@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of CdnEndpointCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnEndpointCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CdnEndpointCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
             try
             {

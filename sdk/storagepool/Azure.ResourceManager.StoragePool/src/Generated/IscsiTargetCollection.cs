@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool
         {
         }
 
-        /// <summary> Initializes a new instance of IscsiTargetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IscsiTargetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal IscsiTargetCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(iscsiTargetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(iscsiTargetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionProtectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EncryptionProtectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EncryptionProtectorCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<EncryptionProtector>> GetIfExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorCollection.Exists");
             scope.Start();
             try
             {

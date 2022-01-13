@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewARMResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteCustomDomainOverviewARMResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteCustomDomainOverviewARMResourceCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.Exists");
             scope.Start();
             try
             {

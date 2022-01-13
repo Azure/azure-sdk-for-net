@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of DisasterRecoveryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DisasterRecoveryCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
             scope.Start();
             try
             {

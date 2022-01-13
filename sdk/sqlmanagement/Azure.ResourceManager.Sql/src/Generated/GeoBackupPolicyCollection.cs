@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of GeoBackupPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GeoBackupPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<GeoBackupPolicy>> GetIfExistsAsync(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicyCollection.Exists");
             scope.Start();
             try
             {

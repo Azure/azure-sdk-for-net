@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteVirtualNetworkConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteVirtualNetworkConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(vnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(vnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {

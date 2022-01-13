@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridIdentityMetadataCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HybridIdentityMetadataCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(metadataName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(metadataName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
             scope.Start();
             try
             {

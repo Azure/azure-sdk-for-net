@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KubeEnvironmentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal KubeEnvironmentCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.Exists");
             scope.Start();
             try
             {

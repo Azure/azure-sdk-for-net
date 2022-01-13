@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstancePrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstancePrivateEndpointConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {

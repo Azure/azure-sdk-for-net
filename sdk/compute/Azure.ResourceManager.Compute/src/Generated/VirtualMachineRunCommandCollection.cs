@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineRunCommandCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualMachineRunCommandCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(runCommandName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(runCommandName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandCollection.Exists");
             scope.Start();
             try
             {

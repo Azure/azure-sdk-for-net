@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkInterfaceIPConfigurationCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
             scope.Start();
             try
             {

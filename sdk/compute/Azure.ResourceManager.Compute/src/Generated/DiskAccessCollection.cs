@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of DiskAccessCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskAccessCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiskAccessCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.Exists");
             scope.Start();
             try
             {

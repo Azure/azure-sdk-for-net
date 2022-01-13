@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPeeringCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkPeeringCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualNetworkPeeringCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.Exists");
             scope.Start();
             try
             {

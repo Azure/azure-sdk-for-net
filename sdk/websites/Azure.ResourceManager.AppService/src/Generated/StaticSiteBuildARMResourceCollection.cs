@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteBuildARMResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildARMResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteBuildARMResourceCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(environmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(environmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.Exists");
             scope.Start();
             try
             {

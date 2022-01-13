@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusSubscriptionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusSubscriptionCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(subscriptionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(subscriptionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.Exists");
             scope.Start();
             try
             {

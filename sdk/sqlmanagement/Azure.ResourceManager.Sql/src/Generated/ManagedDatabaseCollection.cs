@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedDatabaseCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseCollection.Exists");
             scope.Start();
             try
             {

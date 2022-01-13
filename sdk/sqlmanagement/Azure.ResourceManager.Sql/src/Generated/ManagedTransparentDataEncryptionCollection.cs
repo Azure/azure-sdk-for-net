@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedTransparentDataEncryptionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedTransparentDataEncryptionCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedTransparentDataEncryption>> GetIfExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.Exists");
             scope.Start();
             try
             {

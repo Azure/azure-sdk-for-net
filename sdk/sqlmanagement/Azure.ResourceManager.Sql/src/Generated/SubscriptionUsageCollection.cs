@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionUsageCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionUsageCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(usageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(usageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
             try
             {

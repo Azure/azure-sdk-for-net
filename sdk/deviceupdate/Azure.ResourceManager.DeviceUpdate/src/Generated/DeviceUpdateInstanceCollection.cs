@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdateInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeviceUpdateInstanceCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(instanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(instanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
             try
             {

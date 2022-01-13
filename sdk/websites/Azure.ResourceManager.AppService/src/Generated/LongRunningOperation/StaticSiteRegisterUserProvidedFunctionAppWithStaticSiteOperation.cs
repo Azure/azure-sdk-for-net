@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
-            return new StaticSiteUserProvidedFunctionApp(_operationBase, data);
+            return new AppService.StaticSiteUserProvidedFunctionApp(_operationBase, data);
         }
 
         async ValueTask<AppService.StaticSiteUserProvidedFunctionApp> IOperationSource<AppService.StaticSiteUserProvidedFunctionApp>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
-            return new StaticSiteUserProvidedFunctionApp(_operationBase, data);
+            return new AppService.StaticSiteUserProvidedFunctionApp(_operationBase, data);
         }
     }
 }

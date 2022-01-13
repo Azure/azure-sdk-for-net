@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewaySslPredefinedPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ApplicationGatewaySslPredefinedPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(predefinedPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(predefinedPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.Exists");
             scope.Start();
             try
             {

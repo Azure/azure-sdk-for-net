@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLinkServiceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateLinkServiceCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.Exists");
             scope.Start();
             try
             {

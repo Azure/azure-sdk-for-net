@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubHubCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubHubCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WebPubSubHubCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(hubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubHubCollection.Exists");
             scope.Start();
             try
             {

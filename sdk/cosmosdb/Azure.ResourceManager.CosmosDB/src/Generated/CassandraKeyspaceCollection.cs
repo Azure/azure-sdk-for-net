@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraKeyspaceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraKeyspaceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CassandraKeyspaceCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(keyspaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(keyspaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.Exists");
             scope.Start();
             try
             {

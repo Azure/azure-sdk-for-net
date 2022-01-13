@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of VCenterCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VCenterCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VCenterCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(vcenterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(vcenterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineExtensionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal MachineExtensionCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
             scope.Start();
             try
             {

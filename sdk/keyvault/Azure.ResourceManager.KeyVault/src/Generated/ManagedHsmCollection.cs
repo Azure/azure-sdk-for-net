@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedHsmCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedHsmCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.Exists");
             scope.Start();
             try
             {

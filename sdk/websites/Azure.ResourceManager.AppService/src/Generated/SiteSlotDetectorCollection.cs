@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotDetectorCollection(ArmResource parent) : base(parent)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.Exists");
             scope.Start();
             try
             {

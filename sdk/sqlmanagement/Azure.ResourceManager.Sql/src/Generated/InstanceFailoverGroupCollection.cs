@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InstanceFailoverGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(failoverGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(failoverGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Exists");
             scope.Start();
             try
             {

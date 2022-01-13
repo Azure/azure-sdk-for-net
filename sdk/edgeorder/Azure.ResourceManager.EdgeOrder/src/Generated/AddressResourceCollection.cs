@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
         }
 
-        /// <summary> Initializes a new instance of AddressResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AddressResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AddressResourceCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(addressName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(addressName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Exists");
             scope.Start();
             try
             {

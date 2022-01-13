@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of TableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TableCollection(ArmResource parent) : base(parent)
         {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TableCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TableCollection.Exists");
             scope.Start();
             try
             {

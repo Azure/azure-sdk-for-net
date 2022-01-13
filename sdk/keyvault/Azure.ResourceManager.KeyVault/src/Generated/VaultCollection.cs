@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of VaultCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VaultCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VaultCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.Exists");
             scope.Start();
             try
             {

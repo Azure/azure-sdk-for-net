@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SharedPrivateLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SharedPrivateLinkCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(sharedPrivateLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(sharedPrivateLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceEndpointPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
             scope.Start();
             try
             {

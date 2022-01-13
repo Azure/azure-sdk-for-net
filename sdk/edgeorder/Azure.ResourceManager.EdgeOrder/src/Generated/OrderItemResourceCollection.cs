@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
         }
 
-        /// <summary> Initializes a new instance of OrderItemResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OrderItemResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal OrderItemResourceCollection(ArmResource parent) : base(parent)
         {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(orderItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(orderItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.Exists");
             scope.Start();
             try
             {

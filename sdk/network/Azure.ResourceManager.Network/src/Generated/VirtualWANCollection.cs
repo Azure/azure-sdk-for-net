@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualWANCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualWANCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualWANCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.Exists");
             scope.Start();
             try
             {

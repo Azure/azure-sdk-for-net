@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of ServerfarmVirtualNetworkConnectionGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerfarmVirtualNetworkConnectionGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerfarmVirtualNetworkConnectionGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
             try
             {

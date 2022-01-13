@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of IpGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IpGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal IpGroupCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipGroupsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipGroupsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.Exists");
             scope.Start();
             try
             {

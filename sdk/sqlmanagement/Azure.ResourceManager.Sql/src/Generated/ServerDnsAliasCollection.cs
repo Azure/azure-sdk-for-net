@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDnsAliasCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDnsAliasCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDnsAliasCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(dnsAliasName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(dnsAliasName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Exists");
             scope.Start();
             try
             {

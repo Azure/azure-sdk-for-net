@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationVersionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GalleryApplicationVersionCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.Exists");
             scope.Start();
             try
             {

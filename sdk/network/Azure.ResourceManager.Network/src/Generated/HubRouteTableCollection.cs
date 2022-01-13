@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of HubRouteTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubRouteTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HubRouteTableCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.Exists");
             scope.Start();
             try
             {

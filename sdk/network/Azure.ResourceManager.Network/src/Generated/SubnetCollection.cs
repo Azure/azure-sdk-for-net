@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of SubnetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubnetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SubnetCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(subnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(subnetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceDisasterRecoveryConfigAuthorizationRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NamespaceDisasterRecoveryConfigAuthorizationRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NamespaceDisasterRecoveryConfigAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of JobTargetGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobTargetGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JobTargetGroupCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(targetGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(targetGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Exists");
             scope.Start();
             try
             {

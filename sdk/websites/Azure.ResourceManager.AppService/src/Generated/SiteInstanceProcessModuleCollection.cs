@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteInstanceProcessModuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteInstanceProcessModuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteInstanceProcessModuleCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Exists");
             scope.Start();
             try
             {

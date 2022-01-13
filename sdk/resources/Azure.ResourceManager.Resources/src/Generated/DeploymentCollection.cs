@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeploymentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeploymentCollection(ArmResource parent) : base(parent)
         {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Exists");
             scope.Start();
             try
             {

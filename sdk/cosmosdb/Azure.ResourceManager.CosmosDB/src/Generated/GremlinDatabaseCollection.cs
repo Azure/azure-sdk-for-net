@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of GremlinDatabaseCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GremlinDatabaseCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GremlinDatabaseCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.Exists");
             scope.Start();
             try
             {

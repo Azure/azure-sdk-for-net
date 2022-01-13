@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualNetworkGatewayConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.Exists");
             scope.Start();
             try
             {

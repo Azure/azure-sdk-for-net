@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of SqlStoredProcedureCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlStoredProcedureCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlStoredProcedureCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.Exists");
             scope.Start();
             try
             {

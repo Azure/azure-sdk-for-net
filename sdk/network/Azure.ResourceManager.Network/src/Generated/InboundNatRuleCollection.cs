@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of InboundNatRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InboundNatRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal InboundNatRuleCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(inboundNatRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(inboundNatRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.Exists");
             scope.Start();
             try
             {

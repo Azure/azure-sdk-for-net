@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadClassifierCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadClassifierCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WorkloadClassifierCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.Exists");
             scope.Start();
             try
             {

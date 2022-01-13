@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of RecoverableManagedDatabaseCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecoverableManagedDatabaseCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RecoverableManagedDatabaseCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(recoverableDatabaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(recoverableDatabaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
             scope.Start();
             try
             {

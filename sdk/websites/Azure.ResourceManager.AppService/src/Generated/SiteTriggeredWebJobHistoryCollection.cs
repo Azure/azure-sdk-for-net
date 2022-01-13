@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteTriggeredWebJobHistoryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteTriggeredWebJobHistoryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteTriggeredWebJobHistoryCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.Exists");
             scope.Start();
             try
             {

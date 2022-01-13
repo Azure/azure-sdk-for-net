@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDevOpsAuditingSettingsCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDevOpsAuditingSettingsCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDevOpsAuditingSettingsCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.Exists");
             scope.Start();
             try
             {

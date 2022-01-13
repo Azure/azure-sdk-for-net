@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkVirtualApplianceCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkVirtualApplianceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkVirtualApplianceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
             scope.Start();
             try
             {

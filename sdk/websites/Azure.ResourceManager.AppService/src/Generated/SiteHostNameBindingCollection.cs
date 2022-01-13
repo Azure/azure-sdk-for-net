@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteHostNameBindingCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteHostNameBindingCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteHostNameBindingCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.Exists");
             scope.Start();
             try
             {

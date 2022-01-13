@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of RouteFilterRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RouteFilterRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RouteFilterRuleCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Exists");
             scope.Start();
             try
             {

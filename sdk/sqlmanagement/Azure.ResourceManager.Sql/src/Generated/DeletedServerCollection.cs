@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedServerCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedServerCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(deletedServerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(deletedServerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();
             try
             {

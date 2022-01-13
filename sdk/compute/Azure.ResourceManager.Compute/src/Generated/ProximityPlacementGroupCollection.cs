@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of ProximityPlacementGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProximityPlacementGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ProximityPlacementGroupCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(proximityPlacementGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(proximityPlacementGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Exists");
             scope.Start();
             try
             {

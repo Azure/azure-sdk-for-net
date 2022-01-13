@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of FrontendIPConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontendIPConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FrontendIPConfigurationCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(frontendIPConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(frontendIPConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.Exists");
             scope.Start();
             try
             {

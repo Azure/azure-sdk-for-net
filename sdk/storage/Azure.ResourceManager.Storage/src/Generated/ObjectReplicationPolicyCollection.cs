@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ObjectReplicationPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(objectReplicationPolicyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(objectReplicationPolicyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Exists");
             scope.Start();
             try
             {

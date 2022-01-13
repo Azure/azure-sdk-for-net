@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkWatcherCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkWatcherCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkWatcherCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.Exists");
             scope.Start();
             try
             {

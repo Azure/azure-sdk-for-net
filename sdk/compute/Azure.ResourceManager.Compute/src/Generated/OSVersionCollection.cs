@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OSVersionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
             try
             {

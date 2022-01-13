@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualNetworkRuleCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualNetworkRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualNetworkRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Exists");
             scope.Start();
             try
             {

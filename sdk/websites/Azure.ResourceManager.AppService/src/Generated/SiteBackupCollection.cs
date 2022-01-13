@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteBackupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteBackupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteBackupCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(backupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(backupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Exists");
             scope.Start();
             try
             {

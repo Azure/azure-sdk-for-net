@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNamespaceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusNamespaceCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkSecurityGroupCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.Exists");
             scope.Start();
             try
             {

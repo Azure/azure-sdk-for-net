@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionStepCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionStepCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerJobAgentJobExecutionStepCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.Exists");
             scope.Start();
             try
             {

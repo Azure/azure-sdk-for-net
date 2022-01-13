@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotConfigConnectionStringCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigConnectionStringCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotConfigConnectionStringCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Exists");
             scope.Start();
             try
             {

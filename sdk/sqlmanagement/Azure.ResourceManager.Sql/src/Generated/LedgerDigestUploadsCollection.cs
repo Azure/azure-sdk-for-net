@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of LedgerDigestUploadsCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LedgerDigestUploadsCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LedgerDigestUploadsCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LedgerDigestUploads>> GetIfExistsAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LedgerDigestUploadsCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LedgerDigestUploadsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LedgerDigestUploadsCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LedgerDigestUploadsCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HostingEnvironmentDetectorCollection(ArmResource parent) : base(parent)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
             try
             {

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupLongTermRetentionBackupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupLongTermRetentionBackupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackupCollection.Exists");
             scope.Start();
             try
             {

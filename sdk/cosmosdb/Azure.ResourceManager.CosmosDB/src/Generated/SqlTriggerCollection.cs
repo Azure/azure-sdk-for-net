@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of SqlTriggerCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlTriggerCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlTriggerCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(triggerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTriggerCollection.Exists");
             scope.Start();
             try
             {

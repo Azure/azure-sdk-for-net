@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of AzureWebCategoryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureWebCategoryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AzureWebCategoryCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
             scope.Start();
             try
             {

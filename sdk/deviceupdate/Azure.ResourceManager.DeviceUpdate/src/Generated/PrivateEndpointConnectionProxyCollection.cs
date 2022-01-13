@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionProxyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateEndpointConnectionProxyCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.Exists");
             scope.Start();
             try
             {

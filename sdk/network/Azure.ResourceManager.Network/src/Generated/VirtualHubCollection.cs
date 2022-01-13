@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualHubCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualHubCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.Exists");
             scope.Start();
             try
             {

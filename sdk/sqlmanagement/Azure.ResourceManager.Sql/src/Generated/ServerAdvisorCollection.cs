@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerAdvisorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerAdvisorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerAdvisorCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.Exists");
             scope.Start();
             try
             {

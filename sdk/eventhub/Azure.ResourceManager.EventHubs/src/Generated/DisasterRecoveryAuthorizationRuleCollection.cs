@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of DisasterRecoveryAuthorizationRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryAuthorizationRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DisasterRecoveryAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {

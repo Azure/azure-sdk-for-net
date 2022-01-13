@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.Exists");
             scope.Start();
             try
             {

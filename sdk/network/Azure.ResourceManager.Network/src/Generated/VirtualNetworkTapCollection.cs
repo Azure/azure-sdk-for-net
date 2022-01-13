@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkTapCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkTapCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualNetworkTapCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tapName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tapName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.Exists");
             scope.Start();
             try
             {

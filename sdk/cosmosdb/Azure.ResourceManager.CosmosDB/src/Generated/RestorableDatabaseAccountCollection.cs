@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableDatabaseAccountCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorableDatabaseAccountCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.Exists");
             scope.Start();
             try
             {

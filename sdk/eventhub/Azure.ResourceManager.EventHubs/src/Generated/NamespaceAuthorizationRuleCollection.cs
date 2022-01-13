@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceAuthorizationRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NamespaceAuthorizationRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NamespaceAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of DdosProtectionPlanCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlanCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DdosProtectionPlanCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ddosProtectionPlanName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ddosProtectionPlanName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.Exists");
             scope.Start();
             try
             {

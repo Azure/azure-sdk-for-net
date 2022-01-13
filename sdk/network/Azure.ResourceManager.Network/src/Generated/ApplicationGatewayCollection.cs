@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ApplicationGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
             try
             {

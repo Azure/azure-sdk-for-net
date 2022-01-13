@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubClusterCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubClusterCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EventHubClusterCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.Exists");
             scope.Start();
             try
             {

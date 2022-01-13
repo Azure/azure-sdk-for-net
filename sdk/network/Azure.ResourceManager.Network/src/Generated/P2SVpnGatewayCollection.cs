@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of P2SVpnGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="P2SVpnGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal P2SVpnGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGatewayCollection.Exists");
             scope.Start();
             try
             {

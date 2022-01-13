@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteDetectorCollection(ArmResource parent) : base(parent)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PacketCaptureCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PacketCaptureCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(packetCaptureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(packetCaptureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.Exists");
             scope.Start();
             try
             {

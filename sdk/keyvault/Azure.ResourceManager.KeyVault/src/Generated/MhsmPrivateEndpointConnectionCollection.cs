@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MhsmPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal MhsmPrivateEndpointConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {

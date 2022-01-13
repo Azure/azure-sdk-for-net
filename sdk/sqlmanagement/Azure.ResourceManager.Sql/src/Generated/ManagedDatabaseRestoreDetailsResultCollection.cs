@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailsResultCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseRestoreDetailsResultCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedDatabaseRestoreDetailsResultCollection(ArmResource parent) : base(parent)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedDatabaseRestoreDetailsResult>> GetIfExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.Exists");
             scope.Start();
             try
             {

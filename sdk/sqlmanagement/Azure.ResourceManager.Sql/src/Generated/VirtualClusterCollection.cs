@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualClusterCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualClusterCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualClusterCollection(ArmResource parent) : base(parent)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();
             try
             {

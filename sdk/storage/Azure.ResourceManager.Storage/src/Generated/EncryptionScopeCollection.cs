@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EncryptionScopeCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EncryptionScopeCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(encryptionScopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(encryptionScopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
             scope.Start();
             try
             {

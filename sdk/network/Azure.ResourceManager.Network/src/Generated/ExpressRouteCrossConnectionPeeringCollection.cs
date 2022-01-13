@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeeringCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteCrossConnectionPeeringCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Exists");
             scope.Start();
             try
             {

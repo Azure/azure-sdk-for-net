@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of DscpConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DscpConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DscpConfigurationCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.Exists");
             scope.Start();
             try
             {

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotPremierAddOnCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotPremierAddOnCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotPremierAddOnCollection(ArmResource parent) : base(parent)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.Exists");
             scope.Start();
             try
             {

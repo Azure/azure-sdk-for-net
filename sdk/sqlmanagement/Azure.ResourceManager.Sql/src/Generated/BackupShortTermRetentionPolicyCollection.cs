@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupShortTermRetentionPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal BackupShortTermRetentionPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<BackupShortTermRetentionPolicy>> GetIfExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.Exists");
             scope.Start();
             try
             {

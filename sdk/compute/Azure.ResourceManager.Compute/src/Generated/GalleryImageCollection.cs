@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryImageCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GalleryImageCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.Exists");
             scope.Start();
             try
             {

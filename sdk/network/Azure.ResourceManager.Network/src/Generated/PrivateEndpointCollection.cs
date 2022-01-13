@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateEndpointCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(privateEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(privateEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
             try
             {

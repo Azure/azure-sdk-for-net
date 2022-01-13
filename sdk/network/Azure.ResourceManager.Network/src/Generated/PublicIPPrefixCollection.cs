@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPPrefixCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublicIPPrefixCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PublicIPPrefixCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(publicIpPrefixName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(publicIpPrefixName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixCollection.Exists");
             scope.Start();
             try
             {

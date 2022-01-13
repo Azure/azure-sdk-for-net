@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteDiagnosticDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteDiagnosticDetectorCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.Exists");
             scope.Start();
             try
             {

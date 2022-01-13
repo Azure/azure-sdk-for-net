@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of DomainOwnershipIdentifierCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DomainOwnershipIdentifierCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DomainOwnershipIdentifierCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.Exists");
             scope.Start();
             try
             {

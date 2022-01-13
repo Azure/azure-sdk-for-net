@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteInstanceCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.Exists");
             scope.Start();
             try
             {

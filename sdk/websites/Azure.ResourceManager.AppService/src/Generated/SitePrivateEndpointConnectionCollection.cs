@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SitePrivateEndpointConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SitePrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SitePrivateEndpointConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePrivateEndpointConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(privateEndpointConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePrivateEndpointConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {

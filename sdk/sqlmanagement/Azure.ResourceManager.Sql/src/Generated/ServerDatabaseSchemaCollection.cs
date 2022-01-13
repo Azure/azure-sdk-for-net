@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDatabaseSchemaCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDatabaseSchemaCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseSchemaCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
             scope.Start();
             try
             {

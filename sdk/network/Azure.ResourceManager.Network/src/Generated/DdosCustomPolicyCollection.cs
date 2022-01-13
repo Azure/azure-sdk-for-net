@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of DdosCustomPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DdosCustomPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DdosCustomPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ddosCustomPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ddosCustomPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.Exists");
             scope.Start();
             try
             {

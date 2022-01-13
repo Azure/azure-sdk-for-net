@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TemplateSpecCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TemplateSpecCollection(ArmResource parent) : base(parent)
         {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
             try
             {

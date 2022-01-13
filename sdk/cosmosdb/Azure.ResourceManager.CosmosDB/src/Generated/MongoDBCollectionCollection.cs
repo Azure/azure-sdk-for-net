@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoDBCollectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal MongoDBCollectionCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.Exists");
             scope.Start();
             try
             {

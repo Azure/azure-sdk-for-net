@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of GuestAgentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GuestAgentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GuestAgentCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.Exists");
             scope.Start();
             try
             {

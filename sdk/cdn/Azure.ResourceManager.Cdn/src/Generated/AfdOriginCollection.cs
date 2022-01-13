@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdOriginCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdOriginCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdOriginCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Exists");
             scope.Start();
             try
             {

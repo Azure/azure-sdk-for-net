@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CertificateOrderDetectorCollection(ArmResource parent) : base(parent)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
             scope.Start();
             try
             {

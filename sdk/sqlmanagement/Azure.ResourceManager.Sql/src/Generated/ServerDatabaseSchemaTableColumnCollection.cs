@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDatabaseSchemaTableColumnCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDatabaseSchemaTableColumnCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseSchemaTableColumnCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(columnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(columnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdRouteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdRouteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdRouteCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(routeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.Exists");
             scope.Start();
             try
             {

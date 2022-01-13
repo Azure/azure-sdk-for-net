@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of DiskRestorePointCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskRestorePointCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiskRestorePointCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();
             try
             {

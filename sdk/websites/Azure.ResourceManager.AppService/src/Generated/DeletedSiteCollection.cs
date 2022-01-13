@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSiteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedSiteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeletedSiteCollection(ArmResource parent) : base(parent)
         {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceObjectiveCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceObjectiveCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serviceObjectiveName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serviceObjectiveName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();
             try
             {

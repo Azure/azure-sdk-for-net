@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SnapshotCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SnapshotCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(snapshotName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(snapshotName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.Exists");
             scope.Start();
             try
             {

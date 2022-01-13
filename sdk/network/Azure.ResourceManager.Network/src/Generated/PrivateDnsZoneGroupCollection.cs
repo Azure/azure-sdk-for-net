@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateDnsZoneGroupCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteUserProvidedFunctionAppCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteUserProvidedFunctionAppCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerKeyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerKeyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerKeyCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.Exists");
             scope.Start();
             try
             {

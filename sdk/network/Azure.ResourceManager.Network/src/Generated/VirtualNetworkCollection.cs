@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualNetworkCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Exists");
             scope.Start();
             try
             {

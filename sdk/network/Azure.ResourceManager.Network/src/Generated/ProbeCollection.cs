@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ProbeCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProbeCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ProbeCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.Exists");
             scope.Start();
             try
             {

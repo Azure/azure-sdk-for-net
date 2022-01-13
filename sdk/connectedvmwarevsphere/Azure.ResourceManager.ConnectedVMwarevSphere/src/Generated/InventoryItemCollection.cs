@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of InventoryItemCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InventoryItemCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal InventoryItemCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(inventoryItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(inventoryItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.Exists");
             scope.Start();
             try
             {

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotVirtualNetworkConnectionGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotVirtualNetworkConnectionGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
             try
             {

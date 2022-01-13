@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceRoleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CloudServiceRoleCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.Exists");
             scope.Start();
             try
             {

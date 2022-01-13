@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeerExpressRouteCircuitConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PeerExpressRouteCircuitConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
             scope.Start();
             try
             {

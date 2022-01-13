@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerAzureADAdministratorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerAzureADAdministratorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerAzureADAdministratorCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerAzureADAdministrator>> GetIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Exists");
             scope.Start();
             try
             {

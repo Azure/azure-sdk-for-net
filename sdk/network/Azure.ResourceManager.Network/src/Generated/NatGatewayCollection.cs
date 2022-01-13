@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NatGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NatGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NatGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(natGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(natGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorableDroppedManagedDatabaseCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RestorableDroppedManagedDatabaseCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.Exists");
             scope.Start();
             try
             {

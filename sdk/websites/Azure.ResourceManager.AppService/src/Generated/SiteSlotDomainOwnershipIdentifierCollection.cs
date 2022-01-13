@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotDomainOwnershipIdentifierCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDomainOwnershipIdentifierCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotDomainOwnershipIdentifierCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.Exists");
             scope.Start();
             try
             {

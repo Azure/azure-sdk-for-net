@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
         }
 
-        /// <summary> Initializes a new instance of CustomLocationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomLocationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CustomLocationCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ExtendedLocation
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ExtendedLocation
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.Exists");
             scope.Start();
             try
             {

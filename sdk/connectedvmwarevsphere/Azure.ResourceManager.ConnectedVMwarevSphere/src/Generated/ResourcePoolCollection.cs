@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of ResourcePoolCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourcePoolCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ResourcePoolCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(resourcePoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(resourcePoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Exists");
             scope.Start();
             try
             {

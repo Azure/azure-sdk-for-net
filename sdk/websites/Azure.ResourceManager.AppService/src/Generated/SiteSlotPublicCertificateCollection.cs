@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotPublicCertificateCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotPublicCertificateCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotPublicCertificateCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.Exists");
             scope.Start();
             try
             {

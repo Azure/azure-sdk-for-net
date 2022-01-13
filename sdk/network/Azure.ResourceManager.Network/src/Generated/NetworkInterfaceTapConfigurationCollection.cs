@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceTapConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkInterfaceTapConfigurationCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tapConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tapConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Exists");
             scope.Start();
             try
             {

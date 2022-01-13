@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InstancePoolCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal InstancePoolCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.Exists");
             scope.Start();
             try
             {

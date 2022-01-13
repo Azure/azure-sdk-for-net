@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceOperationCollection(ArmResource parent) : base(parent)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceOperation>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
             scope.Start();
             try
             {

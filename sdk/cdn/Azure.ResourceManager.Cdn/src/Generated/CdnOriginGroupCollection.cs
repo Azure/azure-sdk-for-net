@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of CdnOriginGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnOriginGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CdnOriginGroupCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
             scope.Start();
             try
             {

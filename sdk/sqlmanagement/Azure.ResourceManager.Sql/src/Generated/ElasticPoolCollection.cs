@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticPoolCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ElasticPoolCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(elasticPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(elasticPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WebApplicationFirewallPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
             try
             {

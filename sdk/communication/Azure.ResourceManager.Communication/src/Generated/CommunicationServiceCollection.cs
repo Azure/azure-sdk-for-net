@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationServiceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CommunicationServiceCollection(ArmResource parent) : base(parent)
         {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(communicationServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.Exists");
             scope.Start();
             try
             {

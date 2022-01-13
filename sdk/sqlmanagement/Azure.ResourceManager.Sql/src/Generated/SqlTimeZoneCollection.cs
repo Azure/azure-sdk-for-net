@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SqlTimeZoneCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlTimeZoneCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
             try
             {

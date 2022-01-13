@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CdnWebApplicationFirewallPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
             try
             {

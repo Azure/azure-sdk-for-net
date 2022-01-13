@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubAuthorizationRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubAuthorizationRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EventHubAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {

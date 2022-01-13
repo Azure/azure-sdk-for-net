@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SitePremierAddonCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SitePremierAddonCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SitePremierAddonCollection(ArmResource parent) : base(parent)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Exists");
             scope.Start();
             try
             {

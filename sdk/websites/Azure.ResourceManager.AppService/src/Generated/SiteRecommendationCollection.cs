@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecommendationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecommendationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteRecommendationCollection(ArmResource parent) : base(parent)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.Exists");
             scope.Start();
             try
             {

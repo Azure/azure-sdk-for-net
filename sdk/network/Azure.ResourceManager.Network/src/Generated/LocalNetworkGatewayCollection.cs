@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of LocalNetworkGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalNetworkGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LocalNetworkGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(localNetworkGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(localNetworkGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();
             try
             {

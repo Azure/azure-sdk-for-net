@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetExtensionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualMachineScaleSetExtensionCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmssExtensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmssExtensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionCollection.Exists");
             scope.Start();
             try
             {

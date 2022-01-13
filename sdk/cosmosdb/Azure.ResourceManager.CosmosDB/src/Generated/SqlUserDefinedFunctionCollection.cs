@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of SqlUserDefinedFunctionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlUserDefinedFunctionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlUserDefinedFunctionCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LongTermRetentionPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LongTermRetentionPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LongTermRetentionPolicy>> GetIfExistsAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SyncAgentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SyncAgentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SyncAgentCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(syncAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(syncAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.Exists");
             scope.Start();
             try
             {

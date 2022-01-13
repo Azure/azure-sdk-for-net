@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityPartnerProviderCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityPartnerProviderCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SecurityPartnerProviderCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(securityPartnerProviderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(securityPartnerProviderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
             scope.Start();
             try
             {

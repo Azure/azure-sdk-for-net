@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceSiteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualApplianceSiteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualApplianceSiteCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(siteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(siteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();
             try
             {

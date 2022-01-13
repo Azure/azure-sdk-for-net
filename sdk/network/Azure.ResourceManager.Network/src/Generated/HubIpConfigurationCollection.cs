@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of HubIpConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubIpConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HubIpConfigurationCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipConfigName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipConfigName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.Exists");
             scope.Start();
             try
             {

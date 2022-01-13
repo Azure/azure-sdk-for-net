@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdEndpointCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdEndpointCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdEndpointCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdEndpointCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(endpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdEndpointCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdEndpointCollection.Exists");
             scope.Start();
             try
             {

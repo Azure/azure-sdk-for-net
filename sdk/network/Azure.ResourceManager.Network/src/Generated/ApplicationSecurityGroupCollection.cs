@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationSecurityGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationSecurityGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ApplicationSecurityGroupCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(applicationSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Exists");
             scope.Start();
             try
             {

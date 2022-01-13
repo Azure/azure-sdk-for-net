@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceDomainCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AppServiceDomainCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.Exists");
             scope.Start();
             try
             {

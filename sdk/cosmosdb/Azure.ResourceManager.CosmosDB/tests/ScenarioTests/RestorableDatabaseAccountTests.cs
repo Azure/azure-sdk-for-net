@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"));
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableDatabaseAccountsAsync().ToEnumerableAsync();
-            Assert.That(restorableAccounts.Any(account => account.AccountName == _restorableDatabaseAccount.Data.Name));
+            Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
         [Test]

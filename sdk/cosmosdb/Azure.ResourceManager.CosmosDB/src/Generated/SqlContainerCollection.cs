@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of SqlContainerCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlContainerCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlContainerCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Exists");
             scope.Start();
             try
             {

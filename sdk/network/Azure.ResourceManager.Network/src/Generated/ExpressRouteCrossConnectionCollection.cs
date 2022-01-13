@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteCrossConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of OutboundRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OutboundRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal OutboundRuleCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(outboundRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(outboundRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
             scope.Start();
             try
             {

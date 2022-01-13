@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of IpAllocationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IpAllocationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal IpAllocationCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipAllocationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipAllocationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IpAllocationCollection.Exists");
             scope.Start();
             try
             {

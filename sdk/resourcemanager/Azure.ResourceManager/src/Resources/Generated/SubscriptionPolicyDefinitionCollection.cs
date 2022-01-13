@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicyDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SubscriptionPolicyDefinitionCollection(ArmResource parent) : base(parent)
         {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteConfigAppsettingCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteConfigAppsettingCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteConfigAppsettingCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Exists");
             scope.Start();
             try
             {

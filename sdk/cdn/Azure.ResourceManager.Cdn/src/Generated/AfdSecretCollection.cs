@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecretCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdSecretCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdSecretCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.Exists");
             scope.Start();
             try
             {

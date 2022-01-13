@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRoutePortCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.Exists");
             scope.Start();
             try
             {

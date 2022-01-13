@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteFunctionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteFunctionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteFunctionCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.Exists");
             scope.Start();
             try
             {

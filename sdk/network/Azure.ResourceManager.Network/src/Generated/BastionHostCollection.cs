@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of BastionHostCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BastionHostCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal BastionHostCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bastionHostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bastionHostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Exists");
             scope.Start();
             try
             {

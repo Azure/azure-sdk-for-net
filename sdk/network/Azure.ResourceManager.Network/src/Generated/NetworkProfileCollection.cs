@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkProfileCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkProfileCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
             try
             {

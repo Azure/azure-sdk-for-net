@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AppServiceCertificateResourceCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.Exists");
             scope.Start();
             try
             {

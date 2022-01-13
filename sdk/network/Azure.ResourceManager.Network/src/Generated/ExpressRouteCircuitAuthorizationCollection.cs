@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitAuthorizationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteCircuitAuthorizationCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(authorizationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(authorizationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
             scope.Start();
             try
             {

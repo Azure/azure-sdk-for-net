@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerCommunicationLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerCommunicationLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerCommunicationLinkCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(communicationLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(communicationLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
             scope.Start();
             try
             {

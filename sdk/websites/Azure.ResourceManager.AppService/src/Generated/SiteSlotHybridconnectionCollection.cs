@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotHybridconnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotHybridconnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotHybridconnectionCollection(ArmResource parent) : base(parent)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.Exists");
             scope.Start();
             try
             {

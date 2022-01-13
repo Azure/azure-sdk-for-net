@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancingRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LoadBalancingRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LoadBalancingRuleCollection(ArmResource parent) : base(parent)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancingRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancingRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationStoreCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfigurationStoreCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ConfigurationStoreCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
             scope.Start();
             try
             {

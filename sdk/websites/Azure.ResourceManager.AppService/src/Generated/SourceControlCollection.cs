@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SourceControlCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SourceControlCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SourceControlCollection(ArmResource parent) : base(parent)
         {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(sourceControlType));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(sourceControlType));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.Exists");
             scope.Start();
             try
             {

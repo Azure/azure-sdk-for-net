@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of ProfileCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProfileCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ProfileCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Exists");
             scope.Start();
             try
             {

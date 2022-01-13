@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of TenantPolicyDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TenantPolicyDefinitionCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {

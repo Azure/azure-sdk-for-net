@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusTopicCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusTopicCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(topicName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(topicName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
             try
             {

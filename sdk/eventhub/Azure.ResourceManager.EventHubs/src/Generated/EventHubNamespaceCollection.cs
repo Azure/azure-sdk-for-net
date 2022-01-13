@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubNamespaceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubNamespaceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EventHubNamespaceCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Exists");
             scope.Start();
             try
             {

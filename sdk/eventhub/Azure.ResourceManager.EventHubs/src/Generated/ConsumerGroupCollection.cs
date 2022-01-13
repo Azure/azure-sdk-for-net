@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumerGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConsumerGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ConsumerGroupCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(consumerGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(consumerGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.Exists");
             scope.Start();
             try
             {

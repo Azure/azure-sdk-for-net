@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotWebJobCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebJobCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotWebJobCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.Exists");
             scope.Start();
             try
             {

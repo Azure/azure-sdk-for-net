@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of JobAgentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobAgentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JobAgentCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.Exists");
             scope.Start();
             try
             {

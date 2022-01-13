@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CassandraTableCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.Exists");
             scope.Start();
             try
             {

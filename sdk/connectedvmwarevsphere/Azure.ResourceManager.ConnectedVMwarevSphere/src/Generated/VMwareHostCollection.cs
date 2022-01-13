@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareHostCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareHostCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VMwareHostCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PolicyAssignmentCollection(ArmResource parent) : base(parent)
         {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyAssignmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyAssignmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.Exists");
             scope.Start();
             try
             {

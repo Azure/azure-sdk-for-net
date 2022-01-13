@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerJobAgentJobExecutionCollection(ArmResource parent) : base(parent)
         {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerJobAgentJobExecution>> GetIfExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
             scope.Start();
             try
             {

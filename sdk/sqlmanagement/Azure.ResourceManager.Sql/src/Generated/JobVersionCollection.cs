@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of JobVersionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobVersionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JobVersionCollection(ArmResource parent) : base(parent)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<JobVersion>> GetIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VpnConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VpnConnectionCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnConnectionCollection.Exists");
             scope.Start();
             try
             {

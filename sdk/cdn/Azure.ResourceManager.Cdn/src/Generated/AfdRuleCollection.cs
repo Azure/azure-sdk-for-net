@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdRuleCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.Exists");
             scope.Start();
             try
             {

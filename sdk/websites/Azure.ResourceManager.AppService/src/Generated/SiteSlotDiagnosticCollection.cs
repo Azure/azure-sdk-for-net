@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotDiagnosticCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotDiagnosticCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(diagnosticCategory));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(diagnosticCategory));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.Exists");
             scope.Start();
             try
             {

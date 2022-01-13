@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationConfigPropertiesCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MigrationConfigPropertiesCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal MigrationConfigPropertiesCollection(ArmResource parent) : base(parent)
         {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<MigrationConfigProperties>> GetIfExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.Exists");
             scope.Start();
             try
             {

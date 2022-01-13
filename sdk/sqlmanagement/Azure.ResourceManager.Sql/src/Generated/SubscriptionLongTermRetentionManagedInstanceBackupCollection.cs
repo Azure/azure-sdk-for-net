@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionLongTermRetentionManagedInstanceBackupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionLongTermRetentionManagedInstanceBackupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Exists");
             scope.Start();
             try
             {

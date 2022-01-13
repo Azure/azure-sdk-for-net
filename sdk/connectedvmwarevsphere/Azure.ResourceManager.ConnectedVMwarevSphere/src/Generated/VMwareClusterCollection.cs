@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareClusterCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareClusterCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VMwareClusterCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Exists");
             scope.Start();
             try
             {

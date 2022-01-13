@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VpnGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VpnGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.Exists");
             scope.Start();
             try
             {

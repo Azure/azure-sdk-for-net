@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ReplicationLinkCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(linkId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(linkId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
             scope.Start();
             try
             {

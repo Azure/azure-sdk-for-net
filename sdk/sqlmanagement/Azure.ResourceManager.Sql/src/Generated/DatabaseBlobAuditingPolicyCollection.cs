@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseBlobAuditingPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DatabaseBlobAuditingPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseBlobAuditingPolicy>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseAccountCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DatabaseAccountCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCollection.Exists");
             scope.Start();
             try
             {

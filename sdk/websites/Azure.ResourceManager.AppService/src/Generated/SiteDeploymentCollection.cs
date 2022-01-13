@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteDeploymentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDeploymentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteDeploymentCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDeploymentCollection.Exists");
             scope.Start();
             try
             {

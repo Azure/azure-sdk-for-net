@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareDatastoreCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareDatastoreCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VMwareDatastoreCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VMwareDatastoreCollection.Exists");
             scope.Start();
             try
             {

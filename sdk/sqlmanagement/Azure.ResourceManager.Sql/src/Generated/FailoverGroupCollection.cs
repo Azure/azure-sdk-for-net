@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of FailoverGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FailoverGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FailoverGroupCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(failoverGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FailoverGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FailoverGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(failoverGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FailoverGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FailoverGroupCollection.Exists");
             scope.Start();
             try
             {

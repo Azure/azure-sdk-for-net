@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceKeyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceKeyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceKeyCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Exists");
             scope.Start();
             try
             {

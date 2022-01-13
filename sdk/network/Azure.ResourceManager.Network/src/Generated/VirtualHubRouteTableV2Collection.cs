@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2Collection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubRouteTableV2Collection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualHubRouteTableV2Collection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.Exists");
             scope.Start();
             try
             {

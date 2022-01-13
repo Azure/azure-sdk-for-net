@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseSecurityAlertPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseSecurityAlertPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DatabaseSecurityAlertPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseSecurityAlertPolicy>> GetIfExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DatabaseSecurityAlertPolicyCollection.Exists");
             scope.Start();
             try
             {

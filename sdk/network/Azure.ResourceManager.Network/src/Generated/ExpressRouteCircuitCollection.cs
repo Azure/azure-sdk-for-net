@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteCircuitCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(circuitName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(circuitName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitCollection.Exists");
             scope.Start();
             try
             {

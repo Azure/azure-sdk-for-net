@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of JobCredentialCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobCredentialCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JobCredentialCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(credentialName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(credentialName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.Exists");
             scope.Start();
             try
             {

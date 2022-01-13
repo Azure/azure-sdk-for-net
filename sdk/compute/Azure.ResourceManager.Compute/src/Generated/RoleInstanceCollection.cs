@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of RoleInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RoleInstanceCollection(ArmResource parent) : base(parent)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
             scope.Start();
             try
             {

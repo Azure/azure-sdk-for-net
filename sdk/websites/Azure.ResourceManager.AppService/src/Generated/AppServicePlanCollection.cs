@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServicePlanCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AppServicePlanCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilitySetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvailabilitySetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AvailabilitySetCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(availabilitySetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AvailabilitySetCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AvailabilitySetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(availabilitySetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AvailabilitySetCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AvailabilitySetCollection.Exists");
             scope.Start();
             try
             {

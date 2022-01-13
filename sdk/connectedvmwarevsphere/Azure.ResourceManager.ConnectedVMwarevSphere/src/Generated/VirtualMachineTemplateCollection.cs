@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineTemplateCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineTemplateCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualMachineTemplateCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(virtualMachineTemplateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(virtualMachineTemplateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Exists");
             scope.Start();
             try
             {

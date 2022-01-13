@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of DiskEncryptionSetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskEncryptionSetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiskEncryptionSetCollection(ArmResource parent) : base(parent)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskEncryptionSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskEncryptionSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetCollection.Exists");
             scope.Start();
             try
             {

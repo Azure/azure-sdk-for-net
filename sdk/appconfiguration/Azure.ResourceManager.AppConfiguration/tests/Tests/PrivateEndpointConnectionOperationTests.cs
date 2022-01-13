@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                     },
                     Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
                 };
-                VirtualNetwork vnet = await (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(VnetName, vnetData)).WaitForCompletionAsync();
+                VirtualNetwork vnet = await (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, VnetName, vnetData)).WaitForCompletionAsync();
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                         },
                     Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 };
-                PrivateEndpoint = await (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(EndpointName, privateEndpointData)).WaitForCompletionAsync();
+                PrivateEndpoint = await (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(true, EndpointName, privateEndpointData)).WaitForCompletionAsync();
                 List<PrivateEndpointConnection> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
             }

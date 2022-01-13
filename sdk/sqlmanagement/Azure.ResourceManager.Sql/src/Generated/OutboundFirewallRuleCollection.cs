@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of OutboundFirewallRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OutboundFirewallRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal OutboundFirewallRuleCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(outboundRuleFqdn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(outboundRuleFqdn));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.Exists");
             scope.Start();
             try
             {

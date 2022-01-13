@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FirewallPolicyRuleCollectionGroupCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleCollectionGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ruleCollectionGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Exists");
             scope.Start();
             try
             {

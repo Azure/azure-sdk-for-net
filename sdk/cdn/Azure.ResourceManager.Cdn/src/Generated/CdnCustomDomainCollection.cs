@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of CdnCustomDomainCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnCustomDomainCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CdnCustomDomainCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
             try
             {

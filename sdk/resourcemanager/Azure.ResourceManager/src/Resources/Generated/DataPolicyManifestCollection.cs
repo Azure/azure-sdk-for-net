@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataPolicyManifestCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DataPolicyManifestCollection(ArmResource parent) : base(parent)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyMode));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyMode));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SecurityRuleCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(securityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(securityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.Exists");
             scope.Start();
             try
             {

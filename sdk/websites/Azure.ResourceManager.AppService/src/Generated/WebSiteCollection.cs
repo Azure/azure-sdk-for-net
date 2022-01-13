@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of WebSiteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WebSiteCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.Exists");
             scope.Start();
             try
             {

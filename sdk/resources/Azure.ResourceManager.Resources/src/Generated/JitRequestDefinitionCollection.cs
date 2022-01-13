@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of JitRequestDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JitRequestDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JitRequestDefinitionCollection(ArmResource parent) : base(parent)
         {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(jitRequestName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(jitRequestName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.Exists");
             scope.Start();
             try
             {

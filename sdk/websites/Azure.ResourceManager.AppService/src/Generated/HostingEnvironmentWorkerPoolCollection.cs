@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentWorkerPoolCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentWorkerPoolCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HostingEnvironmentWorkerPoolCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(workerPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(workerPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.Exists");
             scope.Start();
             try
             {

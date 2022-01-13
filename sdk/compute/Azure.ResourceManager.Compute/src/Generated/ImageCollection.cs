@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of ImageCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ImageCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ImageCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(imageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ImageCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ImageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(imageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ImageCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ImageCollection.Exists");
             scope.Start();
             try
             {

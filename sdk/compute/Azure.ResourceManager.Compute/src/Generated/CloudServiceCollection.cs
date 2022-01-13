@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CloudServiceCollection(ArmResource parent) : base(parent)
         {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.Exists");
             scope.Start();
             try
             {

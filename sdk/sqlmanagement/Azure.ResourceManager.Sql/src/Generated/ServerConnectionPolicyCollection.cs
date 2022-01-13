@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerConnectionPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerConnectionPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerConnectionPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerConnectionPolicy>> GetIfExistsAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerConnectionPolicyCollection.Exists");
             scope.Start();
             try
             {

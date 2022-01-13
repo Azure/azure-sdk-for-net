@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupPolicyDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicyDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagementGroupPolicyDefinitionCollection(ArmResource parent) : base(parent)
         {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {

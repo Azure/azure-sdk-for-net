@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of SchemaGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SchemaGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SchemaGroupCollection(ArmResource parent) : base(parent)
         {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(schemaGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(schemaGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.Exists");
             scope.Start();
             try
             {

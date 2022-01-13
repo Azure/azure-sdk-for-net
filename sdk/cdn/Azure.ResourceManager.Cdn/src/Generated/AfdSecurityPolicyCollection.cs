@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecurityPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdSecurityPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdSecurityPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthenticationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceAzureADOnlyAuthenticationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceAzureADOnlyAuthenticationCollection(ArmResource parent) : base(parent)
         {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceAzureADOnlyAuthentication>> GetIfExistsAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.Exists");
             scope.Start();
             try
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of DedicatedHostCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DedicatedHostCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DedicatedHostCollection(ArmResource parent) : base(parent)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.Exists");
             scope.Start();
             try
             {

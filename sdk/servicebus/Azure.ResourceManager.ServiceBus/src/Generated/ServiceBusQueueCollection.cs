@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusQueueCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusQueueCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of RouteTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RouteTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RouteTableCollection(ArmResource parent) : base(parent)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RouteTableCollection.Exists");
             scope.Start();
             try
             {

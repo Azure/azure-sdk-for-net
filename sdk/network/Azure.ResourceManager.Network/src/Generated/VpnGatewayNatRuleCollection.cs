@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VpnGatewayNatRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnGatewayNatRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VpnGatewayNatRuleCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(natRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(natRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleCollection.Exists");
             scope.Start();
             try
             {

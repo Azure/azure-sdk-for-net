@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WorkloadGroupCollection(ArmResource parent) : base(parent)
         {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StoragePool
         {
         }
 
-        /// <summary> Initializes a new instance of DiskPoolCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskPoolCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiskPoolCollection(ArmResource parent) : base(parent)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(diskPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(diskPoolName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Exists");
             scope.Start();
             try
             {

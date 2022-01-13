@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of FlowLogCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FlowLogCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FlowLogCollection(ArmResource parent) : base(parent)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(flowLogName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(flowLogName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.Exists");
             scope.Start();
             try
             {
