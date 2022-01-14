@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
         private async Task<Snapshot> CreateSnapshot(Disk disk, string name)
         {
-            var snapshotCreateOperation = await _resourceGroup.GetSnapshots().CreateOrUpdateAsync(name,
+            var snapshotCreateOperation = await _resourceGroup.GetSnapshots().CreateOrUpdateAsync(true, name,
                 new SnapshotData(_config.Location)
                 {
                     CreationData = new CreationData(DiskCreateOption.Copy)
@@ -94,13 +94,13 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
         private async Task DeleteSnapshot(Snapshot snapshot)
         {
-            var snapshotDeleteOperation = await snapshot.DeleteAsync();
+            var snapshotDeleteOperation = await snapshot.DeleteAsync(true);
             await snapshotDeleteOperation.WaitForCompletionResponseAsync();
         }
 
         private async Task<Uri> GrantAccess(Snapshot snapshot)
         {
-            var grantOperation = await snapshot.GrantAccessAsync(
+            var grantOperation = await snapshot.GrantAccessAsync(true,
                 new GrantAccessData(AccessLevel.Read, 3600));
             AccessUri accessUri = await grantOperation.WaitForCompletionAsync();
             return new Uri(accessUri.AccessSAS);
@@ -108,7 +108,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
         private async Task RevokeAccess(Snapshot snapshot)
         {
-            var revokeOperation = await snapshot.RevokeAccessAsync();
+            var revokeOperation = await snapshot.RevokeAccessAsync(true);
             await revokeOperation.WaitForCompletionResponseAsync();
         }
     }

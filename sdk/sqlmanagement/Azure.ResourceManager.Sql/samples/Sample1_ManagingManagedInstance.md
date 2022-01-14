@@ -48,7 +48,7 @@ NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData
     Location = AzureLocation.WestUS2,
 };
 string networkSecurityGroupName = "myNetworkSecurityGroup";
-var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
+var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
 
 //2. create Route table
 RouteTableData routeTableData = new RouteTableData()
@@ -56,7 +56,7 @@ RouteTableData routeTableData = new RouteTableData()
     Location = AzureLocation.WestUS2,
 };
 string routeTableName = "myRouteTable";
-var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
+var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
 
 //3. create vnet(subnet binding NetworkSecurityGroup and RouteTable)
 var vnetData = new VirtualNetworkData()
@@ -82,7 +82,7 @@ var vnetData = new VirtualNetworkData()
     },
 };
 string vnetName = "myVnet";
-var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
 string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 
 //4. create ManagedInstance
