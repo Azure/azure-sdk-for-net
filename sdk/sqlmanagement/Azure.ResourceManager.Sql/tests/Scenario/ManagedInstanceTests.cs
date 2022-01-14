@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
-            var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
+            var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
             var managedInstance = managedInstanceLro.Value;
             return managedInstance;
         }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual("westus2", list.FirstOrDefault().Data.Location.ToString());
 
             // 5.Delte
-            await managedInstance.DeleteAsync();
+            await managedInstance.DeleteAsync(true);
             list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDatabaseSchemaTableColumnCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDatabaseSchemaTableColumnCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseSchemaTableColumnCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchemaTableColumn>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchemaTableColumn>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(columnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _databaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchemaTableColumn>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchemaTableColumn>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(columnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.Exists");
             scope.Start();
             try
             {

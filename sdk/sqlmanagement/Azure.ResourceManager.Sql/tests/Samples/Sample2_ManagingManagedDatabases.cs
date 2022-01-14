@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 ZoneRedundant = false,
             };
             string managedInstanceName = "myManagedInstance";
-            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
+            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
             managedInstance = managedInstanceLro.Value;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             {
             };
             string databaseName = "myDatabase";
-            var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(databaseName, data);
+            var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(true, databaseName, data);
             ManagedDatabase managedDatabase = managedDatabaseLro.Value;
             #endregion
         }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
             ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
-            await managedDatabase.DeleteAsync();
+            await managedDatabase.DeleteAsync(true);
             #endregion
         }
     }

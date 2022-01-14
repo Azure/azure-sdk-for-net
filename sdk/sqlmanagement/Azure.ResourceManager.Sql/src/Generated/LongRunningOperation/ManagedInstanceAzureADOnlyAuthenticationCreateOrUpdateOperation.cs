@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedInstanceAzureADOnlyAuthentication IOperationSource<ManagedInstanceAzureADOnlyAuthentication>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstanceAzureADOnlyAuthentication(_operationBase, ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);
+            return new ManagedInstanceAzureADOnlyAuthentication(_operationBase, data);
         }
 
         async ValueTask<ManagedInstanceAzureADOnlyAuthentication> IOperationSource<ManagedInstanceAzureADOnlyAuthentication>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstanceAzureADOnlyAuthentication(_operationBase, ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);
+            return new ManagedInstanceAzureADOnlyAuthentication(_operationBase, data);
         }
     }
 }

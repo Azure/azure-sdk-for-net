@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                     new ManagedInstancePairInfo(primaryManagedInstanceId,partnerManagedInstanceId),
                 },
             };
-            var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups(locationName).CreateOrUpdateAsync(instanceFailoverGroupName, data);
+            var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups(locationName).CreateOrUpdateAsync(true, instanceFailoverGroupName, data);
             return instanceFailoverGroupLro.Value;
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 5.Delete
             var deleteInstanceFailoverGroup = (await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAsync(instanceFailoverGroupName)).Value;
-            await deleteInstanceFailoverGroup.DeleteAsync();
+            await deleteInstanceFailoverGroup.DeleteAsync(true);
             list = await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

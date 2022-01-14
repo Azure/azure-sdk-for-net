@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             foreach (var item in SqlServerList)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 AdministratorLogin = "Admin-" + sqlServerName,
                 AdministratorLoginPassword = CreateGeneralPassword(),
             };
-            var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(sqlServerName, data);
+            var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(true, sqlServerName, data);
             return SqlServer.Value;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, SqlServerList.Count);
 
-            await SqlServerList[0].DeleteAsync();
+            await SqlServerList[0].DeleteAsync(true);
             SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, SqlServerList.Count);
         }

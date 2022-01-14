@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 SubnetId = subnetId,
                 VCores = 8,
             };
-            var instancePoolLro = await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(instancePoolName, data);
+            var instancePoolLro = await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(true, instancePoolName, data);
             return instancePoolLro.Value;
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
 
-            await instancePool.DeleteAsync();
+            await instancePool.DeleteAsync(true);
             list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }

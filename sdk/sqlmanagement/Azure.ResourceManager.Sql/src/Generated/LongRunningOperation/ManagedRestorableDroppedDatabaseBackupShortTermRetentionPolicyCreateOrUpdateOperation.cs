@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedRestorableDroppedDbBackupShortTermRetentionPolicy IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
+            var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
+            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_operationBase, data);
         }
 
         async ValueTask<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy> IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
+            var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
+            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_operationBase, data);
         }
     }
 }

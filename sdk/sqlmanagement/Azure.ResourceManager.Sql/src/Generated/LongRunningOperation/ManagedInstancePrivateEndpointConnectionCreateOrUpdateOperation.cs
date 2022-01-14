@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedInstancePrivateEndpointConnection IOperationSource<ManagedInstancePrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstancePrivateEndpointConnection(_operationBase, ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement));
+            var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);
+            return new ManagedInstancePrivateEndpointConnection(_operationBase, data);
         }
 
         async ValueTask<ManagedInstancePrivateEndpointConnection> IOperationSource<ManagedInstancePrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstancePrivateEndpointConnection(_operationBase, ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement));
+            var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);
+            return new ManagedInstancePrivateEndpointConnection(_operationBase, data);
         }
     }
 }
