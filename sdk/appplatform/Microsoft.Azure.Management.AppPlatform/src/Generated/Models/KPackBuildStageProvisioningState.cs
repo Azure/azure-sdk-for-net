@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 {
 
     /// <summary>
-    /// Defines values for RuntimeVersion.
+    /// Defines values for KPackBuildStageProvisioningState.
     /// </summary>
-    public static class RuntimeVersion
+    public static class KPackBuildStageProvisioningState
     {
-        public const string Java8 = "Java_8";
-        public const string Java11 = "Java_11";
-        public const string NetCore31 = "NetCore_31";
+        public const string NotStarted = "NotStarted";
+        public const string Running = "Running";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
     }
 }
