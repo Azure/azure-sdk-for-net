@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VpnGatewayNatRule and their operations over its parent. </summary>
     public partial class VpnGatewayNatRuleCollection : ArmCollection, IEnumerable<VpnGatewayNatRule>, IAsyncEnumerable<VpnGatewayNatRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NatRulesRestOperations _natRulesRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _natRulesRestClient = new NatRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VpnGateway.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VpnGateway.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnGateway.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -363,6 +368,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VpnGatewayNatRule, VpnGatewayNatRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VpnGatewayNatRule, VpnGatewayNatRuleData> Construct() { }
     }
 }

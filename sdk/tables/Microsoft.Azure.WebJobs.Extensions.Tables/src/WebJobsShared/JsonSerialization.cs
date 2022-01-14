@@ -28,8 +28,6 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
             Formatting = Formatting.Indented
         };
 
-        private static readonly JsonSerializer JsonSerializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
-
-        internal static JsonSerializer Serializer => JsonSerializer;
+        internal static JsonSerializer Serializer { get; } = JsonSerializer.CreateDefault(JsonSerializerSettings);
     }
 }

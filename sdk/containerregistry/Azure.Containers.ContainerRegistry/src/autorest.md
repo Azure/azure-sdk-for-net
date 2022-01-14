@@ -14,6 +14,24 @@ modelerfour:
 
 ## Customizations for Code Generator
 
+### Rename the enum TagOrderBy->ArtifactTagOrder
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TagOrderBy
+  transform: >
+    $['x-ms-enum']["name"] = "ArtifactTagOrder"
+```
+
+### Rename the enum ManifestOrderBy->ArtifactManifestOrder
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ManifestOrderBy
+  transform: >
+    $['x-ms-enum']["name"] = "ArtifactManifestOrder"
+```
+
 ### Remove response for "ContainerRegistry_DeleteRepository" operation so that the generate code doesn't return a response for the delete repository operation.
 ```yaml
 directive:

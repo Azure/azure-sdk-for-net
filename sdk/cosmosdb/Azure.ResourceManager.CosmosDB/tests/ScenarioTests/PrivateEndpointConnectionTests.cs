@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Network;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var vnetName = Recording.GenerateAssetName("vnet-");
             var vnet = new VirtualNetworkData()
             {
-                Location = Resources.Models.Location.WestUS,
+                Location = AzureLocation.WestUS,
                 AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
-                Location = Resources.Models.Location.WestUS,
+                Location = AzureLocation.WestUS,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
                     new PrivateLinkServiceConnection

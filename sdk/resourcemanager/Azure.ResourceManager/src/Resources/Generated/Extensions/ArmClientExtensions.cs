@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="SubscriptionPolicyDefinition" /> object. </returns>
         public static SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            SubscriptionPolicyDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionPolicyDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TenantPolicyDefinition" /> object. </returns>
         public static TenantPolicyDefinition GetTenantPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            TenantPolicyDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TenantPolicyDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ManagementGroupPolicyDefinition" /> object. </returns>
         public static ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagementGroupPolicyDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementGroupPolicyDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="SubscriptionPolicySetDefinition" /> object. </returns>
         public static SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            SubscriptionPolicySetDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SubscriptionPolicySetDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -63,6 +68,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TenantPolicySetDefinition" /> object. </returns>
         public static TenantPolicySetDefinition GetTenantPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            TenantPolicySetDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TenantPolicySetDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -74,6 +80,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinition" /> object. </returns>
         public static ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagementGroupPolicySetDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementGroupPolicySetDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -85,6 +92,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
         public static PolicyAssignment GetPolicyAssignment(this ArmClient armClient, ResourceIdentifier id)
         {
+            PolicyAssignment.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PolicyAssignment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -96,6 +104,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="PolicyExemption" /> object. </returns>
         public static PolicyExemption GetPolicyExemption(this ArmClient armClient, ResourceIdentifier id)
         {
+            PolicyExemption.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PolicyExemption(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -107,6 +116,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="DataPolicyManifest" /> object. </returns>
         public static DataPolicyManifest GetDataPolicyManifest(this ArmClient armClient, ResourceIdentifier id)
         {
+            DataPolicyManifest.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataPolicyManifest(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -118,6 +128,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ManagementLockObject" /> object. </returns>
         public static ManagementLockObject GetManagementLockObject(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagementLockObject.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagementLockObject(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -129,6 +140,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
         public static ResourceLink GetResourceLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            ResourceLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourceLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

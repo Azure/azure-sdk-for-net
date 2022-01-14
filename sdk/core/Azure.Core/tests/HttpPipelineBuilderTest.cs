@@ -220,8 +220,8 @@ namespace Azure.Core.Tests
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 Array.Empty<HttpPipelinePolicy>(),
-                ResponseClassifier.Shared,
-                new HttpPipelineTransportOptions());
+                new HttpPipelineTransportOptions(),
+                ResponseClassifier.Shared);
 
             HttpPipelineTransport transportField = pipeline.GetType().GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
             if (isCustomTransportSet)

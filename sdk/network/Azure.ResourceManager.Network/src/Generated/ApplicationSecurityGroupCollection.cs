@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ApplicationSecurityGroup and their operations over its parent. </summary>
     public partial class ApplicationSecurityGroupCollection : ArmCollection, IEnumerable<ApplicationSecurityGroup>, IAsyncEnumerable<ApplicationSecurityGroup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ApplicationSecurityGroupsRestOperations _applicationSecurityGroupsRestClient;
@@ -39,10 +39,16 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _applicationSecurityGroupsRestClient = new ApplicationSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ApplicationSecurityGroup, ApplicationSecurityGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ApplicationSecurityGroup, ApplicationSecurityGroupData> Construct() { }
     }
 }

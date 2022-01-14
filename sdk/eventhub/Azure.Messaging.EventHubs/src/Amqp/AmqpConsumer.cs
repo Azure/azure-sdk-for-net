@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId, operationId);
 
-                        link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         var messagesReceived = await link.ReceiveMessagesAsync(maximumEventCount, ReceiveBuildBatchInterval, waitTime, cancellationToken).ConfigureAwait(false);

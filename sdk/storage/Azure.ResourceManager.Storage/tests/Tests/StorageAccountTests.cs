@@ -12,6 +12,8 @@ using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using Azure.ResourceManager.Network.Models;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Storage.Tests
 {
     public class StorageAccountTests : StorageTestBase
@@ -884,7 +886,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.PremiumLRS), kind: Kind.StorageV2, location: Location.EastUS2);
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.PremiumLRS), kind: Kind.StorageV2, location: AzureLocation.EastUS2);
             parameters.ExtendedLocation = new Models.ExtendedLocation
             {
                 Type = Storage.Models.ExtendedLocationTypes.EdgeZone,
@@ -980,7 +982,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //get available locations
-            IEnumerable<Location> locationList = await account.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locationList = await account.GetAvailableLocationsAsync();
             Assert.NotNull(locationList);
         }
 
@@ -1403,8 +1405,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //get all private link resources
-            Response<IReadOnlyList<PrivateLinkResource>> privateLinkResources = await account.GetPrivateLinkResourcesAsync();
-            Assert.NotNull(privateLinkResources.Value);
+            await foreach (var _ in account.GetPrivateLinkResourcesAsync())
+            {
+                return;
+            }
+
+            Assert.Fail($"{nameof(StorageAccount)}.{nameof(StorageAccount.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(PrivateLinkResource)}.");
         }
 
         [Test]

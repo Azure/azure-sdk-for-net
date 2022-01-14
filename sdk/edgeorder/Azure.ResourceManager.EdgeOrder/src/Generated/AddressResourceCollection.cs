@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary> A class representing collection of AddressResource and their operations over its parent. </summary>
     public partial class AddressResourceCollection : ArmCollection, IEnumerable<AddressResource>, IAsyncEnumerable<AddressResource>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EdgeOrderManagementRestOperations _restClient;
@@ -39,10 +39,16 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new EdgeOrderManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -432,6 +438,6 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AddressResource, AddressResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AddressResource, AddressResourceData> Construct() { }
     }
 }

@@ -3,7 +3,11 @@
 
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
+using Moq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
@@ -20,11 +24,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [Test]
         public void Create_ReturnsNull_IfByRefParameter()
         {
-            // Arrange
-            ITableEntityArgumentBindingProvider product = new PocoEntityArgumentBindingProvider();
-            Type parameterType = typeof(SimpleTableEntity).MakeByRefType();
+            var converterMock = CreateConverterMock(typeof(SimpleTableEntity));
+
             // Act
-            IArgumentBinding<TableEntityContext> binding = product.TryCreate(_parameters[0]);
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreatePocoBinding(_parameters[0], converterMock.Object);
             // Assert
             Assert.Null(binding);
         }
@@ -32,21 +35,47 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [Test]
         public void Create_ReturnsBinding_IfContainsResolvedGenericParameter()
         {
-            // Arrange
-            ITableEntityArgumentBindingProvider product = new PocoEntityArgumentBindingProvider();
-            Type parameterType = typeof(GenericClass<SimpleTableEntity>);
+            var converterMock = CreateConverterMock(typeof(GenericClass<SimpleTableEntity>));
             // Act
-            IArgumentBinding<TableEntityContext> binding = product.TryCreate(_parameters[1]);
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreatePocoBinding(_parameters[1], converterMock.Object);
             // Assert
             Assert.NotNull(binding);
         }
 
-        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<SimpleTableEntity> generic)
+        [Test]
+        public void Create_ReturnsBinding_IfImplementsITableEntity()
+        {
+            var converterMock = CreateConverterMock(typeof(SimpleITableEntity));
+            // Act
+            IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreatePocoBinding(_parameters[2], converterMock.Object);
+            // Assert
+            Assert.NotNull(binding);
+        }
+
+        private static Mock<IConverterManager> CreateConverterMock(Type converterType)
+        {
+            var converterMock = new Mock<IConverterManager>(MockBehavior.Strict);
+            converterMock.Setup(c => c.GetConverter<TableAttribute>(typeof(TableEntity), converterType))
+                .Returns<Type, Type>((_, _) => (_, _, _) => Task.FromResult<object>(null));
+            converterMock.Setup(c => c.GetConverter<TableAttribute>(converterType, typeof(TableEntity)))
+                .Returns<Type, Type>((_, _) => (_, _, _) => Task.FromResult<object>(null));
+            return converterMock;
+        }
+
+        private static void Parameters(ref SimpleTableEntity byRef, GenericClass<SimpleTableEntity> generic, SimpleITableEntity p2)
         {
         }
 
         private class SimpleTableEntity
         {
+        }
+
+        private class SimpleITableEntity: ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
 
         private class GenericClass<TArgument>

@@ -13,6 +13,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.TestFramework;
 
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {

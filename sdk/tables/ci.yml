@@ -21,7 +21,6 @@ pr:
     include:
     - sdk/tables/
 
-
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -30,3 +29,5 @@ extends:
     Artifacts:
     - name: Azure.Data.Tables
       safeName: AzureDataTables
+    - name: Microsoft.Azure.WebJobs.Extensions.Tables
+      safeName: MicrosoftAzureWebJobsExtensionsTables

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdateAccount" /> object. </returns>
         public static DeviceUpdateAccount GetDeviceUpdateAccount(this ArmClient armClient, ResourceIdentifier id)
         {
+            DeviceUpdateAccount.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeviceUpdateAccount(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdateInstance" /> object. </returns>
         public static DeviceUpdateInstance GetDeviceUpdateInstance(this ArmClient armClient, ResourceIdentifier id)
         {
+            DeviceUpdateInstance.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeviceUpdateInstance(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="PrivateLink" /> object. </returns>
         public static PrivateLink GetPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -63,6 +68,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="PrivateEndpointConnectionProxy" /> object. </returns>
         public static PrivateEndpointConnectionProxy GetPrivateEndpointConnectionProxy(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnectionProxy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnectionProxy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

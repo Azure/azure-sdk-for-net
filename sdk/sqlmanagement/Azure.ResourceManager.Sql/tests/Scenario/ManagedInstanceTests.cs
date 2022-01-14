@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string networkSecurityGroupName = SessionRecording.GenerateAssetName("networkSecurityGroup-");
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
             };
             var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
 
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
             RouteTableData routeTableData = new RouteTableData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
             };
             var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
 
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         private async Task<ManagedInstance> CreateOrUpdateManagedInstance(string managedInstanceName)
         {
-            ManagedInstanceData data = new ManagedInstanceData(Location.WestUS2)
+            ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
             {
                 AdministratorLogin = $"admin-{managedInstanceName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),

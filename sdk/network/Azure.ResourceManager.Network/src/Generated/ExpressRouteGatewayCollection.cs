@@ -8,10 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -21,7 +23,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteGateway and their operations over its parent. </summary>
-    public partial class ExpressRouteGatewayCollection : ArmCollection, IEnumerable<ExpressRouteGateway>
+    public partial class ExpressRouteGatewayCollection : ArmCollection, IEnumerable<ExpressRouteGateway>, IAsyncEnumerable<ExpressRouteGateway>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExpressRouteGatewaysRestOperations _expressRouteGatewaysRestClient;
@@ -37,10 +39,16 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _expressRouteGatewaysRestClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -272,38 +280,48 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ExpressRouteGateway>> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteGateway> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
-            scope.Start();
-            try
+            Page<ExpressRouteGateway> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _expressRouteGatewaysRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _expressRouteGatewaysRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<ExpressRouteGateway>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteGateway> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<ExpressRouteGateway>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _expressRouteGatewaysRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _expressRouteGatewaysRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Filters the list of <see cref="ExpressRouteGateway" /> for this resource group represented as generic resources. </summary>
@@ -354,15 +372,20 @@ namespace Azure.ResourceManager.Network
 
         IEnumerator<ExpressRouteGateway> IEnumerable<ExpressRouteGateway>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ExpressRouteGateway> IAsyncEnumerable<ExpressRouteGateway>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ExpressRouteGateway, ExpressRouteGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRouteGateway, ExpressRouteGatewayData> Construct() { }
     }
 }

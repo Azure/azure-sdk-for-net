@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VpnSiteLink and their operations over its parent. </summary>
     public partial class VpnSiteLinkCollection : ArmCollection, IEnumerable<VpnSiteLink>, IAsyncEnumerable<VpnSiteLink>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VpnSiteLinksRestOperations _vpnSiteLinksRestClient;
@@ -37,10 +36,16 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VpnSite.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VpnSite.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnSite.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -294,6 +299,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VpnSiteLink, VpnSiteLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VpnSiteLink, VpnSiteLinkData> Construct() { }
     }
 }

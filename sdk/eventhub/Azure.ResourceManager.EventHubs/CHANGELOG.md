@@ -105,6 +105,7 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.Core;
 
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";
@@ -113,7 +114,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
-EventHubNamespaceData parameters = new EventHubNamespaceData(Location.WestUS)
+EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
 {
     Sku = new Models.Sku(SkuName.Standard)
     {
