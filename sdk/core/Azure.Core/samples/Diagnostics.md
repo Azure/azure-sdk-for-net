@@ -123,7 +123,9 @@ using AzureEventSourceListener listener = new AzureEventSourceListener((args, me
 
 ### Capture filtered logs to a file
 
-For scenarios where capturing logs to `Trace` or console isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence. The following example demonstrates capturing error logs to a text file so that they can be analyzed later, while capturing non-error information to console.
+For scenarios where capturing logs to `Trace` or console isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence. 
+
+The following example demonstrates capturing error logs to a text file so that they can be analyzed later, while capturing non-error information to console.  Its important to note that a simple approach is used for illustration.  This form may be helpful for troubleshooting, but a more robust and performant approach is recommended for long-term production use.
 
 ```C# Snippet:FileLogging
 using Stream stream = new FileStream(
