@@ -16,15 +16,11 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a Feature along with the instance operations that can be performed on it. </summary>
     public partial class Feature : ArmResource
     {
-        /// <summary>
-        /// Validate the resource identifier against current resource.
-        /// </summary>
-        /// <param name="identifier"> The resource identifier. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (identifier.ResourceType != $"{Id.ResourceType.Namespace}/features")
+            if (id.ResourceType.GetLastType() != "features")
             {
-                throw new InvalidOperationException($"Invalid resourcetype found when intializing FeatureOperations: {identifier.ResourceType}");
+                throw new InvalidOperationException($"Invalid resourcetype found when intializing FeatureOperations: {id.ResourceType}");
             }
         }
     }

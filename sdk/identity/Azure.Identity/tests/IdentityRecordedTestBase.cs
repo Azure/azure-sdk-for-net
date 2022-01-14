@@ -32,6 +32,8 @@ namespace Azure.Identity.Tests
             Matcher.LegacyExcludedHeaders.Add("x-client-current-telemetry");
             Matcher.LegacyExcludedHeaders.Add("x-client-last-telemetry");
             Matcher.LegacyExcludedHeaders.Add("x-anchormailbox");
+            // temporary until update to disable cookies in Core is shipped
+            Matcher.LegacyExcludedHeaders.Add("cookie");
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
     }

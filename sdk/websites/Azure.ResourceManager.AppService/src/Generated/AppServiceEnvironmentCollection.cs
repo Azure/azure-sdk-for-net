@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of AppServiceEnvironment and their operations over its parent. </summary>
     public partial class AppServiceEnvironmentCollection : ArmCollection, IEnumerable<AppServiceEnvironment>, IAsyncEnumerable<AppServiceEnvironment>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AppServiceEnvironmentsRestOperations _appServiceEnvironmentsRestClient;
@@ -39,10 +39,16 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
