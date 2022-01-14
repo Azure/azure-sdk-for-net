@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedVaultCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeletedVaultCollection(ArmResource parent) : base(parent)
         {
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _vaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedVault>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _vaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedVault>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.Exists");
             scope.Start();
             try
             {
