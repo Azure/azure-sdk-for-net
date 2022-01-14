@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /
         /// OperationId: ResourceLinks_CreateOrUpdate
         /// <summary> Creates or updates a resource link between the specified resources. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ResourceLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ResourceIdentifier linkId, ResourceLinkData parameters, CancellationToken cancellationToken = default)
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /
         /// OperationId: ResourceLinks_CreateOrUpdate
         /// <summary> Creates or updates a resource link between the specified resources. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ResourceLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ResourceIdentifier linkId, ResourceLinkData parameters, CancellationToken cancellationToken = default)

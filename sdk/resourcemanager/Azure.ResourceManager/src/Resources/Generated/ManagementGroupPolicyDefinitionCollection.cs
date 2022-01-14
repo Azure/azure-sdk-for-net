@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
         /// OperationId: PolicyDefinitions_CreateOrUpdateAtManagementGroup
         /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual PolicyDefinitionCreateOrUpdateAtManagementGroupOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
         /// OperationId: PolicyDefinitions_CreateOrUpdateAtManagementGroup
         /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<PolicyDefinitionCreateOrUpdateAtManagementGroupOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)

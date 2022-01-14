@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
         /// OperationId: Tags_CreateOrUpdateAtScope
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
-        /// <param name="parameters"> The TagResource to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<TagCreateOrUpdateAtScopeOperation> CreateOrUpdateAsync(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
         /// OperationId: Tags_CreateOrUpdateAtScope
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
-        /// <param name="parameters"> The TagResource to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual TagCreateOrUpdateAtScopeOperation CreateOrUpdate(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)

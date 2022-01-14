@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Management
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
         /// 
         /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
         public virtual ManagementGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Management
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
         /// 
         /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
         public async virtual Task<ManagementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)

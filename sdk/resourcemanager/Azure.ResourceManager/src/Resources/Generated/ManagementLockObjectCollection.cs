@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: ManagementLocks_CreateOrUpdateByScope
         /// <summary> Create or update a management lock by scope. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ManagementLockCreateOrUpdateByScopeOperation CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: ManagementLocks_CreateOrUpdateByScope
         /// <summary> Create or update a management lock by scope. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ManagementLockCreateOrUpdateByScopeOperation> CreateOrUpdateAsync(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)

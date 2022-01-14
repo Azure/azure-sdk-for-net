@@ -206,8 +206,8 @@ namespace Azure.ResourceManager.Management
         /// If a management group contains child resources, the request will fail.
         /// 
         /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ManagementGroupDeleteOperation> DeleteAsync(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
         {
@@ -236,8 +236,8 @@ namespace Azure.ResourceManager.Management
         /// If a management group contains child resources, the request will fail.
         /// 
         /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ManagementGroupDeleteOperation Delete(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
         {

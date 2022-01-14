@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: ResourceGroups_Delete
         /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
-        /// <param name="forceDeletionTypes"> The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="forceDeletionTypes"> The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ResourceGroupDeleteOperation> DeleteAsync(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
         {
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: ResourceGroups_Delete
         /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
-        /// <param name="forceDeletionTypes"> The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="forceDeletionTypes"> The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ResourceGroupDeleteOperation Delete(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
         {
@@ -241,11 +241,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ResourceGroup>> AddTagAsync(bool waitForCompletion, string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(waitForCompletion, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -270,11 +271,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<ResourceGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> AddTag(bool waitForCompletion, string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -287,7 +289,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(waitForCompletion, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -299,10 +301,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ResourceGroup>> SetTagsAsync(bool waitForCompletion, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -313,10 +316,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(waitForCompletion, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(waitForCompletion, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -328,10 +331,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<ResourceGroup> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> SetTags(bool waitForCompletion, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -342,10 +346,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(waitForCompletion, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(waitForCompletion, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -357,10 +361,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ResourceGroup>> RemoveTagAsync(bool waitForCompletion, string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -373,7 +378,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(waitForCompletion, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -385,10 +390,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> RemoveTag(bool waitForCompletion, string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -401,7 +407,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(waitForCompletion, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -472,8 +478,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_MoveResources
         /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ResourceMoveResourcesOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
@@ -504,8 +510,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_MoveResources
         /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ResourceMoveResourcesOperation MoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
@@ -536,8 +542,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_ValidateMoveResources
         /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ResourceValidateMoveResourcesOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
@@ -568,8 +574,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_ValidateMoveResources
         /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ResourceValidateMoveResourcesOperation ValidateMoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
@@ -600,8 +606,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: ResourceGroups_ExportTemplate
         /// <summary> Captures the specified resource group as a template. </summary>
-        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ResourceGroupExportTemplateOperation> ExportTemplateAsync(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
@@ -632,8 +638,8 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: ResourceGroups_ExportTemplate
         /// <summary> Captures the specified resource group as a template. </summary>
-        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ResourceGroupExportTemplateOperation ExportTemplate(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)

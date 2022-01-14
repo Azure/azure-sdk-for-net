@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: PolicyExemptions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy exemption with the given scope and name. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or above level, the exemption exempts to all applicable resources in the resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual PolicyExemptionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: PolicyExemptions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy exemption with the given scope and name. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or above level, the exemption exempts to all applicable resources in the resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<PolicyExemptionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
