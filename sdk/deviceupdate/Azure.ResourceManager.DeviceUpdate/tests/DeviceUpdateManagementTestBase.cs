@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, input);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
             return lro.Value;
         }
 
