@@ -1,17 +1,9 @@
 namespace Azure.IoT.DeviceUpdate
 {
-    public partial class DeviceUpdateClientOptions : Azure.Core.ClientOptions
+    public partial class DeviceManagementClient
     {
-        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2021_06_01_preview) { }
-        public enum ServiceVersion
-        {
-            V2021_06_01_preview = 1,
-        }
-    }
-    public partial class ManagementClient
-    {
-        protected ManagementClient() { }
-        public ManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
+        protected DeviceManagementClient() { }
+        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CollectLogs(string operationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CollectLogsAsync(string operationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -74,10 +66,10 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.Response StopDeployment(string groupId, string deploymentId, string action, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopDeploymentAsync(string groupId, string deploymentId, string action, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class UpdatesClient
+    public partial class DeviceUpdateClient
     {
-        protected UpdatesClient() { }
-        public UpdatesClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
+        protected DeviceUpdateClient() { }
+        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> DeleteUpdate(bool waitForCompletion, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteUpdateAsync(bool waitForCompletion, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
@@ -101,5 +93,13 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetVersionsAsync(string provider, string name, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> ImportUpdate(bool waitForCompletion, string action, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportUpdateAsync(bool waitForCompletion, string action, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class DeviceUpdateClientOptions : Azure.Core.ClientOptions
+    {
+        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2021_06_01_preview) { }
+        public enum ServiceVersion
+        {
+            V2021_06_01_preview = 1,
+        }
     }
 }

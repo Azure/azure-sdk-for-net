@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> Client options for DeviceUpdateClient. </summary>
+    /// <summary> Client options for DeviceUpdate library clients. </summary>
     public partial class DeviceUpdateClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_06_01_preview;
