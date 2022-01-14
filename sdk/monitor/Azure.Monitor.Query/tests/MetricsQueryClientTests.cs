@@ -77,7 +77,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("metadatatest1", firstElement.Key);
             Assert.AreEqual("metadatatest2", firstElement.Value);
             Assert.AreEqual(1, metricTimeSeriesElement.Values.Count);
-            Assert.AreEqual("TimeStamp: 1/1/0001 12:00:00 AM -08:00 ", metricTimeSeriesElement.Values[0].ToString());
             Assert.AreEqual(new DateTimeOffset(new DateTime(10)), metricTimeSeriesElement.Values[0].TimeStamp);
             IEnumerable<MetricTimeSeriesElement> metricTimeSeriesElements = new[] { metricTimeSeriesElement };
 
