@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PolicyAssignmentCollection(ArmResource parent) : base(parent)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicyAssignmentCreateOperation CreateOrUpdate(string policyAssignmentName, PolicyAssignmentData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PolicyAssignmentCreateOperation CreateOrUpdate(bool waitForCompletion, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentName == null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicyAssignmentCreateOperation> CreateOrUpdateAsync(string policyAssignmentName, PolicyAssignmentData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicyAssignmentCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentName == null)
             {
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentsRestClient.Get(Id, policyAssignmentName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PolicyAssignment>(null, response.GetRawResponse())
-                    : Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PolicyAssignment>(null, response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyAssignmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _policyAssignmentsRestClient.GetAsync(Id, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PolicyAssignment>(null, response.GetRawResponse())
-                    : Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PolicyAssignment>(null, response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyAssignmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.Exists");
             scope.Start();
             try
             {

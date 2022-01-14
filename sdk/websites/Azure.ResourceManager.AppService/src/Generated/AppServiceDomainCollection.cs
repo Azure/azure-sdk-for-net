@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceDomainCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AppServiceDomainCollection(ArmResource parent) : base(parent)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
-        public virtual DomainCreateOrUpdateOperation CreateOrUpdate(string domainName, AppServiceDomainData domain, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DomainCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
-        public async virtual Task<DomainCreateOrUpdateOperation> CreateOrUpdateAsync(string domainName, AppServiceDomainData domain, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DomainCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
             {
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _domainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AppServiceDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new AppServiceDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AppServiceDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _domainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AppServiceDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new AppServiceDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AppServiceDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(domainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceDomainCollection.Exists");
             scope.Start();
             try
             {

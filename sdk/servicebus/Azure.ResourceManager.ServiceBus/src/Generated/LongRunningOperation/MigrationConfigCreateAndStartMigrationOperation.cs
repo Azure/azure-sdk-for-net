@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
         MigrationConfigProperties IOperationSource<MigrationConfigProperties>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new MigrationConfigProperties(_operationBase, MigrationConfigPropertiesData.DeserializeMigrationConfigPropertiesData(document.RootElement));
+            var data = MigrationConfigPropertiesData.DeserializeMigrationConfigPropertiesData(document.RootElement);
+            return new MigrationConfigProperties(_operationBase, data);
         }
 
         async ValueTask<MigrationConfigProperties> IOperationSource<MigrationConfigProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new MigrationConfigProperties(_operationBase, MigrationConfigPropertiesData.DeserializeMigrationConfigPropertiesData(document.RootElement));
+            var data = MigrationConfigPropertiesData.DeserializeMigrationConfigPropertiesData(document.RootElement);
+            return new MigrationConfigProperties(_operationBase, data);
         }
     }
 }

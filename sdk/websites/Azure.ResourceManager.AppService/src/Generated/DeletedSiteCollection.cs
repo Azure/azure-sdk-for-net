@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSiteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedSiteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeletedSiteCollection(ArmResource parent) : base(parent)
         {
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _globalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeletedSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _globalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeletedSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.Exists");
             scope.Start();
             try
             {

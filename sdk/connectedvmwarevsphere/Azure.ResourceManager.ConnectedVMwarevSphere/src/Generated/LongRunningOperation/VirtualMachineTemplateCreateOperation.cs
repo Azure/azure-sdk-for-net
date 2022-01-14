@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         VirtualMachineTemplate IOperationSource<VirtualMachineTemplate>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualMachineTemplate(_operationBase, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement));
+            var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);
+            return new VirtualMachineTemplate(_operationBase, data);
         }
 
         async ValueTask<VirtualMachineTemplate> IOperationSource<VirtualMachineTemplate>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualMachineTemplate(_operationBase, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement));
+            var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);
+            return new VirtualMachineTemplate(_operationBase, data);
         }
     }
 }

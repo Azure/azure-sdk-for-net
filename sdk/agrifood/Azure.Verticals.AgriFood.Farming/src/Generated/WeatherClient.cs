@@ -41,14 +41,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public WeatherClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -106,6 +100,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -168,6 +164,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetDataIngestionJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -230,6 +228,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
@@ -292,6 +292,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetDataDeleteJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
@@ -388,26 +390,11 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetWeathersAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
-            if (boundaryId == null)
-            {
-                throw new ArgumentNullException(nameof(boundaryId));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (weatherDataType == null)
-            {
-                throw new ArgumentNullException(nameof(weatherDataType));
-            }
-            if (granularity == null)
-            {
-                throw new ArgumentNullException(nameof(granularity));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            Argument.AssertNotNull(extensionId, nameof(extensionId));
+            Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
+            Argument.AssertNotNull(granularity, nameof(granularity));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "WeatherClient.GetWeathers");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -506,26 +493,11 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetWeathers(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
-            if (boundaryId == null)
-            {
-                throw new ArgumentNullException(nameof(boundaryId));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (weatherDataType == null)
-            {
-                throw new ArgumentNullException(nameof(weatherDataType));
-            }
-            if (granularity == null)
-            {
-                throw new ArgumentNullException(nameof(granularity));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            Argument.AssertNotNull(extensionId, nameof(extensionId));
+            Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
+            Argument.AssertNotNull(granularity, nameof(granularity));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "WeatherClient.GetWeathers");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -614,6 +586,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -700,6 +674,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateDataIngestionJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -786,6 +762,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateDataDeleteJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
@@ -872,6 +850,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateDataDeleteJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try

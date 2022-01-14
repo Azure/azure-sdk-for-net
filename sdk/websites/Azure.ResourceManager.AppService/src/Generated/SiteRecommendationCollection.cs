@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecommendationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecommendationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteRecommendationCollection(ArmResource parent) : base(parent)
         {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _recommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _recommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteRecommendationCollection.Exists");
             scope.Start();
             try
             {

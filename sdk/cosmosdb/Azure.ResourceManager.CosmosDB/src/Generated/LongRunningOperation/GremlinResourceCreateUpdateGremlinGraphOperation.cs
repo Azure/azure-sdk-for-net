@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         GremlinGraph IOperationSource<GremlinGraph>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new GremlinGraph(_operationBase, GremlinGraphData.DeserializeGremlinGraphData(document.RootElement));
+            var data = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
+            return new GremlinGraph(_operationBase, data);
         }
 
         async ValueTask<GremlinGraph> IOperationSource<GremlinGraph>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new GremlinGraph(_operationBase, GremlinGraphData.DeserializeGremlinGraphData(document.RootElement));
+            var data = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
+            return new GremlinGraph(_operationBase, data);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteTriggeredWebJobHistoryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteTriggeredWebJobHistoryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteTriggeredWebJobHistoryCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetTriggeredWebJobHistorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetTriggeredWebJobHistorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteTriggeredWebJobHistory>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteTriggeredWebJobHistory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteTriggeredWebJobHistoryCollection.Exists");
             scope.Start();
             try
             {

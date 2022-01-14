@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteConfigAppsettingCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteConfigAppsettingCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteConfigAppsettingCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetAppSettingKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetAppSettingKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Exists");
             scope.Start();
             try
             {

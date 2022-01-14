@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of InventoryItemCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InventoryItemCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal InventoryItemCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual InventoryItemCreateOperation CreateOrUpdate(string inventoryItemName, InventoryItemData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InventoryItemCreateOperation CreateOrUpdate(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
             if (inventoryItemName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public async virtual Task<InventoryItemCreateOperation> CreateOrUpdateAsync(string inventoryItemName, InventoryItemData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InventoryItemCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
             if (inventoryItemName == null)
             {
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _inventoryItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<InventoryItem>(null, response.GetRawResponse())
-                    : Response.FromValue(new InventoryItem(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<InventoryItem>(null, response.GetRawResponse());
+                return Response.FromValue(new InventoryItem(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(inventoryItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _inventoryItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<InventoryItem>(null, response.GetRawResponse())
-                    : Response.FromValue(new InventoryItem(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<InventoryItem>(null, response.GetRawResponse());
+                return Response.FromValue(new InventoryItem(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(inventoryItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.Exists");
             scope.Start();
             try
             {

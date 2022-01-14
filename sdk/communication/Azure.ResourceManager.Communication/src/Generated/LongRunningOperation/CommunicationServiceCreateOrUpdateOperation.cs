@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Communication.Models
         CommunicationService IOperationSource<CommunicationService>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CommunicationService(_operationBase, CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement));
+            var data = CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement);
+            return new CommunicationService(_operationBase, data);
         }
 
         async ValueTask<CommunicationService> IOperationSource<CommunicationService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CommunicationService(_operationBase, CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement));
+            var data = CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement);
+            return new CommunicationService(_operationBase, data);
         }
     }
 }

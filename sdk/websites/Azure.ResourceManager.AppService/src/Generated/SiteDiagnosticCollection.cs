@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteDiagnosticCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteDiagnosticCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _diagnosticsRestClient.GetSiteDiagnosticCategory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticCategory, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteDiagnostic>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDiagnostic(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDiagnostic>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(diagnosticCategory));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _diagnosticsRestClient.GetSiteDiagnosticCategoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticCategory, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteDiagnostic>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDiagnostic(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDiagnostic>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(diagnosticCategory));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Exists");
             scope.Start();
             try
             {
