@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(false, _webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, _webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 },
             };
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
-            var vnet = await vnetContainer.CreateOrUpdateAsync(_vnetName, vnetData);
+            var vnet = await vnetContainer.CreateOrUpdateAsync(true, _vnetName, vnetData);
 
             //2.1 Create AppServicePlan
             //string appServicePlanName = "appServicePlan5952";
