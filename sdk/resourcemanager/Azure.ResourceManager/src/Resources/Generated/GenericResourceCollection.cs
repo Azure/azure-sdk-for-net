@@ -131,6 +131,200 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// RequestPath: /{resourceId}
+        /// ContextualPath: /
+        /// OperationId: Resources_GetById
+        /// <summary> Gets a resource by ID. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public virtual Response<GenericResource> Get(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /{resourceId}
+        /// ContextualPath: /
+        /// OperationId: Resources_GetById
+        /// <summary> Gets a resource by ID. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public async virtual Task<Response<GenericResource>> GetAsync(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public virtual Response<GenericResource> GetIfExists(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<GenericResource>(null, response.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public async virtual Task<Response<GenericResource>> GetIfExistsAsync(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<GenericResource>(null, response.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public virtual Response<bool> Exists(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = GetIfExists(resourceId, apiVersion, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await GetIfExistsAsync(resourceId, apiVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         // Builders.
         // public ArmBuilder<Azure.Core.ResourceIdentifier, GenericResource, GenericResourceData> Construct() { }
     }

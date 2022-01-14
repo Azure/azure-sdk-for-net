@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "GenericResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal GenericResource(ArmResource options, GenericResourceData resource) : base(options, resource.Id)
+        internal GenericResource(ArmResource options, GenericResourceData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ResourceDeleteByIdOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ResourceDeleteByIdOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceDeleteByIdOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ResourceDeleteByIdOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_UpdateById
         /// <summary> Updates a resource by ID. </summary>
-        /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceUpdateByIdOperation> UpdateAsync(GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ResourceUpdateByIdOperation> UpdateAsync(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -212,11 +212,11 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_UpdateById
         /// <summary> Updates a resource by ID. </summary>
-        /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceUpdateByIdOperation Update(GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ResourceUpdateByIdOperation Update(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {

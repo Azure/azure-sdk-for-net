@@ -429,6 +429,62 @@ namespace Azure.ResourceManager.Management
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /providers/Microsoft.Management/checkNameAvailability
+        /// ContextualPath: /
+        /// OperationId: ManagementGroups_CheckNameAvailability
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            if (checkNameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityRequest));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = _managementGroupsRestClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /providers/Microsoft.Management/checkNameAvailability
+        /// ContextualPath: /
+        /// OperationId: ManagementGroups_CheckNameAvailability
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
+        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            if (checkNameAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityRequest));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await _managementGroupsRestClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ManagementGroup> IEnumerable<ManagementGroup>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -320,6 +320,8 @@ input-file:
 request-path-to-parent:
   /providers/Microsoft.Management/managementGroups: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
+operation-positions:
+  /providers/Microsoft.Management/checkNameAvailability: collection
 operation-groups-to-omit:
   - HierarchySettings
   - ManagementGroupSubscriptions
