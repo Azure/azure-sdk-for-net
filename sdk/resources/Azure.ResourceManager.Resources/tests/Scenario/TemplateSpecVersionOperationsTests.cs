@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-C-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
             const string version = "v1";
             TemplateSpecVersionData templateSpecVersionData = CreateTemplateSpecVersionData();
-            TemplateSpecVersion templateSpecVersion = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(version, templateSpecVersionData)).Value;
-            await templateSpecVersion.DeleteAsync();
+            TemplateSpecVersion templateSpecVersion = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(true, version, templateSpecVersionData)).Value;
+            await templateSpecVersion.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await templateSpecVersion.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
