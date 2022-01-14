@@ -38,14 +38,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public FarmClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -100,6 +94,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -159,6 +155,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetDataIngestionJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -239,6 +237,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -319,6 +319,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateDataIngestionJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
             try
