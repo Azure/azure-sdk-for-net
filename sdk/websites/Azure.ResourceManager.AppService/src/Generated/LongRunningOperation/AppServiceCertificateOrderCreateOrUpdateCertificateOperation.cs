@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         AppServiceCertificateResource IOperationSource<AppServiceCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AppServiceCertificateResource(_operationBase, AppServiceCertificateResourceData.DeserializeAppServiceCertificateResourceData(document.RootElement));
+            var data = AppServiceCertificateResourceData.DeserializeAppServiceCertificateResourceData(document.RootElement);
+            return new AppServiceCertificateResource(_operationBase, data);
         }
 
         async ValueTask<AppServiceCertificateResource> IOperationSource<AppServiceCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AppServiceCertificateResource(_operationBase, AppServiceCertificateResourceData.DeserializeAppServiceCertificateResourceData(document.RootElement));
+            var data = AppServiceCertificateResourceData.DeserializeAppServiceCertificateResourceData(document.RootElement);
+            return new AppServiceCertificateResource(_operationBase, data);
         }
     }
 }

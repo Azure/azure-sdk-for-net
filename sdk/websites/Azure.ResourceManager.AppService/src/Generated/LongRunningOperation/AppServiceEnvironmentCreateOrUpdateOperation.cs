@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         AppServiceEnvironment IOperationSource<AppServiceEnvironment>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AppServiceEnvironment(_operationBase, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement));
+            var data = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
+            return new AppServiceEnvironment(_operationBase, data);
         }
 
         async ValueTask<AppServiceEnvironment> IOperationSource<AppServiceEnvironment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AppServiceEnvironment(_operationBase, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement));
+            var data = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
+            return new AppServiceEnvironment(_operationBase, data);
         }
     }
 }

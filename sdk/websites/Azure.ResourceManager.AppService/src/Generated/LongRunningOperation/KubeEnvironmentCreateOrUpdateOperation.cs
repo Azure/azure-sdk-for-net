@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         KubeEnvironment IOperationSource<KubeEnvironment>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new KubeEnvironment(_operationBase, KubeEnvironmentData.DeserializeKubeEnvironmentData(document.RootElement));
+            var data = KubeEnvironmentData.DeserializeKubeEnvironmentData(document.RootElement);
+            return new KubeEnvironment(_operationBase, data);
         }
 
         async ValueTask<KubeEnvironment> IOperationSource<KubeEnvironment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new KubeEnvironment(_operationBase, KubeEnvironmentData.DeserializeKubeEnvironmentData(document.RootElement));
+            var data = KubeEnvironmentData.DeserializeKubeEnvironmentData(document.RootElement);
+            return new KubeEnvironment(_operationBase, data);
         }
     }
 }
