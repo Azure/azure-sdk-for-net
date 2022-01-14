@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySetData input = new AvailabilitySetData(location);
-            AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetCollection.CreateOrUpdateAsync(availabilitySetName, input);
+            AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetCollection.CreateOrUpdateAsync(true, availabilitySetName, input);
             AvailabilitySet availabilitySet = lro.Value;
             #endregion Snippet:Managing_Availability_Set_CreateAnAvailabilitySet
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // delete the availability set
-            await availabilitySet.DeleteAsync();
+            await availabilitySet.DeleteAsync(true);
             #endregion Snippet:Managing_Availability_Set_DeleteAnAvailabilitySet
         }
 
