@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Azure.Data.Tables\src\Azure.Data.Tables.csproj" />
+      <PackageReference Include="Azure.Data.Tables" />
     </ItemGroup>
 
     <ItemGroup>
