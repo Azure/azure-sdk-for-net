@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourceLinksRestClient.Delete(Id, cancellationToken);
                 var operation = new ResourceLinkDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

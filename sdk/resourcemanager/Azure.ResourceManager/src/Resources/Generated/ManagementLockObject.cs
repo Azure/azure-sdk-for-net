@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _managementLocksRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
                 var operation = new ManagementLockDeleteByScopeOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
                 var originalResponse = _restClient.DeleteById(Id, apiVersion, cancellationToken);
                 var operation = new ResourceDeleteByIdOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

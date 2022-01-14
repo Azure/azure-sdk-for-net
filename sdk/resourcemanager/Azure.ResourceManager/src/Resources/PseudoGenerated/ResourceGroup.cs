@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
                 var originalResponse = _restClient.Delete(Id.Name, cancellationToken);
                 var operation = new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Resources
                 var originalResponse = _genericRestClient.MoveResources(Id.Name, parameters, cancellationToken);
                 var operation = new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Resources
                 var originalResponse = _genericRestClient.ValidateMoveResources(Id.Name, parameters, cancellationToken);
                 var operation = new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _restClient.Delete(tagName, cancellationToken);
                 var operation = new PredefinedTagDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _restClient.DeleteAtScope(Id, cancellationToken);
                 var operation = new TagDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

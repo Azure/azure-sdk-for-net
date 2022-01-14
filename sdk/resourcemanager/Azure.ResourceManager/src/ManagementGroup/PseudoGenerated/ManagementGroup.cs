@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Management
                 var originalResponse = _restClient.Delete(Id.Name, cacheControl, cancellationToken);
                 var operation = new ManagementGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policySetDefinitionsRestClient.DeleteAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new PolicySetDefinitionDeleteAtManagementGroupOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
