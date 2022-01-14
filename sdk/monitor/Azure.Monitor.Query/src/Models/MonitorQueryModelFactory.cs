@@ -33,20 +33,28 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="resourceType"> The resource type of the metric resource. </param>
-        /// <param name="localizedName"> The name and the display name of the metric, i.e. it is localizable string. </param>
+        /// <param name="name"> The name of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
-        public static MetricResult MetricResult(string id, string resourceType, string localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
+        public static MetricResult MetricResult(string id, string resourceType, string name, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
         {
-            return new MetricResult(id, resourceType, new LocalizableString(localizedName), unit, timeSeries);
+            return new MetricResult(id, resourceType, new LocalizableString(name), unit, timeSeries);
         }
 
         /// <summary>
         /// Enables the user to create an instance of a <see cref="MetricTimeSeriesElement"/>.
+        /// <param name="metadatavalues"> The metric Id. </param>
+        /// <param name="values"> The resource type of the metric resource. </param>
         /// </summary>
-        public static MetricTimeSeriesElement MetricTimeSeriesElement()
+        public static MetricTimeSeriesElement MetricTimeSeriesElement(IReadOnlyDictionary<string, string> metadatavalues, IEnumerable<MetricValue> values)
         {
-            return new MetricTimeSeriesElement();
+            var metadataValueList = new List<MetadataValue>();
+            foreach (var value in metadatavalues)
+            {
+                var metadataValue = new MetadataValue(new LocalizableString(value.Key), value.Value);
+                metadataValueList.Add(metadataValue);
+            }
+            return new MetricTimeSeriesElement(metadataValueList, values.ToList());
         }
 
         /// <summary> Enables the user to create an instance of a <see cref="LogsQueryResult"/>. </summary>

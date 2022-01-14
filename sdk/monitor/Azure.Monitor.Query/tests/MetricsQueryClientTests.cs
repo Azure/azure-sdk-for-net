@@ -67,10 +67,18 @@ namespace Azure.Monitor.Query.Tests
         [Test]
         public void CanGetMetricQueryResult()
         {
-            MetricTimeSeriesElement metricTimeSeriesElement = new Models.MetricTimeSeriesElement();
+            var metadata = new Dictionary<string, string> { { "metadatatest1", "metadatatest2" } };
+            var metricValue = new MetricValue(new DateTimeOffset(new DateTime(10)));
+            var metricValueList = new List<MetricValue>() { metricValue };
+            MetricTimeSeriesElement metricTimeSeriesElement = MonitorQueryModelFactory.MetricTimeSeriesElement(metadata, metricValueList);
             Assert.IsNotNull(metricTimeSeriesElement);
-            Assert.AreEqual(0, metricTimeSeriesElement.Metadata.Count);
-            Assert.AreEqual(0, metricTimeSeriesElement.Values.Count);
+            Assert.AreEqual(1, metricTimeSeriesElement.Metadata.Count);
+            var firstElement = metricTimeSeriesElement.Metadata.First();
+            Assert.AreEqual("metadatatest1", firstElement.Key);
+            Assert.AreEqual("metadatatest2", firstElement.Value);
+            Assert.AreEqual(1, metricTimeSeriesElement.Values.Count);
+            Assert.AreEqual("TimeStamp: 1/1/0001 12:00:00 AM -08:00 ", metricTimeSeriesElement.Values[0].ToString());
+            Assert.AreEqual(new DateTimeOffset(new DateTime(10)), metricTimeSeriesElement.Values[0].TimeStamp);
             IEnumerable<MetricTimeSeriesElement> metricTimeSeriesElements = new[] { metricTimeSeriesElement };
 
             MetricUnit metricUnit = new MetricUnit("test");
@@ -89,7 +97,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("test", metricResult.Unit.ToString());
             IEnumerable<MetricResult> metricResults = new[] { metricResult };
 
-            MetricsQueryResult metricsQueryResult = new Models.MetricsQueryResult(null, TimeSpan.FromMinutes(3).ToString(), null, "namespace", "eastus", metricResults.ToList());
+            MetricsQueryResult metricsQueryResult = MonitorQueryModelFactory.MetricsQueryResult(null, TimeSpan.FromMinutes(3).ToString(), null, "namespace", "eastus", metricResults.ToList());
             Assert.AreEqual(null, metricsQueryResult.Cost);
             Assert.AreEqual(null, metricsQueryResult.Granularity);
             Assert.AreEqual(1, metricsQueryResult.Metrics.Count);
