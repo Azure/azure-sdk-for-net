@@ -16,13 +16,13 @@ using Azure.Core;
 
 namespace Azure.IoT.DeviceUpdate.Tests
 {
-    public class ManagementClientTest: RecordedTestBase<DeviceUpdateClientTestEnvironment>
+    public class DeviceManagementClientTest: RecordedTestBase<DeviceUpdateClientTestEnvironment>
     {
-        public ManagementClientTest(bool isAsync) : base(isAsync)
+        public DeviceManagementClientTest(bool isAsync) : base(isAsync)
         {
         }
 
-        private ManagementClient CreateClient()
+        private DeviceManagementClient CreateClient()
         {
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
@@ -31,14 +31,14 @@ namespace Azure.IoT.DeviceUpdate.Tests
             };
             var options = new DeviceUpdateClientOptions { Transport = new HttpClientTransport(httpHandler) };
             var client = InstrumentClient(
-                new ManagementClient(TestEnvironment.AccountEndPoint, TestEnvironment.InstanceId, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                new DeviceManagementClient(TestEnvironment.AccountEndPoint, TestEnvironment.InstanceId, TestEnvironment.Credential, InstrumentClientOptions(options)));
             return client;
         }
 
         [RecordedTest]
         public async Task GetDevices()
         {
-            ManagementClient client = CreateClient();
+            DeviceManagementClient client = CreateClient();
             AsyncPageable<BinaryData> fetchResponse = client.GetDevicesAsync();
             int counter = 0;
             await foreach (var item in fetchResponse)
@@ -53,7 +53,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
         [RecordedTest]
         public async Task GetDeviceTags()
         {
-            ManagementClient client = CreateClient();
+            DeviceManagementClient client = CreateClient();
             AsyncPageable<BinaryData> fetchResponse = client.GetDeviceTagsAsync();
             int counter = 0;
             await foreach (var item in fetchResponse)
@@ -68,7 +68,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
         [RecordedTest]
         public async Task GetGroups()
         {
-            ManagementClient client = CreateClient();
+            DeviceManagementClient client = CreateClient();
             AsyncPageable<BinaryData> fetchResponse = client.GetGroupsAsync(new RequestContext());
             int counter = 0;
             await foreach (var item in fetchResponse)
@@ -83,7 +83,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
         [RecordedTest]
         public async Task GroupAndDeployment()
         {
-            ManagementClient client = CreateClient();
+            DeviceManagementClient client = CreateClient();
             string groupid = "joegroup";
 
             /* list groups. */

@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> The Updates service client. </summary>
-    public partial class UpdatesClient
+    /// <summary> The DeviceUpdate service client. </summary>
+    public partial class DeviceUpdateClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://api.adu.microsoft.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -30,18 +30,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of UpdatesClient for mocking. </summary>
-        protected UpdatesClient()
+        /// <summary> Initializes a new instance of DeviceUpdateClient for mocking. </summary>
+        protected DeviceUpdateClient()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdatesClient. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
         /// <param name="endpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/>, or <paramref name="credential"/> is null. </exception>
-        public UpdatesClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
+        public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -129,7 +129,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
             try
             {
@@ -207,7 +207,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFile");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFile");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
             try
             {
@@ -395,7 +395,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
             scope.Start();
             try
             {
@@ -467,7 +467,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
             scope.Start();
             try
             {
@@ -547,7 +547,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = null, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetUpdates");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceUpdateClient.GetUpdates");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -628,7 +628,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetUpdates(string search = null, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetUpdates");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceUpdateClient.GetUpdates");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -675,7 +675,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetProviders");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceUpdateClient.GetProviders");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -722,7 +722,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetProviders");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceUpdateClient.GetProviders");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -776,7 +776,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(provider));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetNames");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceUpdateClient.GetNames");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -830,7 +830,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(provider));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetNames");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceUpdateClient.GetNames");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -890,7 +890,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetVersions");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceUpdateClient.GetVersions");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -950,7 +950,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetVersions");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceUpdateClient.GetVersions");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1014,7 +1014,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(version));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetFiles");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceUpdateClient.GetFiles");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1078,7 +1078,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(version));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetFiles");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceUpdateClient.GetFiles");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1155,7 +1155,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "UpdatesClient.GetOperations");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceUpdateClient.GetOperations");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1232,7 +1232,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "UpdatesClient.GetOperations");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceUpdateClient.GetOperations");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1326,12 +1326,12 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.ImportUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportUpdateRequest(action, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "UpdatesClient.ImportUpdate", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1419,12 +1419,12 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Operation<BinaryData> ImportUpdate(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.ImportUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportUpdateRequest(action, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "UpdatesClient.ImportUpdate", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -1464,12 +1464,12 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Operation<BinaryData>> DeleteUpdateAsync(bool waitForCompletion, string provider, string name, string version, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.DeleteUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "UpdatesClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1509,12 +1509,12 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Operation<BinaryData> DeleteUpdate(bool waitForCompletion, string provider, string name, string version, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.DeleteUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "UpdatesClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {

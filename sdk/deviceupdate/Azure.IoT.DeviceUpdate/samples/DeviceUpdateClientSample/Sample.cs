@@ -40,8 +40,8 @@ namespace ConsoleTest
         private readonly string _deviceTag;
         private readonly bool _delete;
 
-        private readonly UpdatesClient _updatesClient;
-        private readonly ManagementClient _managementClient;
+        private readonly DeviceUpdateClient _updatesClient;
+        private readonly DeviceManagementClient _managementClient;
         /// <summary>
         /// Initializes a new instance of the Sample class.
         /// </summary>
@@ -79,8 +79,8 @@ namespace ConsoleTest
 
             var credentials = new ClientSecretCredential(tenantId, clientId, clientSecret);
 
-            _updatesClient = new UpdatesClient(accountEndpoint, instance, credentials);
-            _managementClient = new ManagementClient(accountEndpoint, instance, credentials);
+            _updatesClient = new DeviceUpdateClient(accountEndpoint, instance, credentials);
+            _managementClient = new DeviceManagementClient(accountEndpoint, instance, credentials);
         }
 
         /// <summary>

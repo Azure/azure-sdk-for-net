@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> The Management service client. </summary>
-    public partial class ManagementClient
+    /// <summary> The DeviceManagement service client. </summary>
+    public partial class DeviceManagementClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://api.adu.microsoft.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -30,18 +30,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ManagementClient for mocking. </summary>
-        protected ManagementClient()
+        /// <summary> Initializes a new instance of DeviceManagementClient for mocking. </summary>
+        protected DeviceManagementClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementClient. </summary>
+        /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
         /// <param name="endpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/>, or <paramref name="credential"/> is null. </exception>
-        public ManagementClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
+        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -104,7 +104,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceClassAsync(string deviceClassId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeviceClass");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClass");
             scope.Start();
             try
             {
@@ -157,7 +157,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeviceClass(string deviceClassId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeviceClass");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClass");
             scope.Start();
             try
             {
@@ -232,7 +232,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceAsync(string deviceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDevice");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDevice");
             scope.Start();
             try
             {
@@ -307,7 +307,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDevice(string deviceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDevice");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDevice");
             scope.Start();
             try
             {
@@ -383,7 +383,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceModuleAsync(string deviceId, string moduleId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeviceModule");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceModule");
             scope.Start();
             try
             {
@@ -459,7 +459,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeviceModule(string deviceId, string moduleId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeviceModule");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceModule");
             scope.Start();
             try
             {
@@ -507,7 +507,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetUpdateComplianceAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetUpdateCompliance");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateCompliance");
             scope.Start();
             try
             {
@@ -555,7 +555,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetUpdateCompliance(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetUpdateCompliance");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateCompliance");
             scope.Start();
             try
             {
@@ -603,7 +603,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceTagAsync(string tagName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeviceTag");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceTag");
             scope.Start();
             try
             {
@@ -651,7 +651,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeviceTag(string tagName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeviceTag");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceTag");
             scope.Start();
             try
             {
@@ -704,7 +704,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetGroupAsync(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetGroup");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetGroup");
             scope.Start();
             try
             {
@@ -757,7 +757,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetGroup(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetGroup");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetGroup");
             scope.Start();
             try
             {
@@ -822,7 +822,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> CreateOrUpdateGroupAsync(string groupId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.CreateOrUpdateGroup");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateGroup");
             scope.Start();
             try
             {
@@ -887,7 +887,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response CreateOrUpdateGroup(string groupId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.CreateOrUpdateGroup");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateGroup");
             scope.Start();
             try
             {
@@ -929,7 +929,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> DeleteGroupAsync(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.DeleteGroup");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.DeleteGroup");
             scope.Start();
             try
             {
@@ -971,7 +971,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response DeleteGroup(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.DeleteGroup");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.DeleteGroup");
             scope.Start();
             try
             {
@@ -1021,7 +1021,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetGroupUpdateComplianceAsync(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetGroupUpdateCompliance");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetGroupUpdateCompliance");
             scope.Start();
             try
             {
@@ -1071,7 +1071,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetGroupUpdateCompliance(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetGroupUpdateCompliance");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetGroupUpdateCompliance");
             scope.Start();
             try
             {
@@ -1128,7 +1128,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeployment");
             scope.Start();
             try
             {
@@ -1185,7 +1185,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeployment(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeployment");
             scope.Start();
             try
             {
@@ -1257,7 +1257,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> CreateOrUpdateDeploymentAsync(string groupId, string deploymentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.CreateOrUpdateDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateDeployment");
             scope.Start();
             try
             {
@@ -1329,7 +1329,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response CreateOrUpdateDeployment(string groupId, string deploymentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.CreateOrUpdateDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateDeployment");
             scope.Start();
             try
             {
@@ -1372,7 +1372,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> DeleteDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.DeleteDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeployment");
             scope.Start();
             try
             {
@@ -1415,7 +1415,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response DeleteDeployment(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.DeleteDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeployment");
             scope.Start();
             try
             {
@@ -1468,7 +1468,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeploymentStatusAsync(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeploymentStatus");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentStatus");
             scope.Start();
             try
             {
@@ -1521,7 +1521,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeploymentStatus(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetDeploymentStatus");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentStatus");
             scope.Start();
             try
             {
@@ -1587,7 +1587,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetOperation");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetOperation");
             scope.Start();
             try
             {
@@ -1653,7 +1653,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetOperation");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetOperation");
             scope.Start();
             try
             {
@@ -1726,7 +1726,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> CollectLogsAsync(string operationId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.CollectLogs");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.CollectLogs");
             scope.Start();
             try
             {
@@ -1799,7 +1799,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response CollectLogs(string operationId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.CollectLogs");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.CollectLogs");
             scope.Start();
             try
             {
@@ -1856,7 +1856,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetLogCollectionOperationAsync(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetLogCollectionOperation");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperation");
             scope.Start();
             try
             {
@@ -1913,7 +1913,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetLogCollectionOperation(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetLogCollectionOperation");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperation");
             scope.Start();
             try
             {
@@ -1974,7 +1974,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetLogCollectionOperationDetailedStatusAsync(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetLogCollectionOperationDetailedStatus");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperationDetailedStatus");
             scope.Start();
             try
             {
@@ -2035,7 +2035,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetLogCollectionOperationDetailedStatus(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.GetLogCollectionOperationDetailedStatus");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperationDetailedStatus");
             scope.Start();
             try
             {
@@ -2093,7 +2093,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> StopDeploymentAsync(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.StopDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.StopDeployment");
             scope.Start();
             try
             {
@@ -2151,7 +2151,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response StopDeployment(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.StopDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.StopDeployment");
             scope.Start();
             try
             {
@@ -2209,7 +2209,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> RetryDeploymentAsync(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.RetryDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.RetryDeployment");
             scope.Start();
             try
             {
@@ -2267,7 +2267,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response RetryDeployment(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.RetryDeployment");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.RetryDeployment");
             scope.Start();
             try
             {
@@ -2323,7 +2323,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetDeviceClasses");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetDeviceClasses");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -2380,7 +2380,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetDeviceClasses(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetDeviceClasses");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetDeviceClasses");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -2440,7 +2440,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(deviceClassId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetInstallableUpdatesForDeviceClasses");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -2500,7 +2500,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(deviceClassId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetInstallableUpdatesForDeviceClasses");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -2580,7 +2580,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetDevicesAsync(string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetDevices");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetDevices");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -2660,7 +2660,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetDevices(string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetDevices");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetDevices");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -2712,7 +2712,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetDeviceTagsAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetDeviceTags");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetDeviceTags");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -2764,7 +2764,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetDeviceTags(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetDeviceTags");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetDeviceTags");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -2821,7 +2821,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetGroupsAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetGroups");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetGroups");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -2878,7 +2878,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetGroups(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetGroups");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetGroups");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -2942,7 +2942,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetBestUpdatesForGroups");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetBestUpdatesForGroups");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -3006,7 +3006,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetBestUpdatesForGroups");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetBestUpdatesForGroups");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -3074,7 +3074,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetDeploymentsForGroups");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetDeploymentsForGroups");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -3142,7 +3142,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetDeploymentsForGroups");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetDeploymentsForGroups");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -3210,7 +3210,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(deploymentId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetDeploymentDevices");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetDeploymentDevices");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -3278,7 +3278,7 @@ namespace Azure.IoT.DeviceUpdate
                 throw new ArgumentNullException(nameof(deploymentId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetDeploymentDevices");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetDeploymentDevices");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -3349,7 +3349,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetOperations");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetOperations");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -3420,7 +3420,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetOperations");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetOperations");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -3481,7 +3481,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetLogCollectionOperationsAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ManagementClient.GetLogCollectionOperations");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "DeviceManagementClient.GetLogCollectionOperations");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -3542,7 +3542,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetLogCollectionOperations(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ManagementClient.GetLogCollectionOperations");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "DeviceManagementClient.GetLogCollectionOperations");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -3587,12 +3587,12 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Operation<BinaryData>> ImportDevicesAsync(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.ImportDevices");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.ImportDevices");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportDevicesRequest(action, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "ManagementClient.ImportDevices", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "DeviceManagementClient.ImportDevices", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3631,12 +3631,12 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Operation<BinaryData> ImportDevices(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementClient.ImportDevices");
+            using var scope = _clientDiagnostics.CreateScope("DeviceManagementClient.ImportDevices");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportDevicesRequest(action, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "ManagementClient.ImportDevices", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "DeviceManagementClient.ImportDevices", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
