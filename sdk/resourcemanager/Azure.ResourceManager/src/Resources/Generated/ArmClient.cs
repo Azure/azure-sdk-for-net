@@ -19,6 +19,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
         public virtual PolicyAssignment GetPolicyAssignment(ResourceIdentifier id)
         {
+            PolicyAssignment.ValidateResourceId(id);
             return new PolicyAssignment(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="Provider" /> object. </returns>
         public virtual Provider GetProvider(ResourceIdentifier id)
         {
+            Provider.ValidateResourceId(id);
             return new Provider(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
         public virtual GenericResource GetGenericResource(ResourceIdentifier id)
         {
+            GenericResource.ValidateResourceId(id);
             return new GenericResource(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="ResourceGroup" /> object. </returns>
         public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
+            ResourceGroup.ValidateResourceId(id);
             return new ResourceGroup(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -59,6 +63,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="TagResource" /> object. </returns>
         public virtual TagResource GetTagResource(ResourceIdentifier id)
         {
+            TagResource.ValidateResourceId(id);
             return new TagResource(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="SubscriptionPolicyDefinition" /> object. </returns>
         public virtual SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(ResourceIdentifier id)
         {
+            SubscriptionPolicyDefinition.ValidateResourceId(id);
             return new SubscriptionPolicyDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -79,6 +85,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="TenantPolicyDefinition" /> object. </returns>
         public virtual TenantPolicyDefinition GetTenantPolicyDefinition(ResourceIdentifier id)
         {
+            TenantPolicyDefinition.ValidateResourceId(id);
             return new TenantPolicyDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -89,6 +96,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="ManagementGroupPolicyDefinition" /> object. </returns>
         public virtual ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(ResourceIdentifier id)
         {
+            ManagementGroupPolicyDefinition.ValidateResourceId(id);
             return new ManagementGroupPolicyDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -99,6 +107,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="SubscriptionPolicySetDefinition" /> object. </returns>
         public virtual SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(ResourceIdentifier id)
         {
+            SubscriptionPolicySetDefinition.ValidateResourceId(id);
             return new SubscriptionPolicySetDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -109,6 +118,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="TenantPolicySetDefinition" /> object. </returns>
         public virtual TenantPolicySetDefinition GetTenantPolicySetDefinition(ResourceIdentifier id)
         {
+            TenantPolicySetDefinition.ValidateResourceId(id);
             return new TenantPolicySetDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -119,6 +129,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinition" /> object. </returns>
         public virtual ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(ResourceIdentifier id)
         {
+            ManagementGroupPolicySetDefinition.ValidateResourceId(id);
             return new ManagementGroupPolicySetDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -129,6 +140,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="PolicyExemption" /> object. </returns>
         public virtual PolicyExemption GetPolicyExemption(ResourceIdentifier id)
         {
+            PolicyExemption.ValidateResourceId(id);
             return new PolicyExemption(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -139,6 +151,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="DataPolicyManifest" /> object. </returns>
         public virtual DataPolicyManifest GetDataPolicyManifest(ResourceIdentifier id)
         {
+            DataPolicyManifest.ValidateResourceId(id);
             return new DataPolicyManifest(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -149,6 +162,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="ManagementLockObject" /> object. </returns>
         public virtual ManagementLockObject GetManagementLockObject(ResourceIdentifier id)
         {
+            ManagementLockObject.ValidateResourceId(id);
             return new ManagementLockObject(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -159,6 +173,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
         public virtual ResourceLink GetResourceLink(ResourceIdentifier id)
         {
+            ResourceLink.ValidateResourceId(id);
             return new ResourceLink(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -169,6 +184,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="Subscription" /> object. </returns>
         public virtual Subscription GetSubscription(ResourceIdentifier id)
         {
+            Subscription.ValidateResourceId(id);
             return new Subscription(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
@@ -179,6 +195,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="Feature" /> object. </returns>
         public virtual Feature GetFeature(ResourceIdentifier id)
         {
+            Feature.ValidateResourceId(id);
             return new Feature(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion

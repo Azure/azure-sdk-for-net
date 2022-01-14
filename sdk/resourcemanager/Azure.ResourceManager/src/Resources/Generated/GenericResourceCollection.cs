@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -33,10 +34,102 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
+
+        // Collection level operations.
+
+        /// RequestPath: /{resourceId}
+        /// ContextualPath: /
+        /// OperationId: Resources_CreateOrUpdateById
+        /// <summary> Create a resource by ID. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="parameters"> Create or update resource parameters. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual ResourceCreateOrUpdateByIdOperation CreateOrUpdate(bool waitForCompletion, ResourceIdentifier resourceId, string apiVersion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _resourcesRestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
+                var operation = new ResourceCreateOrUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /{resourceId}
+        /// ContextualPath: /
+        /// OperationId: Resources_CreateOrUpdateById
+        /// <summary> Create a resource by ID. </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
+        /// <param name="parameters"> Create or update resource parameters. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<ResourceCreateOrUpdateByIdOperation> CreateOrUpdateAsync(bool waitForCompletion, ResourceIdentifier resourceId, string apiVersion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _resourcesRestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceCreateOrUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         // Builders.
         // public ArmBuilder<Azure.Core.ResourceIdentifier, GenericResource, GenericResourceData> Construct() { }

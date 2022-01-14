@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,8 +30,11 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -110,9 +114,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _subscriptionsRestClient.Get(subscriptionId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Subscription>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,9 +141,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _subscriptionsRestClient.GetAsync(subscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Subscription>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

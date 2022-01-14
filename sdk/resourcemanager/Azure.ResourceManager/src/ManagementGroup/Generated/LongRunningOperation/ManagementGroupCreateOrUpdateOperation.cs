@@ -69,13 +69,15 @@ namespace Azure.ResourceManager.Management.Models
         ManagementGroup IOperationSource<ManagementGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagementGroup(_operationBase, ManagementGroupData.DeserializeManagementGroupData(document.RootElement));
+            var data = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
+            return new ManagementGroup(_operationBase, data);
         }
 
         async ValueTask<ManagementGroup> IOperationSource<ManagementGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagementGroup(_operationBase, ManagementGroupData.DeserializeManagementGroupData(document.RootElement));
+            var data = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
+            return new ManagementGroup(_operationBase, data);
         }
     }
 }

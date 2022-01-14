@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Resources.Models
         GenericResource IOperationSource<GenericResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new GenericResource(_operationBase, GenericResourceData.DeserializeGenericResourceData(document.RootElement));
+            var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
+            return new GenericResource(_operationBase, data);
         }
 
         async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new GenericResource(_operationBase, GenericResourceData.DeserializeGenericResourceData(document.RootElement));
+            var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
+            return new GenericResource(_operationBase, data);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,10 +35,16 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceLinkCreateOrUpdateOperation CreateOrUpdate(ResourceIdentifier linkId, ResourceLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ResourceLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ResourceIdentifier linkId, ResourceLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -87,7 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceLinkCreateOrUpdateOperation> CreateOrUpdateAsync(ResourceIdentifier linkId, ResourceLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ResourceLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ResourceIdentifier linkId, ResourceLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -191,9 +198,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceLinksRestClient.Get(linkId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ResourceLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ResourceLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ResourceLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,9 +225,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceLinksRestClient.GetAsync(linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ResourceLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ResourceLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ResourceLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

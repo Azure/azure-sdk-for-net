@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,10 +38,16 @@ namespace Azure.ResourceManager.Management
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -58,7 +65,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual ManagementGroupCreateOrUpdateOperation CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagementGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -100,7 +107,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async virtual Task<ManagementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -222,9 +229,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = _managementGroupsRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagementGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagementGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,9 +260,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = await _managementGroupsRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagementGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagementGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

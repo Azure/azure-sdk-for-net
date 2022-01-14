@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,8 +30,11 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Provider.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Provider.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Provider.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -110,9 +114,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _featuresRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Feature>(null, response.GetRawResponse())
-                    : Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Feature>(null, response.GetRawResponse());
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,9 +141,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _featuresRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Feature>(null, response.GetRawResponse())
-                    : Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Feature>(null, response.GetRawResponse());
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

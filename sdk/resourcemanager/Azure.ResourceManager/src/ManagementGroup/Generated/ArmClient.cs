@@ -19,6 +19,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="ManagementGroup" /> object. </returns>
         public virtual ManagementGroup GetManagementGroup(ResourceIdentifier id)
         {
+            ManagementGroup.ValidateResourceId(id);
             return new ManagementGroup(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
         #endregion
