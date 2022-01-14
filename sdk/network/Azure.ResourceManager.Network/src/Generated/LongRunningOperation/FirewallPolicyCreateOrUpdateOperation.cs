@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         FirewallPolicy IOperationSource<FirewallPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new FirewallPolicy(_operationBase, FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement));
+            var data = FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement);
+            return new FirewallPolicy(_operationBase, data);
         }
 
         async ValueTask<FirewallPolicy> IOperationSource<FirewallPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new FirewallPolicy(_operationBase, FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement));
+            var data = FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement);
+            return new FirewallPolicy(_operationBase, data);
         }
     }
 }

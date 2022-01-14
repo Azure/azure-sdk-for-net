@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
             if (_resourceGroup.GetIpGroups().Exists(_ipGroupName))
             {
                 var ipGroup = await _resourceGroup.GetIpGroups().GetAsync(_ipGroupName);
-                await ipGroup.Value.DeleteAsync();
+                await ipGroup.Value.DeleteAsync(true);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Tests
             var container = _resourceGroup.GetIpGroups();
             var data = new IpGroupData();
             data.Location = AzureLocation.WestUS2;
-            var ipGroup = await container.CreateOrUpdateAsync(ipGroupName, data);
+            var ipGroup = await container.CreateOrUpdateAsync(false, ipGroupName, data);
             return ipGroup;
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task Delete()
         {
             var ipGroup  = await CreateIpGroup(_ipGroupName);
-            await ipGroup.Value.DeleteAsync();
+            await ipGroup.Value.DeleteAsync(true);
             var ipGroupList = await _resourceGroup.GetIpGroups().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ipGroupList);
         }

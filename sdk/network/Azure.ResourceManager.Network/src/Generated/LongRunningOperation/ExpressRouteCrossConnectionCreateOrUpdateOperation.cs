@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteCrossConnection IOperationSource<ExpressRouteCrossConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteCrossConnection(_operationBase, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement));
+            var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
+            return new ExpressRouteCrossConnection(_operationBase, data);
         }
 
         async ValueTask<ExpressRouteCrossConnection> IOperationSource<ExpressRouteCrossConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteCrossConnection(_operationBase, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement));
+            var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
+            return new ExpressRouteCrossConnection(_operationBase, data);
         }
     }
 }

@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Network.Tests
             var networkSecurityGroupCollection = GetNetworkSecurityGroupCollection(resourceGroupName);
             Response<NetworkSecurityGroup> nsg = await networkSecurityGroupCollection.GetAsync(resourceGroupName, networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(SecurityRule);
-            var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
-            Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
+            var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(false, networkSecurityGroupName, nsg.Value.Data);
+            Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();
 
             //Get view security group rules
-            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVMSecurityRulesAsync(new SecurityGroupViewParameters(vm.Id));
-            Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
+            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVMSecurityRulesAsync(false, new SecurityGroupViewParameters(vm.Id));
+            Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();
 
             //Verify effective security rule defined earlier
             IEnumerable<EffectiveNetworkSecurityRule> getEffectiveSecurityRule = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.EffectiveSecurityRules.Where(x => x.Name == "UserRule_" + securityRule1);
