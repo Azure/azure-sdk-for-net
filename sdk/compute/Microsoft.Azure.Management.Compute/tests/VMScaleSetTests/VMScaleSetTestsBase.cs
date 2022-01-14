@@ -660,6 +660,9 @@ namespace Compute.Tests
 
                 string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT10M";
                 Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.GracePeriod, expectedAutomaticRepairsGracePeriodValue, ignoreCase: true);
+
+                string expectedAutomaticRepairsRepairActionValue = vmScaleSet.AutomaticRepairsPolicy.RepairAction ?? "replace";
+                Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.RepairAction, expectedAutomaticRepairsRepairActionValue, ignoreCase: true);
             }
 
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&

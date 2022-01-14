@@ -442,8 +442,8 @@ namespace Compute.Tests
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
                         {
                             Enabled = true,
-
-                            GracePeriod = "PT35M"
+                            GracePeriod = "PT35M",
+                            RepairAction = "replace"
                         };
                         UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
@@ -459,8 +459,38 @@ namespace Compute.Tests
                         ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
-
                         Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
+                        Assert.Equal("replace", getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
+
+                        // Test other repair actions. Must disable before changing repair action
+                        foreach (string repairAction in new List<string> { "restart", "reimage" })
+                        {
+                            // Disable auto repairs so we can update repair Action
+                            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                            {
+                                Enabled = false,
+                            };
+                            UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+                            getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+                            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == false);
+
+                            // Now we can update repairAction
+                            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                            {
+                                Enabled = true,
+                                GracePeriod = "PT35M",
+                                RepairAction = repairAction
+                            };
+                            UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+
+                            getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+                            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
+                            Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
+                            Assert.Equal(repairAction, getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
+                        }
 
                         // Disable Automatic Repairs
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
