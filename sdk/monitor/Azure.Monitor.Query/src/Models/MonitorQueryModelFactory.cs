@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Azure.Monitor.Query.Models;
@@ -31,7 +32,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Enables the user to create an instance of a <see cref="MetricResult"/>.
         /// </summary>
-        /// <param name="id"> The metric Id. </param>
+        /// <param name="id"> The metric ID. </param>
         /// <param name="resourceType"> The resource type of the metric resource. </param>
         /// <param name="name"> The name of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
@@ -44,7 +45,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Enables the user to create an instance of a <see cref="MetricTimeSeriesElement"/>.
         /// <param name="metadataValues"> A dictionary comprised of metric metadata values. </param>
-        /// <param name="values"> A list made of MetricValue elements. </param>
+        /// <param name="values"> A list of <see cref="Models.MetricValue"/> elements. </param>
         /// </summary>
         public static MetricTimeSeriesElement MetricTimeSeriesElement(IReadOnlyDictionary<string, string> metadataValues, IEnumerable<MetricValue> values)
         {
@@ -55,6 +56,18 @@ namespace Azure.Monitor.Query.Models
                 metadataValueList.Add(metadataValue);
             }
             return new MetricTimeSeriesElement(metadataValueList, values.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
+        /// <param name="average"> The average value in the time range. </param>
+        /// <param name="minimum"> The least value in the time range. </param>
+        /// <param name="maximum"> The greatest value in the time range. </param>
+        /// <param name="total"> The sum of all of the values in the time range. </param>
+        /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
+        public static MetricValue MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count)
+        {
+            return new MetricValue(timeStamp, average, minimum, maximum, total, count);
         }
 
         /// <summary> Enables the user to create an instance of a <see cref="LogsQueryResult"/>. </summary>

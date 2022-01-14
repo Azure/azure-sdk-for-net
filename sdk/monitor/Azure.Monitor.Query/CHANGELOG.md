@@ -8,6 +8,7 @@ Added the following methods to `MonitorQueryModelFactory`:
 - `LogsTable`
 - `LogsTableRow`
 - `MetricsQueryResult`
+- `MetricValue`
 
 ## 1.0.1 (2021-11-09)
 

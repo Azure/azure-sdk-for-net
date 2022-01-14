@@ -331,7 +331,7 @@ namespace Azure.Monitor.Query.Models
     }
     public partial class MetricValue
     {
-        public MetricValue(System.DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count) { }
+        internal MetricValue() { }
         public double? Average { get { throw null; } }
         public double? Count { get { throw null; } }
         public double? Maximum { get { throw null; } }
@@ -350,6 +350,6 @@ namespace Azure.Monitor.Query.Models
         public static Azure.Monitor.Query.Models.MetricResult MetricResult(string id, string resourceType, string name, Azure.Monitor.Query.Models.MetricUnit unit, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricTimeSeriesElement> timeSeries) { throw null; }
         public static Azure.Monitor.Query.Models.MetricsQueryResult MetricsQueryResult(int? cost, string timespan, System.TimeSpan? granularity, string @namespace, string resourceRegion, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricResult> metrics) { throw null; }
         public static Azure.Monitor.Query.Models.MetricTimeSeriesElement MetricTimeSeriesElement(System.Collections.Generic.IReadOnlyDictionary<string, string> metadataValues, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricValue> values) { throw null; }
-        public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count) { throw null; }
     }
 }

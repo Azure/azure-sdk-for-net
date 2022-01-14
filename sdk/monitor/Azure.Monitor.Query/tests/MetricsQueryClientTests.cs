@@ -68,7 +68,7 @@ namespace Azure.Monitor.Query.Tests
         public void CanGetMetricQueryResult()
         {
             var metadata = new Dictionary<string, string> { { "metadatatest1", "metadatatest2" } };
-            var metricValue = new MetricValue(new DateTimeOffset(new DateTime(10)));
+            var metricValue = MonitorQueryModelFactory.MetricValue(new DateTimeOffset(new DateTime(10)));
             var metricValueList = new List<MetricValue>() { metricValue };
             MetricTimeSeriesElement metricTimeSeriesElement = MonitorQueryModelFactory.MetricTimeSeriesElement(metadata, metricValueList);
             Assert.IsNotNull(metricTimeSeriesElement);
