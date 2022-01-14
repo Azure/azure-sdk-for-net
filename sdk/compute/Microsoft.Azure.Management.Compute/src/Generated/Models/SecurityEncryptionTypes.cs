@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SecurityTypes.
+    /// Defines values for SecurityEncryptionTypes.
     /// </summary>
-    public static class SecurityTypes
+    public static class SecurityEncryptionTypes
     {
-        public const string TrustedLaunch = "TrustedLaunch";
-        public const string ConfidentialVM = "ConfidentialVM";
+        public const string VMGuestStateOnly = "VMGuestStateOnly";
+        public const string DiskWithVMGuestState = "DiskWithVMGuestState";
     }
 }
