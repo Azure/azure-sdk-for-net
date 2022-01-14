@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
     /// </summary>
-    public abstract class ArmResource
+    public abstract partial class ArmResource
     {
         private TagResource _tagResource;
         private Tenant _tenant;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= this.GetTagResource();
+        protected internal TagResource TagResource => _tagResource ??= new TagResource(this, new ResourceIdentifier(this.Id + "/providers/Microsoft.Resources/tags/default"));
 
         /// <summary>
         /// Validate the resource identifier against current operations.

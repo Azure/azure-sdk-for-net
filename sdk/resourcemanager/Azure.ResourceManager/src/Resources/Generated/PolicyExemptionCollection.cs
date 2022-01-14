@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyExemptionsRestClient.CreateOrUpdate(Id, policyExemptionName, parameters, cancellationToken);
-                var operation = new PolicyExemptionCreateOrUpdateOperation(Parent, response);
+                var operation = new PolicyExemptionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyExemptionsRestClient.CreateOrUpdateAsync(Id, policyExemptionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyExemptionCreateOrUpdateOperation(Parent, response);
+                var operation = new PolicyExemptionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policyExemptionsRestClient.Get(Id, policyExemptionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyExemption(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policyExemptionsRestClient.GetAsync(Id, policyExemptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PolicyExemption(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

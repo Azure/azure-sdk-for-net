@@ -4,15 +4,12 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Resources.Models;
 
-[assembly:CodeGenSuppressType("TenantExtensions")]
+[assembly: CodeGenSuppressType("TenantExtensions")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>

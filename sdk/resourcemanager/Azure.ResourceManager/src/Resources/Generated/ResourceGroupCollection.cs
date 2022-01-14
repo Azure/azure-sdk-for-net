@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupCreateOrUpdateOperation(Parent, response);
+                var operation = new ResourceGroupCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupCreateOrUpdateOperation(Parent, response);
+                var operation = new ResourceGroupCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourceGroupsRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

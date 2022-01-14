@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = _managementGroupsRestClient.CreateOrUpdate(groupId, createManagementGroupRequest, cacheControl, cancellationToken);
-                var operation = new ManagementGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managementGroupsRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response);
+                var operation = new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managementGroupsRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = await _managementGroupsRestClient.CreateOrUpdateAsync(groupId, createManagementGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managementGroupsRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response);
+                var operation = new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managementGroupsRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Management
                 var response = _managementGroupsRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Management
                 var response = await _managementGroupsRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

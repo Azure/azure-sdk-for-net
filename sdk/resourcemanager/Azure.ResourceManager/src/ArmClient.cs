@@ -19,7 +19,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// The entry point for all ARM clients.
     /// </summary>
-    public class ArmClient
+    public partial class ArmClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -151,46 +151,6 @@ namespace Azure.ResourceManager
         public virtual TenantCollection GetTenants()
         {
             return new TenantCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
-        }
-
-        /// <summary>
-        /// Gets a resource group operations object.
-        /// </summary>
-        /// <param name="id"> The id of the resourcegroup. </param>
-        /// <returns> Resource operations of the resourcegroup. </returns>
-        public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
-        {
-            return new ResourceGroup(ClientOptions, Credential, BaseUri, Pipeline, id);
-        }
-
-        /// <summary>
-        /// Gets a subscription operations object.
-        /// </summary>
-        /// <param name="id"> The id of the subscription. </param>
-        /// <returns> Resource operations of the subscription. </returns>
-        public virtual Subscription GetSubscription(ResourceIdentifier id)
-        {
-            return new Subscription(ClientOptions, Credential, BaseUri, Pipeline, id);
-        }
-
-        /// <summary>
-        /// Gets a feature operations object.
-        /// </summary>
-        /// <param name="id"> The id of the feature. </param>
-        /// <returns> Resource operations of the feature. </returns>
-        public virtual Feature GetFeature(ResourceIdentifier id)
-        {
-            return new Feature(ClientOptions, Credential, BaseUri, Pipeline, id);
-        }
-
-        /// <summary>
-        /// Gets a Provider operations object.
-        /// </summary>
-        /// <param name="id"> The id of the Provider. </param>
-        /// <returns> Resource operations of the Provider. </returns>
-        public virtual Provider GetProvider(ResourceIdentifier id)
-        {
-            return new Provider(ClientOptions, Credential, BaseUri, Pipeline, id);
         }
 
         /// <summary>
@@ -340,21 +300,6 @@ namespace Azure.ResourceManager
         public virtual GenericResourceCollection GetGenericResources() => _tenant.GetGenericResources();
 
         /// <summary>
-        /// Get the operations for an specific resource.
-        /// </summary>
-        /// <param name="id"> The id of the resource to retrieve. </param>
-        /// <returns> The operations that can be performed over a specific GenericResource. </returns>
-        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            return new GenericResource(GetDefaultSubscription(), id);
-        }
-
-        /// <summary>
         /// Gets the RestApi definition for a given Azure namespace.
         /// </summary>
         /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
@@ -399,12 +344,5 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <returns> A collection of the management groups. </returns>
         public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
-
-        /// <summary>
-        /// Gets the management group operations object associated with the id.
-        /// </summary>
-        /// <param name="id"> The id of the management group operations. </param>
-        /// <returns> A client to perform operations on the management group. </returns>
-        public virtual ManagementGroup GetManagementGroup(ResourceIdentifier id) => _tenant.GetManagementGroup(id);
     }
 }

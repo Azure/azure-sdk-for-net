@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policyDefinitionsRestClient.GetBuiltIn(policyDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policyDefinitionsRestClient.GetBuiltInAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TenantPolicyDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

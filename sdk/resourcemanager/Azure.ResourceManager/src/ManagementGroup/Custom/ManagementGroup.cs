@@ -6,18 +6,13 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management.Models;
-using Azure.ResourceManager.Resources.Models;
 
 [assembly:CodeGenSuppressType("SearchOptions")]
 [assembly:CodeGenSuppressType("EntityViewOptions")]
-[assembly:CodeGenSuppressType("ArmClientExtensions")] // Moved code to ArmClient
 [assembly:CodeGenSuppressType("TenantExtensions")] // Moved code to Custom/Tenant
 [assembly:CodeGenSuppressType("AzureAsyncOperationResults")]
 [assembly:CodeGenSuppressType("ErrorResponse")]

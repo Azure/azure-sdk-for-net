@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _dataPolicyManifestsRestClient.GetByPolicyMode(policyMode, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifest(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _dataPolicyManifestsRestClient.GetByPolicyModeAsync(policyMode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataPolicyManifest(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

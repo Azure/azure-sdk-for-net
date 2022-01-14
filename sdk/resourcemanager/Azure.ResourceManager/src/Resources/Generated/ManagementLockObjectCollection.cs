@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLocksRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
-                var operation = new ManagementLockCreateOrUpdateByScopeOperation(Parent, response);
+                var operation = new ManagementLockCreateOrUpdateByScopeOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLocksRestClient.CreateOrUpdateByScopeAsync(Id, lockName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockCreateOrUpdateByScopeOperation(Parent, response);
+                var operation = new ManagementLockCreateOrUpdateByScopeOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _managementLocksRestClient.GetByScope(Id, lockName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLockObject(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _managementLocksRestClient.GetByScopeAsync(Id, lockName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementLockObject(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

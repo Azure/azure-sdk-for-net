@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _subscriptionsRestClient.Get(subscriptionId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subscription(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _subscriptionsRestClient.GetAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Subscription(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

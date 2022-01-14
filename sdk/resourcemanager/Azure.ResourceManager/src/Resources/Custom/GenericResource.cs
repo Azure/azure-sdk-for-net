@@ -7,15 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
-[assembly:CodeGenSuppressType("GenericResourceFilter")]
-[assembly:CodeGenSuppressType("GenericResource")]
+[assembly: CodeGenSuppressType("GenericResourceFilter")]
+[assembly: CodeGenSuppressType("GenericResource")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
