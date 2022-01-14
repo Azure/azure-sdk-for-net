@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of AfdRuleSet and their operations over its parent. </summary>
     public partial class AfdRuleSetCollection : ArmCollection, IEnumerable<AfdRuleSet>, IAsyncEnumerable<AfdRuleSet>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdRuleSetsRestOperations _afdRuleSetsRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.Cdn
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _afdRuleSetsRestClient = new AfdRuleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Profile.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Profile.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Profile.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -353,6 +358,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AfdRuleSet, AfdRuleSetData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdRuleSet, AfdRuleSetData> Construct() { }
     }
 }

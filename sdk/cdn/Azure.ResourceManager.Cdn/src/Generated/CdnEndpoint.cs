@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,7 +16,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.Cdn
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpoint"/> class. </summary>
@@ -55,6 +58,9 @@ namespace Azure.ResourceManager.Cdn
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpoint"/> class. </summary>
@@ -67,13 +73,13 @@ namespace Azure.ResourceManager.Cdn
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,6 +94,12 @@ namespace Azure.ResourceManager.Cdn
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary> Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
@@ -133,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -141,7 +153,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -754,7 +766,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of CdnOrigins in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnOrigins and their operations over a CdnEndpoint. </returns>
-        public CdnOriginCollection GetCdnOrigins()
+        public virtual CdnOriginCollection GetCdnOrigins()
         {
             return new CdnOriginCollection(this);
         }
@@ -764,7 +776,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of CdnOriginGroups in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnOriginGroups and their operations over a CdnEndpoint. </returns>
-        public CdnOriginGroupCollection GetCdnOriginGroups()
+        public virtual CdnOriginGroupCollection GetCdnOriginGroups()
         {
             return new CdnOriginGroupCollection(this);
         }
@@ -774,7 +786,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a collection of CdnCustomDomains in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnCustomDomains and their operations over a CdnEndpoint. </returns>
-        public CdnCustomDomainCollection GetCdnCustomDomains()
+        public virtual CdnCustomDomainCollection GetCdnCustomDomains()
         {
             return new CdnCustomDomainCollection(this);
         }

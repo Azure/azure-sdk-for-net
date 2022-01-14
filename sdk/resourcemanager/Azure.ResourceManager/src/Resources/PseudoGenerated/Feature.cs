@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 
@@ -37,6 +38,9 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -49,15 +53,15 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/features";
-
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -78,12 +82,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (identifier.ResourceType != $"{Id.ResourceType.Namespace}/features")
+            if (id.ResourceType.GetLastType() != "features")
             {
-                throw new InvalidOperationException($"Invalid resourcetype found when intializing FeatureOperations: {identifier.ResourceType}");
+                throw new InvalidOperationException($"Invalid resourcetype found when intializing FeatureOperations: {id.ResourceType}");
             }
         }
 

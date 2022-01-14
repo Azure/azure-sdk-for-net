@@ -10,13 +10,14 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
 using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
 {
     [ClientTestFixture]
     public class EventHubTestBase:ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
     {
-        public static Location DefaultLocation => Location.EastUS2;
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }

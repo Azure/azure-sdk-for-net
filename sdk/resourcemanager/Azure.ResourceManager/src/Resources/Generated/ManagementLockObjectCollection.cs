@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ManagementLockObject and their operations over its parent. </summary>
     public partial class ManagementLockObjectCollection : ArmCollection, IEnumerable<ManagementLockObject>, IAsyncEnumerable<ManagementLockObject>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementLocksRestOperations _managementLocksRestClient;
@@ -38,15 +36,6 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <summary> Verify that the input resource Id is a valid collection for this type. </summary>
-        /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
         }
 
         // Collection level operations.
@@ -389,6 +378,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagementLockObject, ManagementLockObjectData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagementLockObject, ManagementLockObjectData> Construct() { }
     }
 }

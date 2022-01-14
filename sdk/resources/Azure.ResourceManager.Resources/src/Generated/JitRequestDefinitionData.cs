@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of JitRequestDefinitionData. </summary>
         /// <param name="location"> The location. </param>
-        public JitRequestDefinitionData(Location location) : base(location)
+        public JitRequestDefinitionData(AzureLocation location) : base(location)
         {
             JitAuthorizationPolicies = new ChangeTrackingList<JitAuthorizationPolicies>();
         }
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestState"> The JIT request state. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal JitRequestDefinitionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, tags, location)
+        internal JitRequestDefinitionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, tags, location)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;

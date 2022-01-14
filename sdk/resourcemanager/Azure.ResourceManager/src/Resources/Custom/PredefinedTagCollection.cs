@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,12 +38,16 @@ namespace Azure.ResourceManager.Resources
         internal PredefinedTagCollection(ClientContext clientContext, ResourceIdentifier parentId)
             : base(clientContext, parentId)
         {
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary>
-        /// Gets the valid resource type associated with the collection.
-        /// </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Gets the operations that can be performed on the collection.

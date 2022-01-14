@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Core;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of MachineExtension and their operations over its parent. </summary>
     public partial class MachineExtensionCollection : ArmCollection, IEnumerable<MachineExtension>, IAsyncEnumerable<MachineExtension>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MachineExtensionsRestOperations _machineExtensionsRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _machineExtensionsRestClient = new MachineExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VirtualMachine.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VirtualMachine.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachine.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -383,6 +388,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, MachineExtension, MachineExtensionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, MachineExtension, MachineExtensionData> Construct() { }
     }
 }

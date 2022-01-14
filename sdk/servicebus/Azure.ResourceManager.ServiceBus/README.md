@@ -61,7 +61,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 ```C# Snippet:Managing_ServiceBusNamespaces_CreateResourceGroup
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
@@ -71,7 +71,7 @@ Then we can create a namespace inside this resource group.
 ```C# Snippet:Managing_ServiceBusNamespaces_CreateNamespace
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-Location location = Location.EastUS2;
+AzureLocation location = AzureLocation.EastUS2;
 ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
 ```
 

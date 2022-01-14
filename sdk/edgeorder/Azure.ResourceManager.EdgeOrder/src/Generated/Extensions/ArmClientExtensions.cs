@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="AddressResource" /> object. </returns>
         public static AddressResource GetAddressResource(this ArmClient armClient, ResourceIdentifier id)
         {
+            AddressResource.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AddressResource(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="OrderResource" /> object. </returns>
         public static OrderResource GetOrderResource(this ArmClient armClient, ResourceIdentifier id)
         {
+            OrderResource.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OrderResource(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="OrderItemResource" /> object. </returns>
         public static OrderItemResource GetOrderItemResource(this ArmClient armClient, ResourceIdentifier id)
         {
+            OrderItemResource.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OrderItemResource(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

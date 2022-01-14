@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.AppService
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlot"/> class. </summary>
@@ -56,6 +59,9 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlot"/> class. </summary>
@@ -68,13 +74,13 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -89,6 +95,12 @@ namespace Azure.ResourceManager.AppService
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
@@ -140,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -148,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -2286,25 +2298,30 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async virtual Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesSlotAsync(string operationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkTrace> GetNetworkTracesSlotAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlot");
-            scope.Start();
-            try
+            async Task<Page<NetworkTrace>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _webAppsRestClient.GetNetworkTracesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlot");
+                scope.Start();
+                try
+                {
+                    var response = await _webAppsRestClient.GetNetworkTracesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/{operationId}
@@ -2314,25 +2331,30 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesSlot(string operationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkTrace> GetNetworkTracesSlot(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlot");
-            scope.Start();
-            try
+            Page<NetworkTrace> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _webAppsRestClient.GetNetworkTracesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlot");
+                scope.Start();
+                try
+                {
+                    var response = _webAppsRestClient.GetNetworkTracesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTraces/current/operationresults/{operationId}
@@ -2398,25 +2420,30 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async virtual Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesSlotV2Async(string operationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkTrace> GetNetworkTracesSlotV2Async(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlotV2");
-            scope.Start();
-            try
+            async Task<Page<NetworkTrace>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _webAppsRestClient.GetNetworkTracesSlotV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlotV2");
+                scope.Start();
+                try
+                {
+                    var response = await _webAppsRestClient.GetNetworkTracesSlotV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTraces/{operationId}
@@ -2426,25 +2453,30 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesSlotV2(string operationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkTrace> GetNetworkTracesSlotV2(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlotV2");
-            scope.Start();
-            try
+            Page<NetworkTrace> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _webAppsRestClient.GetNetworkTracesSlotV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetNetworkTracesSlotV2");
+                scope.Start();
+                try
+                {
+                    var response = _webAppsRestClient.GetNetworkTracesSlotV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/newpassword
@@ -2662,20 +2694,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetPrivateLinkResourcesSlot
         /// <summary> Description for Gets the private link resources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesSlotAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetPrivateLinkResourcesSlot");
-            scope.Start();
-            try
+            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _webAppsRestClient.GetPrivateLinkResourcesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetPrivateLinkResourcesSlot");
+                scope.Start();
+                try
+                {
+                    var response = await _webAppsRestClient.GetPrivateLinkResourcesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateLinkResources
@@ -2683,20 +2720,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: WebApps_GetPrivateLinkResourcesSlot
         /// <summary> Description for Gets the private link resources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResourcesSlot(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResourcesSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetPrivateLinkResourcesSlot");
-            scope.Start();
-            try
+            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _webAppsRestClient.GetPrivateLinkResourcesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("SiteSlot.GetPrivateLinkResourcesSlot");
+                scope.Start();
+                try
+                {
+                    var response = _webAppsRestClient.GetPrivateLinkResourcesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml
@@ -3041,6 +3083,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         /// <returns> An async collection of <see cref="SlotDifference" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SlotDifference> GetSlotDifferencesSlotAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
@@ -3088,6 +3131,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         /// <returns> A collection of <see cref="SlotDifference" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SlotDifference> GetSlotDifferencesSlot(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
@@ -3711,7 +3755,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotDetectors in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDetectors and their operations over a SiteSlot. </returns>
-        public SiteSlotDetectorCollection GetSiteSlotDetectors()
+        public virtual SiteSlotDetectorCollection GetSiteSlotDetectors()
         {
             return new SiteSlotDetectorCollection(this);
         }
@@ -3721,7 +3765,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotPrivateEndpointConnections in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPrivateEndpointConnections and their operations over a SiteSlot. </returns>
-        public SiteSlotPrivateEndpointConnectionCollection GetSiteSlotPrivateEndpointConnections()
+        public virtual SiteSlotPrivateEndpointConnectionCollection GetSiteSlotPrivateEndpointConnections()
         {
             return new SiteSlotPrivateEndpointConnectionCollection(this);
         }
@@ -3731,7 +3775,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotHybridConnectionNamespaceRelays in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHybridConnectionNamespaceRelays and their operations over a SiteSlot. </returns>
-        public SiteSlotHybridConnectionNamespaceRelayCollection GetSiteSlotHybridConnectionNamespaceRelays()
+        public virtual SiteSlotHybridConnectionNamespaceRelayCollection GetSiteSlotHybridConnectionNamespaceRelays()
         {
             return new SiteSlotHybridConnectionNamespaceRelayCollection(this);
         }
@@ -3741,7 +3785,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotVirtualNetworkConnections in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnections and their operations over a SiteSlot. </returns>
-        public SiteSlotVirtualNetworkConnectionCollection GetSiteSlotVirtualNetworkConnections()
+        public virtual SiteSlotVirtualNetworkConnectionCollection GetSiteSlotVirtualNetworkConnections()
         {
             return new SiteSlotVirtualNetworkConnectionCollection(this);
         }
@@ -3751,7 +3795,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotDiagnostics in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDiagnostics and their operations over a SiteSlot. </returns>
-        public SiteSlotDiagnosticCollection GetSiteSlotDiagnostics()
+        public virtual SiteSlotDiagnosticCollection GetSiteSlotDiagnostics()
         {
             return new SiteSlotDiagnosticCollection(this);
         }
@@ -3761,7 +3805,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotResourceHealthMetadata along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadata" /> object. </returns>
-        public SiteSlotResourceHealthMetadata GetSiteSlotResourceHealthMetadata()
+        public virtual SiteSlotResourceHealthMetadata GetSiteSlotResourceHealthMetadata()
         {
             return new SiteSlotResourceHealthMetadata(this, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
         }
@@ -3771,7 +3815,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotBackups in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotBackups and their operations over a SiteSlot. </returns>
-        public SiteSlotBackupCollection GetSiteSlotBackups()
+        public virtual SiteSlotBackupCollection GetSiteSlotBackups()
         {
             return new SiteSlotBackupCollection(this);
         }
@@ -3781,7 +3825,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotBasicPublishingCredentialsPolicyFtp along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyFtp" /> object. </returns>
-        public SiteSlotBasicPublishingCredentialsPolicyFtp GetSiteSlotBasicPublishingCredentialsPolicyFtp()
+        public virtual SiteSlotBasicPublishingCredentialsPolicyFtp GetSiteSlotBasicPublishingCredentialsPolicyFtp()
         {
             return new SiteSlotBasicPublishingCredentialsPolicyFtp(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
@@ -3791,7 +3835,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotBasicPublishingCredentialsPolicyScm along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyScm" /> object. </returns>
-        public SiteSlotBasicPublishingCredentialsPolicyScm GetSiteSlotBasicPublishingCredentialsPolicyScm()
+        public virtual SiteSlotBasicPublishingCredentialsPolicyScm GetSiteSlotBasicPublishingCredentialsPolicyScm()
         {
             return new SiteSlotBasicPublishingCredentialsPolicyScm(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
@@ -3801,7 +3845,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotConfigAppSettings in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigAppSettings and their operations over a SiteSlot. </returns>
-        public SiteSlotConfigAppSettingCollection GetSiteSlotConfigAppSettings()
+        public virtual SiteSlotConfigAppSettingCollection GetSiteSlotConfigAppSettings()
         {
             return new SiteSlotConfigAppSettingCollection(this);
         }
@@ -3811,7 +3855,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotConfigConnectionStrings in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigConnectionStrings and their operations over a SiteSlot. </returns>
-        public SiteSlotConfigConnectionStringCollection GetSiteSlotConfigConnectionStrings()
+        public virtual SiteSlotConfigConnectionStringCollection GetSiteSlotConfigConnectionStrings()
         {
             return new SiteSlotConfigConnectionStringCollection(this);
         }
@@ -3821,7 +3865,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotConfigLogs along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotConfigLogs" /> object. </returns>
-        public SiteSlotConfigLogs GetSiteSlotConfigLogs()
+        public virtual SiteSlotConfigLogs GetSiteSlotConfigLogs()
         {
             return new SiteSlotConfigLogs(this, new ResourceIdentifier(Id.ToString() + "/config/logs"));
         }
@@ -3831,7 +3875,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotConfigWeb along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotConfigWeb" /> object. </returns>
-        public SiteSlotConfigWeb GetSiteSlotConfigWeb()
+        public virtual SiteSlotConfigWeb GetSiteSlotConfigWeb()
         {
             return new SiteSlotConfigWeb(this, new ResourceIdentifier(Id.ToString() + "/config/web"));
         }
@@ -3841,7 +3885,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotContinuousWebJobs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotContinuousWebJobs and their operations over a SiteSlot. </returns>
-        public SiteSlotContinuousWebJobCollection GetSiteSlotContinuousWebJobs()
+        public virtual SiteSlotContinuousWebJobCollection GetSiteSlotContinuousWebJobs()
         {
             return new SiteSlotContinuousWebJobCollection(this);
         }
@@ -3851,7 +3895,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotDeployments in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDeployments and their operations over a SiteSlot. </returns>
-        public SiteSlotDeploymentCollection GetSiteSlotDeployments()
+        public virtual SiteSlotDeploymentCollection GetSiteSlotDeployments()
         {
             return new SiteSlotDeploymentCollection(this);
         }
@@ -3861,7 +3905,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotDomainOwnershipIdentifiers in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDomainOwnershipIdentifiers and their operations over a SiteSlot. </returns>
-        public SiteSlotDomainOwnershipIdentifierCollection GetSiteSlotDomainOwnershipIdentifiers()
+        public virtual SiteSlotDomainOwnershipIdentifierCollection GetSiteSlotDomainOwnershipIdentifiers()
         {
             return new SiteSlotDomainOwnershipIdentifierCollection(this);
         }
@@ -3871,7 +3915,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotExtension along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotExtension" /> object. </returns>
-        public SiteSlotExtension GetSiteSlotExtension()
+        public virtual SiteSlotExtension GetSiteSlotExtension()
         {
             return new SiteSlotExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
@@ -3881,7 +3925,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotFunctions in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotFunctions and their operations over a SiteSlot. </returns>
-        public SiteSlotFunctionCollection GetSiteSlotFunctions()
+        public virtual SiteSlotFunctionCollection GetSiteSlotFunctions()
         {
             return new SiteSlotFunctionCollection(this);
         }
@@ -3891,7 +3935,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotHostNameBindings in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHostNameBindings and their operations over a SiteSlot. </returns>
-        public SiteSlotHostNameBindingCollection GetSiteSlotHostNameBindings()
+        public virtual SiteSlotHostNameBindingCollection GetSiteSlotHostNameBindings()
         {
             return new SiteSlotHostNameBindingCollection(this);
         }
@@ -3901,7 +3945,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotHybridconnections in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHybridconnections and their operations over a SiteSlot. </returns>
-        public SiteSlotHybridconnectionCollection GetSiteSlotHybridconnections()
+        public virtual SiteSlotHybridconnectionCollection GetSiteSlotHybridconnections()
         {
             return new SiteSlotHybridconnectionCollection(this);
         }
@@ -3911,7 +3955,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotInstances in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotInstances and their operations over a SiteSlot. </returns>
-        public SiteSlotInstanceCollection GetSiteSlotInstances()
+        public virtual SiteSlotInstanceCollection GetSiteSlotInstances()
         {
             return new SiteSlotInstanceCollection(this);
         }
@@ -3921,7 +3965,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotProcesses in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotProcesses and their operations over a SiteSlot. </returns>
-        public SiteSlotProcessCollection GetSiteSlotProcesses()
+        public virtual SiteSlotProcessCollection GetSiteSlotProcesses()
         {
             return new SiteSlotProcessCollection(this);
         }
@@ -3931,7 +3975,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotNetworkConfig along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotNetworkConfig" /> object. </returns>
-        public SiteSlotNetworkConfig GetSiteSlotNetworkConfig()
+        public virtual SiteSlotNetworkConfig GetSiteSlotNetworkConfig()
         {
             return new SiteSlotNetworkConfig(this, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
         }
@@ -3941,7 +3985,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotPremierAddOns in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPremierAddOns and their operations over a SiteSlot. </returns>
-        public SiteSlotPremierAddOnCollection GetSiteSlotPremierAddOns()
+        public virtual SiteSlotPremierAddOnCollection GetSiteSlotPremierAddOns()
         {
             return new SiteSlotPremierAddOnCollection(this);
         }
@@ -3951,7 +3995,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotPrivateAccess along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotPrivateAccess" /> object. </returns>
-        public SiteSlotPrivateAccess GetSiteSlotPrivateAccess()
+        public virtual SiteSlotPrivateAccess GetSiteSlotPrivateAccess()
         {
             return new SiteSlotPrivateAccess(this, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
         }
@@ -3961,7 +4005,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotPublicCertificates in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPublicCertificates and their operations over a SiteSlot. </returns>
-        public SiteSlotPublicCertificateCollection GetSiteSlotPublicCertificates()
+        public virtual SiteSlotPublicCertificateCollection GetSiteSlotPublicCertificates()
         {
             return new SiteSlotPublicCertificateCollection(this);
         }
@@ -3971,7 +4015,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotSiteextensions in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotSiteextensions and their operations over a SiteSlot. </returns>
-        public SiteSlotSiteextensionCollection GetSiteSlotSiteextensions()
+        public virtual SiteSlotSiteextensionCollection GetSiteSlotSiteextensions()
         {
             return new SiteSlotSiteextensionCollection(this);
         }
@@ -3981,7 +4025,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a MigrateMySqlStatus along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="MigrateMySqlStatus" /> object. </returns>
-        public MigrateMySqlStatus GetMigrateMySqlStatus()
+        public virtual MigrateMySqlStatus GetMigrateMySqlStatus()
         {
             return new MigrateMySqlStatus(this, new ResourceIdentifier(Id.ToString() + "/migratemysql/status"));
         }
@@ -3991,7 +4035,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of NetworkFeatures in the SiteSlot. </summary>
         /// <returns> An object representing collection of NetworkFeatures and their operations over a SiteSlot. </returns>
-        public NetworkFeaturesCollection GetNetworkFeatures()
+        public virtual NetworkFeaturesCollection GetNetworkFeatures()
         {
             return new NetworkFeaturesCollection(this);
         }
@@ -4001,7 +4045,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a SiteSlotSourcecontrol along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotSourcecontrol" /> object. </returns>
-        public SiteSlotSourcecontrol GetSiteSlotSourcecontrol()
+        public virtual SiteSlotSourcecontrol GetSiteSlotSourcecontrol()
         {
             return new SiteSlotSourcecontrol(this, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
         }
@@ -4011,7 +4055,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteTriggeredwebJobs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteTriggeredwebJobs and their operations over a SiteSlot. </returns>
-        public SiteTriggeredwebJobCollection GetSiteTriggeredwebJobs()
+        public virtual SiteTriggeredwebJobCollection GetSiteTriggeredwebJobs()
         {
             return new SiteTriggeredwebJobCollection(this);
         }
@@ -4021,7 +4065,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of SiteSlotWebJobs in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotWebJobs and their operations over a SiteSlot. </returns>
-        public SiteSlotWebJobCollection GetSiteSlotWebJobs()
+        public virtual SiteSlotWebJobCollection GetSiteSlotWebJobs()
         {
             return new SiteSlotWebJobCollection(this);
         }
