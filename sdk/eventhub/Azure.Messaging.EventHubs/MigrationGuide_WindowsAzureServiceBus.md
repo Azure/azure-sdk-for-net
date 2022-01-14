@@ -565,7 +565,7 @@ EventHubReceiver receiver = default;
 try
 {
     string firstPartition = (await client.GetRuntimeInformationAsync()).PartitionIds.First();
-    receiver = consumerGroup.CreateReceiver(firstPartition, EventHubConsumerGroup.StartOfStream);
+    receiver = await consumerGroup.CreateReceiverAsync(firstPartition, EventHubConsumerGroup.StartOfStream);
 
     IEnumerable<EventData> events = await receiver.ReceiveAsync(50);
 
