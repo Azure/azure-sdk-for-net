@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedAccountCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedAccountCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeletedAccountCollection(ArmResource parent) : base(parent)
         {
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _deletedAccountsRestClient.Get(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeletedAccount>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedAccount(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedAccount>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedAccount(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedAccountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _deletedAccountsRestClient.GetAsync(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeletedAccount>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedAccount(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedAccount>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedAccount(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedAccountName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
             scope.Start();
             try
             {

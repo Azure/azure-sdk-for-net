@@ -36,11 +36,12 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupLongTermRetentionManagedInstanceBackupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
         internal ResourceGroupLongTermRetentionManagedInstanceBackupCollection(ArmResource parent, string locationName, string managedInstanceName, string databaseName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -137,9 +138,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +160,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _longTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.Exists");
             scope.Start();
             try
             {

@@ -104,7 +104,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
         }
     }
 };
-VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(vmName, input);
+VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
 VirtualMachine vm = lro.Value;
 ```
 
@@ -138,5 +138,5 @@ ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rg
 VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 string vmName = "myVM";
 VirtualMachine vm = await vmCollection.GetAsync(vmName);
-await vm.DeleteAsync();
+await vm.DeleteAsync(true);
 ```

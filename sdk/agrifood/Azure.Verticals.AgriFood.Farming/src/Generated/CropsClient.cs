@@ -41,14 +41,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public CropsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -97,6 +91,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetCropAsync(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(cropId, nameof(cropId));
+
             using var scope = _clientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
             try
@@ -150,6 +146,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetCrop(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(cropId, nameof(cropId));
+
             using var scope = _clientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
             try
@@ -217,6 +215,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string cropId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(cropId, nameof(cropId));
+
             using var scope = _clientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -284,6 +284,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string cropId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(cropId, nameof(cropId));
+
             using var scope = _clientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -324,6 +326,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(cropId, nameof(cropId));
+
             using var scope = _clientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();
             try
@@ -364,6 +368,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(cropId, nameof(cropId));
+
             using var scope = _clientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();
             try

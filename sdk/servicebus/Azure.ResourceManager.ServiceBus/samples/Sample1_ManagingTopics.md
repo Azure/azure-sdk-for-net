@@ -35,7 +35,7 @@ After we have the resource group created, we can create a namespace
 ```C# Snippet:Managing_ServiceBusTopics_CreateNamespace
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
+ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
 ServiceBusTopicCollection serviceBusTopicCollection = serviceBusNamespace.GetServiceBusTopics();
 ```
 
@@ -45,7 +45,7 @@ Now that we have a namespace, we can manage the topics inside this namespace.
 
 ```C# Snippet:Managing_ServiceBusTopics_CreateTopic
 string topicName = "myTopic";
-ServiceBusTopic serviceBusTopic = (await serviceBusTopicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
+ServiceBusTopic serviceBusTopic = (await serviceBusTopicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData())).Value;
 ```
 
 ***List all topics***
@@ -81,7 +81,7 @@ if (await serviceBusTopicCollection.ExistsAsync("bar"))
 
 ```C# Snippet:Managing_ServiceBusTopics_DeleteTopic
 ServiceBusTopic serviceBusTopic = await serviceBusTopicCollection.GetAsync("myTopic");
-await serviceBusTopic.DeleteAsync();
+await serviceBusTopic.DeleteAsync(true);
 ```
 
 ## Next steps

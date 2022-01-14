@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
         }
 
-        /// <summary> Initializes a new instance of OrderItemResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OrderItemResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal OrderItemResourceCollection(ArmResource parent) : base(parent)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public virtual EdgeOrderManagementCreateOrderItemOperation CreateOrUpdate(string orderItemName, OrderItemResourceData orderItemResource, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EdgeOrderManagementCreateOrderItemOperation CreateOrUpdate(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
             if (orderItemName == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public async virtual Task<EdgeOrderManagementCreateOrderItemOperation> CreateOrUpdateAsync(string orderItemName, OrderItemResourceData orderItemResource, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EdgeOrderManagementCreateOrderItemOperation> CreateOrUpdateAsync(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
             if (orderItemName == null)
             {
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _restClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<OrderItemResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new OrderItemResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OrderItemResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OrderItemResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(orderItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _restClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<OrderItemResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new OrderItemResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OrderItemResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OrderItemResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(orderItemName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.Exists");
             scope.Start();
             try
             {

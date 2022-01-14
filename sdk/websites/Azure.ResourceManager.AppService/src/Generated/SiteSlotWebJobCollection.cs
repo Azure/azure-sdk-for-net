@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotWebJobCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotWebJobCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotWebJobCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotWebJobCollection.Exists");
             scope.Start();
             try
             {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         StaticSitePrivateEndpointConnection IOperationSource<StaticSitePrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new StaticSitePrivateEndpointConnection(_operationBase, RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement));
+            var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
+            return new StaticSitePrivateEndpointConnection(_operationBase, data);
         }
 
         async ValueTask<StaticSitePrivateEndpointConnection> IOperationSource<StaticSitePrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new StaticSitePrivateEndpointConnection(_operationBase, RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement));
+            var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
+            return new StaticSitePrivateEndpointConnection(_operationBase, data);
         }
     }
 }

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         RouteFilter IOperationSource<RouteFilter>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new RouteFilter(_operationBase, RouteFilterData.DeserializeRouteFilterData(document.RootElement));
+            var data = RouteFilterData.DeserializeRouteFilterData(document.RootElement);
+            return new RouteFilter(_operationBase, data);
         }
 
         async ValueTask<RouteFilter> IOperationSource<RouteFilter>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new RouteFilter(_operationBase, RouteFilterData.DeserializeRouteFilterData(document.RootElement));
+            var data = RouteFilterData.DeserializeRouteFilterData(document.RootElement);
+            return new RouteFilter(_operationBase, data);
         }
     }
 }

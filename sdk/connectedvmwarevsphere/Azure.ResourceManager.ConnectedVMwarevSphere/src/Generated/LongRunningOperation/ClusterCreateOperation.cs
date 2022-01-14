@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         VMwareCluster IOperationSource<VMwareCluster>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VMwareCluster(_operationBase, VMwareClusterData.DeserializeVMwareClusterData(document.RootElement));
+            var data = VMwareClusterData.DeserializeVMwareClusterData(document.RootElement);
+            return new VMwareCluster(_operationBase, data);
         }
 
         async ValueTask<VMwareCluster> IOperationSource<VMwareCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VMwareCluster(_operationBase, VMwareClusterData.DeserializeVMwareClusterData(document.RootElement));
+            var data = VMwareClusterData.DeserializeVMwareClusterData(document.RootElement);
+            return new VMwareCluster(_operationBase, data);
         }
     }
 }

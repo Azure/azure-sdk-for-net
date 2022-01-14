@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of JobVersionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobVersionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JobVersionCollection(ArmResource parent) : base(parent)
         {
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<JobVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<JobVersion>> GetIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<JobVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.Exists");
             scope.Start();
             try
             {

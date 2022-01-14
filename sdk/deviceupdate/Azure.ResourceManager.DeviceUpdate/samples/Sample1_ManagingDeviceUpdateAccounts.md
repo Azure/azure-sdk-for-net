@@ -40,7 +40,7 @@ Now that we have the resource group created, we can manage the accounts inside t
 // Get the account collection from the specific resource group and create an account
 string accountName = "myAccount";
 DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-DeviceUpdateAccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input);
+DeviceUpdateAccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
 DeviceUpdateAccount account = lro.Value;
 ```
 
@@ -71,7 +71,7 @@ DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateA
 // Now we can get the account with GetAsync()
 DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
 // With DeleteAsync(), we can delete the account
-await account.DeleteAsync();
+await account.DeleteAsync(true);
 ```
 
 

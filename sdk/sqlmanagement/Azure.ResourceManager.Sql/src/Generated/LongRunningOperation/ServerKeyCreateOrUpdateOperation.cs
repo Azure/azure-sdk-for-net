@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerKey IOperationSource<ServerKey>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerKey(_operationBase, ServerKeyData.DeserializeServerKeyData(document.RootElement));
+            var data = ServerKeyData.DeserializeServerKeyData(document.RootElement);
+            return new ServerKey(_operationBase, data);
         }
 
         async ValueTask<ServerKey> IOperationSource<ServerKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerKey(_operationBase, ServerKeyData.DeserializeServerKeyData(document.RootElement));
+            var data = ServerKeyData.DeserializeServerKeyData(document.RootElement);
+            return new ServerKey(_operationBase, data);
         }
     }
 }

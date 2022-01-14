@@ -43,18 +43,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/>, or <paramref name="credential"/> is null. </exception>
         public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (classificationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(classificationRuleName));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(classificationRuleName, nameof(classificationRuleName));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -413,6 +404,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(action, nameof(action));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();
             try
@@ -477,6 +470,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(action, nameof(action));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();
             try

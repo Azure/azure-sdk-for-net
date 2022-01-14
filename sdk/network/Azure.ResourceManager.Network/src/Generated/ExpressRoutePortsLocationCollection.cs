@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortsLocationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortsLocationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRoutePortsLocationCollection(ArmResource parent) : base(parent)
         {
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRoutePortsLocationsRestClient.Get(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _expressRoutePortsLocationsRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(locationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
             scope.Start();
             try
             {

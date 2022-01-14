@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteVirtualNetworkConnectionGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteVirtualNetworkConnectionGatewayCollection(ArmResource parent) : base(parent)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateVnetConnectionGatewayOperation CreateOrUpdate(string gatewayName, VnetGatewayData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateOrUpdateVnetConnectionGatewayOperation CreateOrUpdate(bool waitForCompletion, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (gatewayName == null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateVnetConnectionGatewayOperation> CreateOrUpdateAsync(string gatewayName, VnetGatewayData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateOrUpdateVnetConnectionGatewayOperation> CreateOrUpdateAsync(bool waitForCompletion, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (gatewayName == null)
             {
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetVnetConnectionGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteVirtualNetworkConnectionGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteVirtualNetworkConnectionGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,14 +219,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetVnetConnectionGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteVirtualNetworkConnectionGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteVirtualNetworkConnectionGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
             try
             {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         HubVirtualNetworkConnection IOperationSource<HubVirtualNetworkConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new HubVirtualNetworkConnection(_operationBase, HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement));
+            var data = HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement);
+            return new HubVirtualNetworkConnection(_operationBase, data);
         }
 
         async ValueTask<HubVirtualNetworkConnection> IOperationSource<HubVirtualNetworkConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new HubVirtualNetworkConnection(_operationBase, HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement));
+            var data = HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement);
+            return new HubVirtualNetworkConnection(_operationBase, data);
         }
     }
 }

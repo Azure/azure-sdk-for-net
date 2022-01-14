@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateWebPubSub(webPubSubName);
-            await webPubSub.DeleteAsync();
+            await webPubSub.DeleteAsync(true);
         }
     }
 }

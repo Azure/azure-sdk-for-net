@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotBackupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotBackupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotBackupCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetBackupStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(backupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetBackupStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(backupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackupCollection.Exists");
             scope.Start();
             try
             {

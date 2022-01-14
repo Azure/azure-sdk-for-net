@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         HostingEnvironmentWorkerPool IOperationSource<HostingEnvironmentWorkerPool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new HostingEnvironmentWorkerPool(_operationBase, WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement));
+            var data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement);
+            return new HostingEnvironmentWorkerPool(_operationBase, data);
         }
 
         async ValueTask<HostingEnvironmentWorkerPool> IOperationSource<HostingEnvironmentWorkerPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new HostingEnvironmentWorkerPool(_operationBase, WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement));
+            var data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement);
+            return new HostingEnvironmentWorkerPool(_operationBase, data);
         }
     }
 }

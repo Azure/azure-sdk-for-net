@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                     }
                 }
             });
-            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // Now we can get the deployment with GetAsync()
             Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
             // With DeleteAsync(), we can delete the deployment
-            await deployment.DeleteAsync();
+            await deployment.DeleteAsync(true);
             #endregion Snippet:Managing_Deployments_DeleteADeployment
         }
 

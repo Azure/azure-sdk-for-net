@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
             string afdSecretName = Recording.GenerateAssetName("AFDSecret-");
             AfdSecret afdSecret = await CreateAfdSecret(afdProfile, afdSecretName);
-            await afdSecret.DeleteAsync();
+            await afdSecret.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdSecret.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

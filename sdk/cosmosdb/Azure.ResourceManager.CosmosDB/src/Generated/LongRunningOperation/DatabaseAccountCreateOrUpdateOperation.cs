@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         DatabaseAccount IOperationSource<DatabaseAccount>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DatabaseAccount(_operationBase, DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement));
+            var data = DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement);
+            return new DatabaseAccount(_operationBase, data);
         }
 
         async ValueTask<DatabaseAccount> IOperationSource<DatabaseAccount>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DatabaseAccount(_operationBase, DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement));
+            var data = DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement);
+            return new DatabaseAccount(_operationBase, data);
         }
     }
 }

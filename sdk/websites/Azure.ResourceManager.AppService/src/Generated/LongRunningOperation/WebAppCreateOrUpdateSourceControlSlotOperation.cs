@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         SiteSlotSourcecontrol IOperationSource<SiteSlotSourcecontrol>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SiteSlotSourcecontrol(_operationBase, SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement));
+            var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);
+            return new SiteSlotSourcecontrol(_operationBase, data);
         }
 
         async ValueTask<SiteSlotSourcecontrol> IOperationSource<SiteSlotSourcecontrol>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SiteSlotSourcecontrol(_operationBase, SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement));
+            var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);
+            return new SiteSlotSourcecontrol(_operationBase, data);
         }
     }
 }

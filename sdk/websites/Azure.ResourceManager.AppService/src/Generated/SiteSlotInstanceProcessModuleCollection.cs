@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotInstanceProcessModuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotInstanceProcessModuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotInstanceProcessModuleCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetInstanceProcessModuleSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotInstanceProcessModule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotInstanceProcessModule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotInstanceProcessModule>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcessModule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetInstanceProcessModuleSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotInstanceProcessModule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotInstanceProcessModule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotInstanceProcessModule>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcessModule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(baseAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.Exists");
             scope.Start();
             try
             {

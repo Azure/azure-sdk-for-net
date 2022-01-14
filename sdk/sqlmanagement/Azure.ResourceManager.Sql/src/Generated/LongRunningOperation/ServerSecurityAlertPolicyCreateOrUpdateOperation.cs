@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerSecurityAlertPolicy IOperationSource<ServerSecurityAlertPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerSecurityAlertPolicy(_operationBase, ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement));
+            var data = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
+            return new ServerSecurityAlertPolicy(_operationBase, data);
         }
 
         async ValueTask<ServerSecurityAlertPolicy> IOperationSource<ServerSecurityAlertPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerSecurityAlertPolicy(_operationBase, ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement));
+            var data = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
+            return new ServerSecurityAlertPolicy(_operationBase, data);
         }
     }
 }

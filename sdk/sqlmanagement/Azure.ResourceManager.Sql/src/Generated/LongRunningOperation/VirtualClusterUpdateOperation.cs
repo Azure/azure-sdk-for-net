@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         VirtualCluster IOperationSource<VirtualCluster>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualCluster(_operationBase, VirtualClusterData.DeserializeVirtualClusterData(document.RootElement));
+            var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
+            return new VirtualCluster(_operationBase, data);
         }
 
         async ValueTask<VirtualCluster> IOperationSource<VirtualCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualCluster(_operationBase, VirtualClusterData.DeserializeVirtualClusterData(document.RootElement));
+            var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
+            return new VirtualCluster(_operationBase, data);
         }
     }
 }

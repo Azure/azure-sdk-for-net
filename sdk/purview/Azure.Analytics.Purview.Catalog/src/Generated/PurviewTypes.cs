@@ -124,6 +124,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
@@ -231,6 +233,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetClassificationDefByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
@@ -338,6 +342,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
@@ -445,6 +451,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetClassificationDefByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
@@ -570,6 +578,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
@@ -695,6 +705,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEntityDefinitionByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
@@ -820,6 +832,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
@@ -945,6 +959,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEntityDefinitionByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
@@ -1035,6 +1051,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
@@ -1125,6 +1143,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEnumDefByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
@@ -1215,6 +1235,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
@@ -1305,6 +1327,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEnumDefByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
@@ -1420,6 +1444,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
@@ -1535,6 +1561,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetRelationshipDefByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
@@ -1650,6 +1678,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
@@ -1765,6 +1795,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetRelationshipDefByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
@@ -1869,6 +1901,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
@@ -1973,6 +2007,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetStructDefByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
@@ -2077,6 +2113,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
@@ -2181,6 +2219,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetStructDefByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
@@ -2326,6 +2366,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
@@ -2471,6 +2513,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetTypeDefinitionByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
@@ -2616,6 +2660,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
@@ -2761,6 +2807,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetTypeDefinitionByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
@@ -2793,6 +2841,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteTypeByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
@@ -2825,6 +2875,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteTypeByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
@@ -3782,6 +3834,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
@@ -4243,6 +4297,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateTypeDefinitions(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
@@ -4701,6 +4757,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateAtlasTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
@@ -5159,6 +5217,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateAtlasTypeDefinitions(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
@@ -5404,6 +5464,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
@@ -5649,6 +5711,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteTypeDefinitions(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
@@ -5837,6 +5901,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
@@ -5941,6 +6007,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetTermTemplateDefByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
@@ -6045,6 +6113,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
@@ -6149,6 +6219,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetTermTemplateDefByName(string name, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
