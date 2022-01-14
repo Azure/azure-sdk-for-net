@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.14 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.13 (2022-01-11)
 - Added `MetastoreOperations`.
 
