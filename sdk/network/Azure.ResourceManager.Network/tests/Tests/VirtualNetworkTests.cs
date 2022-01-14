@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Vnet
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(false, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(getAllVnetInSubscription);
 
             // Delete Vnet
-            var deleteOperation = await getVnetResponse.Value.DeleteAsync(false);
-            await deleteOperation.WaitForCompletionResponseAsync();
+            var deleteOperation = await getVnetResponse.Value.DeleteAsync(true);
+            await deleteOperation.WaitForCompletionResponseAsync();;
 
             // Get all Vnets
             getAllVnetsAP = virtualNetworkCollection.GetAllAsync();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Vnet
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(false, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Network.Tests
                 }
             };
 
-            var putNicResponseOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(false, nicName, nicParameters);
-            await putNicResponseOperation.WaitForCompletionAsync();
+            var putNicResponseOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicParameters);
+            await putNicResponseOperation.WaitForCompletionAsync();;
 
             // Check Ip Address availability API
             Response<IPAddressAvailabilityResult> responseAvailable = await putVnetResponse.Value.CheckIPAddressAvailabilityAsync("10.0.1.10");
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Vnet
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(false, vnet1Name, vnet);
-            Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnet1Name, vnet);
+            Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
             // Get Vnet
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put Vnet2
-            var putVnet2Operation = await virtualNetworkCollection.CreateOrUpdateAsync(false, vnet2Name, vnet2);
-            Response<VirtualNetwork> putVnet2 = await putVnet2Operation.WaitForCompletionAsync();
+            var putVnet2Operation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnet2Name, vnet2);
+            Response<VirtualNetwork> putVnet2 = await putVnet2Operation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnet2.Value.Data.ProvisioningState.ToString());
 
             // Create peering object
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(putVnet2.Value.Id, peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork.Id);
 
             // Delete Peering
-            var deleteOperation = await getPeer.DeleteAsync(false);
-            await deleteOperation.WaitForCompletionResponseAsync();
+            var deleteOperation = await getPeer.DeleteAsync(true);
+            await deleteOperation.WaitForCompletionResponseAsync();;
 
             listPeerAP = virtualNetworkPeeringCollection.GetAllAsync();
             listPeer = await listPeerAP.ToEnumerableAsync();
@@ -316,8 +316,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Vnet
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(false, vnetName, vnet);
-            Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnetName, vnet);
+            Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
             Response<Subnet> getSubnetResponse = await putVnetResponse.Value.GetSubnets().GetAsync(subnetName);
@@ -349,8 +349,8 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(false, nicName, nicParameters);
-            var nicResponse = await putNicResponseOperation.WaitForCompletionAsync();
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(true, nicName, nicParameters);
+            var nicResponse = await putNicResponseOperation.WaitForCompletionAsync();;
 
             // Get Vnet usage again
             usage = await putVnetResponse.Value.GetUsageAsync().ToEnumerableAsync();

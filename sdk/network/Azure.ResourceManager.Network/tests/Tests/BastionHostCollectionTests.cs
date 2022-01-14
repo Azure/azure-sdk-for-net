@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
             if (_resourceGroup.GetBastionHosts().Exists(_bastionName))
             {
                 BastionHost bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
-                await bastion.DeleteAsync(false);
+                await bastion.DeleteAsync(true);
             }
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeTearDown]
         public async Task GlobalTearDown()
         {
-            await _resourceGroup.DeleteAsync();
+            await _resourceGroup.DeleteAsync(true);
         }
 
         [SetUp]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Tests
             var container = _resourceGroup.GetIpGroups();
             var data = new IpGroupData();
             data.Location = AzureLocation.WestUS2;
-            var ipGroup = await container.CreateOrUpdateAsync(false, ipGroupName, data);
+            var ipGroup = await container.CreateOrUpdateAsync(true, ipGroupName, data);
             return ipGroup;
         }
 

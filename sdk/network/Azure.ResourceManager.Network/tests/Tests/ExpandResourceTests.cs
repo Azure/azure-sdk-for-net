@@ -201,13 +201,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(false, nic1name, nic1.Data);
+            var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic1name, nic1.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceCollection.CreateOrUpdateAsync(false, nic2name, nic2.Data);
+            var createOrUpdateOperation2 = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic2name, nic2.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
-            var createOrUpdateOperation3 = await networkInterfaceCollection.CreateOrUpdateAsync(false, nic3name, nic3.Data);
+            var createOrUpdateOperation3 = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic3name, nic3.Data);
             await createOrUpdateOperation3.WaitForCompletionAsync();
 
             // Get Nics
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Assert.NotNull(publicip.Value.Data.IpConfiguration.Etag);
 
             // Delete LoadBalancer
-            Operation deleteOperation = await loadBalancerCollection.Get(lbName).Value.DeleteAsync(false);
+            Operation deleteOperation = await loadBalancerCollection.Get(lbName).Value.DeleteAsync(true);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete

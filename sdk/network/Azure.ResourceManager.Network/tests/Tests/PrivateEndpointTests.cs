@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Network.Tests
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
-            return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(false, name, vnet).WaitForCompletionAsync();
+            return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(true, name, vnet).WaitForCompletionAsync();
         }
 
         private async Task<StorageAccount> createStorageAccount()
         {
             var name = Recording.GenerateAssetName("testsa");
             var parameters = new StorageAccountCreateParameters(new Storage.Models.Sku(SkuName.StandardLRS),Kind.Storage,TestEnvironment.Location);
-            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, name, parameters)).Value;
+            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, name,parameters)).Value;
             //var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
 
         //var storageParameters = new Storage.Models.StorageAccountCreateParameters(new Storage.Models.Sku(Storage.Models.SkuName.StandardLRS), Storage.Models.Kind.Storage, TestEnvironment.Location);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests
         //Response<Storage.Models.StorageAccount> account = await accountOperation.WaitForCompletionAsync();
         //return account.Value;
 
-            //return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(storageAccountId, new GenericResourceData(TestEnvironment.Location)
+            //return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(true, storageAccountId, new GenericResourceData(TestEnvironment.Location)
             //{
             //    //Sku = new Resources.Models.Sku(),
             //    Kind = "storage",

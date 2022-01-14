@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(false, parameters);
-            Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(true, parameters);
+            Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();;
 
             //Validation
             Assert.AreEqual("Country", report.Value.AggregationLevel);
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(false, parameters);
-            Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(true, parameters);
+            Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();;
 
             //Validation
             Assert.AreEqual("State", report.Value.AggregationLevel);
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(false, parameters);
-            Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(true, parameters);
+            Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();;
 
             //Validation
             Assert.AreEqual("City", report.Value.AggregationLevel);

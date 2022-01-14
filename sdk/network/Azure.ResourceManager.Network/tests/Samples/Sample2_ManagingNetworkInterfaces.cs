@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 },
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24" } }
             };
-            VirtualNetwork virtualNetwork = await virtualNetworkCollection.CreateOrUpdate(false, vnetName, vnetInput).WaitForCompletionAsync();
+            VirtualNetwork virtualNetwork = await virtualNetworkCollection.CreateOrUpdate(true, vnetName, vnetInput).WaitForCompletionAsync();
 
             #region Snippet:Managing_Networks_CreateANetworkInterface
             PublicIPAddressCollection publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     DomainNameLabel = "myDomain"
                 }
             };
-            PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(false, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
+            PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(true, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
             string networkInterfaceName = "myNetworkInterface";
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     }
                 }
             };
-            NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(false, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
+            NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(true, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
             #endregion
         }
 

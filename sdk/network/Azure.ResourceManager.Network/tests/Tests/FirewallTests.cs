@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeTearDown]
         public async Task GlobalTearDown()
         {
-            await _resourceGroup.DeleteAsync();
+            await _resourceGroup.DeleteAsync(true);
         }
 
         [SetUp]
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests
                 PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
                 Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
             });
-            var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(false, _firewallName, firewallData)).WaitForCompletionAsync();
+            var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(true, _firewallName, firewallData)).WaitForCompletionAsync();
             return firewallLro.Value;
         }
 
