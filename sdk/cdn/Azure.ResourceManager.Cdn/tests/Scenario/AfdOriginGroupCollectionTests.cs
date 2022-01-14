@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
             Assert.AreEqual(afdOriginGroupName, afdOriginGroupInstance.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdOriginGroups().CreateOrUpdateAsync(null, afdOriginGroupInstance.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdOriginGroups().CreateOrUpdateAsync(afdOriginGroupName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdOriginGroups().CreateOrUpdateAsync(true, null, afdOriginGroupInstance.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdOriginGroups().CreateOrUpdateAsync(true, afdOriginGroupName, null));
         }
 
         [TestCase]

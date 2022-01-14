@@ -56,7 +56,7 @@ VirtualNetworkData input = new VirtualNetworkData()
     Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
 };
 
-VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
+VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(true, vnetName, input).WaitForCompletionAsync();
 ```
 
 ***List all virtual networks***
@@ -103,7 +103,7 @@ if (await virtualNetworkCollection.ExistsAsync("bar"))
 VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
 VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
-await virtualNetwork.DeleteAsync();
+await virtualNetwork.DeleteAsync(true);
 ```
 
 ## Next steps

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccount account = await CreateAccount(rg, accountName);
             Assert.AreEqual(accountName, account.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(null, account.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, null, account.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, null));
         }
 
         [TestCase]

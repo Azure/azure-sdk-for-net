@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            var lro = await collection.CreateOrUpdateAsync(setName, input);
+            var lro = await collection.CreateOrUpdateAsync(true, setName, input);
             return lro.Value;
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var setName = Recording.GenerateAssetName("testAS-");
             var availabilitySet = await CreateAvailabilitySetAsync(setName);
-            await availabilitySet.DeleteAsync();
+            await availabilitySet.DeleteAsync(true);
         }
 
         [TestCase]

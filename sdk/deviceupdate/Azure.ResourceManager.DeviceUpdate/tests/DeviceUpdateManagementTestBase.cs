@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         protected async Task<DeviceUpdateAccount> CreateAccount(ResourceGroup rg, string accountName)
         {
             DeviceUpdateAccountData input = ResourceDataHelper.CreateAccountData();
-            var lro = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input);
+            var lro = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
             return lro.Value;
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         {
             DeviceUpdateInstanceData input = ResourceDataHelper.CreateInstanceData();
             input.IotHubs.Add(new IotHubSettings("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.Devices/IotHubs/orange-aducpsdktestaccount-iothub"));
-            var lro = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(instanceName, input);
+            var lro = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(true, instanceName, input);
             return lro.Value;
         }
     }

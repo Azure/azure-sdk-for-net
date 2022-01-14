@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SqlJobCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlJobCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlJobCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JobCreateOrUpdateOperation CreateOrUpdate(string jobName, SqlJobData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual JobCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
         {
             if (jobName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JobCreateOrUpdateOperation> CreateOrUpdateAsync(string jobName, SqlJobData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<JobCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
         {
             if (jobName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SqlJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SqlJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SqlJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SqlJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.Exists");
             scope.Start();
             try
             {

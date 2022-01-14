@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         BgpConnection IOperationSource<BgpConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new BgpConnection(_operationBase, BgpConnectionData.DeserializeBgpConnectionData(document.RootElement));
+            var data = BgpConnectionData.DeserializeBgpConnectionData(document.RootElement);
+            return new BgpConnection(_operationBase, data);
         }
 
         async ValueTask<BgpConnection> IOperationSource<BgpConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new BgpConnection(_operationBase, BgpConnectionData.DeserializeBgpConnectionData(document.RootElement));
+            var data = BgpConnectionData.DeserializeBgpConnectionData(document.RootElement);
+            return new BgpConnection(_operationBase, data);
         }
     }
 }

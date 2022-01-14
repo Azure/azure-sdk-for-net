@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotPublicCertificateCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotPublicCertificateCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotPublicCertificateCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
-        public virtual WebAppCreateOrUpdatePublicCertificateSlotOperation CreateOrUpdate(string publicCertificateName, PublicCertificateData publicCertificate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateOrUpdatePublicCertificateSlotOperation CreateOrUpdate(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             if (publicCertificateName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdatePublicCertificateSlotOperation> CreateOrUpdateAsync(string publicCertificateName, PublicCertificateData publicCertificate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateOrUpdatePublicCertificateSlotOperation> CreateOrUpdateAsync(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             if (publicCertificateName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetPublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotPublicCertificate>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotPublicCertificate(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotPublicCertificate>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPublicCertificate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetPublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotPublicCertificate>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotPublicCertificate(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotPublicCertificate>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPublicCertificate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.Exists");
             scope.Start();
             try
             {

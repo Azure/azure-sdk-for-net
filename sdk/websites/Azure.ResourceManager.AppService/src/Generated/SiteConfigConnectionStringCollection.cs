@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteConfigConnectionStringCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteConfigConnectionStringCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteConfigConnectionStringCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionString(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.Exists");
             scope.Start();
             try
             {

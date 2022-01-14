@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceSkuCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkVirtualApplianceSkuCollection(ArmResource parent) : base(parent)
         {
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(skuName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(skuName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();
             try
             {

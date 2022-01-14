@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceKeyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceKeyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceKeyCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceKeyCreateOrUpdateOperation CreateOrUpdate(string keyName, ManagedInstanceKeyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceKeyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
             if (keyName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceKeyCreateOrUpdateOperation> CreateOrUpdateAsync(string keyName, ManagedInstanceKeyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceKeyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
             if (keyName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceKey(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managedInstanceKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceKey(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(keyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Exists");
             scope.Start();
             try
             {

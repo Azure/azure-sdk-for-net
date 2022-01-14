@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerJobAgentJobExecutionCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual JobExecutionCreateOrUpdateOperation CreateOrUpdate(Guid jobExecutionId, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual JobExecutionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
             scope.Start();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<JobExecutionCreateOrUpdateOperation> CreateOrUpdateAsync(Guid jobExecutionId, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<JobExecutionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
             scope.Start();
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerJobAgentJobExecution>> GetIfExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
             scope.Start();
             try
             {

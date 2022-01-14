@@ -43,7 +43,7 @@ ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("west
 {
     PublicNetworkAccess = PublicNetworkAccess.Disabled
 };
-ConfigurationStore configurationStore = await (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+ConfigurationStore configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
 ```
 
 ***List all configurationStores***
@@ -87,5 +87,5 @@ if (await configurationStoreCollection.ExistsAsync("myApp"))
 ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
 ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
-await (await configStore.DeleteAsync()).WaitForCompletionResponseAsync();
+await configStore.DeleteAsync(true);
 ```

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         SqlUserDefinedFunction IOperationSource<SqlUserDefinedFunction>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SqlUserDefinedFunction(_operationBase, SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement));
+            var data = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
+            return new SqlUserDefinedFunction(_operationBase, data);
         }
 
         async ValueTask<SqlUserDefinedFunction> IOperationSource<SqlUserDefinedFunction>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SqlUserDefinedFunction(_operationBase, SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement));
+            var data = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
+            return new SqlUserDefinedFunction(_operationBase, data);
         }
     }
 }

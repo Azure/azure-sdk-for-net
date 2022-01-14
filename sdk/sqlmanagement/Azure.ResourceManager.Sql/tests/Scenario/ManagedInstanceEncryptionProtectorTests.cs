@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 ServerKeyType =  "ServiceManaged",
                 AutoRotationEnabled = false,
             };
-            var encryption = await collection.CreateOrUpdateAsync(encryptionProtectorName, data);
+            var encryption = await collection.CreateOrUpdateAsync(true, encryptionProtectorName, data);
             Assert.IsNotNull(encryption.Value.Data);
             Assert.AreEqual(encryptionProtectorName, encryption.Value.Data.Name);
             Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyName);

@@ -294,24 +294,24 @@ namespace Azure.ResourceManager.Storage
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the DeletedAccountData for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedAccountData> GetDeletedAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DeletedAccount> GetDeletedAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeletedAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<DeletedAccountData>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<DeletedAccount>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedAccounts");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -319,14 +319,14 @@ namespace Azure.ResourceManager.Storage
                         throw;
                     }
                 }
-                async Task<Page<DeletedAccountData>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<DeletedAccount>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedAccounts");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -339,24 +339,24 @@ namespace Azure.ResourceManager.Storage
             );
         }
 
-        /// <summary> Lists the DeletedAccountData for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedAccountData> GetDeletedAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<DeletedAccount> GetDeletedAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeletedAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<DeletedAccountData> FirstPageFunc(int? pageSizeHint)
+                Page<DeletedAccount> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedAccounts");
                     scope.Start();
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -364,14 +364,14 @@ namespace Azure.ResourceManager.Storage
                         throw;
                     }
                 }
-                Page<DeletedAccountData> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<DeletedAccount> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedAccounts");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {

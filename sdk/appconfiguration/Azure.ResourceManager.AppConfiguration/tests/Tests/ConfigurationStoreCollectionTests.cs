@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            ConfigurationStore configurationStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+            ConfigurationStore configurationStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
 
             Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
 
             configurationStore.Data.PublicNetworkAccess = PublicNetworkAccess.Enabled;
-            configurationStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStore.Data)).WaitForCompletionAsync();
+            configurationStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStore.Data)).Value;
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData);
             ConfigurationStore configurationStore = await ResGroup.GetConfigurationStores().GetAsync(configurationStoreName);
 
             Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName1, configurationStoreData)).WaitForCompletionAsync();
-            await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName2, configurationStoreData)).WaitForCompletionAsync();
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName1, configurationStoreData);
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName2, configurationStoreData);
             List<ConfigurationStore> configurationStores = await ResGroup.GetConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(configurationStores.Count == 2);
-            Assert.IsTrue(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
+            Assert.IsTrue(configurationStores.First(x => x.Data.Name == configurationStoreName1).Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData);
             ConfigurationStore configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(configurationStoreName);
 
             Assert.IsTrue(configurationStore.Data.Name == configurationStoreName);

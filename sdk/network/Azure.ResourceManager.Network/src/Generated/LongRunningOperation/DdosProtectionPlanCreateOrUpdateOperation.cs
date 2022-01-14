@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         DdosProtectionPlan IOperationSource<DdosProtectionPlan>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DdosProtectionPlan(_operationBase, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement));
+            var data = DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement);
+            return new DdosProtectionPlan(_operationBase, data);
         }
 
         async ValueTask<DdosProtectionPlan> IOperationSource<DdosProtectionPlan>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DdosProtectionPlan(_operationBase, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement));
+            var data = DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement);
+            return new DdosProtectionPlan(_operationBase, data);
         }
     }
 }
