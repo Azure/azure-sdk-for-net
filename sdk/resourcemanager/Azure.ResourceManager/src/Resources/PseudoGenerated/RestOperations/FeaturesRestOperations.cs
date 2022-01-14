@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public FeaturesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2015-12-01")
+        public FeaturesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = null)
         {
             if (subscriptionId == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
-            _apiVersion = apiVersion;
+            _apiVersion = apiVersion ?? "2015-12-01";
         }
 
         internal HttpMessage CreateListAllRequest()

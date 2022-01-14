@@ -39,14 +39,8 @@ namespace Azure.ResourceManager.Resources
             : base(operations, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(Id.ResourceType, out var version))
-            {
-                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(Id.ResourceType, out var version);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
@@ -62,14 +56,8 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(Id.ResourceType, out var version))
-            {
-                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(Id.ResourceType, out var version);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 

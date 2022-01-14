@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
-            _apiVersion = apiVersion;
+            _apiVersion = apiVersion ?? null;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, string filter, string expand, int? top)

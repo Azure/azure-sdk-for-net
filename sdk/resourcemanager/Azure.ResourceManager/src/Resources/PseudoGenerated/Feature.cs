@@ -38,14 +38,8 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
-            {
-                _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ResourceType, out var version)
+            _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -60,14 +54,8 @@ namespace Azure.ResourceManager.Resources
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
-            {
-                _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ResourceType, out var version)
+            _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

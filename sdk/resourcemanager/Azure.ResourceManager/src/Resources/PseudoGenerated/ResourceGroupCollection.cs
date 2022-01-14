@@ -38,14 +38,8 @@ namespace Azure.ResourceManager.Resources
             : base(subscription)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ResourceGroup.ResourceType, out var version))
-            {
-                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ResourceGroup.ResourceType, out var version);
+            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

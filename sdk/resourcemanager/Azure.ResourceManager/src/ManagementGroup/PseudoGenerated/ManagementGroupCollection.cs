@@ -39,14 +39,8 @@ namespace Azure.ResourceManager.Management
             : base(tenant)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ManagementGroup.ResourceType, out var version))
-            {
-                _restClient ??= new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
-            }
-            else
-            {
-                _restClient ??= new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ManagementGroup.ResourceType, out var version);
+            _restClient ??= new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

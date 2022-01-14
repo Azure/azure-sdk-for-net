@@ -45,22 +45,10 @@ namespace Azure.ResourceManager.Resources
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
-            {
-                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
-            if (ClientOptions.TryGetApiVersion(ResourceType, out version))
-            {
-                _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            ClientOptions.TryGetApiVersion(ResourceType, out version);
+            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -75,22 +63,10 @@ namespace Azure.ResourceManager.Resources
             : base(operations, resource.Id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
-            {
-                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
-            if (ClientOptions.TryGetApiVersion(ResourceType, out version))
-            {
-                _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            ClientOptions.TryGetApiVersion(ResourceType, out version);
+            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
             _data = resource;
             HasData = true;
 #if DEBUG

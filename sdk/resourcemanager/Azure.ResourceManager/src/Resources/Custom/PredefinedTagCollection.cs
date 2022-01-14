@@ -39,14 +39,8 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext, parentId)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(TagResource.ResourceType, out var version))
-            {
-                _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(TagResource.ResourceType, out var version);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

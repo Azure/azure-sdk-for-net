@@ -45,22 +45,10 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
-            {
-                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            }
-            if (ClientOptions.TryGetApiVersion(Feature.ResourceType, out version))
-            {
-                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            ClientOptions.TryGetApiVersion(Feature.ResourceType, out version);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -77,22 +65,10 @@ namespace Azure.ResourceManager.Resources
             _data = subscriptionData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(ResourceType, out var version))
-            {
-                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            }
-            if (ClientOptions.TryGetApiVersion(Feature.ResourceType, out version))
-            {
-                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            ClientOptions.TryGetApiVersion(Feature.ResourceType, out version);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

@@ -38,14 +38,8 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(Tenant.ResourceType, out var version))
-            {
-                _restClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(Tenant.ResourceType, out var version);
+            _restClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
         }
 
         /// <summary> Gets the tenants for your account. </summary>

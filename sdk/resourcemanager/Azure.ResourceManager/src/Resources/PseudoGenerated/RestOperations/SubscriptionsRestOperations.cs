@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        public SubscriptionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = "2019-11-01")
+        public SubscriptionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = null)
         {
             endpoint ??= new Uri("https://management.azure.com");
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
-            _apiVersion = apiVersion;
+            _apiVersion = apiVersion ?? "2019-11-01";
         }
 
         internal Azure.Core.HttpMessage CreateListLocationsRequest(string subscriptionId)

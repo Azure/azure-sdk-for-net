@@ -38,14 +38,8 @@ namespace Azure.ResourceManager.Resources
             : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version))
-            {
-                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -55,14 +49,8 @@ namespace Azure.ResourceManager.Resources
             : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            if (ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version))
-            {
-                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            }
-            else
-            {
-                _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            }
+            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
