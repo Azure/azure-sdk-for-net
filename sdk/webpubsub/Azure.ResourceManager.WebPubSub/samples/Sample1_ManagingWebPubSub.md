@@ -64,7 +64,7 @@ WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
     ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
 };
 
-WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(false, webPubSubName, data)).WaitForCompletionAsync();
 ```
 
 ***Get a WebPubSub***
@@ -94,5 +94,5 @@ await foreach (WebPubSub WebPubSub in response)
 WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
 WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
-await webPubSub.DeleteAsync();
+await webPubSub.DeleteAsync(true);
 ```

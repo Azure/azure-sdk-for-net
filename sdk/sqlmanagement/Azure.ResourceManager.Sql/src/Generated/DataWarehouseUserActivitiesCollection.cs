@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of DataWarehouseUserActivitiesCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataWarehouseUserActivitiesCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DataWarehouseUserActivitiesCollection(ArmResource parent) : base(parent)
         {
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _dataWarehouseUserActivitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataWarehouseUserActivities>> GetIfExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _dataWarehouseUserActivitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataWarehouseUserActivities>(null, response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataWarehouseUserActivitiesCollection.Exists");
             scope.Start();
             try
             {

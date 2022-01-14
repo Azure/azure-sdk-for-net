@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationStoreCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfigurationStoreCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ConfigurationStoreCollection(ArmResource parent) : base(parent)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
-        public virtual ConfigurationStoreCreateOperation CreateOrUpdate(string configStoreName, ConfigurationStoreData configStoreCreationParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ConfigurationStoreCreateOperation CreateOrUpdate(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (configStoreName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
-        public async virtual Task<ConfigurationStoreCreateOperation> CreateOrUpdateAsync(string configStoreName, ConfigurationStoreData configStoreCreationParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ConfigurationStoreCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (configStoreName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _configurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ConfigurationStore>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ConfigurationStore>(null, response.GetRawResponse());
+                return Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _configurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ConfigurationStore>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ConfigurationStore>(null, response.GetRawResponse());
+                return Response.FromValue(new ConfigurationStore(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(configStoreName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
             scope.Start();
             try
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SnapshotCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SnapshotCollection(ArmResource parent) : base(parent)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public virtual SnapshotCreateOrUpdateOperation CreateOrUpdate(string snapshotName, SnapshotData snapshot, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SnapshotCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public async virtual Task<SnapshotCreateOrUpdateOperation> CreateOrUpdateAsync(string snapshotName, SnapshotData snapshot, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _snapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Snapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Snapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(snapshotName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _snapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Snapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Snapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(snapshotName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.Exists");
             scope.Start();
             try
             {

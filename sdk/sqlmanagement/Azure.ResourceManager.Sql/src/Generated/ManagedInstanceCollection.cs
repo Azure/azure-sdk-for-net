@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceCollection(ArmResource parent) : base(parent)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceCreateOrUpdateOperation CreateOrUpdate(string managedInstanceName, ManagedInstanceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
             if (managedInstanceName == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceCreateOrUpdateOperation> CreateOrUpdateAsync(string managedInstanceName, ManagedInstanceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
             if (managedInstanceName == null)
             {
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managedInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Exists");
             scope.Start();
             try
             {

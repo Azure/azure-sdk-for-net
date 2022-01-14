@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDatabaseSchemaCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDatabaseSchemaCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseSchemaCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _databaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(schemaName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
             scope.Start();
             try
             {

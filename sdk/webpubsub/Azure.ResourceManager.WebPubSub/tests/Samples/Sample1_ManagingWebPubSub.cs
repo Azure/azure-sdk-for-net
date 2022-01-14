@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
             };
 
-            WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(false, webPubSubName, data)).WaitForCompletionAsync();
 
             #endregion
         }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
             WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
-            await webPubSub.DeleteAsync();
+            await webPubSub.DeleteAsync(true);
             #endregion
         }
     }

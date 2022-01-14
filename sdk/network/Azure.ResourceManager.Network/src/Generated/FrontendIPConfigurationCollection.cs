@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of FrontendIPConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontendIPConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FrontendIPConfigurationCollection(ArmResource parent) : base(parent)
         {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(frontendIPConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(frontendIPConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FrontendIPConfigurationCollection.Exists");
             scope.Start();
             try
             {

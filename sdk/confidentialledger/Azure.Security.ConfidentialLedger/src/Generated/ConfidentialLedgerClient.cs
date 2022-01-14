@@ -393,6 +393,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
@@ -438,6 +440,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
@@ -490,6 +494,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
@@ -542,6 +548,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
@@ -582,6 +590,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
@@ -622,6 +632,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
@@ -736,6 +748,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(userId, nameof(userId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
@@ -770,6 +784,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response DeleteUser(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(userId, nameof(userId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
@@ -810,6 +826,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(userId, nameof(userId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
@@ -850,6 +868,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetUser(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(userId, nameof(userId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
@@ -897,6 +917,9 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
@@ -944,6 +967,9 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try

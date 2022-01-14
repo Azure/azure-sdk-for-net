@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 EmailAccountAdmins = false,
                 RetentionDays = 0,
             };
-            var securityAlertPolicie = await collection.CreateOrUpdateAsync(securityAlertPoliciesName, data);
+            var securityAlertPolicie = await collection.CreateOrUpdateAsync(true, securityAlertPoliciesName, data);
             Assert.IsNotNull(securityAlertPolicie.Value.Data);
             Assert.AreEqual(securityAlertPoliciesName, securityAlertPolicie.Value.Data.Name);
             Assert.AreEqual("Enabled", securityAlertPolicie.Value.Data.State.ToString());

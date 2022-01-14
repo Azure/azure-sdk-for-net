@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ProbeCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProbeCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ProbeCollection(ArmResource parent) : base(parent)
         {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerProbesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Probe>(null, response.GetRawResponse())
-                    : Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Probe>(null, response.GetRawResponse());
+                return Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _loadBalancerProbesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Probe>(null, response.GetRawResponse())
-                    : Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Probe>(null, response.GetRawResponse());
+                return Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.Exists");
             scope.Start();
             try
             {

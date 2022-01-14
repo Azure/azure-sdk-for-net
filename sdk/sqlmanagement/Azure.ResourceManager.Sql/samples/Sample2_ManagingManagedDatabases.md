@@ -50,7 +50,7 @@ ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2)
 {
 };
 string databaseName = "myDatabase";
-var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(databaseName, data);
+var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(true, databaseName, data);
 ManagedDatabase managedDatabase = managedDatabaseLro.Value;
 ```
 
@@ -98,5 +98,5 @@ if (await managedDatabaseCollection.ExistsAsync("bar"))
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
 ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
-await managedDatabase.DeleteAsync();
+await managedDatabase.DeleteAsync(true);
 ```

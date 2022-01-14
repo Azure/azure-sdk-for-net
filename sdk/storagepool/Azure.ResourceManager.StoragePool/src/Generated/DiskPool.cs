@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary> Initializes a new instance of the <see cref = "DiskPool"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DiskPool(ArmResource options, DiskPoolData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DiskPool(ArmResource options, DiskPoolData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _diskPoolsRestClient = new DiskPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -153,7 +153,17 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DiskPool.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -161,7 +171,17 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DiskPool.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
@@ -170,7 +190,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Delete a Disk pool; attached disks are not affected. This delete operation can take 10 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskPoolDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskPoolDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Delete");
             scope.Start();
@@ -195,7 +215,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Delete a Disk pool; attached disks are not affected. This delete operation can take 10 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskPoolDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskPoolDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Delete");
             scope.Start();
@@ -223,7 +243,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPool.AddTag");
@@ -252,7 +272,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPool.AddTag");
@@ -280,7 +300,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPool.SetTags");
@@ -309,7 +329,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPool.SetTags");
@@ -338,7 +358,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPool.RemoveTag");
@@ -366,7 +386,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPool.RemoveTag");
@@ -394,7 +414,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolUpdatePayload"/> is null. </exception>
-        public async virtual Task<DiskPoolUpdateOperation> UpdateAsync(DiskPoolUpdate diskPoolUpdatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskPoolUpdateOperation> UpdateAsync(bool waitForCompletion, DiskPoolUpdate diskPoolUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (diskPoolUpdatePayload == null)
             {
@@ -426,7 +446,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolUpdatePayload"/> is null. </exception>
-        public virtual DiskPoolUpdateOperation Update(DiskPoolUpdate diskPoolUpdatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskPoolUpdateOperation Update(bool waitForCompletion, DiskPoolUpdate diskPoolUpdatePayload, CancellationToken cancellationToken = default)
         {
             if (diskPoolUpdatePayload == null)
             {
@@ -538,7 +558,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> The operation to start a Disk Pool. This start operation can take 10 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskPoolStartOperation> StartAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskPoolStartOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Start");
             scope.Start();
@@ -563,7 +583,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> The operation to start a Disk Pool. This start operation can take 10 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskPoolStartOperation Start(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskPoolStartOperation Start(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Start");
             scope.Start();
@@ -588,7 +608,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Shuts down the Disk Pool and releases the compute resources. You are not billed for the compute resources that this Disk Pool uses. This operation can take 10 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskPoolDeallocateOperation> DeallocateAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskPoolDeallocateOperation> DeallocateAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Deallocate");
             scope.Start();
@@ -613,7 +633,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Shuts down the Disk Pool and releases the compute resources. You are not billed for the compute resources that this Disk Pool uses. This operation can take 10 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskPoolDeallocateOperation Deallocate(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskPoolDeallocateOperation Deallocate(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Deallocate");
             scope.Start();
@@ -638,7 +658,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Upgrade replaces the underlying virtual machine hosts one at a time. This operation can take 10-15 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskPoolUpgradeOperation> UpgradeAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskPoolUpgradeOperation> UpgradeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Upgrade");
             scope.Start();
@@ -663,7 +683,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Upgrade replaces the underlying virtual machine hosts one at a time. This operation can take 10-15 minutes to complete. This is expected service behavior. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskPoolUpgradeOperation Upgrade(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskPoolUpgradeOperation Upgrade(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskPool.Upgrade");
             scope.Start();

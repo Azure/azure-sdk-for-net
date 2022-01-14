@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteInstanceCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteInstanceCollection.Exists");
             scope.Start();
             try
             {

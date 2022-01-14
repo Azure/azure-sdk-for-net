@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of DiskCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiskCollection(ArmResource parent) : base(parent)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public virtual DiskCreateOrUpdateOperation CreateOrUpdate(string diskName, DiskData disk, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public async virtual Task<DiskCreateOrUpdateOperation> CreateOrUpdateAsync(string diskName, DiskData disk, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Disk>(null, response.GetRawResponse())
-                    : Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Disk>(null, response.GetRawResponse());
+                return Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Disk>(null, response.GetRawResponse())
-                    : Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Disk>(null, response.GetRawResponse());
+                return Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskCollection.Exists");
             scope.Start();
             try
             {

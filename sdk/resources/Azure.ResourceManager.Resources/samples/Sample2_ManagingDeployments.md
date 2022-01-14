@@ -55,7 +55,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
         }
     }
 });
-DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -80,7 +80,7 @@ DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
 // Now we can get the deployment with GetAsync()
 Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
 // With DeleteAsync(), we can delete the deployment
-await deployment.DeleteAsync();
+await deployment.DeleteAsync(true);
 ```
 
 

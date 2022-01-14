@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(applicationDefinitionName, applicationDefinitionData)).Value;
-            await applicationDefinition.DeleteAsync();
+            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData)).Value;
+            await applicationDefinition.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await applicationDefinition.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

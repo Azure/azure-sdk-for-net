@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupPolicySetDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicySetDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagementGroupPolicySetDefinitionCollection(ArmResource parent) : base(parent)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation CreateOrUpdate(string policySetDefinitionName, PolicySetDefinitionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation CreateOrUpdate(bool waitForCompletion, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinitionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation> CreateOrUpdateAsync(bool waitForCompletion, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policySetDefinitionsRestClient.GetAtManagementGroup(Id.Name, policySetDefinitionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagementGroupPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementGroupPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagementGroupPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _policySetDefinitionsRestClient.GetAtManagementGroupAsync(Id.Name, policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagementGroupPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementGroupPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagementGroupPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionCollection.Exists");
             scope.Start();
             try
             {

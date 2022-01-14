@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         CdnCustomDomain IOperationSource<CdnCustomDomain>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CdnCustomDomain(_operationBase, CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
+            var data = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
+            return new CdnCustomDomain(_operationBase, data);
         }
 
         async ValueTask<CdnCustomDomain> IOperationSource<CdnCustomDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CdnCustomDomain(_operationBase, CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
+            var data = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
+            return new CdnCustomDomain(_operationBase, data);
         }
     }
 }

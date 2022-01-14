@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Create a new account
             string accountName = "myAccount";
             DeviceUpdateAccountData input1 = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-            DeviceUpdateAccountCreateOperation lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input1);
+            DeviceUpdateAccountCreateOperation lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input1);
             DeviceUpdateAccount account = lro1.Value;
             // Get the instance collection from the specific account and create an instance
             string instanceName = "myInstance";
             DeviceUpdateInstanceData input2 = new DeviceUpdateInstanceData(AzureLocation.WestUS2);
             input2.IotHubs.Add(new IotHubSettings("/subscriptions/.../resourceGroups/.../providers/Microsoft.Devices/IotHubs/..."));
-            DeviceUpdateInstanceCreateOperation lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(instanceName, input2);
+            DeviceUpdateInstanceCreateOperation lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(true, instanceName, input2);
             DeviceUpdateInstance instance = lro2.Value;
             #endregion Snippet:Managing_Instances_CreateAnInstance
         }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Now we can get the instance with GetAsync()
             DeviceUpdateInstance instance = await instanceCollection.GetAsync("myInstance");
             // With DeleteAsync(), we can delete the instance
-            await instance.DeleteAsync();
+            await instance.DeleteAsync(true);
             #endregion Snippet:Managing_Instances_DeleteAnInstance
         }
 

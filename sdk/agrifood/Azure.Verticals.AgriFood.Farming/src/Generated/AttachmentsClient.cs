@@ -41,14 +41,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AttachmentsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -100,6 +94,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetAttachmentAsync(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.GetAttachment");
             scope.Start();
             try
@@ -156,6 +153,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetAttachment(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.GetAttachment");
             scope.Start();
             try
@@ -213,6 +213,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string attachmentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -270,6 +273,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string farmerId, string attachmentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -311,6 +317,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Delete");
             scope.Start();
             try
@@ -352,6 +361,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Delete");
             scope.Start();
             try
@@ -393,6 +405,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
             scope.Start();
             try
@@ -434,6 +449,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Download(string farmerId, string attachmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(attachmentId, nameof(attachmentId));
+
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
             scope.Start();
             try
@@ -513,10 +531,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetAttachmentsByFarmerIdAsync(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "AttachmentsClient.GetAttachmentsByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -598,10 +613,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetAttachmentsByFarmerId(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "AttachmentsClient.GetAttachmentsByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)

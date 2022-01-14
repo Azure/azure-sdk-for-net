@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualHub IOperationSource<VirtualHub>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualHub(_operationBase, VirtualHubData.DeserializeVirtualHubData(document.RootElement));
+            var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
+            return new VirtualHub(_operationBase, data);
         }
 
         async ValueTask<VirtualHub> IOperationSource<VirtualHub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualHub(_operationBase, VirtualHubData.DeserializeVirtualHubData(document.RootElement));
+            var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
+            return new VirtualHub(_operationBase, data);
         }
     }
 }

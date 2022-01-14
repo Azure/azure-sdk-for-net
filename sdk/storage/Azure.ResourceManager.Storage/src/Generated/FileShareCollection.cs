@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of FileShareCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FileShareCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FileShareCollection(ArmResource parent) : base(parent)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="fileShare"/> is null. </exception>
-        public virtual FileShareCreateOperation CreateOrUpdate(string shareName, FileShareData fileShare, string expand = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual FileShareCreateOperation CreateOrUpdate(bool waitForCompletion, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="fileShare"/> is null. </exception>
-        public async virtual Task<FileShareCreateOperation> CreateOrUpdateAsync(string shareName, FileShareData fileShare, string expand = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<FileShareCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _fileSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<FileShare>(null, response.GetRawResponse())
-                    : Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FileShare>(null, response.GetRawResponse());
+                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _fileSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<FileShare>(null, response.GetRawResponse())
-                    : Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FileShare>(null, response.GetRawResponse());
+                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(shareName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
             try
             {

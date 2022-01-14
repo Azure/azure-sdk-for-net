@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of StorageQueueCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageQueueCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StorageQueueCollection(ArmResource parent) : base(parent)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
-        public virtual QueueCreateOperation CreateOrUpdate(string queueName, StorageQueueData queue, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual QueueCreateOperation CreateOrUpdate(bool waitForCompletion, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
-        public async virtual Task<QueueCreateOperation> CreateOrUpdateAsync(string queueName, StorageQueueData queue, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<QueueCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _queueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<StorageQueue>(null, response.GetRawResponse())
-                    : Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StorageQueue>(null, response.GetRawResponse());
+                return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _queueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<StorageQueue>(null, response.GetRawResponse())
-                    : Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StorageQueue>(null, response.GetRawResponse());
+                return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
             try
             {

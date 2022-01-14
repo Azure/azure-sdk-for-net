@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionStepTargetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionStepTargetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerJobAgentJobExecutionStepTargetCollection(ArmResource parent) : base(parent)
         {
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobTargetExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerJobAgentJobExecutionStepTarget>> GetIfExistsAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobTargetExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecutionStepTarget>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStepTarget(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepTargetCollection.Exists");
             scope.Start();
             try
             {

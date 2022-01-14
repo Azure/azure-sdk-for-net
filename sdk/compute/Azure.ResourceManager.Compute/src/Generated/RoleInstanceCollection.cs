@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of RoleInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RoleInstanceCollection(ArmResource parent) : base(parent)
         {
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RoleInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new RoleInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RoleInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new RoleInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _cloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RoleInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new RoleInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RoleInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new RoleInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
             scope.Start();
             try
             {

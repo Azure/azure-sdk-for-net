@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteBuildARMResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildARMResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteBuildARMResourceCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.GetStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(environmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _staticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(environmentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.Exists");
             scope.Start();
             try
             {

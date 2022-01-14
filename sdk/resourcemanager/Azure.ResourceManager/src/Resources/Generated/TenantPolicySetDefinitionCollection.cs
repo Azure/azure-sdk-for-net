@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of TenantPolicySetDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TenantPolicySetDefinitionCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _policySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Exists");
             scope.Start();
             try
             {

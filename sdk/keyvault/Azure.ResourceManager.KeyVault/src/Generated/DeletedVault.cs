@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Initializes a new instance of the <see cref = "DeletedVault"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DeletedVault(ArmResource options, DeletedVaultData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DeletedVault(ArmResource options, DeletedVaultData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
@@ -147,7 +147,17 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DeletedVault.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -155,13 +165,23 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DeletedVault.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VaultPurgeDeletedOperation> PurgeDeletedAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VaultPurgeDeletedOperation> PurgeDeletedAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeleted");
             scope.Start();
@@ -183,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VaultPurgeDeletedOperation PurgeDeleted(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VaultPurgeDeletedOperation PurgeDeleted(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeleted");
             scope.Start();
