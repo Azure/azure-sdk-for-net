@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
                 LinkResource = await ConfigStore.GetPrivateLinkResources().GetAsync("configurationStores");
             }
         }

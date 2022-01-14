@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateLinkResourceCollection(ArmResource parent) : base(parent)
         {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
