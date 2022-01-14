@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -47,6 +48,9 @@ namespace Azure.ResourceManager.Storage
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _storageAccountsRestClient = new StorageAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="StorageAccount"/> class. </summary>
@@ -57,6 +61,9 @@ namespace Azure.ResourceManager.Storage
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _storageAccountsRestClient = new StorageAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="StorageAccount"/> class. </summary>
@@ -70,13 +77,13 @@ namespace Azure.ResourceManager.Storage
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _storageAccountsRestClient = new StorageAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,6 +98,12 @@ namespace Azure.ResourceManager.Storage
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary> Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys. </summary>
@@ -743,38 +756,48 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets the private link resources that need to be created for a storage account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetPrivateLinkResources");
-            scope.Start();
-            try
+            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _privateLinkResourcesRestClient.ListByStorageAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = await _privateLinkResourcesRestClient.ListByStorageAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Gets the private link resources that need to be created for a storage account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetPrivateLinkResources");
-            scope.Start();
-            try
+            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _privateLinkResourcesRestClient.ListByStorageAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = _privateLinkResourcesRestClient.ListByStorageAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         #region ManagementPolicy

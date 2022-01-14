@@ -102,7 +102,9 @@ namespace Azure.ResourceManager.Core
         /// Compares two API version values in string type.
         /// </summary>
         /// <param name="other"> The API version value to compare. </param>
-        /// <returns> Comparison result in integer. 1 for greater than, 0 for equals to, and -1 for less than. </returns>
+        /// <returns> 0 if the APIVersionBase are equivalent, less than 0 if this APIVersionBase
+        /// should be ordered before the given APIVersionBase, greater than 0 if this APIVersionBase
+        /// should be ordered after the given APIVersionBase.. </returns>
         public int CompareTo(string other)
         {
             if (other is null)

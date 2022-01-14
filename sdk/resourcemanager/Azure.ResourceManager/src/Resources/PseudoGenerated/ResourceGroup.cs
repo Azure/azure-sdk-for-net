@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -62,10 +65,16 @@ namespace Azure.ResourceManager.Resources
             _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _data = resource;
             HasData = true;
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Gets whether or not the current instance has data.

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of JitRequestDefinition and their operations over its parent. </summary>
-    public partial class JitRequestDefinitionCollection : ArmCollection, IEnumerable<JitRequestDefinition>
+    public partial class JitRequestDefinitionCollection : ArmCollection, IEnumerable<JitRequestDefinition>, IAsyncEnumerable<JitRequestDefinition>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JitRequestsRestOperations _jitRequestsRestClient;
@@ -37,10 +38,16 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _jitRequestsRestClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -272,38 +279,48 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Retrieves all JIT requests within the resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<JitRequestDefinition>> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="JitRequestDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JitRequestDefinition> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetAll");
-            scope.Start();
-            try
+            Page<JitRequestDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _jitRequestsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(value => new JitRequestDefinition(Parent, value)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jitRequestsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequestDefinition(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Retrieves all JIT requests within the resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<JitRequestDefinition>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="JitRequestDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JitRequestDefinition> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<JitRequestDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _jitRequestsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(value => new JitRequestDefinition(Parent, value)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _jitRequestsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequestDefinition(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Filters the list of <see cref="JitRequestDefinition" /> for this resource group represented as generic resources. </summary>
@@ -354,12 +371,17 @@ namespace Azure.ResourceManager.Resources
 
         IEnumerator<JitRequestDefinition> IEnumerable<JitRequestDefinition>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<JitRequestDefinition> IAsyncEnumerable<JitRequestDefinition>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -44,6 +45,9 @@ namespace Azure.ResourceManager.Sql
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _recoverableManagedDatabasesRestClient = new RecoverableManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="RecoverableManagedDatabase"/> class. </summary>
@@ -53,6 +57,9 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _recoverableManagedDatabasesRestClient = new RecoverableManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="RecoverableManagedDatabase"/> class. </summary>
@@ -65,13 +72,13 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _recoverableManagedDatabasesRestClient = new RecoverableManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/recoverableDatabases";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -86,6 +93,12 @@ namespace Azure.ResourceManager.Sql
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/recoverableDatabases/{recoverableDatabaseName}

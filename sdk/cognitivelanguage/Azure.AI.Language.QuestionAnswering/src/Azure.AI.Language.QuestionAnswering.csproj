@@ -33,10 +33,5 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
-  
-  <!-- TODO: Switch out project reference with .core package reference when package is ready. https://github.com/Azure/azure-sdk-for-net/issues/26171 -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
 
 </Project>

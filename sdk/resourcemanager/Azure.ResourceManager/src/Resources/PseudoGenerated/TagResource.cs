@@ -44,9 +44,6 @@ namespace Azure.ResourceManager.Resources
             _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Id.ResourceType;
-
         /// <summary>
         /// Gets whether or not the current instance has data.
         /// </summary>

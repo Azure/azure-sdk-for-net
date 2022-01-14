@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of RestorableDroppedManagedDatabase and their operations over its parent. </summary>
     public partial class RestorableDroppedManagedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedManagedDatabase>, IAsyncEnumerable<RestorableDroppedManagedDatabase>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RestorableDroppedManagedDatabasesRestOperations _restorableDroppedManagedDatabasesRestClient;
@@ -36,10 +36,16 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ManagedInstance.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ManagedInstance.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
