@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var list = await _resourceGroup.GetCommunicationServices().GetAllAsync().ToEnumerableAsync();
             foreach (var communicationService in list)
             {
-                await communicationService.DeleteAsync();
+                await communicationService.DeleteAsync(true);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var collection = _resourceGroup.GetCommunicationServices();
             var communicationService = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            await communicationService.DeleteAsync();
+            await communicationService.DeleteAsync(true);
             Assert.IsFalse(collection.Exists(communicationServiceName));
         }
 
