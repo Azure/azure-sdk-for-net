@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -33,10 +34,16 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetailsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ManagedDatabase.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ManagedDatabase.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabase.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -169,6 +176,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagedDatabaseRestoreDetailsResult, ManagedDatabaseRestoreDetailsResultData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedDatabaseRestoreDetailsResult, ManagedDatabaseRestoreDetailsResultData> Construct() { }
     }
 }

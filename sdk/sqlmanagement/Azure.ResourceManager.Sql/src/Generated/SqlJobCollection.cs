@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of SqlJob and their operations over its parent. </summary>
     public partial class SqlJobCollection : ArmCollection, IEnumerable<SqlJob>, IAsyncEnumerable<SqlJob>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JobsRestOperations _jobsRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _jobsRestClient = new JobsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => JobAgent.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != JobAgent.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobAgent.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -381,6 +386,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlJob, SqlJobData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlJob, SqlJobData> Construct() { }
     }
 }

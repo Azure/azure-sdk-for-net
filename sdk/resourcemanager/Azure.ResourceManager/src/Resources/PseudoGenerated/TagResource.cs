@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,9 +43,6 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Id.ResourceType;
 
         /// <summary>
         /// Gets whether or not the current instance has data.

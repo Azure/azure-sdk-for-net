@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.KeyVault.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of MhsmPrivateEndpointConnection and their operations over its parent. </summary>
     public partial class MhsmPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MhsmPrivateEndpointConnection>, IAsyncEnumerable<MhsmPrivateEndpointConnection>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MhsmPrivateEndpointConnectionsRestOperations _mHSMPrivateEndpointConnectionsRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.KeyVault
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _mHSMPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ManagedHsm.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ManagedHsm.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedHsm.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -363,6 +368,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData> Construct() { }
     }
 }

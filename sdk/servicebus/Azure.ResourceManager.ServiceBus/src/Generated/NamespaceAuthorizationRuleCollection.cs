@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.ServiceBus.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of ServiceBusAuthorizationRule and their operations over its parent. </summary>
     public partial class NamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceAuthorizationRule>, IAsyncEnumerable<NamespaceAuthorizationRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespaceAuthorizationRulesRestOperations _namespaceAuthorizationRulesRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespaceAuthorizationRulesRestClient = new NamespaceAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServiceBusNamespace.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServiceBusNamespace.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespace.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -363,6 +368,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NamespaceAuthorizationRule, ServiceBusAuthorizationRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NamespaceAuthorizationRule, ServiceBusAuthorizationRuleData> Construct() { }
     }
 }

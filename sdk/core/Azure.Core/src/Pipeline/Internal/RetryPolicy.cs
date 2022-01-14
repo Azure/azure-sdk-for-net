@@ -99,7 +99,7 @@ namespace Azure.Core.Pipeline
                         throw new AggregateException($"Retry failed after {attempt} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
                     }
                 }
-                else if (message.ResponseClassifier.IsErrorResponse(message))
+                else if (message.Response.IsError)
                 {
                     if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message))
                     {

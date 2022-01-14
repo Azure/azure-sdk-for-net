@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Storage.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing collection of StorageQueue and their operations over its parent. </summary>
     public partial class StorageQueueCollection : ArmCollection, IEnumerable<StorageQueue>, IAsyncEnumerable<StorageQueue>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly QueueRestOperations _queueRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.Storage
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _queueRestClient = new QueueRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => QueueService.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != QueueService.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, QueueService.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -367,6 +372,6 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, StorageQueue, StorageQueueData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, StorageQueue, StorageQueueData> Construct() { }
     }
 }

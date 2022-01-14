@@ -8,10 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -20,7 +22,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of VirtualMachineExtensionImage and their operations over its parent. </summary>
-    public partial class VirtualMachineExtensionImageCollection : ArmCollection, IEnumerable<VirtualMachineExtensionImage>
+    public partial class VirtualMachineExtensionImageCollection : ArmCollection, IEnumerable<VirtualMachineExtensionImage>, IAsyncEnumerable<VirtualMachineExtensionImage>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineExtensionImagesRestOperations _virtualMachineExtensionImagesRestClient;
@@ -42,10 +44,16 @@ namespace Azure.ResourceManager.Compute
             _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _location = location;
             _publisherName = publisherName;
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -239,38 +247,48 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of virtual machine extension image types. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<VirtualMachineExtensionImage>> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineExtensionImage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineExtensionImage> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
-            scope.Start();
-            try
+            Page<VirtualMachineExtensionImage> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _virtualMachineExtensionImagesRestClient.ListTypes(Id.SubscriptionId, _location, _publisherName, cancellationToken);
-                return Response.FromValue(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)).ToArray() as IReadOnlyList<VirtualMachineExtensionImage>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualMachineExtensionImagesRestClient.ListTypes(Id.SubscriptionId, _location, _publisherName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Gets a list of virtual machine extension image types. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineExtensionImage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineExtensionImage> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<VirtualMachineExtensionImage>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _virtualMachineExtensionImagesRestClient.ListTypesAsync(Id.SubscriptionId, _location, _publisherName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)).ToArray() as IReadOnlyList<VirtualMachineExtensionImage>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualMachineExtensionImagesRestClient.ListTypesAsync(Id.SubscriptionId, _location, _publisherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
@@ -280,25 +298,30 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        public virtual Response<IReadOnlyList<VirtualMachineExtensionImage>> GetAll(string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineExtensionImage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineExtensionImage> GetAll(string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
-            scope.Start();
-            try
+            Page<VirtualMachineExtensionImage> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _virtualMachineExtensionImagesRestClient.ListVersions(Id.SubscriptionId, _location, _publisherName, type, filter, top, orderby, cancellationToken);
-                return Response.FromValue(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)).ToArray() as IReadOnlyList<VirtualMachineExtensionImage>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualMachineExtensionImagesRestClient.ListVersions(Id.SubscriptionId, _location, _publisherName, type, filter, top, orderby, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
@@ -308,25 +331,30 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        public async virtual Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> GetAllAsync(string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineExtensionImage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineExtensionImage> GetAllAsync(string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<VirtualMachineExtensionImage>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _virtualMachineExtensionImagesRestClient.ListVersionsAsync(Id.SubscriptionId, _location, _publisherName, type, filter, top, orderby, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)).ToArray() as IReadOnlyList<VirtualMachineExtensionImage>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualMachineExtensionImagesRestClient.ListVersionsAsync(Id.SubscriptionId, _location, _publisherName, type, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImage(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Filters the list of <see cref="VirtualMachineExtensionImage" /> for this subscription represented as generic resources. </summary>
@@ -377,15 +405,20 @@ namespace Azure.ResourceManager.Compute
 
         IEnumerator<VirtualMachineExtensionImage> IEnumerable<VirtualMachineExtensionImage>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<VirtualMachineExtensionImage> IAsyncEnumerable<VirtualMachineExtensionImage>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualMachineExtensionImage, VirtualMachineExtensionImageData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualMachineExtensionImage, VirtualMachineExtensionImageData> Construct() { }
     }
 }

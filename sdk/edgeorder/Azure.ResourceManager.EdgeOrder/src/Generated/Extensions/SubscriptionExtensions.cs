@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (productFamiliesRequest == null)
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamily> GetProductFamilies(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (productFamiliesRequest == null)
@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (configurationsRequest == null)
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductConfiguration> GetConfigurations(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (configurationsRequest == null)

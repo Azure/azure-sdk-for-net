@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.ServiceBus
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespace"/> class. </summary>
@@ -61,6 +64,9 @@ namespace Azure.ResourceManager.ServiceBus
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespace"/> class. </summary>
@@ -75,13 +81,13 @@ namespace Azure.ResourceManager.ServiceBus
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +102,12 @@ namespace Azure.ResourceManager.ServiceBus
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary> Gets a description for the specified namespace. </summary>
@@ -141,7 +153,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -149,7 +161,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -422,38 +434,48 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets lists of resources that supports Privatelinks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.GetPrivateLinkResources");
-            scope.Start();
-            try
+            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.GetPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Gets lists of resources that supports Privatelinks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.GetPrivateLinkResources");
-            scope.Start();
-            try
+            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespace.GetPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Check the give namespace name availability. </summary>
@@ -510,7 +532,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it in the ServiceBusNamespace. </summary>
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
-        public NetworkRuleSet GetNetworkRuleSet()
+        public virtual NetworkRuleSet GetNetworkRuleSet()
         {
             return new NetworkRuleSet(this, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
@@ -520,7 +542,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a ServiceBusNamespace. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -530,7 +552,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of DisasterRecoveries in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of DisasterRecoveries and their operations over a ServiceBusNamespace. </returns>
-        public DisasterRecoveryCollection GetDisasterRecoveries()
+        public virtual DisasterRecoveryCollection GetDisasterRecoveries()
         {
             return new DisasterRecoveryCollection(this);
         }
@@ -540,7 +562,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of NamespaceAuthorizationRules in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of NamespaceAuthorizationRules and their operations over a ServiceBusNamespace. </returns>
-        public NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
+        public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
             return new NamespaceAuthorizationRuleCollection(this);
         }
@@ -550,7 +572,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of MigrationConfigProperties in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of MigrationConfigProperties and their operations over a ServiceBusNamespace. </returns>
-        public MigrationConfigPropertiesCollection GetMigrationConfigProperties()
+        public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
         {
             return new MigrationConfigPropertiesCollection(this);
         }
@@ -560,7 +582,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of ServiceBusQueues in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of ServiceBusQueues and their operations over a ServiceBusNamespace. </returns>
-        public ServiceBusQueueCollection GetServiceBusQueues()
+        public virtual ServiceBusQueueCollection GetServiceBusQueues()
         {
             return new ServiceBusQueueCollection(this);
         }
@@ -570,7 +592,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a collection of ServiceBusTopics in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of ServiceBusTopics and their operations over a ServiceBusNamespace. </returns>
-        public ServiceBusTopicCollection GetServiceBusTopics()
+        public virtual ServiceBusTopicCollection GetServiceBusTopics()
         {
             return new ServiceBusTopicCollection(this);
         }

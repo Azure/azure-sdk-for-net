@@ -8,6 +8,8 @@ using Azure.Messaging.EventGrid.SystemEvents;
 using NUnit.Framework;
 using Azure.Core.Serialization;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
@@ -1052,18 +1054,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceWriteSuccessEventData;
 
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteSuccessEventData).TenantId);
-
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceWriteSuccessEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
-
-            var claimsJson = JsonDocument.Parse((eventData as ResourceWriteSuccessEventData).Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceWriteSuccessEventData).HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1074,17 +1068,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceWriteFailureEventData;
 
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceWriteFailureEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
-
-            var claimsJson = JsonDocument.Parse((eventData as ResourceWriteFailureEventData).Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceWriteFailureEventData).HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1095,17 +1082,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceWriteCancelEventData;
 
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceWriteCancelEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
-
-            var claimsJson = JsonDocument.Parse((eventData as ResourceWriteCancelEventData).Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceWriteCancelEventData).HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1116,17 +1096,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceDeleteSuccessEventData;
 
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceDeleteSuccessEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
-
-            var claimsJson = JsonDocument.Parse((eventData as ResourceDeleteSuccessEventData).Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceDeleteSuccessEventData).HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1137,8 +1110,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteFailureEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceDeleteFailureEventData;
+
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1149,17 +1124,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceDeleteCancelEventData;
 
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceDeleteCancelEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
-
-            var claimsJson = JsonDocument.Parse((eventData as ResourceDeleteCancelEventData).Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceDeleteCancelEventData).HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1170,17 +1138,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceActionSuccessEventData;
 
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceActionSuccessEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
-
-            var claimsJson = JsonDocument.Parse((eventData as ResourceActionSuccessEventData).Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceActionSuccessEventData).HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1190,18 +1151,12 @@ namespace Azure.Messaging.EventGrid.Tests
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
+            var moddel = EventGridModelFactory.AcsChatThreadCreatedWithUserEventData(participants: new ReadOnlyCollection<AcsChatThreadParticipantProperties>(new List<AcsChatThreadParticipantProperties>()));
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceActionFailureEventData;
 
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceActionFailureEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
-
-            var claimsJson = JsonDocument.Parse((eventData as ResourceActionFailureEventData).Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceActionFailureEventData).HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            AssertResourceEventData(eventData);
         }
 
         [Test]
@@ -1212,17 +1167,45 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
-            Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelEventData).TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object data));
+            var eventData = data as ResourceActionCancelEventData;
 
-            var authorizationJson = JsonDocument.Parse((eventData as ResourceActionCancelEventData).Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+            AssertResourceEventData(eventData);
+        }
 
-            var claimsJson = JsonDocument.Parse((eventData as ResourceActionCancelEventData).Claims).RootElement;
+        // Using dynamic to avoid duplicating the test cases for each event. The events don't share a common base type but they all have the
+        // properties being tested below.
+        private static void AssertResourceEventData(dynamic eventData)
+        {
+            Assert.NotNull(eventData);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            var authorizationJson = JsonDocument.Parse(eventData.Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default",
+                authorizationJson.GetProperty("scope").GetString());
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default",
+                eventData.AuthorizationValue.Scope);
+            Assert.AreEqual("Microsoft.Web/sites/host/listKeys/action", authorizationJson.GetProperty("action").GetString());
+            Assert.AreEqual("Microsoft.Web/sites/host/listKeys/action", eventData.AuthorizationValue.Action);
+            Assert.AreEqual(
+                "{\"role\":\"Azure EventGrid Service BuiltIn Role\",\"roleAssignmentScope\":\"/subscriptions/sub\",\"roleAssignmentId\":\"rid\",\"roleDefinitionId\":\"rd\",\"principalId\":\"principal\",\"principalType\":\"ServicePrincipal\"}",
+                authorizationJson.GetProperty("evidence").GetRawText());
+            Assert.AreEqual("Azure EventGrid Service BuiltIn Role", eventData.AuthorizationValue.Evidence["role"]);
+            Assert.AreEqual("/subscriptions/sub", eventData.AuthorizationValue.Evidence["roleAssignmentScope"]);
+            Assert.AreEqual("ServicePrincipal", eventData.AuthorizationValue.Evidence["principalType"]);
+
+            var claimsJson = JsonDocument.Parse(eventData.Claims).RootElement;
             Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+            Assert.AreEqual("https://management.core.windows.net", eventData.ClaimsValue["aud"]);
 
-            var httpRequestJson = JsonDocument.Parse((eventData as ResourceActionCancelEventData).HttpRequest).RootElement;
+            var httpRequestJson = JsonDocument.Parse(eventData.HttpRequest).RootElement;
             Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
+            Assert.AreEqual("POST", eventData.HttpRequestValue.Method.ToString());
+            Assert.AreEqual(
+                "https://management.azure.com/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default/listKeys?api-version=2018-11-01",
+                httpRequestJson.GetProperty("url").GetString());
+            Assert.AreEqual(
+                "https://management.azure.com/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default/listKeys?api-version=2018-11-01",
+                eventData.HttpRequestValue.Url);
         }
         #endregion
 

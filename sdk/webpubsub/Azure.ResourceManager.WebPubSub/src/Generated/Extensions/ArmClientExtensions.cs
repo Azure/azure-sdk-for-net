@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSub" /> object. </returns>
         public static WebPubSub GetWebPubSub(this ArmClient armClient, ResourceIdentifier id)
         {
+            WebPubSub.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebPubSub(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubHub" /> object. </returns>
         public static WebPubSubHub GetWebPubSubHub(this ArmClient armClient, ResourceIdentifier id)
         {
+            WebPubSubHub.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebPubSubHub(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="SharedPrivateLink" /> object. </returns>
         public static SharedPrivateLink GetSharedPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            SharedPrivateLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedPrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

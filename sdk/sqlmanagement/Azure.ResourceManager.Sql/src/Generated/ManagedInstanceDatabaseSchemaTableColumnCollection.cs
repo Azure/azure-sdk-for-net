@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of DatabaseColumn and their operations over its parent. </summary>
     public partial class ManagedInstanceDatabaseSchemaTableColumnCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseSchemaTableColumn>, IAsyncEnumerable<ManagedInstanceDatabaseSchemaTableColumn>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnsRestClient;
@@ -37,10 +36,16 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ManagedInstanceDatabaseSchemaTable.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ManagedInstanceDatabaseSchemaTable.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceDatabaseSchemaTable.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -308,6 +313,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagedInstanceDatabaseSchemaTableColumn, DatabaseColumnData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceDatabaseSchemaTableColumn, DatabaseColumnData> Construct() { }
     }
 }

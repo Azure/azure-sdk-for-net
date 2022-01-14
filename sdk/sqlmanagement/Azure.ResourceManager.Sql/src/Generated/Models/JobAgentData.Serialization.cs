@@ -8,8 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -47,9 +45,9 @@ namespace Azure.ResourceManager.Sql
 
         internal static JobAgentData DeserializeJobAgentData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<Sku> sku = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -64,7 +62,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -58,6 +58,9 @@ namespace Azure.ResourceManager.Sql
             _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlServer"/> class. </summary>
@@ -73,6 +76,9 @@ namespace Azure.ResourceManager.Sql
             _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlServer"/> class. </summary>
@@ -91,13 +97,13 @@ namespace Azure.ResourceManager.Sql
             _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -112,6 +118,12 @@ namespace Azure.ResourceManager.Sql
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
@@ -165,7 +177,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -173,7 +185,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -950,7 +962,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RecoverableDatabases in the SqlServer. </summary>
         /// <returns> An object representing collection of RecoverableDatabases and their operations over a SqlServer. </returns>
-        public RecoverableDatabaseCollection GetRecoverableDatabases()
+        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
         {
             return new RecoverableDatabaseCollection(this);
         }
@@ -960,7 +972,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of SqlDatabases in the SqlServer. </summary>
         /// <returns> An object representing collection of SqlDatabases and their operations over a SqlServer. </returns>
-        public SqlDatabaseCollection GetSqlDatabases()
+        public virtual SqlDatabaseCollection GetSqlDatabases()
         {
             return new SqlDatabaseCollection(this);
         }
@@ -970,7 +982,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ElasticPools in the SqlServer. </summary>
         /// <returns> An object representing collection of ElasticPools and their operations over a SqlServer. </returns>
-        public ElasticPoolCollection GetElasticPools()
+        public virtual ElasticPoolCollection GetElasticPools()
         {
             return new ElasticPoolCollection(this);
         }
@@ -980,7 +992,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerCommunicationLinks in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerCommunicationLinks and their operations over a SqlServer. </returns>
-        public ServerCommunicationLinkCollection GetServerCommunicationLinks()
+        public virtual ServerCommunicationLinkCollection GetServerCommunicationLinks()
         {
             return new ServerCommunicationLinkCollection(this);
         }
@@ -990,7 +1002,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServiceObjectives in the SqlServer. </summary>
         /// <returns> An object representing collection of ServiceObjectives and their operations over a SqlServer. </returns>
-        public ServiceObjectiveCollection GetServiceObjectives()
+        public virtual ServiceObjectiveCollection GetServiceObjectives()
         {
             return new ServiceObjectiveCollection(this);
         }
@@ -1000,7 +1012,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicies and their operations over a SqlServer. </returns>
-        public ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
+        public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
         {
             return new ExtendedServerBlobAuditingPolicyCollection(this);
         }
@@ -1010,7 +1022,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerBlobAuditingPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerBlobAuditingPolicies and their operations over a SqlServer. </returns>
-        public ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
+        public virtual ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
         {
             return new ServerBlobAuditingPolicyCollection(this);
         }
@@ -1020,7 +1032,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerAdvisors in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerAdvisors and their operations over a SqlServer. </returns>
-        public ServerAdvisorCollection GetServerAdvisors()
+        public virtual ServerAdvisorCollection GetServerAdvisors()
         {
             return new ServerAdvisorCollection(this);
         }
@@ -1030,7 +1042,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of EncryptionProtectors in the SqlServer. </summary>
         /// <returns> An object representing collection of EncryptionProtectors and their operations over a SqlServer. </returns>
-        public EncryptionProtectorCollection GetEncryptionProtectors()
+        public virtual EncryptionProtectorCollection GetEncryptionProtectors()
         {
             return new EncryptionProtectorCollection(this);
         }
@@ -1040,7 +1052,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of FailoverGroups in the SqlServer. </summary>
         /// <returns> An object representing collection of FailoverGroups and their operations over a SqlServer. </returns>
-        public FailoverGroupCollection GetFailoverGroups()
+        public virtual FailoverGroupCollection GetFailoverGroups()
         {
             return new FailoverGroupCollection(this);
         }
@@ -1050,7 +1062,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of FirewallRules in the SqlServer. </summary>
         /// <returns> An object representing collection of FirewallRules and their operations over a SqlServer. </returns>
-        public FirewallRuleCollection GetFirewallRules()
+        public virtual FirewallRuleCollection GetFirewallRules()
         {
             return new FirewallRuleCollection(this);
         }
@@ -1060,7 +1072,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of JobAgents in the SqlServer. </summary>
         /// <returns> An object representing collection of JobAgents and their operations over a SqlServer. </returns>
-        public JobAgentCollection GetJobAgents()
+        public virtual JobAgentCollection GetJobAgents()
         {
             return new JobAgentCollection(this);
         }
@@ -1070,7 +1082,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the SqlServer. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a SqlServer. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -1080,7 +1092,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of PrivateLinkResources in the SqlServer. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a SqlServer. </returns>
-        public PrivateLinkResourceCollection GetPrivateLinkResources()
+        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {
             return new PrivateLinkResourceCollection(this);
         }
@@ -1090,7 +1102,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it in the SqlServer. </summary>
         /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
-        public ServerAutomaticTuning GetServerAutomaticTuning()
+        public virtual ServerAutomaticTuning GetServerAutomaticTuning()
         {
             return new ServerAutomaticTuning(this, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
@@ -1100,7 +1112,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerAzureADAdministrators in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerAzureADAdministrators and their operations over a SqlServer. </returns>
-        public ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
+        public virtual ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
         {
             return new ServerAzureADAdministratorCollection(this);
         }
@@ -1110,7 +1122,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerAzureADOnlyAuthentications in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerAzureADOnlyAuthentications and their operations over a SqlServer. </returns>
-        public ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
+        public virtual ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
         {
             return new ServerAzureADOnlyAuthenticationCollection(this);
         }
@@ -1120,7 +1132,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDevOpsAuditingSettings in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerDevOpsAuditingSettings and their operations over a SqlServer. </returns>
-        public ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
+        public virtual ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
         {
             return new ServerDevOpsAuditingSettingsCollection(this);
         }
@@ -1130,7 +1142,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDnsAliases in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerDnsAliases and their operations over a SqlServer. </returns>
-        public ServerDnsAliasCollection GetServerDnsAliases()
+        public virtual ServerDnsAliasCollection GetServerDnsAliases()
         {
             return new ServerDnsAliasCollection(this);
         }
@@ -1140,7 +1152,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerKeys in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerKeys and their operations over a SqlServer. </returns>
-        public ServerKeyCollection GetServerKeys()
+        public virtual ServerKeyCollection GetServerKeys()
         {
             return new ServerKeyCollection(this);
         }
@@ -1150,7 +1162,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerSecurityAlertPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerSecurityAlertPolicies and their operations over a SqlServer. </returns>
-        public ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
+        public virtual ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
         {
             return new ServerSecurityAlertPolicyCollection(this);
         }
@@ -1160,7 +1172,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerVulnerabilityAssessments in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerVulnerabilityAssessments and their operations over a SqlServer. </returns>
-        public ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
+        public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
         {
             return new ServerVulnerabilityAssessmentCollection(this);
         }
@@ -1170,7 +1182,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of SyncAgents in the SqlServer. </summary>
         /// <returns> An object representing collection of SyncAgents and their operations over a SqlServer. </returns>
-        public SyncAgentCollection GetSyncAgents()
+        public virtual SyncAgentCollection GetSyncAgents()
         {
             return new SyncAgentCollection(this);
         }
@@ -1180,7 +1192,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of VirtualNetworkRules in the SqlServer. </summary>
         /// <returns> An object representing collection of VirtualNetworkRules and their operations over a SqlServer. </returns>
-        public VirtualNetworkRuleCollection GetVirtualNetworkRules()
+        public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
         {
             return new VirtualNetworkRuleCollection(this);
         }
@@ -1190,7 +1202,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of OutboundFirewallRules in the SqlServer. </summary>
         /// <returns> An object representing collection of OutboundFirewallRules and their operations over a SqlServer. </returns>
-        public OutboundFirewallRuleCollection GetOutboundFirewallRules()
+        public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
         {
             return new OutboundFirewallRuleCollection(this);
         }
@@ -1200,7 +1212,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RestorableDroppedDatabases in the SqlServer. </summary>
         /// <returns> An object representing collection of RestorableDroppedDatabases and their operations over a SqlServer. </returns>
-        public RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
+        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
         {
             return new RestorableDroppedDatabaseCollection(this);
         }
@@ -1210,7 +1222,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerConnectionPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerConnectionPolicies and their operations over a SqlServer. </returns>
-        public ServerConnectionPolicyCollection GetServerConnectionPolicies()
+        public virtual ServerConnectionPolicyCollection GetServerConnectionPolicies()
         {
             return new ServerConnectionPolicyCollection(this);
         }

@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of SyncMember and their operations over its parent. </summary>
     public partial class SyncMemberCollection : ArmCollection, IEnumerable<SyncMember>, IAsyncEnumerable<SyncMember>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SyncMembersRestOperations _syncMembersRestClient;
@@ -38,10 +37,16 @@ namespace Azure.ResourceManager.Sql
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _syncMembersRestClient = new SyncMembersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SyncGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SyncGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SyncGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -381,6 +386,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SyncMember, SyncMemberData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SyncMember, SyncMemberData> Construct() { }
     }
 }
