@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         VMwareHost IOperationSource<VMwareHost>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VMwareHost(_operationBase, VMwareHostData.DeserializeVMwareHostData(document.RootElement));
+            var data = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
+            return new VMwareHost(_operationBase, data);
         }
 
         async ValueTask<VMwareHost> IOperationSource<VMwareHost>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VMwareHost(_operationBase, VMwareHostData.DeserializeVMwareHostData(document.RootElement));
+            var data = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
+            return new VMwareHost(_operationBase, data);
         }
     }
 }
