@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             };
 
             // Create WebPubSub
-            var webPubSub = await (await resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(false, webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
