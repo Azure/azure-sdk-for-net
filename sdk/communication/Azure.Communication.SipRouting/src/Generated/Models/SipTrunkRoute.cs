@@ -9,12 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.SipRouting.Models
+namespace Azure.Communication.SipRouting
 {
     /// <summary> Represents a trunk route for routing calls. </summary>
-    public partial class TrunkRoute
+    public partial class SipTrunkRoute
     {
-        /// <summary> Initializes a new instance of TrunkRoute. </summary>
+        /// <summary> Initializes a new instance of SipTrunkRoute. </summary>
         /// <param name="name"> Gets or sets name of the route. </param>
         /// <param name="numberPattern">
         /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
@@ -24,7 +24,7 @@ namespace Azure.Communication.SipRouting.Models
         /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="numberPattern"/> is null. </exception>
-        public TrunkRoute(string name, string numberPattern)
+        public SipTrunkRoute(string name, string numberPattern)
         {
             if (name == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Communication.SipRouting.Models
             Trunks = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TrunkRoute. </summary>
+        /// <summary> Initializes a new instance of SipTrunkRoute. </summary>
         /// <param name="description"> Gets or sets description of the route. </param>
         /// <param name="name"> Gets or sets name of the route. </param>
         /// <param name="numberPattern">
@@ -51,7 +51,7 @@ namespace Azure.Communication.SipRouting.Models
         /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
         /// </param>
         /// <param name="trunks"> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </param>
-        internal TrunkRoute(string description, string name, string numberPattern, IList<string> trunks)
+        internal SipTrunkRoute(string description, string name, string numberPattern, IList<string> trunks)
         {
             Description = description;
             Name = name;

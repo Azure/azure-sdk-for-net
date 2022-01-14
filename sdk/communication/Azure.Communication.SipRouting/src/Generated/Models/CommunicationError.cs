@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.SipRouting.Models
+namespace Azure.Communication.SipRouting
 {
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationError

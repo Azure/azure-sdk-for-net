@@ -3,11 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
-using Azure.Communication.SipRouting.Models;
+using Azure.Communication.SipRouting;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,7 +20,7 @@ namespace Azure.Communication.SipRouting
     public class SipRoutingClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AzureCommunicationSIPRoutingServiceRestClient _restClient;
+        private readonly SipRoutingRestClient _restClient;
 
         #region public constructors - all arguments need null check
 
@@ -45,7 +46,7 @@ namespace Azure.Communication.SipRouting
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public SipRoutingClient(Uri endpoint, AzureKeyCredential keyCredential, SipRoutingClientOptions? options = default)
+        public SipRoutingClient(Uri endpoint, AzureKeyCredential keyCredential, SipRoutingClientOptions options = default)
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 AssertNotNull(keyCredential, nameof(keyCredential)),
@@ -58,7 +59,7 @@ namespace Azure.Communication.SipRouting
         /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         /// </summary>
-        public SipRoutingClient(Uri endpoint, TokenCredential tokenCredential, SipRoutingClientOptions? options = default)
+        public SipRoutingClient(Uri endpoint, TokenCredential tokenCredential, SipRoutingClientOptions options = default)
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 AssertNotNull(tokenCredential, nameof(tokenCredential)),
@@ -84,7 +85,7 @@ namespace Azure.Communication.SipRouting
         private SipRoutingClient(string endpoint, HttpPipeline httpPipeline, SipRoutingClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            _restClient = new AzureCommunicationSIPRoutingServiceRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            _restClient = new SipRoutingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion
@@ -137,72 +138,16 @@ namespace Azure.Communication.SipRouting
         }
 
         /// <summary>
-        /// Update <see cref="SipConfigurationPatch"/> for resource with SIP trunk gateways list and routing settings.
+        /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list and routing settings.
         /// </summary>
-        /// <param name="trunks">List of SIP trunk gateways.</param>
-        /// <param name="routes"></param>
+        /// <param name="config">Updated configuration.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> UpdateSipTrunkConfiguration(
-            IDictionary<string,TrunkPatch> trunks,
-            IList<TrunkRoute> routes,
+        public virtual Response<SipConfiguration> UpdateSipConfiguration(
+            SipConfiguration config,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfigurationPatch(trunks, routes);
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateSipTrunkConfiguration)}");
-            scope.Start();
-            try
-            {
-                return _restClient.PatchSipConfiguration(config, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update <see cref="SipConfigurationPatch"/> for resource with SIP trunk gateways list and routing settings.
-        /// </summary>
-        /// <param name="trunks">List of SIP trunk gateways.</param>
-        /// <param name="routes"></param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> UpdateSipTrunkConfigurationAsync(
-            IDictionary<string,TrunkPatch> trunks,
-            IList<TrunkRoute> routes,
-            CancellationToken cancellationToken = default)
-        {
-            var config = new SipConfigurationPatch(trunks, routes);
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateSipTrunkConfiguration)}");
-            scope.Start();
-            try
-            {
-                return await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list. Other configuration settings are not affected.
-        /// </summary>
-        /// <param name="trunks">List of SIP trunk gateways.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> UpdateTrunks(
-            IDictionary<string,TrunkPatch> trunks,
-            CancellationToken cancellationToken = default)
-        {
-            var config = new SipConfigurationPatch(trunks);
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateTrunks)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateSipConfiguration)}");
             scope.Start();
             try
             {
@@ -221,13 +166,41 @@ namespace Azure.Communication.SipRouting
         /// <param name="trunks">List of SIP trunk gateways.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> UpdateTrunksAsync(
-            IDictionary<string,TrunkPatch> trunks,
+        public virtual Response<SipConfiguration> UpdateSipConfiguration(
+            IDictionary<string, SipTrunk> trunks,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfigurationPatch(trunks);
+            var config = new SipConfiguration(trunks, new List<SipTrunkRoute>());
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateTrunks)}");
+            return UpdateSipConfiguration(config, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update <see cref="SipConfiguration"/> for resource with online routing settings. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="routes">List of online routing settings.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual Response<SipConfiguration> UpdateSipConfiguration(
+            IEnumerable<SipTrunkRoute> routes,
+            CancellationToken cancellationToken = default)
+        {
+            var config = new SipConfiguration() { Trunks = new Dictionary<string, SipTrunk>(), Routes = routes.ToList() };
+
+            return UpdateSipConfiguration(config, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list and routing settings.
+        /// </summary>
+        /// <param name="config">Updated configuration.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual async Task<Response<SipConfiguration>> UpdateSipConfigurationAsync(
+            SipConfiguration config,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateSipConfiguration)}");
             scope.Start();
             try
             {
@@ -241,28 +214,17 @@ namespace Azure.Communication.SipRouting
         }
 
         /// <summary>
-        /// Update <see cref="SipConfiguration"/> for resource with online routing settings. Other configuration settings are not affected.
+        /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list. Other configuration settings are not affected.
         /// </summary>
-        /// <param name="routes">List of online routing settings.</param>
+        /// <param name="trunks">List of SIP trunk gateways.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> UpdateRoutingSettings(
-            IList<TrunkRoute> routes,
+        public virtual async Task<Response<SipConfiguration>> UpdateSipConfigurationAsync(
+            IDictionary<string,SipTrunk> trunks,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfigurationPatch(routes);
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateRoutingSettings)}");
-            scope.Start();
-            try
-            {
-                return _restClient.PatchSipConfiguration(config, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            var config = new SipConfiguration(trunks, new List<SipTrunkRoute>());
+            return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -271,23 +233,12 @@ namespace Azure.Communication.SipRouting
         /// <param name="routes">List of online routing settings.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> UpdateRoutingSettingsAsync(
-            IList<TrunkRoute> routes,
+        public virtual async Task<Response<SipConfiguration>> UpdateSipConfigurationAsync(
+            IEnumerable<SipTrunkRoute> routes,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfigurationPatch(routes);
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(UpdateRoutingSettings)}");
-            scope.Start();
-            try
-            {
-                return await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            var config = new SipConfiguration() { Trunks = new Dictionary<string, SipTrunk>(), Routes = routes };
+            return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)

@@ -10,26 +10,25 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.SipRouting.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.SipRouting
 {
-    internal partial class AzureCommunicationSIPRoutingServiceRestClient
+    internal partial class SipRoutingRestClient
     {
         private string endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of AzureCommunicationSIPRoutingServiceRestClient. </summary>
+        /// <summary> Initializes a new instance of SipRoutingRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AzureCommunicationSIPRoutingServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-05-01-preview")
+        public SipRoutingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-05-01-preview")
         {
             if (endpoint == null)
             {
@@ -100,31 +99,10 @@ namespace Azure.Communication.SipRouting
             }
         }
 
-        internal HttpMessage CreatePatchSipConfigurationRequest(SipConfigurationPatch body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/sip", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/merge-patch+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
         /// <summary> Patches SIP configuration for resource. </summary>
         /// <param name="body"> Configuration patch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SipConfiguration>> PatchSipConfigurationAsync(SipConfigurationPatch body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SipConfiguration>> PatchSipConfigurationAsync(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchSipConfigurationRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -145,7 +123,7 @@ namespace Azure.Communication.SipRouting
         /// <summary> Patches SIP configuration for resource. </summary>
         /// <param name="body"> Configuration patch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SipConfiguration> PatchSipConfiguration(SipConfigurationPatch body = null, CancellationToken cancellationToken = default)
+        public Response<SipConfiguration> PatchSipConfiguration(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchSipConfigurationRequest(body);
             _pipeline.Send(message, cancellationToken);

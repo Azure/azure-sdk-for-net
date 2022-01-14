@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.SipRouting.Models
+namespace Azure.Communication.SipRouting
 {
-    public partial class TrunkRoute : IUtf8JsonSerializable
+    public partial class SipTrunkRoute : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.Communication.SipRouting.Models
             writer.WriteEndObject();
         }
 
-        internal static TrunkRoute DeserializeTrunkRoute(JsonElement element)
+        internal static SipTrunkRoute DeserializeSipTrunkRoute(JsonElement element)
         {
             Optional<string> description = default;
             string name = default;
@@ -77,7 +77,7 @@ namespace Azure.Communication.SipRouting.Models
                     continue;
                 }
             }
-            return new TrunkRoute(description.Value, name, numberPattern, Optional.ToList(trunks));
+            return new SipTrunkRoute(description.Value, name, numberPattern, Optional.ToList(trunks));
         }
     }
 }

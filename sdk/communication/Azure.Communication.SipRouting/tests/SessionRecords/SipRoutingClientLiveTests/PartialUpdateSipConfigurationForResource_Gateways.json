@@ -1,0 +1,175 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/sip?api-version=2021-05-01-preview1",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "273",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "Date": "Fri, 17 Sep 2021 15:11:49 GMT",
+        "traceparent": "00-8b778ad0b6f852408c3edb99713d14b7-98391145896e8b48-00",
+        "User-Agent": [
+          "azsdk-net-Communication.SipRouting/1.0.0-alpha.20210917.1",
+          "(.NET Core 4.6.30411.01; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "4efd937551da77b9f318e640e8e8ab27",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "trunks": {
+          "sbs1.contoso.com": {
+            "sipSignalingPort": 1122
+          },
+          "sbs2.contoso.com": {
+            "sipSignalingPort": 1123
+          }
+        },
+        "routes": [
+          {
+            "description": "Handle numbers starting with \u0027\u002B123\u0027",
+            "name": "First rule",
+            "numberPattern": "\\\u002B123[0-9]\u002B",
+            "trunks": [
+              "sbs1.contoso.com"
+            ]
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Sep 2021 15:11:52 GMT",
+        "MS-CV": "D8bLyus6mUeXM46C2pr22A.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0NrBEYQAAAABb/\u002BKnKU2aRIV5IvlCqPQ6TE9OMjFFREdFMDEyMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "3014ms"
+      },
+      "ResponseBody": {
+        "trunks": {
+          "sbs1.contoso.com": {
+            "sipSignalingPort": 1122
+          },
+          "sbs2.contoso.com": {
+            "sipSignalingPort": 1123
+          }
+        },
+        "routes": [
+          {
+            "description": "Handle numbers starting with \u0027\u002B123\u0027",
+            "name": "First rule",
+            "numberPattern": "\\\u002B123[0-9]\u002B",
+            "trunks": [
+              "sbs1.contoso.com"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/sip?api-version=2021-05-01-preview1",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "36",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "Date": "Fri, 17 Sep 2021 15:11:53 GMT",
+        "traceparent": "00-88ac4f4f0661584899800a35b2fa36d5-0c7d1f507f418146-00",
+        "User-Agent": [
+          "azsdk-net-Communication.SipRouting/1.0.0-alpha.20210917.1",
+          "(.NET Core 4.6.30411.01; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "f3d449fba7811f163cbce6f38b8133e8",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "trunks": {
+          "sbs2.contoso.com": null
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Sep 2021 15:11:54 GMT",
+        "MS-CV": "2rIKYM6Cw0qyiS2TboAFOQ.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0ObBEYQAAAABSKDxuKjRZS7fJpjRCzcG6TE9OMjFFREdFMDEyMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "1554ms"
+      },
+      "ResponseBody": {
+        "trunks": {
+          "sbs1.contoso.com": {
+            "sipSignalingPort": 1122
+          }
+        },
+        "routes": [
+          {
+            "description": "Handle numbers starting with \u0027\u002B123\u0027",
+            "name": "First rule",
+            "numberPattern": "\\\u002B123[0-9]\u002B",
+            "trunks": [
+              "sbs1.contoso.com"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/sip?api-version=2021-05-01-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Fri, 17 Sep 2021 15:11:54 GMT",
+        "traceparent": "00-61921497c951ff40b5356204b8f7ad0d-3c16c4671f99dd40-00",
+        "User-Agent": [
+          "azsdk-net-Communication.SipRouting/1.0.0-alpha.20210917.1",
+          "(.NET Core 4.6.30411.01; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "f1cbb0840a2be3de6a52b5e83e8baa59",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Sep 2021 15:11:54 GMT",
+        "MS-CV": "ftlxpbkNx0ud5MmYTRluAw.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0O7BEYQAAAAA1rJIZcwUjQ4oZ/ZMwFVwKTE9OMjFFREdFMDEyMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "263ms"
+      },
+      "ResponseBody": {
+        "trunks": {
+          "sbs1.contoso.com": {
+            "sipSignalingPort": 1122
+          }
+        },
+        "routes": [
+          {
+            "description": "Handle numbers starting with \u0027\u002B123\u0027",
+            "name": "First rule",
+            "numberPattern": "\\\u002B123[0-9]\u002B",
+            "trunks": [
+              "sbs1.contoso.com"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "386577988"
+  }
+}

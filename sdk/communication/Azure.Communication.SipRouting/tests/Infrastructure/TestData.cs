@@ -3,32 +3,28 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.SipRouting.Models;
+using Azure.Communication.SipRouting;
 
 namespace Azure.Communication.SipRouting.Tests.Infrastructure
 {
     internal static class TestData
     {
         public static readonly List<string> Fqdns = new List<string>(){ "sbs1.contoso.com", "sbs2.contoso.com" };
-        public static readonly TrunkPatch[] TrunkPorts = { new TrunkPatch(1122), new TrunkPatch(1123) };
+        public static readonly SipTrunk[] TrunkPorts = { new SipTrunk(1122), new SipTrunk(1123) };
 
-        public static readonly TrunkRoute RuleNavigateToTrunk1 = new TrunkRoute(
+        public static readonly SipTrunkRoute RuleNavigateToTrunk1 = new SipTrunkRoute(
             name: "First rule",
+            description: "Handle numbers starting with '+123'",
             numberPattern: @"\+123[0-9]+",
-            trunks: new List<string> { Fqdns[0] })
-        {
-            Description = "Handle numbers starting with '+123'",
-        };
+            trunks: new List<string> { Fqdns[0] });
 
-        public static readonly TrunkRoute RuleNavigateToAllTrunks = new TrunkRoute(
+        public static readonly SipTrunkRoute RuleNavigateToAllTrunks = new SipTrunkRoute(
             name: "Last rule",
+            description: "Handle all other numbers'",
             numberPattern: @"\+[1-9][0-9]{3,23}",
-            trunks: Fqdns)
-        {
-            Description = "Handle all other numbers'",
-        };
+            trunks: Fqdns);
 
-        public static readonly Dictionary<string, TrunkPatch> TrunkDictionary = new Dictionary<string, TrunkPatch>()
+        public static readonly Dictionary<string, SipTrunk> TrunkDictionary = new Dictionary<string, SipTrunk>()
         {
             { Fqdns[0], TrunkPorts[0]},
             { Fqdns[1], TrunkPorts[1]}

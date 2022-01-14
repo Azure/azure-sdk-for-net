@@ -1,0 +1,374 @@
+{
+  "servers": [
+    {
+      "url": "{endpoint}",
+      "variables": {
+        "endpoint": {
+          "x-in": "path",
+          "x-name": "endpoint",
+          "description": "The communication resource, for example https://resourcename.communication.azure.com",
+          "x-required": true,
+          "x-type": "string",
+          "x-ms-skip-url-encoding": true,
+          "x-ms-parameter-location": "client",
+          "x-ms-original": {
+            "$ref": "communicationservicessiprouting.json#/components/parameters/Endpoint"
+          },
+          "default": ""
+        }
+      }
+    }
+  ],
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SipRouting Service",
+    "description": "SipRouting Service",
+    "contact": {
+      "email": "acsdevexdisc@microsoft.com"
+    },
+    "version": "2021-05-01-preview"
+  },
+  "paths": {
+    "/sip": {
+      "get": {
+        "tags": [
+          "SipConfiguration"
+        ],
+        "summary": "Gets SIP configuration for resource.",
+        "operationId": "GetSipConfiguration",
+        "parameters": [
+          {
+            "$ref": "communicationservicessiprouting.json#/components/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "communicationservicessiprouting.json#/components/schemas/SipConfiguration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../../Common/stable/2021-03-07/common.json#/components/schemas/CommunicationErrorResponse"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "x-ms-examples": {
+          "Get SIP configuration for resource": {
+            "parameters": {
+              "api-version": "2021-05-01-preview",
+              "endpoint": "https://resourcename.communication.azure.com/"
+            },
+            "responses": {
+              "200": {
+                "headers": {},
+                "body": {
+                  "trunks": {
+                    "vendor.xyz.biz": {
+                      "sipSignalingPort": 5061
+                    },
+                    "vendor.abc.biz": {
+                      "sipSignalingPort": 5061
+                    }
+                  },
+                  "routes": [
+                    {
+                      "name": "LocalRoute",
+                      "numberPattern": "^\\+1[0-9]{10}$"
+                    },
+                    {
+                      "name": "VendorXYZ",
+                      "description": "External route XYZ",
+                      "numberPattern": "^\\+?\\d+$",
+                      "trunks": [
+                        "vendor.xyz.biz"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "SipConfiguration"
+        ],
+        "summary": "Patches SIP configuration for resource.",
+        "operationId": "PatchSipConfiguration",
+        "parameters": [
+          {
+            "$ref": "communicationservicessiprouting.json#/components/parameters/ApiVersionParameter"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/merge-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SipConfiguration"
+              }
+            }
+          },
+          "description": "Configuration patch.",
+          "x-ms-requestBody-name": "body"
+        },
+        "x-ms-requestBody-index": 1,
+        "responses": {
+          "200": {
+            "description": "Patched configuration is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "communicationservicessiprouting.json#/components/schemas/SipConfiguration"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media type of the patch.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../../Common/stable/2021-03-07/common.json#/components/schemas/CommunicationErrorResponse"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "422": {
+            "description": "If the request is empty, unprocessable or inconsistent with the stored data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../../Common/stable/2021-03-07/common.json#/components/schemas/CommunicationErrorResponse"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "500": {
+            "description": "All other api errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../../Common/stable/2021-03-07/common.json#/components/schemas/CommunicationErrorResponse"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../../Common/stable/2021-03-07/common.json#/components/schemas/CommunicationErrorResponse"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "x-ms-examples": {
+          "Patch SIP configuration for resource": {
+            "parameters": {
+              "api-version": "2021-05-01-preview",
+              "body": {
+                "trunks": {
+                  "vendor.xyz.biz": {
+                    "sipSignalingPort": 5061
+                  }
+                },
+                "routes": [
+                  {
+                    "name": "VendorXYZ",
+                    "description": "External route XYZ",
+                    "numberPattern": "^\\+?\\d+$",
+                    "trunks": [
+                      "vendor.xyz.biz"
+                    ]
+                  }
+                ]
+              },
+              "endpoint": "https://resourcename.communication.azure.com/"
+            },
+            "responses": {
+              "200": {
+                "headers": {},
+                "body": {
+                  "trunks": {
+                    "vendor.xyz.biz": {
+                      "sipSignalingPort": 5061
+                    }
+                  },
+                  "routes": [
+                    {
+                      "name": "VendorXYZ",
+                      "description": "External route XYZ",
+                      "numberPattern": "^\\+?\\d+$",
+                      "trunks": [
+                        "vendor.xyz.biz"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "415": {
+                "headers": {},
+                "body": {
+                  "error": {
+                    "code": "UnsupportedMediaType",
+                    "message": "Unsupported Media Type."
+                  }
+                }
+              },
+              "422": {
+                "headers": {},
+                "body": {
+                  "error": {
+                    "code": "UnprocessableEntity",
+                    "message": "One or more request inputs are not valid.",
+                    "innererror": {
+                      "code": "InvalidRegex",
+                      "message": "Unsupported regex format provided."
+                    }
+                  }
+                }
+              },
+              "500": {
+                "headers": {},
+                "body": {
+                  "error": {
+                    "code": "InternalError",
+                    "message": "The server encountered an internal error."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Trunk": {
+        "description": "Represents a SIP trunk for routing calls. See RFC 4904.",
+        "required": [
+          "sipSignalingPort"
+        ],
+        "type": "object",
+        "properties": {
+          "sipSignalingPort": {
+            "format": "int32",
+            "description": "Gets or sets SIP signaling port of the trunk.",
+            "type": "integer"
+          }
+        }
+      },
+      "TrunkRoute": {
+        "description": "Represents a trunk route for routing calls.",
+        "required": [
+          "name",
+          "numberPattern"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "description": "Gets or sets description of the route.",
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "name": {
+            "description": "Gets or sets name of the route.",
+            "maxLength": 256,
+            "type": "string"
+          },
+          "numberPattern": {
+            "description": "Gets or sets regex number pattern for routing calls. .NET regex format is supported.\r\nThe regex should match only digits with an optional '+' prefix without spaces.\r\nI.e. \"^\\+[1-9][0-9]{3,23}$\".",
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "trunks": {
+            "description": "Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN.",
+            "maxLength": 250,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SipConfiguration": {
+        "description": "Represents a SIP configuration.\r\nWhen a call is being routed the routes are applied in the same order as in the routes list.\r\nA route is matched by its number pattern.\r\nCall is then directed into route's first available trunk, based on the order in the route's trunks list.",
+        "type": "object",
+        "properties": {
+          "trunks": {
+            "description": "SIP trunks for routing calls.\r\nMap key is trunk's FQDN (1-249 characters).",
+            "maxLength": 250,
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "communicationservicessiprouting.json#/components/schemas/Trunk"
+            }
+          },
+          "routes": {
+            "description": "Trunk routes for routing calls.",
+            "maxLength": 250,
+            "type": "array",
+            "items": {
+              "$ref": "communicationservicessiprouting.json#/components/schemas/TrunkRoute"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ApiVersionParameter": {
+        "name": "api-version",
+        "in": "query",
+        "description": "Version of API to invoke",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Endpoint": {
+        "name": "endpoint",
+        "in": "path",
+        "description": "The communication resource, for example https://resourcename.communication.azure.com",
+        "required": true,
+        "x-ms-parameter-location": "client",
+        "x-ms-skip-url-encoding": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "securitySchemes": {
+      "azure_auth": {
+        "description": "Azure Active Directory OAuth2 Flow",
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+            "scopes": {
+              "user_impersonation": "impersonate your user account"
+            }
+          }
+        }
+      }
+    }
+  }
+}

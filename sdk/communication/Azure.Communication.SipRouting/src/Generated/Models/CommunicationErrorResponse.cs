@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.SipRouting.Models
+namespace Azure.Communication.SipRouting
 {
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse

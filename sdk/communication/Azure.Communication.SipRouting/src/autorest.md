@@ -6,7 +6,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/01563419f540c27a96abae75f9feaa3e5e9a1f13/specification/communication/data-plane/SipRouting/readme.md
-tag: package-sip-2021-05-01
+tag: package-2021-05-01-preview
 output-folder: ./Generated
 namespace: Azure.Communication.SipRouting
 no-namespace-folders: true
@@ -19,4 +19,42 @@ no-async: false
 add-credential: false
 title: Azure Communication SIP Routing Service
 disable-async-iterators: true
+model-namespace: false
+output-converted-oai3: true
+```
+
+# The types with Patch suffix, used in API are not used for SDK, to keep the things simple. Therefore, they are removed from autorest.
+### Change SipConfigurationPatch to SipConfiguration 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths.*[?(@.operationId == "PatchSipConfiguration")].parameters..[?(@.description == "Configuration patch.")]
+  transform: >
+    $.schema = {"$ref": "#/definitions/SipConfiguration"}
+```
+
+### Remove TrunkPatch type
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.TrunkPatch
+```
+### Remove SipConfigurationPatch type
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.SipConfigurationPatch
+```
+
+### Relax constraints on SipTrunk to use it instead of TrunkPatch
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SipTrunk
+  transform: >
+    delete $.required;
 ```

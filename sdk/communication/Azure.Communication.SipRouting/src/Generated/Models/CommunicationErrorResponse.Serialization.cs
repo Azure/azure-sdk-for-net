@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.SipRouting.Models
+namespace Azure.Communication.SipRouting
 {
     internal partial class CommunicationErrorResponse
     {

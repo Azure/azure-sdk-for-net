@@ -1,0 +1,120 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/sip?api-version=2021-05-01-preview1",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "273",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "Date": "Wed, 20 Oct 2021 08:32:53 GMT",
+        "traceparent": "00-fadb0e862a5014498f6de02406d6587a-094b10271613514f-00",
+        "User-Agent": "azsdk-net-Communication.SipRouting/1.0.0-alpha.20211020.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b6eae99d1b351436340e06283dfd3f66",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "trunks": {
+          "sbs1.contoso.com": {
+            "sipSignalingPort": 1122
+          },
+          "sbs2.contoso.com": {
+            "sipSignalingPort": 1123
+          }
+        },
+        "routes": [
+          {
+            "description": "Handle numbers starting with \u0027\u002B123\u0027",
+            "name": "First rule",
+            "numberPattern": "\\\u002B123[0-9]\u002B",
+            "trunks": [
+              "sbs1.contoso.com"
+            ]
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Oct 2021 08:32:44 GMT",
+        "MS-CV": "QPIlVC3IRkmdTkGBDBVhkA.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0K9RvYQAAAABEa1iDmwaFSbUQM2KyYM4ZUFJHMDFFREdFMDcxNwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "684ms"
+      },
+      "ResponseBody": {
+        "trunks": {
+          "sbs1.contoso.com": {
+            "sipSignalingPort": 1122
+          },
+          "sbs2.contoso.com": {
+            "sipSignalingPort": 1123
+          }
+        },
+        "routes": [
+          {
+            "description": "Handle numbers starting with \u0027\u002B123\u0027",
+            "name": "First rule",
+            "numberPattern": "\\\u002B123[0-9]\u002B",
+            "trunks": [
+              "sbs1.contoso.com"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/sip?api-version=2021-05-01-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Wed, 20 Oct 2021 08:32:54 GMT",
+        "traceparent": "00-e26f57b575039345ba55373b0de005a8-000bf4c4679ac446-00",
+        "User-Agent": "azsdk-net-Communication.SipRouting/1.0.0-alpha.20211020.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "89da73f0141113317b0747f9f154ca91",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Oct 2021 08:32:44 GMT",
+        "MS-CV": "LC5/3OT5KkGQQRL1ZCS0yA.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LNRvYQAAAACFDFw0S7vVTbxz7B/nk7YpUFJHMDFFREdFMDcxNwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "195ms"
+      },
+      "ResponseBody": {
+        "trunks": {
+          "sbs1.contoso.com": {
+            "sipSignalingPort": 1122
+          },
+          "sbs2.contoso.com": {
+            "sipSignalingPort": 1123
+          }
+        },
+        "routes": [
+          {
+            "description": "Handle numbers starting with \u0027\u002B123\u0027",
+            "name": "First rule",
+            "numberPattern": "\\\u002B123[0-9]\u002B",
+            "trunks": [
+              "sbs1.contoso.com"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1892970169"
+  }
+}

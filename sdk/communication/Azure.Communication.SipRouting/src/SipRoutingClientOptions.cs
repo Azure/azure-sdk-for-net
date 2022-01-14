@@ -8,37 +8,26 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.SipRouting
 {
     /// <summary>
-    /// The options for calling configuration client options. <see cref="SipRoutingClientOptions"/>
+    /// The options for calling configuration client options <see cref="SipRoutingClientOptions"/>.
     /// </summary>
     public class SipRoutingClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest version of the calling configuration service.
         /// </summary>
-        public const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1;
         internal string ApiVersion { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SipRoutingClientOptions"/>.
         /// </summary>
-        public SipRoutingClientOptions(ServiceVersion version = LatestVersion, RetryOptions? retryOptions = default, HttpPipelineTransport? transport = default)
+        public SipRoutingClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
                 ServiceVersion.V1 => "2021-05-01-preview1",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-
-            if (transport != default)
-                Transport = transport;
-
-            if (retryOptions != null)
-            {
-                Retry.Mode = retryOptions.Mode;
-                Retry.MaxRetries = retryOptions.MaxRetries;
-                Retry.Delay = retryOptions.Delay;
-                Retry.MaxDelay = retryOptions.MaxDelay;
-            }
         }
 
         /// <summary>

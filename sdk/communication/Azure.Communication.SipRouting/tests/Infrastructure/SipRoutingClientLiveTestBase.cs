@@ -11,8 +11,8 @@ namespace Azure.Communication.SipRouting.Tests.Infrastructure
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
-        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
-            => Sanitizer = new CommunicationRecordedTestSanitizer();
+        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+            => Sanitizer = new SipRoutingClientRecordedTestSanitizer();
 
         public bool IncludeSipRoutingLiveTests
             => TestEnvironment.Mode == RecordedTestMode.Playback

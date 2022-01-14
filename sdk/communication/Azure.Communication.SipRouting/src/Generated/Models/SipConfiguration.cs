@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.SipRouting.Models
+namespace Azure.Communication.SipRouting
 {
     /// <summary>
     /// Represents a SIP configuration.
@@ -22,10 +22,10 @@ namespace Azure.Communication.SipRouting.Models
     public partial class SipConfiguration
     {
         /// <summary> Initializes a new instance of SipConfiguration. </summary>
-        internal SipConfiguration()
+        public SipConfiguration()
         {
-            Trunks = new ChangeTrackingDictionary<string, Trunk>();
-            Routes = new ChangeTrackingList<TrunkRoute>();
+            Trunks = new Dictionary<string, SipTrunk>();
+            Routes = new List<SipTrunkRoute>();
         }
 
         /// <summary> Initializes a new instance of SipConfiguration. </summary>
@@ -35,19 +35,10 @@ namespace Azure.Communication.SipRouting.Models
         /// Map key is trunk&apos;s FQDN (1-249 characters).
         /// </param>
         /// <param name="routes"> Trunk routes for routing calls. </param>
-        internal SipConfiguration(IReadOnlyDictionary<string, Trunk> trunks, IReadOnlyList<TrunkRoute> routes)
+        internal SipConfiguration(IDictionary<string, SipTrunk> trunks, IList<SipTrunkRoute> routes)
         {
             Trunks = trunks;
             Routes = routes;
         }
-
-        /// <summary>
-        /// SIP trunks for routing calls.
-        /// 
-        /// Map key is trunk&apos;s FQDN (1-249 characters).
-        /// </summary>
-        public IReadOnlyDictionary<string, Trunk> Trunks { get; }
-        /// <summary> Trunk routes for routing calls. </summary>
-        public IReadOnlyList<TrunkRoute> Routes { get; }
     }
 }

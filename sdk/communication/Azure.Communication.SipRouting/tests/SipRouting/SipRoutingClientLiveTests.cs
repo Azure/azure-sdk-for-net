@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.SipRouting.Models;
+using Azure.Communication.SipRouting;
 using Azure.Communication.SipRouting.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -38,10 +38,10 @@ namespace Azure.Communication.SipRouting.Tests.SipRouting
 
             Assert.IsNotNull(config);
             // updated value is set
-            Assert.AreEqual(2, config.Trunks.Count);
-            Assert.AreEqual(config.Trunks.Keys, TestData.Fqdns);
-            Assert.AreEqual(1, config.Routes.Count);
-            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes[0].Name);
+            Assert.AreEqual(2, config.Trunks.Count());
+            Assert.AreEqual(config.Trunks.Select(x => x.Key), TestData.Fqdns);
+            Assert.AreEqual(1, config.Routes.Count());
+            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes.First().Name);
         }
 
         [Test]
@@ -49,15 +49,19 @@ namespace Azure.Communication.SipRouting.Tests.SipRouting
         {
             var client = CreateClient();
 
+            var trunks = TestData.TrunkDictionary;
+            var routes = new List<SipTrunkRoute> { TestData.RuleNavigateToTrunk1 };
+            await client.UpdateSipConfigurationAsync(new SipConfiguration() { Trunks = trunks, Routes = routes});
+
             // Smoke test to ensure that client generated from token is able to work as expected.
             SipConfiguration config = await client.GetSipConfigurationAsync();
 
             Assert.IsNotNull(config);
             // updated value is set
-            Assert.AreEqual(2, config.Trunks.Count);
-            Assert.AreEqual(config.Trunks.Keys, TestData.Fqdns);
-            Assert.AreEqual(1, config.Routes.Count);
-            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes[0].Name);
+            Assert.AreEqual(2, config.Trunks.Count());
+            Assert.AreEqual(config.Trunks.Select(x => x.Key), TestData.Fqdns);
+            Assert.AreEqual(1, config.Routes.Count());
+            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes.First().Name);
         }
 
         [Test]
@@ -65,16 +69,16 @@ namespace Azure.Communication.SipRouting.Tests.SipRouting
         {
             var client = CreateClient();
             var trunks = TestData.TrunkDictionary;
-            var routes = new List<TrunkRoute> { TestData.RuleNavigateToTrunk1 };
-            await client.UpdateSipTrunkConfigurationAsync(trunks, routes);
+            var routes = new List<SipTrunkRoute> { TestData.RuleNavigateToTrunk1 };
+            await client.UpdateSipConfigurationAsync(new SipConfiguration() { Trunks = trunks, Routes = routes });
 
             SipConfiguration config = await client.GetSipConfigurationAsync();
             Assert.IsNotNull(config);
             // updated value is set
-            Assert.AreEqual(2, config.Trunks.Count);
-            Assert.AreEqual(config.Trunks.Keys, TestData.Fqdns);
-            Assert.AreEqual(1, config.Routes.Count);
-            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes[0].Name);
+            Assert.AreEqual(2, config.Trunks.Count());
+            Assert.AreEqual(config.Trunks.Select(x => x.Key), TestData.Fqdns);
+            Assert.AreEqual(1, config.Routes.Count());
+            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes.First().Name);
         }
 
         [Test]
@@ -84,22 +88,23 @@ namespace Azure.Communication.SipRouting.Tests.SipRouting
 
             // reset SIP trunk settings
             var trunks = TestData.TrunkDictionary;
-            var routes = new List<TrunkRoute> { TestData.RuleNavigateToTrunk1 };
-            await client.UpdateSipTrunkConfigurationAsync(trunks, routes);
+            var routes = new List<SipTrunkRoute> { TestData.RuleNavigateToTrunk1 };
+            await client.UpdateSipConfigurationAsync(new SipConfiguration() { Trunks = trunks, Routes = routes });
 
             // fill in only gateways list
-            var trunkPatch = new TrunkPatch();
-            var updatedTrunks = new Dictionary<string, TrunkPatch>() { { "sbs1.contoso.com", trunkPatch } };
-            await client.UpdateTrunksAsync(updatedTrunks);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            var updatedTrunks = new Dictionary<string, SipTrunk>() { { "sbs2.contoso.com", null } };
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            await client.UpdateSipConfigurationAsync(updatedTrunks);
 
             SipConfiguration config = await client.GetSipConfigurationAsync();
             Assert.IsNotNull(config);
             // updated value is set
-            Assert.AreEqual(1, config.Trunks.Count);
-            Assert.AreEqual(config.Trunks,TestData.Fqdns[0]);
+            Assert.AreEqual(1, config.Trunks.Count());
+            Assert.AreEqual(config.Trunks.First().Key,TestData.Fqdns[0]);
             // initial value is reserved
-            Assert.AreEqual(1, config.Routes.Count);
-            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes[0].Name);
+            Assert.AreEqual(1, config.Routes.Count());
+            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, config.Routes.First().Name);
         }
 
         [Test]
@@ -109,21 +114,21 @@ namespace Azure.Communication.SipRouting.Tests.SipRouting
 
             // reset SIP trunk settings
             var trunks = TestData.TrunkDictionary;
-            var routes = new List<TrunkRoute> { TestData.RuleNavigateToTrunk1 };
-            await client.UpdateSipTrunkConfigurationAsync(trunks, routes);
+            var routes = new List<SipTrunkRoute> { TestData.RuleNavigateToTrunk1 };
+            await client.UpdateSipConfigurationAsync(new SipConfiguration() { Trunks = trunks, Routes = routes });
 
             // fill in only routing settings
-            var updatedRoutingSettings = new List<TrunkRoute> { TestData.RuleNavigateToAllTrunks };
-            await client.UpdateRoutingSettingsAsync(updatedRoutingSettings);
+            var updatedRoutingSettings = new List<SipTrunkRoute> { TestData.RuleNavigateToAllTrunks };
+            await client.UpdateSipConfigurationAsync(updatedRoutingSettings);
 
             SipConfiguration config = await client.GetSipConfigurationAsync();
             Assert.IsNotNull(config);
             // updated value is set
-            Assert.AreEqual(2, config.Trunks.Count);
-            Assert.AreEqual(config.Trunks.Keys, TestData.Fqdns);
+            Assert.AreEqual(2, config.Trunks.Count());
+            Assert.AreEqual(config.Trunks.Select(x => x.Key), TestData.Fqdns);
             // initial value is reserved
-            Assert.AreEqual(1, config.Routes.Count);
-            Assert.AreEqual(TestData.RuleNavigateToAllTrunks.Name, config.Routes[0].Name);
+            Assert.AreEqual(1, config.Routes.Count());
+            Assert.AreEqual(TestData.RuleNavigateToAllTrunks.Name, config.Routes.First().Name);
         }
 
         private TokenCredential GetToken() => Mode == RecordedTestMode.Playback

@@ -9,14 +9,41 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.SipRouting.Models
+namespace Azure.Communication.SipRouting
 {
-    public partial class SipConfiguration
+    public partial class SipConfiguration : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Trunks))
+            {
+                writer.WritePropertyName("trunks");
+                writer.WriteStartObject();
+                foreach (var item in Trunks)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Routes))
+            {
+                writer.WritePropertyName("routes");
+                writer.WriteStartArray();
+                foreach (var item in Routes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
         internal static SipConfiguration DeserializeSipConfiguration(JsonElement element)
         {
-            Optional<IReadOnlyDictionary<string, Trunk>> trunks = default;
-            Optional<IReadOnlyList<TrunkRoute>> routes = default;
+            Optional<IDictionary<string, SipTrunk>> trunks = default;
+            Optional<IList<SipTrunkRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trunks"))
@@ -26,10 +53,10 @@ namespace Azure.Communication.SipRouting.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, Trunk> dictionary = new Dictionary<string, Trunk>();
+                    Dictionary<string, SipTrunk> dictionary = new Dictionary<string, SipTrunk>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Trunk.DeserializeTrunk(property0.Value));
+                        dictionary.Add(property0.Name, SipTrunk.DeserializeSipTrunk(property0.Value));
                     }
                     trunks = dictionary;
                     continue;
@@ -41,10 +68,10 @@ namespace Azure.Communication.SipRouting.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TrunkRoute> array = new List<TrunkRoute>();
+                    List<SipTrunkRoute> array = new List<SipTrunkRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrunkRoute.DeserializeTrunkRoute(item));
+                        array.Add(SipTrunkRoute.DeserializeSipTrunkRoute(item));
                     }
                     routes = array;
                     continue;
