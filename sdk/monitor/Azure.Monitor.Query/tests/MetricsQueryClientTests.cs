@@ -85,14 +85,13 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsNotNull(metricUnit);
             Assert.AreEqual("test", metricUnit.ToString());
 
-            LocalizableString localizableString = new LocalizableString("name", "localizedName");
-            MetricResult metricResult = MonitorQueryModelFactory.MetricResult("https://management.azure.gov", "type", localizableString, metricUnit, metricTimeSeriesElements);
+            MetricResult metricResult = MonitorQueryModelFactory.MetricResult("https://management.azure.gov", "type", "name", metricUnit, metricTimeSeriesElements);
             Assert.IsNotNull(metricResult);
             Assert.AreEqual(null, metricResult.Description);
             Assert.AreEqual(null, metricResult.Error.Code);
             Assert.AreEqual(null, metricResult.Error.Message);
             Assert.AreEqual("https://management.azure.gov", metricResult.Id);
-            Assert.AreEqual("localizedName", metricResult.Name);
+            Assert.AreEqual("name", metricResult.Name);
             Assert.AreEqual("type", metricResult.ResourceType);
             Assert.AreEqual(1, metricResult.TimeSeries.Count);
             Assert.AreEqual("test", metricResult.Unit.ToString());
@@ -106,7 +105,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(null, metricsQueryResult.Metrics[0].Error.Code);
             Assert.AreEqual(null, metricsQueryResult.Metrics[0].Error.Message);
             Assert.AreEqual("https://management.azure.gov", metricsQueryResult.Metrics[0].Id);
-            Assert.AreEqual("localizedName", metricsQueryResult.Metrics[0].Name);
+            Assert.AreEqual("name", metricsQueryResult.Metrics[0].Name);
             Assert.AreEqual("type", metricsQueryResult.Metrics[0].ResourceType);
             Assert.AreEqual("namespace", metricsQueryResult.Namespace);
             Assert.AreEqual("eastus", metricsQueryResult.ResourceRegion);

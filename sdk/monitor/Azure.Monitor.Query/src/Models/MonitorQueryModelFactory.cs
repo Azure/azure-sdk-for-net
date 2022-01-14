@@ -43,13 +43,13 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary>
         /// Enables the user to create an instance of a <see cref="MetricTimeSeriesElement"/>.
-        /// <param name="metadatavalues"> A dictionary comprised of metric metadata values. </param>
+        /// <param name="metadataValues"> A dictionary comprised of metric metadata values. </param>
         /// <param name="values"> A list made of MetricValue elements. </param>
         /// </summary>
-        public static MetricTimeSeriesElement MetricTimeSeriesElement(IReadOnlyDictionary<string, string> metadatavalues, IEnumerable<MetricValue> values)
+        public static MetricTimeSeriesElement MetricTimeSeriesElement(IReadOnlyDictionary<string, string> metadataValues, IEnumerable<MetricValue> values)
         {
             var metadataValueList = new List<MetadataValue>();
-            foreach (var value in metadatavalues)
+            foreach (var value in metadataValues)
             {
                 var metadataValue = new MetadataValue(new LocalizableString(value.Key), value.Value);
                 metadataValueList.Add(metadataValue);
