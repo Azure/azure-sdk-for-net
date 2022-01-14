@@ -163,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 
         /// <summary>
         /// Defines whether ordering needs to be maintained. If true, messages sent to topic will be
-        /// forwarded to the subscription in order. For partitioned topics, defaults to false, and 
+        /// forwarded to the subscription in order. For partitioned topics, defaults to false, and
         /// setting it to true has no effect.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>
