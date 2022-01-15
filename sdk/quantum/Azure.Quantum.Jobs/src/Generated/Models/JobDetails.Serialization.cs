@@ -47,21 +47,14 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(Target);
             if (Optional.IsCollectionDefined(Metadata))
             {
-                if (Metadata != null)
+                writer.WritePropertyName("metadata");
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
                 {
-                    writer.WritePropertyName("metadata");
-                    writer.WriteStartObject();
-                    foreach (var item in Metadata)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("metadata");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(OutputDataUri))
             {
@@ -72,6 +65,16 @@ namespace Azure.Quantum.Jobs.Models
             {
                 writer.WritePropertyName("outputDataFormat");
                 writer.WriteStringValue(OutputDataFormat);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartArray();
+                foreach (var item in Tags)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -91,10 +94,12 @@ namespace Azure.Quantum.Jobs.Models
             Optional<string> outputDataFormat = default;
             Optional<JobStatus> status = default;
             Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset?> beginExecutionTime = default;
-            Optional<DateTimeOffset?> endExecutionTime = default;
-            Optional<DateTimeOffset?> cancellationTime = default;
+            Optional<DateTimeOffset> beginExecutionTime = default;
+            Optional<DateTimeOffset> endExecutionTime = default;
+            Optional<DateTimeOffset> cancellationTime = default;
+            Optional<CostEstimate> costEstimate = default;
             Optional<ErrorData> errorData = default;
+            Optional<IList<string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -146,7 +151,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        metadata = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -191,7 +196,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        beginExecutionTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     beginExecutionTime = property.Value.GetDateTimeOffset("O");
@@ -201,7 +206,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endExecutionTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endExecutionTime = property.Value.GetDateTimeOffset("O");
@@ -211,24 +216,49 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cancellationTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cancellationTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("costEstimate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    costEstimate = CostEstimate.DeserializeCostEstimate(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorData"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        errorData = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorData = ErrorData.DeserializeErrorData(property.Value);
                     continue;
                 }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    tags = array;
+                    continue;
+                }
             }
-            return new JobDetails(id.Value, name.Value, containerUri, inputDataUri.Value, inputDataFormat, inputParams.Value, providerId, target, Optional.ToDictionary(metadata), outputDataUri.Value, outputDataFormat.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(beginExecutionTime), Optional.ToNullable(endExecutionTime), Optional.ToNullable(cancellationTime), errorData.Value);
+            return new JobDetails(id.Value, name.Value, containerUri, inputDataUri.Value, inputDataFormat, inputParams.Value, providerId, target, Optional.ToDictionary(metadata), outputDataUri.Value, outputDataFormat.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(beginExecutionTime), Optional.ToNullable(endExecutionTime), Optional.ToNullable(cancellationTime), costEstimate.Value, errorData.Value, Optional.ToList(tags));
         }
     }
 }
