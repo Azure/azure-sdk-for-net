@@ -3,6 +3,5 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-input-file:
-    -  $(this-folder)/swagger/quantum.json
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/quantum/data-plane/readme.md
 ```
