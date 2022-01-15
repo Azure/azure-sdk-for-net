@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Tests.Samples
             {
                 AzureLocation location = AzureLocation.WestUS2;
                 ResourceGroupData rgData = new ResourceGroupData(location);
-                _ = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+                _ = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             }
 #endif
             ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Tests.Samples
                 AzureLocation location = AzureLocation.WestUS2;
                 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
                 ResourceGroupData rgData = new ResourceGroupData(location);
-                _ = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+                _ = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             }
 #endif
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            resourceGroup = await resourceGroup.AddTagAsync("key", "value");
+            resourceGroup = await resourceGroup.AddTagAsync(true, "key", "value");
             #endregion Snippet:Managing_Resource_Groups_UpdateAResourceGroup
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            await resourceGroup.DeleteAsync();
+            await resourceGroup.DeleteAsync(true);
             #endregion Snippet:Managing_Resource_Groups_DeleteResourceGroup
         }
     }

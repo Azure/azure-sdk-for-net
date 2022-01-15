@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Tests
 
             var genericResources = Client.GetGenericResources();
             var resourceId = rg.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(resourceId, null));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(null, ConstructGenericAvailabilitySet()));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(true, resourceId, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(true, null, ConstructGenericAvailabilitySet()));
             var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(new ResourceIdentifier(rgId)));
         }
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.Tests
             var resourceId = rg.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                var createOp = await genericResources.CreateOrUpdateAsync(resourceId, null, false);
+                var createOp = await genericResources.CreateOrUpdateAsync(false, resourceId, null);
                 _ = await createOp.WaitForCompletionAsync();
             });
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                var createOp = await genericResources.CreateOrUpdateAsync(null, ConstructGenericAvailabilitySet(), false);
+                var createOp = await genericResources.CreateOrUpdateAsync(false, null, ConstructGenericAvailabilitySet());
                 _ = await createOp.WaitForCompletionAsync();
             });
             var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";

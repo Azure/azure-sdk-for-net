@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            var op = await genericResources.CreateOrUpdateAsync(asetId, data);
+            var op = await genericResources.CreateOrUpdateAsync(true, asetId, data);
             return op.Value;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(asetId, data, false);
+            return await genericResources.CreateOrUpdateAsync(false, asetId, data);
         }
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Tests
         protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgName)
         {
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
-            ResourceGroupCreateOrUpdateOperation lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
+            ResourceGroupCreateOrUpdateOperation lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, input);
             return lro.Value;
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Tests
         {
             GenericResourceData input = ConstructGenericVirtualNetworkData();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            ResourceCreateOrUpdateByIdOperation lro = await Client.GetGenericResources().CreateOrUpdateAsync(vnId, input);
+            ResourceCreateOrUpdateByIdOperation lro = await Client.GetGenericResources().CreateOrUpdateAsync(true, vnId, input);
             return lro.Value;
         }
 
