@@ -15,17 +15,17 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-    public partial class TagUpdateAtScopeOperation : Operation<TagResource>
+    /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
+    public partial class TagResourceCreateOrUpdateOperation : Operation<TagResource>
     {
         private readonly OperationOrResponseInternals<TagResource> _operation;
 
-        /// <summary> Initializes a new instance of TagUpdateAtScopeOperation for mocking. </summary>
-        protected TagUpdateAtScopeOperation()
+        /// <summary> Initializes a new instance of TagResourceCreateOrUpdateOperation for mocking. </summary>
+        protected TagResourceCreateOrUpdateOperation()
         {
         }
 
-        internal TagUpdateAtScopeOperation(ArmResource operationsBase, Response<TagResourceData> response)
+        internal TagResourceCreateOrUpdateOperation(ArmResource operationsBase, Response<TagResourceData> response)
         {
             _operation = new OperationOrResponseInternals<TagResource>(Response.FromValue(new TagResource(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
-    public partial class ResourceValidateMoveResourcesOperation : Operation
+    /// <summary> This operation deletes the policy set definition in the given management group with the given name. </summary>
+    public partial class ManagementGroupPolicySetDefinitionDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourceValidateMoveResourcesOperation for mocking. </summary>
-        protected ResourceValidateMoveResourcesOperation()
+        /// <summary> Initializes a new instance of ManagementGroupPolicySetDefinitionDeleteOperation for mocking. </summary>
+        protected ManagementGroupPolicySetDefinitionDeleteOperation()
         {
         }
 
-        internal ResourceValidateMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagementGroupPolicySetDefinitionDeleteOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceValidateMoveResourcesOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

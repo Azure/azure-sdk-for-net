@@ -10,22 +10,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
-    public partial class PolicySetDefinitionDeleteOperation : Operation
+    /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
+    public partial class ResourceGroupValidateMoveResourcesOperation : Operation
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionDeleteOperation for mocking. </summary>
-        protected PolicySetDefinitionDeleteOperation()
+        /// <summary> Initializes a new instance of ResourceGroupValidateMoveResourcesOperation for mocking. </summary>
+        protected ResourceGroupValidateMoveResourcesOperation()
         {
         }
 
-        internal PolicySetDefinitionDeleteOperation(Response response)
+        internal ResourceGroupValidateMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(response);
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupValidateMoveResourcesOperation");
         }
 
         /// <inheritdoc />

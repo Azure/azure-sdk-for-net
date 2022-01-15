@@ -10,22 +10,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation deletes the policy definition in the given management group with the given name. </summary>
-    public partial class PolicyDefinitionDeleteAtManagementGroupOperation : Operation
+    /// <summary> Deletes a resource by ID. </summary>
+    public partial class GenericResourceDeleteOperation : Operation
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of PolicyDefinitionDeleteAtManagementGroupOperation for mocking. </summary>
-        protected PolicyDefinitionDeleteAtManagementGroupOperation()
+        /// <summary> Initializes a new instance of GenericResourceDeleteOperation for mocking. </summary>
+        protected GenericResourceDeleteOperation()
         {
         }
 
-        internal PolicyDefinitionDeleteAtManagementGroupOperation(Response response)
+        internal GenericResourceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(response);
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GenericResourceDeleteOperation");
         }
 
         /// <inheritdoc />

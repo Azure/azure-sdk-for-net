@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Resources
         internal SubscriptionPolicyDefinitionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SubscriptionPolicyDefinition.ResourceType, out string apiVersion);
+            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
+        public virtual SubscriptionPolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, policyDefinitionName, parameters, cancellationToken);
-                var operation = new PolicyDefinitionCreateOrUpdateOperation(this, response);
+                var operation = new SubscriptionPolicyDefinitionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<SubscriptionPolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, policyDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyDefinitionCreateOrUpdateOperation(this, response);
+                var operation = new SubscriptionPolicyDefinitionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

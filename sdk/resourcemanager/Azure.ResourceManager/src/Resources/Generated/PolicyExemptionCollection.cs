@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Resources
         internal PolicyExemptionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policyExemptionsRestClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(PolicyExemption.ResourceType, out string apiVersion);
+            _policyExemptionsRestClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
 
         // Collection level operations.

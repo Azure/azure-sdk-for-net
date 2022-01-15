@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Deletes a resource by ID. </summary>
-    public partial class ResourceDeleteByIdOperation : Operation
+    /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
+    public partial class SubscriptionPolicyDefinitionDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourceDeleteByIdOperation for mocking. </summary>
-        protected ResourceDeleteByIdOperation()
+        /// <summary> Initializes a new instance of SubscriptionPolicyDefinitionDeleteOperation for mocking. </summary>
+        protected SubscriptionPolicyDefinitionDeleteOperation()
         {
         }
 
-        internal ResourceDeleteByIdOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SubscriptionPolicyDefinitionDeleteOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceDeleteByIdOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

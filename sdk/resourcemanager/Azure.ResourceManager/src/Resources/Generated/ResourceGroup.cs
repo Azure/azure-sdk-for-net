@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,8 +60,9 @@ namespace Azure.ResourceManager.Resources
         internal ResourceGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,8 +77,9 @@ namespace Azure.ResourceManager.Resources
         internal ResourceGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -230,7 +233,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourceGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes, cancellationToken);
                 var operation = new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -482,7 +485,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceMoveResourcesOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ResourceGroupMoveResourcesOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -494,7 +497,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourcesRestClient.MoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourceGroupMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -514,7 +517,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceMoveResourcesOperation MoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupMoveResourcesOperation MoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -526,9 +529,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourcesRestClient.MoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourceGroupMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -546,7 +549,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceValidateMoveResourcesOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ResourceGroupValidateMoveResourcesOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -558,7 +561,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourcesRestClient.ValidateMoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourceGroupValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -578,7 +581,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceValidateMoveResourcesOperation ValidateMoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupValidateMoveResourcesOperation ValidateMoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -590,9 +593,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourcesRestClient.ValidateMoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourceGroupValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -135,6 +135,7 @@ request-path-to-resource-type:
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: Microsoft.Resources/features
 #   /{resourceId}: ""
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Microsoft.Resources/providers
+  /providers: Microsoft.Resources/providers
 request-path-to-scope-resource-types:
   /{scope}/providers/Microsoft.Authorization/locks/{lockName}:
     - subscriptions

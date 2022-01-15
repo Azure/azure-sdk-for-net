@@ -16,16 +16,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation creates or updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group. </summary>
-    public partial class PolicyAssignmentCreateOperation : Operation<PolicyAssignment>
+    public partial class PolicyAssignmentCreateOrUpdateOperation : Operation<PolicyAssignment>
     {
         private readonly OperationOrResponseInternals<PolicyAssignment> _operation;
 
-        /// <summary> Initializes a new instance of PolicyAssignmentCreateOperation for mocking. </summary>
-        protected PolicyAssignmentCreateOperation()
+        /// <summary> Initializes a new instance of PolicyAssignmentCreateOrUpdateOperation for mocking. </summary>
+        protected PolicyAssignmentCreateOrUpdateOperation()
         {
         }
 
-        internal PolicyAssignmentCreateOperation(ArmResource operationsBase, Response<PolicyAssignmentData> response)
+        internal PolicyAssignmentCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicyAssignmentData> response)
         {
             _operation = new OperationOrResponseInternals<PolicyAssignment>(Response.FromValue(new PolicyAssignment(operationsBase, response.Value), response.GetRawResponse()));
         }

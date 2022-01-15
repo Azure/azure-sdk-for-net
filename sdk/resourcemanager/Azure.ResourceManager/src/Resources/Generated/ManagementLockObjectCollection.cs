@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Resources
         internal ManagementLockObjectCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagementLockObject.ResourceType, out string apiVersion);
+            _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
 
         // Collection level operations.
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagementLockCreateOrUpdateByScopeOperation CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        public virtual ManagementLockObjectCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
             {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLocksRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
-                var operation = new ManagementLockCreateOrUpdateByScopeOperation(this, response);
+                var operation = new ManagementLockObjectCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagementLockCreateOrUpdateByScopeOperation> CreateOrUpdateAsync(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementLockObjectCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
             {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLocksRestClient.CreateOrUpdateByScopeAsync(Id, lockName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockCreateOrUpdateByScopeOperation(this, response);
+                var operation = new ManagementLockObjectCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

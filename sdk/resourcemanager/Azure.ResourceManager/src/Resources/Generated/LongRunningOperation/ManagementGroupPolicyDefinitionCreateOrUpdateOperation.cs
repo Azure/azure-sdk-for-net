@@ -16,16 +16,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
-    public partial class PolicyDefinitionCreateOrUpdateAtManagementGroupOperation : Operation<ManagementGroupPolicyDefinition>
+    public partial class ManagementGroupPolicyDefinitionCreateOrUpdateOperation : Operation<ManagementGroupPolicyDefinition>
     {
         private readonly OperationOrResponseInternals<ManagementGroupPolicyDefinition> _operation;
 
-        /// <summary> Initializes a new instance of PolicyDefinitionCreateOrUpdateAtManagementGroupOperation for mocking. </summary>
-        protected PolicyDefinitionCreateOrUpdateAtManagementGroupOperation()
+        /// <summary> Initializes a new instance of ManagementGroupPolicyDefinitionCreateOrUpdateOperation for mocking. </summary>
+        protected ManagementGroupPolicyDefinitionCreateOrUpdateOperation()
         {
         }
 
-        internal PolicyDefinitionCreateOrUpdateAtManagementGroupOperation(ArmResource operationsBase, Response<PolicyDefinitionData> response)
+        internal ManagementGroupPolicyDefinitionCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicyDefinitionData> response)
         {
             _operation = new OperationOrResponseInternals<ManagementGroupPolicyDefinition>(Response.FromValue(new ManagementGroupPolicyDefinition(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Resources
     internal partial class ResourcesRestOperations
     {
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
@@ -29,9 +31,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
-        public ResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public ResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2021-04-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
@@ -61,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -150,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(sourceResourceGroupName, true);
             uri.AppendPath("/moveResources", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -239,7 +244,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(sourceResourceGroupName, true);
             uri.AppendPath("/validateMoveResources", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -338,7 +343,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -405,7 +410,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateDeleteByIdRequest(string resourceId, string apiVersion)
+        internal HttpMessage CreateDeleteByIdRequest(string resourceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -423,21 +428,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public async Task<Response> DeleteByIdAsync(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public async Task<Response> DeleteByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
             }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
 
-            using var message = CreateDeleteByIdRequest(resourceId, apiVersion);
+            using var message = CreateDeleteByIdRequest(resourceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -452,21 +452,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public Response DeleteById(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public Response DeleteById(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
             }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
 
-            using var message = CreateDeleteByIdRequest(resourceId, apiVersion);
+            using var message = CreateDeleteByIdRequest(resourceId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -479,7 +474,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateByIdRequest(string resourceId, string apiVersion, GenericResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateByIdRequest(string resourceId, GenericResourceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -501,26 +496,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Create a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateByIdAsync(string resourceId, string apiVersion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateByIdAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters);
+            using var message = CreateCreateOrUpdateByIdRequest(resourceId, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -535,26 +525,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Create a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdateById(string resourceId, string apiVersion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdateById(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters);
+            using var message = CreateCreateOrUpdateByIdRequest(resourceId, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -567,7 +552,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateUpdateByIdRequest(string resourceId, string apiVersion, GenericResourceData parameters)
+        internal HttpMessage CreateUpdateByIdRequest(string resourceId, GenericResourceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -589,26 +574,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Updates a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateByIdAsync(string resourceId, string apiVersion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> UpdateByIdAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateByIdRequest(resourceId, apiVersion, parameters);
+            using var message = CreateUpdateByIdRequest(resourceId, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -622,26 +602,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Updates a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="apiVersion"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response UpdateById(string resourceId, string apiVersion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
+        public Response UpdateById(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateByIdRequest(resourceId, apiVersion, parameters);
+            using var message = CreateUpdateByIdRequest(resourceId, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -653,7 +628,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetByIdRequest(string resourceId, string apiVersion)
+        internal HttpMessage CreateGetByIdRequest(string resourceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -671,21 +646,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public async Task<Response<GenericResourceData>> GetByIdAsync(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public async Task<Response<GenericResourceData>> GetByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
             }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
 
-            using var message = CreateGetByIdRequest(resourceId, apiVersion);
+            using var message = CreateGetByIdRequest(resourceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -705,21 +675,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public Response<GenericResourceData> GetById(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public Response<GenericResourceData> GetById(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
                 throw new ArgumentNullException(nameof(resourceId));
             }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
 
-            using var message = CreateGetByIdRequest(resourceId, apiVersion);
+            using var message = CreateGetByIdRequest(resourceId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

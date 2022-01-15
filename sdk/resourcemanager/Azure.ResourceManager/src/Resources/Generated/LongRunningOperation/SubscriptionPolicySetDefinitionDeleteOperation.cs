@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
-    public partial class ResourceMoveResourcesOperation : Operation
+    /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
+    public partial class SubscriptionPolicySetDefinitionDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourceMoveResourcesOperation for mocking. </summary>
-        protected ResourceMoveResourcesOperation()
+        /// <summary> Initializes a new instance of SubscriptionPolicySetDefinitionDeleteOperation for mocking. </summary>
+        protected SubscriptionPolicySetDefinitionDeleteOperation()
         {
         }
 
-        internal ResourceMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SubscriptionPolicySetDefinitionDeleteOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceMoveResourcesOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

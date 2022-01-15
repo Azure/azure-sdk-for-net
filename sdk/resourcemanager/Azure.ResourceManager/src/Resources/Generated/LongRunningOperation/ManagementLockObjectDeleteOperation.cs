@@ -13,17 +13,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
-    public partial class TagDeleteAtScopeOperation : Operation
+    /// <summary> Delete a management lock by scope. </summary>
+    public partial class ManagementLockObjectDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of TagDeleteAtScopeOperation for mocking. </summary>
-        protected TagDeleteAtScopeOperation()
+        /// <summary> Initializes a new instance of ManagementLockObjectDeleteOperation for mocking. </summary>
+        protected ManagementLockObjectDeleteOperation()
         {
         }
 
-        internal TagDeleteAtScopeOperation(Response response)
+        internal ManagementLockObjectDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }
