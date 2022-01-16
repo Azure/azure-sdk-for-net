@@ -38,6 +38,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "Disabled until bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26401")]
         public async Task DeployProject()
         {
             string testProjectName = CreateTestProjectName();

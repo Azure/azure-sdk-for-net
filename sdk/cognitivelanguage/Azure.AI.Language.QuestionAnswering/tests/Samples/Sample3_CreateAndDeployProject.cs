@@ -16,6 +16,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
     {
         [RecordedTest]
         [SyncOnly]
+        [Ignore(reason: "Disabled until deployment lro bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26401")]
         public void CreateAndDeploy()
         {
             QuestionAnsweringProjectsClient client = Client;
@@ -113,6 +114,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
         [RecordedTest]
         [AsyncOnly]
+        [Ignore(reason: "Disabled until deployment lro bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26401")]
+
         public async Task CreateAndDeployAsync()
         {
             QuestionAnsweringProjectsClient client = Client;
