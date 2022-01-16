@@ -46,10 +46,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
 #if SNIPPET
+            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
             updateSourcesOperation.WaitForCompletion();
 #else
+            Operation<BinaryData> updateSourcesOperation = InstrumentOperation(client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent));
             await updateSourcesOperation.WaitForCompletionAsync();
 #endif
 
