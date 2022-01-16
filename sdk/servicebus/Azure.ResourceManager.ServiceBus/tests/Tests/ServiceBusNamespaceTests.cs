@@ -173,8 +173,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //get private link resource
-            IReadOnlyList<PrivateLinkResource> privateLinkResources = (await serviceBusNamespace.GetPrivateLinkResourcesAsync()).Value;
-            Assert.NotNull(privateLinkResources);
+            await foreach (var _ in serviceBusNamespace.GetPrivateLinkResourcesAsync())
+            {
+                return;
+            }
         }
 
         [Test]

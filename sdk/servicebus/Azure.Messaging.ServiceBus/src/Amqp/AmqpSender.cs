@@ -254,7 +254,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             timeout).ConfigureAwait(false);
                     }
 
-                    link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                    link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken).ConfigureAwait(false);
 
                     // Validate that the message is not too large to send.  This is done after the link is created to ensure
                     // that the maximum message size is known, as it is dictated by the service using the link.

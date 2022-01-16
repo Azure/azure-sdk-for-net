@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <Version>1.0.0-beta.1</Version>
@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Azure.Data.Tables\src\Azure.Data.Tables.csproj" />
+      <PackageReference Include="Azure.Data.Tables" />
     </ItemGroup>
 
     <ItemGroup>

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of Probe and their operations over its parent. </summary>
     public partial class ProbeCollection : ArmCollection, IEnumerable<Probe>, IAsyncEnumerable<Probe>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LoadBalancerProbesRestOperations _loadBalancerProbesRestClient;
@@ -36,10 +36,16 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _loadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => LoadBalancer.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != LoadBalancer.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
