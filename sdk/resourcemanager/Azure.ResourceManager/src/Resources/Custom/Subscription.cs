@@ -117,5 +117,15 @@ namespace Azure.ResourceManager.Resources
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        /// <summary>
+        /// Gets the RestApi definition for a given Azure namespace.
+        /// </summary>
+        /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
+        /// <returns> A collection representing the rest apis for the namespace. </returns>
+        public virtual RestApiCollection GetRestApis(string azureNamespace)
+        {
+            return new RestApiCollection(this, azureNamespace);
+        }
     }
 }

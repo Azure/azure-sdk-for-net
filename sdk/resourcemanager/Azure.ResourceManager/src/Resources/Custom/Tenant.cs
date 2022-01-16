@@ -27,15 +27,19 @@ namespace Azure.ResourceManager.Resources
     public partial class Tenant : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref = "Tenant"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Tenant(ArmResource options, TenantData resource) : base(options, ResourceIdentifier.Root)
+        /// <param name="options"> The resource object to copy the client parameters from. </param>
+        /// <param name="tenantData"> The data model representing the generic azure resource. </param>
+        internal Tenant(ArmResource options, TenantData tenantData) : base(options, ResourceIdentifier.Root)
         {
             HasData = true;
-            _data = resource;
+            _data = tenantData;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);
+            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -49,8 +53,12 @@ namespace Azure.ResourceManager.Resources
             : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.Root)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);
+            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>

@@ -113,7 +113,6 @@ namespace Azure.ResourceManager
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new Subscription(ClientOptions, Credential, BaseUri, Pipeline, ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
-            ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
         private Subscription _defaultSubscription;
@@ -298,16 +297,6 @@ namespace Azure.ResourceManager
         /// <summary> Gets a collection of GenericResources. </summary>
         /// <returns> An object representing collection of GenericResources and their operations. </returns>
         public virtual GenericResourceCollection GetGenericResources() => _tenant.GetGenericResources();
-
-        /// <summary>
-        /// Gets the RestApi definition for a given Azure namespace.
-        /// </summary>
-        /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
-        /// <returns> A collection representing the rest apis for the namespace. </returns>
-        public virtual RestApiCollection GetRestApis(string azureNamespace)
-        {
-            return new RestApiCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
-        }
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>

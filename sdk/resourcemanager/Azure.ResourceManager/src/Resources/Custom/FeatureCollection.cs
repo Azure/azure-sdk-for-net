@@ -16,12 +16,19 @@ namespace Azure.ResourceManager.Resources
     [CodeGenSuppress("FeatureCollection", typeof(ArmResource))]
     public partial class FeatureCollection : ArmCollection, IEnumerable<Feature>, IAsyncEnumerable<Feature>
     {
-        /// <summary> Initializes a new instance of FeatureCollection class. </summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FeatureCollection"/> class.
+        /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal FeatureCollection(Provider parent) : base(parent)
+       internal FeatureCollection(Provider parent)
+            : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(Feature.ResourceType, out var version);
+            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>

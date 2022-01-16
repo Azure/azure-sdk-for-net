@@ -207,6 +207,12 @@ directive:
   - rename-operation:
       from: checkResourceName
       to: ResourceCheck_CheckResourceName
+  - rename-operation:
+      from: Resources_MoveResources
+      to: ResourceGroups_MoveResources
+  - rename-operation:
+      from: Resources_ValidateMoveResources
+      to: ResourceGroups_ValidateMoveResources
   - rename-model:
       from: Location
       to: LocationExpanded

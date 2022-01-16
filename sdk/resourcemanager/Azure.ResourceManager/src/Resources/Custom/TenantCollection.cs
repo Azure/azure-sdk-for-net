@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(Tenant.ResourceType, out var apiVersion);
+            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
     }
 }

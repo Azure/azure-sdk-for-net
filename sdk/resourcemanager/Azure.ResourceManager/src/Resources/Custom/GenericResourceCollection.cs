@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Resources
         internal GenericResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(GenericResource.ResourceType, out string apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,6 +44,8 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
         }
 
+        // Collection level operations.
+
         /// RequestPath: /{resourceId}
         /// ContextualPath: /
         /// OperationId: Resources_CreateOrUpdateById
@@ -51,8 +54,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceCreateOrUpdateByIdOperation CreateOrUpdate(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual GenericResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var response = _resourcesRestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
-                var operation = new ResourceCreateOrUpdateByIdOperation(Parent, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                var operation = new GenericResourceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceCreateOrUpdateByIdOperation> CreateOrUpdateAsync(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<GenericResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -107,7 +110,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceCreateOrUpdateByIdOperation(Parent, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                var operation = new GenericResourceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +144,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GenericResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +175,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -289,7 +292,12 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersion(ResourceIdentifier resourceId, CancellationToken cancellationToken)
         {
-            string version = ClientOptions.ApiVersions.TryGetApiVersion(resourceId.ResourceType, cancellationToken);
+            ResourceIdentifier subscription = resourceId.GetSubscriptionResourceIdentifier();
+            if (subscription == null)
+            {
+                throw new ArgumentException("Only resource id in a subscription is supported", nameof(resourceId));
+            }
+            string version = new ProviderCollection(this, subscription).TryGetApiVersion(resourceId.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {resourceId}");
@@ -299,7 +307,12 @@ namespace Azure.ResourceManager.Resources
 
         private async Task<string> GetApiVersionAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken)
         {
-            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
+            ResourceIdentifier subscription = resourceId.GetSubscriptionResourceIdentifier();
+            if (subscription == null)
+            {
+                throw new ArgumentException("Only resource id in a subscription is supported", nameof(resourceId));
+            }
+            string version = await new ProviderCollection(this, subscription).TryGetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {resourceId}");

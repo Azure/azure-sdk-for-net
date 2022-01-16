@@ -1,65 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20220111.1",
-          "(.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "4eee20ce82dfc85644b7ce3123cfcae7",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "468",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 Jan 2022 08:17:25 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b3341cbd-1746-4af4-8eef-0e673d9ba2a4",
-        "x-ms-ratelimit-remaining-subscription-reads": "11988",
-        "x-ms-request-id": "b3341cbd-1746-4af4-8eef-0e673d9ba2a4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220111T081725Z:b3341cbd-1746-4af4-8eef-0e673d9ba2a4"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "authorizationSource": "RoleBased",
-        "managedByTenants": [],
-        "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
-        },
-        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
-        "state": "Enabled",
-        "subscriptionPolicies": {
-          "locationPlacementId": "Internal_2014-09-01",
-          "quotaId": "Internal_2014-09-01",
-          "spendingLimit": "Off"
-        }
-      }
-    },
-    {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Resources?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b7e7e90b0b7002dd7e09d02eda81696c-99155ac3d976d049-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20220111.1",
-          "(.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "c12b8dbb974b0b1933ec9549a7e48501",
+        "traceparent": "00-bb1679928677fa46a0f4c2cd13538016-c8472699e3257043-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220116.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4eee20ce82dfc85644b7ce3123cfcae7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -68,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "16918",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 Jan 2022 08:17:25 GMT",
+        "Date": "Sun, 16 Jan 2022 09:48:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2696e124-a5c7-4a20-8592-39a2f90a0e89",
-        "x-ms-ratelimit-remaining-subscription-reads": "11987",
-        "x-ms-request-id": "2696e124-a5c7-4a20-8592-39a2f90a0e89",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220111T081725Z:2696e124-a5c7-4a20-8592-39a2f90a0e89"
+        "x-ms-correlation-request-id": "b89a200d-0e53-4726-a073-995933288272",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "b89a200d-0e53-4726-a073-995933288272",
+        "x-ms-routing-request-id": "JAPANEAST:20220116T094849Z:b89a200d-0e53-4726-a073-995933288272"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Resources",
@@ -1278,12 +1227,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b7e7e90b0b7002dd7e09d02eda81696c-24ffc35daf9e11d5-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20220111.1",
-          "(.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "fe6815cacb281669eb6221cdd84d51e3",
+        "traceparent": "00-bb1679928677fa46a0f4c2cd13538016-2a8e378b50ecdc4e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220116.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c12b8dbb974b0b1933ec9549a7e48501",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1292,16 +1238,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "97",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 Jan 2022 08:17:25 GMT",
+        "Date": "Sun, 16 Jan 2022 09:48:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "30bcfbd4-2fd1-4871-a684-db45e5a75660",
+        "x-ms-correlation-request-id": "f60e9285-0273-4df6-8954-305a83a68b6e",
         "x-ms-failure-cause": "gateway",
-        "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "30bcfbd4-2fd1-4871-a684-db45e5a75660",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220111T081725Z:30bcfbd4-2fd1-4871-a684-db45e5a75660"
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "f60e9285-0273-4df6-8954-305a83a68b6e",
+        "x-ms-routing-request-id": "JAPANEAST:20220116T094849Z:f60e9285-0273-4df6-8954-305a83a68b6e"
       },
       "ResponseBody": {
         "error": {

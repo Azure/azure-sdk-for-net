@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-16ef85a356f4e249bd747c7643e55fdd-9a64ffafc21d8642-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220115.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-b266bd5cbcb28048ac91506870462f7f-ca8b2a4ee4c0ab4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220116.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "93fe157516184e443ed4e9d863f8ae86",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 15 Jan 2022 08:22:52 GMT",
+        "Date": "Sun, 16 Jan 2022 04:08:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ecd4f005-8481-4dbb-bf53-4ef48faab4ec",
-        "x-ms-ratelimit-remaining-subscription-reads": "11979",
-        "x-ms-request-id": "ecd4f005-8481-4dbb-bf53-4ef48faab4ec",
-        "x-ms-routing-request-id": "KOREASOUTH:20220115T082253Z:ecd4f005-8481-4dbb-bf53-4ef48faab4ec"
+        "x-ms-correlation-request-id": "44bd211b-cc59-4a5e-9c9b-83238dbd98c2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "44bd211b-cc59-4a5e-9c9b-83238dbd98c2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220116T040802Z:44bd211b-cc59-4a5e-9c9b-83238dbd98c2"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -52,7 +52,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220115.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220116.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "618daf320f7b0e6b0730e5fe01a26e11",
         "x-ms-return-client-request-id": "true"
       },
@@ -62,15 +62,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "152",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 15 Jan 2022 08:22:53 GMT",
+        "Date": "Sun, 16 Jan 2022 04:08:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "64a3b732-a864-414c-bc3c-bf9fbedd916a",
+        "x-ms-correlation-request-id": "6431465f-3bbe-430c-9d40-9250dd9195ac",
         "x-ms-ratelimit-remaining-subscription-writes": "1190",
-        "x-ms-request-id": "64a3b732-a864-414c-bc3c-bf9fbedd916a",
-        "x-ms-routing-request-id": "KOREASOUTH:20220115T082254Z:64a3b732-a864-414c-bc3c-bf9fbedd916a"
+        "x-ms-request-id": "6431465f-3bbe-430c-9d40-9250dd9195ac",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220116T040804Z:6431465f-3bbe-430c-9d40-9250dd9195ac"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6453",
@@ -88,7 +88,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220115.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220116.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "2b3f59edc9e90ede4b45ef34f9783a16",
         "x-ms-return-client-request-id": "true"
       },
@@ -97,15 +97,15 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Sat, 15 Jan 2022 08:22:55 GMT",
+        "Date": "Sun, 16 Jan 2022 04:08:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b43415ba-6308-4b6c-93bb-69caa8851739",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14990",
-        "x-ms-request-id": "b43415ba-6308-4b6c-93bb-69caa8851739",
-        "x-ms-routing-request-id": "KOREASOUTH:20220115T082255Z:b43415ba-6308-4b6c-93bb-69caa8851739"
+        "x-ms-correlation-request-id": "dc176b94-a226-49b8-b60c-0b3d06c94d95",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14988",
+        "x-ms-request-id": "dc176b94-a226-49b8-b60c-0b3d06c94d95",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220116T040805Z:dc176b94-a226-49b8-b60c-0b3d06c94d95"
       },
       "ResponseBody": []
     },
@@ -115,7 +115,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220115.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220116.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "1f56c369e79366ddaaf08ce830454d9c",
         "x-ms-return-client-request-id": "true"
       },
@@ -125,15 +125,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "4032",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 15 Jan 2022 08:22:55 GMT",
+        "Date": "Sun, 16 Jan 2022 04:08:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7f06ac11-ce8c-438a-9538-5a23210c7932",
-        "x-ms-ratelimit-remaining-subscription-reads": "11978",
-        "x-ms-request-id": "7f06ac11-ce8c-438a-9538-5a23210c7932",
-        "x-ms-routing-request-id": "KOREASOUTH:20220115T082256Z:7f06ac11-ce8c-438a-9538-5a23210c7932"
+        "x-ms-correlation-request-id": "f80cd59a-d846-4884-baa6-226bc3b29b11",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "f80cd59a-d846-4884-baa6-226bc3b29b11",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220116T040806Z:f80cd59a-d846-4884-baa6-226bc3b29b11"
       },
       "ResponseBody": {
         "value": [
@@ -380,7 +380,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220115.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220116.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "09ebd86583b8699dd07e15351f37148e",
         "x-ms-return-client-request-id": "true"
       },
@@ -390,15 +390,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "4032",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 15 Jan 2022 08:22:55 GMT",
+        "Date": "Sun, 16 Jan 2022 04:08:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "acf61776-8a32-4d6f-9e7c-116f3105137e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11977",
-        "x-ms-request-id": "acf61776-8a32-4d6f-9e7c-116f3105137e",
-        "x-ms-routing-request-id": "KOREASOUTH:20220115T082256Z:acf61776-8a32-4d6f-9e7c-116f3105137e"
+        "x-ms-correlation-request-id": "ab150251-5ecf-45ba-b04b-70e18611f8a6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "ab150251-5ecf-45ba-b04b-70e18611f8a6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220116T040806Z:ab150251-5ecf-45ba-b04b-70e18611f8a6"
       },
       "ResponseBody": {
         "value": [
