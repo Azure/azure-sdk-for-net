@@ -74,7 +74,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
     Template = File.ReadAllText("storage-template.json"),
     Parameters = File.ReadAllText("storage-parameters.json")
 });
-DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -98,7 +98,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
     },
     Parameters = parameters
 });
-DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 

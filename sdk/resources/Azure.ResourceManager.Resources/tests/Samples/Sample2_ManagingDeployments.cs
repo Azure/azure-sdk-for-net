@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 },
                 Parameters = parameters
             });
-            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 Template = File.ReadAllText("storage-template.json"),
                 Parameters = File.ReadAllText("storage-parameters.json")
             });
-            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
