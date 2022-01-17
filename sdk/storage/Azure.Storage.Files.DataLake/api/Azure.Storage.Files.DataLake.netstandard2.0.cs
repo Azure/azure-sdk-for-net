@@ -3,6 +3,7 @@ namespace Azure.Storage.Files.DataLake
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
         public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_02_12) { }
+        public Azure.Storage.Files.DataLake.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { get { throw null; } }
@@ -172,6 +173,7 @@ namespace Azure.Storage.Files.DataLake
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> UploadAsync(string path, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.IProgress<long> progressHandler = null, Azure.Storage.StorageTransferOptions transferOptions = default(Azure.Storage.StorageTransferOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> UploadAsync(string path, bool overwrite = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.Storage.Files.DataLake.DataLakeFileClient WithCustomerProvidedKey(Azure.Storage.Files.DataLake.Models.CustomerProvidedKey? customerProvidedKey) { throw null; }
     }
     public partial class DataLakeFileSystemClient
     {
@@ -417,6 +419,23 @@ namespace Azure.Storage.Files.DataLake.Models
         Success = 1,
         Aborted = 2,
         Failed = 3,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CustomerProvidedKey : System.IEquatable<Azure.Storage.Files.DataLake.Models.CustomerProvidedKey>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CustomerProvidedKey(byte[] key) { throw null; }
+        public CustomerProvidedKey(string key) { throw null; }
+        public Azure.Storage.Files.DataLake.Models.EncryptionAlgorithmType EncryptionAlgorithm { get { throw null; } }
+        public string EncryptionKey { get { throw null; } }
+        public string EncryptionKeyHash { get { throw null; } }
+        public bool Equals(Azure.Storage.Files.DataLake.Models.CustomerProvidedKey other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.DataLake.Models.CustomerProvidedKey left, Azure.Storage.Files.DataLake.Models.CustomerProvidedKey right) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.DataLake.Models.CustomerProvidedKey left, Azure.Storage.Files.DataLake.Models.CustomerProvidedKey right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DataLakeAccessPolicy
     {
@@ -674,6 +693,10 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool Enabled { get { throw null; } set { } }
         public string ErrorDocument404Path { get { throw null; } set { } }
         public string IndexDocument { get { throw null; } set { } }
+    }
+    public enum EncryptionAlgorithmType
+    {
+        Aes256 = 0,
     }
     public partial class FileDownloadDetails
     {
