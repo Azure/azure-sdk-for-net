@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,41 +28,119 @@ namespace Azure.Rest.WebPubSub.Tests
         public async Task SimpleWebSocketClientCanConnectAndReceiveMessage()
         {
             WebPubSubServiceClientOptions options = InstrumentClientOptions(new WebPubSubServiceClientOptions());
-            WebPubSubServiceClient serviceClient = InstrumentClient(
-                new WebPubSubServiceClient(TestEnvironment.ConnectionString, "hub1", options));
+
+            var serviceClient = new WebPubSubServiceClient(TestEnvironment.ConnectionString, nameof(SimpleWebSocketClientCanConnectAndReceiveMessage), options);
 
             var url = await serviceClient.GetClientAccessUriAsync();
-            var endTcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            List<WebSocketFrame> frames = new List<WebSocketFrame>();
             // start the connection
-            using var client = new WebSocketClient(url, message =>
-            {
-                Console.WriteLine(message.MessageAsString);
-                if (message.IsEndSignal())
-                {
-                    endTcs.SetResult(null);
-                }
-                else
-                {
-                    frames.Add(message);
-                }
-                return default;
-            });
+            using var client = new WebSocketClient(url, IsSimpleClientEndSignal);
 
             // connected
-            await client.WaitForConnected;
+            await client.WaitForConnected.OrTimeout();
 
             // broadcast messages
 
-            await serviceClient.SendToAllAsync("Hello", ContentType.TextPlain);
-            await serviceClient.SendToAllAsync("Hello", ContentType.ApplicationJson);
-            await serviceClient.SendToAllAsync("Hello", ContentType.ApplicationOctetStream);
+            var textContent = "Hello";
+            await serviceClient.SendToAllAsync(textContent, ContentType.TextPlain);
+            var jsonContent = BinaryData.FromObjectAsJson(new { hello = "world" });
+            await serviceClient.SendToAllAsync(RequestContent.Create(jsonContent), ContentType.ApplicationJson);
+            var binaryContent = BinaryData.FromString("Hello");
+            await serviceClient.SendToAllAsync(RequestContent.Create(binaryContent), ContentType.ApplicationOctetStream);
 
-            await serviceClient.SendToAllAsync(RequestContent.Create(WebSocketFrame.GetEndSignal()), ContentType.ApplicationOctetStream);
+            await serviceClient.SendToAllAsync(RequestContent.Create(GetEndSignalBytes()), ContentType.ApplicationOctetStream);
 
-            await endTcs.Task;
+            await client.LifetimeTask.OrTimeout();
+            var frames = client.ReceivedFrames;
 
             Assert.AreEqual(3, frames.Count);
+            Assert.AreEqual(textContent, frames[0].MessageAsString);
+            Assert.AreEqual(jsonContent.ToString(), frames[1].MessageAsString);
+            CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
+        }
+
+        [Test]
+        public async Task SubprotocolWebSocketClientCanConnectAndReceiveMessage()
+        {
+            WebPubSubServiceClientOptions options = InstrumentClientOptions(new WebPubSubServiceClientOptions());
+
+            var serviceClient = new WebPubSubServiceClient(TestEnvironment.ConnectionString, nameof(SubprotocolWebSocketClientCanConnectAndReceiveMessage), options);
+
+            var url = await serviceClient.GetClientAccessUriAsync();
+            // start the connection
+            using var client = new WebSocketClient(url, IsSubprotocolClientEndSignal, a => a.AddSubProtocol("json.webpubsub.azure.v1"));
+
+            // connected
+            await client.WaitForConnected.OrTimeout();
+
+            // broadcast messages
+
+            var textContent = "Hello";
+            await serviceClient.SendToAllAsync(textContent, ContentType.TextPlain);
+            var jsonContent = new { hello = "world" };
+            await serviceClient.SendToAllAsync(RequestContent.Create(BinaryData.FromObjectAsJson(jsonContent)), ContentType.ApplicationJson);
+            var binaryContent = BinaryData.FromString("Hello");
+            await serviceClient.SendToAllAsync(RequestContent.Create(binaryContent), ContentType.ApplicationOctetStream);
+
+            await serviceClient.SendToAllAsync(RequestContent.Create(GetEndSignalBytes()), ContentType.ApplicationOctetStream);
+
+            await client.LifetimeTask.OrTimeout();
+            var frames = client.ReceivedFrames;
+
+            Assert.AreEqual(4, frames.Count);
+            // first message must be the "connected" message
+            var connected = JsonSerializer.Deserialize<ConnectedMessage>(frames[0].MessageAsString, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            Assert.NotNull(connected);
+            Assert.AreEqual("connected", connected.Event);
+            Assert.AreEqual(JsonSerializer.Serialize(new {
+                type = "message",
+                from = "server",
+                dataType = "text",
+                data = textContent
+            }), frames[1].MessageAsString);
+            Assert.AreEqual(JsonSerializer.Serialize(new
+            {
+                type = "message",
+                from = "server",
+                dataType = "json",
+                data = jsonContent
+            }), frames[2].MessageAsString);
+            CollectionAssert.AreEquivalent(JsonSerializer.Serialize(new
+            {
+                type = "message",
+                from = "server",
+                dataType = "binary",
+                data = Convert.ToBase64String(binaryContent.ToArray())
+            }), frames[3].MessageBytes);
+        }
+
+        private sealed class ConnectedMessage
+        {
+            public string Type { get; set; }
+            public string Event { get; set; }
+            public string UserId { get; set; }
+            public string ConnectionId { get; set; }
+        }
+
+        private static bool IsSimpleClientEndSignal(WebSocketFrame frame)
+        {
+            var bytes = frame.MessageBytes;
+            return bytes.Length == 3 && bytes[0] == 5 && bytes[1] == 1 && bytes[2] == 1;
+        }
+
+        private static bool IsSubprotocolClientEndSignal(WebSocketFrame frame)
+        {
+            return frame.MessageAsString == JsonSerializer.Serialize(new
+            {
+                type = "message",
+                from = "server",
+                dataType = "binary",
+                data = "BQEB"
+            });
+        }
+
+        private static byte[] GetEndSignalBytes()
+        {
+            return new byte[] { 5, 1, 1 };
         }
 
         private sealed class WebSocketFrame
@@ -88,36 +167,28 @@ namespace Azure.Rest.WebPubSub.Tests
                         throw new NotSupportedException(type.ToString());
                 }
             }
-
-            public bool IsEndSignal()
-            {
-                // a special byte array for end signal
-                return MessageBytes.Length == 3 && MessageBytes[0] == 5 && MessageBytes[1] == 1 && MessageBytes[2] == 1;
-            }
-
-            public static byte[] GetEndSignal()
-            {
-                return new byte[] { 5, 1, 1 };
-            }
         }
 
         private sealed class WebSocketClient : IDisposable
         {
             private readonly ClientWebSocket _webSocket;
             private readonly Uri _uri;
-            public Func<WebSocketFrame, ValueTask> OnMessage { get; }
+            private readonly Func<WebSocketFrame, bool> _isEndSignal;
+
             public Task LifetimeTask { get; }
             public Task WaitForConnected { get; }
 
-            public WebSocketClient(Uri uri, Func<WebSocketFrame, ValueTask> onMessage = null, Action<ClientWebSocketOptions> configureOptions = null)
+            public List<WebSocketFrame> ReceivedFrames { get; } = new List<WebSocketFrame>();
+
+            public WebSocketClient(Uri uri, Func<WebSocketFrame, bool> isEndSignal, Action<ClientWebSocketOptions> configureOptions = null)
             {
                 _uri = uri;
+                _isEndSignal = isEndSignal;
                 var ws = new ClientWebSocket();
                 configureOptions?.Invoke(ws.Options);
 
                 _webSocket = ws;
                 WaitForConnected = ConnectAsync();
-                OnMessage = onMessage;
                 LifetimeTask = ReceiveLoop(default);
             }
 
@@ -171,12 +242,17 @@ namespace Azure.Rest.WebPubSub.Tests
                         return;
                     }
 
-                    if (OnMessage != null)
+                    await ms.WriteAsync(buffer, segments.Offset, receiveResult.Count);
+                    if (receiveResult.EndOfMessage)
                     {
-                        await ms.WriteAsync(buffer, segments.Offset, segments.Count);
-                        if (receiveResult.EndOfMessage)
+                        var frame = new WebSocketFrame(ms.ToArray(), receiveResult.MessageType);
+                        if (_isEndSignal(frame))
                         {
-                            await OnMessage.Invoke(new WebSocketFrame(ms.ToArray(), receiveResult.MessageType));
+                            break;
+                        }
+                        else
+                        {
+                            ReceivedFrames.Add(frame);
                             ms.SetLength(0);
                         }
                     }
