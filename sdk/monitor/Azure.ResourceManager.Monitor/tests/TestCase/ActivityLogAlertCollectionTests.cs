@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Tests.TestsCase
         public async Task Get()
         {
             var collection = await GetActivityLogAlertCollectionAsync();
-            var actionGroupName = Recording.GenerateAssetName("testActivityLogAlert-");
+            var actionGroupName = Recording.GenerateAssetName("testActivityLogAlert");
             var subID = DefaultSubscription.Id;
             var input = ResourceDataHelper.GetBasicActivityLogAlertData("global", subID);
             var lro = await collection.CreateOrUpdateAsync(actionGroupName, input);
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Monitor.Tests.TestsCase
             var collection = await GetActivityLogAlertCollectionAsync();
             var subID = DefaultSubscription.Id;
             var input = ResourceDataHelper.GetBasicActivityLogAlertData("global", subID);
-            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testActivityLogAlert-"), input);
-            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testActivityLogAlert-"), input);
+            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testActivityLogAlert"), input);
+            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testActivityLogAlert"), input);
             int count = 0;
             await foreach (var activityLogAlert in collection.GetAllAsync())
             {

@@ -21,6 +21,10 @@ mgmt-debug:
   show-request-path: true
 
 directive:
+  - from: swagger-document
+    where: $.definitions.ActivityLogAlert.properties.actions
+    transform: >
+        $["x-nullable"] = true;
   - rename-model:
       from: AzureMonitorPrivateLinkScope
       to: PrivateLinkScope
@@ -150,9 +154,4 @@ directive:
   - from: activityLogAlerts_API.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
-
-#   - from: swagger-document
-#     where: $.definitions.AlertRuleProperties.properties.actions
-#     transform: >
-#         $["x-nullable"] = true;
 ```

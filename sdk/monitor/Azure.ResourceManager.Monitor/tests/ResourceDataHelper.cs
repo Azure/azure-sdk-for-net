@@ -8,6 +8,7 @@ using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.Core;
+using System;
 
 namespace Azure.ResourceManager.Monitor.Tests
 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertActivityLogAlert(ActivityLogAlertData alert1, ActivityLogAlertData alert2)
         {
             AssertTrackedResource(alert1, alert2);
-            Assert.AreEqual(alert1.Condition, alert2.Condition);
+            Assert.AreEqual(alert1.Description, alert2.Description);
         }
 
         public static ActivityLogAlertData GetBasicActivityLogAlertData(AzureLocation location, string subID)
@@ -83,6 +84,60 @@ namespace Azure.ResourceManager.Monitor.Tests
                 {
                     ActionGroups = {}
                 }
+            };
+            return data;
+        }
+        #endregion
+
+        #region AlertRule
+        public static void AssertAlertRule(AlertRuleData alert1, AlertRuleData alert2)
+        {
+            AssertTrackedResource(alert1, alert2);
+            Assert.AreEqual(alert1.Description, alert2.Description);
+        }
+
+        public static AlertRuleData GetBasicAlertRuleData(AzureLocation location)
+        {
+            RuleDataSource ruleDataSource = new RuleDataSource()
+            {
+                ResourceUri = "resUri1",
+                MetricNamespace = "CpuPercentage"
+            };
+            var ruleCondition = new RuleCondition()
+            {
+                DataSource = ruleDataSource,
+            };
+            var data = new AlertRuleData(location, "alertRule", true, ruleCondition)
+            {
+            };
+            return data;
+        }
+        #endregion
+
+        #region AutoscaleSetting
+        public static void AssertAutoscaleSetting(AutoscaleSettingData setting1, AutoscaleSettingData setting2)
+        {
+            AssertTrackedResource(setting1, setting2);
+            Assert.AreEqual(setting1.NamePropertiesName, setting2.NamePropertiesName);
+        }
+
+        public static AutoscaleSettingData GetBasicAutoscaleSettingData(AzureLocation location)
+        {
+            var fixDate = new TimeWindow(DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
+            var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
+            var recurrence = new Recurrence(RecurrenceFrequency.Week, Schedule);
+            ScaleCapacity scaleCapacity = new ScaleCapacity("1", "100", "1");
+            IEnumerable<ScaleRule> rules = new List<ScaleRule>()
+            {
+                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.NotEquals, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, TimeSpan.FromMinutes(20)))
+            };
+            IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
+            {
+                new AutoscaleProfile("Profiles1", scaleCapacity, rules),
+                //new AutoscaleProfile("Profiles2", scaleCapacity, rules, fixDate, null),
+            };
+            var data = new AutoscaleSettingData(location, profiles)
+            {
             };
             return data;
         }

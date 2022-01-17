@@ -51,8 +51,15 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsDefined(Actions))
             {
-                writer.WritePropertyName("actions");
-                writer.WriteObjectValue(Actions);
+                if (Actions != null)
+                {
+                    writer.WritePropertyName("actions");
+                    writer.WriteObjectValue(Actions);
+                }
+                else
+                {
+                    writer.WriteNull("actions");
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                actions = null;
                                 continue;
                             }
                             actions = ActivityLogAlertActionList.DeserializeActivityLogAlertActionList(property0.Value);
