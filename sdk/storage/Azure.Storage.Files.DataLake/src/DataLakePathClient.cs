@@ -906,6 +906,17 @@ namespace Azure.Storage.Files.DataLake
                     scope.Start();
                     ResponseWithHeaders<PathCreateHeaders> response;
 
+                    string encryptionKey = null;
+                    string encryptionKeySha256 = null;
+                    EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null;
+
+                    if (resourceType == PathResourceType.File)
+                    {
+                        encryptionKey = ClientConfiguration.CustomerProvidedKey?.EncryptionKey;
+                        encryptionKeySha256 = ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash;
+                        encryptionAlgorithm = EncryptionAlgorithmTypeInternal.AES256;
+                    }
+
                     if (async)
                     {
                         response = await PathRestClient.CreateAsync(
@@ -923,6 +934,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: encryptionKey,
+                            encryptionKeySha256: encryptionKeySha256,
+                            encryptionAlgorithm: encryptionAlgorithm,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -943,6 +957,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: encryptionKey,
+                            encryptionKeySha256: encryptionKeySha256,
+                            encryptionAlgorithm: encryptionAlgorithm,
                             cancellationToken: cancellationToken);
                     }
 

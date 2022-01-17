@@ -60,6 +60,9 @@ directive:
     delete $.SourceIfNoneMatch["x-ms-parameter-grouping"];
     delete $.SourceIfUnmodifiedSince["x-ms-parameter-grouping"];
     delete $.SourceLeaseId["x-ms-parameter-grouping"];
+    delete $.EncryptionKey["x-ms-parameter-grouping"];
+    delete $.EncryptionKeySha256["x-ms-parameter-grouping"];
+    delete $.EncryptionAlgorithm["x-ms-parameter-grouping"];
 ```
 
 ### Fix Path
@@ -130,4 +133,17 @@ directive:
             delete $[oldName];
         }
     }
+```
+
+### Fix EncryptionAlgorithm
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.EncryptionAlgorithm.enum;
+    $.EncryptionAlgorithm.enum = [
+      "None",
+      "AES256"
+    ];
 ```

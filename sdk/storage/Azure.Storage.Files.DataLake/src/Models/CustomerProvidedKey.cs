@@ -8,6 +8,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// Wrapper for an encryption key to be used with client provided key server-side encryption.
+    /// Note that encryption is applied is applied on a per-file basis.
     /// </summary>
     public readonly struct CustomerProvidedKey : IEquatable<CustomerProvidedKey>
     {
