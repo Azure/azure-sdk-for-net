@@ -1,7 +1,7 @@
 {
     "init": {
         "initScript": {
-            "path": "./eng/automation/init.sh",
+            "path": "./eng/scripts/automation/init.sh",
             "logPrefix": "[DotNet]",
             "stderr":{
                 "storeAllLog": true
@@ -10,7 +10,7 @@
     },
     "generateAndBuild": {
         "generateAndBuildScript": {
-            "path": "./eng/automation/Invoke-GenerateAndBuild.ps1",
+            "path": "./eng/scripts/automation/Invoke-GenerateAndBuild.ps1",
             "script": "pwsh",
             "logPrefix": "[DotNet-Generate]",
             "stderr":{
@@ -20,7 +20,7 @@
     },
     "mockTest": {
         "mockTestScript": {
-            "path": "./eng/automation/Invoke-MockTest.ps1",
+            "path": "./eng/scripts/automation/Invoke-MockTest.ps1",
             "script": "pwsh",
             "logPrefix": "[GO-MockTest]",
             "stderr":{
