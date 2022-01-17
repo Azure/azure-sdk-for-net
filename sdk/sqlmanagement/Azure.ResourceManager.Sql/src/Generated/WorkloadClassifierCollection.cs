@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadClassifierCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadClassifierCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WorkloadClassifierCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WorkloadClassifierCreateOrUpdateOperation CreateOrUpdate(string workloadClassifierName, WorkloadClassifierData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WorkloadClassifierCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
             if (workloadClassifierName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WorkloadClassifierCreateOrUpdateOperation> CreateOrUpdateAsync(string workloadClassifierName, WorkloadClassifierData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WorkloadClassifierCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
             if (workloadClassifierName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _workloadClassifiersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<WorkloadClassifier>(null, response.GetRawResponse())
-                    : Response.FromValue(new WorkloadClassifier(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<WorkloadClassifier>(null, response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifier(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _workloadClassifiersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<WorkloadClassifier>(null, response.GetRawResponse())
-                    : Response.FromValue(new WorkloadClassifier(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<WorkloadClassifier>(null, response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifier(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(workloadClassifierName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.Exists");
             scope.Start();
             try
             {

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
 
             // create
-            PublicIPPrefix prefix = await container.CreateOrUpdate(name, new PublicIPPrefixData()
+            PublicIPPrefix prefix = await container.CreateOrUpdate(true, name, new PublicIPPrefixData()
             {
                 Location = TestEnvironment.Location,
                 PrefixLength = 28,
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Tests
             prefixData.Tags.Add("tag2", "value2");
 
             // update
-            prefix = await container.CreateOrUpdate(name, prefixData).WaitForCompletionAsync();
+            prefix = await container.CreateOrUpdate(true, name, prefixData).WaitForCompletionAsync();
             prefixData = prefix.Data;
 
             ValidateCommon(prefixData, name);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(prefixData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await prefix.DeleteAsync();
+            await prefix.DeleteAsync(true);
 
             Assert.False(await container.ExistsAsync(name));
 

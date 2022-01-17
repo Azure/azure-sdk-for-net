@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Storage.Models
         StorageAccount IOperationSource<StorageAccount>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new StorageAccount(_operationBase, StorageAccountData.DeserializeStorageAccountData(document.RootElement));
+            var data = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
+            return new StorageAccount(_operationBase, data);
         }
 
         async ValueTask<StorageAccount> IOperationSource<StorageAccount>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new StorageAccount(_operationBase, StorageAccountData.DeserializeStorageAccountData(document.RootElement));
+            var data = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
+            return new StorageAccount(_operationBase, data);
         }
     }
 }

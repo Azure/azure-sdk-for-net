@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
         }
 
-        /// <summary> Initializes a new instance of AddressResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AddressResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AddressResourceCollection(ArmResource parent) : base(parent)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public virtual EdgeOrderManagementCreateAddressOperation CreateOrUpdate(string addressName, AddressResourceData addressResource, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EdgeOrderManagementCreateAddressOperation CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             if (addressName == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public async virtual Task<EdgeOrderManagementCreateAddressOperation> CreateOrUpdateAsync(string addressName, AddressResourceData addressResource, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EdgeOrderManagementCreateAddressOperation> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             if (addressName == null)
             {
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _restClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AddressResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AddressResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(addressName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AddressResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AddressResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentNullException(nameof(addressName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Exists");
             scope.Start();
             try
             {

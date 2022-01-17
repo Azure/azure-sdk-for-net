@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceRoleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CloudServiceRoleCollection(ArmResource parent) : base(parent)
         {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CloudServiceRole>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudServiceRole>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _cloudServiceRolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CloudServiceRole>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudServiceRole>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.Exists");
             scope.Start();
             try
             {

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
+            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
             _queueService = _storageAccount.GetQueueService();
             _queueService = await _queueService.GetAsync();
             _storageQueueCollection = _queueService.GetStorageQueues();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 var storageAccountCollection = _resourceGroup.GetStorageAccounts();
                 await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
                 {
-                    await account.DeleteAsync();
+                    await account.DeleteAsync(true);
                 }
                 _resourceGroup = null;
                 _storageAccount = null;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
-            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(storageQueueName, new StorageQueueData())).Value;
+            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(true, storageQueueName, new StorageQueueData())).Value;
             Assert.IsNotNull(queue1);
             Assert.AreEqual(queue1.Id.Name, storageQueueName);
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsEmpty(queueData.Metadata);
 
             //delete storage queue
-            await queue1.DeleteAsync();
+            await queue1.DeleteAsync(true);
 
             //validate if successfully deleted
             Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName));
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //create two blob containers
             string queueName1 = Recording.GenerateAssetName("testqueue1");
             string queueName2 = Recording.GenerateAssetName("testqueue2");
-            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(queueName1, new StorageQueueData())).Value;
-            StorageQueue queue2 = (await _storageQueueCollection.CreateOrUpdateAsync(queueName2, new StorageQueueData())).Value;
+            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(true, queueName1, new StorageQueueData())).Value;
+            StorageQueue queue2 = (await _storageQueueCollection.CreateOrUpdateAsync(true, queueName2, new StorageQueueData())).Value;
 
             //validate if there are two queues
             StorageQueue queue3 = null;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
-            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(storageQueueName, new StorageQueueData())).Value;
+            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(true, storageQueueName, new StorageQueueData())).Value;
             Assert.IsNotNull(queue1);
             Assert.AreEqual(queue1.Id.Name, storageQueueName);
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Cors = cors,
             };
-            _queueService = (await _queueService.CreateOrUpdateAsync(parameter)).Value;
+            _queueService = (await _queueService.CreateOrUpdateAsync(true, parameter)).Value;
 
             //validate
             Assert.AreEqual(_queueService.Data.Cors.CorsRulesValue.Count, 1);

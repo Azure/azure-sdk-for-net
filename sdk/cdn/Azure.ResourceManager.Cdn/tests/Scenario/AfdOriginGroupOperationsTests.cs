@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
-            await afdOriginGroupInstance.DeleteAsync();
+            await afdOriginGroupInstance.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdOriginGroupInstance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                     AdditionalLatencyInMilliseconds = 500
                 }
             };
-            var lro = await afdOriginGroupInstance.UpdateAsync(updateOptions);
+            var lro = await afdOriginGroupInstance.UpdateAsync(true, updateOptions);
             AfdOriginGroup updatedAfdOriginGroupInstance = lro.Value;
             ResourceDataHelper.AssertAfdOriginGroupUpdate(updatedAfdOriginGroupInstance, updateOptions);
         }

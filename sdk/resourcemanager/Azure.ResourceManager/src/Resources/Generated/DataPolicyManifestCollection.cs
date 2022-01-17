@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataPolicyManifestCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DataPolicyManifestCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _dataPolicyManifestsRestClient.GetByPolicyMode(policyMode, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyMode));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _dataPolicyManifestsRestClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyMode));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
             scope.Start();
             try
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorableDroppedDatabaseCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RestorableDroppedDatabaseCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _restorableDroppedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RestorableDroppedDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorableDroppedDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorableDroppedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _restorableDroppedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RestorableDroppedDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RestorableDroppedDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RestorableDroppedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.Exists");
             scope.Start();
             try
             {

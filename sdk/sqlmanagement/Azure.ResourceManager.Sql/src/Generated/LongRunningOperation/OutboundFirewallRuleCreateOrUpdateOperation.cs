@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         OutboundFirewallRule IOperationSource<OutboundFirewallRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new OutboundFirewallRule(_operationBase, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement));
+            var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
+            return new OutboundFirewallRule(_operationBase, data);
         }
 
         async ValueTask<OutboundFirewallRule> IOperationSource<OutboundFirewallRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new OutboundFirewallRule(_operationBase, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement));
+            var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
+            return new OutboundFirewallRule(_operationBase, data);
         }
     }
 }

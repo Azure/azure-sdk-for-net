@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.StoragePool.Models
         DiskPool IOperationSource<DiskPool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DiskPool(_operationBase, DiskPoolData.DeserializeDiskPoolData(document.RootElement));
+            var data = DiskPoolData.DeserializeDiskPoolData(document.RootElement);
+            return new DiskPool(_operationBase, data);
         }
 
         async ValueTask<DiskPool> IOperationSource<DiskPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DiskPool(_operationBase, DiskPoolData.DeserializeDiskPoolData(document.RootElement));
+            var data = DiskPoolData.DeserializeDiskPoolData(document.RootElement);
+            return new DiskPool(_operationBase, data);
         }
     }
 }

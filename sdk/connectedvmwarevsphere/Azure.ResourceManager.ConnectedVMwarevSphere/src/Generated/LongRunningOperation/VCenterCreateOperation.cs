@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         VCenter IOperationSource<VCenter>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VCenter(_operationBase, VCenterData.DeserializeVCenterData(document.RootElement));
+            var data = VCenterData.DeserializeVCenterData(document.RootElement);
+            return new VCenter(_operationBase, data);
         }
 
         async ValueTask<VCenter> IOperationSource<VCenter>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VCenter(_operationBase, VCenterData.DeserializeVCenterData(document.RootElement));
+            var data = VCenterData.DeserializeVCenterData(document.RootElement);
+            return new VCenter(_operationBase, data);
         }
     }
 }

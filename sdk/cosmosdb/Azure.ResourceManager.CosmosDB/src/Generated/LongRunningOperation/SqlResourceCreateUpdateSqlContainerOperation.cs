@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         SqlContainer IOperationSource<SqlContainer>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SqlContainer(_operationBase, SqlContainerData.DeserializeSqlContainerData(document.RootElement));
+            var data = SqlContainerData.DeserializeSqlContainerData(document.RootElement);
+            return new SqlContainer(_operationBase, data);
         }
 
         async ValueTask<SqlContainer> IOperationSource<SqlContainer>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SqlContainer(_operationBase, SqlContainerData.DeserializeSqlContainerData(document.RootElement));
+            var data = SqlContainerData.DeserializeSqlContainerData(document.RootElement);
+            return new SqlContainer(_operationBase, data);
         }
     }
 }

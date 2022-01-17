@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         NatGateway IOperationSource<NatGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new NatGateway(_operationBase, NatGatewayData.DeserializeNatGatewayData(document.RootElement));
+            var data = NatGatewayData.DeserializeNatGatewayData(document.RootElement);
+            return new NatGateway(_operationBase, data);
         }
 
         async ValueTask<NatGateway> IOperationSource<NatGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new NatGateway(_operationBase, NatGatewayData.DeserializeNatGatewayData(document.RootElement));
+            var data = NatGatewayData.DeserializeNatGatewayData(document.RootElement);
+            return new NatGateway(_operationBase, data);
         }
     }
 }

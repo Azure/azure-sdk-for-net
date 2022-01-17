@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         DatabaseAccountMongodbDatabaseCollectionThroughputSetting IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
+            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_operationBase, data);
         }
 
         async ValueTask<DatabaseAccountMongodbDatabaseCollectionThroughputSetting> IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
+            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_operationBase, data);
         }
     }
 }

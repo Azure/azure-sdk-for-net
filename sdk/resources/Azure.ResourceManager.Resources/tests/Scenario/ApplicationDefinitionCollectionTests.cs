@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(applicationDefinitionName, applicationDefinitionData)).Value;
+            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData)).Value;
             Assert.AreEqual(applicationDefinitionName, applicationDefinition.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(null, applicationDefinitionData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(applicationDefinitionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, null, applicationDefinitionData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, null));
         }
 
         [TestCase]
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-L-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(applicationDefinitionName, applicationDefinitionData);
+            _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData);
             int count = 0;
             await foreach (var tempApplicationDefinition in rg.GetApplicationDefinitions().GetAllAsync())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-G-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(applicationDefinitionName, applicationDefinitionData)).Value;
+            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData)).Value;
             ApplicationDefinition getApplicationDefinition = await rg.GetApplicationDefinitions().GetAsync(applicationDefinitionName);
             AssertValidApplicationDefinition(applicationDefinition, getApplicationDefinition);
         }

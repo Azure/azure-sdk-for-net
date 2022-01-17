@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstancePrivateLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstancePrivateLinkCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstancePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstancePrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstancePrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstancePrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managedInstancePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstancePrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstancePrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstancePrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(groupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.Exists");
             scope.Start();
             try
             {

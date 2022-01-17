@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
         }
 
-        internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)
+        internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, Resource resource, string instrumentationKey)
         {
             var name = PartA_Name_Mapping[TelemetryType.Message];
             var time = FormatUtcTimestamp(logRecord.Timestamp);
@@ -108,10 +108,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 InstrumentationKey = instrumentationKey
             };
 
-            // TODO: I WAS TOLD THIS MIGHT BE CHANGING. IGNORING FOR NOW.
-            //InitRoleInfo(activity);
-            //telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
-            //telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
+            InitRoleInfo(resource);
+            telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
+            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
 
             if (logRecord.TraceId != default)
             {

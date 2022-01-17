@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteConfigSnapshotCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteConfigSnapshotCollection(ArmResource parent) : base(parent)
         {
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(snapshotId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(snapshotId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Exists");
             scope.Start();
             try
             {

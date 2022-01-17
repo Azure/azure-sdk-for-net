@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         PrivateEndpointConnectionProxy IOperationSource<PrivateEndpointConnectionProxy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateEndpointConnectionProxy(_operationBase, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement));
+            var data = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);
+            return new PrivateEndpointConnectionProxy(_operationBase, data);
         }
 
         async ValueTask<PrivateEndpointConnectionProxy> IOperationSource<PrivateEndpointConnectionProxy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateEndpointConnectionProxy(_operationBase, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement));
+            var data = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);
+            return new PrivateEndpointConnectionProxy(_operationBase, data);
         }
     }
 }

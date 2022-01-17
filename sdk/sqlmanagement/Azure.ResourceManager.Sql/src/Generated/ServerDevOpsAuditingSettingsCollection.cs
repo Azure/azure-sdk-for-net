@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDevOpsAuditingSettingsCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDevOpsAuditingSettingsCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDevOpsAuditingSettingsCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServerDevOpsAuditSettingCreateOrUpdateOperation CreateOrUpdate(string devOpsAuditingSettingsName, ServerDevOpsAuditingSettingsData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServerDevOpsAuditSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettingsData parameters, CancellationToken cancellationToken = default)
         {
             if (devOpsAuditingSettingsName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerDevOpsAuditSettingCreateOrUpdateOperation> CreateOrUpdateAsync(string devOpsAuditingSettingsName, ServerDevOpsAuditingSettingsData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServerDevOpsAuditSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettingsData parameters, CancellationToken cancellationToken = default)
         {
             if (devOpsAuditingSettingsName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverDevOpsAuditSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDevOpsAuditingSettings>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDevOpsAuditingSettings(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDevOpsAuditingSettings>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDevOpsAuditingSettings(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _serverDevOpsAuditSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDevOpsAuditingSettings>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDevOpsAuditingSettings(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDevOpsAuditingSettings>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDevOpsAuditingSettings(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.Exists");
             scope.Start();
             try
             {

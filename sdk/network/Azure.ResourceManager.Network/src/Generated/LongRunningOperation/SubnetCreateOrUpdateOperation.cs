@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         Subnet IOperationSource<Subnet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Subnet(_operationBase, SubnetData.DeserializeSubnetData(document.RootElement));
+            var data = SubnetData.DeserializeSubnetData(document.RootElement);
+            return new Subnet(_operationBase, data);
         }
 
         async ValueTask<Subnet> IOperationSource<Subnet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Subnet(_operationBase, SubnetData.DeserializeSubnetData(document.RootElement));
+            var data = SubnetData.DeserializeSubnetData(document.RootElement);
+            return new Subnet(_operationBase, data);
         }
     }
 }

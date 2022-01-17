@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateEndpointCollection(ArmResource parent) : base(parent)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PrivateEndpointCreateOrUpdateOperation CreateOrUpdate(string privateEndpointName, PrivateEndpointData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PrivateEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
         {
             if (privateEndpointName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PrivateEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(string privateEndpointName, PrivateEndpointData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PrivateEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
         {
             if (privateEndpointName == null)
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _privateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,14 +216,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(privateEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _privateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(privateEndpointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
             try
             {

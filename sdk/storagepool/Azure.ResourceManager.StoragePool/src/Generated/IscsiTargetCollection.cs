@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool
         {
         }
 
-        /// <summary> Initializes a new instance of IscsiTargetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IscsiTargetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal IscsiTargetCollection(ArmResource parent) : base(parent)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> or <paramref name="iscsiTargetCreatePayload"/> is null. </exception>
-        public virtual IscsiTargetCreateOrUpdateOperation CreateOrUpdate(string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual IscsiTargetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
         {
             if (iscsiTargetName == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> or <paramref name="iscsiTargetCreatePayload"/> is null. </exception>
-        public async virtual Task<IscsiTargetCreateOrUpdateOperation> CreateOrUpdateAsync(string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<IscsiTargetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
         {
             if (iscsiTargetName == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _iscsiTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<IscsiTarget>(null, response.GetRawResponse())
-                    : Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IscsiTarget>(null, response.GetRawResponse());
+                return Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(iscsiTargetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _iscsiTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<IscsiTarget>(null, response.GetRawResponse())
-                    : Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IscsiTarget>(null, response.GetRawResponse());
+                return Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(iscsiTargetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
             scope.Start();
             try
             {

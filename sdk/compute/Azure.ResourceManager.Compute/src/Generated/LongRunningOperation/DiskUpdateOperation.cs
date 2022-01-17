@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         Disk IOperationSource<Disk>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Disk(_operationBase, DiskData.DeserializeDiskData(document.RootElement));
+            var data = DiskData.DeserializeDiskData(document.RootElement);
+            return new Disk(_operationBase, data);
         }
 
         async ValueTask<Disk> IOperationSource<Disk>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Disk(_operationBase, DiskData.DeserializeDiskData(document.RootElement));
+            var data = DiskData.DeserializeDiskData(document.RootElement);
+            return new Disk(_operationBase, data);
         }
     }
 }
