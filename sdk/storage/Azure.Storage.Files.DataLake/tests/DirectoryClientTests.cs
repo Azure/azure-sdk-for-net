@@ -1121,6 +1121,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetAccessControlAsync_CPK()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem
+                .GetDirectoryClient(GetNewDirectoryName())
+                .WithCustomerProvidedKey(customerProvidedKey));
+            await directory.CreateAsync();
+
+            // Act
+            PathAccessControl accessControl = await directory.GetAccessControlAsync();
+
+            // Assert
+            Assert.IsNotNull(accessControl.Owner);
+            Assert.IsNotNull(accessControl.Group);
+            Assert.IsNotNull(accessControl.Permissions);
+            Assert.IsNotNull(accessControl.AccessControlList);
+        }
+
+        [RecordedTest]
         public async Task SetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
