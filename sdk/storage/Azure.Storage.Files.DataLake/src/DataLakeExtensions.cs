@@ -866,6 +866,16 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        internal static Blobs.Models.CustomerProvidedKey? ToBlobCustomerProvidedKey(this DataLake.Models.CustomerProvidedKey? dataLakeCustomerProvidedKey)
+        {
+            if (dataLakeCustomerProvidedKey == null)
+            {
+                return null;
+            }
+
+            return new Blobs.Models.CustomerProvidedKey(dataLakeCustomerProvidedKey.Value.EncryptionKey);
+        }
+
         #region ValidateConditionsNotPresent
         internal static void ValidateConditionsNotPresent(
             this RequestConditions requestConditions,

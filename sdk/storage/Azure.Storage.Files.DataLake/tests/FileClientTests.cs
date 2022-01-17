@@ -1920,7 +1920,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task AppendFlushAsync_CPK()
+        public async Task AppendFlushReadAsync_CPK()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1933,11 +1933,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             byte[] data = GetRandomBuffer(Size);
             using Stream stream = new MemoryStream(data);
             await file.AppendAsync(stream, 0);
-            Response<PathInfo> response = await file.FlushAsync(Size);
+            Response<PathInfo> flushResponse = await file.FlushAsync(Size);
 
             // Assert
-            Assert.IsTrue(response.Value.IsServerEncrypted);
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.IsTrue(flushResponse.Value.IsServerEncrypted);
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, flushResponse.Value.EncryptionKeySha256);
+
+            // Act
+            Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
+
+            // Assert
+            Assert.IsTrue(downloadResponse.Value.Properties.IsServerEncrypted);
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, downloadResponse.Value.Properties.EncryptionKeySha256);
         }
 
         [RecordedTest]
