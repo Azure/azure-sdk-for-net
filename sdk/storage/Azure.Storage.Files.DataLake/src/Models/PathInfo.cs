@@ -28,8 +28,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
-        /// The SHA-256 hash of the encryption key used to encrypt the file. This header is only returned when the file was encrypted with a customer-provided key.
-        /// Note that this response header does not apply to directories.
+        /// The SHA-256 hash of the encryption key used to encrypt the path. This header is only returned when the path was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
 

@@ -350,29 +350,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        // We don't want to be sending CPK headers on Directory Create.
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
-        public async Task CreateAsync_IgnoreCPK()
+        public async Task CreateAsync_CPK()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            DataLakeClientOptions options = GetOptions();
-            options.CustomerProvidedKey = customerProvidedKey;
-            string directoryName = GetNewDirectoryName();
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
-            {
-                DirectoryOrFilePath = directoryName,
-            };
-
-            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uriBuilder.ToUri(), GetStorageSharedKeyCredentials(), options));
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem
+                .GetDirectoryClient(GetNewDirectoryName())
+                .WithCustomerProvidedKey(customerProvidedKey));
 
             // Act
             Response<PathInfo> response = await directory.CreateAsync();
 
             // Assert
-            Assert.IsNull(response.Value.EncryptionKeySha256);
+            Assert.IsTrue(response.Value.IsServerEncrypted);
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
         [RecordedTest]

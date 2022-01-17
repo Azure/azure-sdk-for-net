@@ -651,6 +651,26 @@ namespace Azure.Storage.Files.DataLake
         #endregion
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="DataLakePathClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="DataLakePathClient"/>.
+        /// </remarks>
+        public DataLakePathClient WithCustomerProvidedKey(Models.CustomerProvidedKey? customerProvidedKey)
+        {
+            DataLakeClientConfiguration newClientConfiguration = DataLakeClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new DataLakePathClient(
+                pathUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
+
+        /// <summary>
         /// Converts metadata in DFS metadata string
         /// </summary>
         internal static string BuildMetadataString(Metadata metadata)
@@ -906,17 +926,6 @@ namespace Azure.Storage.Files.DataLake
                     scope.Start();
                     ResponseWithHeaders<PathCreateHeaders> response;
 
-                    string encryptionKey = null;
-                    string encryptionKeySha256 = null;
-                    EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null;
-
-                    if (resourceType == PathResourceType.File)
-                    {
-                        encryptionKey = ClientConfiguration.CustomerProvidedKey?.EncryptionKey;
-                        encryptionKeySha256 = ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash;
-                        encryptionAlgorithm = EncryptionAlgorithmTypeInternal.AES256;
-                    }
-
                     if (async)
                     {
                         response = await PathRestClient.CreateAsync(
@@ -934,9 +943,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            encryptionKey: encryptionKey,
-                            encryptionKeySha256: encryptionKeySha256,
-                            encryptionAlgorithm: encryptionAlgorithm,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -957,9 +966,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            encryptionKey: encryptionKey,
-                            encryptionKeySha256: encryptionKeySha256,
-                            encryptionAlgorithm: encryptionAlgorithm,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
 
