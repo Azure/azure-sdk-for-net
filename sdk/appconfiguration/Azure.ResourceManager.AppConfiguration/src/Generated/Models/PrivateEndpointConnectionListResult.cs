@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         internal PrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnection>();
+            Value = new ChangeTrackingList<PrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
-        internal PrivateEndpointConnectionListResult(IReadOnlyList<PrivateEndpointConnection> value, string nextLink)
+        internal PrivateEndpointConnectionListResult(IReadOnlyList<PrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection value. </summary>
-        public IReadOnlyList<PrivateEndpointConnection> Value { get; }
+        public IReadOnlyList<PrivateEndpointConnectionData> Value { get; }
         /// <summary> The URI that can be used to request the next set of paged results. </summary>
         public string NextLink { get; }
     }

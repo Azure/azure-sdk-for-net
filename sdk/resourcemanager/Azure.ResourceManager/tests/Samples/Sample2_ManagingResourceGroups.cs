@@ -1,6 +1,7 @@
 ﻿#region Snippet:Managing_Resource_Groups_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupData rgData = new ResourceGroupData(location);
             ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup resourceGroup = operation.Value;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Tests.Samples
             ResourceGroup rg = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
             if (rg == null)
             {
-                Location location = Location.WestUS2;
+                AzureLocation location = AzureLocation.WestUS2;
                 ResourceGroupData rgData = new ResourceGroupData(location);
                 _ = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
             }
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Tests.Samples
             ResourceGroup rg = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
             if (rg == null)
             {
-                Location location = Location.WestUS2;
+                AzureLocation location = AzureLocation.WestUS2;
                 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
                 ResourceGroupData rgData = new ResourceGroupData(location);
                 _ = await rgCollection.CreateOrUpdateAsync(rgName, rgData);

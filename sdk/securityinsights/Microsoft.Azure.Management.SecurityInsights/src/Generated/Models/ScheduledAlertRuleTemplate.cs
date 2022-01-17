@@ -35,53 +35,76 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the ScheduledAlertRuleTemplate class.
         /// </summary>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
         /// <param name="alertRulesCreatedByTemplateCount">the number of alert
         /// rules that were created by this template</param>
-        /// <param name="createdDateUTC">The time that this alert rule template
-        /// has been added.</param>
         /// <param name="description">The description of the alert rule
         /// template.</param>
         /// <param name="displayName">The display name for alert rule
         /// template.</param>
-        /// <param name="requiredDataConnectors">The required data connectors
-        /// for this template</param>
         /// <param name="status">The alert rule template status. Possible
         /// values include: 'Installed', 'Available', 'NotAvailable'</param>
         /// <param name="query">The query that creates alerts for this
         /// rule.</param>
+        /// <param name="severity">The severity for alerts created by this
+        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
+        /// 'Informational'</param>
+        /// <param name="version">The version of this template - in format
+        /// &lt;a.b.c&gt;, where all are numbers. For example
+        /// &lt;1.0.2&gt;.</param>
         /// <param name="queryFrequency">The frequency (in ISO 8601 duration
         /// format) for this alert rule to run.</param>
         /// <param name="queryPeriod">The period (in ISO 8601 duration format)
         /// that this alert rule looks at.</param>
-        /// <param name="severity">The severity for alerts created by this
-        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
-        /// 'Informational'</param>
         /// <param name="triggerOperator">The operation against the threshold
         /// that triggers alert rule. Possible values include: 'GreaterThan',
         /// 'LessThan', 'Equal', 'NotEqual'</param>
         /// <param name="triggerThreshold">The threshold triggers this alert
         /// rule.</param>
-        /// <param name="tactics">The tactics of the alert rule
-        /// template</param>
-        public ScheduledAlertRuleTemplate(string id = default(string), string name = default(string), string type = default(string), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? createdDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), string query = default(string), System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), string severity = default(string), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?), IList<string> tactics = default(IList<string>))
-            : base(id, name, type)
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        /// <param name="lastUpdatedDateUTC">The last time that this alert rule
+        /// template has been updated.</param>
+        /// <param name="createdDateUTC">The time that this alert rule template
+        /// has been added.</param>
+        /// <param name="requiredDataConnectors">The required data sources for
+        /// this template</param>
+        /// <param name="tactics">The tactics of the alert rule</param>
+        /// <param name="customDetails">Dictionary of string key-value pairs of
+        /// columns to be attached to the alert</param>
+        /// <param name="entityMappings">Array of the entity mappings of the
+        /// alert rule</param>
+        /// <param name="alertDetailsOverride">The alert details override
+        /// settings</param>
+        /// <param name="eventGroupingSettings">The event grouping
+        /// settings.</param>
+        public ScheduledAlertRuleTemplate(int alertRulesCreatedByTemplateCount, string description, string displayName, string status, string query, string severity, string version, System.TimeSpan queryFrequency, System.TimeSpan queryPeriod, TriggerOperator triggerOperator, int triggerThreshold, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.DateTime? lastUpdatedDateUTC = default(System.DateTime?), System.DateTime? createdDateUTC = default(System.DateTime?), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), IList<string> tactics = default(IList<string>), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride), EventGroupingSettings eventGroupingSettings = default(EventGroupingSettings))
+            : base(id, name, type, systemData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
+            LastUpdatedDateUTC = lastUpdatedDateUTC;
             CreatedDateUTC = createdDateUTC;
             Description = description;
             DisplayName = displayName;
             RequiredDataConnectors = requiredDataConnectors;
             Status = status;
             Query = query;
+            Severity = severity;
+            Tactics = tactics;
+            Version = version;
+            CustomDetails = customDetails;
+            EntityMappings = entityMappings;
+            AlertDetailsOverride = alertDetailsOverride;
             QueryFrequency = queryFrequency;
             QueryPeriod = queryPeriod;
-            Severity = severity;
             TriggerOperator = triggerOperator;
             TriggerThreshold = triggerThreshold;
-            Tactics = tactics;
+            EventGroupingSettings = eventGroupingSettings;
             CustomInit();
         }
 
@@ -95,7 +118,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// template
         /// </summary>
         [JsonProperty(PropertyName = "properties.alertRulesCreatedByTemplateCount")]
-        public int? AlertRulesCreatedByTemplateCount { get; set; }
+        public int AlertRulesCreatedByTemplateCount { get; set; }
+
+        /// <summary>
+        /// Gets the last time that this alert rule template has been updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastUpdatedDateUTC")]
+        public System.DateTime? LastUpdatedDateUTC { get; private set; }
 
         /// <summary>
         /// Gets the time that this alert rule template has been added.
@@ -116,7 +145,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the required data connectors for this template
+        /// Gets or sets the required data sources for this template
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiredDataConnectors")]
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; set; }
@@ -135,20 +164,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string Query { get; set; }
 
         /// <summary>
-        /// Gets or sets the frequency (in ISO 8601 duration format) for this
-        /// alert rule to run.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.queryFrequency")]
-        public System.TimeSpan? QueryFrequency { get; set; }
-
-        /// <summary>
-        /// Gets or sets the period (in ISO 8601 duration format) that this
-        /// alert rule looks at.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.queryPeriod")]
-        public System.TimeSpan? QueryPeriod { get; set; }
-
-        /// <summary>
         /// Gets or sets the severity for alerts created by this alert rule.
         /// Possible values include: 'High', 'Medium', 'Low', 'Informational'
         /// </summary>
@@ -156,24 +171,104 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string Severity { get; set; }
 
         /// <summary>
+        /// Gets or sets the tactics of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tactics")]
+        public IList<string> Tactics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of this template - in format
+        /// &amp;lt;a.b.c&amp;gt;, where all are numbers. For example
+        /// &amp;lt;1.0.2&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets dictionary of string key-value pairs of columns to be
+        /// attached to the alert
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customDetails")]
+        public IDictionary<string, string> CustomDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of the entity mappings of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.entityMappings")]
+        public IList<EntityMapping> EntityMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alert details override settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alertDetailsOverride")]
+        public AlertDetailsOverride AlertDetailsOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets the frequency (in ISO 8601 duration format) for this
+        /// alert rule to run.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.queryFrequency")]
+        public System.TimeSpan QueryFrequency { get; set; }
+
+        /// <summary>
+        /// Gets or sets the period (in ISO 8601 duration format) that this
+        /// alert rule looks at.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.queryPeriod")]
+        public System.TimeSpan QueryPeriod { get; set; }
+
+        /// <summary>
         /// Gets or sets the operation against the threshold that triggers
         /// alert rule. Possible values include: 'GreaterThan', 'LessThan',
         /// 'Equal', 'NotEqual'
         /// </summary>
         [JsonProperty(PropertyName = "properties.triggerOperator")]
-        public TriggerOperator? TriggerOperator { get; set; }
+        public TriggerOperator TriggerOperator { get; set; }
 
         /// <summary>
         /// Gets or sets the threshold triggers this alert rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.triggerThreshold")]
-        public int? TriggerThreshold { get; set; }
+        public int TriggerThreshold { get; set; }
 
         /// <summary>
-        /// Gets or sets the tactics of the alert rule template
+        /// Gets or sets the event grouping settings.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tactics")]
-        public IList<string> Tactics { get; set; }
+        [JsonProperty(PropertyName = "properties.eventGroupingSettings")]
+        public EventGroupingSettings EventGroupingSettings { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Description == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
+            }
+            if (DisplayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
+            }
+            if (Status == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Status");
+            }
+            if (Query == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Query");
+            }
+            if (Severity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Severity");
+            }
+            if (Version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Version");
+            }
+        }
     }
 }

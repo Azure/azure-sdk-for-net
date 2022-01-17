@@ -51,16 +51,16 @@ namespace StreamAnalytics.Tests
                         {
                             DataType = @"nvarchar(max)"
                         },
-                        Binding = new AzureMachineLearningStudioFunctionBinding()
+                        Binding = new AzureMachineLearningWebServiceFunctionBinding()
                         {
                             Endpoint = TestHelper.ExecuteEndpoint,
                             ApiKey = null,
-                            Inputs = new AzureMachineLearningStudioInputs()
+                            Inputs = new AzureMachineLearningWebServiceInputs()
                             {
                                 Name = "input1",
-                                ColumnNames = new AzureMachineLearningStudioInputColumn[]
+                                ColumnNames = new AzureMachineLearningWebServiceInputColumn[]
                                 {
-                                    new AzureMachineLearningStudioInputColumn()
+                                    new AzureMachineLearningWebServiceInputColumn()
                                     {
                                         Name = "tweet",
                                         DataType = "string",
@@ -68,9 +68,9 @@ namespace StreamAnalytics.Tests
                                     }
                                 }
                             },
-                            Outputs = new List<AzureMachineLearningStudioOutputColumn>()
+                            Outputs = new List<AzureMachineLearningWebServiceOutputColumn>()
                             {
-                                new AzureMachineLearningStudioOutputColumn()
+                                new AzureMachineLearningWebServiceOutputColumn()
                                 {
                                     Name = "Sentiment",
                                     DataType = "string"
@@ -85,7 +85,7 @@ namespace StreamAnalytics.Tests
                 streamAnalyticsManagementClient.StreamingJobs.CreateOrReplace(TestHelper.GetDefaultStreamingJob(), resourceGroupName, jobName);
 
                 // Retrieve default definition
-                AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters retrieveDefaultDefinitionParameters = new AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters()
+                AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters retrieveDefaultDefinitionParameters = new AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters()
                 {
                     UdfType = UdfType.Scalar,
                     ExecuteEndpoint = TestHelper.ExecuteEndpoint
@@ -98,9 +98,9 @@ namespace StreamAnalytics.Tests
                 ValidationHelper.ValidateFunctionProperties(expectedFunction.Properties, function.Properties, false);
 
                 // PUT function
-                ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = TestHelper.ApiKey;
+                ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = TestHelper.ApiKey;
                 var putResponse = await streamAnalyticsManagementClient.Functions.CreateOrReplaceWithHttpMessagesAsync(function, resourceGroupName, jobName, functionName);
-                ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = null; // Null out because secrets are not returned in responses
+                ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)function.Properties).Binding).ApiKey = null; // Null out because secrets are not returned in responses
                 ValidationHelper.ValidateFunction(function, putResponse.Body, false);
                 Assert.Equal(expectedFunctionResourceId, putResponse.Body.Id);
                 Assert.Equal(functionName, putResponse.Body.Name);
@@ -122,13 +122,13 @@ namespace StreamAnalytics.Tests
                 {
                     Properties = new ScalarFunctionProperties()
                     {
-                        Binding = new AzureMachineLearningStudioFunctionBinding()
+                        Binding = new AzureMachineLearningWebServiceFunctionBinding()
                         {
                             BatchSize = 5000
                         }
                     }
                 };
-                ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)putResponse.Body.Properties).Binding).BatchSize = ((AzureMachineLearningStudioFunctionBinding)((ScalarFunctionProperties)functionPatch.Properties).Binding).BatchSize;
+                ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)putResponse.Body.Properties).Binding).BatchSize = ((AzureMachineLearningWebServiceFunctionBinding)((ScalarFunctionProperties)functionPatch.Properties).Binding).BatchSize;
                 var patchResponse = await streamAnalyticsManagementClient.Functions.UpdateWithHttpMessagesAsync(functionPatch, resourceGroupName, jobName, functionName);
                 ValidationHelper.ValidateFunction(putResponse.Body, patchResponse.Body, true);
                 // ETag should be different after a PATCH operation
@@ -218,10 +218,10 @@ namespace StreamAnalytics.Tests
                     Script = javaScriptFunctionCode
 
                 };
-                CloudException cloudException = Assert.Throws<CloudException>(
+                ErrorException errorException = Assert.Throws<ErrorException>(
                     () => streamAnalyticsManagementClient.Functions.RetrieveDefaultDefinition(resourceGroupName, jobName, functionName, retrieveDefaultDefinitionParameters));
-                Assert.Equal(HttpStatusCode.InternalServerError, cloudException.Response.StatusCode);
-                Assert.Contains(@"Retrieve default definition is not supported for function type: Microsoft.StreamAnalytics/JavascriptUdf", cloudException.Response.Content);
+                Assert.Equal(HttpStatusCode.InternalServerError, errorException.Response.StatusCode);
+                Assert.Contains(@"Retrieve default definition is not supported for function type: Microsoft.StreamAnalytics/JavascriptUdf", errorException.Response.Content);
 
                 // PUT function
                 var putResponse = await streamAnalyticsManagementClient.Functions.CreateOrReplaceWithHttpMessagesAsync(function, resourceGroupName, jobName, functionName);

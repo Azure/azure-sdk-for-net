@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         HubRouteTable IOperationSource<HubRouteTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new HubRouteTable(_operationBase, HubRouteTableData.DeserializeHubRouteTableData(document.RootElement));
+            var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);
+            return new HubRouteTable(_operationBase, data);
         }
 
         async ValueTask<HubRouteTable> IOperationSource<HubRouteTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new HubRouteTable(_operationBase, HubRouteTableData.DeserializeHubRouteTableData(document.RootElement));
+            var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);
+            return new HubRouteTable(_operationBase, data);
         }
     }
 }

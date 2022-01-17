@@ -5,36 +5,33 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The response to a list restorable dropped databases request. </summary>
+    /// <summary> A list of restorable dropped databases. </summary>
     internal partial class RestorableDroppedDatabaseListResult
     {
         /// <summary> Initializes a new instance of RestorableDroppedDatabaseListResult. </summary>
-        /// <param name="value"> A list of restorable dropped databases. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RestorableDroppedDatabaseListResult(IEnumerable<RestorableDroppedDatabase> value)
+        internal RestorableDroppedDatabaseListResult()
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<RestorableDroppedDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of RestorableDroppedDatabaseListResult. </summary>
-        /// <param name="value"> A list of restorable dropped databases. </param>
-        internal RestorableDroppedDatabaseListResult(IReadOnlyList<RestorableDroppedDatabase> value)
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        internal RestorableDroppedDatabaseListResult(IReadOnlyList<RestorableDroppedDatabaseData> value, string nextLink)
         {
             Value = value;
+            NextLink = nextLink;
         }
 
-        /// <summary> A list of restorable dropped databases. </summary>
-        public IReadOnlyList<RestorableDroppedDatabase> Value { get; }
+        /// <summary> Array of results. </summary>
+        public IReadOnlyList<RestorableDroppedDatabaseData> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,11 +36,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         /// <param name="targetResourceName">Gets or sets the target Resource
         /// name.</param>
+        /// <param name="tags">Gets or sets the Resource tags.</param>
         /// <param name="zoneRedundant">Possible values include: 'Enable',
         /// 'Disable'</param>
-        public SqlDatabaseResourceSettings(string targetResourceName, string zoneRedundant = default(string))
+        public SqlDatabaseResourceSettings(string targetResourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), string zoneRedundant = default(string))
             : base(targetResourceName)
         {
+            Tags = tags;
             ZoneRedundant = zoneRedundant;
             CustomInit();
         }
@@ -47,6 +51,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Enable', 'Disable'

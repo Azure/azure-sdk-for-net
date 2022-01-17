@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core.Tests
         protected static readonly int MaxIdLength = 27;
 
         public E2eTestBase(bool isAsync)
-         : base(isAsync, TestSettings.Instance.TestMode)
+         : base(isAsync, TestSettings.Instance.TestMode, useLegacyTransport: true)
         {
             Sanitizer = new TestUrlSanitizer();
         }

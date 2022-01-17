@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LongTermRetentionBackupListResult. </summary>
         internal LongTermRetentionBackupListResult()
         {
-            Value = new ChangeTrackingList<LongTermRetentionBackup>();
+            Value = new ChangeTrackingList<LongTermRetentionBackupData>();
         }
 
         /// <summary> Initializes a new instance of LongTermRetentionBackupListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal LongTermRetentionBackupListResult(IReadOnlyList<LongTermRetentionBackup> value, string nextLink)
+        internal LongTermRetentionBackupListResult(IReadOnlyList<LongTermRetentionBackupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<LongTermRetentionBackup> Value { get; }
+        public IReadOnlyList<LongTermRetentionBackupData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

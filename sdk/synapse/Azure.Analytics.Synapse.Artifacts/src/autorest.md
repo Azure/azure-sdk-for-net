@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-artifacts-composite-v2
+tag: package-artifacts-composite-v3
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/9ab141452538ce5cf1427300d3c181923a8a8765/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/949388b9dfddc435859fda2850c5bb5019aa217b/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
 security: AADToken
@@ -102,4 +102,23 @@ directive:
         $[path]["x-csharp-usage"] = "converter";
       }
     }
+```
+
+### Fix spelling issues
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Notebook.properties
+  transform: >
+    $.nbformat['x-ms-client-name'] = 'NotebookFormat';
+    $.nbformat_minor['x-ms-client-name'] = 'NotebookFormatMinor';
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TriggerRun.properties
+  transform: >
+    $.status["x-ms-enum"].values = [{value: "Succeeded", name: "Succeeded" },{value: "Failed", name: "Failed" },{value: "Inprogress", name: "InProgress" }];
 ```

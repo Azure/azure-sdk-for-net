@@ -21,7 +21,7 @@ namespace Azure.Template.Generated.Tests
                 Transport = transport
             };
 
-            return new TemplateServiceClient(new MockCredential(), _url , options);
+            return new TemplateServiceClient(_url, new MockCredential(), options);
         }
 
         // Add unit tests here
@@ -30,7 +30,7 @@ namespace Azure.Template.Generated.Tests
         public void GetResourceMethodTest()
         {
             var client = typeof(TemplateServiceClient);
-            var method = client.GetMethod(nameof(TemplateServiceClient.GetTemplateService));
+            var method = client.GetMethod(nameof(TemplateServiceClient.GetResource));
             var parameters = method.GetParameters();
 
             Assert.AreEqual(2, parameters.Length);
@@ -51,7 +51,7 @@ namespace Azure.Template.Generated.Tests
             var mockTransport = new MockTransport(mockResponse);
             TemplateServiceClient client = CreateClient(mockTransport);
 
-            Response response = await client.GetTemplateServiceAsync("123");
+            Response response = await client.GetResourceAsync("123");
             using JsonDocument resourceJson = JsonDocument.Parse(response.Content.ToMemory());
             string resourceName = resourceJson.RootElement.GetProperty("name").ToString();
             string resourceId = resourceJson.RootElement.GetProperty("id").ToString();

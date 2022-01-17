@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
@@ -27,19 +28,6 @@ namespace SignalRServiceExtension.Tests
                 .SetHubProtocol(configuration);
             Assert.Empty(services);
         }
-
-#if NETCOREAPP2_1
-
-        [Fact]
-        public void SetHubProtocol_Throw()
-        {
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            configuration[Constants.AzureSignalRHubProtocol] = HubProtocol.SystemTextJson.ToString();
-            var services = new ServiceCollection();
-            Assert.Throws<InvalidOperationException>(() => services.SetHubProtocol(configuration));
-        }
-
-#endif
 
 #if NETCOREAPP3_1
 

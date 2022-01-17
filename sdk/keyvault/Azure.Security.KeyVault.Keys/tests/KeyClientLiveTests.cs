@@ -34,17 +34,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Matcher = new RecordMatcher(compareBodies: false);
         }
 
-        [SetUp]
-        public void ClearChallengeCacheforRecord()
-        {
-            // in record mode we reset the challenge cache before each test so that the challenge call
-            // is always made.  This allows tests to be replayed independently and in any order
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                ChallengeBasedAuthenticationPolicy.ClearCache();
-            }
-        }
-
         [Test]
         public async Task CreateKey()
         {

@@ -21,7 +21,7 @@
     "TestTargetFramework": [
         "netcoreapp3.1",
         "net461",
-        "net5.0"
+        "net6.0"
     ],
     "AdditionalTestArguments": [
         "/p:UseProjectReferenceToAzureClients=false",

@@ -112,8 +112,7 @@ namespace Azure.ResourceManager
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
-                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.RootResourceIdentifier.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
-            ClientOptions.ApiVersions.SetProviderClient(this);
+                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
         }
 
         private Subscription _defaultSubscription;
@@ -160,6 +159,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the resourcegroup. </returns>
         public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
+            ResourceGroup.ValidateResourceId(id);
             return new ResourceGroup(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
@@ -170,6 +170,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the subscription. </returns>
         public virtual Subscription GetSubscription(ResourceIdentifier id)
         {
+            Subscription.ValidateResourceId(id);
             return new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
@@ -180,6 +181,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the feature. </returns>
         public virtual Feature GetFeature(ResourceIdentifier id)
         {
+            Feature.ValidateResourceId(id);
             return new Feature(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
@@ -190,6 +192,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the Provider. </returns>
         public virtual Provider GetProvider(ResourceIdentifier id)
         {
+            Provider.ValidateResourceId(id);
             return new Provider(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
@@ -340,7 +343,7 @@ namespace Azure.ResourceManager
             var genericResourceOperations = new ChangeTrackingList<GenericResource>();
             foreach (string id in ids)
             {
-                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), id));
+                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), new ResourceIdentifier(id)));
             }
             return genericResourceOperations;
         }
@@ -358,16 +361,6 @@ namespace Azure.ResourceManager
             }
 
             return new GenericResource(GetDefaultSubscription(), id);
-        }
-
-        /// <summary>
-        /// Gets the RestApi definition for a given Azure namespace.
-        /// </summary>
-        /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
-        /// <returns> A collection representing the rest apis for the namespace. </returns>
-        public virtual RestApiCollection GetRestApis(string azureNamespace)
-        {
-            return new RestApiCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
         }
 
         /// <summary> Gets all resource providers for a subscription. </summary>

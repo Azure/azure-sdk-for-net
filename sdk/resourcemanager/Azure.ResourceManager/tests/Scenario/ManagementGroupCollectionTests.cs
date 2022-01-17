@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupOptions());
             _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]

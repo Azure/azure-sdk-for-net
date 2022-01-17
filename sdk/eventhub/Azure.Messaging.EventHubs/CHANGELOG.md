@@ -1,12 +1,24 @@
 # Release History
 
-## 5.7.0-beta.2 (Unreleased)
+## 5.7.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 5.7.0-beta.2 (2022-01-13)
+
+### Features Added
+
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
+
+### Bugs Fixed
+
+- Fixed an issue for publishing with idempotent retries enabled where the client and service state could become out-of-sync for error scenarios with ambiguous outcomes. When this occurred, callers had no way to detect or correct the condition and it was possible that new events would fail to publish or be incorrectly identified as duplicates by the service. 
 
 ### Other Changes
 

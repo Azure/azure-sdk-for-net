@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData
+    public class EventData : MessageWithMetadata
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso href="https://datatracker.ietf.org/doc/html/rfc2046">RFC2046 (MIME Types)</seealso>
         ///
-        public string ContentType
+        public override string ContentType
         {
             get
             {
@@ -95,6 +95,26 @@ namespace Azure.Messaging.EventHubs
                 }
             }
         }
+
+        /// <summary>
+        ///   Hidden property that shadows the <see cref="EventBody"/> property. This is added
+        ///   in order to inherit from <see cref="MessageWithMetadata"/>.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => EventBody;
+            set => EventBody = value;
+        }
+
+        /// <summary>
+        ///   Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
+        ///   the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
 
         /// <summary>
         ///   An application-defined value that uniquely identifies the event.  The identifier is

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Core
 
         private static int IndexOfOrdinal(this string s, char c)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             return s.IndexOf(c, StringComparison.Ordinal);
 #else
             return s.IndexOf(c);

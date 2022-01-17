@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.1 (Unreleased)
+## 5.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.2.0 (2021-12-08)
+
+### Features Added
+
+- Add listener details.
+- Add protected constructors to `ServiceBusMessageActions` and `ServiceBusSessionMessageActions` for mocking.
+
+### Bugs Fixed
+
+- Make `ServiceBusMessageActions` thread-safe.
 
 ## 5.1.0 (2021-11-10)
 

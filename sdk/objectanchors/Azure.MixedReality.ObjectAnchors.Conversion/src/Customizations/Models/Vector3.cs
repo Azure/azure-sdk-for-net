@@ -14,45 +14,45 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         private System.Numerics.Vector3 data;
 
         /// <summary>
-        /// Creates a autorest-defined Vector3 given its Numerics equivalent
+        /// Creates a autorest-defined Vector3 given its Numerics equivalent.
         /// </summary>
-        /// <param name="vector">The numerics vector</param>
+        /// <param name="vector">The numerics vector.</param>
         internal Vector3(System.Numerics.Vector3 vector)
         {
             data = vector;
         }
 
         /// <summary>
-        /// Creates a autorest-defined Vector3 given its fields
+        /// Creates a autorest-defined Vector3 given its fields.
         /// </summary>
-        /// <param name="x">X component</param>
-        /// <param name="y">Y component</param>
-        /// <param name="z">Z component</param>
+        /// <param name="x">X component.</param>
+        /// <param name="y">Y component.</param>
+        /// <param name="z">Z component.</param>
         internal Vector3(float x, float y, float z)
         {
             data = new System.Numerics.Vector3(x, y, z);
         }
 
         /// <summary>
-        /// X component
+        /// X component.
         /// </summary>
         public float X { get { return data.X; } set { data.X = value; } }
 
         /// <summary>
-        /// Y component
+        /// Y component.
         /// </summary>
         public float Y { get { return data.Y; } set { data.Y = value; } }
 
         /// <summary>
-        /// Z component
+        /// Z component.
         /// </summary>
         public float Z { get { return data.Z; } set { data.Z = value; } }
 
         /// <summary>
-        /// Assesses equality with another vector
+        /// Assesses equality with another vector.
         /// </summary>
-        /// <param name="other">The other vector being compared to</param>
-        /// <returns>Whether the two are equal</returns>
+        /// <param name="other">The other vector being compared to.</param>
+        /// <returns>Whether the two are equal.</returns>
         public bool Equals(Vector3 other)
         {
             return this.data.Equals(other.data);

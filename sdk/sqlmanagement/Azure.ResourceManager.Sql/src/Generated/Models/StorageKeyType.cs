@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The type of the storage key to use. </summary>
-    public enum StorageKeyType
+    /// <summary> Storage key type. </summary>
+    public readonly partial struct StorageKeyType : IEquatable<StorageKeyType>
     {
-        /// <summary> StorageAccessKey. </summary>
-        StorageAccessKey,
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="StorageKeyType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageKeyType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string SharedAccessKeyValue = "SharedAccessKey";
+        private const string StorageAccessKeyValue = "StorageAccessKey";
+
         /// <summary> SharedAccessKey. </summary>
-        SharedAccessKey
+        public static StorageKeyType SharedAccessKey { get; } = new StorageKeyType(SharedAccessKeyValue);
+        /// <summary> StorageAccessKey. </summary>
+        public static StorageKeyType StorageAccessKey { get; } = new StorageKeyType(StorageAccessKeyValue);
+        /// <summary> Determines if two <see cref="StorageKeyType"/> values are the same. </summary>
+        public static bool operator ==(StorageKeyType left, StorageKeyType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="StorageKeyType"/> values are not the same. </summary>
+        public static bool operator !=(StorageKeyType left, StorageKeyType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="StorageKeyType"/>. </summary>
+        public static implicit operator StorageKeyType(string value) => new StorageKeyType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is StorageKeyType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(StorageKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

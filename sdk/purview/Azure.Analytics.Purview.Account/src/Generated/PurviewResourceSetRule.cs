@@ -31,8 +31,29 @@ namespace Azure.Analytics.Purview.Account
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics instance to use. </param>
+        /// <param name="pipeline"> The pipeline instance to use. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, or <paramref name="apiVersion"/> is null. </exception>
+        internal PurviewResourceSetRule(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion = "2019-11-01-preview")
+        {
+            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
         /// <summary> Get a resource set config service model. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -155,7 +176,7 @@ namespace Azure.Analytics.Purview.Account
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetResourceSetRuleRequest();
+                using HttpMessage message = CreateGetResourceSetRuleRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -166,7 +187,7 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a resource set config service model. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -289,7 +310,7 @@ namespace Azure.Analytics.Purview.Account
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetResourceSetRuleRequest();
+                using HttpMessage message = CreateGetResourceSetRuleRequest(context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -301,7 +322,7 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Creates or updates an resource set config. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -515,11 +536,13 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> CreateOrUpdateResourceSetRuleAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -531,7 +554,7 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Creates or updates an resource set config. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -745,11 +768,13 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response CreateOrUpdateResourceSetRule(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content);
+                using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -760,7 +785,7 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -789,7 +814,7 @@ namespace Azure.Analytics.Purview.Account
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteResourceSetRuleRequest();
+                using HttpMessage message = CreateDeleteResourceSetRuleRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -800,7 +825,7 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -829,7 +854,7 @@ namespace Azure.Analytics.Purview.Account
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteResourceSetRuleRequest();
+                using HttpMessage message = CreateDeleteResourceSetRuleRequest(context);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
@@ -839,9 +864,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        internal HttpMessage CreateGetResourceSetRuleRequest()
+        internal HttpMessage CreateGetResourceSetRuleRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -854,9 +879,9 @@ namespace Azure.Analytics.Purview.Account
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateResourceSetRuleRequest(RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateResourceSetRuleRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -871,9 +896,9 @@ namespace Azure.Analytics.Purview.Account
             return message;
         }
 
-        internal HttpMessage CreateDeleteResourceSetRuleRequest()
+        internal HttpMessage CreateDeleteResourceSetRuleRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();

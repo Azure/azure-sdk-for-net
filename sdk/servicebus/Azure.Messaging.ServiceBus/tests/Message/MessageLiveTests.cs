@@ -204,6 +204,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(scope.TopicName, scope.SubscriptionNames.First());
                 ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
+
+                // defer the message so we can verify that the Message State is cleared as expected by constructor
+                await receiver.DeferMessageAsync(received);
+                received = await receiver.PeekMessageAsync();
                 AmqpAnnotatedMessage rawReceived = received.GetRawAmqpMessage();
                 Assert.IsNotNull(rawReceived.Header.DeliveryCount);
                 Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));

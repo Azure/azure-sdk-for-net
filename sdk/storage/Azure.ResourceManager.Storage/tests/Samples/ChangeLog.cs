@@ -3,6 +3,7 @@
 
 #region Snippet:Create_Storage_Account
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -24,11 +25,11 @@ string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-Sku sku = new Sku(SkuName.PremiumLRS);
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);
+Models.Sku sku = new Models.Sku(SkuName.PremiumLRS);
+StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Models.Sku(SkuName.StandardGRS), Kind.Storage, AzureLocation.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
+StorageAccount account = storageAccountCollection.CreateOrUpdate(true, accountName, parameters).Value;
             #endregion
         }
     }

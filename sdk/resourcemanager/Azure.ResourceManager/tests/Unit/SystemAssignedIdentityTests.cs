@@ -14,46 +14,6 @@ namespace Azure.ResourceManager.Tests
     {
         private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "SystemAssignedIdentity");
 
-        [TestCase(0, null, null, null, null)]
-        [TestCase(0, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", null, null)]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa97", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa99", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(1, "72f988bf-86f1-41af-91ab-2d7cd011eb47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-
-        [TestCase(-1, null, null, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa99")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db46", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db48", "de29bab1-49e1-4705-819b-4dfddceaaa97")]
-        [TestCase(-1, "72f988bf-86f1-41af-91ab-2d7cd011db46", "de29bab1-49e1-4705-819b-4dfdbceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db46", "de29bab1-49e1-4705-819b-4dfddceaaa99")]
-        public void CompareTo(int answer, string tenantId1, string principalId1, string tenantId2, string principalId2)
-        {
-            SystemAssignedIdentity identity1;
-            SystemAssignedIdentity identity2;
-            if (tenantId1 == null)
-            {
-                identity1 = new SystemAssignedIdentity();
-            }
-            else
-            {
-                identity1 = new SystemAssignedIdentity(new Guid(tenantId1), new Guid(principalId1));
-            }
-
-            if (tenantId2 == null)
-            {
-                identity2 = new SystemAssignedIdentity();
-            }
-            else
-            {
-                identity2 = new SystemAssignedIdentity(new Guid(tenantId2), new Guid(principalId2));
-            }
-
-            Assert.AreEqual(answer, identity1.CompareTo(identity2));
-            Assert.AreEqual(answer * -1, identity2.CompareTo(identity1));
-        }
-
         [TestCase(null, null, null, null)]
         [TestCase("72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
         public void EqualsMethodTrue(string tenantId1, string principalId1, string tenantId2, string principalId2)
@@ -125,22 +85,6 @@ namespace Azure.ResourceManager.Tests
             SystemAssignedIdentity identity1 = new SystemAssignedIdentity();
             SystemAssignedIdentity identity2 = null;
             Assert.IsFalse(identity1.Equals(identity2));
-        }
-
-        [TestCase]
-        public void CompareToMethodBothIdentitiesEmpty()
-        {
-            SystemAssignedIdentity identity1 = new SystemAssignedIdentity();
-            SystemAssignedIdentity identity2 = new SystemAssignedIdentity();
-            Assert.AreEqual(0, identity1.CompareTo(identity2));
-        }
-
-        [TestCase]
-        public void CompareToMethodOneIdentityNull()
-        {
-            SystemAssignedIdentity identity1 = new SystemAssignedIdentity();
-            SystemAssignedIdentity identity2 = null;
-            Assert.AreEqual(1, identity1.CompareTo(identity2));
         }
 
         public JsonProperty DeserializerHelper(string filename)

@@ -14,7 +14,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Resources management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager -Version 1.0.0-beta.5
+Install-Package Azure.ResourceManager -Version 1.0.0-beta.7
 ```
 
 ### Prerequisites
@@ -39,6 +39,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 
 // Code omitted for brevity
 
@@ -138,13 +139,9 @@ However, keep in mind that some of those properties could be null. You can usual
 ### Example: ResourceIdentifier TryGet methods 
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-// Assume we don't know what type of resource id we have we can cast to the base type
 ResourceIdentifier id = new ResourceIdentifier(resourceId);
-string property;
-if (id.TryGetSubscriptionId(out property))
-    Console.WriteLine($"Subscription: {property}");
-if (id.TryGetResourceGroupName(out property))
-    Console.WriteLine($"ResourceGroup: {property}");
+Console.WriteLine($"Subscription: {id.SubscriptionId}");
+Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 // Parent is only null when we reach the top of the chain which is a Tenant
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 // Name will never be null
@@ -274,7 +271,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;

@@ -271,9 +271,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        [TestCase("FTPUCALXDWR")]
-        [TestCase("rwdxlacuptf")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [TestCase("IFTPUCALYXDWR")]
+        [TestCase("rwdxylacuptfi")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -288,6 +288,8 @@ namespace Azure.Storage.Blobs.Test
             };
 
             accountSasBuilder.SetPermissions(permissionsString);
+
+            Assert.AreEqual("rwdxylacuptfi", accountSasBuilder.Permissions);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
 
@@ -320,9 +322,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
-        [TestCase("TLXDWMECAR")]
-        [TestCase("racwdxltme")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [TestCase("IEMFTLYXDWCAR")]
+        [TestCase("racwdxyltfmei")]
         public async Task ContainerPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -338,6 +340,8 @@ namespace Azure.Storage.Blobs.Test
             blobSasBuilder.SetPermissions(
                 rawPermissions: permissionsString,
                 normalize: true);
+
+            Assert.AreEqual("racwdxyltfmei", blobSasBuilder.Permissions);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
 

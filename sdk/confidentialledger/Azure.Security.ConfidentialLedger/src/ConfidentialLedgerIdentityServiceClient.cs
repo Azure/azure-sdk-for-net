@@ -32,7 +32,7 @@ namespace Azure.Security.ConfidentialLedger
             }
             options ??= new ConfidentialLedgerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _identityServiceUri = identityServiceUri;
             _apiVersion = options.Version;
         }
