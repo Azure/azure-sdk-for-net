@@ -206,11 +206,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="manifestOrder"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual AsyncPageable<ArtifactManifestProperties> GetManifestPropertiesCollectionAsync(ArtifactManifestOrder manifestOrder = ArtifactManifestOrder.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactManifestProperties> GetAllManifestPropertiesAsync(ArtifactManifestOrder manifestOrder = ArtifactManifestOrder.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactManifestProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetAllManifestProperties)}");
                 scope.Start();
                 try
                 {
@@ -227,7 +227,7 @@ namespace Azure.Containers.ContainerRegistry
 
             async Task<Page<ArtifactManifestProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetAllManifestProperties)}");
                 scope.Start();
                 try
                 {
@@ -251,11 +251,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="manifestOrder"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Pageable<ArtifactManifestProperties> GetManifestPropertiesCollection(ArtifactManifestOrder manifestOrder = ArtifactManifestOrder.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactManifestProperties> GetAllManifestProperties(ArtifactManifestOrder manifestOrder = ArtifactManifestOrder.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactManifestProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetAllManifestProperties)}");
                 scope.Start();
                 try
                 {
@@ -272,7 +272,7 @@ namespace Azure.Containers.ContainerRegistry
 
             Page<ArtifactManifestProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetAllManifestProperties)}");
                 scope.Start();
                 try
                 {

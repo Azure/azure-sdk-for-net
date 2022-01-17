@@ -45,22 +45,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/>, <paramref name="scanName"/>, or <paramref name="credential"/> is null. </exception>
         public PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (scanName == null)
-            {
-                throw new ArgumentNullException(nameof(scanName));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
+            Argument.AssertNotNull(scanName, nameof(scanName));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -420,6 +408,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
@@ -560,6 +550,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
@@ -980,6 +972,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(runId, nameof(runId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
@@ -1044,6 +1038,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response RunScan(string runId, string scanLevel = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(runId, nameof(runId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
@@ -1107,6 +1103,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CancelScanAsync(string runId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(runId, nameof(runId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
@@ -1170,6 +1168,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CancelScan(string runId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(runId, nameof(runId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
@@ -1432,6 +1432,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CreateOrUpdateTriggerAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
@@ -1544,6 +1546,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CreateOrUpdateTrigger(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try

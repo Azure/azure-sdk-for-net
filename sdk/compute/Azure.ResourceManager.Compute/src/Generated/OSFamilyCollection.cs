@@ -33,9 +33,10 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of OSFamilyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OSFamilyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         internal OSFamilyCollection(ArmResource parent, string location) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -124,9 +125,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<OSFamily>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OSFamily>(null, response.GetRawResponse());
+                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,14 +147,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osFamilyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _cloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<OSFamily>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OSFamily>(null, response.GetRawResponse());
+                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osFamilyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Exists");
             scope.Start();
             try
             {

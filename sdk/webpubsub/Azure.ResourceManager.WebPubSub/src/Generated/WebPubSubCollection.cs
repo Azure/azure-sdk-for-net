@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WebPubSubCollection(ArmResource parent) : base(parent)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WebPubSubCreateOrUpdateOperation CreateOrUpdate(string resourceName, WebPubSubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebPubSubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebPubSubCreateOrUpdateOperation> CreateOrUpdateAsync(string resourceName, WebPubSubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebPubSubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceName == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<WebPubSub>(null, response.GetRawResponse())
-                    : Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<WebPubSub>(null, response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<WebPubSub>(null, response.GetRawResponse())
-                    : Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<WebPubSub>(null, response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {

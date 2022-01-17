@@ -18,7 +18,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Conta
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-AsyncPageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollectionAsync();
+AsyncPageable<ArtifactTagProperties> tags = image.GetAllTagPropertiesAsync();
 
 // Iterate through the image's tags, listing the tagged alias for the image
 Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 AzureADOnlyAuthentication = true,
             };
-            var adoAuth = await collection.CreateOrUpdateAsync(AuthenticationName.Default, data);
+            var adoAuth = await collection.CreateOrUpdateAsync(true, AuthenticationName.Default, data);
 
             // 2.CheckIfExist
             Assert.IsTrue(collection.Exists(adoAuthName));

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         InstanceFailoverGroup IOperationSource<InstanceFailoverGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new InstanceFailoverGroup(_operationBase, InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement));
+            var data = InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement);
+            return new InstanceFailoverGroup(_operationBase, data);
         }
 
         async ValueTask<InstanceFailoverGroup> IOperationSource<InstanceFailoverGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new InstanceFailoverGroup(_operationBase, InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement));
+            var data = InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement);
+            return new InstanceFailoverGroup(_operationBase, data);
         }
     }
 }

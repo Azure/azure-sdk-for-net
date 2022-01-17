@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             //now we can create a storage account with defined account name and parameters
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
+            StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
             StorageAccount storageAccount = accountCreateOperation.Value;
             #endregion
         }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_StorageAccounts_DeleteStorageAccount
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
-            await storageAccount.DeleteAsync();
+            await storageAccount.DeleteAsync(true);
             #endregion
         }
         [Test]

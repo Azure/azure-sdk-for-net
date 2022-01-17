@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-C-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
             Assert.AreEqual(templateSpecName, templateSpec.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().CreateOrUpdateAsync(null, templateSpecData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, null, templateSpecData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, null));
         }
 
         [TestCase]
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-L-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            _ = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
+            _ = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
             int count = 0;
             await foreach (var tempTemplateSpec in rg.GetTemplateSpecs().GetAllAsync())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-L-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
             int count = 0;
             await foreach (var tempTemplateSpec in subscription.GetTemplateSpecsAsync())
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
             TemplateSpec getTemplateSpec = await rg.GetTemplateSpecs().GetAsync(templateSpecName);
             AssertValidTemplateSpec(templateSpec, getTemplateSpec);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().GetAsync(null));

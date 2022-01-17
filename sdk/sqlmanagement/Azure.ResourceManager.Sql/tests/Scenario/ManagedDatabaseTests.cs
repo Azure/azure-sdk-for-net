@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 1.CreateOrUpdata
             ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2) { };
-            var database = await collection.CreateOrUpdateAsync(databaseName, data);
+            var database = await collection.CreateOrUpdateAsync(true, databaseName, data);
             Assert.IsNotNull(database.Value.Data);
             Assert.AreEqual(databaseName, database.Value.Data.Name);
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 5.Delete
             var deleteDatabase = await collection.GetAsync(databaseName);
-            await deleteDatabase.Value.DeleteAsync();
+            await deleteDatabase.Value.DeleteAsync(true);
             list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Resources.Models
         Deployment IOperationSource<Deployment>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Deployment(_operationBase, DeploymentData.DeserializeDeploymentData(document.RootElement));
+            var data = DeploymentData.DeserializeDeploymentData(document.RootElement);
+            return new Deployment(_operationBase, data);
         }
 
         async ValueTask<Deployment> IOperationSource<Deployment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Deployment(_operationBase, DeploymentData.DeserializeDeploymentData(document.RootElement));
+            var data = DeploymentData.DeserializeDeploymentData(document.RootElement);
+            return new Deployment(_operationBase, data);
         }
     }
 }

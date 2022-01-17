@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdRule IOperationSource<AfdRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdRule(_operationBase, AfdRuleData.DeserializeAfdRuleData(document.RootElement));
+            var data = AfdRuleData.DeserializeAfdRuleData(document.RootElement);
+            return new AfdRule(_operationBase, data);
         }
 
         async ValueTask<AfdRule> IOperationSource<AfdRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdRule(_operationBase, AfdRuleData.DeserializeAfdRuleData(document.RootElement));
+            var data = AfdRuleData.DeserializeAfdRuleData(document.RootElement);
+            return new AfdRule(_operationBase, data);
         }
     }
 }

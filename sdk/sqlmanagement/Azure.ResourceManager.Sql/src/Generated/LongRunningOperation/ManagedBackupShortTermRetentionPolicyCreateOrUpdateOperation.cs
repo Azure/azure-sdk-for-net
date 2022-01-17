@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedInstanceDatabaseBackupShortTermRetentionPolicy IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
+            var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
+            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(_operationBase, data);
         }
 
         async ValueTask<ManagedInstanceDatabaseBackupShortTermRetentionPolicy> IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(_operationBase, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement));
+            var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
+            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(_operationBase, data);
         }
     }
 }

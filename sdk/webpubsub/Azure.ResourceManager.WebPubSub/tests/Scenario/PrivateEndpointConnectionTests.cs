@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                     new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
                 },
             };
-            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(_vnetName, vnetData);
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(true, _vnetName, vnetData);
             _vnet = vnetLro.Value;
 
             await StopSessionRecordingAsync();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var privateEndpointList = await _resourceGroup.GetPrivateEndpoints().GetAllAsync().ToEnumerableAsync();
             foreach (var item in privateEndpointList)
             {
-                await (await item.DeleteAsync()).WaitForCompletionResponseAsync();
+                await (await item.DeleteAsync(true)).WaitForCompletionResponseAsync();
             }
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 },
             };
             var privateEndPointContainer = _resourceGroup.GetPrivateEndpoints();
-            var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
+            var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(true, privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
         }
 
         [Test]
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.AreEqual(1, list.Count);
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
             list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);

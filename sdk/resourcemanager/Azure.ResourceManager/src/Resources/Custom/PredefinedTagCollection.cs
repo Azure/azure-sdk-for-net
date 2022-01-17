@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class PredefinedTagCollection : ArmCollection, IEnumerable<PredefinedTag>, IAsyncEnumerable<PredefinedTag>
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private TagRestOperations _restClient;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly TagRestOperations _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PredefinedTagCollection"/> class for mocking.
@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Resources
         internal PredefinedTagCollection(ClientContext clientContext, ResourceIdentifier parentId)
             : base(clientContext, parentId)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            ClientOptions.TryGetApiVersion(TagResource.ResourceType, out var version);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -49,24 +52,17 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Gets the operations that can be performed on the collection.
-        /// </summary>
-        private TagRestOperations RestClient => _restClient ??= new TagRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
-
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<PredefinedTagCreateOrUpdateOperation> CreateOrUpdateAsync(string tagName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTagCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.CreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
                 var operation = new PredefinedTagCreateOrUpdateOperation(this, originalResponse);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -85,11 +81,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual PredefinedTagCreateOrUpdateOperation CreateOrUpdate(string tagName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTagCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdate(tagName, cancellationToken);
+                var originalResponse = _restClient.CreateOrUpdate(tagName, cancellationToken);
                 var operation = new PredefinedTagCreateOrUpdateOperation(this, originalResponse);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -108,11 +104,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<PredefinedTag>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
+                using var scope0 = _clientDiagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListAsync(cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new PredefinedTag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -123,11 +119,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<PredefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
+                using var scope0 = _clientDiagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new PredefinedTag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -145,11 +141,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<PredefinedTag> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
+                using var scope0 = _clientDiagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
-                    var response = RestClient.List(cancellationToken);
+                    var response = _restClient.List(cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new PredefinedTag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -160,11 +156,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<PredefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
+                using var scope0 = _clientDiagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
+                    var response = _restClient.ListNextPage(nextLink, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new PredefinedTag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

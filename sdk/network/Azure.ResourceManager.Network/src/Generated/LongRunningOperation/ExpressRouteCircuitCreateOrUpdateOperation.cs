@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteCircuit IOperationSource<ExpressRouteCircuit>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteCircuit(_operationBase, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(document.RootElement));
+            var data = ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(document.RootElement);
+            return new ExpressRouteCircuit(_operationBase, data);
         }
 
         async ValueTask<ExpressRouteCircuit> IOperationSource<ExpressRouteCircuit>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteCircuit(_operationBase, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(document.RootElement));
+            var data = ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(document.RootElement);
+            return new ExpressRouteCircuit(_operationBase, data);
         }
     }
 }

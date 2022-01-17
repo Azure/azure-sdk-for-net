@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of the <see cref = "DatabaseAccount"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DatabaseAccount(ArmResource options, DatabaseAccountData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DatabaseAccount(ArmResource options, DatabaseAccountData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _databaseAccountsRestClient = new DatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -191,7 +191,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -199,13 +209,23 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB database account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseAccountDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.Delete");
             scope.Start();
@@ -227,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Deletes an existing Azure Cosmos DB database account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseAccountDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.Delete");
             scope.Start();
@@ -255,7 +275,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.AddTag");
@@ -284,7 +304,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.AddTag");
@@ -312,7 +332,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.SetTags");
@@ -341,7 +361,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.SetTags");
@@ -370,7 +390,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.RemoveTag");
@@ -398,7 +418,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.RemoveTag");
@@ -423,7 +443,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateParameters"/> is null. </exception>
-        public async virtual Task<DatabaseAccountUpdateOperation> UpdateAsync(DatabaseAccountUpdateOptions updateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountUpdateOperation> UpdateAsync(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
         {
             if (updateParameters == null)
             {
@@ -452,7 +472,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateParameters"/> is null. </exception>
-        public virtual DatabaseAccountUpdateOperation Update(DatabaseAccountUpdateOptions updateParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountUpdateOperation Update(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
         {
             if (updateParameters == null)
             {
@@ -481,7 +501,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
-        public async virtual Task<DatabaseAccountFailoverPriorityChangeOperation> FailoverPriorityChangeAsync(FailoverPolicies failoverParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountFailoverPriorityChangeOperation> FailoverPriorityChangeAsync(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
             if (failoverParameters == null)
             {
@@ -510,7 +530,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
-        public virtual DatabaseAccountFailoverPriorityChangeOperation FailoverPriorityChange(FailoverPolicies failoverParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountFailoverPriorityChangeOperation FailoverPriorityChange(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
             if (failoverParameters == null)
             {
@@ -611,7 +631,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOffline"/> is null. </exception>
-        public async virtual Task<DatabaseAccountOfflineRegionOperation> OfflineRegionAsync(RegionForOnlineOffline regionParameterForOffline, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountOfflineRegionOperation> OfflineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOffline == null)
             {
@@ -640,7 +660,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOffline"/> is null. </exception>
-        public virtual DatabaseAccountOfflineRegionOperation OfflineRegion(RegionForOnlineOffline regionParameterForOffline, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountOfflineRegionOperation OfflineRegion(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOffline == null)
             {
@@ -669,7 +689,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOnline"/> is null. </exception>
-        public async virtual Task<DatabaseAccountOnlineRegionOperation> OnlineRegionAsync(RegionForOnlineOffline regionParameterForOnline, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountOnlineRegionOperation> OnlineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOnline == null)
             {
@@ -698,7 +718,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOnline"/> is null. </exception>
-        public virtual DatabaseAccountOnlineRegionOperation OnlineRegion(RegionForOnlineOffline regionParameterForOnline, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountOnlineRegionOperation OnlineRegion(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOnline == null)
             {
@@ -763,7 +783,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public async virtual Task<DatabaseAccountRegenerateKeyOperation> RegenerateKeyAsync(DatabaseAccountRegenerateKeyOptions keyToRegenerate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountRegenerateKeyOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
         {
             if (keyToRegenerate == null)
             {
@@ -792,7 +812,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public virtual DatabaseAccountRegenerateKeyOperation RegenerateKey(DatabaseAccountRegenerateKeyOptions keyToRegenerate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountRegenerateKeyOperation RegenerateKey(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
         {
             if (keyToRegenerate == null)
             {

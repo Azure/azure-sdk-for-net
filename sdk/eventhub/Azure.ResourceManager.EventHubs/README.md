@@ -61,7 +61,7 @@ Then we can create a namespace inside this resource group.
 string namespaceName = "myNamespace";
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
 AzureLocation location = AzureLocation.EastUS2;
-EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
@@ -102,7 +102,7 @@ if (await namespaceCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_Namespaces_DeleteNamespace
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
 EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-await eventHubNamespace.DeleteAsync();
+await eventHubNamespace.DeleteAsync(true);
 ```
 
 ### Add a tag to the namespace

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         Profile IOperationSource<Profile>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Profile(_operationBase, ProfileData.DeserializeProfileData(document.RootElement));
+            var data = ProfileData.DeserializeProfileData(document.RootElement);
+            return new Profile(_operationBase, data);
         }
 
         async ValueTask<Profile> IOperationSource<Profile>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Profile(_operationBase, ProfileData.DeserializeProfileData(document.RootElement));
+            var data = ProfileData.DeserializeProfileData(document.RootElement);
+            return new Profile(_operationBase, data);
         }
     }
 }

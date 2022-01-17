@@ -325,6 +325,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateGlossaryAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
@@ -461,6 +463,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateGlossary(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
@@ -605,6 +609,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
@@ -749,6 +755,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateGlossaryCategories(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
@@ -893,6 +901,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateGlossaryCategoryAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
@@ -1037,6 +1047,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateGlossaryCategory(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
@@ -1125,6 +1137,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
@@ -1213,6 +1227,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryCategory(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
@@ -1358,6 +1374,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
@@ -1503,6 +1522,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
@@ -1535,6 +1557,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
@@ -1567,6 +1591,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
@@ -1656,6 +1682,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
@@ -1745,6 +1774,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
@@ -1789,6 +1821,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
@@ -1833,6 +1867,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
@@ -1880,6 +1916,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
@@ -1927,6 +1965,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
@@ -2162,6 +2202,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
@@ -2397,6 +2439,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateGlossaryTerm(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
@@ -2531,6 +2575,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
@@ -2665,6 +2711,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
@@ -2900,6 +2948,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
@@ -3135,6 +3186,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
@@ -3167,6 +3221,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
@@ -3199,6 +3255,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
@@ -3334,6 +3392,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
@@ -3469,6 +3530,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
@@ -3704,6 +3768,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
@@ -3939,6 +4005,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateGlossaryTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
@@ -3991,6 +4059,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
@@ -4043,6 +4113,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
@@ -4093,6 +4165,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
@@ -4143,6 +4218,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AssignTermToEntities(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
@@ -4193,6 +4271,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
@@ -4243,6 +4324,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
@@ -4293,6 +4377,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
@@ -4343,6 +4430,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
@@ -4390,6 +4480,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
@@ -4437,6 +4529,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(termGuid, nameof(termGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
@@ -4521,6 +4615,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
@@ -4605,6 +4701,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossary(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
@@ -4742,6 +4840,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
@@ -4879,6 +4980,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateGlossary(string glossaryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
@@ -4911,6 +5015,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
@@ -4943,6 +5049,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossary(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
@@ -5034,6 +5142,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
@@ -5125,6 +5235,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
@@ -5169,6 +5281,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
@@ -5213,6 +5327,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
@@ -5300,6 +5416,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
@@ -5387,6 +5505,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
@@ -5473,6 +5593,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
@@ -5559,6 +5682,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
@@ -5696,6 +5822,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
@@ -5833,6 +5961,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
@@ -5880,6 +6010,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
@@ -5927,6 +6059,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
@@ -5975,6 +6109,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(operationGuid, nameof(operationGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
@@ -6023,6 +6159,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(operationGuid, nameof(operationGuid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
@@ -6047,6 +6185,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
@@ -6071,6 +6212,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
@@ -6207,6 +6351,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
@@ -6343,6 +6489,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
@@ -6394,6 +6542,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
@@ -6445,6 +6596,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
@@ -6496,6 +6650,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try
@@ -6547,6 +6704,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try

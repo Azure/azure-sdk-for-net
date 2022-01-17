@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionAsync(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Cdn
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWithSubscription");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckCdnNameAvailabilityWithSubscription");
                 scope.Start();
                 try
                 {
                     var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityWithSubscriptionAsync(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.CheckCdnNameAvailabilityWithSubscriptionAsync(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscription(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWithSubscription");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckCdnNameAvailabilityWithSubscription");
                 scope.Start();
                 try
                 {
                     var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.CheckNameAvailabilityWithSubscription(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken);
+                    var response = restOperations.CheckCdnNameAvailabilityWithSubscription(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
