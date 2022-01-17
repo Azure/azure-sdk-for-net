@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCheckAppServiceNameAvailabilityRequest(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateCheckAppServiceNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
-        public Response<ResourceNameAvailability> CheckAppServiceNameAvailability(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateCheckAppServiceNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
