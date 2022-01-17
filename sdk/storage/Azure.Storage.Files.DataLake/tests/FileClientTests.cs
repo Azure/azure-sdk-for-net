@@ -523,6 +523,24 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task ExistsAsync_CPK()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
+            await file.CreateAsync();
+
+            // Act
+            Response<bool> response = await file.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [RecordedTest]
         public async Task DeleteIfExists_Exists()
         {
             // Arrange
