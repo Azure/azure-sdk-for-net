@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Resources.Models
         Application IOperationSource<Application>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Application(_operationBase, ApplicationData.DeserializeApplicationData(document.RootElement));
+            var data = ApplicationData.DeserializeApplicationData(document.RootElement);
+            return new Application(_operationBase, data);
         }
 
         async ValueTask<Application> IOperationSource<Application>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Application(_operationBase, ApplicationData.DeserializeApplicationData(document.RootElement));
+            var data = ApplicationData.DeserializeApplicationData(document.RootElement);
+            return new Application(_operationBase, data);
         }
     }
 }

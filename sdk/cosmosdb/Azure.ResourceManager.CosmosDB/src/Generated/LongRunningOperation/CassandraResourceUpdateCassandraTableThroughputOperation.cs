@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         DatabaseAccountCassandraKeyspaceTableThroughputSetting IOperationSource<DatabaseAccountCassandraKeyspaceTableThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
+            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(_operationBase, data);
         }
 
         async ValueTask<DatabaseAccountCassandraKeyspaceTableThroughputSetting> IOperationSource<DatabaseAccountCassandraKeyspaceTableThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
+            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(_operationBase, data);
         }
     }
 }

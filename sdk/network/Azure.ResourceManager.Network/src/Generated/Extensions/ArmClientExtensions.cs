@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGateway" /> object. </returns>
         public static ApplicationGateway GetApplicationGateway(this ArmClient armClient, ResourceIdentifier id)
         {
+            ApplicationGateway.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationGateway(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
         public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this ArmClient armClient, ResourceIdentifier id)
         {
+            ApplicationGatewayAvailableSslOptions.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationGatewayAvailableSslOptions(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewaySslPredefinedPolicy" /> object. </returns>
         public static ApplicationGatewaySslPredefinedPolicy GetApplicationGatewaySslPredefinedPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ApplicationGatewaySslPredefinedPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationGatewaySslPredefinedPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewayPrivateEndpointConnection" /> object. </returns>
         public static ApplicationGatewayPrivateEndpointConnection GetApplicationGatewayPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            ApplicationGatewayPrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationGatewayPrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationSecurityGroup" /> object. </returns>
         public static ApplicationSecurityGroup GetApplicationSecurityGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            ApplicationSecurityGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationSecurityGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="AzureFirewall" /> object. </returns>
         public static AzureFirewall GetAzureFirewall(this ArmClient armClient, ResourceIdentifier id)
         {
+            AzureFirewall.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AzureFirewall(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="AzureWebCategory" /> object. </returns>
         public static AzureWebCategory GetAzureWebCategory(this ArmClient armClient, ResourceIdentifier id)
         {
+            AzureWebCategory.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AzureWebCategory(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -97,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BastionHost" /> object. </returns>
         public static BastionHost GetBastionHost(this ArmClient armClient, ResourceIdentifier id)
         {
+            BastionHost.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new BastionHost(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -108,6 +116,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="CustomIpPrefix" /> object. </returns>
         public static CustomIpPrefix GetCustomIpPrefix(this ArmClient armClient, ResourceIdentifier id)
         {
+            CustomIpPrefix.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CustomIpPrefix(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -119,6 +128,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DdosCustomPolicy" /> object. </returns>
         public static DdosCustomPolicy GetDdosCustomPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            DdosCustomPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DdosCustomPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -130,6 +140,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DdosProtectionPlan" /> object. </returns>
         public static DdosProtectionPlan GetDdosProtectionPlan(this ArmClient armClient, ResourceIdentifier id)
         {
+            DdosProtectionPlan.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DdosProtectionPlan(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DscpConfiguration" /> object. </returns>
         public static DscpConfiguration GetDscpConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
+            DscpConfiguration.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DscpConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -152,6 +164,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorization" /> object. </returns>
         public static ExpressRouteCircuitAuthorization GetExpressRouteCircuitAuthorization(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteCircuitAuthorization.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteCircuitAuthorization(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -163,6 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitPeering" /> object. </returns>
         public static ExpressRouteCircuitPeering GetExpressRouteCircuitPeering(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteCircuitPeering.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteCircuitPeering(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -174,6 +188,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitConnection" /> object. </returns>
         public static ExpressRouteCircuitConnection GetExpressRouteCircuitConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteCircuitConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteCircuitConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -185,6 +200,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnection" /> object. </returns>
         public static PeerExpressRouteCircuitConnection GetPeerExpressRouteCircuitConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PeerExpressRouteCircuitConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PeerExpressRouteCircuitConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -196,6 +212,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuit" /> object. </returns>
         public static ExpressRouteCircuit GetExpressRouteCircuit(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteCircuit.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteCircuit(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -207,6 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCrossConnection" /> object. </returns>
         public static ExpressRouteCrossConnection GetExpressRouteCrossConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteCrossConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteCrossConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -218,6 +236,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeering" /> object. </returns>
         public static ExpressRouteCrossConnectionPeering GetExpressRouteCrossConnectionPeering(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteCrossConnectionPeering.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteCrossConnectionPeering(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -229,6 +248,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRoutePortsLocation" /> object. </returns>
         public static ExpressRoutePortsLocation GetExpressRoutePortsLocation(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRoutePortsLocation.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRoutePortsLocation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -240,6 +260,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRoutePort" /> object. </returns>
         public static ExpressRoutePort GetExpressRoutePort(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRoutePort.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRoutePort(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -251,6 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteLink" /> object. </returns>
         public static ExpressRouteLink GetExpressRouteLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -262,6 +284,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FirewallPolicy" /> object. </returns>
         public static FirewallPolicy GetFirewallPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            FirewallPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new FirewallPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -273,6 +296,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroup" /> object. </returns>
         public static FirewallPolicyRuleCollectionGroup GetFirewallPolicyRuleCollectionGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            FirewallPolicyRuleCollectionGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new FirewallPolicyRuleCollectionGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -284,6 +308,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="IpAllocation" /> object. </returns>
         public static IpAllocation GetIpAllocation(this ArmClient armClient, ResourceIdentifier id)
         {
+            IpAllocation.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new IpAllocation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -295,6 +320,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="IpGroup" /> object. </returns>
         public static IpGroup GetIpGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            IpGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new IpGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -306,6 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LoadBalancer" /> object. </returns>
         public static LoadBalancer GetLoadBalancer(this ArmClient armClient, ResourceIdentifier id)
         {
+            LoadBalancer.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LoadBalancer(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -317,6 +344,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BackendAddressPool" /> object. </returns>
         public static BackendAddressPool GetBackendAddressPool(this ArmClient armClient, ResourceIdentifier id)
         {
+            BackendAddressPool.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new BackendAddressPool(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -328,6 +356,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FrontendIPConfiguration" /> object. </returns>
         public static FrontendIPConfiguration GetFrontendIPConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
+            FrontendIPConfiguration.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new FrontendIPConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -339,6 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="InboundNatRule" /> object. </returns>
         public static InboundNatRule GetInboundNatRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            InboundNatRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new InboundNatRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -350,6 +380,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LoadBalancingRule" /> object. </returns>
         public static LoadBalancingRule GetLoadBalancingRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            LoadBalancingRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LoadBalancingRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -361,6 +392,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="OutboundRule" /> object. </returns>
         public static OutboundRule GetOutboundRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            OutboundRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OutboundRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -372,6 +404,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="Probe" /> object. </returns>
         public static Probe GetProbe(this ArmClient armClient, ResourceIdentifier id)
         {
+            Probe.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Probe(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -383,6 +416,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NatGateway" /> object. </returns>
         public static NatGateway GetNatGateway(this ArmClient armClient, ResourceIdentifier id)
         {
+            NatGateway.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NatGateway(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -394,6 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterface" /> object. </returns>
         public static NetworkInterface GetNetworkInterface(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkInterface.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkInterface(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -405,6 +440,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceIPConfiguration" /> object. </returns>
         public static NetworkInterfaceIPConfiguration GetNetworkInterfaceIPConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkInterfaceIPConfiguration.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkInterfaceIPConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -416,6 +452,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceTapConfiguration" /> object. </returns>
         public static NetworkInterfaceTapConfiguration GetNetworkInterfaceTapConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkInterfaceTapConfiguration.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkInterfaceTapConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -427,6 +464,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkProfile" /> object. </returns>
         public static NetworkProfile GetNetworkProfile(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkProfile.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkProfile(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -438,6 +476,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkSecurityGroup" /> object. </returns>
         public static NetworkSecurityGroup GetNetworkSecurityGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkSecurityGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkSecurityGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -449,6 +488,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SecurityRule" /> object. </returns>
         public static SecurityRule GetSecurityRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            SecurityRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SecurityRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -460,6 +500,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DefaultSecurityRule" /> object. </returns>
         public static DefaultSecurityRule GetDefaultSecurityRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            DefaultSecurityRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DefaultSecurityRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -471,6 +512,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkVirtualAppliance" /> object. </returns>
         public static NetworkVirtualAppliance GetNetworkVirtualAppliance(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkVirtualAppliance.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkVirtualAppliance(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -482,6 +524,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualApplianceSite" /> object. </returns>
         public static VirtualApplianceSite GetVirtualApplianceSite(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualApplianceSite.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualApplianceSite(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -493,6 +536,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkVirtualApplianceSku" /> object. </returns>
         public static NetworkVirtualApplianceSku GetNetworkVirtualApplianceSku(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkVirtualApplianceSku.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkVirtualApplianceSku(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -504,6 +548,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkWatcher" /> object. </returns>
         public static NetworkWatcher GetNetworkWatcher(this ArmClient armClient, ResourceIdentifier id)
         {
+            NetworkWatcher.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkWatcher(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -515,6 +560,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PacketCapture" /> object. </returns>
         public static PacketCapture GetPacketCapture(this ArmClient armClient, ResourceIdentifier id)
         {
+            PacketCapture.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PacketCapture(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -526,6 +572,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ConnectionMonitor" /> object. </returns>
         public static ConnectionMonitor GetConnectionMonitor(this ArmClient armClient, ResourceIdentifier id)
         {
+            ConnectionMonitor.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ConnectionMonitor(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -537,6 +584,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FlowLog" /> object. </returns>
         public static FlowLog GetFlowLog(this ArmClient armClient, ResourceIdentifier id)
         {
+            FlowLog.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new FlowLog(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -548,6 +596,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateEndpoint" /> object. </returns>
         public static PrivateEndpoint GetPrivateEndpoint(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpoint.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpoint(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -559,6 +608,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateDnsZoneGroup" /> object. </returns>
         public static PrivateDnsZoneGroup GetPrivateDnsZoneGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateDnsZoneGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateDnsZoneGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -570,6 +620,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateLinkService" /> object. </returns>
         public static PrivateLinkService GetPrivateLinkService(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateLinkService.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkService(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -581,6 +632,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -592,6 +644,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PublicIPAddress" /> object. </returns>
         public static PublicIPAddress GetPublicIPAddress(this ArmClient armClient, ResourceIdentifier id)
         {
+            PublicIPAddress.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PublicIPAddress(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -603,6 +656,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PublicIPPrefix" /> object. </returns>
         public static PublicIPPrefix GetPublicIPPrefix(this ArmClient armClient, ResourceIdentifier id)
         {
+            PublicIPPrefix.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PublicIPPrefix(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -614,6 +668,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteFilter" /> object. </returns>
         public static RouteFilter GetRouteFilter(this ArmClient armClient, ResourceIdentifier id)
         {
+            RouteFilter.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RouteFilter(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -625,6 +680,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteFilterRule" /> object. </returns>
         public static RouteFilterRule GetRouteFilterRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            RouteFilterRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RouteFilterRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -636,6 +692,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteTable" /> object. </returns>
         public static RouteTable GetRouteTable(this ArmClient armClient, ResourceIdentifier id)
         {
+            RouteTable.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RouteTable(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -647,6 +704,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="Route" /> object. </returns>
         public static Route GetRoute(this ArmClient armClient, ResourceIdentifier id)
         {
+            Route.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Route(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -658,6 +716,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SecurityPartnerProvider" /> object. </returns>
         public static SecurityPartnerProvider GetSecurityPartnerProvider(this ArmClient armClient, ResourceIdentifier id)
         {
+            SecurityPartnerProvider.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SecurityPartnerProvider(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -669,6 +728,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ServiceEndpointPolicy" /> object. </returns>
         public static ServiceEndpointPolicy GetServiceEndpointPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServiceEndpointPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceEndpointPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -680,6 +740,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinition" /> object. </returns>
         public static ServiceEndpointPolicyDefinition GetServiceEndpointPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            ServiceEndpointPolicyDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceEndpointPolicyDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -691,6 +752,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
         public static VirtualNetwork GetVirtualNetwork(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualNetwork.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetwork(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -702,6 +764,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="Subnet" /> object. </returns>
         public static Subnet GetSubnet(this ArmClient armClient, ResourceIdentifier id)
         {
+            Subnet.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Subnet(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -713,6 +776,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkPeering" /> object. </returns>
         public static VirtualNetworkPeering GetVirtualNetworkPeering(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualNetworkPeering.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetworkPeering(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -724,6 +788,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGateway" /> object. </returns>
         public static VirtualNetworkGateway GetVirtualNetworkGateway(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualNetworkGateway.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetworkGateway(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -735,6 +800,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGatewayConnection" /> object. </returns>
         public static VirtualNetworkGatewayConnection GetVirtualNetworkGatewayConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualNetworkGatewayConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetworkGatewayConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -746,6 +812,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LocalNetworkGateway" /> object. </returns>
         public static LocalNetworkGateway GetLocalNetworkGateway(this ArmClient armClient, ResourceIdentifier id)
         {
+            LocalNetworkGateway.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LocalNetworkGateway(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -757,6 +824,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGatewayNatRule" /> object. </returns>
         public static VirtualNetworkGatewayNatRule GetVirtualNetworkGatewayNatRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualNetworkGatewayNatRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetworkGatewayNatRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -768,6 +836,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkTap" /> object. </returns>
         public static VirtualNetworkTap GetVirtualNetworkTap(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualNetworkTap.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetworkTap(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -779,6 +848,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualRouter" /> object. </returns>
         public static VirtualRouter GetVirtualRouter(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualRouter.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualRouter(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -790,6 +860,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualRouterPeering" /> object. </returns>
         public static VirtualRouterPeering GetVirtualRouterPeering(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualRouterPeering.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualRouterPeering(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -801,6 +872,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualWAN" /> object. </returns>
         public static VirtualWAN GetVirtualWAN(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualWAN.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualWAN(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -812,6 +884,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSite" /> object. </returns>
         public static VpnSite GetVpnSite(this ArmClient armClient, ResourceIdentifier id)
         {
+            VpnSite.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnSite(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -823,6 +896,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSiteLink" /> object. </returns>
         public static VpnSiteLink GetVpnSiteLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            VpnSiteLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnSiteLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -834,6 +908,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnServerConfiguration" /> object. </returns>
         public static VpnServerConfiguration GetVpnServerConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
+            VpnServerConfiguration.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnServerConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -845,6 +920,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualHub" /> object. </returns>
         public static VirtualHub GetVirtualHub(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualHub.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualHub(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -856,6 +932,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubVirtualNetworkConnection" /> object. </returns>
         public static HubVirtualNetworkConnection GetHubVirtualNetworkConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            HubVirtualNetworkConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new HubVirtualNetworkConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -867,6 +944,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnGateway" /> object. </returns>
         public static VpnGateway GetVpnGateway(this ArmClient armClient, ResourceIdentifier id)
         {
+            VpnGateway.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnGateway(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -878,6 +956,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnConnection" /> object. </returns>
         public static VpnConnection GetVpnConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            VpnConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -889,6 +968,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSiteLinkConnection" /> object. </returns>
         public static VpnSiteLinkConnection GetVpnSiteLinkConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            VpnSiteLinkConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnSiteLinkConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -900,6 +980,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnGatewayNatRule" /> object. </returns>
         public static VpnGatewayNatRule GetVpnGatewayNatRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            VpnGatewayNatRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VpnGatewayNatRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -911,6 +992,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="P2SVpnGateway" /> object. </returns>
         public static P2SVpnGateway GetP2SVpnGateway(this ArmClient armClient, ResourceIdentifier id)
         {
+            P2SVpnGateway.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new P2SVpnGateway(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -922,6 +1004,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualHubRouteTableV2" /> object. </returns>
         public static VirtualHubRouteTableV2 GetVirtualHubRouteTableV2(this ArmClient armClient, ResourceIdentifier id)
         {
+            VirtualHubRouteTableV2.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualHubRouteTableV2(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -933,6 +1016,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteGateway" /> object. </returns>
         public static ExpressRouteGateway GetExpressRouteGateway(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteGateway.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteGateway(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -944,6 +1028,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteConnection" /> object. </returns>
         public static ExpressRouteConnection GetExpressRouteConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -955,6 +1040,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BgpConnection" /> object. </returns>
         public static BgpConnection GetBgpConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            BgpConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new BgpConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -966,6 +1052,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubIpConfiguration" /> object. </returns>
         public static HubIpConfiguration GetHubIpConfiguration(this ArmClient armClient, ResourceIdentifier id)
         {
+            HubIpConfiguration.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new HubIpConfiguration(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -977,6 +1064,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubRouteTable" /> object. </returns>
         public static HubRouteTable GetHubRouteTable(this ArmClient armClient, ResourceIdentifier id)
         {
+            HubRouteTable.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new HubRouteTable(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -988,6 +1076,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="WebApplicationFirewallPolicy" /> object. </returns>
         public static WebApplicationFirewallPolicy GetWebApplicationFirewallPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            WebApplicationFirewallPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebApplicationFirewallPolicy(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

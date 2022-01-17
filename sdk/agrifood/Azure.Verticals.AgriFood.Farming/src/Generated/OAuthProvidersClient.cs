@@ -41,14 +41,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public OAuthProvidersClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -99,6 +93,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetOAuthProviderAsync(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.GetOAuthProvider");
             scope.Start();
             try
@@ -154,6 +150,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetOAuthProvider(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.GetOAuthProvider");
             scope.Start();
             try
@@ -225,6 +223,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string oauthProviderId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -296,6 +296,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string oauthProviderId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -336,6 +338,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();
             try
@@ -376,6 +380,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();
             try

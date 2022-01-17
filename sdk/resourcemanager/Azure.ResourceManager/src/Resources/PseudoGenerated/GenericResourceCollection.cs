@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class GenericResourceCollection : ArmCollection, IEnumerable<GenericResource>, IAsyncEnumerable<GenericResource>
     {
-        private ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ProviderCollection _providerCollection;
+        private readonly ResourcesRestOperations _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceCollection"/> class for mocking.
@@ -36,34 +38,11 @@ namespace Azure.ResourceManager.Resources
         internal GenericResourceCollection(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            ResourceIdentifier subscription = Id.GetSubscriptionResourceIdentifier();
+            _providerCollection = new ProviderCollection(this, subscription);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subscription?.SubscriptionId ?? Guid.Empty.ToString(), BaseUri);
         }
-
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-        }
-
-        private ResourcesRestOperations RestClient
-        {
-            get
-            {
-                string subscription = Id.SubscriptionId;
-                if (subscription == null)
-                    subscription = Guid.Empty.ToString();
-
-                return new ResourcesRestOperations(
-                    Diagnostics,
-                    Pipeline,
-                    ClientOptions,
-                    subscription,
-                    BaseUri);
-            }
-        }
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets details for this resource from the service.
@@ -74,14 +53,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceId cannot be null or a whitespace. </exception>
         public Response<GenericResource> Get(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.Get");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
-                var result = RestClient.GetById(resourceId, apiVersion, cancellationToken);
+                var result = _restClient.GetById(resourceId, apiVersion, cancellationToken);
                 if (result.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(result.GetRawResponse());
 
                 return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
@@ -101,14 +80,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceId cannot be null or a whitespace. </exception>
         public virtual async Task<Response<GenericResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.Get");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
-                var response = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new GenericResource(this, response), response.GetRawResponse());
             }
@@ -128,11 +107,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(filter, expand, top, cancellationToken);
+                    var response = _restClient.List(filter, expand, top, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -143,11 +122,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, filter, expand, top, cancellationToken);
+                    var response = _restClient.ListNextPage(nextLink, filter, expand, top, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -168,11 +147,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(filter, expand, top, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListAsync(filter, expand, top, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -183,11 +162,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, filter, expand, top, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListNextPageAsync(nextLink, filter, expand, top, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -215,11 +194,11 @@ namespace Azure.ResourceManager.Resources
 
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByResourceGroup(resourceGroupName, filter, expand, top, cancellationToken);
+                    var response = _restClient.ListByResourceGroup(resourceGroupName, filter, expand, top, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -230,11 +209,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, filter, expand, top, cancellationToken);
+                    var response = _restClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, filter, expand, top, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -262,11 +241,11 @@ namespace Azure.ResourceManager.Resources
 
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByResourceGroupAsync(resourceGroupName, filter, expand, top, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListByResourceGroupAsync(resourceGroupName, filter, expand, top, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -277,11 +256,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, filter, expand, top, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, filter, expand, top, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -310,13 +289,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
-                var originalResponse = RestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
-                var operation = new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                var originalResponse = _restClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
+                var operation = new ResourceCreateOrUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -345,13 +324,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                var originalResponse = await _restClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceCreateOrUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -365,7 +344,7 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersion(ResourceIdentifier resourceId, CancellationToken cancellationToken)
         {
-            string version = ClientOptions.ApiVersions.TryGetApiVersion(resourceId.ResourceType, cancellationToken);
+            string version = _providerCollection.TryGetApiVersion(resourceId.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {resourceId}");
@@ -375,7 +354,7 @@ namespace Azure.ResourceManager.Resources
 
         private async Task<string> GetApiVersionAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken)
         {
-            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
+            string version = await _providerCollection.TryGetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {resourceId}");
@@ -392,13 +371,13 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<GenericResource> GetIfExists(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExists");
             scope.Start();
 
             try
             {
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
-                var response = RestClient.GetById(resourceId, apiVersion, cancellationToken);
+                var response = _restClient.GetById(resourceId, apiVersion, cancellationToken);
                 return response.Value == null
                    ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
                    : Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
@@ -419,13 +398,13 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<GenericResource>> GetIfExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExists");
             scope.Start();
 
             try
             {
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
-                var response = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                    ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
                    : Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
@@ -446,7 +425,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -470,7 +449,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.CheckIfExists");
             scope.Start();
 
             try

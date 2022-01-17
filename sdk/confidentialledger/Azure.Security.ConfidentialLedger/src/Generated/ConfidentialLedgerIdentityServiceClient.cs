@@ -57,6 +57,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(ledgerId, nameof(ledgerId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try
@@ -97,6 +99,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(ledgerId, nameof(ledgerId));
+
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try

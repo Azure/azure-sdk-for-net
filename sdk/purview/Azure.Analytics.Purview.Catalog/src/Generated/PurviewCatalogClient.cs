@@ -38,14 +38,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewCatalogClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -112,6 +106,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
@@ -183,6 +179,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Search(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
@@ -227,6 +225,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
@@ -271,6 +271,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Suggest(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
@@ -317,6 +319,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> BrowseAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
             try
@@ -363,6 +367,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Browse(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
             try
@@ -407,6 +413,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
@@ -451,6 +459,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try

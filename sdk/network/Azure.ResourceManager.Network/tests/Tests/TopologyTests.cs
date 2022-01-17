@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create NetworkWatcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync(resourceGroupName2, networkWatcherName, properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName2, networkWatcherName, properties);
 
             TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };
 

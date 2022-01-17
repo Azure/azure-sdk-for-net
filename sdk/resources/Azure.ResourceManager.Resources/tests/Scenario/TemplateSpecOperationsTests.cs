@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
-            await templateSpec.DeleteAsync();
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
+            await templateSpec.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await templateSpec.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

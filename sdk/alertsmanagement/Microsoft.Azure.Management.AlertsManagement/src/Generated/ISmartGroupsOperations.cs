@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SmartGroup>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string smartGroupState = default(string), string timeRange = default(string), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SmartGroup>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string smartGroupState = default(string), string timeRange = default(string), long? pageCount = default(long?), string sortBy = default(string), string sortOrder = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get information related to a specific Smart Group.
         /// </summary>

@@ -83,8 +83,8 @@ namespace Azure
         public abstract void Dispose();
 
         /// <summary>
-        /// Indicates whether the message's <see cref="ResponseClassifier"/> considers this
-        /// response an error.
+        /// Indicates whether the status code of the returned response is considered
+        /// an error code.
         /// </summary>
         public virtual bool IsError { get; internal set; }
 

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         ManagedHsm IOperationSource<ManagedHsm>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedHsm(_operationBase, ManagedHsmData.DeserializeManagedHsmData(document.RootElement));
+            var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
+            return new ManagedHsm(_operationBase, data);
         }
 
         async ValueTask<ManagedHsm> IOperationSource<ManagedHsm>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedHsm(_operationBase, ManagedHsmData.DeserializeManagedHsmData(document.RootElement));
+            var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
+            return new ManagedHsm(_operationBase, data);
         }
     }
 }

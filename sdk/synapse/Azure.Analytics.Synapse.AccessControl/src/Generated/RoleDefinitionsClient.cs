@@ -38,14 +38,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AccessControlClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -218,6 +212,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
             scope0.Start();
             try
@@ -277,6 +273,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
             scope0.Start();
             try

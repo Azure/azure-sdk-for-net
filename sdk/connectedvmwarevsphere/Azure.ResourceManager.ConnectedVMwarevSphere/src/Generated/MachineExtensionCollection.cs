@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of MachineExtension and their operations over its parent. </summary>
     public partial class MachineExtensionCollection : ArmCollection, IEnumerable<MachineExtension>, IAsyncEnumerable<MachineExtension>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MachineExtensionsRestOperations _machineExtensionsRestClient;
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineExtensionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal MachineExtensionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _machineExtensionsRestClient = new MachineExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VirtualMachine.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VirtualMachine.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachine.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
-        public virtual MachineExtensionCreateOrUpdateOperation CreateOrUpdate(string extensionName, MachineExtensionData extensionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual MachineExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
@@ -90,7 +96,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
-        public async virtual Task<MachineExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(string extensionName, MachineExtensionData extensionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<MachineExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
@@ -194,9 +200,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _machineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<MachineExtension>(null, response.GetRawResponse())
-                    : Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<MachineExtension>(null, response.GetRawResponse());
+                return Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,14 +222,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _machineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<MachineExtension>(null, response.GetRawResponse())
-                    : Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<MachineExtension>(null, response.GetRawResponse());
+                return Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -268,7 +274,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
             scope.Start();
             try
             {

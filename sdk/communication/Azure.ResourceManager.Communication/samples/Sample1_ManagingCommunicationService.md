@@ -44,7 +44,7 @@ CommunicationServiceData data = new CommunicationServiceData()
     Location = "global",
     DataLocation = "UnitedStates",
 };
-CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
 CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
@@ -66,5 +66,5 @@ await foreach (CommunicationService communicationService  in list)
 CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
 CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-await communicationService.DeleteAsync();
+await communicationService.DeleteAsync(true);
 ```

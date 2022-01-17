@@ -162,6 +162,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateOrUpdateEntityAsync(string collection, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntity");
             scope.Start();
             try
@@ -307,6 +310,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateOrUpdateEntity(string collection, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntity");
             scope.Start();
             try
@@ -454,6 +460,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateOrUpdateEntityInBulkAsync(string collection, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntityInBulk");
             scope.Start();
             try
@@ -601,6 +610,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateOrUpdateEntityInBulk(string collection, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntityInBulk");
             scope.Start();
             try
@@ -690,6 +702,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collection, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCollections.MoveEntitiesToCollection");
             scope.Start();
             try
@@ -779,6 +794,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response MoveEntitiesToCollection(string collection, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewCollections.MoveEntitiesToCollection");
             scope.Start();
             try

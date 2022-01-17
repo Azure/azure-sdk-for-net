@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualRouterPeering IOperationSource<VirtualRouterPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualRouterPeering(_operationBase, VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement));
+            var data = VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement);
+            return new VirtualRouterPeering(_operationBase, data);
         }
 
         async ValueTask<VirtualRouterPeering> IOperationSource<VirtualRouterPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualRouterPeering(_operationBase, VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement));
+            var data = VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement);
+            return new VirtualRouterPeering(_operationBase, data);
         }
     }
 }
