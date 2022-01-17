@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of OSVersion and their operations over its parent. </summary>
     public partial class OSVersionCollection : ArmCollection, IEnumerable<OSVersion>, IAsyncEnumerable<OSVersion>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
@@ -33,18 +33,25 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OSVersionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         internal OSVersionCollection(ArmResource parent, string location) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _location = location;
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -118,9 +125,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<OSVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OSVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,14 +147,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _cloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<OSVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<OSVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(osVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
             try
             {

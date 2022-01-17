@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _restClient;
         private readonly GenericResourceData _data;
+        private readonly ProviderCollection _providerCollection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResource"/> class for mocking.
@@ -38,7 +39,9 @@ namespace Azure.ResourceManager.Resources
             : base(operations, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            ClientOptions.TryGetApiVersion(Id.ResourceType, out var version);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
 
         /// <summary>
@@ -53,11 +56,10 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            ClientOptions.TryGetApiVersion(Id.ResourceType, out var version);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
         }
-
-        /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -228,13 +230,6 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-            if (identifier is null)
-                throw new ArgumentNullException(nameof(identifier));
-        }
-
         /// <summary>
         /// Replace the tags on the resource with the given set.
         /// </summary>
@@ -403,7 +398,7 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersion(CancellationToken cancellationToken)
         {
-            string version = ClientOptions.ApiVersions.TryGetApiVersion(Id.ResourceType, cancellationToken);
+            string version = _providerCollection.TryGetApiVersion(Id.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {Id}");
@@ -413,7 +408,7 @@ namespace Azure.ResourceManager.Resources
 
         private async Task<string> GetApiVersionAsync(CancellationToken cancellationToken)
         {
-            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
+            string version = await _providerCollection.TryGetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {Id}");

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualWAN IOperationSource<VirtualWAN>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualWAN(_operationBase, VirtualWANData.DeserializeVirtualWANData(document.RootElement));
+            var data = VirtualWANData.DeserializeVirtualWANData(document.RootElement);
+            return new VirtualWAN(_operationBase, data);
         }
 
         async ValueTask<VirtualWAN> IOperationSource<VirtualWAN>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualWAN(_operationBase, VirtualWANData.DeserializeVirtualWANData(document.RootElement));
+            var data = VirtualWANData.DeserializeVirtualWANData(document.RootElement);
+            return new VirtualWAN(_operationBase, data);
         }
     }
 }

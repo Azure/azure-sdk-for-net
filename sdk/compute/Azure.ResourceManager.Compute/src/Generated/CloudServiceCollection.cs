@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of CloudService and their operations over its parent. </summary>
     public partial class CloudServiceCollection : ArmCollection, IEnumerable<CloudService>, IAsyncEnumerable<CloudService>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CloudServicesRestOperations _cloudServicesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CloudServiceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _cloudServicesRestClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public virtual CloudServiceCreateOrUpdateOperation CreateOrUpdate(string cloudServiceName, CloudServiceData parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CloudServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<CloudServiceCreateOrUpdateOperation> CreateOrUpdateAsync(string cloudServiceName, CloudServiceData parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {
@@ -176,9 +182,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CloudService>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudService>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,14 +204,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _cloudServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CloudService>(null, response.GetRawResponse())
-                    : Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CloudService>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -250,7 +256,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceCollection.Exists");
             scope.Start();
             try
             {

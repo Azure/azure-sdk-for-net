@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing collection of ObjectReplicationPolicy and their operations over its parent. </summary>
     public partial class ObjectReplicationPolicyCollection : ArmCollection, IEnumerable<ObjectReplicationPolicy>, IAsyncEnumerable<ObjectReplicationPolicy>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ObjectReplicationPoliciesRestOperations _objectReplicationPoliciesRestClient;
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ObjectReplicationPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _objectReplicationPoliciesRestClient = new ObjectReplicationPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => StorageAccount.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != StorageAccount.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageAccount.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ObjectReplicationPolicyCreateOrUpdateOperation CreateOrUpdate(string objectReplicationPolicyId, ObjectReplicationPolicyData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ObjectReplicationPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string objectReplicationPolicyId, ObjectReplicationPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (objectReplicationPolicyId == null)
             {
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<ObjectReplicationPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string objectReplicationPolicyId, ObjectReplicationPolicyData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ObjectReplicationPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string objectReplicationPolicyId, ObjectReplicationPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (objectReplicationPolicyId == null)
             {
@@ -182,9 +188,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _objectReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,14 +210,14 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(objectReplicationPolicyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _objectReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ObjectReplicationPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ObjectReplicationPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +262,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(objectReplicationPolicyId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Exists");
             scope.Start();
             try
             {

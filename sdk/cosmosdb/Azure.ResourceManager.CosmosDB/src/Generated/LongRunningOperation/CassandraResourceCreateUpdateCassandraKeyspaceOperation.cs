@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         CassandraKeyspace IOperationSource<CassandraKeyspace>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CassandraKeyspace(_operationBase, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement));
+            var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
+            return new CassandraKeyspace(_operationBase, data);
         }
 
         async ValueTask<CassandraKeyspace> IOperationSource<CassandraKeyspace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CassandraKeyspace(_operationBase, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement));
+            var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
+            return new CassandraKeyspace(_operationBase, data);
         }
     }
 }

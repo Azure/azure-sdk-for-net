@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             WebPubSubHubData data = new WebPubSubHubData(webPubSubHubProperties)
             {
             };
-            var hub = await collection.CreateOrUpdateAsync(name, data);
+            var hub = await collection.CreateOrUpdateAsync(true, name, data);
             return hub.Value;
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             var deleteWebPubSubHub = await collection.GetAsync(webPubSubHubName);
-            await deleteWebPubSubHub.Value.DeleteAsync();
+            await deleteWebPubSubHub.Value.DeleteAsync(true);
             list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of FirewallRule and their operations over its parent. </summary>
     public partial class FirewallRuleCollection : ArmCollection, IEnumerable<FirewallRule>, IAsyncEnumerable<FirewallRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly FirewallRulesRestOperations _firewallRulesRestClient;
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirewallRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FirewallRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SqlServer.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SqlServer.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual FirewallRuleCreateOrUpdateOperation CreateOrUpdate(string firewallRuleName, FirewallRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual FirewallRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string firewallRuleName, FirewallRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallRuleName == null)
             {
@@ -90,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<FirewallRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string firewallRuleName, FirewallRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<FirewallRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string firewallRuleName, FirewallRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallRuleName == null)
             {
@@ -194,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _firewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<FirewallRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FirewallRule>(null, response.GetRawResponse());
+                return Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(firewallRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _firewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<FirewallRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<FirewallRule>(null, response.GetRawResponse());
+                return Response.FromValue(new FirewallRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -268,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(firewallRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("FirewallRuleCollection.Exists");
             scope.Start();
             try
             {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         PacketCapture IOperationSource<PacketCapture>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PacketCapture(_operationBase, PacketCaptureData.DeserializePacketCaptureData(document.RootElement));
+            var data = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+            return new PacketCapture(_operationBase, data);
         }
 
         async ValueTask<PacketCapture> IOperationSource<PacketCapture>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PacketCapture(_operationBase, PacketCaptureData.DeserializePacketCaptureData(document.RootElement));
+            var data = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+            return new PacketCapture(_operationBase, data);
         }
     }
 }

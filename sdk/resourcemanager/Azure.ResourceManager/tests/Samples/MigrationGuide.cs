@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Create_AvailabilitySet
             string vmName = "quickstartvm";
             AvailabilitySetData aSetData = new AvailabilitySetData(location);
-            AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData);
+            AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
             AvailabilitySet aset = asetCreateLro.Value;
             string asetId = aset.Id;
             #endregion
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Tests.Samples
                     }
                 }
             };
-            VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+            VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             VirtualNetwork vnet = vnetCreateLro.Value;
             #endregion
 
             #region Snippet:Create_NetworkSecurityGroup
             string nsgName = vmName + "_nsg";
             NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
-            NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
+            NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, nsgName, nsgData);
             NetworkSecurityGroup nsg = nsgCreateLro.Value;
             #endregion
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Tests.Samples
             NetworkInterfaceData nicData = new NetworkInterfaceData();
             nicData.Location = location;
             nicData.IpConfigurations.Add(nicIPConfig);
-            NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(nicName, nicData);
+            NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicData);
             NetworkInterface nic = nicCreateLro.Value;
             #endregion
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Tests.Samples
             nicReference.Id = nic.Id;
             vmData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
-            VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
+            VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, vmName, vmData)).Value;
             Console.WriteLine("VM ID: " + vm.Id);
             #endregion
         }

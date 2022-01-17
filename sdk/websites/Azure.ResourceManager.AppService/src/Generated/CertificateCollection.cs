@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of Certificate and their operations over its parent. </summary>
     public partial class CertificateCollection : ArmCollection, IEnumerable<Certificate>, IAsyncEnumerable<Certificate>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CertificatesRestOperations _certificatesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CertificateCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CertificateCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _certificatesRestClient = new CertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateEnvelope"/> is null. </exception>
-        public virtual CertificateCreateOrUpdateOperation CreateOrUpdate(string name, CertificateData certificateEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CertificateCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateEnvelope"/> is null. </exception>
-        public async virtual Task<CertificateCreateOrUpdateOperation> CreateOrUpdateAsync(string name, CertificateData certificateEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CertificateCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -196,9 +202,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _certificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Certificate>(null, response.GetRawResponse())
-                    : Response.FromValue(new Certificate(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Certificate>(null, response.GetRawResponse());
+                return Response.FromValue(new Certificate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,14 +224,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CertificateCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _certificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Certificate>(null, response.GetRawResponse())
-                    : Response.FromValue(new Certificate(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Certificate>(null, response.GetRawResponse());
+                return Response.FromValue(new Certificate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CertificateCollection.Exists");
             scope.Start();
             try
             {

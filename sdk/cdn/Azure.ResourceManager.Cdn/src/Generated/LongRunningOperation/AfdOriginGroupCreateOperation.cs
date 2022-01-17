@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdOriginGroup IOperationSource<AfdOriginGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdOriginGroup(_operationBase, AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement));
+            var data = AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement);
+            return new AfdOriginGroup(_operationBase, data);
         }
 
         async ValueTask<AfdOriginGroup> IOperationSource<AfdOriginGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdOriginGroup(_operationBase, AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement));
+            var data = AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement);
+            return new AfdOriginGroup(_operationBase, data);
         }
     }
 }

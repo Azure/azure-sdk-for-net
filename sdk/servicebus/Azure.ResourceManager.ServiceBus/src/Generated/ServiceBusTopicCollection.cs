@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of ServiceBusTopic and their operations over its parent. </summary>
     public partial class ServiceBusTopicCollection : ArmCollection, IEnumerable<ServiceBusTopic>, IAsyncEnumerable<ServiceBusTopic>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TopicsRestOperations _topicsRestClient;
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusTopicCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusTopicCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _topicsRestClient = new TopicsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServiceBusNamespace.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServiceBusNamespace.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespace.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual TopicCreateOrUpdateOperation CreateOrUpdate(string topicName, ServiceBusTopicData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual TopicCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
             if (topicName == null)
             {
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<TopicCreateOrUpdateOperation> CreateOrUpdateAsync(string topicName, ServiceBusTopicData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<TopicCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
             if (topicName == null)
             {
@@ -182,9 +188,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _topicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,14 +210,14 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(topicName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _topicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +262,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(topicName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
             try
             {

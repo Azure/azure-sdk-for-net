@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_keyspaceAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_keyspaceAccountIdentifier).Delete();
+                ArmClient.GetDatabaseAccount(_keyspaceAccountIdentifier).Delete(true);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CassandraKeyspace keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
             if (keyspace != null)
             {
-                await keyspace.DeleteAsync();
+                await keyspace.DeleteAsync(true);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, keyspace.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            keyspace = await (await CassandraKeyspaceCollection.CreateOrUpdateAsync(_keyspaceName, updateOptions)).WaitForCompletionAsync();
+            keyspace = (await CassandraKeyspaceCollection.CreateOrUpdateAsync(true, _keyspaceName, updateOptions)).Value;
             Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.Id);
             keyspace2 = await CassandraKeyspaceCollection.GetAsync(_keyspaceName);
             VerifyCassandraKeyspaces(keyspace, keyspace2);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountCassandraKeyspaceThroughputSetting throughput2 = await throughput.CreateOrUpdate(false, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceThroughputSetting throughput = await keyspace.GetDatabaseAccountCassandraKeyspaceThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateCassandraKeyspaceToAutoscale().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = await throughput.MigrateCassandraKeyspaceToAutoscale(false).WaitForCompletionAsync();
             AssertAutoscale(throughputData);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceThroughputSetting throughput = await keyspace.GetDatabaseAccountCassandraKeyspaceThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateCassandraKeyspaceToManualThroughput().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = await throughput.MigrateCassandraKeyspaceToManualThroughput(false).WaitForCompletionAsync();
             AssertManualThroughput(throughputData);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraKeyspaceDelete()
         {
             var keyspace = await CreateCassandraKeyspace(null);
-            await keyspace.DeleteAsync();
+            await keyspace.DeleteAsync(true);
 
             keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
             Assert.Null(keyspace);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var keyspaceLro = await collection.CreateOrUpdateAsync(name, cassandraKeyspaceCreateUpdateOptions);
+            var keyspaceLro = await collection.CreateOrUpdateAsync(true, name, cassandraKeyspaceCreateUpdateOptions);
             return keyspaceLro.Value;
         }
 

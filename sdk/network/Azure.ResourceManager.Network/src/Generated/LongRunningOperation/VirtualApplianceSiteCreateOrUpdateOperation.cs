@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualApplianceSite IOperationSource<VirtualApplianceSite>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualApplianceSite(_operationBase, VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(document.RootElement));
+            var data = VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(document.RootElement);
+            return new VirtualApplianceSite(_operationBase, data);
         }
 
         async ValueTask<VirtualApplianceSite> IOperationSource<VirtualApplianceSite>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualApplianceSite(_operationBase, VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(document.RootElement));
+            var data = VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(document.RootElement);
+            return new VirtualApplianceSite(_operationBase, data);
         }
     }
 }

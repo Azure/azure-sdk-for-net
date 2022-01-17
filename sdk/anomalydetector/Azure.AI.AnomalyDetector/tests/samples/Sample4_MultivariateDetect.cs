@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.IO;
@@ -41,14 +42,14 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             Guid? model_id_raw = null;
             try
             {
-                model_id_raw = await trainAsync(client, datasource, start_time, end_time).ConfigureAwait(false);
+                model_id_raw = await TrainAsync(client, datasource, start_time, end_time).ConfigureAwait(false);
                 Console.WriteLine(model_id_raw);
                 Guid model_id = model_id_raw.GetValueOrDefault();
 
                 // detect
                 start_time = end_time;
                 end_time = new DateTimeOffset(2021, 1, 3, 0, 0, 0, offset);
-                DetectionResult result = await detectAsync(client, datasource, model_id, start_time, end_time).ConfigureAwait(false);
+                DetectionResult result = await DetectAsync(client, datasource, model_id, start_time, end_time).ConfigureAwait(false);
                 if (result != null)
                 {
                     Console.WriteLine(String.Format("Result ID: {0}", result.ResultId));
@@ -56,32 +57,35 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     Console.WriteLine(String.Format("Result length: {0}", result.Results.Count));
                 }
 
+                //detect last
+                await DetectLastAsync(client, model_id).ConfigureAwait(false);
+
                 // export model
-                await exportAsync(client, model_id).ConfigureAwait(false);
+                await ExportAsync(client, model_id).ConfigureAwait(false);
 
                 // delete
-                await deleteAsync(client, model_id).ConfigureAwait(false);
+                await DeleteAsync(client, model_id).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 String msg = String.Format("Multivariate error. {0}", e.Message);
                 if (model_id_raw != null)
                 {
-                    await deleteAsync(client, model_id_raw.GetValueOrDefault()).ConfigureAwait(false);
+                    await DeleteAsync(client, model_id_raw.GetValueOrDefault()).ConfigureAwait(false);
                 }
                 Console.WriteLine(msg);
-                throw new Exception(msg);
+                throw;
             }
         }
 
         #region Snippet:TrainMultivariateModel
-        private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+        private async Task<Guid?> TrainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
             try
             {
                 Console.WriteLine("Training new model...");
 
-                int model_number = await getModelNumberAsync(client, false).ConfigureAwait(false);
+                int model_number = await GetModelNumberAsync(client, false).ConfigureAwait(false);
                 Console.WriteLine(String.Format("{0} available models before training.", model_number));
 
                 ModelInfo data_feed = new ModelInfo(datasource, start_time, end_time);
@@ -114,20 +118,20 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     Console.WriteLine(String.Format("Request timeout after {0} tryouts", max_tryout));
                 }
 
-                model_number = await getModelNumberAsync(client).ConfigureAwait(false);
+                model_number = await GetModelNumberAsync(client).ConfigureAwait(false);
                 Console.WriteLine(String.Format("{0} available models after training.", model_number));
                 return trained_model_id;
             }
             catch (Exception e)
             {
                 Console.WriteLine(String.Format("Train error. {0}", e.Message));
-                throw new Exception(e.Message);
+                throw;
             }
         }
         #endregion
 
         #region Snippet:DetectMultivariateAnomaly
-        private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+        private async Task<DetectionResult> DetectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
             try
             {
@@ -159,13 +163,13 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             catch (Exception e)
             {
                 Console.WriteLine(String.Format("Detection error. {0}", e.Message));
-                throw new Exception(e.Message);
+                throw;
             }
         }
         #endregion
 
         #region Snippet:ExportMultivariateModel
-        private async Task exportAsync(AnomalyDetectorClient client, Guid model_id, string model_path = "model.zip")
+        private async Task ExportAsync(AnomalyDetectorClient client, Guid model_id, string model_path = "model.zip")
         {
             try
             {
@@ -181,19 +185,19 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             catch (Exception e)
             {
                 Console.WriteLine(String.Format("Export error. {0}", e.Message));
-                throw new Exception(e.Message);
+                throw;
             }
         }
         #endregion
 
         #region Snippet:DeleteMultivariateModel
-        private async Task deleteAsync(AnomalyDetectorClient client, Guid model_id)
+        private async Task DeleteAsync(AnomalyDetectorClient client, Guid model_id)
         {
             await client.DeleteMultivariateModelAsync(model_id).ConfigureAwait(false);
-            int model_number = await getModelNumberAsync(client).ConfigureAwait(false);
+            int model_number = await GetModelNumberAsync(client).ConfigureAwait(false);
             Console.WriteLine(String.Format("{0} available models after deletion.", model_number));
         }
-        private async Task<int> getModelNumberAsync(AnomalyDetectorClient client, bool delete = false)
+        private async Task<int> GetModelNumberAsync(AnomalyDetectorClient client, bool delete = false)
         {
             int count = 0;
             AsyncPageable<ModelSnapshot> model_list = client.ListMultivariateModelAsync(0, 10000);
@@ -207,6 +211,43 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 }
             }
             return count;
+        }
+        #endregion
+
+        #region Snippet:DetectLastMultivariateAnomaly
+        private async Task<LastDetectionResult> DetectLastAsync(AnomalyDetectorClient client, Guid model_id)
+        {
+            Console.WriteLine("Start detect...");
+
+            List<VariableValues> variables = new List<VariableValues>();
+            variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
+            variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
+
+            LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 1);
+
+            try
+            {
+                Response<LastDetectionResult> response = await client.LastDetectAnomalyAsync(model_id, lastDetectionRequest).ConfigureAwait(false);
+                if (response.GetRawResponse().Status == 200)
+                {
+                    foreach (AnomalyState state in response.Value.Results)
+                    {
+                        Console.WriteLine(String.Format("timestamp: {}, isAnomaly: {}, score: {}.", state.Timestamp, state.Value.IsAnomaly, state.Value.Score));
+                    }
+                }
+
+                return response;
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+                throw;
+            }
         }
         #endregion
     }

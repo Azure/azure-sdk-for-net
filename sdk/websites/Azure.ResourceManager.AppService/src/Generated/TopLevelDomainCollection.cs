@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of TopLevelDomain and their operations over its parent. </summary>
     public partial class TopLevelDomainCollection : ArmCollection, IEnumerable<TopLevelDomain>, IAsyncEnumerable<TopLevelDomain>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TopLevelDomainsRestOperations _topLevelDomainsRestClient;
@@ -32,16 +32,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of TopLevelDomainCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TopLevelDomainCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TopLevelDomainCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -121,9 +127,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TopLevelDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,14 +149,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TopLevelDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +201,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
             scope.Start();
             try
             {

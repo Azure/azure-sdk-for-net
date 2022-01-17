@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of HybridIdentityMetadata and their operations over its parent. </summary>
     public partial class HybridIdentityMetadataCollection : ArmCollection, IEnumerable<HybridIdentityMetadata>, IAsyncEnumerable<HybridIdentityMetadata>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HybridIdentityMetadataRestOperations _hybridIdentityMetadataRestClient;
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridIdentityMetadataCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HybridIdentityMetadataCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _hybridIdentityMetadataRestClient = new HybridIdentityMetadataRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VirtualMachine.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VirtualMachine.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachine.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual HybridIdentityMetadataCreateOperation CreateOrUpdate(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual HybridIdentityMetadataCreateOperation CreateOrUpdate(bool waitForCompletion, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
         {
             if (metadataName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<HybridIdentityMetadataCreateOperation> CreateOrUpdateAsync(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<HybridIdentityMetadataCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
         {
             if (metadataName == null)
             {
@@ -186,9 +192,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _hybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<HybridIdentityMetadata>(null, response.GetRawResponse())
-                    : Response.FromValue(new HybridIdentityMetadata(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HybridIdentityMetadata>(null, response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadata(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,14 +214,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(metadataName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _hybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<HybridIdentityMetadata>(null, response.GetRawResponse())
-                    : Response.FromValue(new HybridIdentityMetadata(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HybridIdentityMetadata>(null, response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadata(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,7 +266,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(metadataName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
             scope.Start();
             try
             {

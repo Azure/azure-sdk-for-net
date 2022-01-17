@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             string instanceName = Recording.GenerateAssetName("Instance-");
             DeviceUpdateInstance instance = await CreateInstance(account, instanceName);
             Assert.AreEqual(instanceName, instance.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(null, instance.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(instanceName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(true, null, instance.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(true, instanceName, null));
         }
 
         [TestCase]

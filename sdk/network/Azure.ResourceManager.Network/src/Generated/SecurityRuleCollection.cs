@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of SecurityRule and their operations over its parent. </summary>
     public partial class SecurityRuleCollection : ArmCollection, IEnumerable<SecurityRule>, IAsyncEnumerable<SecurityRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SecurityRulesRestOperations _securityRulesRestClient;
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SecurityRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _securityRulesRestClient = new SecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => NetworkSecurityGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != NetworkSecurityGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkSecurityGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public virtual SecurityRuleCreateOrUpdateOperation CreateOrUpdate(string securityRuleName, SecurityRuleData securityRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SecurityRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public async virtual Task<SecurityRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string securityRuleName, SecurityRuleData securityRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SecurityRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
@@ -182,9 +188,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _securityRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SecurityRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SecurityRule>(null, response.GetRawResponse());
+                return Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,14 +210,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(securityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _securityRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SecurityRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SecurityRule>(null, response.GetRawResponse());
+                return Response.FromValue(new SecurityRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(securityRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.Exists");
             scope.Start();
             try
             {

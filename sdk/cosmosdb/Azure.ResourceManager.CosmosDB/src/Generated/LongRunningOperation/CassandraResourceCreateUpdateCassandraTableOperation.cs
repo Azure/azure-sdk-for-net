@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         CassandraTable IOperationSource<CassandraTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CassandraTable(_operationBase, CassandraTableData.DeserializeCassandraTableData(document.RootElement));
+            var data = CassandraTableData.DeserializeCassandraTableData(document.RootElement);
+            return new CassandraTable(_operationBase, data);
         }
 
         async ValueTask<CassandraTable> IOperationSource<CassandraTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CassandraTable(_operationBase, CassandraTableData.DeserializeCassandraTableData(document.RootElement));
+            var data = CassandraTableData.DeserializeCassandraTableData(document.RootElement);
+            return new CassandraTable(_operationBase, data);
         }
     }
 }

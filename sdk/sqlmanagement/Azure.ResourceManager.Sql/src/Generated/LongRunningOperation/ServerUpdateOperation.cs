@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         SqlServer IOperationSource<SqlServer>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SqlServer(_operationBase, SqlServerData.DeserializeSqlServerData(document.RootElement));
+            var data = SqlServerData.DeserializeSqlServerData(document.RootElement);
+            return new SqlServer(_operationBase, data);
         }
 
         async ValueTask<SqlServer> IOperationSource<SqlServer>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SqlServer(_operationBase, SqlServerData.DeserializeSqlServerData(document.RootElement));
+            var data = SqlServerData.DeserializeSqlServerData(document.RootElement);
+            return new SqlServer(_operationBase, data);
         }
     }
 }

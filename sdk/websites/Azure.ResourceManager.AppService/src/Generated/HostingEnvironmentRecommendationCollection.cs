@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -26,16 +27,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentRecommendationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HostingEnvironmentRecommendationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => AppServiceEnvironment.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != AppServiceEnvironment.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceEnvironment.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -121,9 +128,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,14 +152,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +208,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {

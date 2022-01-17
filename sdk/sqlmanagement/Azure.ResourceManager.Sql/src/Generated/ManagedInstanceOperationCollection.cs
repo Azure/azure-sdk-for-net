@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedInstanceOperation and their operations over its parent. </summary>
     public partial class ManagedInstanceOperationCollection : ArmCollection, IEnumerable<ManagedInstanceOperation>, IAsyncEnumerable<ManagedInstanceOperation>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedInstanceRestOperations _managedInstanceOperationsRestClient;
@@ -30,16 +30,22 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceOperationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managedInstanceOperationsRestClient = new ManagedInstanceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ManagedInstance.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ManagedInstance.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -101,9 +107,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,14 +123,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceOperation>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managedInstanceOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
             scope.Start();
             try
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,6 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
     public partial class SiteSlotDetectorCollection : ArmCollection, IEnumerable<SiteSlotDetector>, IAsyncEnumerable<SiteSlotDetector>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticsRestOperations _diagnosticsRestClient;
@@ -30,16 +30,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotDetectorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SiteSlot.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SiteSlot.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -128,9 +134,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _diagnosticsRestClient.GetSiteDetectorResponseSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,14 +159,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _diagnosticsRestClient.GetSiteDetectorResponseSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotDetectorCollection.Exists");
             scope.Start();
             try
             {

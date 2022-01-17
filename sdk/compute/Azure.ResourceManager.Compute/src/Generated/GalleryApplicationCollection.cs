@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of GalleryApplication and their operations over its parent. </summary>
     public partial class GalleryApplicationCollection : ArmCollection, IEnumerable<GalleryApplication>, IAsyncEnumerable<GalleryApplication>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GalleryApplicationsRestOperations _galleryApplicationsRestClient;
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryApplicationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GalleryApplicationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _galleryApplicationsRestClient = new GalleryApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Gallery.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Gallery.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Gallery.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public virtual GalleryApplicationCreateOrUpdateOperation CreateOrUpdate(string galleryApplicationName, GalleryApplicationData galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationName == null)
             {
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<GalleryApplicationCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryApplicationName, GalleryApplicationData galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationName == null)
             {
@@ -182,9 +188,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<GalleryApplication>(null, response.GetRawResponse())
-                    : Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<GalleryApplication>(null, response.GetRawResponse());
+                return Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,14 +210,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _galleryApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<GalleryApplication>(null, response.GetRawResponse())
-                    : Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<GalleryApplication>(null, response.GetRawResponse());
+                return Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +262,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationCollection.Exists");
             scope.Start();
             try
             {

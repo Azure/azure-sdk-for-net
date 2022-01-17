@@ -1,6 +1,6 @@
 # Release History
 
-## 4.3.0-beta.6 (Unreleased)
+## 4.3.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.3.0-beta.6 (2022-01-12)
+
+### Other Changes
+
+- Package metadata fixed
 
 ## 4.3.0-beta.5 (2022-01-11)
 

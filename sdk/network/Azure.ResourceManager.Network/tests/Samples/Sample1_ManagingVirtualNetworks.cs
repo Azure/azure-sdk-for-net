@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
             };
 
-            VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
+            VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(true, vnetName, input).WaitForCompletionAsync();
             #endregion
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
             VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
-            await virtualNetwork.DeleteAsync();
+            await virtualNetwork.DeleteAsync(true);
             #endregion
         }
 

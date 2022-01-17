@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var list = await _resourceGroup.GetCommunicationServices().GetAllAsync().ToEnumerableAsync();
             foreach (var communicationService in list)
             {
-                await communicationService.DeleteAsync();
+                await communicationService.DeleteAsync(true);
             }
         }
 
