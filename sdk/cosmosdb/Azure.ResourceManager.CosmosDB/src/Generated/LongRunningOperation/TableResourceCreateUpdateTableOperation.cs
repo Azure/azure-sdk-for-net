@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         CosmosTable IOperationSource<CosmosTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CosmosTable(_operationBase, CosmosTableData.DeserializeCosmosTableData(document.RootElement));
+            var data = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
+            return new CosmosTable(_operationBase, data);
         }
 
         async ValueTask<CosmosTable> IOperationSource<CosmosTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CosmosTable(_operationBase, CosmosTableData.DeserializeCosmosTableData(document.RootElement));
+            var data = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
+            return new CosmosTable(_operationBase, data);
         }
     }
 }

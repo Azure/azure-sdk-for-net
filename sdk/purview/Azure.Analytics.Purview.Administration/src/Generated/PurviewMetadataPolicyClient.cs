@@ -116,6 +116,8 @@ namespace Azure.Analytics.Purview.Administration
         public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
@@ -212,6 +214,8 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
@@ -277,6 +281,8 @@ namespace Azure.Analytics.Purview.Administration
         public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try
@@ -342,6 +348,8 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Response GetMetadataPolicy(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try

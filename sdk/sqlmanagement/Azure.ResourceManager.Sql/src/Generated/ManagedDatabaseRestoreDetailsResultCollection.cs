@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailsResultCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseRestoreDetailsResultCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedDatabaseRestoreDetailsResultCollection(ArmResource parent) : base(parent)
         {
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedDatabaseRestoreDetailsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedDatabaseRestoreDetailsResult>> GetIfExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managedDatabaseRestoreDetailsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.Exists");
             scope.Start();
             try
             {

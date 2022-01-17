@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         AppServicePlan IOperationSource<AppServicePlan>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AppServicePlan(_operationBase, AppServicePlanData.DeserializeAppServicePlanData(document.RootElement));
+            var data = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
+            return new AppServicePlan(_operationBase, data);
         }
 
         async ValueTask<AppServicePlan> IOperationSource<AppServicePlan>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AppServicePlan(_operationBase, AppServicePlanData.DeserializeAppServicePlanData(document.RootElement));
+            var data = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
+            return new AppServicePlan(_operationBase, data);
         }
     }
 }

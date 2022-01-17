@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotConfigAppSettingCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigAppSettingCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotConfigAppSettingCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotConfigAppSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigAppSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettingKey));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.Exists");
             scope.Start();
             try
             {

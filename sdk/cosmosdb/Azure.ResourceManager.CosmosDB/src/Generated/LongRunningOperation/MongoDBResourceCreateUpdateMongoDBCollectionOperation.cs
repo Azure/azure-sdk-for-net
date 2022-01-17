@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         MongoDBCollection IOperationSource<MongoDBCollection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new MongoDBCollection(_operationBase, MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement));
+            var data = MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement);
+            return new MongoDBCollection(_operationBase, data);
         }
 
         async ValueTask<MongoDBCollection> IOperationSource<MongoDBCollection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new MongoDBCollection(_operationBase, MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement));
+            var data = MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement);
+            return new MongoDBCollection(_operationBase, data);
         }
     }
 }

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         ConfigurationStore IOperationSource<ConfigurationStore>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ConfigurationStore(_operationBase, ConfigurationStoreData.DeserializeConfigurationStoreData(document.RootElement));
+            var data = ConfigurationStoreData.DeserializeConfigurationStoreData(document.RootElement);
+            return new ConfigurationStore(_operationBase, data);
         }
 
         async ValueTask<ConfigurationStore> IOperationSource<ConfigurationStore>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ConfigurationStore(_operationBase, ConfigurationStoreData.DeserializeConfigurationStoreData(document.RootElement));
+            var data = ConfigurationStoreData.DeserializeConfigurationStoreData(document.RootElement);
+            return new ConfigurationStore(_operationBase, data);
         }
     }
 }

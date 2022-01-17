@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Tests
             PolicyAssignment policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
-            await policyExemption.DeleteAsync();
+            await policyExemption.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policyExemption.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

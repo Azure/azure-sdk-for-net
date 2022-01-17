@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         LongTermRetentionPolicy IOperationSource<LongTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new LongTermRetentionPolicy(_operationBase, LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement));
+            var data = LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement);
+            return new LongTermRetentionPolicy(_operationBase, data);
         }
 
         async ValueTask<LongTermRetentionPolicy> IOperationSource<LongTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new LongTermRetentionPolicy(_operationBase, LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement));
+            var data = LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement);
+            return new LongTermRetentionPolicy(_operationBase, data);
         }
     }
 }

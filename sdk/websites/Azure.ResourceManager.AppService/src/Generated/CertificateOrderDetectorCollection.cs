@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CertificateOrderDetectorCollection(ArmResource parent) : base(parent)
         {
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _certificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CertificateOrderDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new CertificateOrderDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CertificateOrderDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _certificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CertificateOrderDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new CertificateOrderDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<CertificateOrderDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
             scope.Start();
             try
             {

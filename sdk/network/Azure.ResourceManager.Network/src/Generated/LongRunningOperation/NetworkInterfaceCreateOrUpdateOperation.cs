@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         NetworkInterface IOperationSource<NetworkInterface>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new NetworkInterface(_operationBase, NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement));
+            var data = NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement);
+            return new NetworkInterface(_operationBase, data);
         }
 
         async ValueTask<NetworkInterface> IOperationSource<NetworkInterface>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new NetworkInterface(_operationBase, NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement));
+            var data = NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement);
+            return new NetworkInterface(_operationBase, data);
         }
     }
 }

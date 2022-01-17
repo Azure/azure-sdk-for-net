@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedInstanceKey IOperationSource<ManagedInstanceKey>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstanceKey(_operationBase, ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement));
+            var data = ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement);
+            return new ManagedInstanceKey(_operationBase, data);
         }
 
         async ValueTask<ManagedInstanceKey> IOperationSource<ManagedInstanceKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstanceKey(_operationBase, ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement));
+            var data = ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement);
+            return new ManagedInstanceKey(_operationBase, data);
         }
     }
 }

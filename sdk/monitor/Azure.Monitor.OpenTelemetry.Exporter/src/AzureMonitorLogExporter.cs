@@ -37,7 +37,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = AzureMonitorConverter.Convert(batch, this.instrumentationKey);
+                var resource = this.ParentProvider.GetResource();
+                var telemetryItems = AzureMonitorConverter.Convert(batch, resource, this.instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.

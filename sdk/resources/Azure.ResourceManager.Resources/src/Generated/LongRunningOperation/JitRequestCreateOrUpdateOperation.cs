@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Resources.Models
         JitRequestDefinition IOperationSource<JitRequestDefinition>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new JitRequestDefinition(_operationBase, JitRequestDefinitionData.DeserializeJitRequestDefinitionData(document.RootElement));
+            var data = JitRequestDefinitionData.DeserializeJitRequestDefinitionData(document.RootElement);
+            return new JitRequestDefinition(_operationBase, data);
         }
 
         async ValueTask<JitRequestDefinition> IOperationSource<JitRequestDefinition>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new JitRequestDefinition(_operationBase, JitRequestDefinitionData.DeserializeJitRequestDefinitionData(document.RootElement));
+            var data = JitRequestDefinitionData.DeserializeJitRequestDefinitionData(document.RootElement);
+            return new JitRequestDefinition(_operationBase, data);
         }
     }
 }

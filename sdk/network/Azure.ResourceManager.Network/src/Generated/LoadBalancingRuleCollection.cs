@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancingRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LoadBalancingRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LoadBalancingRuleCollection(ArmResource parent) : base(parent)
         {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancingRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _loadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(loadBalancingRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
             try
             {

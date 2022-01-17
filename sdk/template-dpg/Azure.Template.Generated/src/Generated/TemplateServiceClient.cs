@@ -40,14 +40,8 @@ namespace Azure.Template.Generated
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public TemplateServiceClient(Uri endpoint, TokenCredential credential, TemplateServiceClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new TemplateServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -136,6 +130,8 @@ namespace Azure.Template.Generated
         public virtual async Task<Response> DeleteAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
             using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
@@ -158,6 +154,8 @@ namespace Azure.Template.Generated
         public virtual Response Delete(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
             using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
@@ -189,6 +187,8 @@ namespace Azure.Template.Generated
         public virtual async Task<Response> GetResourceAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
             using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try
@@ -220,6 +220,8 @@ namespace Azure.Template.Generated
         public virtual Response GetResource(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
             using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try

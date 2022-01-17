@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         VMwareDatastore IOperationSource<VMwareDatastore>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VMwareDatastore(_operationBase, VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement));
+            var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement);
+            return new VMwareDatastore(_operationBase, data);
         }
 
         async ValueTask<VMwareDatastore> IOperationSource<VMwareDatastore>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VMwareDatastore(_operationBase, VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement));
+            var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement);
+            return new VMwareDatastore(_operationBase, data);
         }
     }
 }

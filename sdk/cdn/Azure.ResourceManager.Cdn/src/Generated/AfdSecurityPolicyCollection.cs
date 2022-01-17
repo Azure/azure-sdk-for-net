@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecurityPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdSecurityPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdSecurityPolicyCollection(ArmResource parent) : base(parent)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="securityPolicy"/> is null. </exception>
-        public virtual AfdSecurityPolicyCreateOperation CreateOrUpdate(string securityPolicyName, AfdSecurityPolicyData securityPolicy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdSecurityPolicyCreateOperation CreateOrUpdate(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="securityPolicy"/> is null. </exception>
-        public async virtual Task<AfdSecurityPolicyCreateOperation> CreateOrUpdateAsync(string securityPolicyName, AfdSecurityPolicyData securityPolicy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdSecurityPolicyCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdSecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {

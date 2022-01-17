@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         CustomLocation IOperationSource<CustomLocation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CustomLocation(_operationBase, CustomLocationData.DeserializeCustomLocationData(document.RootElement));
+            var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
+            return new CustomLocation(_operationBase, data);
         }
 
         async ValueTask<CustomLocation> IOperationSource<CustomLocation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CustomLocation(_operationBase, CustomLocationData.DeserializeCustomLocationData(document.RootElement));
+            var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
+            return new CustomLocation(_operationBase, data);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotContinuousWebJobCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuousWebJobCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotContinuousWebJobCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotContinuousWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotContinuousWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Exists");
             scope.Start();
             try
             {

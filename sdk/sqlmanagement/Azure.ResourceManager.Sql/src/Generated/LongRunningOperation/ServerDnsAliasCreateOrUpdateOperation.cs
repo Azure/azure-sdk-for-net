@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerDnsAlias IOperationSource<ServerDnsAlias>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerDnsAlias(_operationBase, ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement));
+            var data = ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement);
+            return new ServerDnsAlias(_operationBase, data);
         }
 
         async ValueTask<ServerDnsAlias> IOperationSource<ServerDnsAlias>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerDnsAlias(_operationBase, ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement));
+            var data = ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement);
+            return new ServerDnsAlias(_operationBase, data);
         }
     }
 }
