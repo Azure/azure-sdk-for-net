@@ -352,4 +352,7 @@ directive:
 #     where: $.definitions.SiteConfig.properties.apiManagementConfig
 #     transform: >
 #         $["x-nullable"] = true;
+  - rename-operation:
+      from: CheckNameAvailability
+      to: CheckAppServiceNameAvailability
 ```

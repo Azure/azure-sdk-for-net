@@ -1992,7 +1992,7 @@ namespace Azure.ResourceManager.AppService
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CheckNameAvailability
+        /// OperationId: CheckAppServiceNameAvailability
         /// <summary> Description for Check if a resource name is available. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="name"> Resource name to verify. </param>
@@ -2000,7 +2000,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -2010,12 +2010,12 @@ namespace Azure.ResourceManager.AppService
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppServiceNameAvailability");
                 scope.Start();
                 try
                 {
                     var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, name, type, isFqdn, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.CheckAppServiceNameAvailabilityAsync(subscription.Id.SubscriptionId, name, type, isFqdn, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -2029,7 +2029,7 @@ namespace Azure.ResourceManager.AppService
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CheckNameAvailability
+        /// OperationId: CheckAppServiceNameAvailability
         /// <summary> Description for Check if a resource name is available. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="name"> Resource name to verify. </param>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<ResourceNameAvailability> CheckNameAvailability(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -2047,12 +2047,12 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppServiceNameAvailability");
                 scope.Start();
                 try
                 {
                     var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                    var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, name, type, isFqdn, cancellationToken);
+                    var response = restOperations.CheckAppServiceNameAvailability(subscription.Id.SubscriptionId, name, type, isFqdn, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
