@@ -603,7 +603,9 @@ namespace Azure.Storage.Files.DataLake
             => new PathInfo
             {
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256
             };
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
