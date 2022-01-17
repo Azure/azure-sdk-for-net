@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Tests
         private Subscription _subscription;
 
         public PredefinedTagCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Tests
         private readonly string _location = "southcentralus";
 
         public ArmClientTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
