@@ -14,3 +14,15 @@ data-plane: true
 security: AADToken
 security-scopes:  https://api.adu.microsoft.com/.default
 ```
+# Model endpoint parameter as a url, not a string.
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $.parameters.EndpointParameter
+    transform: >
+      if ($.format === undefined) {
+        $.format = "url";
+      }
+
+```

@@ -22,7 +22,7 @@ For the best development experience, developers should use the official Microsof
 Install the Device Update for IoT Hub client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.IoT.DeviceUpdate --version 1.0.0-beta.1
+dotnet add package Azure.IoT.DeviceUpdate
 ```
 
 ### Authenticate the Client
@@ -32,8 +32,8 @@ In order to interact with the Device Update for IoT Hub service, you will need t
 ## Key concepts
 
 Device Update for IoT Hub is a managed service that enables you to deploy over-the-air updates for your IoT devices. The client library has three main components:
-- **ManagementClient**: device, group, deployment management (enumerate, create, retrieve, delete device, group, deployment, etc.)
-- **UpdatesClient**: update management (import, enumerate, delete, etc.)
+- **DeviceManagementClient**: device, group, deployment management (enumerate, create, retrieve, delete device, group, deployment, etc.)
+- **DeviceUpdateClient**: update management (import, enumerate, delete, etc.)
 
 You can learn more about Device Update for IoT Hub by visiting [Device Update for IoT Hub](https://github.com/azure/iot-hub-device-update).
 

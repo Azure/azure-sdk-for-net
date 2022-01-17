@@ -79,8 +79,8 @@ namespace ConsoleTest
 
             var credentials = new ClientSecretCredential(tenantId, clientId, clientSecret);
 
-            _updatesClient = new DeviceUpdateClient(accountEndpoint, instance, credentials);
-            _managementClient = new DeviceManagementClient(accountEndpoint, instance, credentials);
+            _updatesClient = new DeviceUpdateClient(new Uri(accountEndpoint), instance, credentials);
+            _managementClient = new DeviceManagementClient(new Uri(accountEndpoint), instance, credentials);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace ConsoleTest
         private async Task<string> ImportUpdateStepAsync(string version)
         {
             ContentFactory contentFactory = new ContentFactory(_connectionString, BlobContainer);
-            var update = await contentFactory.CreateImportUpdate(SimulatorProvider, SimulatorModel, version);
+            await contentFactory.CreateImportUpdate(SimulatorProvider, SimulatorModel, version);
 
             ConsoleEx.WriteLine(ConsoleColor.Yellow, "Importing update...");
             string action = "import";
