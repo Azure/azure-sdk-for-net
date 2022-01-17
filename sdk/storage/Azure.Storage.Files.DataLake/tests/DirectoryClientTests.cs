@@ -200,6 +200,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            Models.CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeClientOptions dataLakeClientOptions = new DataLakeClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new DataLakeDirectoryClient(httpUri, dataLakeClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [RecordedTest]
         public async Task CreateAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

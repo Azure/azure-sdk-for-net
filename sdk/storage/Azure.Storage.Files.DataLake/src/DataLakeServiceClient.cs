@@ -172,6 +172,8 @@ namespace Azure.Storage.Files.DataLake
                 authPolicy,
                 _clientConfiguration.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -361,6 +363,8 @@ namespace Azure.Storage.Files.DataLake
                 authentication,
                 _clientConfiguration.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
