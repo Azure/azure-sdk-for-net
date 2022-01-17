@@ -16,6 +16,9 @@ list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
 
+override-operation-name:
+  Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
+
 directive:
   - from: swagger-document
     where: $.paths
