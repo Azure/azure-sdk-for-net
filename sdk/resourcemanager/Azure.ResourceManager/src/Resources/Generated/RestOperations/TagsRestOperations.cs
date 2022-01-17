@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is null. </exception>
-        public async Task<Response<Models.PredefinedTag>> CreateOrUpdateAsync(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response<PredefinedTag>> CreateOrUpdateAsync(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        Models.PredefinedTag value = default;
+                        PredefinedTag value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.PredefinedTag.DeserializePredefinedTag(document.RootElement);
+                        value = PredefinedTag.DeserializePredefinedTag(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is null. </exception>
-        public Response<Models.PredefinedTag> CreateOrUpdate(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
+        public Response<PredefinedTag> CreateOrUpdate(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        Models.PredefinedTag value = default;
+                        PredefinedTag value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.PredefinedTag.DeserializePredefinedTag(document.RootElement);
+                        value = PredefinedTag.DeserializePredefinedTag(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
