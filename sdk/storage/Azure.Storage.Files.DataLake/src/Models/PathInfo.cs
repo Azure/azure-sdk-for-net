@@ -24,7 +24,6 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary>
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
-        /// Note that this response header does not apply to directories.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
 
