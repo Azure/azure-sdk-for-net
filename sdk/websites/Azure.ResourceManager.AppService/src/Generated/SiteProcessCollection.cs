@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteProcessCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteProcessCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteProcessCollection(ArmResource parent) : base(parent)
         {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetProcess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteProcess>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteProcess(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteProcess(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(processId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetProcessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteProcess>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteProcess(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteProcess(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(processId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.Exists");
             scope.Start();
             try
             {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VpnGatewayNatRule IOperationSource<VpnGatewayNatRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VpnGatewayNatRule(_operationBase, VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement));
+            var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
+            return new VpnGatewayNatRule(_operationBase, data);
         }
 
         async ValueTask<VpnGatewayNatRule> IOperationSource<VpnGatewayNatRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VpnGatewayNatRule(_operationBase, VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement));
+            var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
+            return new VpnGatewayNatRule(_operationBase, data);
         }
     }
 }

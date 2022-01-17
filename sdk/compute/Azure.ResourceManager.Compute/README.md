@@ -70,7 +70,7 @@ ResourceGroup resourceGroup = lro.Value;
 AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
 string availabilitySetName = "myAvailabilitySet";
 AvailabilitySetData input = new AvailabilitySetData(location);
-AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetCollection.CreateOrUpdateAsync(availabilitySetName, input);
+AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetCollection.CreateOrUpdateAsync(true, availabilitySetName, input);
 AvailabilitySet availabilitySet = lro.Value;
 ```
 
@@ -134,7 +134,7 @@ AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabil
 string availabilitySetName = "myAvailabilitySet";
 AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
 // delete the availability set
-await availabilitySet.DeleteAsync();
+await availabilitySet.DeleteAsync(true);
 ```
 
 ### Check if availability set exists

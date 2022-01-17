@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         SiteInstanceExtension IOperationSource<SiteInstanceExtension>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SiteInstanceExtension(_operationBase, MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement));
+            var data = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+            return new SiteInstanceExtension(_operationBase, data);
         }
 
         async ValueTask<SiteInstanceExtension> IOperationSource<SiteInstanceExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SiteInstanceExtension(_operationBase, MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement));
+            var data = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+            return new SiteInstanceExtension(_operationBase, data);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of DisasterRecoveryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DisasterRecoveryCollection(ArmResource parent) : base(parent)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DisasterRecoveryCreateOrUpdateOperation CreateOrUpdate(string @alias, DisasterRecoveryData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DisasterRecoveryCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (@alias == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DisasterRecoveryCreateOrUpdateOperation> CreateOrUpdateAsync(string @alias, DisasterRecoveryData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DisasterRecoveryCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (@alias == null)
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DisasterRecovery>(null, response.GetRawResponse())
-                    : Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DisasterRecovery>(null, response.GetRawResponse())
-                    : Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
             scope.Start();
             try
             {

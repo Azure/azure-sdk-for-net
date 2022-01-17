@@ -34,10 +34,11 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineExtensionImageCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
         internal VirtualMachineExtensionImageCollection(ArmResource parent, string location, string publisherName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -142,9 +143,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineExtensionImagesRestClient.Get(Id.SubscriptionId, _location, _publisherName, type, version, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualMachineExtensionImage>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineExtensionImage(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualMachineExtensionImage>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineExtensionImage(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,14 +170,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualMachineExtensionImagesRestClient.GetAsync(Id.SubscriptionId, _location, _publisherName, type, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualMachineExtensionImage>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineExtensionImage(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualMachineExtensionImage>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineExtensionImage(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
             scope.Start();
             try
             {

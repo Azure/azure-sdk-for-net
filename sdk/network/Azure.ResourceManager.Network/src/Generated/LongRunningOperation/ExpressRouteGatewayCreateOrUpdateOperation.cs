@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteGateway IOperationSource<ExpressRouteGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteGateway(_operationBase, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement));
+            var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement);
+            return new ExpressRouteGateway(_operationBase, data);
         }
 
         async ValueTask<ExpressRouteGateway> IOperationSource<ExpressRouteGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteGateway(_operationBase, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement));
+            var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement);
+            return new ExpressRouteGateway(_operationBase, data);
         }
     }
 }

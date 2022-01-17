@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualNetworkGatewayNatRule IOperationSource<VirtualNetworkGatewayNatRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualNetworkGatewayNatRule(_operationBase, VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(document.RootElement));
+            var data = VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(document.RootElement);
+            return new VirtualNetworkGatewayNatRule(_operationBase, data);
         }
 
         async ValueTask<VirtualNetworkGatewayNatRule> IOperationSource<VirtualNetworkGatewayNatRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualNetworkGatewayNatRule(_operationBase, VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(document.RootElement));
+            var data = VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(document.RootElement);
+            return new VirtualNetworkGatewayNatRule(_operationBase, data);
         }
     }
 }

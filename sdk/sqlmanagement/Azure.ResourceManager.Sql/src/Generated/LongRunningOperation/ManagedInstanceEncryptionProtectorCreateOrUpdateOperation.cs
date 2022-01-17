@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedInstanceEncryptionProtector IOperationSource<ManagedInstanceEncryptionProtector>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstanceEncryptionProtector(_operationBase, ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement));
+            var data = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
+            return new ManagedInstanceEncryptionProtector(_operationBase, data);
         }
 
         async ValueTask<ManagedInstanceEncryptionProtector> IOperationSource<ManagedInstanceEncryptionProtector>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstanceEncryptionProtector(_operationBase, ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement));
+            var data = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
+            return new ManagedInstanceEncryptionProtector(_operationBase, data);
         }
     }
 }

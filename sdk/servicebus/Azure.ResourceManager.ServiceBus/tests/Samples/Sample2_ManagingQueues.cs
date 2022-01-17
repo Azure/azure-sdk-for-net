@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #region Snippet:Managing_ServiceBusQueues_CreateNamespace
             string namespaceName = "myNamespace";
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
             ServiceBusQueueCollection serviceBusQueueCollection = serviceBusNamespace.GetServiceBusQueues();
             #endregion
             this.serviceBusQueueCollection = serviceBusQueueCollection;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusQueues_CreateQueue
             string queueName = "myQueue";
-            ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(queueName, new ServiceBusQueueData())).Value;
+            ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
             #endregion
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusQueues_DeleteQueue
             ServiceBusQueue serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
-            await serviceBusQueue.DeleteAsync();
+            await serviceBusQueue.DeleteAsync(true);
             #endregion
         }
     }

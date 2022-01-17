@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
 
             ValidateVault(managedHsm.Value.Data,
                 VaultName,
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
+                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
+                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            await retrievedVault.Value.DeleteAsync();
+            await retrievedVault.Value.DeleteAsync(true);
             //Purge need to use loaction parameter. Update them later.
             //await retrievedVault.Value.PurgeDeletedAsync();
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(true, vaultName, parameters).ConfigureAwait(false);
 
             Assert.NotNull(managedHsm.Value);
             Assert.NotNull(managedHsm.Value.Id);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Delete
             foreach (var item in vaultList)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
                 // Purge need to use loaction parameter. Update them later.
                 //await item.PurgeDeletedAsync();
             }
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
 
             // Delete
-            await managedHsm.Value.DeleteAsync();
+            await managedHsm.Value.DeleteAsync(true);
 
             // Get deleted vault
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             parameters.Properties.CreateMode = CreateMode.Recover;
 
             // Recover in recover mode
-            var recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+            var recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
 
             Assert.True(recoveredVault2.Value.Data.IsEqual(managedHsm.Value.Data));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var getResult = await ManagedHsmCollection.GetAsync(VaultName);
 
             // Delete
-            await getResult.Value.DeleteAsync();
+            await getResult.Value.DeleteAsync(true);
         }
 
         private void ValidateVault(

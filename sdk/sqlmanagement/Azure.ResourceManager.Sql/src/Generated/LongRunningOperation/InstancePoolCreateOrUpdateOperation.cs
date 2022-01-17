@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         InstancePool IOperationSource<InstancePool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new InstancePool(_operationBase, InstancePoolData.DeserializeInstancePoolData(document.RootElement));
+            var data = InstancePoolData.DeserializeInstancePoolData(document.RootElement);
+            return new InstancePool(_operationBase, data);
         }
 
         async ValueTask<InstancePool> IOperationSource<InstancePool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new InstancePool(_operationBase, InstancePoolData.DeserializeInstancePoolData(document.RootElement));
+            var data = InstancePoolData.DeserializeInstancePoolData(document.RootElement);
+            return new InstancePool(_operationBase, data);
         }
     }
 }

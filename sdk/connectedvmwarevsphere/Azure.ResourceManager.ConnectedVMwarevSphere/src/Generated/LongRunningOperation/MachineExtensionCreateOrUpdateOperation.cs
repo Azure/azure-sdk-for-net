@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         MachineExtension IOperationSource<MachineExtension>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new MachineExtension(_operationBase, MachineExtensionData.DeserializeMachineExtensionData(document.RootElement));
+            var data = MachineExtensionData.DeserializeMachineExtensionData(document.RootElement);
+            return new MachineExtension(_operationBase, data);
         }
 
         async ValueTask<MachineExtension> IOperationSource<MachineExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new MachineExtension(_operationBase, MachineExtensionData.DeserializeMachineExtensionData(document.RootElement));
+            var data = MachineExtensionData.DeserializeMachineExtensionData(document.RootElement);
+            return new MachineExtension(_operationBase, data);
         }
     }
 }

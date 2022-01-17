@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerDevOpsAuditingSettings IOperationSource<ServerDevOpsAuditingSettings>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerDevOpsAuditingSettings(_operationBase, ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(document.RootElement));
+            var data = ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(document.RootElement);
+            return new ServerDevOpsAuditingSettings(_operationBase, data);
         }
 
         async ValueTask<ServerDevOpsAuditingSettings> IOperationSource<ServerDevOpsAuditingSettings>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerDevOpsAuditingSettings(_operationBase, ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(document.RootElement));
+            var data = ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(document.RootElement);
+            return new ServerDevOpsAuditingSettings(_operationBase, data);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualClusterCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualClusterCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualClusterCollection(ArmResource parent) : base(parent)
         {
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _virtualClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();
             try
             {

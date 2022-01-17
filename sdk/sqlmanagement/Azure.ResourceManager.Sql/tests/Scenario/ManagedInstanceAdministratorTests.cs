@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 Sid = Guid.NewGuid(),
                 TenantId = Guid.NewGuid(),
             };
-            var admin = await collection.CreateOrUpdateAsync(adminName, data);
+            var admin = await collection.CreateOrUpdateAsync(true, adminName, data);
             Assert.NotNull(admin.Value.Data);
             Assert.AreEqual(adminName, admin.Value.Data.Name);
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 5.Delete
             var deleteAdmin = await collection.GetAsync(adminName);
-            await   deleteAdmin.Value.DeleteAsync();
+            await   deleteAdmin.Value.DeleteAsync(true);
             list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

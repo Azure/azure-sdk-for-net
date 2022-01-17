@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.Communication
         public virtual Azure.ResourceManager.Communication.CommunicationServiceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName) { throw null; }
-        public virtual Azure.ResourceManager.Communication.Models.CommunicationServiceDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Communication.Models.CommunicationServiceDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.Models.CommunicationServiceDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Communication.Models.CommunicationServiceDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Communication
     public partial class CommunicationServiceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.CommunicationService>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.CommunicationService>, System.Collections.IEnumerable
     {
         protected CommunicationServiceCollection() { }
-        public virtual Azure.ResourceManager.Communication.Models.CommunicationServiceCreateOrUpdateOperation CreateOrUpdate(string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Communication.Models.CommunicationServiceCreateOrUpdateOperation> CreateOrUpdateAsync(string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.Models.CommunicationServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Communication.Models.CommunicationServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> Get(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -74,23 +74,6 @@ namespace Azure.ResourceManager.Communication
 }
 namespace Azure.ResourceManager.Communication.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionType : System.IEquatable<Azure.ResourceManager.Communication.Models.ActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionType(string value) { throw null; }
-        public static Azure.ResourceManager.Communication.Models.ActionType Internal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Communication.Models.ActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Communication.Models.ActionType left, Azure.ResourceManager.Communication.Models.ActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Communication.Models.ActionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Communication.Models.ActionType left, Azure.ResourceManager.Communication.Models.ActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CommunicationServiceCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Communication.CommunicationService>
     {
         protected CommunicationServiceCreateOrUpdateOperation() { }
@@ -164,25 +147,6 @@ namespace Azure.ResourceManager.Communication.Models
         public NameAvailabilityOptions(string type, string name) { }
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Origin : System.IEquatable<Azure.ResourceManager.Communication.Models.Origin>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Origin(string value) { throw null; }
-        public static Azure.ResourceManager.Communication.Models.Origin System { get { throw null; } }
-        public static Azure.ResourceManager.Communication.Models.Origin User { get { throw null; } }
-        public static Azure.ResourceManager.Communication.Models.Origin UserSystem { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Communication.Models.Origin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Communication.Models.Origin left, Azure.ResourceManager.Communication.Models.Origin right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Communication.Models.Origin (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Communication.Models.Origin left, Azure.ResourceManager.Communication.Models.Origin right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Communication.Models.ProvisioningState>

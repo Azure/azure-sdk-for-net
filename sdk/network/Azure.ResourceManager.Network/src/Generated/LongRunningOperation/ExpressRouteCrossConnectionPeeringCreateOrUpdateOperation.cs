@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteCrossConnectionPeering IOperationSource<ExpressRouteCrossConnectionPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteCrossConnectionPeering(_operationBase, ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement));
+            var data = ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement);
+            return new ExpressRouteCrossConnectionPeering(_operationBase, data);
         }
 
         async ValueTask<ExpressRouteCrossConnectionPeering> IOperationSource<ExpressRouteCrossConnectionPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteCrossConnectionPeering(_operationBase, ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement));
+            var data = ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement);
+            return new ExpressRouteCrossConnectionPeering(_operationBase, data);
         }
     }
 }
