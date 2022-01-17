@@ -288,4 +288,10 @@ directive:
               }
           }
       }
+  - rename-operation:
+      from: CheckNameAvailability
+      to: CheckCdnNameAvailability
+  - rename-operation:
+      from: CheckNameAvailabilityWithSubscription
+      to: CheckCdnNameAvailabilityWithSubscription
 ```
