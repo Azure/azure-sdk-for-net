@@ -79,8 +79,8 @@ namespace ConsoleTest
 
             var credentials = new ClientSecretCredential(tenantId, clientId, clientSecret);
 
-            _updatesClient = new DeviceUpdateClient(new Uri(accountEndpoint), instance, credentials);
-            _managementClient = new DeviceManagementClient(new Uri(accountEndpoint), instance, credentials);
+            _updatesClient = new DeviceUpdateClient(accountEndpoint, instance, credentials);
+            _managementClient = new DeviceManagementClient(accountEndpoint, instance, credentials);
         }
 
         /// <summary>
