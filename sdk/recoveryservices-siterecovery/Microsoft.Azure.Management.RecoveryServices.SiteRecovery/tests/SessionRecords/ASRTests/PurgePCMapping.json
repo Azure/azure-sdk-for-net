@@ -16,7 +16,7 @@
                     "FxVersion/4.6.29812.02",
                     "OSName/Windows",
                     "OSVersion/Microsoft.Windows.10.0.19042.",
-                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.7.0"
+                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.2.0.0"
                 ]
             },
             "ResponseHeaders": {
@@ -83,7 +83,7 @@
                     "FxVersion/4.6.29812.02",
                     "OSName/Windows",
                     "OSVersion/Microsoft.Windows.10.0.19042.",
-                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.7.0"
+                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.2.0.0"
                 ]
             },
             "ResponseHeaders": {
@@ -150,7 +150,7 @@
                     "FxVersion/4.6.29812.02",
                     "OSName/Windows",
                     "OSVersion/Microsoft.Windows.10.0.19042.",
-                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.7.0"
+                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.2.0.0"
                 ]
             },
             "ResponseHeaders": {
@@ -214,7 +214,7 @@
                     "FxVersion/4.6.29812.02",
                     "OSName/Windows",
                     "OSVersion/Microsoft.Windows.10.0.19042.",
-                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.7.0"
+                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.2.0.0"
                 ]
             },
             "ResponseHeaders": {
@@ -275,7 +275,7 @@
                     "FxVersion/4.6.29812.02",
                     "OSName/Windows",
                     "OSVersion/Microsoft.Windows.10.0.19042.",
-                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.7.0"
+                    "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.2.0.0"
                 ]
             },
             "ResponseHeaders": {
