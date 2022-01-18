@@ -1,4 +1,4 @@
-[string] $RepoRoot = "${PSScriptRoot}/../.."
+[string] $RepoRoot = "${PSScriptRoot}/../../.."
 [string] $dotnetInstallScriptVersion = "v1"
 
 function GetDotNetInstallScript() {
