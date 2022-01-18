@@ -689,7 +689,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout, PathGetPropertiesAction? action, bool? upn, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
+        internal HttpMessage CreateGetPropertiesRequest(int? timeout, PathGetPropertiesAction? action, bool? upn, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -730,18 +730,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (encryptionKey != null)
-            {
-                request.Headers.Add("x-ms-encryption-key", encryptionKey);
-            }
-            if (encryptionKeySha256 != null)
-            {
-                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
-            }
-            if (encryptionAlgorithm != null)
-            {
-                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -755,13 +743,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
-        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
+            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -782,13 +767,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
-        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathGetPropertiesHeaders> GetProperties(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathGetPropertiesHeaders> GetProperties(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
+            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)

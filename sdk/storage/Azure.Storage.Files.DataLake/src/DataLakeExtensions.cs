@@ -121,7 +121,7 @@ namespace Azure.Storage.Files.DataLake
             new PathInfo
             {
                 ETag = blobInfo.ETag,
-                LastModified = blobInfo.LastModified,
+                LastModified = blobInfo.LastModified
             };
 
         internal static DataLakeLease ToDataLakeLease(this BlobLease blobLease) =>

@@ -1120,6 +1120,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        // Note that FileClient.GetAccessControl() does not need to pass CPK request headers.
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
         public async Task GetAccessControlAsync_CPK()
@@ -3927,6 +3928,24 @@ namespace Azure.Storage.Files.DataLake.Tests
                         conditions: conditions),
                     e => { });
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task SetMetadataAsync_CPK()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem
+                .GetDirectoryClient(GetNewDirectoryName())
+                .WithCustomerProvidedKey(customerProvidedKey));
+            await directory.CreateAsync();
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            await directory.SetMetadataAsync(metadata);
         }
 
         [RecordedTest]
