@@ -49,13 +49,8 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-<<<<<<< HEAD
                     CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
-=======
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
->>>>>>> d269eede20a23edec101477601a2b90bee54e690
                     return response;
                 }
                 catch (Exception e)
@@ -86,13 +81,8 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-<<<<<<< HEAD
                     CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = restOperations.CheckNameAvailability(checkNameAvailabilityInput, cancellationToken);
-=======
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.CheckCdnNameAvailability(checkNameAvailabilityInput, cancellationToken);
->>>>>>> d269eede20a23edec101477601a2b90bee54e690
                     return response;
                 }
                 catch (Exception e)

@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RestorePointGroup> GetRestorePointCollectionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RestorePointGroup> GetRestorePointGroupsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -2401,7 +2401,7 @@ namespace Azure.ResourceManager.Compute
                 RestorePointCollectionsRestOperations restOperations = GetRestorePointCollectionsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<RestorePointGroup>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointGroups");
                     scope.Start();
                     try
                     {
@@ -2416,7 +2416,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<RestorePointGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointGroups");
                     scope.Start();
                     try
                     {
@@ -2438,7 +2438,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RestorePointGroup> GetRestorePointCollections(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<RestorePointGroup> GetRestorePointGroups(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -2447,7 +2447,7 @@ namespace Azure.ResourceManager.Compute
                 RestorePointCollectionsRestOperations restOperations = GetRestorePointCollectionsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<RestorePointGroup> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointGroups");
                     scope.Start();
                     try
                     {
@@ -2462,7 +2462,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<RestorePointGroup> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointGroups");
                     scope.Start();
                     try
                     {

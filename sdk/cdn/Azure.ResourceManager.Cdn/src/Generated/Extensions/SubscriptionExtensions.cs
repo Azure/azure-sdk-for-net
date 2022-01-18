@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckCdnNameAvailabilityWithSubscriptionAsync(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Cdn
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckCdnNameAvailabilityWithSubscription(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }

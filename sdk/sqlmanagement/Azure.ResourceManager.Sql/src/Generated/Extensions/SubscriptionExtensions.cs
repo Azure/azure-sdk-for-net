@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SqlServer> GetServersAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SqlServer> GetSqlServersAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.Sql
                 ServersRestOperations restOperations = GetServersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<SqlServer>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSqlServers");
                     scope.Start();
                     try
                     {
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 async Task<Page<SqlServer>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSqlServers");
                     scope.Start();
                     try
                     {
@@ -1462,7 +1462,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SqlServer> GetServers(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        public static Pageable<SqlServer> GetSqlServers(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1471,7 +1471,7 @@ namespace Azure.ResourceManager.Sql
                 ServersRestOperations restOperations = GetServersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<SqlServer> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSqlServers");
                     scope.Start();
                     try
                     {
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 Page<SqlServer> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSqlServers");
                     scope.Start();
                     try
                     {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceBusNamespace> GetNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ServiceBusNamespace> GetServiceBusNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus
                 NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ServiceBusNamespace>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 async Task<Page<ServiceBusNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceBusNamespace> GetNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ServiceBusNamespace> GetServiceBusNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus
                 NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ServiceBusNamespace> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 Page<ServiceBusNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
