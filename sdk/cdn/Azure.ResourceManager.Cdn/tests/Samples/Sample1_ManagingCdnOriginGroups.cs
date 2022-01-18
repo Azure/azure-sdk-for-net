@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Create a new cdn profile
             string profileName = "myProfile";
             var input1 = new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
-            ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, profileName, input1);
+            ProfileCreateOrUpdateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, profileName, input1);
             Profile profile = lro1.Value;
             // Get the cdn endpoint collection from the specific profile and create an endpoint
             string endpointName = "myEndpoint";
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
                 Weight = 100
             };
             input2.Origins.Add(deepCreatedOrigin);
-            CdnEndpointCreateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input2);
+            CdnEndpointCreateOrUpdateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input2);
             CdnEndpoint endpoint = lro2.Value;
             // Get the cdn origin group collection from the specific endpoint and create an origin group
             string originGroupName = "myOriginGroup";
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 Id = new ResourceIdentifier($"{endpoint.Id}/origins/myOrigin")
             });
-            CdnOriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, originGroupName, input3);
+            CdnOriginGroupCreateOrUpdateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, originGroupName, input3);
             CdnOriginGroup originGroup = lro3.Value;
             #endregion Snippet:Managing_OriginGroups_CreateAnOriginGroup
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 

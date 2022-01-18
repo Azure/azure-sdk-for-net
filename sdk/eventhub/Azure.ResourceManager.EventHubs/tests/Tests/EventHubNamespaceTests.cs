@@ -363,18 +363,18 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
 
             //add a tag
-            eventHubNamespace = await eventHubNamespace.AddTagAsync("key", "value");
+            eventHubNamespace = await eventHubNamespace.AddTagAsync(true, "key", "value");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
             Assert.AreEqual(eventHubNamespace.Data.Tags["key"], "value");
 
             //set the tag
             eventHubNamespace.Data.Tags.Add("key1", "value1");
-            eventHubNamespace = await eventHubNamespace.SetTagsAsync(eventHubNamespace.Data.Tags);
+            eventHubNamespace = await eventHubNamespace.SetTagsAsync(true, eventHubNamespace.Data.Tags);
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 2);
             Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
 
             //remove a tag
-            eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key");
+            eventHubNamespace = await eventHubNamespace.RemoveTagAsync(true, "key");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
 
             //wait until provision state is succeeded

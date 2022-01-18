@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
             this.resourceGroup = resourceGroup;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #region Snippet:Managing_Namespaces_AddTag
             EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
             EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-            await eventHubNamespace.AddTagAsync("key","value");
+            await eventHubNamespace.AddTagAsync(true, "key","value");
             #endregion
         }
     }

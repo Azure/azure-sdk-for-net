@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = await restOperations.CheckCdnNameAvailabilityWithSubscriptionAsync(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.CheckNameAvailabilityWithSubscriptionAsync(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = restOperations.CheckCdnNameAvailabilityWithSubscription(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken);
+                    var response = restOperations.CheckNameAvailabilityWithSubscription(subscription.Id.SubscriptionId, checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

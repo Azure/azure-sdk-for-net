@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = await restOperations.CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.CheckNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = restOperations.CheckCdnNameAvailability(checkNameAvailabilityInput, cancellationToken);
+                    var response = restOperations.CheckNameAvailability(checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
