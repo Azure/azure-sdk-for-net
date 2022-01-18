@@ -13,6 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
+        [Ignore("")]
         public async Task MultiCategoryClassifyAsync()
         {
             // Create a text analytics client.
