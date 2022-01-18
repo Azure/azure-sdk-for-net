@@ -110,7 +110,7 @@ await eventHubNamespace.DeleteAsync(true);
 ```C# Snippet:Managing_Namespaces_AddTag
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
 EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-await eventHubNamespace.AddTagAsync(true, "key","value");
+await eventHubNamespace.AddTagAsync("key","value");
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/yukun-dong/azure-sdk-for-net/tree/eventhub-2018-01-preview/sdk/eventhub/Azure.ResourceManager.EventHubs/samples) we have available.
