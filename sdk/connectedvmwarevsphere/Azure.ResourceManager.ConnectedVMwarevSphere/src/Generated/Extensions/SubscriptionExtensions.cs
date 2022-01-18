@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareCluster> GetClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VMwareCluster> GetVMwareClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VMwareCluster>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareClusters");
                     scope.Start();
                     try
                     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 async Task<Page<VMwareCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareClusters");
                     scope.Start();
                     try
                     {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareCluster> GetClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<VMwareCluster> GetVMwareClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VMwareCluster> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareClusters");
                     scope.Start();
                     try
                     {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 Page<VMwareCluster> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareClusters");
                     scope.Start();
                     try
                     {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareHost> GetHostsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VMwareHost> GetVMwareHostsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 HostsRestOperations restOperations = GetHostsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VMwareHost>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetHosts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareHosts");
                     scope.Start();
                     try
                     {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 async Task<Page<VMwareHost>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetHosts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareHosts");
                     scope.Start();
                     try
                     {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareHost> GetHosts(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<VMwareHost> GetVMwareHosts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 HostsRestOperations restOperations = GetHostsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VMwareHost> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetHosts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareHosts");
                     scope.Start();
                     try
                     {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 Page<VMwareHost> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetHosts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareHosts");
                     scope.Start();
                     try
                     {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareDatastore> GetDatastoresAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VMwareDatastore> GetVMwareDatastoresAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 DatastoresRestOperations restOperations = GetDatastoresRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VMwareDatastore>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatastores");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareDatastores");
                     scope.Start();
                     try
                     {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 async Task<Page<VMwareDatastore>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatastores");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareDatastores");
                     scope.Start();
                     try
                     {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareDatastore> GetDatastores(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<VMwareDatastore> GetVMwareDatastores(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 DatastoresRestOperations restOperations = GetDatastoresRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VMwareDatastore> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatastores");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareDatastores");
                     scope.Start();
                     try
                     {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 Page<VMwareDatastore> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatastores");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVMwareDatastores");
                     scope.Start();
                     try
                     {

@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Tests
         {
             var rgOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
             _rg = rgOp.Value;
-            _rg = await _rg.AddTagAsync(true, "key1", "value1");
-            _rg = await _rg.AddTagAsync(true, "key2", "value2");
+            _rg = await _rg.AddTagAsync("key1", "value1");
+            _rg = await _rg.AddTagAsync("key2", "value2");
         }
 
         [TestCaseSource(nameof(TagAddSource))]
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Tests
         {
             if (key is null)
             {
-                var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(true, key, value));
+                var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(key, value));
                 Assert.That(ex.Message.Contains("key provided cannot be null or a whitespace"));
             }
             else if (value is null)
             {
-                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await _rg.AddTagAsync(true, key, value));
+                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await _rg.AddTagAsync(key, value));
                 Assert.That(ex.Message.Contains("Invalid tag value. The following tags 'nullKey' have a null value. Tag value cannot be null."));
             }
             else
             {
-                var result = await _rg.AddTagAsync(true, key, value);
+                var result = await _rg.AddTagAsync(key, value);
                 Assert.AreEqual(result.Value.Data.Tags, tags);
             }
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestSetTags()
         {
-            var result = await _rg.SetTagsAsync(true, UpdateTags);
+            var result = await _rg.SetTagsAsync(UpdateTags);
             Assert.AreEqual(result.Value.Data.Tags, UpdateTags);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestRemoveTag(string key, IDictionary<string, string> tags)
         {
-            var result = await _rg.RemoveTagAsync(true, key);
+            var result = await _rg.RemoveTagAsync(key);
             Assert.AreEqual(result.Value.Data.Tags, tags);
         }
 

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_StorageAccounts_GetResourceGroupCollection
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             //now we can create a storage account with defined account name and parameters
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
+            StorageAccountCreateOrUpdateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
             StorageAccount storageAccount = accountCreateOperation.Value;
             #endregion
         }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
             // add a tag on this storage account
-            await storageAccount.AddTagAsync("key", "value");
+            await storageAccount.AddTagAsync(true, "key", "value");
             #endregion
         }
     }

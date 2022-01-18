@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareCollection shareCollection = fileService.GetFileShares();
             FileShareData shareData = new FileShareData();
             shareData.ShareQuota = 5200;
-            FileShareCreateOperation fileShareCreateOperation = await shareCollection.CreateOrUpdateAsync(false, fileShareName, shareData);
+            FileShareCreateOrUpdateOperation fileShareCreateOperation = await shareCollection.CreateOrUpdateAsync(false, fileShareName, shareData);
             FileShare share = await fileShareCreateOperation.WaitForCompletionAsync();
             Assert.AreEqual(share.Data.ShareQuota, shareData.ShareQuota);
         }
@@ -1154,16 +1154,16 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, parameters)).Value;
 
             //add tag to this storage account
-            account = await account.AddTagAsync("key", "value");
+            account = await account.AddTagAsync(true, "key", "value");
 
             //verify the tag is added successfully
-            Assert.AreEqual(account.Data.Tags.Count, 1);
+            Assert.AreEqual(account.Data.Tags.Count, DefaultTags.Count + 1);
 
             //remove tag
-            account = await account.RemoveTagAsync("key");
+            account = await account.RemoveTagAsync(true, "key");
 
             //verify the tag is removed successfully
-            Assert.AreEqual(account.Data.Tags.Count, 0);
+            Assert.AreEqual(account.Data.Tags.Count, DefaultTags.Count);
         }
 
         [Test]

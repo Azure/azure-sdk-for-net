@@ -1403,7 +1403,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomIpPrefix> GetCustomIPPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CustomIpPrefix> GetCustomIpPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Network
                 CustomIPPrefixesRestOperations restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<CustomIpPrefix>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -1427,7 +1427,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<CustomIpPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomIpPrefix> GetCustomIPPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<CustomIpPrefix> GetCustomIpPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1458,7 +1458,7 @@ namespace Azure.ResourceManager.Network
                 CustomIPPrefixesRestOperations restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<CustomIpPrefix> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<CustomIpPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -4789,7 +4789,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -4798,7 +4798,7 @@ namespace Azure.ResourceManager.Network
                 ServiceEndpointPoliciesRestOperations restOperations = GetServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ServiceEndpointPolicy>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -4813,7 +4813,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<ServiceEndpointPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -4835,7 +4835,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceEndpointPolicy> GetServiceEndpointPolicies(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesByServiceEndpointPolicy(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -4844,7 +4844,7 @@ namespace Azure.ResourceManager.Network
                 ServiceEndpointPoliciesRestOperations restOperations = GetServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ServiceEndpointPolicy> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -4859,7 +4859,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<ServiceEndpointPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -5437,7 +5437,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualWAN> GetVirtualWansAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualWAN> GetVirtualWANsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -5446,7 +5446,7 @@ namespace Azure.ResourceManager.Network
                 VirtualWansRestOperations restOperations = GetVirtualWansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualWAN>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -5461,7 +5461,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<VirtualWAN>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -5483,7 +5483,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualWAN> GetVirtualWans(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualWAN> GetVirtualWANs(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -5492,7 +5492,7 @@ namespace Azure.ResourceManager.Network
                 VirtualWansRestOperations restOperations = GetVirtualWansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualWAN> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -5507,7 +5507,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<VirtualWAN> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -6037,7 +6037,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<P2SVpnGateway> GetP2sVpnGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<P2SVpnGateway> GetP2SVpnGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -6046,7 +6046,7 @@ namespace Azure.ResourceManager.Network
                 P2SVpnGatewaysRestOperations restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<P2SVpnGateway>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
@@ -6061,7 +6061,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<P2SVpnGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
@@ -6083,7 +6083,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<P2SVpnGateway> GetP2sVpnGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<P2SVpnGateway> GetP2SVpnGateways(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -6092,7 +6092,7 @@ namespace Azure.ResourceManager.Network
                 P2SVpnGatewaysRestOperations restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<P2SVpnGateway> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
@@ -6107,7 +6107,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<P2SVpnGateway> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
