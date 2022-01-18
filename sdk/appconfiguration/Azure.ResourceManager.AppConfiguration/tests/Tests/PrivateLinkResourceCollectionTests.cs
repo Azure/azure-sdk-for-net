@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
             }
         }
 
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
         [Ignore("Error resource id without '/' in the beginning")]
         [Test]
-        public async Task CheckIfExistsTest()
+        public async Task ExistsTest()
         {
-            bool linkResource = await ConfigStore.GetPrivateLinkResources().CheckIfExistsAsync("configurationStores");
+            bool linkResource = await ConfigStore.GetPrivateLinkResources().ExistsAsync("configurationStores");
 
             Assert.IsTrue(linkResource);
         }

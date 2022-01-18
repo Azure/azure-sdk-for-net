@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of DiskAccess and their operations over its parent. </summary>
     public partial class DiskAccessCollection : ArmCollection, IEnumerable<DiskAccess>, IAsyncEnumerable<DiskAccess>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiskAccessesRestOperations _diskAccessesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of DiskAccessCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskAccessCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiskAccessCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public virtual DiskAccessCreateOrUpdateOperation CreateOrUpdate(string diskAccessName, DiskAccessData diskAccess, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiskAccessCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public async virtual Task<DiskAccessCreateOrUpdateOperation> CreateOrUpdateAsync(string diskAccessName, DiskAccessData diskAccess, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskAccessCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskAccessesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DiskAccess>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiskAccess(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiskAccess>(null, response.GetRawResponse());
+                return Response.FromValue(new DiskAccess(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _diskAccessesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DiskAccess>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiskAccess(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiskAccess>(null, response.GetRawResponse());
+                return Response.FromValue(new DiskAccess(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,14 +232,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string diskAccessName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +257,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
                 throw new ArgumentNullException(nameof(diskAccessName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessCollection.Exists");
             scope.Start();
             try
             {
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DiskAccess, DiskAccessData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DiskAccess, DiskAccessData> Construct() { }
     }
 }

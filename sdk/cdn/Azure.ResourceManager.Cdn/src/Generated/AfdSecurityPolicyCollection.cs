@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of AfdSecurityPolicy and their operations over its parent. </summary>
     public partial class AfdSecurityPolicyCollection : ArmCollection, IEnumerable<AfdSecurityPolicy>, IAsyncEnumerable<AfdSecurityPolicy>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdSecurityPoliciesRestOperations _afdSecurityPoliciesRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecurityPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdSecurityPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdSecurityPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Profile.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Profile.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Profile.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="securityPolicy"/> is null. </exception>
-        public virtual AfdSecurityPolicyCreateOperation CreateOrUpdate(string securityPolicyName, AfdSecurityPolicyData securityPolicy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdSecurityPolicyCreateOperation CreateOrUpdate(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="securityPolicy"/> is null. </exception>
-        public async virtual Task<AfdSecurityPolicyCreateOperation> CreateOrUpdateAsync(string securityPolicyName, AfdSecurityPolicyData securityPolicy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdSecurityPolicyCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
@@ -183,9 +188,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdSecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,14 +210,14 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecurityPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,14 +230,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +255,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             if (securityPolicyName == null)
             {
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -363,6 +368,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AfdSecurityPolicy, AfdSecurityPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdSecurityPolicy, AfdSecurityPolicyData> Construct() { }
     }
 }

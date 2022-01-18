@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualHub and their operations over its parent. </summary>
     public partial class VirtualHubCollection : ArmCollection, IEnumerable<VirtualHub>, IAsyncEnumerable<VirtualHub>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualHubsRestOperations _virtualHubsRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualHubCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualHubCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualHubsRestClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual VirtualHubCreateOrUpdateOperation CreateOrUpdate(string virtualHubName, VirtualHubData virtualHubParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualHubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public async virtual Task<VirtualHubCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualHubName, VirtualHubData virtualHubParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualHub>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualHub>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualHub>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualHub>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,14 +232,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualHubName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualHubName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubCollection.Exists");
             scope.Start();
             try
             {
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualHub, VirtualHubData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualHub, VirtualHubData> Construct() { }
     }
 }

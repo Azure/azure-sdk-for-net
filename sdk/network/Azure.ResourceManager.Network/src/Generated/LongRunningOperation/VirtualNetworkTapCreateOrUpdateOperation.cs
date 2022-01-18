@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualNetworkTap IOperationSource<VirtualNetworkTap>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualNetworkTap(_operationBase, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement));
+            var data = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement);
+            return new VirtualNetworkTap(_operationBase, data);
         }
 
         async ValueTask<VirtualNetworkTap> IOperationSource<VirtualNetworkTap>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualNetworkTap(_operationBase, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement));
+            var data = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement);
+            return new VirtualNetworkTap(_operationBase, data);
         }
     }
 }

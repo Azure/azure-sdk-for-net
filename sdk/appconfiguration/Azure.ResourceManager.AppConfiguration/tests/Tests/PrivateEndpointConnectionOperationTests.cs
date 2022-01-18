@@ -13,6 +13,7 @@ using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
 
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
@@ -38,13 +39,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string VnetName = Recording.GenerateAssetName("vnetname");
                 string SubnetName = Recording.GenerateAssetName("subnetname");
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
-                ResGroup = await (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
+                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
                 ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
                 // Prepare VNet and Private Endpoint
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                     },
                     Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
                 };
-                VirtualNetwork vnet = await (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(VnetName, vnetData)).WaitForCompletionAsync();
+                VirtualNetwork vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, VnetName, vnetData)).Value;
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                         },
                     Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 };
-                PrivateEndpoint = await (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(EndpointName, privateEndpointData)).WaitForCompletionAsync();
+                PrivateEndpoint = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(true, EndpointName, privateEndpointData)).Value;
                 List<PrivateEndpointConnection> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
             }
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task DeleteTest()
         {
-            await (await Connection.DeleteAsync()).WaitForCompletionResponseAsync();
+            await Connection.DeleteAsync(true);
             PrivateEndpointConnection connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
 
             Assert.IsNull(connection);
@@ -99,9 +100,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<Resources.Models.Location> locations =  await Connection.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locations =  await Connection.GetAvailableLocationsAsync();
 
-            Assert.IsTrue(locations.Count() >= 1);
+            Assert.IsNotEmpty(locations);
         }
     }
 }

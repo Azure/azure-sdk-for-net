@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ExtendedServerBlobAuditingPolicy IOperationSource<ExtendedServerBlobAuditingPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExtendedServerBlobAuditingPolicy(_operationBase, ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement));
+            var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);
+            return new ExtendedServerBlobAuditingPolicy(_operationBase, data);
         }
 
         async ValueTask<ExtendedServerBlobAuditingPolicy> IOperationSource<ExtendedServerBlobAuditingPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExtendedServerBlobAuditingPolicy(_operationBase, ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement));
+            var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);
+            return new ExtendedServerBlobAuditingPolicy(_operationBase, data);
         }
     }
 }

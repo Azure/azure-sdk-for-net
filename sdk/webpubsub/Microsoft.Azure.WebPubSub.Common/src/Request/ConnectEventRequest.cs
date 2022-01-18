@@ -63,6 +63,7 @@ namespace Microsoft.Azure.WebPubSub.Common
 
         /// <summary>
         /// Create <see cref="EventErrorResponse"/>.
+        /// Methods works for Function Extensions. And AspNetCore SDK Hub methods can directly throw exception for error cases.
         /// </summary>
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>

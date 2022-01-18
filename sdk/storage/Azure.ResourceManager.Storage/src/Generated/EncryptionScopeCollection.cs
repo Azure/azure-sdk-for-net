@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Storage.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing collection of EncryptionScope and their operations over its parent. </summary>
     public partial class EncryptionScopeCollection : ArmCollection, IEnumerable<EncryptionScope>, IAsyncEnumerable<EncryptionScope>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EncryptionScopesRestOperations _encryptionScopesRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EncryptionScopeCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EncryptionScopeCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _encryptionScopesRestClient = new EncryptionScopesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => StorageAccount.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != StorageAccount.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageAccount.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> or <paramref name="encryptionScope"/> is null. </exception>
-        public virtual EncryptionScopePutOperation CreateOrUpdate(string encryptionScopeName, EncryptionScopeData encryptionScope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EncryptionScopePutOperation CreateOrUpdate(bool waitForCompletion, string encryptionScopeName, EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
         {
             if (encryptionScopeName == null)
             {
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> or <paramref name="encryptionScope"/> is null. </exception>
-        public async virtual Task<EncryptionScopePutOperation> CreateOrUpdateAsync(string encryptionScopeName, EncryptionScopeData encryptionScope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EncryptionScopePutOperation> CreateOrUpdateAsync(bool waitForCompletion, string encryptionScopeName, EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
         {
             if (encryptionScopeName == null)
             {
@@ -183,9 +188,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _encryptionScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<EncryptionScope>(null, response.GetRawResponse())
-                    : Response.FromValue(new EncryptionScope(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<EncryptionScope>(null, response.GetRawResponse());
+                return Response.FromValue(new EncryptionScope(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,14 +210,14 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(encryptionScopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _encryptionScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<EncryptionScope>(null, response.GetRawResponse())
-                    : Response.FromValue(new EncryptionScope(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<EncryptionScope>(null, response.GetRawResponse());
+                return Response.FromValue(new EncryptionScope(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,14 +230,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             if (encryptionScopeName == null)
             {
                 throw new ArgumentNullException(nameof(encryptionScopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +255,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             if (encryptionScopeName == null)
             {
                 throw new ArgumentNullException(nameof(encryptionScopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
             scope.Start();
             try
             {
@@ -363,6 +368,6 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, EncryptionScope, EncryptionScopeData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, EncryptionScope, EncryptionScopeData> Construct() { }
     }
 }

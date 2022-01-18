@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="state">Describe whether this data type connection is
         /// enabled or not. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        public AwsCloudTrailDataConnectorDataTypesLogs(string state = default(string))
+        public AwsCloudTrailDataConnectorDataTypesLogs(string state)
             : base(state)
         {
             CustomInit();
@@ -44,5 +44,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         partial void CustomInit();
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

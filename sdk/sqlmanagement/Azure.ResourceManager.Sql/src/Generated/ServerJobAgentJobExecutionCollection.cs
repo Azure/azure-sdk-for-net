@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of JobExecution and their operations over its parent. </summary>
     public partial class ServerJobAgentJobExecutionCollection : ArmCollection, IEnumerable<ServerJobAgentJobExecution>, IAsyncEnumerable<ServerJobAgentJobExecution>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JobExecutionsRestOperations _jobExecutionsRestClient;
@@ -33,17 +32,23 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerJobAgentJobExecutionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _jobExecutionsRestClient = new JobExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _jobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SqlJob.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SqlJob.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlJob.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual JobExecutionCreateOrUpdateOperation CreateOrUpdate(Guid jobExecutionId, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual JobExecutionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
             scope.Start();
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<JobExecutionCreateOrUpdateOperation> CreateOrUpdateAsync(Guid jobExecutionId, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<JobExecutionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
             scope.Start();
@@ -157,9 +162,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,14 +178,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerJobAgentJobExecution>> GetIfExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,9 +197,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckIfExists(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
             scope.Start();
             try
             {
@@ -211,9 +216,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
             scope.Start();
             try
             {
@@ -437,6 +442,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerJobAgentJobExecution, JobExecutionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerJobAgentJobExecution, JobExecutionData> Construct() { }
     }
 }

@@ -8,6 +8,7 @@ using Azure.Data.SchemaRegistry;
 using NUnit.Framework;
 using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging;
@@ -46,6 +47,49 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotNull(readEmployee);
             Assert.AreEqual("Caketown", readEmployee.Name);
             Assert.AreEqual(42, readEmployee.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanSerializeAndDeserializeWithCompatibleSchema()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee_V2 { Age = 42, Name = "Caketown", City = "Redmond" };
+
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+            (string schemaId, BinaryData data) = await encoder.EncodeAsync(employee, typeof(Employee_V2), CancellationToken.None);
+
+            // deserialize using the old schema, which is forward compatible with the new schema
+            // if you swap the old schema and the new schema in your mind, then this can also be thought as a backwards compatible test
+            var deserializedObject = await encoder.DecodeAsync(data, schemaId, typeof(Employee), CancellationToken.None);
+            var readEmployee = deserializedObject as Employee;
+            Assert.IsNotNull(readEmployee);
+            Assert.AreEqual("Caketown", readEmployee.Name);
+            Assert.AreEqual(42, readEmployee.Age);
+
+            // deserialize using the new schema to make sure we are respecting it
+            deserializedObject = await encoder.DecodeAsync(data, schemaId, typeof(Employee_V2), CancellationToken.None);
+            var readEmployeeV2 = deserializedObject as Employee_V2;
+            Assert.IsNotNull(readEmployee);
+            Assert.AreEqual("Caketown", readEmployeeV2.Name);
+            Assert.AreEqual(42, readEmployeeV2.Age);
+            Assert.AreEqual("Redmond", readEmployeeV2.City);
+        }
+
+        [RecordedTest]
+        public async Task CannotDeserializeIntoNonCompatibleType()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee() { Age = 42, Name = "Caketown"};
+
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+            (string schemaId, BinaryData data) = await encoder.EncodeAsync(employee, typeof(Employee), CancellationToken.None);
+
+            // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
+            Assert.That(
+                async () => await encoder.DecodeAsync(data, schemaId, typeof(Employee_V2), CancellationToken.None),
+                Throws.InstanceOf<AvroException>());
         }
 
         [RecordedTest]
@@ -141,6 +185,38 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(2, contentType.Length);
             Assert.AreEqual("avro/binary", contentType[0]);
             Assert.IsNotEmpty(contentType[1]);
+
+            // verify the payload was decoded correctly
+            Assert.IsNotNull(deserialized);
+            Assert.AreEqual("Caketown", deserialized.Name);
+            Assert.AreEqual(42, deserialized.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanDecodePreamble()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+            EventData eventData = await encoder.EncodeMessageDataAsync<EventData>(employee);
+            string schemaId = eventData.ContentType.Split('+')[1];
+            eventData.ContentType = "avro/binary";
+
+            using var stream = new MemoryStream();
+            stream.Write(new byte[] { 0, 0, 0, 0 }, 0, 4);
+            var encoding = new UTF8Encoding(false);
+            stream.Write(encoding.GetBytes(schemaId), 0, 32);
+            stream.Write(eventData.Body.ToArray(), 0, eventData.Body.Length);
+            stream.Position = 0;
+            eventData.EventBody = BinaryData.FromStream(stream);
+
+            Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(eventData, typeof(Employee));
+
+            // decoding should not alter the message
+            Assert.AreEqual("avro/binary", eventData.ContentType);
 
             // verify the payload was decoded correctly
             Assert.IsNotNull(deserialized);

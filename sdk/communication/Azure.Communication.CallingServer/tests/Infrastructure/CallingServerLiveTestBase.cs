@@ -83,7 +83,7 @@ namespace Azure.Communication.CallingServer.Tests
             return GROUP_IDENTIFIER;
         }
 
-        public CallingServerLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public CallingServerLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CallingServerRecordedTestSanitizer();
 
         public bool SkipCallingServerInteractionLiveTests

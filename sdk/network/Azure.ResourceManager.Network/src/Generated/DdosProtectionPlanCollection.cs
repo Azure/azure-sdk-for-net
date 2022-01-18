@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of DdosProtectionPlan and their operations over its parent. </summary>
     public partial class DdosProtectionPlanCollection : ArmCollection, IEnumerable<DdosProtectionPlan>, IAsyncEnumerable<DdosProtectionPlan>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DdosProtectionPlansRestOperations _ddosProtectionPlansRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of DdosProtectionPlanCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlanCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DdosProtectionPlanCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _ddosProtectionPlansRestClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DdosProtectionPlanCreateOrUpdateOperation CreateOrUpdate(string ddosProtectionPlanName, DdosProtectionPlanData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DdosProtectionPlanCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ddosProtectionPlanName, DdosProtectionPlanData parameters, CancellationToken cancellationToken = default)
         {
             if (ddosProtectionPlanName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DdosProtectionPlanCreateOrUpdateOperation> CreateOrUpdateAsync(string ddosProtectionPlanName, DdosProtectionPlanData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DdosProtectionPlanCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ddosProtectionPlanName, DdosProtectionPlanData parameters, CancellationToken cancellationToken = default)
         {
             if (ddosProtectionPlanName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DdosProtectionPlan>(null, response.GetRawResponse())
-                    : Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DdosProtectionPlan>(null, response.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ddosProtectionPlanName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosProtectionPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DdosProtectionPlan>(null, response.GetRawResponse())
-                    : Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DdosProtectionPlan>(null, response.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,14 +232,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
             if (ddosProtectionPlanName == null)
             {
                 throw new ArgumentNullException(nameof(ddosProtectionPlanName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
             if (ddosProtectionPlanName == null)
             {
                 throw new ArgumentNullException(nameof(ddosProtectionPlanName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanCollection.Exists");
             scope.Start();
             try
             {
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DdosProtectionPlan, DdosProtectionPlanData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DdosProtectionPlan, DdosProtectionPlanData> Construct() { }
     }
 }

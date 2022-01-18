@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ReplicationLink and their operations over its parent. </summary>
     public partial class ReplicationLinkCollection : ArmCollection, IEnumerable<ReplicationLink>, IAsyncEnumerable<ReplicationLink>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ReplicationLinksRestOperations _replicationLinksRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ReplicationLinkCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SqlDatabase.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SqlDatabase.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -120,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _replicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ReplicationLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(linkId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _replicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ReplicationLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,14 +167,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string linkId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
                 throw new ArgumentNullException(nameof(linkId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -187,14 +192,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
                 throw new ArgumentNullException(nameof(linkId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -306,6 +311,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ReplicationLink, ReplicationLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ReplicationLink, ReplicationLinkData> Construct() { }
     }
 }

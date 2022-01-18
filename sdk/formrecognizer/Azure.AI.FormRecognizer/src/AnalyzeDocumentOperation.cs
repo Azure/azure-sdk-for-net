@@ -185,8 +185,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<AnalyzeResult>> IOperation<AnalyzeResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeResultOperation> response = async
-                ? await _serviceClient.DocumentAnalysisGetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.DocumentAnalysisGetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
+                ? await _serviceClient.GetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
 
             AnalyzeResultOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();

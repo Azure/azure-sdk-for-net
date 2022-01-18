@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         RouteTable IOperationSource<RouteTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new RouteTable(_operationBase, RouteTableData.DeserializeRouteTableData(document.RootElement));
+            var data = RouteTableData.DeserializeRouteTableData(document.RootElement);
+            return new RouteTable(_operationBase, data);
         }
 
         async ValueTask<RouteTable> IOperationSource<RouteTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new RouteTable(_operationBase, RouteTableData.DeserializeRouteTableData(document.RootElement));
+            var data = RouteTableData.DeserializeRouteTableData(document.RootElement);
+            return new RouteTable(_operationBase, data);
         }
     }
 }

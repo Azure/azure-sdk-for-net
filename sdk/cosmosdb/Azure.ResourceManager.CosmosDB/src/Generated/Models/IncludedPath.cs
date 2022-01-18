@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of IncludedPath. </summary>
         public IncludedPath()
         {
-            Indexes = new ChangeTrackingList<Indexes>();
+            Indexes = new ChangeTrackingList<PathIndexes>();
         }
 
         /// <summary> Initializes a new instance of IncludedPath. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         /// <param name="indexes"> List of indexes for this path. </param>
-        internal IncludedPath(string path, IList<Indexes> indexes)
+        internal IncludedPath(string path, IList<PathIndexes> indexes)
         {
             Path = path;
             Indexes = indexes;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </summary>
         public string Path { get; set; }
         /// <summary> List of indexes for this path. </summary>
-        public IList<Indexes> Indexes { get; }
+        public IList<PathIndexes> Indexes { get; }
     }
 }

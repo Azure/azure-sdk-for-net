@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to be used with the HTTP request.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -79,11 +79,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IExtensionsOperations.
-        /// </summary>
-        IExtensionsOperations Extensions { get; }
 
     }
 }

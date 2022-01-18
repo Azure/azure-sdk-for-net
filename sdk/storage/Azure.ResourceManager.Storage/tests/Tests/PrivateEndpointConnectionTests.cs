@@ -9,6 +9,7 @@ using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Storage.Tests.Helpers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
-            _storageAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters(kind: Kind.StorageV2))).Value;
+            _storageAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters(kind: Kind.StorageV2))).Value;
         }
 
         [TearDown]
@@ -35,9 +36,9 @@ namespace Azure.ResourceManager.Storage.Tests
             List<PrivateEndpointConnection> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             foreach (PrivateEndpointConnection connection in privateEndpointConnections)
             {
-                await connection.DeleteAsync();
+                await connection.DeleteAsync(true);
             }
-            await _storageAccount.DeleteAsync();
+            await _storageAccount.DeleteAsync(true);
         }
         [Test]
         [RecordedTest]
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
             Assert.AreEqual(PrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
 
-            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(privateEndpointConnection.Data.Name, new PrivateEndpointConnectionData()
+            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(true, privateEndpointConnection.Data.Name, new PrivateEndpointConnectionData()
             {
                 PrivateLinkServiceConnectionState = new Models.PrivateLinkServiceConnectionState()
                 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Tests
             PrivateEndpointConnection privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
             Assert.IsNotNull(privateEndpointConnection);
 
-            await privateEndpointConnection.DeleteAsync();
+            await privateEndpointConnection.DeleteAsync(true);
             //should return 404 rather than 400
             //privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnection.Data.Name);
             //Assert.Null(privateEndpointConnection);
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var vnetName = Recording.GenerateAssetName("vnet-");
             var vnet = new VirtualNetworkData()
             {
-                Location = Resources.Models.Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
@@ -114,12 +115,12 @@ namespace Azure.ResourceManager.Storage.Tests
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
-            VirtualNetwork virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(vnetName, vnet).WaitForCompletionAsync();
+            VirtualNetwork virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(false, vnetName, vnet).WaitForCompletionAsync();
 
             var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
-                Location = Resources.Models.Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
                     new PrivateLinkServiceConnection
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 },
             };
 
-            return await _resourceGroup.GetPrivateEndpoints().CreateOrUpdate(name, privateEndpointData).WaitForCompletionAsync();
+            return await _resourceGroup.GetPrivateEndpoints().CreateOrUpdate(false, name, privateEndpointData).WaitForCompletionAsync();
         }
         private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, PrivateEndpointConnection actualValue)
         {

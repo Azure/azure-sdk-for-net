@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Tests
         private readonly FormRecognizerClientOptions.ServiceVersion _serviceVersion;
 
         public FormRecognizerLiveTestBase(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, useLegacyTransport: true)
+            : base(isAsync)
         {
             _serviceVersion = serviceVersion;
             Sanitizer = new FormRecognizerRecordedTestSanitizer();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ManagedInstance along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstance : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagedInstance"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedInstancesRestOperations _managedInstancesRestClient;
         private readonly ManagedDatabasesRestOperations _managedDatabasesRestClient;
@@ -36,16 +42,19 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "ManagedInstance"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ManagedInstance(ArmResource options, ManagedInstanceData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ManagedInstance(ArmResource options, ManagedInstanceData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstance"/> class. </summary>
@@ -58,6 +67,9 @@ namespace Azure.ResourceManager.Sql
             _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstance"/> class. </summary>
@@ -73,13 +85,13 @@ namespace Azure.ResourceManager.Sql
             _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,6 +106,12 @@ namespace Azure.ResourceManager.Sql
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
@@ -147,17 +165,37 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstance.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
@@ -166,7 +204,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a managed instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagedInstanceDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.Delete");
             scope.Start();
@@ -191,7 +229,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a managed instance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagedInstanceDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.Delete");
             scope.Start();
@@ -219,7 +257,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.AddTag");
@@ -248,7 +286,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.AddTag");
@@ -276,7 +314,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.SetTags");
@@ -305,7 +343,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.SetTags");
@@ -334,7 +372,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.RemoveTag");
@@ -362,7 +400,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.RemoveTag");
@@ -390,7 +428,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceUpdateOperation> UpdateAsync(ManagedInstanceUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceUpdateOperation> UpdateAsync(bool waitForCompletion, ManagedInstanceUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -422,7 +460,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceUpdateOperation Update(ManagedInstanceUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceUpdateOperation Update(bool waitForCompletion, ManagedInstanceUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -631,7 +669,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagedInstanceFailoverOperation> FailoverAsync(ReplicaType? replicaType = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceFailoverOperation> FailoverAsync(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.Failover");
             scope.Start();
@@ -657,7 +695,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagedInstanceFailoverOperation Failover(ReplicaType? replicaType = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceFailoverOperation Failover(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedInstance.Failover");
             scope.Start();
@@ -684,7 +722,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceTdeCertificateCreateOperation> CreateManagedInstanceTdeCertificateAsync(TdeCertificate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceTdeCertificateCreateOperation> CreateManagedInstanceTdeCertificateAsync(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -716,7 +754,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceTdeCertificateCreateOperation CreateManagedInstanceTdeCertificate(TdeCertificate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceTdeCertificateCreateOperation CreateManagedInstanceTdeCertificate(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -826,7 +864,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedDatabases in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedDatabases and their operations over a ManagedInstance. </returns>
-        public ManagedDatabaseCollection GetManagedDatabases()
+        public virtual ManagedDatabaseCollection GetManagedDatabases()
         {
             return new ManagedDatabaseCollection(this);
         }
@@ -836,7 +874,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceAdministrators in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceAdministrators and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceAdministratorCollection GetManagedInstanceAdministrators()
+        public virtual ManagedInstanceAdministratorCollection GetManagedInstanceAdministrators()
         {
             return new ManagedInstanceAdministratorCollection(this);
         }
@@ -846,7 +884,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceAzureADOnlyAuthentications in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceAzureADOnlyAuthentications and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceAzureADOnlyAuthenticationCollection GetManagedInstanceAzureADOnlyAuthentications()
+        public virtual ManagedInstanceAzureADOnlyAuthenticationCollection GetManagedInstanceAzureADOnlyAuthentications()
         {
             return new ManagedInstanceAzureADOnlyAuthenticationCollection(this);
         }
@@ -856,7 +894,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceEncryptionProtectors in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceEncryptionProtectors and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceEncryptionProtectorCollection GetManagedInstanceEncryptionProtectors()
+        public virtual ManagedInstanceEncryptionProtectorCollection GetManagedInstanceEncryptionProtectors()
         {
             return new ManagedInstanceEncryptionProtectorCollection(this);
         }
@@ -866,7 +904,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceKeys in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceKeys and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceKeyCollection GetManagedInstanceKeys()
+        public virtual ManagedInstanceKeyCollection GetManagedInstanceKeys()
         {
             return new ManagedInstanceKeyCollection(this);
         }
@@ -876,7 +914,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceOperations in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceOperations and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceOperationCollection GetManagedInstanceOperations()
+        public virtual ManagedInstanceOperationCollection GetManagedInstanceOperations()
         {
             return new ManagedInstanceOperationCollection(this);
         }
@@ -886,7 +924,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstancePrivateEndpointConnections in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstancePrivateEndpointConnections and their operations over a ManagedInstance. </returns>
-        public ManagedInstancePrivateEndpointConnectionCollection GetManagedInstancePrivateEndpointConnections()
+        public virtual ManagedInstancePrivateEndpointConnectionCollection GetManagedInstancePrivateEndpointConnections()
         {
             return new ManagedInstancePrivateEndpointConnectionCollection(this);
         }
@@ -896,7 +934,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstancePrivateLinks in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstancePrivateLinks and their operations over a ManagedInstance. </returns>
-        public ManagedInstancePrivateLinkCollection GetManagedInstancePrivateLinks()
+        public virtual ManagedInstancePrivateLinkCollection GetManagedInstancePrivateLinks()
         {
             return new ManagedInstancePrivateLinkCollection(this);
         }
@@ -906,7 +944,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedInstanceVulnerabilityAssessments in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceVulnerabilityAssessments and their operations over a ManagedInstance. </returns>
-        public ManagedInstanceVulnerabilityAssessmentCollection GetManagedInstanceVulnerabilityAssessments()
+        public virtual ManagedInstanceVulnerabilityAssessmentCollection GetManagedInstanceVulnerabilityAssessments()
         {
             return new ManagedInstanceVulnerabilityAssessmentCollection(this);
         }
@@ -916,7 +954,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ManagedServerSecurityAlertPolicies in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedServerSecurityAlertPolicies and their operations over a ManagedInstance. </returns>
-        public ManagedServerSecurityAlertPolicyCollection GetManagedServerSecurityAlertPolicies()
+        public virtual ManagedServerSecurityAlertPolicyCollection GetManagedServerSecurityAlertPolicies()
         {
             return new ManagedServerSecurityAlertPolicyCollection(this);
         }
@@ -926,7 +964,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RecoverableManagedDatabases in the ManagedInstance. </summary>
         /// <returns> An object representing collection of RecoverableManagedDatabases and their operations over a ManagedInstance. </returns>
-        public RecoverableManagedDatabaseCollection GetRecoverableManagedDatabases()
+        public virtual RecoverableManagedDatabaseCollection GetRecoverableManagedDatabases()
         {
             return new RecoverableManagedDatabaseCollection(this);
         }
@@ -936,9 +974,9 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a SqlAgentConfiguration along with the instance operations that can be performed on it in the ManagedInstance. </summary>
         /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
-        public SqlAgentConfiguration GetSqlAgentConfiguration()
+        public virtual SqlAgentConfiguration GetSqlAgentConfiguration()
         {
-            return new SqlAgentConfiguration(this, Id + "/sqlAgent/current");
+            return new SqlAgentConfiguration(this, new ResourceIdentifier(Id.ToString() + "/sqlAgent/current"));
         }
         #endregion
 
@@ -946,7 +984,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RestorableDroppedManagedDatabases in the ManagedInstance. </summary>
         /// <returns> An object representing collection of RestorableDroppedManagedDatabases and their operations over a ManagedInstance. </returns>
-        public RestorableDroppedManagedDatabaseCollection GetRestorableDroppedManagedDatabases()
+        public virtual RestorableDroppedManagedDatabaseCollection GetRestorableDroppedManagedDatabases()
         {
             return new RestorableDroppedManagedDatabaseCollection(this);
         }

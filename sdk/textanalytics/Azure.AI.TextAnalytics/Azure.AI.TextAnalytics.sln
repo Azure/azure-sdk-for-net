@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.TextAnalytics.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{FD1CFA70-4C03-42AF-9D95-E3E974F9AC9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{44C5D4FF-7404-4D7A-977B-8E1EAADA7D1D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.TextAnalytics.Perf", "perf\Azure.AI.TextAnalytics.Perf\Azure.AI.TextAnalytics.Perf.csproj", "{2EE6085E-A0D6-4D25-B6E1-E5BA579E7D7C}"

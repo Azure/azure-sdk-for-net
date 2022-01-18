@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists roles for Purview Account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -78,8 +78,8 @@ namespace Azure.Analytics.Purview.Administration
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataRolesRequest()
-                        : CreateGetMetadataRolesNextPageRequest(nextLink);
+                        ? CreateGetMetadataRolesRequest(context)
+                        : CreateGetMetadataRolesNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists roles for Purview Account. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -133,8 +133,8 @@ namespace Azure.Analytics.Purview.Administration
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataRolesRequest()
-                        : CreateGetMetadataRolesNextPageRequest(nextLink);
+                        ? CreateGetMetadataRolesRequest(context)
+                        : CreateGetMetadataRolesNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -142,9 +142,9 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        internal HttpMessage CreateGetMetadataRolesRequest()
+        internal HttpMessage CreateGetMetadataRolesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -158,9 +158,9 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetMetadataRolesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetMetadataRolesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

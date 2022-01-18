@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdSecret IOperationSource<AfdSecret>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdSecret(_operationBase, AfdSecretData.DeserializeAfdSecretData(document.RootElement));
+            var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
+            return new AfdSecret(_operationBase, data);
         }
 
         async ValueTask<AfdSecret> IOperationSource<AfdSecret>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdSecret(_operationBase, AfdSecretData.DeserializeAfdSecretData(document.RootElement));
+            var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
+            return new AfdSecret(_operationBase, data);
         }
     }
 }

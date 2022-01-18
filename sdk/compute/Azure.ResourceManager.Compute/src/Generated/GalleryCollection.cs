@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of Gallery and their operations over its parent. </summary>
     public partial class GalleryCollection : ArmCollection, IEnumerable<Gallery>, IAsyncEnumerable<Gallery>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GalleriesRestOperations _galleriesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GalleryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public virtual GalleryCreateOrUpdateOperation CreateOrUpdate(string galleryName, GalleryData gallery, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public async virtual Task<GalleryCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryName, GalleryData gallery, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
@@ -187,9 +193,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Gallery>(null, response.GetRawResponse())
-                    : Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Gallery>(null, response.GetRawResponse());
+                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +216,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Gallery>(null, response.GetRawResponse())
-                    : Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Gallery>(null, response.GetRawResponse());
+                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,14 +237,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +263,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.Exists");
             scope.Start();
             try
             {
@@ -416,6 +422,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Gallery, GalleryData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Gallery, GalleryData> Construct() { }
     }
 }

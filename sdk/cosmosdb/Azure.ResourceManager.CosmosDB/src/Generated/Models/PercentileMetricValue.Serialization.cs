@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<double> p90 = default;
             Optional<double> p95 = default;
             Optional<double> p99 = default;
-            Optional<int> Count = default;
+            Optional<int> count = default;
             Optional<double> average = default;
             Optional<double> maximum = default;
             Optional<double> minimum = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Count = property.Value.GetInt32();
+                    count = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("average"))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PercentileMetricValue(Optional.ToNullable(Count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
+            return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
         }
     }
 }

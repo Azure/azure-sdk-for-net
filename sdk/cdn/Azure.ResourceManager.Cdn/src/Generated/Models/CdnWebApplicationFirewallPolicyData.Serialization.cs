@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
         internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element)
         {
             Optional<string> etag = default;
-            Sku sku = default;
+            Models.Sku sku = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<SystemData> systemData = default;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))

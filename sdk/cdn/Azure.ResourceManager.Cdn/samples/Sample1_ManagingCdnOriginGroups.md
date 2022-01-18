@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_OriginGroups_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +26,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
@@ -37,12 +38,12 @@ Now that we have the resource group created, we can manage the cdn origin group 
 ```C# Snippet:Managing_OriginGroups_CreateAnOriginGroup
 // Create a new cdn profile
 string profileName = "myProfile";
-var input1 = new ProfileData(Location.WestUS, new Sku { Name = SkuName.StandardMicrosoft });
-ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(profileName, input1);
+var input1 = new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
+ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, profileName, input1);
 Profile profile = lro1.Value;
 // Get the cdn endpoint collection from the specific profile and create an endpoint
 string endpointName = "myEndpoint";
-var input2 = new CdnEndpointData(Location.WestUS)
+var input2 = new CdnEndpointData(AzureLocation.WestUS)
 {
     IsHttpAllowed = true,
     IsHttpsAllowed = true,
@@ -55,16 +56,16 @@ DeepCreatedOrigin deepCreatedOrigin = new DeepCreatedOrigin("myOrigin")
     Weight = 100
 };
 input2.Origins.Add(deepCreatedOrigin);
-CdnEndpointCreateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(endpointName, input2);
+CdnEndpointCreateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input2);
 CdnEndpoint endpoint = lro2.Value;
 // Get the cdn origin group collection from the specific endpoint and create an origin group
 string originGroupName = "myOriginGroup";
 var input3 = new CdnOriginGroupData();
 input3.Origins.Add(new WritableSubResource
 {
-    Id = $"{endpoint.Id}/origins/myOrigin"
+    Id = new ResourceIdentifier($"{endpoint.Id}/origins/myOrigin")
 });
-CdnOriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input3);
+CdnOriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, originGroupName, input3);
 CdnOriginGroup originGroup = lro3.Value;
 ```
 
@@ -103,7 +104,7 @@ OriginGroupUpdateOptions input = new OriginGroupUpdateOptions()
         ProbeIntervalInSeconds = 60
     }
 };
-CdnOriginGroupUpdateOperation lro = await originGroup.UpdateAsync(input);
+CdnOriginGroupUpdateOperation lro = await originGroup.UpdateAsync(true, input);
 originGroup = lro.Value;
 ```
 
@@ -117,7 +118,7 @@ CdnOriginGroupCollection originGroupCollection = endpoint.GetCdnOriginGroups();
 // Now we can get the origin group with GetAsync()
 CdnOriginGroup originGroup = await originGroupCollection.GetAsync("myOriginGroup");
 // With DeleteAsync(), we can delete the origin group
-await originGroup.DeleteAsync();
+await originGroup.DeleteAsync(true);
 ```
 
 

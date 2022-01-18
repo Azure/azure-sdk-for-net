@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ExtendedResourceProperties DeserializeExtendedResourceProperties(JsonElement element)
         {
-            Optional<string> Rid = default;
-            Optional<object> Ts = default;
-            Optional<string> Etag = default;
+            Optional<string> rid = default;
+            Optional<float> ts = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"))
                 {
-                    Rid = property.Value.GetString();
+                    rid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("_ts"))
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Ts = property.Value.GetObject();
+                    ts = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("_etag"))
                 {
-                    Etag = property.Value.GetString();
+                    etag = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExtendedResourceProperties(Rid.Value, Ts.Value, Etag.Value);
+            return new ExtendedResourceProperties(rid.Value, Optional.ToNullable(ts), etag.Value);
         }
     }
 }

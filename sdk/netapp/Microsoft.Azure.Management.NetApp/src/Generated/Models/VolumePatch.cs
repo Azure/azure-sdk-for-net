@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="exportPolicy">exportPolicy</param>
         /// <param name="throughputMibps">Maximum throughput in Mibps that can
-        /// be achieved by this volume</param>
+        /// be achieved by this volume and this will be accepted as input only
+        /// for manual qosType volume</param>
         /// <param name="dataProtection">DataProtection</param>
         /// <param name="isDefaultQuotaEnabled">Specifies if default quota is
         /// enabled for the volume.</param>
@@ -139,7 +140,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <summary>
         /// Gets or sets maximum throughput in Mibps that can be achieved by
-        /// this volume
+        /// this volume and this will be accepted as input only for manual
+        /// qosType volume
         /// </summary>
         [JsonProperty(PropertyName = "properties.throughputMibps")]
         public double? ThroughputMibps { get; set; }
@@ -191,17 +193,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 if (UsageThreshold < 107374182400)
                 {
                     throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
-                }
-            }
-            if (ThroughputMibps != null)
-            {
-                if (ThroughputMibps > 4500)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
-                }
-                if (ThroughputMibps < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 1);
                 }
             }
         }

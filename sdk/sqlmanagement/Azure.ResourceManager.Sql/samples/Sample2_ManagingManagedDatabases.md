@@ -32,7 +32,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
@@ -46,11 +46,11 @@ please notice that ManagedDatabases is sub resource of managed instance, before 
 ```C# Snippet:Managing_Sql_CreateAManagedDatabases
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-ManagedDatabaseData data = new ManagedDatabaseData(Location.WestUS2)
+ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2)
 {
 };
 string databaseName = "myDatabase";
-var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(databaseName, data);
+var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(true, databaseName, data);
 ManagedDatabase managedDatabase = managedDatabaseLro.Value;
 ```
 
@@ -86,7 +86,7 @@ if (managedInstance != null)
     Console.WriteLine(managedDatabase.Data.Name);
 }
 
-if (await managedDatabaseCollection.CheckIfExistsAsync("bar"))
+if (await managedDatabaseCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("Virtual network 'bar' exists.");
 }
@@ -98,5 +98,5 @@ if (await managedDatabaseCollection.CheckIfExistsAsync("bar"))
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
 ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
-await managedDatabase.DeleteAsync();
+await managedDatabase.DeleteAsync(true);
 ```

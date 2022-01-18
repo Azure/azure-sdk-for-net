@@ -295,7 +295,11 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipelinePolicy authPolicy = sasCredential switch
             {
-                null => policy,
+                // We were not passed an explicit SasCredential nor does one exist in the query string, default to policy
+                null when string.IsNullOrWhiteSpace(_endpoint.Query) => policy,
+                // The endpoint has a query string, so assume it is a SAS token
+                null => new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(_endpoint.Query)),
+                // We were passed an explicit SasCredential, use that
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
             _pipeline = HttpPipelineBuilder.Build(
@@ -318,7 +322,8 @@ namespace Azure.Data.Tables
             ClientDiagnostics diagnostics,
             bool isPremiumEndpoint,
             Uri endpoint,
-            HttpPipeline pipeline)
+            HttpPipeline pipeline,
+            TableSharedKeyCredential credential)
         {
             _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, table);
             _tableOperations = tableOperations;
@@ -329,6 +334,7 @@ namespace Azure.Data.Tables
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
             _pipeline = pipeline;
+            _tableSharedKeyCredential = credential;
         }
 
         /// <summary>
@@ -550,7 +556,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="Response"/> containing headers such as ETag.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -584,7 +590,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> containing headers such as ETag</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -708,7 +714,7 @@ namespace Azure.Data.Tables
         public virtual async Task<Response> UpsertEntityAsync<T>(
             T entity,
             TableUpdateMode mode = TableUpdateMode.Merge,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -756,7 +762,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
-            where T : class, ITableEntity, new()
+            where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -816,7 +822,7 @@ namespace Azure.Data.Tables
             T entity,
             ETag ifMatch,
             TableUpdateMode mode = TableUpdateMode.Merge,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
@@ -882,7 +888,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
-            where T : class, ITableEntity, new()
+            where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
@@ -1423,6 +1429,13 @@ namespace Azure.Data.Tables
                 throw new ArgumentException($"The {nameof(builder.TableName)} must match the table name used to initialize this instance of the client");
             }
             TableUriBuilder sasUri = new(_endpoint);
+            if (string.IsNullOrEmpty(sasUri.Tablename))
+            {
+                // The table name is not included in the URI, so add it while preserving the trailing slash, if it exists.
+                var sasUrlbuilder = new UriBuilder(_endpoint);
+                sasUrlbuilder.Path += sasUrlbuilder.Path.EndsWith("/", StringComparison.Ordinal) ? $"{Name}/" : $"/{Name}";
+                sasUri = new(sasUrlbuilder.Uri);
+            }
             sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
