@@ -138,7 +138,10 @@
         "Pcnet",
         "Pmem",
         "Pvscsi",
-        "Sesparse"
+        "Sesparse",
+        "VCenter",
+        "VMware",
+        "vSphere"
       ]
     },
     {
