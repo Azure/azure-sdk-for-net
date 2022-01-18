@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
+    [Ignore("")]
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
