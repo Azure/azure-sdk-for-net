@@ -374,6 +374,16 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
+        #region VaultKey
+
+        /// <summary> Gets a collection of VaultKeys in the Vault. </summary>
+        /// <returns> An object representing collection of VaultKeys and their operations over a Vault. </returns>
+        public virtual VaultKeyCollection GetVaultKeys()
+        {
+            return new VaultKeyCollection(this);
+        }
+        #endregion
+
         #region PrivateEndpointConnection
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the Vault. </summary>
@@ -381,6 +391,16 @@ namespace Azure.ResourceManager.KeyVault
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
+        }
+        #endregion
+
+        #region Secret
+
+        /// <summary> Gets a collection of Secrets in the Vault. </summary>
+        /// <returns> An object representing collection of Secrets and their operations over a Vault. </returns>
+        public virtual SecretCollection GetSecrets()
+        {
+            return new SecretCollection(this);
         }
         #endregion
     }

@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityVaultAsync(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.KeyVault
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityVault");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckKeyVaultNameAvailability");
                 scope.Start();
                 try
                 {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityVault(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.KeyVault
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityVault");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckKeyVaultNameAvailability");
                 scope.Start();
                 try
                 {
