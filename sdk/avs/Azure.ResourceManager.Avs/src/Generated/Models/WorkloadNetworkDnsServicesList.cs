@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkDnsServicesList. </summary>
         internal WorkloadNetworkDnsServicesList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkDnsService>();
+            Value = new ChangeTrackingList<WorkloadNetworkDnsServiceData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkDnsServicesList. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkDnsServicesList(IReadOnlyList<WorkloadNetworkDnsService> value, string nextLink)
+        internal WorkloadNetworkDnsServicesList(IReadOnlyList<WorkloadNetworkDnsServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on the page. </summary>
-        public IReadOnlyList<WorkloadNetworkDnsService> Value { get; }
+        public IReadOnlyList<WorkloadNetworkDnsServiceData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

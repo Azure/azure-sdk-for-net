@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Avs
 {
     internal partial class PlacementPoliciesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PlacementPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-12-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public PlacementPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-12-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Avs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string privateCloudName, string clusterName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,13 +65,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List placement policies in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<PlacementPoliciesList>> GetAllAsync(string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public async Task<Response<PlacementPoliciesList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,13 +107,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List placement policies in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public Response<PlacementPoliciesList> GetAll(string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public Response<PlacementPoliciesList> List(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,14 +173,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get a placement policy by name in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
-        public async Task<Response<PlacementPolicyData>> GetAsync(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
+        public async Task<Response<PlacementPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicyName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -210,14 +222,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get a placement policy by name in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
-        public Response<PlacementPolicyData> Get(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
+        public Response<PlacementPolicyData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicyName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -253,7 +270,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyData placementPolicy)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyData placementPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,15 +299,20 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update a placement policy in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="placementPolicy"> A placement policy in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicy"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyData placementPolicy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicy"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyData placementPolicy, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -312,7 +334,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicy));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicy);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -325,15 +347,20 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update a placement policy in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="placementPolicy"> A placement policy in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicy"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyData placementPolicy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicy"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyData placementPolicy, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -355,7 +382,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicy));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicy);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -367,7 +394,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyUpdate placementPolicyUpdate)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyUpdate placementPolicyUpdate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -396,15 +423,20 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Update a placement policy in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="placementPolicyUpdate"> The placement policy properties that may be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicyUpdate"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyUpdate placementPolicyUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicyUpdate"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyUpdate placementPolicyUpdate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -426,7 +458,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicyUpdate));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicyUpdate);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicyUpdate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -439,15 +471,20 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Update a placement policy in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="placementPolicyUpdate"> The placement policy properties that may be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicyUpdate"/> is null. </exception>
-        public Response Update(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyUpdate placementPolicyUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="placementPolicyName"/>, or <paramref name="placementPolicyUpdate"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, PlacementPolicyUpdate placementPolicyUpdate, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -469,7 +506,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicyUpdate));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicyUpdate);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName, placementPolicyUpdate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -481,7 +518,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -506,14 +543,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete a placement policy in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -531,7 +573,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicyName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -545,14 +587,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete a placement policy in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="placementPolicyName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -570,7 +617,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(placementPolicyName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, clusterName, placementPolicyName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -583,7 +630,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string privateCloudName, string clusterName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -599,16 +646,21 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List placement policies in a private cloud cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<PlacementPoliciesList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public async Task<Response<PlacementPoliciesList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -623,7 +675,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -641,16 +693,21 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List placement policies in a private cloud cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public Response<PlacementPoliciesList> GetAllNextPage(string nextLink, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public Response<PlacementPoliciesList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -665,7 +722,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName, clusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         Datastore IOperationSource<Datastore>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Datastore(_operationBase, DatastoreData.DeserializeDatastoreData(document.RootElement));
+            var data = DatastoreData.DeserializeDatastoreData(document.RootElement);
+            return new Datastore(_operationBase, data);
         }
 
         async ValueTask<Datastore> IOperationSource<Datastore>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Datastore(_operationBase, DatastoreData.DeserializeDatastoreData(document.RootElement));
+            var data = DatastoreData.DeserializeDatastoreData(document.RootElement);
+            return new Datastore(_operationBase, data);
         }
     }
 }

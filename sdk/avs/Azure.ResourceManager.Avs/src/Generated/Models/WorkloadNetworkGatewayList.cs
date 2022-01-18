@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkGatewayList. </summary>
         internal WorkloadNetworkGatewayList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkGateway>();
+            Value = new ChangeTrackingList<WorkloadNetworkGatewayData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkGatewayList. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkGatewayList(IReadOnlyList<WorkloadNetworkGateway> value, string nextLink)
+        internal WorkloadNetworkGatewayList(IReadOnlyList<WorkloadNetworkGatewayData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on the page. </summary>
-        public IReadOnlyList<WorkloadNetworkGateway> Value { get; }
+        public IReadOnlyList<WorkloadNetworkGatewayData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

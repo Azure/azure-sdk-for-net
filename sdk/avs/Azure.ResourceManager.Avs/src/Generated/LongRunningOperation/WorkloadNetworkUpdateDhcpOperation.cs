@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Avs.Models
     {
         private readonly OperationInternals<WorkloadNetworkDhcp> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of WorkloadNetworkUpdateDhcpOperation for mocking. </summary>
         protected WorkloadNetworkUpdateDhcpOperation()
         {
         }
 
-        internal WorkloadNetworkUpdateDhcpOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkloadNetworkUpdateDhcpOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WorkloadNetworkDhcp>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadNetworkUpdateDhcpOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         WorkloadNetworkDhcp IOperationSource<WorkloadNetworkDhcp>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return WorkloadNetworkDhcp.DeserializeWorkloadNetworkDhcp(document.RootElement);
+            var data = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);
+            return new WorkloadNetworkDhcp(_operationBase, data);
         }
 
         async ValueTask<WorkloadNetworkDhcp> IOperationSource<WorkloadNetworkDhcp>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return WorkloadNetworkDhcp.DeserializeWorkloadNetworkDhcp(document.RootElement);
+            var data = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);
+            return new WorkloadNetworkDhcp(_operationBase, data);
         }
     }
 }

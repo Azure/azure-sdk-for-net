@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         Cluster IOperationSource<Cluster>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Cluster(_operationBase, ClusterData.DeserializeClusterData(document.RootElement));
+            var data = ClusterData.DeserializeClusterData(document.RootElement);
+            return new Cluster(_operationBase, data);
         }
 
         async ValueTask<Cluster> IOperationSource<Cluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Cluster(_operationBase, ClusterData.DeserializeClusterData(document.RootElement));
+            var data = ClusterData.DeserializeClusterData(document.RootElement);
+            return new Cluster(_operationBase, data);
         }
     }
 }

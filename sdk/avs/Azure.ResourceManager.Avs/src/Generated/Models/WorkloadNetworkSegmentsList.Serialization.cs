@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkSegmentsList DeserializeWorkloadNetworkSegmentsList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadNetworkSegment>> value = default;
+            Optional<IReadOnlyList<WorkloadNetworkSegmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadNetworkSegment> array = new List<WorkloadNetworkSegment>();
+                    List<WorkloadNetworkSegmentData> array = new List<WorkloadNetworkSegmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkSegment.DeserializeWorkloadNetworkSegment(item));
+                        array.Add(WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(item));
                     }
                     value = array;
                     continue;

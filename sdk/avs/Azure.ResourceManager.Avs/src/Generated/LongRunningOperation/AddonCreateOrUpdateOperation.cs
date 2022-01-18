@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         Addon IOperationSource<Addon>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Addon(_operationBase, AddonData.DeserializeAddonData(document.RootElement));
+            var data = AddonData.DeserializeAddonData(document.RootElement);
+            return new Addon(_operationBase, data);
         }
 
         async ValueTask<Addon> IOperationSource<Addon>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Addon(_operationBase, AddonData.DeserializeAddonData(document.RootElement));
+            var data = AddonData.DeserializeAddonData(document.RootElement);
+            return new Addon(_operationBase, data);
         }
     }
 }

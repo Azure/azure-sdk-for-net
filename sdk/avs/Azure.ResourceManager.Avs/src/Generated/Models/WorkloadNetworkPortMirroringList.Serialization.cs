@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkPortMirroringList DeserializeWorkloadNetworkPortMirroringList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadNetworkPortMirroring>> value = default;
+            Optional<IReadOnlyList<WorkloadNetworkPortMirroringData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadNetworkPortMirroring> array = new List<WorkloadNetworkPortMirroring>();
+                    List<WorkloadNetworkPortMirroringData> array = new List<WorkloadNetworkPortMirroringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkPortMirroring.DeserializeWorkloadNetworkPortMirroring(item));
+                        array.Add(WorkloadNetworkPortMirroringData.DeserializeWorkloadNetworkPortMirroringData(item));
                     }
                     value = array;
                     continue;

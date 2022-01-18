@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         PrivateCloud IOperationSource<PrivateCloud>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateCloud(_operationBase, PrivateCloudData.DeserializePrivateCloudData(document.RootElement));
+            var data = PrivateCloudData.DeserializePrivateCloudData(document.RootElement);
+            return new PrivateCloud(_operationBase, data);
         }
 
         async ValueTask<PrivateCloud> IOperationSource<PrivateCloud>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateCloud(_operationBase, PrivateCloudData.DeserializePrivateCloudData(document.RootElement));
+            var data = PrivateCloudData.DeserializePrivateCloudData(document.RootElement);
+            return new PrivateCloud(_operationBase, data);
         }
     }
 }

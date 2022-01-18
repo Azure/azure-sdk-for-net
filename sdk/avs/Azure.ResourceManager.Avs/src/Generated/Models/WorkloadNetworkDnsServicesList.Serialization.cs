@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkDnsServicesList DeserializeWorkloadNetworkDnsServicesList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadNetworkDnsService>> value = default;
+            Optional<IReadOnlyList<WorkloadNetworkDnsServiceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadNetworkDnsService> array = new List<WorkloadNetworkDnsService>();
+                    List<WorkloadNetworkDnsServiceData> array = new List<WorkloadNetworkDnsServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkDnsService.DeserializeWorkloadNetworkDnsService(item));
+                        array.Add(WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(item));
                     }
                     value = array;
                     continue;

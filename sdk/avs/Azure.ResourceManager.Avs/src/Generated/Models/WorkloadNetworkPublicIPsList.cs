@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkPublicIPsList. </summary>
         internal WorkloadNetworkPublicIPsList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkPublicIP>();
+            Value = new ChangeTrackingList<WorkloadNetworkPublicIPData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkPublicIPsList. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkPublicIPsList(IReadOnlyList<WorkloadNetworkPublicIP> value, string nextLink)
+        internal WorkloadNetworkPublicIPsList(IReadOnlyList<WorkloadNetworkPublicIPData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on the page. </summary>
-        public IReadOnlyList<WorkloadNetworkPublicIP> Value { get; }
+        public IReadOnlyList<WorkloadNetworkPublicIPData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

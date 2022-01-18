@@ -8,54 +8,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing collection of Addon and their operations over a PrivateCloud. </summary>
+    /// <summary> A class representing collection of Addon and their operations over its parent. </summary>
     public partial class AddonCollection : ArmCollection, IEnumerable<Addon>, IAsyncEnumerable<Addon>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AddonsRestOperations _restClient;
+        private readonly AddonsRestOperations _addonsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AddonCollection"/> class for mocking. </summary>
         protected AddonCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of AddonCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AddonCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AddonCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new AddonsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _addonsRestClient = new AddonsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<Addon> IEnumerable<Addon>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != PrivateCloud.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateCloud.ResourceType), nameof(id));
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<Addon> IAsyncEnumerable<Addon>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => PrivateCloud.ResourceType;
 
         // Collection level operations.
 
@@ -65,7 +56,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="addon"/> is null. </exception>
-        public virtual AddonCreateOrUpdateOperation CreateOrUpdate(string addonName, AddonData addon, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AddonCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string addonName, AddonData addon, CancellationToken cancellationToken = default)
         {
             if (addonName == null)
             {
@@ -80,8 +71,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, addonName, addon, cancellationToken);
-                var operation = new AddonCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, addonName, addon).Request, response);
+                var response = _addonsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, addon, cancellationToken);
+                var operation = new AddonCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, addon).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="addon"/> is null. </exception>
-        public async virtual Task<AddonCreateOrUpdateOperation> CreateOrUpdateAsync(string addonName, AddonData addon, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AddonCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string addonName, AddonData addon, CancellationToken cancellationToken = default)
         {
             if (addonName == null)
             {
@@ -114,8 +105,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, addonName, addon, cancellationToken).ConfigureAwait(false);
-                var operation = new AddonCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, addonName, addon).Request, response);
+                var response = await _addonsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, addon, cancellationToken).ConfigureAwait(false);
+                var operation = new AddonCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, addon).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +118,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get an addon by name in a private cloud. </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<Addon> Get(string addonName, CancellationToken cancellationToken = default)
         {
+            if (addonName == null)
+            {
+                throw new ArgumentNullException(nameof(addonName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AddonCollection.Get");
             scope.Start();
             try
             {
-                if (addonName == null)
-                {
-                    throw new ArgumentNullException(nameof(addonName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, addonName, cancellationToken: cancellationToken);
+                var response = _addonsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Addon(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +145,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get an addon by name in a private cloud. </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public async virtual Task<Response<Addon>> GetAsync(string addonName, CancellationToken cancellationToken = default)
         {
+            if (addonName == null)
+            {
+                throw new ArgumentNullException(nameof(addonName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AddonCollection.Get");
             scope.Start();
             try
             {
-                if (addonName == null)
-                {
-                    throw new ArgumentNullException(nameof(addonName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, addonName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _addonsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Addon(Parent, response.Value), response.GetRawResponse());
@@ -181,22 +174,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<Addon> GetIfExists(string addonName, CancellationToken cancellationToken = default)
         {
+            if (addonName == null)
+            {
+                throw new ArgumentNullException(nameof(addonName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AddonCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (addonName == null)
-                {
-                    throw new ArgumentNullException(nameof(addonName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, addonName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Addon>(null, response.GetRawResponse())
-                    : Response.FromValue(new Addon(this, response.Value), response.GetRawResponse());
+                var response = _addonsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<Addon>(null, response.GetRawResponse());
+                return Response.FromValue(new Addon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,22 +201,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public async virtual Task<Response<Addon>> GetIfExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
+            if (addonName == null)
+            {
+                throw new ArgumentNullException(nameof(addonName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AddonCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (addonName == null)
-                {
-                    throw new ArgumentNullException(nameof(addonName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, addonName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Addon>(null, response.GetRawResponse())
-                    : Response.FromValue(new Addon(this, response.Value), response.GetRawResponse());
+                var response = await _addonsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<Addon>(null, response.GetRawResponse());
+                return Response.FromValue(new Addon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,18 +228,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string addonName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        public virtual Response<bool> Exists(string addonName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AddonCollection.CheckIfExists");
+            if (addonName == null)
+            {
+                throw new ArgumentNullException(nameof(addonName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("AddonCollection.Exists");
             scope.Start();
             try
             {
-                if (addonName == null)
-                {
-                    throw new ArgumentNullException(nameof(addonName));
-                }
-
                 var response = GetIfExists(addonName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +253,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string addonName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AddonCollection.CheckIfExists");
+            if (addonName == null)
+            {
+                throw new ArgumentNullException(nameof(addonName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("AddonCollection.Exists");
             scope.Start();
             try
             {
-                if (addonName == null)
-                {
-                    throw new ArgumentNullException(nameof(addonName));
-                }
-
                 var response = await GetIfExistsAsync(addonName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +287,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _addonsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Addon(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +302,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _addonsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Addon(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _addonsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Addon(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _addonsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Addon(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +352,22 @@ namespace Azure.ResourceManager.Avs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<Addon> IEnumerable<Addon>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<Addon> IAsyncEnumerable<Addon>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, Addon, AddonData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Addon, AddonData> Construct() { }
     }
 }

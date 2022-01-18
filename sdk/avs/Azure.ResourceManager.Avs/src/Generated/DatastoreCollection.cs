@@ -8,54 +8,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing collection of Datastore and their operations over a Cluster. </summary>
+    /// <summary> A class representing collection of Datastore and their operations over its parent. </summary>
     public partial class DatastoreCollection : ArmCollection, IEnumerable<Datastore>, IAsyncEnumerable<Datastore>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DatastoresRestOperations _restClient;
+        private readonly DatastoresRestOperations _datastoresRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DatastoreCollection"/> class for mocking. </summary>
         protected DatastoreCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of DatastoreCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatastoreCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DatastoreCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DatastoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _datastoresRestClient = new DatastoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<Datastore> IEnumerable<Datastore>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != Cluster.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Cluster.ResourceType), nameof(id));
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<Datastore> IAsyncEnumerable<Datastore>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Cluster.ResourceType;
 
         // Collection level operations.
 
@@ -65,7 +56,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> or <paramref name="datastore"/> is null. </exception>
-        public virtual DatastoreCreateOrUpdateOperation CreateOrUpdate(string datastoreName, DatastoreData datastore, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatastoreCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string datastoreName, DatastoreData datastore, CancellationToken cancellationToken = default)
         {
             if (datastoreName == null)
             {
@@ -80,8 +71,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore, cancellationToken);
-                var operation = new DatastoreCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore).Request, response);
+                var response = _datastoresRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore, cancellationToken);
+                var operation = new DatastoreCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _datastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> or <paramref name="datastore"/> is null. </exception>
-        public async virtual Task<DatastoreCreateOrUpdateOperation> CreateOrUpdateAsync(string datastoreName, DatastoreData datastore, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatastoreCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string datastoreName, DatastoreData datastore, CancellationToken cancellationToken = default)
         {
             if (datastoreName == null)
             {
@@ -114,8 +105,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore, cancellationToken).ConfigureAwait(false);
-                var operation = new DatastoreCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore).Request, response);
+                var response = await _datastoresRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore, cancellationToken).ConfigureAwait(false);
+                var operation = new DatastoreCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _datastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, datastore).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +118,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get a datastore in a private cloud cluster. </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public virtual Response<Datastore> Get(string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (datastoreName == null)
+            {
+                throw new ArgumentNullException(nameof(datastoreName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.Get");
             scope.Start();
             try
             {
-                if (datastoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(datastoreName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken);
+                var response = _datastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Datastore(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +145,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get a datastore in a private cloud cluster. </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public async virtual Task<Response<Datastore>> GetAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (datastoreName == null)
+            {
+                throw new ArgumentNullException(nameof(datastoreName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.Get");
             scope.Start();
             try
             {
-                if (datastoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(datastoreName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _datastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Datastore(Parent, response.Value), response.GetRawResponse());
@@ -181,22 +174,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public virtual Response<Datastore> GetIfExists(string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (datastoreName == null)
+            {
+                throw new ArgumentNullException(nameof(datastoreName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (datastoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(datastoreName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Datastore>(null, response.GetRawResponse())
-                    : Response.FromValue(new Datastore(this, response.Value), response.GetRawResponse());
+                var response = _datastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<Datastore>(null, response.GetRawResponse());
+                return Response.FromValue(new Datastore(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,22 +201,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public async virtual Task<Response<Datastore>> GetIfExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (datastoreName == null)
+            {
+                throw new ArgumentNullException(nameof(datastoreName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (datastoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(datastoreName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Datastore>(null, response.GetRawResponse())
-                    : Response.FromValue(new Datastore(this, response.Value), response.GetRawResponse());
+                var response = await _datastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<Datastore>(null, response.GetRawResponse());
+                return Response.FromValue(new Datastore(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,18 +228,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string datastoreName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        public virtual Response<bool> Exists(string datastoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.CheckIfExists");
+            if (datastoreName == null)
+            {
+                throw new ArgumentNullException(nameof(datastoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.Exists");
             scope.Start();
             try
             {
-                if (datastoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(datastoreName));
-                }
-
                 var response = GetIfExists(datastoreName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +253,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.CheckIfExists");
+            if (datastoreName == null)
+            {
+                throw new ArgumentNullException(nameof(datastoreName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatastoreCollection.Exists");
             scope.Start();
             try
             {
-                if (datastoreName == null)
-                {
-                    throw new ArgumentNullException(nameof(datastoreName));
-                }
-
                 var response = await GetIfExistsAsync(datastoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +287,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _datastoresRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Datastore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +302,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _datastoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Datastore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _datastoresRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Datastore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _datastoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Datastore(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +352,22 @@ namespace Azure.ResourceManager.Avs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<Datastore> IEnumerable<Datastore>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<Datastore> IAsyncEnumerable<Datastore>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, Datastore, DatastoreData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Datastore, DatastoreData> Construct() { }
     }
 }

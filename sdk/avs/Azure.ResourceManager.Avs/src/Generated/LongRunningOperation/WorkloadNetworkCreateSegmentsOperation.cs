@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Avs.Models
     {
         private readonly OperationInternals<WorkloadNetworkSegment> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of WorkloadNetworkCreateSegmentsOperation for mocking. </summary>
         protected WorkloadNetworkCreateSegmentsOperation()
         {
         }
 
-        internal WorkloadNetworkCreateSegmentsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkloadNetworkCreateSegmentsOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WorkloadNetworkSegment>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadNetworkCreateSegmentsOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         WorkloadNetworkSegment IOperationSource<WorkloadNetworkSegment>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return WorkloadNetworkSegment.DeserializeWorkloadNetworkSegment(document.RootElement);
+            var data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
+            return new WorkloadNetworkSegment(_operationBase, data);
         }
 
         async ValueTask<WorkloadNetworkSegment> IOperationSource<WorkloadNetworkSegment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return WorkloadNetworkSegment.DeserializeWorkloadNetworkSegment(document.RootElement);
+            var data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
+            return new WorkloadNetworkSegment(_operationBase, data);
         }
     }
 }

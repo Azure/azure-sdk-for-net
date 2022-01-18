@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Avs.Models
     {
         private readonly OperationInternals<WorkloadNetworkVMGroup> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of WorkloadNetworkUpdateVMGroupOperation for mocking. </summary>
         protected WorkloadNetworkUpdateVMGroupOperation()
         {
         }
 
-        internal WorkloadNetworkUpdateVMGroupOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkloadNetworkUpdateVMGroupOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WorkloadNetworkVMGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadNetworkUpdateVMGroupOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         WorkloadNetworkVMGroup IOperationSource<WorkloadNetworkVMGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return WorkloadNetworkVMGroup.DeserializeWorkloadNetworkVMGroup(document.RootElement);
+            var data = WorkloadNetworkVMGroupData.DeserializeWorkloadNetworkVMGroupData(document.RootElement);
+            return new WorkloadNetworkVMGroup(_operationBase, data);
         }
 
         async ValueTask<WorkloadNetworkVMGroup> IOperationSource<WorkloadNetworkVMGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return WorkloadNetworkVMGroup.DeserializeWorkloadNetworkVMGroup(document.RootElement);
+            var data = WorkloadNetworkVMGroupData.DeserializeWorkloadNetworkVMGroupData(document.RootElement);
+            return new WorkloadNetworkVMGroup(_operationBase, data);
         }
     }
 }

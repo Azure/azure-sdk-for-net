@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of VirtualMachinesList. </summary>
         internal VirtualMachinesList()
         {
-            Value = new ChangeTrackingList<VirtualMachine>();
+            Value = new ChangeTrackingList<VirtualMachineData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachinesList. </summary>
         /// <param name="value"> The items to be displayed on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal VirtualMachinesList(IReadOnlyList<VirtualMachine> value, string nextLink)
+        internal VirtualMachinesList(IReadOnlyList<VirtualMachineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items to be displayed on the page. </summary>
-        public IReadOnlyList<VirtualMachine> Value { get; }
+        public IReadOnlyList<VirtualMachineData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

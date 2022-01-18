@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The private cloud SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public PrivateCloudData(Location location, Models.Sku sku) : base(location)
+        public PrivateCloudData(AzureLocation location, Models.Sku sku) : base(location)
         {
             if (sku == null)
             {
@@ -60,7 +58,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
         /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
         /// <param name="secondaryCircuit"> A secondary expressRoute circuit from a separate AZ. Only present in a stretched private cloud. </param>
-        internal PrivateCloudData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, PrivateCloudIdentity identity, ManagementCluster managementCluster, InternetEnum? internet, IList<IdentitySource> identitySources, AvailabilityProperties availability, Encryption encryption, PrivateCloudProvisioningState? provisioningState, Circuit circuit, Endpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vmotionNetwork, string vcenterPassword, string nsxtPassword, string vcenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, Circuit secondaryCircuit) : base(id, name, type, tags, location)
+        internal PrivateCloudData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, PrivateCloudIdentity identity, ManagementCluster managementCluster, InternetEnum? internet, IList<IdentitySource> identitySources, AvailabilityProperties availability, Encryption encryption, PrivateCloudProvisioningState? provisioningState, Circuit circuit, Endpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vmotionNetwork, string vcenterPassword, string nsxtPassword, string vcenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, Circuit secondaryCircuit) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;

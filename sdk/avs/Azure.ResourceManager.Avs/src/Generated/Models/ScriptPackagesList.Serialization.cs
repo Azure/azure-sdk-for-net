@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ScriptPackagesList DeserializeScriptPackagesList(JsonElement element)
         {
-            Optional<IReadOnlyList<ScriptPackage>> value = default;
+            Optional<IReadOnlyList<ScriptPackageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScriptPackage> array = new List<ScriptPackage>();
+                    List<ScriptPackageData> array = new List<ScriptPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptPackage.DeserializeScriptPackage(item));
+                        array.Add(ScriptPackageData.DeserializeScriptPackageData(item));
                     }
                     value = array;
                     continue;

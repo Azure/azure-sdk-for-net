@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Avs
 {
     internal partial class HcxEnterpriseSitesRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public HcxEnterpriseSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-12-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public HcxEnterpriseSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-12-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Avs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string privateCloudName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,12 +63,17 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
-        public async Task<Response<HcxEnterpriseSiteList>> GetAllAsync(string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public async Task<Response<HcxEnterpriseSiteList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,12 +100,17 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
-        public Response<HcxEnterpriseSiteList> GetAll(string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public Response<HcxEnterpriseSiteList> List(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +136,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,13 +159,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get an HCX Enterprise Site by name in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
-        public async Task<Response<HcxEnterpriseSiteData>> GetAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        public async Task<Response<HcxEnterpriseSiteData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -172,7 +184,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,13 +203,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get an HCX Enterprise Site by name in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
-        public Response<HcxEnterpriseSiteData> Get(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        public Response<HcxEnterpriseSiteData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -211,7 +228,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +246,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -256,14 +273,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update an HCX Enterprise Site in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> The name of the private cloud. </param>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="hcxEnterpriseSite"> The HCX Enterprise Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="hcxEnterpriseSiteName"/>, or <paramref name="hcxEnterpriseSite"/> is null. </exception>
-        public async Task<Response<HcxEnterpriseSiteData>> CreateOrUpdateAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="hcxEnterpriseSiteName"/>, or <paramref name="hcxEnterpriseSite"/> is null. </exception>
+        public async Task<Response<HcxEnterpriseSiteData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -281,7 +303,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(hcxEnterpriseSite));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, hcxEnterpriseSiteName, hcxEnterpriseSite);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, hcxEnterpriseSiteName, hcxEnterpriseSite);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -299,14 +321,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update an HCX Enterprise Site in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> The name of the private cloud. </param>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="hcxEnterpriseSite"> The HCX Enterprise Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="hcxEnterpriseSiteName"/>, or <paramref name="hcxEnterpriseSite"/> is null. </exception>
-        public Response<HcxEnterpriseSiteData> CreateOrUpdate(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="hcxEnterpriseSiteName"/>, or <paramref name="hcxEnterpriseSite"/> is null. </exception>
+        public Response<HcxEnterpriseSiteData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -324,7 +351,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(hcxEnterpriseSite));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, hcxEnterpriseSiteName, hcxEnterpriseSite);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, hcxEnterpriseSiteName, hcxEnterpriseSite);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -341,7 +368,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -364,13 +391,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete an HCX Enterprise Site in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -384,7 +416,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -397,13 +429,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete an HCX Enterprise Site in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -417,7 +454,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, hcxEnterpriseSiteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -429,7 +466,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string privateCloudName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -445,15 +482,20 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
-        public async Task<Response<HcxEnterpriseSiteList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public async Task<Response<HcxEnterpriseSiteList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -464,7 +506,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -482,15 +524,20 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List HCX Enterprise Sites in a private cloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
-        public Response<HcxEnterpriseSiteList> GetAllNextPage(string nextLink, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public Response<HcxEnterpriseSiteList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -501,7 +548,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

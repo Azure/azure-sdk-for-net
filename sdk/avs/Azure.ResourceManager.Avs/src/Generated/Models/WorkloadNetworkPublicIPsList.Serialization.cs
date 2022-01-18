@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkPublicIPsList DeserializeWorkloadNetworkPublicIPsList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadNetworkPublicIP>> value = default;
+            Optional<IReadOnlyList<WorkloadNetworkPublicIPData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadNetworkPublicIP> array = new List<WorkloadNetworkPublicIP>();
+                    List<WorkloadNetworkPublicIPData> array = new List<WorkloadNetworkPublicIPData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkPublicIP.DeserializeWorkloadNetworkPublicIP(item));
+                        array.Add(WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(item));
                     }
                     value = array;
                     continue;

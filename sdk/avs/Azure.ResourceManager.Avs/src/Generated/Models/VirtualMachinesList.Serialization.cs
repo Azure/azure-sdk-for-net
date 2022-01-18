@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static VirtualMachinesList DeserializeVirtualMachinesList(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualMachine>> value = default;
+            Optional<IReadOnlyList<VirtualMachineData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachine> array = new List<VirtualMachine>();
+                    List<VirtualMachineData> array = new List<VirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachine.DeserializeVirtualMachine(item));
+                        array.Add(VirtualMachineData.DeserializeVirtualMachineData(item));
                     }
                     value = array;
                     continue;

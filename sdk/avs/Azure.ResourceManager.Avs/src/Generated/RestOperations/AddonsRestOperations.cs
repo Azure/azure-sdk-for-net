@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Avs
 {
     internal partial class AddonsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AddonsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-12-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public AddonsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-12-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Avs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string privateCloudName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,12 +63,17 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List addons in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
-        public async Task<Response<AddonList>> GetAllAsync(string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public async Task<Response<AddonList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,12 +100,17 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List addons in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
-        public Response<AddonList> GetAll(string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public Response<AddonList> List(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +136,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string privateCloudName, string addonName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,13 +159,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get an addon by name in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
-        public async Task<Response<AddonData>> GetAsync(string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
+        public async Task<Response<AddonData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -172,7 +184,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(addonName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, addonName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, addonName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,13 +203,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get an addon by name in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
-        public Response<AddonData> Get(string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
+        public Response<AddonData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -211,7 +228,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(addonName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, addonName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, addonName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -229,7 +246,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateCloudName, string addonName, AddonData addon)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AddonData addon)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -256,14 +273,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update a addon in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> The name of the private cloud. </param>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="addon"> A addon in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="addonName"/>, or <paramref name="addon"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string privateCloudName, string addonName, AddonData addon, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="addonName"/>, or <paramref name="addon"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AddonData addon, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -281,7 +303,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(addon));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, addonName, addon);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, addonName, addon);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -294,14 +316,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update a addon in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> The name of the private cloud. </param>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="addon"> A addon in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="addonName"/>, or <paramref name="addon"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string privateCloudName, string addonName, AddonData addon, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="addonName"/>, or <paramref name="addon"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AddonData addon, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -319,7 +346,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(addon));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, addonName, addon);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, addonName, addon);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -331,7 +358,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string privateCloudName, string addonName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -354,13 +381,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete a addon in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -374,7 +406,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(addonName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, addonName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, addonName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -388,13 +420,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete a addon in a private cloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="addonName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -408,7 +445,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(addonName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, addonName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, addonName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +458,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string privateCloudName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -437,15 +474,20 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List addons in a private cloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
-        public async Task<Response<AddonList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public async Task<Response<AddonList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -456,7 +498,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -474,15 +516,20 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List addons in a private cloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
-        public Response<AddonList> GetAllNextPage(string nextLink, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateCloudName"/> is null. </exception>
+        public Response<AddonList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -493,7 +540,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(privateCloudName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         CloudLink IOperationSource<CloudLink>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CloudLink(_operationBase, CloudLinkData.DeserializeCloudLinkData(document.RootElement));
+            var data = CloudLinkData.DeserializeCloudLinkData(document.RootElement);
+            return new CloudLink(_operationBase, data);
         }
 
         async ValueTask<CloudLink> IOperationSource<CloudLink>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CloudLink(_operationBase, CloudLinkData.DeserializeCloudLinkData(document.RootElement));
+            var data = CloudLinkData.DeserializeCloudLinkData(document.RootElement);
+            return new CloudLink(_operationBase, data);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="PrivateCloud" /> object. </returns>
         public static PrivateCloud GetPrivateCloud(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateCloud.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateCloud(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="Cluster" /> object. </returns>
         public static Cluster GetCluster(this ArmClient armClient, ResourceIdentifier id)
         {
+            Cluster.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Cluster(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="Datastore" /> object. </returns>
         public static Datastore GetDatastore(this ArmClient armClient, ResourceIdentifier id)
         {
+            Datastore.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Datastore(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="HcxEnterpriseSite" /> object. </returns>
         public static HcxEnterpriseSite GetHcxEnterpriseSite(this ArmClient armClient, ResourceIdentifier id)
         {
+            HcxEnterpriseSite.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new HcxEnterpriseSite(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -63,6 +68,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ExpressRouteAuthorization" /> object. </returns>
         public static ExpressRouteAuthorization GetExpressRouteAuthorization(this ArmClient armClient, ResourceIdentifier id)
         {
+            ExpressRouteAuthorization.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ExpressRouteAuthorization(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -74,7 +80,116 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="GlobalReachConnection" /> object. </returns>
         public static GlobalReachConnection GetGlobalReachConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            GlobalReachConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GlobalReachConnection(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkSegment
+        /// <summary> Gets an object representing a WorkloadNetworkSegment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkSegment" /> object. </returns>
+        public static WorkloadNetworkSegment GetWorkloadNetworkSegment(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkSegment.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkSegment(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkDhcp
+        /// <summary> Gets an object representing a WorkloadNetworkDhcp along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkDhcp" /> object. </returns>
+        public static WorkloadNetworkDhcp GetWorkloadNetworkDhcp(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkDhcp.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkDhcp(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkGateway
+        /// <summary> Gets an object representing a WorkloadNetworkGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkGateway" /> object. </returns>
+        public static WorkloadNetworkGateway GetWorkloadNetworkGateway(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkGateway.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkGateway(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkPortMirroring
+        /// <summary> Gets an object representing a WorkloadNetworkPortMirroring along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkPortMirroring" /> object. </returns>
+        public static WorkloadNetworkPortMirroring GetWorkloadNetworkPortMirroring(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkPortMirroring.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkPortMirroring(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkVMGroup
+        /// <summary> Gets an object representing a WorkloadNetworkVMGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkVMGroup" /> object. </returns>
+        public static WorkloadNetworkVMGroup GetWorkloadNetworkVMGroup(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkVMGroup.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkVMGroup(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkVirtualMachine
+        /// <summary> Gets an object representing a WorkloadNetworkVirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkVirtualMachine" /> object. </returns>
+        public static WorkloadNetworkVirtualMachine GetWorkloadNetworkVirtualMachine(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkVirtualMachine.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkVirtualMachine(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkDnsService
+        /// <summary> Gets an object representing a WorkloadNetworkDnsService along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkDnsService" /> object. </returns>
+        public static WorkloadNetworkDnsService GetWorkloadNetworkDnsService(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkDnsService.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkDnsService(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkDnsZone
+        /// <summary> Gets an object representing a WorkloadNetworkDnsZone along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkDnsZone" /> object. </returns>
+        public static WorkloadNetworkDnsZone GetWorkloadNetworkDnsZone(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkDnsZone.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkDnsZone(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region WorkloadNetworkPublicIP
+        /// <summary> Gets an object representing a WorkloadNetworkPublicIP along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkPublicIP" /> object. </returns>
+        public static WorkloadNetworkPublicIP GetWorkloadNetworkPublicIP(this ArmClient armClient, ResourceIdentifier id)
+        {
+            WorkloadNetworkPublicIP.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WorkloadNetworkPublicIP(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -85,6 +200,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="CloudLink" /> object. </returns>
         public static CloudLink GetCloudLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            CloudLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CloudLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -96,7 +212,20 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="Addon" /> object. </returns>
         public static Addon GetAddon(this ArmClient armClient, ResourceIdentifier id)
         {
+            Addon.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Addon(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region VirtualMachine
+        /// <summary> Gets an object representing a VirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
+        public static VirtualMachine GetVirtualMachine(this ArmClient armClient, ResourceIdentifier id)
+        {
+            VirtualMachine.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachine(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -107,7 +236,44 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="PlacementPolicy" /> object. </returns>
         public static PlacementPolicy GetPlacementPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
+            PlacementPolicy.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PlacementPolicy(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ScriptPackage
+        /// <summary> Gets an object representing a ScriptPackage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScriptPackage" /> object. </returns>
+        public static ScriptPackage GetScriptPackage(this ArmClient armClient, ResourceIdentifier id)
+        {
+            ScriptPackage.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScriptPackage(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ScriptCmdlet
+        /// <summary> Gets an object representing a ScriptCmdlet along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScriptCmdlet" /> object. </returns>
+        public static ScriptCmdlet GetScriptCmdlet(this ArmClient armClient, ResourceIdentifier id)
+        {
+            ScriptCmdlet.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScriptCmdlet(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ScriptExecution
+        /// <summary> Gets an object representing a ScriptExecution along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScriptExecution" /> object. </returns>
+        public static ScriptExecution GetScriptExecution(this ArmClient armClient, ResourceIdentifier id)
+        {
+            ScriptExecution.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScriptExecution(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         GlobalReachConnection IOperationSource<GlobalReachConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new GlobalReachConnection(_operationBase, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement));
+            var data = GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement);
+            return new GlobalReachConnection(_operationBase, data);
         }
 
         async ValueTask<GlobalReachConnection> IOperationSource<GlobalReachConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new GlobalReachConnection(_operationBase, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement));
+            var data = GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement);
+            return new GlobalReachConnection(_operationBase, data);
         }
     }
 }

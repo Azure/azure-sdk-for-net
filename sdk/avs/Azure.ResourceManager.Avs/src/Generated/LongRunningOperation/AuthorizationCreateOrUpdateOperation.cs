@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         ExpressRouteAuthorization IOperationSource<ExpressRouteAuthorization>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteAuthorization(_operationBase, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement));
+            var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);
+            return new ExpressRouteAuthorization(_operationBase, data);
         }
 
         async ValueTask<ExpressRouteAuthorization> IOperationSource<ExpressRouteAuthorization>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteAuthorization(_operationBase, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement));
+            var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);
+            return new ExpressRouteAuthorization(_operationBase, data);
         }
     }
 }

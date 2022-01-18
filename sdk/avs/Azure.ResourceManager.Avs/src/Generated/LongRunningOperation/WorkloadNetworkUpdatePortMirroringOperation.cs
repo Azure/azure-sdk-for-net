@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Avs.Models
     {
         private readonly OperationInternals<WorkloadNetworkPortMirroring> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of WorkloadNetworkUpdatePortMirroringOperation for mocking. </summary>
         protected WorkloadNetworkUpdatePortMirroringOperation()
         {
         }
 
-        internal WorkloadNetworkUpdatePortMirroringOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkloadNetworkUpdatePortMirroringOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WorkloadNetworkPortMirroring>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadNetworkUpdatePortMirroringOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         WorkloadNetworkPortMirroring IOperationSource<WorkloadNetworkPortMirroring>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return WorkloadNetworkPortMirroring.DeserializeWorkloadNetworkPortMirroring(document.RootElement);
+            var data = WorkloadNetworkPortMirroringData.DeserializeWorkloadNetworkPortMirroringData(document.RootElement);
+            return new WorkloadNetworkPortMirroring(_operationBase, data);
         }
 
         async ValueTask<WorkloadNetworkPortMirroring> IOperationSource<WorkloadNetworkPortMirroring>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return WorkloadNetworkPortMirroring.DeserializeWorkloadNetworkPortMirroring(document.RootElement);
+            var data = WorkloadNetworkPortMirroringData.DeserializeWorkloadNetworkPortMirroringData(document.RootElement);
+            return new WorkloadNetworkPortMirroring(_operationBase, data);
         }
     }
 }

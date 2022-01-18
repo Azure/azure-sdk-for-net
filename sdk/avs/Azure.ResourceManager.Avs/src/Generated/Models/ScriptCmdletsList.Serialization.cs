@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ScriptCmdletsList DeserializeScriptCmdletsList(JsonElement element)
         {
-            Optional<IReadOnlyList<ScriptCmdlet>> value = default;
+            Optional<IReadOnlyList<ScriptCmdletData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScriptCmdlet> array = new List<ScriptCmdlet>();
+                    List<ScriptCmdletData> array = new List<ScriptCmdletData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptCmdlet.DeserializeScriptCmdlet(item));
+                        array.Add(ScriptCmdletData.DeserializeScriptCmdletData(item));
                     }
                     value = array;
                     continue;

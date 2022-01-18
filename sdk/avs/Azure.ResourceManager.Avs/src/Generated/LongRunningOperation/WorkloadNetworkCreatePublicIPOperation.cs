@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Avs.Models
     {
         private readonly OperationInternals<WorkloadNetworkPublicIP> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of WorkloadNetworkCreatePublicIPOperation for mocking. </summary>
         protected WorkloadNetworkCreatePublicIPOperation()
         {
         }
 
-        internal WorkloadNetworkCreatePublicIPOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkloadNetworkCreatePublicIPOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WorkloadNetworkPublicIP>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadNetworkCreatePublicIPOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         WorkloadNetworkPublicIP IOperationSource<WorkloadNetworkPublicIP>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return WorkloadNetworkPublicIP.DeserializeWorkloadNetworkPublicIP(document.RootElement);
+            var data = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(document.RootElement);
+            return new WorkloadNetworkPublicIP(_operationBase, data);
         }
 
         async ValueTask<WorkloadNetworkPublicIP> IOperationSource<WorkloadNetworkPublicIP>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return WorkloadNetworkPublicIP.DeserializeWorkloadNetworkPublicIP(document.RootElement);
+            var data = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(document.RootElement);
+            return new WorkloadNetworkPublicIP(_operationBase, data);
         }
     }
 }

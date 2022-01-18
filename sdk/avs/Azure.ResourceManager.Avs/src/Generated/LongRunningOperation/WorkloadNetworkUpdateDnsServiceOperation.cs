@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.Avs.Models
     {
         private readonly OperationInternals<WorkloadNetworkDnsService> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of WorkloadNetworkUpdateDnsServiceOperation for mocking. </summary>
         protected WorkloadNetworkUpdateDnsServiceOperation()
         {
         }
 
-        internal WorkloadNetworkUpdateDnsServiceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkloadNetworkUpdateDnsServiceOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WorkloadNetworkDnsService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadNetworkUpdateDnsServiceOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,15 @@ namespace Azure.ResourceManager.Avs.Models
         WorkloadNetworkDnsService IOperationSource<WorkloadNetworkDnsService>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return WorkloadNetworkDnsService.DeserializeWorkloadNetworkDnsService(document.RootElement);
+            var data = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);
+            return new WorkloadNetworkDnsService(_operationBase, data);
         }
 
         async ValueTask<WorkloadNetworkDnsService> IOperationSource<WorkloadNetworkDnsService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return WorkloadNetworkDnsService.DeserializeWorkloadNetworkDnsService(document.RootElement);
+            var data = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);
+            return new WorkloadNetworkDnsService(_operationBase, data);
         }
     }
 }

@@ -8,54 +8,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing collection of HcxEnterpriseSite and their operations over a PrivateCloud. </summary>
+    /// <summary> A class representing collection of HcxEnterpriseSite and their operations over its parent. </summary>
     public partial class HcxEnterpriseSiteCollection : ArmCollection, IEnumerable<HcxEnterpriseSite>, IAsyncEnumerable<HcxEnterpriseSite>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HcxEnterpriseSitesRestOperations _restClient;
+        private readonly HcxEnterpriseSitesRestOperations _hcxEnterpriseSitesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="HcxEnterpriseSiteCollection"/> class for mocking. </summary>
         protected HcxEnterpriseSiteCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of HcxEnterpriseSiteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HcxEnterpriseSiteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HcxEnterpriseSiteCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new HcxEnterpriseSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _hcxEnterpriseSitesRestClient = new HcxEnterpriseSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<HcxEnterpriseSite> IEnumerable<HcxEnterpriseSite>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != PrivateCloud.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateCloud.ResourceType), nameof(id));
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<HcxEnterpriseSite> IAsyncEnumerable<HcxEnterpriseSite>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => PrivateCloud.ResourceType;
 
         // Collection level operations.
 
@@ -65,7 +56,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> or <paramref name="hcxEnterpriseSite"/> is null. </exception>
-        public virtual HcxEnterpriseSiteCreateOrUpdateOperation CreateOrUpdate(string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual HcxEnterpriseSiteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, CancellationToken cancellationToken = default)
         {
             if (hcxEnterpriseSiteName == null)
             {
@@ -80,7 +71,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, hcxEnterpriseSite, cancellationToken);
+                var response = _hcxEnterpriseSitesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, hcxEnterpriseSite, cancellationToken);
                 var operation = new HcxEnterpriseSiteCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -99,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> or <paramref name="hcxEnterpriseSite"/> is null. </exception>
-        public async virtual Task<HcxEnterpriseSiteCreateOrUpdateOperation> CreateOrUpdateAsync(string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<HcxEnterpriseSiteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hcxEnterpriseSiteName, HcxEnterpriseSiteData hcxEnterpriseSite, CancellationToken cancellationToken = default)
         {
             if (hcxEnterpriseSiteName == null)
             {
@@ -114,7 +105,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, hcxEnterpriseSite, cancellationToken).ConfigureAwait(false);
+                var response = await _hcxEnterpriseSitesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, hcxEnterpriseSite, cancellationToken).ConfigureAwait(false);
                 var operation = new HcxEnterpriseSiteCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,21 +118,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get an HCX Enterprise Site by name in a private cloud. </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         public virtual Response<HcxEnterpriseSite> Get(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (hcxEnterpriseSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.Get");
             scope.Start();
             try
             {
-                if (hcxEnterpriseSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken: cancellationToken);
+                var response = _hcxEnterpriseSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HcxEnterpriseSite(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +145,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get an HCX Enterprise Site by name in a private cloud. </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         public async virtual Task<Response<HcxEnterpriseSite>> GetAsync(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (hcxEnterpriseSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.Get");
             scope.Start();
             try
             {
-                if (hcxEnterpriseSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hcxEnterpriseSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new HcxEnterpriseSite(Parent, response.Value), response.GetRawResponse());
@@ -181,22 +174,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         public virtual Response<HcxEnterpriseSite> GetIfExists(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (hcxEnterpriseSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (hcxEnterpriseSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<HcxEnterpriseSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new HcxEnterpriseSite(this, response.Value), response.GetRawResponse());
+                var response = _hcxEnterpriseSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<HcxEnterpriseSite>(null, response.GetRawResponse());
+                return Response.FromValue(new HcxEnterpriseSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,22 +201,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         public async virtual Task<Response<HcxEnterpriseSite>> GetIfExistsAsync(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
+            if (hcxEnterpriseSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (hcxEnterpriseSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<HcxEnterpriseSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new HcxEnterpriseSite(this, response.Value), response.GetRawResponse());
+                var response = await _hcxEnterpriseSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<HcxEnterpriseSite>(null, response.GetRawResponse());
+                return Response.FromValue(new HcxEnterpriseSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,18 +228,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        public virtual Response<bool> Exists(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.CheckIfExists");
+            if (hcxEnterpriseSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.Exists");
             scope.Start();
             try
             {
-                if (hcxEnterpriseSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
-                }
-
                 var response = GetIfExists(hcxEnterpriseSiteName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +253,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.CheckIfExists");
+            if (hcxEnterpriseSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("HcxEnterpriseSiteCollection.Exists");
             scope.Start();
             try
             {
-                if (hcxEnterpriseSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(hcxEnterpriseSiteName));
-                }
-
                 var response = await GetIfExistsAsync(hcxEnterpriseSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +287,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _hcxEnterpriseSitesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new HcxEnterpriseSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +302,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _hcxEnterpriseSitesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new HcxEnterpriseSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hcxEnterpriseSitesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new HcxEnterpriseSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hcxEnterpriseSitesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new HcxEnterpriseSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +352,22 @@ namespace Azure.ResourceManager.Avs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<HcxEnterpriseSite> IEnumerable<HcxEnterpriseSite>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<HcxEnterpriseSite> IAsyncEnumerable<HcxEnterpriseSite>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, HcxEnterpriseSite, HcxEnterpriseSiteData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, HcxEnterpriseSite, HcxEnterpriseSiteData> Construct() { }
     }
 }

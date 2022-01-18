@@ -22,29 +22,161 @@ namespace Azure.ResourceManager.Avs
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region PrivateCloud
-        private static PrivateCloudsRestOperations GetPrivateCloudsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static LocationsRestOperations GetLocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new PrivateCloudsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new LocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+        }
+
+        private static PrivateCloudsRestOperations GetPrivateCloudsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        {
+            return new PrivateCloudsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+        }
+
+        /// <summary> Return trial status for subscription by region. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static async Task<Response<Trial>> CheckTrialAvailabilityLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckTrialAvailabilityLocation");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.CheckTrialAvailabilityAsync(subscription.Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Return trial status for subscription by region. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Response<Trial> CheckTrialAvailabilityLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckTrialAvailabilityLocation");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.CheckTrialAvailability(subscription.Id.SubscriptionId, location, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        /// <summary> Return quota for subscription by region. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static async Task<Response<Quota>> CheckQuotaAvailabilityLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckQuotaAvailabilityLocation");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = await restOperations.CheckQuotaAvailabilityAsync(subscription.Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Return quota for subscription by region. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Response<Quota> CheckQuotaAvailabilityLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckQuotaAvailabilityLocation");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    var response = restOperations.CheckQuotaAvailability(subscription.Id.SubscriptionId, location, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
         }
 
         /// <summary> Lists the PrivateClouds for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PrivateCloud> GetPrivateCloudsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PrivateCloud> GetInSubscriptionPrivateCloudsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateCloudsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetPrivateCloudsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<PrivateCloud>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateClouds");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetInSubscriptionPrivateClouds");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetInSubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListInSubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateCloud(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -55,11 +187,11 @@ namespace Azure.ResourceManager.Avs
                 }
                 async Task<Page<PrivateCloud>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateClouds");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetInSubscriptionPrivateClouds");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetInSubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListInSubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateCloud(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -77,19 +209,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PrivateCloud> GetPrivateClouds(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<PrivateCloud> GetInSubscriptionPrivateClouds(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateCloudsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetPrivateCloudsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<PrivateCloud> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateClouds");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetInSubscriptionPrivateClouds");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetInSubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListInSubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateCloud(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -100,11 +232,11 @@ namespace Azure.ResourceManager.Avs
                 }
                 Page<PrivateCloud> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateClouds");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetInSubscriptionPrivateClouds");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetInSubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListInSubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateCloud(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -125,7 +257,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetPrivateCloudByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetPrivateCloudsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(PrivateCloud.ResourceType);
             filters.SubstringFilter = filter;
@@ -139,148 +271,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetPrivateCloudByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetPrivateCloudsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(PrivateCloud.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
-        #endregion
-
-        #region Location
-        private static LocationsRestOperations GetLocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new LocationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
-        /// <summary> Return trial status for subscription by region. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<Trial>> CheckLocationTrialAvailabilityAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckLocationTrialAvailability");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.CheckTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Return trial status for subscription by region. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<Trial> CheckLocationTrialAvailability(this Subscription subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckLocationTrialAvailability");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.CheckTrialAvailability(location, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
-        /// <summary> Return quota for subscription by region. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<Quota>> CheckLocationQuotaAvailabilityAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckLocationQuotaAvailability");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.CheckQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Return quota for subscription by region. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<Quota> CheckLocationQuotaAvailability(this Subscription subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLocationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckLocationQuotaAvailability");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.CheckQuotaAvailability(location, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
-        #endregion
     }
 }

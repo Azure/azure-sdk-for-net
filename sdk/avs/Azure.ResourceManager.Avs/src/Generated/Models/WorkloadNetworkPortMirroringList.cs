@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>
         internal WorkloadNetworkPortMirroringList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkPortMirroring>();
+            Value = new ChangeTrackingList<WorkloadNetworkPortMirroringData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroring> value, string nextLink)
+        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on the page. </summary>
-        public IReadOnlyList<WorkloadNetworkPortMirroring> Value { get; }
+        public IReadOnlyList<WorkloadNetworkPortMirroringData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

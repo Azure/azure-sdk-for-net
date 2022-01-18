@@ -8,54 +8,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing collection of ExpressRouteAuthorization and their operations over a PrivateCloud. </summary>
+    /// <summary> A class representing collection of ExpressRouteAuthorization and their operations over its parent. </summary>
     public partial class ExpressRouteAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteAuthorization>, IAsyncEnumerable<ExpressRouteAuthorization>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AuthorizationsRestOperations _restClient;
+        private readonly AuthorizationsRestOperations _authorizationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteAuthorizationCollection"/> class for mocking. </summary>
         protected ExpressRouteAuthorizationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteAuthorizationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteAuthorizationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteAuthorizationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new AuthorizationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _authorizationsRestClient = new AuthorizationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<ExpressRouteAuthorization> IEnumerable<ExpressRouteAuthorization>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != PrivateCloud.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateCloud.ResourceType), nameof(id));
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ExpressRouteAuthorization> IAsyncEnumerable<ExpressRouteAuthorization>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => PrivateCloud.ResourceType;
 
         // Collection level operations.
 
@@ -65,7 +56,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="authorization"/> is null. </exception>
-        public virtual AuthorizationCreateOrUpdateOperation CreateOrUpdate(string authorizationName, ExpressRouteAuthorizationData authorization, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AuthorizationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string authorizationName, ExpressRouteAuthorizationData authorization, CancellationToken cancellationToken = default)
         {
             if (authorizationName == null)
             {
@@ -80,8 +71,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, authorizationName, authorization, cancellationToken);
-                var operation = new AuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, authorizationName, authorization).Request, response);
+                var response = _authorizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorization, cancellationToken);
+                var operation = new AuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _authorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorization).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="authorization"/> is null. </exception>
-        public async virtual Task<AuthorizationCreateOrUpdateOperation> CreateOrUpdateAsync(string authorizationName, ExpressRouteAuthorizationData authorization, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AuthorizationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string authorizationName, ExpressRouteAuthorizationData authorization, CancellationToken cancellationToken = default)
         {
             if (authorizationName == null)
             {
@@ -114,8 +105,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, authorizationName, authorization, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, authorizationName, authorization).Request, response);
+                var response = await _authorizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorization, cancellationToken).ConfigureAwait(false);
+                var operation = new AuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _authorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorization).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +118,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get an ExpressRoute Circuit Authorization by name in a private cloud. </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual Response<ExpressRouteAuthorization> Get(string authorizationName, CancellationToken cancellationToken = default)
         {
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.Get");
             scope.Start();
             try
             {
-                if (authorizationName == null)
-                {
-                    throw new ArgumentNullException(nameof(authorizationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
+                var response = _authorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteAuthorization(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +145,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get an ExpressRoute Circuit Authorization by name in a private cloud. </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public async virtual Task<Response<ExpressRouteAuthorization>> GetAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.Get");
             scope.Start();
             try
             {
-                if (authorizationName == null)
-                {
-                    throw new ArgumentNullException(nameof(authorizationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _authorizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteAuthorization(Parent, response.Value), response.GetRawResponse());
@@ -181,22 +174,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual Response<ExpressRouteAuthorization> GetIfExists(string authorizationName, CancellationToken cancellationToken = default)
         {
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (authorizationName == null)
-                {
-                    throw new ArgumentNullException(nameof(authorizationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteAuthorization>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteAuthorization(this, response.Value), response.GetRawResponse());
+                var response = _authorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteAuthorization>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteAuthorization(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,22 +201,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public async virtual Task<Response<ExpressRouteAuthorization>> GetIfExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (authorizationName == null)
-                {
-                    throw new ArgumentNullException(nameof(authorizationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteAuthorization>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteAuthorization(this, response.Value), response.GetRawResponse());
+                var response = await _authorizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteAuthorization>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteAuthorization(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,18 +228,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string authorizationName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        public virtual Response<bool> Exists(string authorizationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.CheckIfExists");
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.Exists");
             scope.Start();
             try
             {
-                if (authorizationName == null)
-                {
-                    throw new ArgumentNullException(nameof(authorizationName));
-                }
-
                 var response = GetIfExists(authorizationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +253,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.CheckIfExists");
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.Exists");
             scope.Start();
             try
             {
-                if (authorizationName == null)
-                {
-                    throw new ArgumentNullException(nameof(authorizationName));
-                }
-
                 var response = await GetIfExistsAsync(authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +287,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _authorizationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +302,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _authorizationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _authorizationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _authorizationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorization(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +352,22 @@ namespace Azure.ResourceManager.Avs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<ExpressRouteAuthorization> IEnumerable<ExpressRouteAuthorization>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ExpressRouteAuthorization> IAsyncEnumerable<ExpressRouteAuthorization>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ExpressRouteAuthorization, ExpressRouteAuthorizationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRouteAuthorization, ExpressRouteAuthorizationData> Construct() { }
     }
 }

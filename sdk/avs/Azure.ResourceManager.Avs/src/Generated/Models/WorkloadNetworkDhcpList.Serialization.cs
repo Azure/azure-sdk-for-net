@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkDhcpList DeserializeWorkloadNetworkDhcpList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadNetworkDhcp>> value = default;
+            Optional<IReadOnlyList<WorkloadNetworkDhcpData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadNetworkDhcp> array = new List<WorkloadNetworkDhcp>();
+                    List<WorkloadNetworkDhcpData> array = new List<WorkloadNetworkDhcpData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkDhcp.DeserializeWorkloadNetworkDhcp(item));
+                        array.Add(WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(item));
                     }
                     value = array;
                     continue;

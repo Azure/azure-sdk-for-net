@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>
         internal ScriptCmdletsList()
         {
-            Value = new ChangeTrackingList<ScriptCmdlet>();
+            Value = new ChangeTrackingList<ScriptCmdletData>();
         }
 
         /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>
         /// <param name="value"> List of scripts. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal ScriptCmdletsList(IReadOnlyList<ScriptCmdlet> value, string nextLink)
+        internal ScriptCmdletsList(IReadOnlyList<ScriptCmdletData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of scripts. </summary>
-        public IReadOnlyList<ScriptCmdlet> Value { get; }
+        public IReadOnlyList<ScriptCmdletData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

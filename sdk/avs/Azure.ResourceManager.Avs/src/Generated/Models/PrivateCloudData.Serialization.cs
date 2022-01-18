@@ -8,9 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -102,7 +100,7 @@ namespace Azure.ResourceManager.Avs
             Sku sku = default;
             Optional<PrivateCloudIdentity> identity = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -158,7 +156,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

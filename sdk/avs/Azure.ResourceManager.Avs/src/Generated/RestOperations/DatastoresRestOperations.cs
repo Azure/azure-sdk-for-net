@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Avs
 {
     internal partial class DatastoresRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DatastoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-12-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public DatastoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-12-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Avs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string privateCloudName, string clusterName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,13 +65,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List datastores in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<DatastoreList>> GetAllAsync(string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public async Task<Response<DatastoreList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,13 +107,18 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List datastores in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public Response<DatastoreList> GetAll(string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public Response<DatastoreList> List(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,14 +173,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get a datastore in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
-        public async Task<Response<DatastoreData>> GetAsync(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
+        public async Task<Response<DatastoreData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, clusterName, datastoreName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, datastoreName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -210,14 +222,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Get a datastore in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
-        public Response<DatastoreData> Get(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
+        public Response<DatastoreData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, privateCloudName, clusterName, datastoreName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, datastoreName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -253,7 +270,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, DatastoreData datastore)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, DatastoreData datastore)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,15 +299,20 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update a datastore in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="datastore"> A datastore in a private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="datastoreName"/>, or <paramref name="datastore"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, DatastoreData datastore, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="datastoreName"/>, or <paramref name="datastore"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, DatastoreData datastore, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -312,7 +334,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(datastore));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, clusterName, datastoreName, datastore);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, datastoreName, datastore);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -325,15 +347,20 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Create or update a datastore in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="datastore"> A datastore in a private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="datastoreName"/>, or <paramref name="datastore"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, DatastoreData datastore, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="datastoreName"/>, or <paramref name="datastore"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, DatastoreData datastore, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -355,7 +382,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(datastore));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, privateCloudName, clusterName, datastoreName, datastore);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, datastoreName, datastore);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -367,7 +394,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -392,14 +419,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete a datastore in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -417,7 +449,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, clusterName, datastoreName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, datastoreName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -431,14 +463,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Delete a datastore in a private cloud cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, or <paramref name="datastoreName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string datastoreName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -456,7 +493,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(datastoreName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, privateCloudName, clusterName, datastoreName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, datastoreName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -469,7 +506,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string privateCloudName, string clusterName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -485,16 +522,21 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List datastores in a private cloud cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<DatastoreList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public async Task<Response<DatastoreList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -509,7 +551,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -527,16 +569,21 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> List datastores in a private cloud cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public Response<DatastoreList> GetAllNextPage(string nextLink, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, or <paramref name="clusterName"/> is null. </exception>
+        public Response<DatastoreList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -551,7 +598,7 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentNullException(nameof(clusterName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName, clusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -8,54 +8,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing collection of PlacementPolicy and their operations over a Cluster. </summary>
+    /// <summary> A class representing collection of PlacementPolicy and their operations over its parent. </summary>
     public partial class PlacementPolicyCollection : ArmCollection, IEnumerable<PlacementPolicy>, IAsyncEnumerable<PlacementPolicy>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PlacementPoliciesRestOperations _restClient;
+        private readonly PlacementPoliciesRestOperations _placementPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PlacementPolicyCollection"/> class for mocking. </summary>
         protected PlacementPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of PlacementPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlacementPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PlacementPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PlacementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _placementPoliciesRestClient = new PlacementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<PlacementPolicy> IEnumerable<PlacementPolicy>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != Cluster.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Cluster.ResourceType), nameof(id));
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<PlacementPolicy> IAsyncEnumerable<PlacementPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Cluster.ResourceType;
 
         // Collection level operations.
 
@@ -65,7 +56,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> or <paramref name="placementPolicy"/> is null. </exception>
-        public virtual PlacementPolicyCreateOrUpdateOperation CreateOrUpdate(string placementPolicyName, PlacementPolicyData placementPolicy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PlacementPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string placementPolicyName, PlacementPolicyData placementPolicy, CancellationToken cancellationToken = default)
         {
             if (placementPolicyName == null)
             {
@@ -80,8 +71,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy, cancellationToken);
-                var operation = new PlacementPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy).Request, response);
+                var response = _placementPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy, cancellationToken);
+                var operation = new PlacementPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _placementPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> or <paramref name="placementPolicy"/> is null. </exception>
-        public async virtual Task<PlacementPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string placementPolicyName, PlacementPolicyData placementPolicy, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PlacementPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string placementPolicyName, PlacementPolicyData placementPolicy, CancellationToken cancellationToken = default)
         {
             if (placementPolicyName == null)
             {
@@ -114,8 +105,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy, cancellationToken).ConfigureAwait(false);
-                var operation = new PlacementPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy).Request, response);
+                var response = await _placementPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy, cancellationToken).ConfigureAwait(false);
+                var operation = new PlacementPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _placementPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, placementPolicy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,21 +118,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get a placement policy by name in a private cloud cluster. </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual Response<PlacementPolicy> Get(string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (placementPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(placementPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (placementPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(placementPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken: cancellationToken);
+                var response = _placementPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PlacementPolicy(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +145,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get a placement policy by name in a private cloud cluster. </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public async virtual Task<Response<PlacementPolicy>> GetAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (placementPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(placementPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.Get");
             scope.Start();
             try
             {
-                if (placementPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(placementPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _placementPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new PlacementPolicy(Parent, response.Value), response.GetRawResponse());
@@ -181,22 +174,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual Response<PlacementPolicy> GetIfExists(string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (placementPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(placementPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (placementPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(placementPolicyName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PlacementPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new PlacementPolicy(this, response.Value), response.GetRawResponse());
+                var response = _placementPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<PlacementPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new PlacementPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,22 +201,23 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public async virtual Task<Response<PlacementPolicy>> GetIfExistsAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
+            if (placementPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(placementPolicyName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (placementPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(placementPolicyName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PlacementPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new PlacementPolicy(this, response.Value), response.GetRawResponse());
+                var response = await _placementPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<PlacementPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new PlacementPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,18 +228,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string placementPolicyName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
+        public virtual Response<bool> Exists(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.CheckIfExists");
+            if (placementPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(placementPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.Exists");
             scope.Start();
             try
             {
-                if (placementPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(placementPolicyName));
-                }
-
                 var response = GetIfExists(placementPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +253,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string placementPolicyName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.CheckIfExists");
+            if (placementPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(placementPolicyName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PlacementPolicyCollection.Exists");
             scope.Start();
             try
             {
-                if (placementPolicyName == null)
-                {
-                    throw new ArgumentNullException(nameof(placementPolicyName));
-                }
-
                 var response = await GetIfExistsAsync(placementPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -290,7 +287,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _placementPoliciesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PlacementPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -305,7 +302,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _placementPoliciesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PlacementPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _placementPoliciesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PlacementPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Avs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _placementPoliciesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PlacementPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,7 +352,22 @@ namespace Azure.ResourceManager.Avs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<PlacementPolicy> IEnumerable<PlacementPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<PlacementPolicy> IAsyncEnumerable<PlacementPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, PlacementPolicy, PlacementPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PlacementPolicy, PlacementPolicyData> Construct() { }
     }
 }
