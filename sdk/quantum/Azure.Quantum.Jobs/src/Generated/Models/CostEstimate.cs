@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    /// <summary> A job cost estimate. </summary>
+    /// <summary> A job cost estimate. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </summary>
     public partial class CostEstimate
     {
         /// <summary> Initializes a new instance of CostEstimate. </summary>
