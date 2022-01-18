@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityInput checkNameAvailabilityInput)
+        internal HttpMessage CreateCheckCdnNameAvailabilityRequest(CheckNameAvailabilityInput checkNameAvailabilityInput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
                 throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityInput);
+            using var message = CreateCheckCdnNameAvailabilityRequest(checkNameAvailabilityInput);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public Response<CheckNameAvailabilityOutput> CheckNameAvailability(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
                 throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityInput);
+            using var message = CreateCheckCdnNameAvailabilityRequest(checkNameAvailabilityInput);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityWithSubscriptionRequest(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput)
+        internal HttpMessage CreateCheckCdnNameAvailabilityWithSubscriptionRequest(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionAsync(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
             }
 
-            using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, checkNameAvailabilityInput);
+            using var message = CreateCheckCdnNameAvailabilityWithSubscriptionRequest(subscriptionId, checkNameAvailabilityInput);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public Response<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscription(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
             }
 
-            using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, checkNameAvailabilityInput);
+            using var message = CreateCheckCdnNameAvailabilityWithSubscriptionRequest(subscriptionId, checkNameAvailabilityInput);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
