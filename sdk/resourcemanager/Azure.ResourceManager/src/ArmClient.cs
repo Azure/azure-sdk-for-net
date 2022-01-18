@@ -19,7 +19,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// The entry point for all ARM clients.
     /// </summary>
-    public class ArmClient
+    public partial class ArmClient
     {
         /// <summary>
         /// The base URI of the service.

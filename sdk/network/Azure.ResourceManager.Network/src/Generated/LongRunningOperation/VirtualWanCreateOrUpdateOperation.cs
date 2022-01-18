@@ -18,20 +18,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN. </summary>
-    public partial class VirtualWanCreateOrUpdateOperation : Operation<VirtualWAN>, IOperationSource<VirtualWAN>
+    public partial class VirtualWANCreateOrUpdateOperation : Operation<VirtualWAN>, IOperationSource<VirtualWAN>
     {
         private readonly OperationInternals<VirtualWAN> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of VirtualWanCreateOrUpdateOperation for mocking. </summary>
-        protected VirtualWanCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of VirtualWANCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualWANCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualWanCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualWANCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<VirtualWAN>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualWanCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualWAN>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualWANCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

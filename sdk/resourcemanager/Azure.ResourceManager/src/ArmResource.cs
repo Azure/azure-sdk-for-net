@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
     /// </summary>
-    public abstract class ArmResource
+    public abstract partial class ArmResource
     {
         private TagResource _tagResource;
         private Tenant _tenant;

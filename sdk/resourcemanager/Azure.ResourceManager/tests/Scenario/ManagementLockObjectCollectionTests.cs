@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockObject mgmtLockObject = await CreateManagementLockObject(rg, mgmtLockObjectName);
             Assert.AreEqual(mgmtLockObjectName, mgmtLockObject.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetManagementLockObjects().CreateOrUpdateAsync(true, null, mgmtLockObject.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg.GetManagementLockObjects().CreateOrUpdateAsync(true, null, mgmtLockObject.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetManagementLockObjects().CreateOrUpdateAsync(true, mgmtLockObjectName, null));
             await mgmtLockObject.DeleteAsync(true);
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Tests
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockObject mgmtLockObject = await CreateManagementLockObject(subscription, mgmtLockObjectName);
             Assert.AreEqual(mgmtLockObjectName, mgmtLockObject.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetManagementLockObjects().CreateOrUpdateAsync(true, null, mgmtLockObject.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await subscription.GetManagementLockObjects().CreateOrUpdateAsync(true, null, mgmtLockObject.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetManagementLockObjects().CreateOrUpdateAsync(true, mgmtLockObjectName, null));
             await mgmtLockObject.DeleteAsync(true);
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Tests
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockObject mgmtLockObject = await CreateManagementLockObject(vn, mgmtLockObjectName);
             Assert.AreEqual(mgmtLockObjectName, mgmtLockObject.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetManagementLockObjects().CreateOrUpdateAsync(true, null, mgmtLockObject.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await vn.GetManagementLockObjects().CreateOrUpdateAsync(true, null, mgmtLockObject.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetManagementLockObjects().CreateOrUpdateAsync(true, mgmtLockObjectName, null));
             await mgmtLockObject.DeleteAsync(true);
         }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Tests
             ManagementLockObject mgmtLockObject = await CreateManagementLockObject(subscription, mgmtLockObjectName);
             ManagementLockObject getMgmtLockObject = await subscription.GetManagementLockObjects().GetAsync(mgmtLockObjectName);
             AssertValidManagementLockObject(mgmtLockObject, getMgmtLockObject);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetManagementLockObjects().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await subscription.GetManagementLockObjects().GetAsync(null));
             await mgmtLockObject.DeleteAsync(true);
         }
         private void AssertValidManagementLockObject(ManagementLockObject model, ManagementLockObject getResult)

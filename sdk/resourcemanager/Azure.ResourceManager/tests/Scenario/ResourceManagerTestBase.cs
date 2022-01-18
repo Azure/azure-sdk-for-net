@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Tests
         protected async Task<ManagementLockObject> CreateManagementLockObject(ArmResource armResource, string lockName)
         {
             ManagementLockObjectData input = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
-            ManagementLockCreateOrUpdateByScopeOperation lro = await armResource.GetManagementLockObjects().CreateOrUpdateAsync(true, lockName, input);
+            ManagementLockObjectCreateOrUpdateOperation lro = await armResource.GetManagementLockObjects().CreateOrUpdateAsync(true, lockName, input);
             return lro.Value;
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignmentCreateOperation lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, input);
+            PolicyAssignmentCreateOrUpdateOperation lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, input);
             return lro.Value;
         }
 
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Tests
         protected async Task<SubscriptionPolicyDefinition> CreatePolicyDefinitionAtSubscription(Subscription subscription, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            PolicyDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
+            SubscriptionPolicyDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
             return lro.Value;
         }
 
         protected async Task<ManagementGroupPolicyDefinition> CreatePolicyDefinitionAtMgmtGroup(ManagementGroup mgmtGroup, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            PolicyDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
+            ManagementGroupPolicyDefinitionCreateOrUpdateOperation lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
             return lro.Value;
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            PolicySetDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
+            SubscriptionPolicySetDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
             return lro.Value;
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
+            ManagementGroupPolicySetDefinitionCreateOrUpdateOperation lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
             return lro.Value;
         }
 

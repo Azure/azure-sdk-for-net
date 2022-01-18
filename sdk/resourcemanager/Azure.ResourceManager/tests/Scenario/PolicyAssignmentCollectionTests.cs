@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignment policyAssignment = await CreatePolicyAssignment(mgmtGroup, policyAssignmentName);
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, null));
         }
         
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Tests
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignment policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, null));
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignment policyAssignment = await CreatePolicyAssignment(subscription, policyAssignmentName);
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await subscription.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, null));
         }
                
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Tests
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignment policyAssignment = await CreatePolicyAssignment(vn, policyAssignmentName);
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await vn.GetPolicyAssignments().CreateOrUpdateAsync(true, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, null));
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Tests
             PolicyAssignment policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             PolicyAssignment getPolicyAssignment = await rg.GetPolicyAssignments().GetAsync(policyAssignmentName);
             AssertValidPolicyAssignment(policyAssignment, getPolicyAssignment);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg.GetPolicyAssignments().GetAsync(null));
         }
 
         private void AssertValidPolicyAssignment(PolicyAssignment model, PolicyAssignment getResult)

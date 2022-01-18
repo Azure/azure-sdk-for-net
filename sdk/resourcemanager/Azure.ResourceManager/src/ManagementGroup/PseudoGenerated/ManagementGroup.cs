@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing the operations that can be performed over a specific ManagementGroup.
     /// </summary>
-    public class ManagementGroup : ArmResource
+    public partial class ManagementGroup : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementGroupsRestOperations _restClient;

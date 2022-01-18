@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(mgmtGroup, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(subscription, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(vn, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Tests
             PolicyExemption policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
             PolicyExemption getPolicyExemption = await rg.GetPolicyExemptions().GetAsync(policyExemptionName);
             AssertValidPolicyExemption(policyExemption, getPolicyExemption);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg.GetPolicyExemptions().GetAsync(null));
         }
 
         private void AssertValidPolicyExemption(PolicyExemption model, PolicyExemption getResult)

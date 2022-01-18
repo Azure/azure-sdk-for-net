@@ -12,6 +12,7 @@ namespace Azure.ResourceManager
         protected virtual Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } }
         protected virtual Azure.Core.TokenCredential Credential { get { throw null; } }
         protected virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.ResourceManager.Resources.DataPolicyManifest GetDataPolicyManifest(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Subscription GetDefaultSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Subscription> GetDefaultSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.Feature GetFeature(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -21,12 +22,22 @@ namespace Azure.ResourceManager
         public virtual System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.GenericResource> GetGenericResources(System.Collections.Generic.IEnumerable<string> ids) { throw null; }
         public virtual System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.GenericResource> GetGenericResources(params string[] ids) { throw null; }
         public virtual Azure.ResourceManager.Management.ManagementGroup GetManagementGroup(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Management.ManagementGroupCollection GetManagementGroups() { throw null; }
+        public virtual Azure.ResourceManager.Resources.ManagementLockObject GetManagementLockObject(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicyAssignment GetPolicyAssignment(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicyExemption GetPolicyExemption(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.PredefinedTag GetPreDefinedTag(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Provider GetProvider(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ResourceGroup GetResourceGroup(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.ResourceLink GetResourceLink(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Subscription GetSubscription(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.SubscriptionCollection GetSubscriptions() { throw null; }
+        public virtual Azure.ResourceManager.Resources.TenantPolicyDefinition GetTenantPolicyDefinition(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.TenantPolicySetDefinition GetTenantPolicySetDefinition(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Models.ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.ProviderInfo> GetTenantProviders(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -56,9 +67,6 @@ namespace Azure.ResourceManager
         public Azure.ResourceManager.ResourceNameFilter SubstringFilter { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceTagFilter TagFilter { get { throw null; } set { } }
         public override string ToString() { throw null; }
-    }
-    public static partial class ResourceGroupExtensions
-    {
     }
     public partial class ResourceNameFilter : Azure.ResourceManager.GenericResourceFilter, System.IEquatable<Azure.ResourceManager.ResourceNameFilter>, System.IEquatable<string>
     {
@@ -99,9 +107,6 @@ namespace Azure.ResourceManager
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
-    public static partial class SubscriptionExtensions
-    {
-    }
 }
 namespace Azure.ResourceManager.Core
 {
@@ -123,6 +128,9 @@ namespace Azure.ResourceManager.Core
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
         protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         protected internal Azure.ResourceManager.Resources.TagResource TagResource { get { throw null; } }
+        public virtual Azure.ResourceManager.Resources.ManagementLockObjectCollection GetManagementLockObjects() { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicyAssignmentCollection GetPolicyAssignments() { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicyExemptionCollection GetPolicyExemptions() { throw null; }
         protected System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> ListAvailableLocations(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> ListAvailableLocationsAsync(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -157,6 +165,8 @@ namespace Azure.ResourceManager.Management
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> GetAsync(Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Management.Models.DescendantInfo> GetDescendants(string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Management.Models.DescendantInfo> GetDescendantsAsync(string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionCollection GetManagementGroupPolicyDefinitions() { throw null; }
+        public virtual Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionCollection GetManagementGroupPolicySetDefinitions() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> Update(Azure.ResourceManager.Management.Models.PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> UpdateAsync(Azure.ResourceManager.Management.Models.PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -498,26 +508,6 @@ namespace Azure.ResourceManager.Models
 }
 namespace Azure.ResourceManager.Resources
 {
-    public static partial class ArmClientExtensions
-    {
-        public static Azure.ResourceManager.Resources.DataPolicyManifest GetDataPolicyManifest(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.ManagementLockObject GetManagementLockObject(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.PolicyAssignment GetPolicyAssignment(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.PolicyExemption GetPolicyExemption(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.ResourceLink GetResourceLink(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.TenantPolicyDefinition GetTenantPolicyDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Resources.TenantPolicySetDefinition GetTenantPolicySetDefinition(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-    }
-    public static partial class ArmResourceExtensions
-    {
-        public static Azure.ResourceManager.Resources.ManagementLockObjectCollection GetManagementLockObjects(this Azure.ResourceManager.Core.ArmResource armResource) { throw null; }
-        public static Azure.ResourceManager.Resources.PolicyAssignmentCollection GetPolicyAssignments(this Azure.ResourceManager.Core.ArmResource armResource) { throw null; }
-        public static Azure.ResourceManager.Resources.PolicyExemptionCollection GetPolicyExemptions(this Azure.ResourceManager.Core.ArmResource armResource) { throw null; }
-    }
     public partial class DataPolicyManifest : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -641,11 +631,6 @@ namespace Azure.ResourceManager.Resources
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.Sku Sku { get { throw null; } set { } }
     }
-    public static partial class ManagementGroupExtensions
-    {
-        public static Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionCollection GetManagementGroupPolicyDefinitions(this Azure.ResourceManager.Management.ManagementGroup managementGroup) { throw null; }
-        public static Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionCollection GetManagementGroupPolicySetDefinitions(this Azure.ResourceManager.Management.ManagementGroup managementGroup) { throw null; }
-    }
     public partial class ManagementGroupPolicyDefinition : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -653,8 +638,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.PolicyDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policyDefinitionName) { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.PolicyDefinitionDeleteAtManagementGroupOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicyDefinitionDeleteAtManagementGroupOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.ManagementGroupPolicyDefinitionDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementGroupPolicyDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -663,8 +648,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ManagementGroupPolicyDefinitionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>, System.Collections.IEnumerable
     {
         protected ManagementGroupPolicyDefinitionCollection() { }
-        public virtual Azure.ResourceManager.Resources.Models.PolicyDefinitionCreateOrUpdateAtManagementGroupOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicyDefinitionCreateOrUpdateAtManagementGroupOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.ManagementGroupPolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementGroupPolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition> Get(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -684,8 +669,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.PolicySetDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policySetDefinitionName) { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.PolicySetDefinitionDeleteAtManagementGroupOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicySetDefinitionDeleteAtManagementGroupOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.ManagementGroupPolicySetDefinitionDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementGroupPolicySetDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -694,8 +679,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ManagementGroupPolicySetDefinitionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>, System.Collections.IEnumerable
     {
         protected ManagementGroupPolicySetDefinitionCollection() { }
-        public virtual Azure.ResourceManager.Resources.Models.PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation CreateOrUpdate(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation> CreateOrUpdateAsync(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.ManagementGroupPolicySetDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementGroupPolicySetDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition> Get(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -715,8 +700,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.ManagementLockObjectData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string lockName) { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.ManagementLockDeleteByScopeOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementLockDeleteByScopeOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.ManagementLockObjectDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementLockObjectDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ManagementLockObject> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ManagementLockObject>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -725,8 +710,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ManagementLockObjectCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ManagementLockObject>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementLockObject>, System.Collections.IEnumerable
     {
         protected ManagementLockObjectCollection() { }
-        public virtual Azure.ResourceManager.Resources.Models.ManagementLockCreateOrUpdateByScopeOperation CreateOrUpdate(bool waitForCompletion, string lockName, Azure.ResourceManager.Resources.ManagementLockObjectData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementLockCreateOrUpdateByScopeOperation> CreateOrUpdateAsync(bool waitForCompletion, string lockName, Azure.ResourceManager.Resources.ManagementLockObjectData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.ManagementLockObjectCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string lockName, Azure.ResourceManager.Resources.ManagementLockObjectData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ManagementLockObjectCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string lockName, Azure.ResourceManager.Resources.ManagementLockObjectData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ManagementLockObject> Get(string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -763,8 +748,8 @@ namespace Azure.ResourceManager.Resources
     public partial class PolicyAssignmentCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.PolicyAssignment>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.PolicyAssignment>, System.Collections.IEnumerable
     {
         protected PolicyAssignmentCollection() { }
-        public virtual Azure.ResourceManager.Resources.Models.PolicyAssignmentCreateOperation CreateOrUpdate(bool waitForCompletion, string policyAssignmentName, Azure.ResourceManager.Resources.PolicyAssignmentData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicyAssignmentCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyAssignmentName, Azure.ResourceManager.Resources.PolicyAssignmentData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.PolicyAssignmentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyAssignmentName, Azure.ResourceManager.Resources.PolicyAssignmentData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicyAssignmentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyAssignmentName, Azure.ResourceManager.Resources.PolicyAssignmentData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string policyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.PolicyAssignment> Get(string policyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -979,9 +964,6 @@ namespace Azure.ResourceManager.Resources
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
     }
-    public static partial class ResourceGroupExtensions
-    {
-    }
     public partial class ResourceLink : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1044,6 +1026,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.ProviderCollection GetProviders() { throw null; }
         public virtual Azure.ResourceManager.Resources.ResourceGroupCollection GetResourceGroups() { throw null; }
         public virtual Azure.ResourceManager.Resources.RestApiCollection GetRestApis(string azureNamespace) { throw null; }
+        public Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions() { throw null; }
+        public Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T UseClientContext<T>(System.Func<System.Uri, Azure.Core.TokenCredential, Azure.ResourceManager.ArmClientOptions, Azure.Core.Pipeline.HttpPipeline, T> func) { throw null; }
     }
@@ -1076,15 +1060,6 @@ namespace Azure.ResourceManager.Resources
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public static partial class SubscriptionExtensions
-    {
-        public static Azure.Pageable<Azure.ResourceManager.Resources.ResourceLink> GetAtSubscriptionResourceLinks(this Azure.ResourceManager.Resources.Subscription subscription, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.ResourceLink> GetAtSubscriptionResourceLinksAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetResourceLinksAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetResourceLinksAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
-        public static Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
-    }
     public partial class SubscriptionPolicyDefinition : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1092,8 +1067,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.PolicyDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policyDefinitionName) { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.PolicyDefinitionDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicyDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.SubscriptionPolicyDefinitionDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.SubscriptionPolicyDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1102,8 +1077,8 @@ namespace Azure.ResourceManager.Resources
     public partial class SubscriptionPolicyDefinitionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>, System.Collections.IEnumerable
     {
         protected SubscriptionPolicyDefinitionCollection() { }
-        public virtual Azure.ResourceManager.Resources.Models.PolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.SubscriptionPolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.SubscriptionPolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, Azure.ResourceManager.Resources.PolicyDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition> Get(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1125,8 +1100,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.PolicySetDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policySetDefinitionName) { throw null; }
-        public virtual Azure.ResourceManager.Resources.Models.PolicySetDefinitionDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicySetDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.SubscriptionPolicySetDefinitionDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.SubscriptionPolicySetDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1135,8 +1110,8 @@ namespace Azure.ResourceManager.Resources
     public partial class SubscriptionPolicySetDefinitionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>, System.Collections.IEnumerable
     {
         protected SubscriptionPolicySetDefinitionCollection() { }
-        public virtual Azure.ResourceManager.Resources.Models.PolicySetDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.PolicySetDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Models.SubscriptionPolicySetDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.SubscriptionPolicySetDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policySetDefinitionName, Azure.ResourceManager.Resources.PolicySetDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition> Get(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1467,9 +1442,57 @@ namespace Azure.ResourceManager.Resources.Models
         internal ManagedByTenant() { }
         public string TenantId { get { throw null; } }
     }
-    public partial class ManagementLockCreateOrUpdateByScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.ManagementLockObject>
+    public partial class ManagementGroupPolicyDefinitionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>
     {
-        protected ManagementLockCreateOrUpdateByScopeOperation() { }
+        protected ManagementGroupPolicyDefinitionCreateOrUpdateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagementGroupPolicyDefinitionDeleteOperation : Azure.Operation
+    {
+        protected ManagementGroupPolicyDefinitionDeleteOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagementGroupPolicySetDefinitionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>
+    {
+        protected ManagementGroupPolicySetDefinitionCreateOrUpdateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagementGroupPolicySetDefinitionDeleteOperation : Azure.Operation
+    {
+        protected ManagementGroupPolicySetDefinitionDeleteOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagementLockObjectCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.ManagementLockObject>
+    {
+        protected ManagementLockObjectCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1480,9 +1503,9 @@ namespace Azure.ResourceManager.Resources.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementLockObject>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementLockObject>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagementLockDeleteByScopeOperation : Azure.Operation
+    public partial class ManagementLockObjectDeleteOperation : Azure.Operation
     {
-        protected ManagementLockDeleteByScopeOperation() { }
+        protected ManagementLockObjectDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
@@ -1554,9 +1577,9 @@ namespace Azure.ResourceManager.Resources.Models
         public ParameterValuesValue() { }
         public object Value { get { throw null; } set { } }
     }
-    public partial class PolicyAssignmentCreateOperation : Azure.Operation<Azure.ResourceManager.Resources.PolicyAssignment>
+    public partial class PolicyAssignmentCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.PolicyAssignment>
     {
-        protected PolicyAssignmentCreateOperation() { }
+        protected PolicyAssignmentCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1592,54 +1615,6 @@ namespace Azure.ResourceManager.Resources.Models
         SystemAssigned = 0,
         None = 1,
     }
-    public partial class PolicyDefinitionCreateOrUpdateAtManagementGroupOperation : Azure.Operation<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>
-    {
-        protected PolicyDefinitionCreateOrUpdateAtManagementGroupOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PolicyDefinitionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>
-    {
-        protected PolicyDefinitionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.Resources.SubscriptionPolicyDefinition Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PolicyDefinitionDeleteAtManagementGroupOperation : Azure.Operation
-    {
-        protected PolicyDefinitionDeleteAtManagementGroupOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PolicyDefinitionDeleteOperation : Azure.Operation
-    {
-        protected PolicyDefinitionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class PolicyDefinitionGroup
     {
         public PolicyDefinitionGroup(string name) { }
@@ -1673,54 +1648,6 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class PolicyExemptionDeleteOperation : Azure.Operation
     {
         protected PolicyExemptionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation : Azure.Operation<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>
-    {
-        protected PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PolicySetDefinitionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>
-    {
-        protected PolicySetDefinitionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PolicySetDefinitionDeleteAtManagementGroupOperation : Azure.Operation
-    {
-        protected PolicySetDefinitionDeleteAtManagementGroupOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PolicySetDefinitionDeleteOperation : Azure.Operation
-    {
-        protected PolicySetDefinitionDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
@@ -2099,6 +2026,54 @@ namespace Azure.ResourceManager.Resources.Models
         public string LocationPlacementId { get { throw null; } }
         public string QuotaId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.SpendingLimit? SpendingLimit { get { throw null; } }
+    }
+    public partial class SubscriptionPolicyDefinitionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>
+    {
+        protected SubscriptionPolicyDefinitionCreateOrUpdateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.ResourceManager.Resources.SubscriptionPolicyDefinition Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionPolicyDefinitionDeleteOperation : Azure.Operation
+    {
+        protected SubscriptionPolicyDefinitionDeleteOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionPolicySetDefinitionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>
+    {
+        protected SubscriptionPolicySetDefinitionCreateOrUpdateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinition>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionPolicySetDefinitionDeleteOperation : Azure.Operation
+    {
+        protected SubscriptionPolicySetDefinitionDeleteOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public enum SubscriptionState
     {

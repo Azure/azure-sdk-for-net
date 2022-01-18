@@ -317,5 +317,19 @@ namespace Azure.ResourceManager.Resources
         {
             return new RestApiCollection(this, azureNamespace);
         }
+
+        /// <summary> Gets an object representing a SubscriptionPolicyDefinitionCollection along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="SubscriptionPolicyDefinitionCollection" /> object. </returns>
+        public SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
+        {
+            return new SubscriptionPolicyDefinitionCollection(this);
+        }
+
+        /// <summary> Gets an object representing a SubscriptionPolicySetDefinitionCollection along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinitionCollection" /> object. </returns>
+        public SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
+        {
+            return new SubscriptionPolicySetDefinitionCollection(this);
+        }
     }
 }
