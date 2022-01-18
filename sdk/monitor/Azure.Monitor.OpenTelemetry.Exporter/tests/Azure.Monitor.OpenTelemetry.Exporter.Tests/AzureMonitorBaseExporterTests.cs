@@ -18,7 +18,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             traceExporter.InitRoleNameAndInstance();
 
             Assert.Null(traceExporter.RoleName);
-            Assert.Null(traceExporter.RoleInstance);
         }
 
         [Fact]

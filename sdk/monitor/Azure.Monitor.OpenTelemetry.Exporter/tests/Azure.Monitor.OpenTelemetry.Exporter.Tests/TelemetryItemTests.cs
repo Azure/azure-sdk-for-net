@@ -41,16 +41,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 parentContext: default,
                 startTime: DateTime.UtcNow);
 
-            var resource = CreateTestResource();
-
             var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
 
             var telemetryItem = TelemetryItem.GetTelemetry(activity, ref monitorTags, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryItem.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
-            Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
@@ -66,16 +62,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 parentContext: default,
                 startTime: DateTime.UtcNow);
 
-            var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
-
             var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
 
             var telemetryItem = TelemetryItem.GetTelemetry(activity, ref monitorTags, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryItem.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
-            Assert.Equal("my-service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal("my-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.Equal(activity.TraceId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
             Assert.Equal(SdkVersionUtils.SdkVersion, telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
@@ -90,7 +82,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
-            var resource = CreateTestResource();
 
             var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
 
@@ -98,10 +89,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryItem.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
-            Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
-            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
-            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Equal(activity.ParentSpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
@@ -297,25 +284,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var telemetryItem = TelemetryItem.GetTelemetry(activity, ref monitorTags, null);
 
-            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
-        }
-
-        [Fact]
-        public void RoleInstanceIsNotOverwrittenIfSetViaServiceInstanceId()
-        {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var activity = activitySource.StartActivity(
-                ActivityName,
-                ActivityKind.Server,
-                null,
-                startTime: DateTime.UtcNow);
-            var resource = CreateTestResource(null, null, "serviceinstance");
-
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
-
-            var telemetryItem = TelemetryItem.GetTelemetry(activity, ref monitorTags, null);
-
-            Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            // TODO: Fix this test case with TelemetryPartB changes.
+            // Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
         [Theory]
