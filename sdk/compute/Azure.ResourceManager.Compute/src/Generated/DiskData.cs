@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="zones"> The Logical zone list for Disk. </param>
         /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
         /// <param name="timeCreated"> The time when the disk was created. </param>
-        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="oSType"> The Operating System type. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer}. </param>
         /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        internal DiskData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, tags, location)
+        internal DiskData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? oSType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, tags, location)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             Zones = zones;
             ExtendedLocation = extendedLocation;
             TimeCreated = timeCreated;
-            OsType = osType;
+            OSType = oSType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The time when the disk was created. </summary>
         public DateTimeOffset? TimeCreated { get; }
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemTypes? OSType { get; set; }
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer}. </summary>

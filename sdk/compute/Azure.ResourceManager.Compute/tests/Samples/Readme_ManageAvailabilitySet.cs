@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // add a tag on this availabilitySet
-            AvailabilitySet updatedAvailabilitySet = await availabilitySet.AddTagAsync(true, "key", "value");
+            AvailabilitySet updatedAvailabilitySet = await availabilitySet.AddTagAsync("key", "value");
             #endregion Snippet:Managing_Availability_Set_AddTagAvailabilitySet
         }
     }

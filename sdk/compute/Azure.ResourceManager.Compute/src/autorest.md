@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a4783665bb6c0b13f345aec/specification/compute/resource-manager/readme.md
 tag: package-2021-08-01
 clear-output-folder: true
 skip-csproj: true
@@ -67,4 +67,16 @@ directive:
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"
+  - from: swagger-document
+    where: $.definitions.DiskProperties.properties.osType
+    transform: $["x-ms-client-name"] = "OSType"
+  - from: swagger-document
+    where: $.definitions.DiskRestorePointProperties.properties.osType
+    transform: $["x-ms-client-name"] = "OSType"
+  - from: swagger-document
+    where: $.definitions.GalleryImageProperties.properties.osType
+    transform: $["x-ms-client-name"] = "OSType"
+  - from: swagger-document
+    where: $.definitions.GalleryImageProperties.properties.osState
+    transform: $["x-ms-client-name"] = "OSState"
 ```
