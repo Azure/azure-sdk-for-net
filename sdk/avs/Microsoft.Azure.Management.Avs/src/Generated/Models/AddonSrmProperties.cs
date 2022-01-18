@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Avs.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,12 +30,12 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Initializes a new instance of the AddonSrmProperties class.
         /// </summary>
-        /// <param name="licenseKey">The Site Recovery Manager (SRM)
-        /// license</param>
         /// <param name="provisioningState">The state of the addon
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
         /// 'Cancelled', 'Building', 'Deleting', 'Updating'</param>
-        public AddonSrmProperties(string licenseKey, string provisioningState = default(string))
+        /// <param name="licenseKey">The Site Recovery Manager (SRM)
+        /// license</param>
+        public AddonSrmProperties(string provisioningState = default(string), string licenseKey = default(string))
             : base(provisioningState)
         {
             LicenseKey = licenseKey;
@@ -54,18 +53,5 @@ namespace Microsoft.Azure.Management.Avs.Models
         [JsonProperty(PropertyName = "licenseKey")]
         public string LicenseKey { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (LicenseKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "LicenseKey");
-            }
-        }
     }
 }

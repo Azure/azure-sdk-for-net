@@ -4,8 +4,8 @@ set -e
 base=`dirname {BASH_SOURCE[0]}`
 rootdir="$( cd "$base" && pwd )"
 netstd14="netstandard1.4"
-#netcore11='netcoreapp1.1'
-netcore20='netcoreapp2.0'
+#netcore11='netcoreapp3.1'
+netcore20='netcoreapp3.1'
 ubuntu1404="ubuntu.14.04-x64"
 nugetOrgSource="https://api.nuget.org/v3/index.json"
 localNugetFeed="./tools/LocalNugetFeed"

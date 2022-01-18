@@ -246,5 +246,28 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity["Foo3"], Is.EqualTo(now));
             Assert.That(entity["Foo3"] is DateTime);
         }
+
+         [Test]
+        public void TypeCoercionForDateTimeTypes()
+        {
+            var entity = new TableEntity("partition", "row");
+            var offsetNow = DateTimeOffset.UtcNow;
+            var dateNow = offsetNow.UtcDateTime;
+
+            // Initialize a property to an DateTimeOffset value
+            entity["DTOffset"] = offsetNow;
+            Assert.That(entity["DTOffset"] is DateTimeOffset);
+            Assert.That(entity["DTOffset"], Is.EqualTo(offsetNow));
+            Assert.That(entity.GetDateTimeOffset("DTOffset"), Is.EqualTo(offsetNow));
+            Assert.That(entity.GetDateTime("DTOffset"), Is.EqualTo(dateNow));
+
+            // Initialize a property to an DateTime value
+            entity["DT"] = dateNow;
+            Assert.AreEqual(typeof(DateTime), entity["DT"].GetType());
+            DateTimeOffset dtoffset = (DateTime)entity["DT"];
+            Assert.That(entity["DT"], Is.EqualTo(dateNow));
+            Assert.That(entity.GetDateTime("DT"), Is.EqualTo(dateNow));
+            Assert.That(entity.GetDateTimeOffset("DT"), Is.EqualTo(offsetNow));
+        }
     }
 }

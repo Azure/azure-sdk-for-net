@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </remarks>
     ///
     /// <seealso cref="EventHubBufferedProducerClient" />
-    ///
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubProducerClient : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts that may be made to get a <see cref="TransportProducer" /> from the pool.</summary>
@@ -352,6 +352,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="connection">The connection to use as the basis for delegation of client-type operations.</param>
         /// <param name="transportProducer">The transport producer instance to use as the basis for service communication.</param>
         /// <param name="partitionProducerPool">A <see cref="TransportProducerPool" /> used to manage a set of partition specific <see cref="TransportProducer" />.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         /// <remarks>
         ///   This constructor is intended to be used internally for functional
@@ -360,7 +361,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         internal EventHubProducerClient(EventHubConnection connection,
                                         TransportProducer transportProducer,
-                                        TransportProducerPool partitionProducerPool = default)
+                                        TransportProducerPool partitionProducerPool = default,
+                                        EventHubProducerClientOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(transportProducer, nameof(transportProducer));
@@ -368,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
-            Options = new EventHubProducerClientOptions();
+            Options = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
             Identifier = Guid.NewGuid().ToString();
             PartitionProducerPool = partitionProducerPool ?? new TransportProducerPool(partitionId => transportProducer);
 
@@ -498,7 +500,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         internal virtual async Task<PartitionPublishingPropertiesInternal> GetPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                         CancellationToken cancellationToken = default)
+                                                                                                                 CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
@@ -957,20 +959,24 @@ namespace Azure.Messaging.EventHubs.Producer
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 EventHubsEventSource.Log.IdempotentPublishStart(EventHubName, options.PartitionId);
 
+                var resetStateOnError = false;
+                var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
 
                 try
                 {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    if (!partitionState.PublishingGuard.Wait(100, cancellationToken))
+                    {
+                        await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    }
 
-                    await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    releaseGuard = true;
                     EventHubsEventSource.Log.IdempotentSynchronizationAcquire(EventHubName, options.PartitionId);
 
                     // Ensure that the partition state has been initialized.
 
                     if (!partitionState.IsInitialized)
                     {
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                         await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
                     }
 
@@ -989,7 +995,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     // Publish the events.
 
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    resetStateOnError = true;
 
                     EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, firstSequence, lastSequence);
                     await SendInternalAsync(eventSet, options, cancellationToken).ConfigureAwait(false);
@@ -1013,12 +1019,40 @@ namespace Azure.Messaging.EventHubs.Producer
                         eventData.ClearPublishingState();
                     }
 
+                    if (resetStateOnError)
+                    {
+                        // Reset the partition state and options to ensure that future attempts
+                        // are safe and do not risk data loss by reusing the same producer group identifier.
+
+                        if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
+                        {
+                            partitionOptions = new PartitionPublishingOptionsInternal();
+                            Options.PartitionOptions[options.PartitionId] = partitionOptions;
+                        }
+
+                        partitionOptions.ProducerGroupId = null;
+                        partitionOptions.OwnerLevel = null;
+                        partitionOptions.StartingSequenceNumber = null;
+
+                        partitionState.ProducerGroupId = null;
+                        partitionState.OwnerLevel = null;
+                        partitionState.LastPublishedSequenceNumber = null;
+
+                        // Expire the transport producer associated with the partition, to ensure
+                        // that the new idempotent state is used for the next publishing operation.
+
+                        await PartitionProducerPool.ExpirePooledProducerAsync(options.PartitionId, forceClose: true).ConfigureAwait(false);
+                    }
+
                     throw;
                 }
                 finally
                 {
-                    partitionState.PublishingGuard.Release();
-                    EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    if (releaseGuard)
+                    {
+                        partitionState.PublishingGuard.Release();
+                        EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -1052,6 +1086,8 @@ namespace Azure.Messaging.EventHubs.Producer
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 EventHubsEventSource.Log.IdempotentPublishStart(EventHubName, options.PartitionId);
 
+                var resetStateOnError = false;
+                var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
 
                 var eventSet = eventBatch.AsEnumerable<EventData>() switch
@@ -1062,16 +1098,18 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 try
                 {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    if (!partitionState.PublishingGuard.Wait(100, cancellationToken))
+                    {
+                        await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    }
 
-                    await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    releaseGuard = true;
                     EventHubsEventSource.Log.IdempotentSynchronizationAcquire(EventHubName, options.PartitionId);
 
                     // Ensure that the partition state has been initialized.
 
                     if (!partitionState.IsInitialized)
                     {
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                         await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
                     }
 
@@ -1090,7 +1128,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     // Publish the events.
 
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    resetStateOnError = true;
 
                     EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, firstSequence, lastSequence);
                     await SendInternalAsync(eventBatch, cancellationToken).ConfigureAwait(false);
@@ -1111,12 +1149,40 @@ namespace Azure.Messaging.EventHubs.Producer
                         eventData.ClearPublishingState();
                     }
 
+                    if (resetStateOnError)
+                    {
+                        // Reset the partition state and options to ensure that future attempts
+                        // are safe and do not risk data loss by reusing the same producer group identifier.
+
+                            if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
+                        {
+                            partitionOptions = new PartitionPublishingOptionsInternal();
+                            Options.PartitionOptions[options.PartitionId] = partitionOptions;
+                        }
+
+                        partitionOptions.ProducerGroupId = null;
+                        partitionOptions.OwnerLevel = null;
+                        partitionOptions.StartingSequenceNumber = null;
+
+                        partitionState.ProducerGroupId = null;
+                        partitionState.OwnerLevel = null;
+                        partitionState.LastPublishedSequenceNumber = null;
+
+                        // Expire the transport producer associated with the partition, to ensure
+                        // that the new idempotent state is used for the next publishing operation.
+
+                        await PartitionProducerPool.ExpirePooledProducerAsync(options.PartitionId, forceClose: true).ConfigureAwait(false);
+                    }
+
                     throw;
                 }
                 finally
                 {
-                    partitionState.PublishingGuard.Release();
-                    EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    if (releaseGuard)
+                    {
+                        partitionState.PublishingGuard.Release();
+                        EventHubsEventSource.Log.IdempotentSynchronizationRelease(EventHubName, options.PartitionId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -1216,7 +1282,7 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 foreach (var identifier in diagnosticIdentifiers)
                 {
-                    scope.AddLink(identifier);
+                    scope.AddLink(identifier, null);
                 }
             }
 
@@ -1361,7 +1427,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static PartitionPublishingPropertiesInternal CreatePublishingPropertiesFromPartitionState(EventHubProducerClientOptions options,
-                                                                                                  PartitionPublishingState state) =>
+                                                                                                          PartitionPublishingState state) =>
                     new PartitionPublishingPropertiesInternal(options.EnableIdempotentPartitions,
                                                       state.ProducerGroupId,
                                                       state.OwnerLevel,

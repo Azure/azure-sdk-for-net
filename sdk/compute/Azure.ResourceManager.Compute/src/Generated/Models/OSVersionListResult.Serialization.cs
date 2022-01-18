@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static OSVersionListResult DeserializeOSVersionListResult(JsonElement element)
         {
-            IReadOnlyList<OSVersion> value = default;
+            IReadOnlyList<OSVersionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<OSVersion> array = new List<OSVersion>();
+                    List<OSVersionData> array = new List<OSVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OSVersion.DeserializeOSVersion(item));
+                        array.Add(OSVersionData.DeserializeOSVersionData(item));
                     }
                     value = array;
                     continue;

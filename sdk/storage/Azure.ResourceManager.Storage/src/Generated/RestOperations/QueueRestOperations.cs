@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Storage
 {
     internal partial class QueueRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,13 +29,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public QueueRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-04-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public QueueRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-04-01")
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string queueServiceName, string queueName, StorageQueueData queue)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string queueName, StorageQueueData queue)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,9 +54,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/queueServices/", false);
-            uri.AppendPath(queueServiceName, true);
-            uri.AppendPath("/queues/", false);
+            uri.AppendPath("/queueServices/default/queues/", false);
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -73,15 +68,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
-        public async Task<Response<StorageQueueData>> CreateAsync(string resourceGroupName, string accountName, string queueServiceName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
+        public async Task<Response<StorageQueueData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -89,10 +88,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
             }
             if (queueName == null)
             {
@@ -103,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queue));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, accountName, queueServiceName, queueName, queue);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, queueName, queue);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -120,15 +115,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
-        public Response<StorageQueueData> Create(string resourceGroupName, string accountName, string queueServiceName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
+        public Response<StorageQueueData> Create(string subscriptionId, string resourceGroupName, string accountName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -136,10 +135,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
             }
             if (queueName == null)
             {
@@ -150,7 +145,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queue));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, accountName, queueServiceName, queueName, queue);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, queueName, queue);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -166,7 +161,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string queueServiceName, string queueName, StorageQueueData queue)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string queueName, StorageQueueData queue)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -179,9 +174,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/queueServices/", false);
-            uri.AppendPath(queueServiceName, true);
-            uri.AppendPath("/queues/", false);
+            uri.AppendPath("/queueServices/default/queues/", false);
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -195,15 +188,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
-        public async Task<Response<StorageQueueData>> UpdateAsync(string resourceGroupName, string accountName, string queueServiceName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
+        public async Task<Response<StorageQueueData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -211,10 +208,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
             }
             if (queueName == null)
             {
@@ -225,7 +218,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queue));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, queueServiceName, queueName, queue);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, queueName, queue);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -242,15 +235,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
-        public Response<StorageQueueData> Update(string resourceGroupName, string accountName, string queueServiceName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
+        public Response<StorageQueueData> Update(string subscriptionId, string resourceGroupName, string accountName, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -258,10 +255,6 @@ namespace Azure.ResourceManager.Storage
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
-            }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
             }
             if (queueName == null)
             {
@@ -272,7 +265,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queue));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, queueServiceName, queueName, queue);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, queueName, queue);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -288,7 +281,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName, string queueServiceName, string queueName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string queueName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -301,9 +294,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/queueServices/", false);
-            uri.AppendPath(queueServiceName, true);
-            uri.AppendPath("/queues/", false);
+            uri.AppendPath("/queueServices/default/queues/", false);
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -313,14 +304,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, or <paramref name="queueName"/> is null. </exception>
-        public async Task<Response<StorageQueueData>> GetAsync(string resourceGroupName, string accountName, string queueServiceName, string queueName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
+        public async Task<Response<StorageQueueData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -329,16 +324,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
             if (queueName == null)
             {
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName, queueServiceName, queueName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, queueName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -357,14 +348,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, or <paramref name="queueName"/> is null. </exception>
-        public Response<StorageQueueData> Get(string resourceGroupName, string accountName, string queueServiceName, string queueName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
+        public Response<StorageQueueData> Get(string subscriptionId, string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -373,16 +368,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
             if (queueName == null)
             {
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName, queueServiceName, queueName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, queueName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -400,7 +391,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName, string queueServiceName, string queueName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string queueName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -413,9 +404,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/queueServices/", false);
-            uri.AppendPath(queueServiceName, true);
-            uri.AppendPath("/queues/", false);
+            uri.AppendPath("/queueServices/default/queues/", false);
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -425,14 +414,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, or <paramref name="queueName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string queueServiceName, string queueName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -441,16 +434,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
             if (queueName == null)
             {
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName, queueServiceName, queueName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, queueName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -462,14 +451,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueServiceName"/>, or <paramref name="queueName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string accountName, string queueServiceName, string queueName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -478,16 +471,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
             if (queueName == null)
             {
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName, queueServiceName, queueName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, queueName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -498,7 +487,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string accountName, string queueServiceName, string maxpagesize, string filter)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -511,9 +500,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/queueServices/", false);
-            uri.AppendPath(queueServiceName, true);
-            uri.AppendPath("/queues", false);
+            uri.AppendPath("/queueServices/default/queues", false);
             uri.AppendQuery("api-version", apiVersion, true);
             if (maxpagesize != null)
             {
@@ -530,15 +517,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets a list of all the queues under the specified storage account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueServiceName"/> is null. </exception>
-        public async Task<Response<ListQueueResource>> GetAllAsync(string resourceGroupName, string accountName, string queueServiceName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<ListQueueResource>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -547,12 +538,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, queueServiceName, maxpagesize, filter);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -569,15 +556,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets a list of all the queues under the specified storage account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueServiceName"/> is null. </exception>
-        public Response<ListQueueResource> GetAll(string resourceGroupName, string accountName, string queueServiceName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<ListQueueResource> List(string subscriptionId, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -586,12 +577,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName, queueServiceName, maxpagesize, filter);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -607,7 +594,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string accountName, string queueServiceName, string maxpagesize, string filter)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -623,18 +610,22 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets a list of all the queues under the specified storage account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueServiceName"/> is null. </exception>
-        public async Task<Response<ListQueueResource>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string accountName, string queueServiceName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<ListQueueResource>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -644,12 +635,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, queueServiceName, maxpagesize, filter);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, maxpagesize, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -667,18 +654,22 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets a list of all the queues under the specified storage account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueServiceName"/> is null. </exception>
-        public Response<ListQueueResource> GetAllNextPage(string nextLink, string resourceGroupName, string accountName, string queueServiceName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<ListQueueResource> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -688,12 +679,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (queueServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(queueServiceName));
-            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, queueServiceName, maxpagesize, filter);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, maxpagesize, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

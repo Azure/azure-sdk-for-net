@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PrimaryAggregationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrimaryAggregationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrimaryAggregationType(string value)
         {

@@ -50,7 +50,8 @@ namespace KeyVault.Management.Tests
                     true, // enableSoftDelete defaults to true
                     new[] { testBase.accPol },
                     testBase.vaultProperties.NetworkAcls,
-                    testBase.tags);
+                    testBase.tags,
+                    testBase.systemData);
 
                 //Update
 
@@ -85,7 +86,8 @@ namespace KeyVault.Management.Tests
                     true,
                     new[] { testBase.accPol },
                     testBase.vaultProperties.NetworkAcls,
-                    testBase.tags);
+                    testBase.tags,
+                    testBase.systemData);
 
                 var retrievedVault = testBase.client.Vaults.Get(
                     resourceGroupName: testBase.rgName,
@@ -105,7 +107,8 @@ namespace KeyVault.Management.Tests
                     true,
                     new[] { testBase.accPol },
                     testBase.vaultProperties.NetworkAcls,
-                    testBase.tags);
+                    testBase.tags,
+                    testBase.systemData);
 
                 // Delete
                 testBase.client.Vaults.Delete(
@@ -183,7 +186,8 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     new[] { testBase.accPol },
-                    testBase.tags);
+                    testBase.tags,
+                    testBase.systemData);
 
                 // Get
                 var retrievedVault = testBase.client.Vaults.Get(
@@ -203,7 +207,8 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     new[] { testBase.accPol },
-                    testBase.tags);
+                    testBase.tags,
+                    testBase.systemData);
 
 
                 // Delete
@@ -453,7 +458,8 @@ namespace KeyVault.Management.Tests
             bool expectedEnabledForDiskEncryption,
             bool? expectedEnableSoftDelete,
             AccessPolicyEntry[] expectedPolicies,
-            Dictionary<string, string> expectedTags)
+            Dictionary<string, string> expectedTags,
+            SystemData expectedSystemData)
         {
             Assert.NotNull(vault);
             Assert.NotNull(vault.Properties);
@@ -472,6 +478,7 @@ namespace KeyVault.Management.Tests
             Assert.Equal(expectedEnableSoftDelete, vault.Properties.EnableSoftDelete);
             Assert.True(expectedTags.DictionaryEqual(vault.Tags));
             Assert.True(expectedPolicies.IsEqual(vault.Properties.AccessPolicies));
+            ValidateSystemData(expectedSystemData, vault.SystemData);
         }
 
         private void ValidateVault(
@@ -489,7 +496,8 @@ namespace KeyVault.Management.Tests
             bool? expectedEnableSoftDelete,
             AccessPolicyEntry[] expectedPolicies,
             NetworkRuleSet networkRuleSet,
-            Dictionary<string, string> expectedTags)
+            Dictionary<string, string> expectedTags,
+            SystemData expectedSystemData)
         {
             ValidateVault(
                 vault,
@@ -505,7 +513,8 @@ namespace KeyVault.Management.Tests
                 expectedEnabledForDiskEncryption,
                 expectedEnableSoftDelete,
                 expectedPolicies,
-                expectedTags);
+                expectedTags,
+                expectedSystemData);
 
             Assert.NotNull(vault.Properties.NetworkAcls);
             Assert.Equal(networkRuleSet.DefaultAction, vault.Properties.NetworkAcls.DefaultAction);
@@ -514,7 +523,18 @@ namespace KeyVault.Management.Tests
             Assert.Equal(networkRuleSet.IpRules[0].Value, vault.Properties.NetworkAcls.IpRules[0].Value);
             Assert.Equal(networkRuleSet.IpRules[1].Value, vault.Properties.NetworkAcls.IpRules[1].Value);
         }
-    }
+
+        private void ValidateSystemData(SystemData expectedSystemData, SystemData vaultSystemData)
+        {
+            Assert.NotNull(expectedSystemData);
+            Assert.Equal(expectedSystemData.CreatedBy, vaultSystemData.CreatedBy);
+            Assert.Equal(expectedSystemData.CreatedByType, vaultSystemData.CreatedByType);
+            Assert.Equal(expectedSystemData.CreatedAt.Value.ToUniversalTime(), vaultSystemData.CreatedAt);
+            Assert.Equal(expectedSystemData.LastModifiedBy, vaultSystemData.LastModifiedBy);
+            Assert.Equal(expectedSystemData.LastModifiedByType, vaultSystemData.LastModifiedByType);
+            Assert.Equal(expectedSystemData.LastModifiedAt.Value.ToUniversalTime(), vaultSystemData.LastModifiedAt);
+        }
+}
 
     public static class Extensions
     {

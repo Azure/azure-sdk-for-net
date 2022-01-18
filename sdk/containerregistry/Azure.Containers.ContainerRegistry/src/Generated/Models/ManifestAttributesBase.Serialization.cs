@@ -28,8 +28,6 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
-            Optional<string> quarantineState = default;
-            Optional<string> quarantineDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"))
@@ -156,21 +154,11 @@ namespace Azure.Containers.ContainerRegistry
                             readEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("quarantineState"))
-                        {
-                            quarantineState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("quarantineDetails"))
-                        {
-                            quarantineDetails = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

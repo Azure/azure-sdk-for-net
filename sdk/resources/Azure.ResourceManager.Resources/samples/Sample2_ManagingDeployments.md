@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_Deployments_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -25,7 +26,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
@@ -54,7 +55,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
         }
     }
 });
-DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
+DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -79,7 +80,7 @@ DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
 // Now we can get the deployment with GetAsync()
 Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
 // With DeleteAsync(), we can delete the deployment
-await deployment.DeleteAsync();
+await deployment.DeleteAsync(true);
 ```
 
 

@@ -11,6 +11,8 @@ namespace Azure.Core
     /// </summary>
     public class ResponseClassifier
     {
+        internal static ResponseClassifier Shared { get; } = new();
+
         /// <summary>
         /// Specifies if the request contained in the <paramref name="message"/> should be retried.
         /// </summary>

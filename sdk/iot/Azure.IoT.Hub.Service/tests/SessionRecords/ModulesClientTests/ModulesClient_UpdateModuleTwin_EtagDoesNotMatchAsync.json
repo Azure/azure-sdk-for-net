@@ -1,38 +1,35 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://FakeHost.net/devices/TwinLifecycleDevice796017923?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/devices/TwinLifecycleDevice1985995919?api-version=2020-03-13",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "43",
+        "Content-Length": "44",
         "Content-Type": "application/json",
         "If-Match": "\u0022\u0022",
-        "User-Agent": [
-          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "9928779848e7cc93e295e574142a6ba0",
+        "User-Agent": "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20211208.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "835a7501df3079c0aadd875f517a1f98",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "deviceId": "TwinLifecycleDevice796017923"
+        "deviceId": "TwinLifecycleDevice1985995919"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "542",
+        "Content-Length": "543",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 07 Jul 2021 20:47:27 GMT",
-        "ETag": "\u0022NzUzMzI4Nzcz\u0022",
+        "Date": "Thu, 09 Dec 2021 20:22:05 GMT",
+        "ETag": "\u0022OTU4NzU1MjI3\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "eac5846c-259e-4218-a72a-886bb2ed1a81"
+        "x-ms-request-id": "c4baf091-ae1c-426a-a65a-6ee355821bc5"
       },
       "ResponseBody": {
-        "deviceId": "TwinLifecycleDevice796017923",
-        "generationId": "637612876481651031",
-        "etag": "NzUzMzI4Nzcz",
+        "deviceId": "TwinLifecycleDevice1985995919",
+        "generationId": "637746781261338780",
+        "etag": "OTU4NzU1MjI3",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -57,40 +54,37 @@
       }
     },
     {
-      "RequestUri": "https://FakeHost.net/devices/TwinLifecycleDevice796017923/modules/TwinLifecycleModule2123975924?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/devices/TwinLifecycleDevice1985995919/modules/TwinLifecycleModule1838385078?api-version=2020-03-13",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "86",
+        "Content-Length": "87",
         "Content-Type": "application/json",
         "If-Match": "\u0022\u0022",
-        "User-Agent": [
-          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "16c435d8b80f0bb6921755e3fd56b7e3",
+        "User-Agent": "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20211208.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e29a9ffc18cbd6f684dc85c48a325cd6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "moduleId": "TwinLifecycleModule2123975924",
-        "deviceId": "TwinLifecycleDevice796017923"
+        "moduleId": "TwinLifecycleModule1838385078",
+        "deviceId": "TwinLifecycleDevice1985995919"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "488",
+        "Content-Length": "489",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 07 Jul 2021 20:47:28 GMT",
+        "Date": "Thu, 09 Dec 2021 20:22:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "ef0ca382-e32f-4e71-aff2-420b00718935"
+        "x-ms-request-id": "f9d6e0f0-d670-42d1-b3cc-0d974970646d"
       },
       "ResponseBody": {
-        "moduleId": "TwinLifecycleModule2123975924",
+        "moduleId": "TwinLifecycleModule1838385078",
         "managedBy": null,
-        "deviceId": "TwinLifecycleDevice796017923",
-        "generationId": "637612876488000832",
-        "etag": "MjMzNDQ1OTI2",
+        "deviceId": "TwinLifecycleDevice1985995919",
+        "generationId": "637746781261807271",
+        "etag": "MzYzOTEzMjQ1",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00",
         "lastActivityTime": "0001-01-01T00:00:00",
@@ -109,33 +103,30 @@
       }
     },
     {
-      "RequestUri": "https://FakeHost.net/twins/TwinLifecycleDevice796017923/modules/TwinLifecycleModule2123975924?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/twins/TwinLifecycleDevice1985995919/modules/TwinLifecycleModule1838385078?api-version=2020-03-13",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "c44121cd00c13a8a92e3f26f9974dfc6",
+        "User-Agent": "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20211208.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e82ee3b8a427b27066f940204feb35d7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "582",
+        "Content-Length": "583",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 07 Jul 2021 20:47:28 GMT",
+        "Date": "Thu, 09 Dec 2021 20:22:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "15b9947d-e1a6-4de1-bb4e-0f60b74478b1"
+        "x-ms-request-id": "7ec2ea66-fe32-4f35-a8ab-865fc133c685"
       },
       "ResponseBody": {
-        "deviceId": "TwinLifecycleDevice796017923",
-        "moduleId": "TwinLifecycleModule2123975924",
+        "deviceId": "TwinLifecycleDevice1985995919",
+        "moduleId": "TwinLifecycleModule1838385078",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "MjMzNDQ1OTI2",
+        "deviceEtag": "MzYzOTEzMjQ1",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -164,24 +155,21 @@
       }
     },
     {
-      "RequestUri": "https://FakeHost.net/twins/TwinLifecycleDevice796017923/modules/TwinLifecycleModule2123975924?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/twins/TwinLifecycleDevice1985995919/modules/TwinLifecycleModule1838385078?api-version=2020-03-13",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "550",
+        "Content-Length": "567",
         "Content-Type": "application/json",
         "If-Match": "*",
-        "User-Agent": [
-          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "d845e2b2ec1ddfe5c01d06d0f2afcf8b",
+        "User-Agent": "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20211208.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c4962dbbad09e9eb7e84ff5359fbef77",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "deviceId": "TwinLifecycleDevice796017923",
-        "moduleId": "TwinLifecycleModule2123975924",
+        "deviceId": "TwinLifecycleDevice1985995919",
+        "moduleId": "TwinLifecycleModule1838385078",
         "properties": {
           "desired": {
             "$metadata": {
@@ -199,29 +187,29 @@
         },
         "etag": "AAAAAAAAAAE=",
         "version": 2,
-        "deviceEtag": "MjMzNDQ1OTI2",
+        "deviceEtag": "MzYzOTEzMjQ1",
         "status": "enabled",
-        "statusUpdateTime": "0001-01-01T00:00:00Z",
+        "statusUpdateTime": "0001-01-01T00:00:00.0000000Z",
         "connectionState": "Disconnected",
-        "lastActivityTime": "0001-01-01T00:00:00Z",
+        "lastActivityTime": "0001-01-01T00:00:00.0000000Z",
         "cloudToDeviceMessageCount": 0,
         "authenticationType": "sas",
         "x509Thumbprint": {}
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "716",
+        "Content-Length": "717",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 07 Jul 2021 20:47:28 GMT",
+        "Date": "Thu, 09 Dec 2021 20:22:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "b934b8a5-aeed-48f5-af20-bd24be407cb3"
+        "x-ms-request-id": "7556833b-d4fb-4116-965f-7a9f74a96077"
       },
       "ResponseBody": {
-        "deviceId": "TwinLifecycleDevice796017923",
-        "moduleId": "TwinLifecycleModule2123975924",
+        "deviceId": "TwinLifecycleDevice1985995919",
+        "moduleId": "TwinLifecycleModule1838385078",
         "etag": "AAAAAAAAAAI=",
-        "deviceEtag": "MjMzNDQ1OTI2",
+        "deviceEtag": "MzYzOTEzMjQ1",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -237,10 +225,10 @@
           "desired": {
             "username": "userA",
             "$metadata": {
-              "$lastUpdated": "2021-07-07T20:47:28.8612004Z",
+              "$lastUpdated": "2021-12-09T20:22:06.2744757Z",
               "$lastUpdatedVersion": 2,
               "username": {
-                "$lastUpdated": "2021-07-07T20:47:28.8612004Z",
+                "$lastUpdated": "2021-12-09T20:22:06.2744757Z",
                 "$lastUpdatedVersion": 2
               }
             },
@@ -256,24 +244,21 @@
       }
     },
     {
-      "RequestUri": "https://FakeHost.net/twins/TwinLifecycleDevice796017923/modules/TwinLifecycleModule2123975924?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/twins/TwinLifecycleDevice1985995919/modules/TwinLifecycleModule1838385078?api-version=2020-03-13",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "550",
+        "Content-Length": "567",
         "Content-Type": "application/json",
         "If-Match": "\u0022AAAAAAAAAAE=\u0022",
-        "User-Agent": [
-          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "f2a601dda6e8d8dfaa8a842cc647711d",
+        "User-Agent": "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20211208.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6ea6b081374b58712ee87bd2d8d68798",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "deviceId": "TwinLifecycleDevice796017923",
-        "moduleId": "TwinLifecycleModule2123975924",
+        "deviceId": "TwinLifecycleDevice1985995919",
+        "moduleId": "TwinLifecycleModule1838385078",
         "properties": {
           "desired": {
             "$metadata": {
@@ -291,57 +276,54 @@
         },
         "etag": "AAAAAAAAAAE=",
         "version": 2,
-        "deviceEtag": "MjMzNDQ1OTI2",
+        "deviceEtag": "MzYzOTEzMjQ1",
         "status": "enabled",
-        "statusUpdateTime": "0001-01-01T00:00:00Z",
+        "statusUpdateTime": "0001-01-01T00:00:00.0000000Z",
         "connectionState": "Disconnected",
-        "lastActivityTime": "0001-01-01T00:00:00Z",
+        "lastActivityTime": "0001-01-01T00:00:00.0000000Z",
         "cloudToDeviceMessageCount": 0,
         "authenticationType": "sas",
         "x509Thumbprint": {}
       },
       "StatusCode": 412,
       "ResponseHeaders": {
-        "Content-Length": "197",
+        "Content-Length": "198",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 07 Jul 2021 20:47:28 GMT",
+        "Date": "Thu, 09 Dec 2021 20:22:05 GMT",
         "iothub-errorcode": "PreconditionFailed",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "12758d67-3c99-403c-93f4-8c2684b63a87"
+        "x-ms-request-id": "3080a95e-2785-48f7-97b7-7e74039b5837"
       },
       "ResponseBody": {
-        "Message": "ErrorCode:PreconditionFailed;ETag mismatch for device ID \u0027TwinLifecycleDevice796017923\u0027",
-        "ExceptionMessage": "Tracking ID:12758d673c99403c93f48c2684b63a87-TimeStamp:07/07/2021 20:47:28"
+        "Message": "ErrorCode:PreconditionFailed;ETag mismatch for device ID \u0027TwinLifecycleDevice1985995919\u0027",
+        "ExceptionMessage": "Tracking ID:3080a95e278548f797b77e74039b5837-TimeStamp:12/09/2021 20:22:06"
       }
     },
     {
-      "RequestUri": "https://FakeHost.net/devices/TwinLifecycleDevice796017923?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/devices/TwinLifecycleDevice1985995919?api-version=2020-03-13",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "If-Match": "*",
-        "User-Agent": [
-          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "1a308e37df10e1c53c6103a4f9ba48e2",
+        "User-Agent": "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20211208.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5d09ada7979b0acdf84569a2a51d586b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 07 Jul 2021 20:47:28 GMT",
+        "Date": "Thu, 09 Dec 2021 20:22:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "c093f56a-282a-42da-902e-a5e62cbea17b"
+        "x-ms-request-id": "c922ae35-3303-4d05-839e-68953663becd"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
     "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==",
-    "RandomSeed": "789243263"
+    "RandomSeed": "1837982039"
   }
 }

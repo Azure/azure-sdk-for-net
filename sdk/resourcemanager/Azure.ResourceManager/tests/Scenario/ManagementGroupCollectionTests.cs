@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupOptions());
             _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdate()
         {
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
-            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions());
-            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions(), waitForCompletion: false);
+            ManagementGroup mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);

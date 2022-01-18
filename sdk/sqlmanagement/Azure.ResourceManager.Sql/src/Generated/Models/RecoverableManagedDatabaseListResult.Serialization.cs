@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RecoverableManagedDatabaseListResult DeserializeRecoverableManagedDatabaseListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RecoverableManagedDatabase>> value = default;
+            Optional<IReadOnlyList<RecoverableManagedDatabaseData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RecoverableManagedDatabase> array = new List<RecoverableManagedDatabase>();
+                    List<RecoverableManagedDatabaseData> array = new List<RecoverableManagedDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoverableManagedDatabase.DeserializeRecoverableManagedDatabase(item));
+                        array.Add(RecoverableManagedDatabaseData.DeserializeRecoverableManagedDatabaseData(item));
                     }
                     value = array;
                     continue;

@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -117,6 +122,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("minimalTlsVersion");
                 writer.WriteStringValue(MinimalTlsVersion);
+            }
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                writer.WritePropertyName("storageAccountType");
+                writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (Optional.IsDefined(ZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant");
+                writer.WriteBooleanValue(ZoneRedundant.Value);
+            }
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            {
+                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WriteStringValue(PrimaryUserAssignedIdentityId);
+            }
+            if (Optional.IsDefined(KeyId))
+            {
+                writer.WritePropertyName("keyId");
+                writer.WriteStringValue(KeyId);
+            }
+            if (Optional.IsDefined(Administrators))
+            {
+                writer.WritePropertyName("administrators");
+                writer.WriteObjectValue(Administrators);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

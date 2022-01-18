@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The role of the database in the replication link. </summary>
+    /// <summary> Local replication role. </summary>
     public enum ReplicationRole
     {
         /// <summary> Primary. </summary>

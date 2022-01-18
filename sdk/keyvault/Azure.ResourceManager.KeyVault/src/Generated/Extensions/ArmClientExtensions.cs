@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="Vault" /> object. </returns>
         public static Vault GetVault(this ArmClient armClient, ResourceIdentifier id)
         {
+            Vault.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Vault(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="DeletedVault" /> object. </returns>
         public static DeletedVault GetDeletedVault(this ArmClient armClient, ResourceIdentifier id)
         {
+            DeletedVault.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeletedVault(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -52,7 +56,20 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="ManagedHsm" /> object. </returns>
         public static ManagedHsm GetManagedHsm(this ArmClient armClient, ResourceIdentifier id)
         {
+            ManagedHsm.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedHsm(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region DeletedManagedHsm
+        /// <summary> Gets an object representing a DeletedManagedHsm along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedManagedHsm" /> object. </returns>
+        public static DeletedManagedHsm GetDeletedManagedHsm(this ArmClient armClient, ResourceIdentifier id)
+        {
+            DeletedManagedHsm.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeletedManagedHsm(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -63,6 +80,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="MhsmPrivateEndpointConnection" /> object. </returns>
         public static MhsmPrivateEndpointConnection GetMhsmPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            MhsmPrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MhsmPrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

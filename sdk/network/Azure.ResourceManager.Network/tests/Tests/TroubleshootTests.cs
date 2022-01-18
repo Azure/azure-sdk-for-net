@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var virtualNetworkGatewayCollection = GetVirtualNetworkGatewayCollection(resourceGroupName);
             var putVirtualNetworkGatewayResponseOperation =
-                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(virtualNetworkGatewayName, virtualNetworkGateway);
+                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(true, virtualNetworkGatewayName, virtualNetworkGateway);
             await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();;
             // GetVirtualNetworkGateway API
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse =
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
             //Create storage
             //string storageName = Recording.GenerateAssetName("azsmnet");

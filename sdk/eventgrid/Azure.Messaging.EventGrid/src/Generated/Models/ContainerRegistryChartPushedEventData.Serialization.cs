@@ -20,7 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> id = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> action = default;
+            Optional<string> location = default;
             Optional<ContainerRegistryArtifactEventTarget> target = default;
+            Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -43,6 +45,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     action = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("target"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -53,8 +60,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     target = ContainerRegistryArtifactEventTarget.DeserializeContainerRegistryArtifactEventTarget(property.Value);
                     continue;
                 }
+                if (property.NameEquals("connectedRegistry"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value);
+                    continue;
+                }
             }
-            return new ContainerRegistryChartPushedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, target.Value);
+            return new ContainerRegistryChartPushedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, connectedRegistry.Value);
         }
 
         internal partial class ContainerRegistryChartPushedEventDataConverter : JsonConverter<ContainerRegistryChartPushedEventData>

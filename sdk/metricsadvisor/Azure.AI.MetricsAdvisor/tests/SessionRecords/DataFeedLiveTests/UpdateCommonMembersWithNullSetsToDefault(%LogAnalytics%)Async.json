@@ -37,7 +37,7 @@
           }
         ],
         "timestampColumn": "timestamp",
-        "dataStartFrom": "2021-01-01T00:00:00Z",
+        "dataStartFrom": "2021-01-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 60,
         "maxConcurrency": 1,
         "minRetryIntervalInSeconds": 60,
@@ -103,7 +103,7 @@
             "dimensionDisplayName": "dimension"
           }
         ],
-        "dataStartFrom": "2021-01-01T00:00:00Z",
+        "dataStartFrom": "2021-01-01T00:00:00.0000000Z",
         "dataSourceType": "AzureLogAnalytics",
         "timestampColumn": "timestamp",
         "startOffsetInSeconds": 60,
@@ -162,7 +162,7 @@
         "dataFeedName": "dataFeedidjsPqlM",
         "dataFeedDescription": null,
         "timestampColumn": null,
-        "dataStartFrom": "2021-01-01T00:00:00Z",
+        "dataStartFrom": "2021-01-01T00:00:00.0000000Z",
         "startOffsetInSeconds": null,
         "maxConcurrency": null,
         "minRetryIntervalInSeconds": null,
@@ -210,7 +210,7 @@
             "dimensionDisplayName": "dimension"
           }
         ],
-        "dataStartFrom": "2021-01-01T00:00:00Z",
+        "dataStartFrom": "2021-01-01T00:00:00.0000000Z",
         "dataSourceType": "AzureLogAnalytics",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

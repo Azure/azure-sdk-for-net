@@ -114,7 +114,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string faceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string faceListId, string name, string userData = default(string), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -135,11 +135,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
             }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
             if (name != null)
             {
                 if (name.Length > 128)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "name", 128);
+                }
+                if (name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "name", 1);
                 }
             }
             if (userData != null)

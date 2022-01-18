@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </remarks>
     ///
     /// <seealso cref="EventHubProducerClient" />
-    ///
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubBufferedProducerClient : IAsyncDisposable
     {
         /// <summary>The maximum amount of time, in milliseconds, to allow for acquiring the semaphore guarding a partition's publishing eligibility.</summary>
@@ -757,20 +757,13 @@ namespace Azure.Messaging.EventHubs.Producer
                     AssertValidPartition(partitionId, _partitionHash);
                 }
 
-                // Annotate the event with the current time; this is intended to help ensure that
-                // publishing can apply the maximum wait time correctly and will be removed when
-                // the event as added to a batch.
-
-                var amqpMessage = eventData.GetRawAmqpMessage();
-                amqpMessage.SetEnqueuedTime(GetCurrentTime());
-
                 // If there was a partition key requested, calculate the assigned partition and
                 // annotate the event so that it is preserved by the Event Hubs broker.
 
                 if (!string.IsNullOrEmpty(partitionKey))
                 {
                     partitionId = PartitionResolver.AssignForPartitionKey(partitionKey, _partitions);
-                    amqpMessage.SetPartitionKey(partitionKey);
+                    eventData.GetRawAmqpMessage().SetPartitionKey(partitionKey);
                 }
 
                 // If no partition was assigned, assign one for automatic routing.
@@ -939,26 +932,17 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 // Enumerate the events and enqueue them.
 
-                var enqueueTime = GetCurrentTime();
-
                 foreach (var eventData in events)
                 {
                     var eventPartitionId = partitionId;
-                    var amqpMessage = eventData.GetRawAmqpMessage();
 
                     // If there is an associated partition key, annotate the event so that it is
                     // preserved by the Event Hubs broker.
 
                     if (!string.IsNullOrEmpty(partitionKey))
                     {
-                        amqpMessage.SetPartitionKey(partitionKey);
+                        eventData.GetRawAmqpMessage().SetPartitionKey(partitionKey);
                     }
-
-                    // Annotate the event with the current time; this is intended to help ensure that
-                    // publishing can apply the maximum wait time correctly and will be removed when
-                    // the event as added to a batch.
-
-                    amqpMessage.SetEnqueuedTime(enqueueTime);
 
                     // If no partition was assigned, assign one for automatic routing.
 
@@ -2111,7 +2095,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     // There should be only one instance of this background publishing task running, so it is safe to assume
                     // no other publishing operations are active.  Reset the operation cancellation source to ensure that
-                    // any prior cancellation or disposal does not prevent cancelling operations created here.
+                    // any prior cancellation or disposal does not prevent canceling operations created here.
 
                     var activeOperationCancellationSource = new CancellationTokenSource();
                     var existingSource = Interlocked.Exchange(ref _activeSendOperationsCancellationSource, activeOperationCancellationSource);

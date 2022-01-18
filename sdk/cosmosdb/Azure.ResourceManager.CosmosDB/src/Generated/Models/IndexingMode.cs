@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="IndexingMode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexingMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ConsistentValue = "Consistent";
-        private const string LazyValue = "Lazy";
-        private const string NoneValue = "None";
+        private const string ConsistentValue = "consistent";
+        private const string LazyValue = "lazy";
+        private const string NoneValue = "none";
 
-        /// <summary> Consistent. </summary>
+        /// <summary> consistent. </summary>
         public static IndexingMode Consistent { get; } = new IndexingMode(ConsistentValue);
-        /// <summary> Lazy. </summary>
+        /// <summary> lazy. </summary>
         public static IndexingMode Lazy { get; } = new IndexingMode(LazyValue);
-        /// <summary> None. </summary>
+        /// <summary> none. </summary>
         public static IndexingMode None { get; } = new IndexingMode(NoneValue);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are the same. </summary>
         public static bool operator ==(IndexingMode left, IndexingMode right) => left.Equals(right);

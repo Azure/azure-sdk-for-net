@@ -72,7 +72,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The Azure.AI.Language.Conversations client library provides both synchronous and asynchronous APIs.
 
-The following examples show common scenarios using the `client` [created above](#Create a ConversationAnalysisClient).
+The following examples show common scenarios using the `client` [created above](#create-a-conversationanalysisclient).
 
 ### Analyze a conversation
 

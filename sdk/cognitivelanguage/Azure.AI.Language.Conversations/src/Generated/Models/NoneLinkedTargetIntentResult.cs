@@ -11,18 +11,18 @@ namespace Azure.AI.Language.Conversations
     public partial class NoneLinkedTargetIntentResult : TargetIntentResult
     {
         /// <summary> Initializes a new instance of NoneLinkedTargetIntentResult. </summary>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal NoneLinkedTargetIntentResult(double confidenceScore) : base(confidenceScore)
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        internal NoneLinkedTargetIntentResult(double confidence) : base(confidence)
         {
-            TargetKind = TargetKind.NonLinked;
+            TargetKind = Conversations.TargetKind.NonLinked;
         }
 
         /// <summary> Initializes a new instance of NoneLinkedTargetIntentResult. </summary>
         /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
-        internal NoneLinkedTargetIntentResult(TargetKind targetKind, string apiVersion, double confidenceScore, ConversationResult result) : base(targetKind, apiVersion, confidenceScore)
+        internal NoneLinkedTargetIntentResult(TargetKind targetKind, string apiVersion, double confidence, ConversationResult result) : base(targetKind, apiVersion, confidence)
         {
             Result = result;
             TargetKind = targetKind;

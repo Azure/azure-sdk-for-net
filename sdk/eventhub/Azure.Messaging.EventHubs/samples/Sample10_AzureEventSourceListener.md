@@ -2,6 +2,10 @@
 
 The Event Hubs client library is instrumented using the .NET [`EventSource`](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) mechanism for logging. When instrumenting or diagnosing issues with applications that consume the library, it is often helpful to have access to the Event Hubs logs.  The following scenarios demonstrate how to use the [`AzureEventSourceListener`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) from the `Azure.Core` package to capture logs emitted by the Event Hubs client library.
 
+## Azure Event Source Listener lifetime
+
+In order for the `AzureEventSourceListener` to collect logs, it must be in scope and active while the client library is in use.  If the listener is disposed or otherwise out of scope, logs cannot be collected.  Generally, we recommend creating the listener as a top-level member of the class where the Event Hubs client being inspected is used.
+
 ## Capture all events and write them in to the console
 
 The following snippet demonstrates an example of capturing all log information from every [Azure SDK for .NET](https://github.com/Azure/azure-sdk-for-net) library in use and displaying it directly in the Console.  Calling the `AzureEventSourceListener.CreateConsoleLogger` factory method with other levels, such as `Critical`, `Error`, `Warning`, or `Informational` will help to filter out unwanted events.

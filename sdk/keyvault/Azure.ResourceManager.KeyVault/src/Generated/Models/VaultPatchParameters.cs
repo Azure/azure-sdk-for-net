@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for creating or updating a vault. </summary>
-    internal partial class VaultPatchParameters
+    public partial class VaultPatchParameters
     {
         /// <summary> Initializes a new instance of VaultPatchParameters. </summary>
         public VaultPatchParameters()

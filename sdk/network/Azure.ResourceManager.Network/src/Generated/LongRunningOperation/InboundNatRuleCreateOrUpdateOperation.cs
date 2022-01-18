@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         InboundNatRule IOperationSource<InboundNatRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new InboundNatRule(_operationBase, InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement));
+            var data = InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement);
+            return new InboundNatRule(_operationBase, data);
         }
 
         async ValueTask<InboundNatRule> IOperationSource<InboundNatRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new InboundNatRule(_operationBase, InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement));
+            var data = InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement);
+            return new InboundNatRule(_operationBase, data);
         }
     }
 }

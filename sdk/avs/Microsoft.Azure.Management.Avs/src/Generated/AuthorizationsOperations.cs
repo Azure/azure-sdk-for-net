@@ -107,10 +107,6 @@ namespace Microsoft.Azure.Management.Avs
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (privateCloudName == null)
             {
@@ -335,10 +331,6 @@ namespace Microsoft.Azure.Management.Avs
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (privateCloudName == null)
             {
@@ -521,16 +513,19 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='authorizationName'>
         /// Name of the ExpressRoute Circuit Authorization in the private cloud
         /// </param>
+        /// <param name='authorization'>
+        /// An ExpressRoute Circuit Authorization
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ExpressRouteAuthorization>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ExpressRouteAuthorization>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, ExpressRouteAuthorization authorization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ExpressRouteAuthorization> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ExpressRouteAuthorization> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, authorization, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -571,6 +566,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='authorizationName'>
         /// Name of the ExpressRoute Circuit Authorization in the private cloud
         /// </param>
+        /// <param name='authorization'>
+        /// An ExpressRoute Circuit Authorization
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -592,7 +590,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ExpressRouteAuthorization>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ExpressRouteAuthorization>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, ExpressRouteAuthorization authorization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -619,10 +617,6 @@ namespace Microsoft.Azure.Management.Avs
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (privateCloudName == null)
             {
@@ -631,6 +625,10 @@ namespace Microsoft.Azure.Management.Avs
             if (authorizationName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationName");
+            }
+            if (authorization == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "authorization");
             }
             if (Client.ApiVersion == null)
             {
@@ -643,7 +641,6 @@ namespace Microsoft.Azure.Management.Avs
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
             }
-            ExpressRouteAuthorization authorization = new ExpressRouteAuthorization();
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -875,10 +872,6 @@ namespace Microsoft.Azure.Management.Avs
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (privateCloudName == null)

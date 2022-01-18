@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerDnsAliasListResult DeserializeServerDnsAliasListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerDnsAlias>> value = default;
+            Optional<IReadOnlyList<ServerDnsAliasData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerDnsAlias> array = new List<ServerDnsAlias>();
+                    List<ServerDnsAliasData> array = new List<ServerDnsAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerDnsAlias.DeserializeServerDnsAlias(item));
+                        array.Add(ServerDnsAliasData.DeserializeServerDnsAliasData(item));
                     }
                     value = array;
                     continue;

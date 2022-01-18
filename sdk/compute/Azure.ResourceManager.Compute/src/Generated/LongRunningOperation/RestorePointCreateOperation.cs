@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         RestorePoint IOperationSource<RestorePoint>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new RestorePoint(_operationBase, RestorePointData.DeserializeRestorePointData(document.RootElement));
+            var data = RestorePointData.DeserializeRestorePointData(document.RootElement);
+            return new RestorePoint(_operationBase, data);
         }
 
         async ValueTask<RestorePoint> IOperationSource<RestorePoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new RestorePoint(_operationBase, RestorePointData.DeserializeRestorePointData(document.RootElement));
+            var data = RestorePointData.DeserializeRestorePointData(document.RootElement);
+            return new RestorePoint(_operationBase, data);
         }
     }
 }

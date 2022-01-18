@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Avs
     public static partial class ScriptExecutionsOperationsExtensions
     {
             /// <summary>
-            /// Get an script execution resource by name in a private cloud
+            /// List script executions in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Get an script execution resource by name in a private cloud
+            /// List script executions in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Get an script execution resource by name in a private cloud
+            /// Get an script execution by name in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Get an script execution resource by name in a private cloud
+            /// Get an script execution by name in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Create or update a script execution resource in a private cloud
+            /// Create or update a script execution in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Create or update a script execution resource in a private cloud
+            /// Create or update a script execution in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Create or update a script execution resource in a private cloud
+            /// Create or update a script execution in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Create or update a script execution resource in a private cloud
+            /// Create or update a script execution in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Get an script execution resource by name in a private cloud
+            /// List script executions in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Get an script execution resource by name in a private cloud
+            /// List script executions in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
