@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <summary> Initializes a new instance of HardwareProfile. </summary>
         /// <param name="memorySizeMB"> Gets or sets memory size in MBs for the vm. </param>
-        /// <param name="numCPUs"> Gets or sets the number of vCPUs for the vm. </param>
+        /// <param name="numCpus"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="numCoresPerSocket"> Gets or sets the number of cores per socket for the vm. Defaults to 1 if unspecified. </param>
         /// <param name="cpuHotAddEnabled"> Gets or sets a value indicating whether virtual processors can be added while this virtual machine is running. </param>
         /// <param name="cpuHotRemoveEnabled"> Gets or sets a value indicating whether virtual processors can be removed while this virtual machine is running. </param>
         /// <param name="memoryHotAddEnabled"> Gets or sets a value indicating whether memory can be added while this virtual machine is running. </param>
-        internal HardwareProfile(int? memorySizeMB, int? numCPUs, int? numCoresPerSocket, bool? cpuHotAddEnabled, bool? cpuHotRemoveEnabled, bool? memoryHotAddEnabled)
+        internal HardwareProfile(int? memorySizeMB, int? numCpus, int? numCoresPerSocket, bool? cpuHotAddEnabled, bool? cpuHotRemoveEnabled, bool? memoryHotAddEnabled)
         {
             MemorySizeMB = memorySizeMB;
-            NumCPUs = numCPUs;
+            NumCpus = numCpus;
             NumCoresPerSocket = numCoresPerSocket;
             CpuHotAddEnabled = cpuHotAddEnabled;
             CpuHotRemoveEnabled = cpuHotRemoveEnabled;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Gets or sets memory size in MBs for the vm. </summary>
         public int? MemorySizeMB { get; set; }
         /// <summary> Gets or sets the number of vCPUs for the vm. </summary>
-        public int? NumCPUs { get; set; }
+        public int? NumCpus { get; set; }
         /// <summary> Gets or sets the number of cores per socket for the vm. Defaults to 1 if unspecified. </summary>
         public int? NumCoresPerSocket { get; set; }
         /// <summary> Gets or sets a value indicating whether virtual processors can be added while this virtual machine is running. </summary>

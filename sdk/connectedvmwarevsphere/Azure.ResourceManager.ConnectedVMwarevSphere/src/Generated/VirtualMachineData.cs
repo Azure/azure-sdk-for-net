@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="templateId"> Gets or sets the ARM Id of the template resource to deploy the virtual machine. </param>
         /// <param name="vCenterId"> Gets or sets the ARM Id of the vCenter resource in which this resource pool resides. </param>
         /// <param name="placementProfile"> Placement properties. </param>
-        /// <param name="osProfile"> OS properties. </param>
+        /// <param name="oSProfile"> OS properties. </param>
         /// <param name="hardwareProfile"> Hardware properties. </param>
         /// <param name="networkProfile"> Network properties. </param>
         /// <param name="storageProfile"> Storage properties. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
         /// <param name="vmId"> Gets or sets a unique identifier for the vm resource. </param>
-        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, SystemData systemData, string kind, VMwareIdentity identity, string resourcePoolId, string templateId, string vCenterId, PlacementProfile placementProfile, OsProfile osProfile, HardwareProfile hardwareProfile, NetworkProfile networkProfile, StorageProfile storageProfile, GuestAgentProfile guestAgentProfile, string moRefId, string inventoryItemId, string moName, string folderPath, string instanceUuid, string smbiosUuid, FirmwareType? firmwareType, string powerState, string customResourceName, string uuid, IReadOnlyList<ResourceStatus> statuses, string provisioningState, string vmId) : base(id, name, type, tags, location)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, SystemData systemData, string kind, VMwareIdentity identity, string resourcePoolId, string templateId, string vCenterId, PlacementProfile placementProfile, OSProfile oSProfile, HardwareProfile hardwareProfile, NetworkProfile networkProfile, StorageProfile storageProfile, GuestAgentProfile guestAgentProfile, string moRefId, string inventoryItemId, string moName, string folderPath, string instanceUuid, string smbiosUuid, FirmwareType? firmwareType, string powerState, string customResourceName, string uuid, IReadOnlyList<ResourceStatus> statuses, string provisioningState, string vmId) : base(id, name, type, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SystemData = systemData;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             TemplateId = templateId;
             VCenterId = vCenterId;
             PlacementProfile = placementProfile;
-            OsProfile = osProfile;
+            OSProfile = oSProfile;
             HardwareProfile = hardwareProfile;
             NetworkProfile = networkProfile;
             StorageProfile = storageProfile;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Placement properties. </summary>
         public PlacementProfile PlacementProfile { get; set; }
         /// <summary> OS properties. </summary>
-        public OsProfile OsProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Hardware properties. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Network properties. </summary>
