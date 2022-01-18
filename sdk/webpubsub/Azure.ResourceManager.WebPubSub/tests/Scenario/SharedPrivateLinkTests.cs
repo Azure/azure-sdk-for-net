@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             if (_resourceGroup.GetWebPubSubs().Exists(_webPubSubName))
             {
                 var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(_webPubSubName);
-                await webPubSub.Value.DeleteAsync();
+                await webPubSub.Value.DeleteAsync(true);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, _webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 },
             };
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
-            var vnet = await vnetContainer.CreateOrUpdateAsync(_vnetName, vnetData);
+            var vnet = await vnetContainer.CreateOrUpdateAsync(true, _vnetName, vnetData);
 
             //2.1 Create AppServicePlan
             //string appServicePlanName = "appServicePlan5952";
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 GroupId = "webPubSub",
                 RequestMessage = "please approve",
             };
-            var link = await container.CreateOrUpdateAsync(LinkName, data);
+            var link = await container.CreateOrUpdateAsync(true, LinkName, data);
             return link.Value;
         }
 

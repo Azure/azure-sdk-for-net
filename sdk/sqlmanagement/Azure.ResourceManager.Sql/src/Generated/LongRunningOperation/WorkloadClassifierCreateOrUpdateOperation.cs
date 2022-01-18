@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         WorkloadClassifier IOperationSource<WorkloadClassifier>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new WorkloadClassifier(_operationBase, WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement));
+            var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
+            return new WorkloadClassifier(_operationBase, data);
         }
 
         async ValueTask<WorkloadClassifier> IOperationSource<WorkloadClassifier>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new WorkloadClassifier(_operationBase, WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement));
+            var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
+            return new WorkloadClassifier(_operationBase, data);
         }
     }
 }

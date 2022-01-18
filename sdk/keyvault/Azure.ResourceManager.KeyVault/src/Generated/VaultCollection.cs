@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of Vault and their operations over its parent. </summary>
     public partial class VaultCollection : ArmCollection, IEnumerable<Vault>, IAsyncEnumerable<Vault>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VaultsRestOperations _vaultsRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of VaultCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VaultCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VaultCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VaultCreateOrUpdateOperation CreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VaultCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VaultCreateOrUpdateOperation> CreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VaultCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _vaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Vault>(null, response.GetRawResponse())
-                    : Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Vault>(null, response.GetRawResponse());
+                return Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _vaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Vault>(null, response.GetRawResponse())
-                    : Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Vault>(null, response.GetRawResponse());
+                return Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +264,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.Exists");
             scope.Start();
             try
             {

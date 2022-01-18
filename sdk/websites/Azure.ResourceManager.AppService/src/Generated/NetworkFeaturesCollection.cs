@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -26,16 +27,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFeaturesCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFeaturesCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkFeaturesCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SiteSlot.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SiteSlot.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -115,9 +122,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkFeatures>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkFeatures>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,14 +144,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(view));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkFeatures>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkFeatures>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +196,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(view));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.Exists");
             scope.Start();
             try
             {

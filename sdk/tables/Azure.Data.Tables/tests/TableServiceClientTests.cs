@@ -201,28 +201,26 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> ValidConnStrings()
         {
-            yield return new object[]
-            {
-                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;"
-            };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}" };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;", AccountName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;", AccountName };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}", AccountName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}", AccountName };
+            yield return new object[] { "DefaultEndpointsProtocol=http;AccountName=localhost;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;TableEndpoint=http://localhost:8902/;", "localhost"};
         }
 
         [Test]
         [TestCaseSource(nameof(ValidConnStrings))]
-        public void AccountNameAndNameForConnStringCtor(string connString)
+        public void AccountNameAndNameForConnStringCtor(string connString, string accountName)
         {
             var client = new TableServiceClient(connString, new TableClientOptions());
 
-            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(accountName, client.AccountName);
 
             var tableClient = client.GetTableClient("someTable");
 
-            Assert.AreEqual(AccountName, tableClient.AccountName);
+            Assert.AreEqual(accountName, tableClient.AccountName);
         }
 
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()

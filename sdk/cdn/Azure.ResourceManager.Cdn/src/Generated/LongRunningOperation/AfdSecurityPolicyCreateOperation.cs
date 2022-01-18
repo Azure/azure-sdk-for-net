@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdSecurityPolicy IOperationSource<AfdSecurityPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdSecurityPolicy(_operationBase, AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement));
+            var data = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
+            return new AfdSecurityPolicy(_operationBase, data);
         }
 
         async ValueTask<AfdSecurityPolicy> IOperationSource<AfdSecurityPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdSecurityPolicy(_operationBase, AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement));
+            var data = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
+            return new AfdSecurityPolicy(_operationBase, data);
         }
     }
 }

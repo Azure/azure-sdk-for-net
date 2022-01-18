@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
                 Location = "global",
                 DataLocation = "UnitedStates",
             };
-            CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+            CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
             CommunicationService communicationService = communicationServiceLro.Value;
             #endregion Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
             CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
             CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-            await communicationService.DeleteAsync();
+            await communicationService.DeleteAsync(true);
             #endregion Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
         }
     }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Resources
     public class SubscriptionCollection : ArmCollection, IEnumerable<Subscription>, IAsyncEnumerable<Subscription>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly SubscriptionsRestOperations _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionCollection"/> class for mocking.
@@ -36,7 +38,11 @@ namespace Azure.ResourceManager.Resources
             : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            RestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(Subscription.ResourceType, out var version);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -44,15 +50,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected new Tenant Parent { get { return base.Parent as Tenant; } }
 
-        /// <summary>
-        /// Gets the valid resource type associated with the collection.
-        /// </summary>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
-
-        /// <summary>
-        /// Gets the operations that can be performed on the collection.
-        /// </summary>
-        private SubscriptionsRestOperations RestClient;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Lists all subscriptions in the current collection.
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(cancellationToken);
+                    var response = _restClient.List(cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
+                    var response = _restClient.ListNextPage(nextLink, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -111,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListAsync(cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -126,7 +128,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -151,7 +153,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = RestClient.Get(subscriptionGuid, cancellationToken);
+                var response = _restClient.Get(subscriptionGuid, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
 
@@ -177,7 +179,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
@@ -204,7 +206,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var response = RestClient.Get(subscriptionGuid, cancellationToken);
+                var response = _restClient.Get(subscriptionGuid, cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<Subscription>(null, response.GetRawResponse())
                     : Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
@@ -230,7 +232,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<Subscription>(null, response.GetRawResponse())
                     : Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());

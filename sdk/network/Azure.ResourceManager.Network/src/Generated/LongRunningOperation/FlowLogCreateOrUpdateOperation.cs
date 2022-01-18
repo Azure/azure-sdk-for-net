@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         FlowLog IOperationSource<FlowLog>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new FlowLog(_operationBase, FlowLogData.DeserializeFlowLogData(document.RootElement));
+            var data = FlowLogData.DeserializeFlowLogData(document.RootElement);
+            return new FlowLog(_operationBase, data);
         }
 
         async ValueTask<FlowLog> IOperationSource<FlowLog>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new FlowLog(_operationBase, FlowLogData.DeserializeFlowLogData(document.RootElement));
+            var data = FlowLogData.DeserializeFlowLogData(document.RootElement);
+            return new FlowLog(_operationBase, data);
         }
     }
 }

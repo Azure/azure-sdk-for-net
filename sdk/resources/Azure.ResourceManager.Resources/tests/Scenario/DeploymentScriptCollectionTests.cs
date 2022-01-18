@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-C-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            DeploymentScript deploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(deployScriptName, deploymentScriptData)).Value;
+            DeploymentScript deploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(true, deployScriptName, deploymentScriptData)).Value;
             Assert.AreEqual(deployScriptName, deploymentScript.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(null, deploymentScriptData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(deployScriptName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(true, null, deploymentScriptData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(true, deployScriptName, null));
         }
 
         [TestCase]
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-L-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(deployScriptName, deploymentScriptData);
+            _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(true, deployScriptName, deploymentScriptData);
             int count = 0;
             await foreach (var tempDeploymentScript in rg.GetDeploymentScripts().GetAllAsync())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-L-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(deployScriptName, deploymentScriptData);
+            _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(true, deployScriptName, deploymentScriptData);
             int count = 0;
             await foreach (var tempDeploymentScript in subscription.GetDeploymentScriptsAsync())
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-G-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            DeploymentScript tempDeploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(deployScriptName, deploymentScriptData)).Value;
+            DeploymentScript tempDeploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(true, deployScriptName, deploymentScriptData)).Value;
             AzurePowerShellScript deploymentScript = tempDeploymentScript.Data as AzurePowerShellScript;
             DeploymentScript tempGetDeploymentScript = await rg.GetDeploymentScripts().GetAsync(deployScriptName);
             AzurePowerShellScript getdeploymentScript = tempGetDeploymentScript.Data as AzurePowerShellScript;

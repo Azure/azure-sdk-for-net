@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of EventHubNamespace and their operations over its parent. </summary>
     public partial class EventHubNamespaceCollection : ArmCollection, IEnumerable<EventHubNamespace>, IAsyncEnumerable<EventHubNamespace>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
@@ -34,17 +34,23 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubNamespaceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubNamespaceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EventHubNamespaceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _eventHubNamespacesRestClient = new EventHubNamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -54,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual EventHubNamespaceCreateOrUpdateOperation CreateOrUpdate(string namespaceName, EventHubNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EventHubNamespaceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string namespaceName, EventHubNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -88,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<EventHubNamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(string namespaceName, EventHubNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EventHubNamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string namespaceName, EventHubNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -186,9 +192,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _namespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<EventHubNamespace>(null, response.GetRawResponse())
-                    : Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<EventHubNamespace>(null, response.GetRawResponse());
+                return Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,14 +214,14 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _namespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<EventHubNamespace>(null, response.GetRawResponse())
-                    : Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<EventHubNamespace>(null, response.GetRawResponse());
+                return Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,7 +266,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Exists");
             scope.Start();
             try
             {

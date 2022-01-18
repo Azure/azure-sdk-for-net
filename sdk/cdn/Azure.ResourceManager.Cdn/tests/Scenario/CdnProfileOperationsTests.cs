@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardAkamai);
-            await cdnProfile.DeleteAsync();
+            await cdnProfile.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await cdnProfile.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardAkamai);
             ProfileUpdateOptions updateOptions = new ProfileUpdateOptions();
             updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await cdnProfile.UpdateAsync(updateOptions);
+            var lro = await cdnProfile.UpdateAsync(true, updateOptions);
             Profile updatedCdnProfile = lro.Value;
             ResourceDataHelper.AssertProfileUpdate(updatedCdnProfile, updateOptions);
         }

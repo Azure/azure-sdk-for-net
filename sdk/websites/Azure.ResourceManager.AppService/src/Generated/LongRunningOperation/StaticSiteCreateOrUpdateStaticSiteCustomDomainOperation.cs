@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         StaticSiteCustomDomainOverviewARMResource IOperationSource<StaticSiteCustomDomainOverviewARMResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new StaticSiteCustomDomainOverviewARMResource(_operationBase, StaticSiteCustomDomainOverviewARMResourceData.DeserializeStaticSiteCustomDomainOverviewARMResourceData(document.RootElement));
+            var data = StaticSiteCustomDomainOverviewARMResourceData.DeserializeStaticSiteCustomDomainOverviewARMResourceData(document.RootElement);
+            return new StaticSiteCustomDomainOverviewARMResource(_operationBase, data);
         }
 
         async ValueTask<StaticSiteCustomDomainOverviewARMResource> IOperationSource<StaticSiteCustomDomainOverviewARMResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new StaticSiteCustomDomainOverviewARMResource(_operationBase, StaticSiteCustomDomainOverviewARMResourceData.DeserializeStaticSiteCustomDomainOverviewARMResourceData(document.RootElement));
+            var data = StaticSiteCustomDomainOverviewARMResourceData.DeserializeStaticSiteCustomDomainOverviewARMResourceData(document.RootElement);
+            return new StaticSiteCustomDomainOverviewARMResource(_operationBase, data);
         }
     }
 }

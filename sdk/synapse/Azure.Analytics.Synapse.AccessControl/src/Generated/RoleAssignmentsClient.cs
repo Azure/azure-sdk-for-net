@@ -38,14 +38,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RoleAssignmentsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AccessControlClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -114,6 +108,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
             scope.Start();
             try
@@ -187,6 +183,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response CheckPrincipalAccess(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
             scope.Start();
             try
@@ -360,6 +358,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope0.Start();
             try
@@ -419,6 +420,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope0.Start();
             try
@@ -469,6 +473,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope0.Start();
             try
@@ -519,6 +525,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope0.Start();
             try
@@ -561,6 +569,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();
             try
@@ -603,6 +613,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();
             try

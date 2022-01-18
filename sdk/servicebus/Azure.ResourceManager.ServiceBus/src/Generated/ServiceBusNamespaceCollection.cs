@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of ServiceBusNamespace and their operations over its parent. </summary>
     public partial class ServiceBusNamespaceCollection : ArmCollection, IEnumerable<ServiceBusNamespace>, IAsyncEnumerable<ServiceBusNamespace>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNamespaceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusNamespaceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NamespaceCreateOrUpdateOperation CreateOrUpdate(string namespaceName, ServiceBusNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NamespaceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string namespaceName, ServiceBusNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(string namespaceName, ServiceBusNamespaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string namespaceName, ServiceBusNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _namespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _namespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +264,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Exists");
             scope.Start();
             try
             {

@@ -3,14 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using System.Linq;
-using System.Text;
 
 namespace Azure.ResourceManager.Core
 {
@@ -59,16 +58,13 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArmResource(ClientContext clientContext, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             ClientOptions = clientContext.ClientOptions;
             Id = id;
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
             Pipeline = clientContext.Pipeline;
-            #if DEBUG
-            #pragma warning disable CA2214
-            ValidateResourceType(id);
-            #pragma warning restore CA2214
-            #endif
         }
 
         private Tenant Tenant => _tenant ??= new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
@@ -99,26 +95,10 @@ namespace Azure.ResourceManager.Core
         protected internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
-        /// Gets the valid Azure resource type for the current operations.
-        /// </summary>
-        /// <returns> A valid Azure resource type. </returns>
-        protected abstract ResourceType ValidResourceType { get; }
-
-        /// <summary>
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
         protected internal TagResource TagResource => _tagResource ??= new TagResource(this, Id);
-
-        /// <summary>
-        /// Validate the resource identifier against current operations.
-        /// </summary>
-        /// <param name="identifier"> The resource identifier. </param>
-        protected virtual void ValidateResourceType(ResourceIdentifier identifier)
-        {
-            if (identifier?.ResourceType != ValidResourceType)
-                throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");
-        }
 
         /// <summary>
         /// Lists all available geo-locations.

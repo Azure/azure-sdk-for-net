@@ -299,19 +299,19 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new location implicitly from a string.
         /// </summary>
-        /// <param name="other"> String to be assigned in the Name form. </param>
-        public static implicit operator AzureLocation(string other)
+        /// <param name="location"> String to be assigned in the Name form. </param>
+        public static implicit operator AzureLocation(string location)
         {
-            if (!ReferenceEquals(other, null))
+            if (!ReferenceEquals(location, null))
             {
                 AzureLocation value;
-                if (PublicCloudLocations.TryGetValue(other, out value))
+                if (PublicCloudLocations.TryGetValue(location, out value))
                 {
                     return value;
                 }
             }
 
-            return new AzureLocation(other!);
+            return new AzureLocation(location!);
         }
 
         /// <summary>
@@ -327,10 +327,10 @@ namespace Azure.Core
         /// <summary>
         /// Creates a string implicitly from a AzureLocation object.
         /// </summary>
-        /// <param name="other"> AzureLocation object to be assigned. </param>
-        public static implicit operator string(AzureLocation other)
+        /// <param name="location"> AzureLocation object to be assigned. </param>
+        public static implicit operator string(AzureLocation location)
         {
-            return other.ToString();
+            return location.ToString();
         }
 
         /// <inheritdoc/>

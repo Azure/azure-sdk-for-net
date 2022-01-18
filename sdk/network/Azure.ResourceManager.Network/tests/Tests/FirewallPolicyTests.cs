@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new SubnetData() { Name = "AzureFirewallSubnet", AddressPrefix = "10.26.2.0/26", },
                 },
             };
-            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("vnet-"), vnetData);
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("vnet-"), vnetData);
             _network = vnetLro.Value;
             _networkIdentifier = _network.Id;
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Tests
                 PublicIPAllocationMethod = IPAllocationMethod.Static,
                 Sku = new PublicIPAddressSku() { Name = PublicIPAddressSkuName.Standard },
             };
-            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("publicIp-"), ipData);
+            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("publicIp-"), ipData);
             _publicIPAddress = ipLro.Value;
             _publicIPAddressIdentifier = _publicIPAddress.Id;
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests
                 PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
                 Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
             });
-            var firewallLro = await rg.GetAzureFirewalls().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("firewall-"), firewallData);
+            var firewallLro = await rg.GetAzureFirewalls().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("firewall-"), firewallData);
             _firewall = firewallLro.Value;
             _firewallIdentifier = _firewall.Id;
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Tests
             string FirewallPolicyName = Recording.GenerateAssetName("policy-");
             FirewallPolicyData data = new FirewallPolicyData();
             data.Location = AzureLocation.WestUS2;
-            await _resourceGroup.GetFirewallPolicies().CreateOrUpdateAsync(FirewallPolicyName, data);
+            await _resourceGroup.GetFirewallPolicies().CreateOrUpdateAsync(true, FirewallPolicyName, data);
         }
     }
 }

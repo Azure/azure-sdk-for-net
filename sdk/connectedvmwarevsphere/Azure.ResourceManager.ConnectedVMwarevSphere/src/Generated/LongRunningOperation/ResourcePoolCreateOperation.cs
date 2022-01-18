@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         ResourcePool IOperationSource<ResourcePool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ResourcePool(_operationBase, ResourcePoolData.DeserializeResourcePoolData(document.RootElement));
+            var data = ResourcePoolData.DeserializeResourcePoolData(document.RootElement);
+            return new ResourcePool(_operationBase, data);
         }
 
         async ValueTask<ResourcePool> IOperationSource<ResourcePool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ResourcePool(_operationBase, ResourcePoolData.DeserializeResourcePoolData(document.RootElement));
+            var data = ResourcePoolData.DeserializeResourcePoolData(document.RootElement);
+            return new ResourcePool(_operationBase, data);
         }
     }
 }
