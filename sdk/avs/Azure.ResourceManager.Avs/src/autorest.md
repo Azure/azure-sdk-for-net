@@ -11,29 +11,4 @@ security: AADToken
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c4d6f92d3fd35a69ebce68f4c73c35c4238c2ac5/specification/vmware/resource-manager/readme.md
 tag: package-2021-12-01
 model-namespace: false
-operation-group-to-resource-type:
-  Locations: Microsoft.AVS/locations
-  ScriptCmdlets: Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets
-  ScriptPackages: Microsoft.AVS/privateClouds/scriptPackages
-  VirtualMachines: Microsoft.AVS/privateClouds/clusters/virtualMachines
-operation-group-to-parent:
-  Locations: subscriptions
-  WorkloadNetworks: Microsoft.AVS/privateClouds
-operation-group-to-resource:
-#   Addons: NonResource
-#   Authorizations: NonResource
-#   CloudLinks: NonResource
-#   Clusters: NonResource
-#   Datastores: NonResource
-#   GlobalReachConnections: NonResource
-#   HcxExterpriseSites: NonResource
-  Locations: NonResource
-#   Operations: NonResource
-#   PlacementPolicies: NonResource
-#   PrivateClouds: NonResource
-  ScriptCmdlets: NonResource
-  ScriptExecutions: NonResource
-  ScriptPackages: NonResource
-  VirtualMachines: NonResource
-  WorkloadNetworks: NonResource
 ```
