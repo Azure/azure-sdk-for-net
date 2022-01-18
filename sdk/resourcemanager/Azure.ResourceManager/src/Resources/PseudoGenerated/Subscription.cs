@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources
         internal Subscription(ArmClient client, ResourceIdentifier id)
             : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(ResourceType, out var version);
             _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, version);
             ArmClient.TryGetApiVersion(Feature.ResourceType, out version);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources
         {
             _data = subscriptionData;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(ResourceType, out var version);
             _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, version);
             ArmClient.TryGetApiVersion(Feature.ResourceType, out version);

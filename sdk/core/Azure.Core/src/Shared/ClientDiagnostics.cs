@@ -26,13 +26,13 @@ namespace Azure.Core.Pipeline
 
         public ClientDiagnostics(ClientOptions options)
             : this(options.GetType().Namespace!,
-            options.GetType().Assembly,
+            GetResourceProviderNamespace(options.GetType().Assembly),
             options.Diagnostics)
         {
         }
 
-        public ClientDiagnostics(string optionsNameSpace, Assembly optionsAssembly, DiagnosticsOptions diagnosticsOptions)
-            : base(optionsNameSpace, GetResourceProviderNamespace(optionsAssembly), diagnosticsOptions.IsDistributedTracingEnabled)
+        public ClientDiagnostics(string optionsNameSpace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions)
+            : base(optionsNameSpace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled)
         {
             _sanitizer = CreateMessageSanitizer(diagnosticsOptions);
         }

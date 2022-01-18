@@ -242,7 +242,7 @@ namespace Azure.ResourceManager
         public virtual Subscription GetDefaultSubscription(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            using var scope = new ClientDiagnostics("Azure.ResourceManager", typeof(ArmClient).Assembly, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            using var scope = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
             scope.Start();
             try
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager
         public virtual async Task<Subscription> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            using var scope = new ClientDiagnostics("Azure.ResourceManager", typeof(ArmClient).Assembly, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            using var scope = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
             scope.Start();
             try
             {

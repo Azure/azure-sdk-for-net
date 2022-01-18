@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         {
             _data = tenantData;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(Provider.ResourceType, out var version);
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Guid.Empty.ToString(), BaseUri, version);
 #if DEBUG
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal Tenant(ArmClient armClient)
             : base(armClient, ResourceIdentifier.Root)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(Provider.ResourceType, out var version);
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Guid.Empty.ToString(), BaseUri, version);
 #if DEBUG

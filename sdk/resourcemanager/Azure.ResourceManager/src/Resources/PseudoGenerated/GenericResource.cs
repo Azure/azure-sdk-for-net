@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         internal GenericResource(ArmResource operations, ResourceIdentifier id)
             : base(operations, id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", "Microsoft.Resources", DiagnosticOptions);
             ArmClient.TryGetApiVersion(Id.ResourceType, out var version);
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         {
             _data = resource;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", "Microsoft.Resources", DiagnosticOptions);
             ArmClient.TryGetApiVersion(Id.ResourceType, out var version);
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
             _providerCollection = new ProviderCollection(this, Id.GetSubscriptionResourceIdentifier());

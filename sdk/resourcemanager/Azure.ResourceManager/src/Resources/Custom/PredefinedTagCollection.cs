@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         internal PredefinedTagCollection(ArmClient client, ResourceIdentifier parentId)
             : base(client, parentId)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PredefinedTag.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(TagResource.ResourceType, out var version);
             _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG

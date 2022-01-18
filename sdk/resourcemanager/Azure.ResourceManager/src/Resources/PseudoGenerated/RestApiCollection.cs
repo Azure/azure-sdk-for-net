@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         internal RestApiCollection(ArmResource operation, string nameSpace)
             : base(operation)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, DiagnosticOptions);
             _nameSpace = nameSpace;
             _providerCollection = new ProviderCollection(this, Id);
         }

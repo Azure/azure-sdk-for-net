@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         internal GenericResourceCollection(ArmClient client, ResourceIdentifier id)
             : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", "Microsoft.Resources", DiagnosticOptions);
             ResourceIdentifier subscription = Id.GetSubscriptionResourceIdentifier();
             _providerCollection = new ProviderCollection(this, subscription);
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, subscription?.SubscriptionId ?? Guid.Empty.ToString(), BaseUri);

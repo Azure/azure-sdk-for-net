@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal ProviderCollection(Subscription parent)
             : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Provider.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(Provider.ResourceType, out var version);
             _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources
         internal ProviderCollection(ArmResource operations, ResourceIdentifier id)
             : base(operations.ArmClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Provider.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(Provider.ResourceType, out var version);
             _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG

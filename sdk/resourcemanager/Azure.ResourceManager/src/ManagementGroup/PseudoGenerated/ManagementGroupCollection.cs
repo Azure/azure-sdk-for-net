@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Management
         internal ManagementGroupCollection(Tenant tenant)
             : base(tenant)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ManagementGroup.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(ManagementGroup.ResourceType, out var version);
             _restClient ??= new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, version);
 #if DEBUG

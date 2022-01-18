@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
        internal FeatureCollection(Provider parent)
             : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(Feature.ResourceType, out var version);
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
