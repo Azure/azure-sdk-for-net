@@ -26,7 +26,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
         static Regex binaryMimeRegex = new Regex("(image/*|audio/*|video/*|application/octet-stream|multipart/form-data)");
         static RecorderUtilities()
         {
-            // Lazy sanitize fields in the request and response bodies
             JsonPathSanitizers.Add("$..primaryKey");
             JsonPathSanitizers.Add("$..secondaryKey");
             JsonPathSanitizers.Add("$..primaryConnectionString");
