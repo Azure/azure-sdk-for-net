@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of ProviderRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The client options used to construct the current client. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = null)
+        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, string subscriptionId, Uri endpoint = null, string apiVersion = null)
         {
             if (subscriptionId == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             this.endpoint = endpoint;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = HttpMessageUtilities.GetUserAgentName(this, applicationId);
             _apiVersion = apiVersion ?? "2019-10-01";
         }
 

@@ -39,39 +39,26 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "DataPolicyManifest"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataPolicyManifest(ArmResource options, DataPolicyManifestData data) : base(options, data.Id)
+        internal DataPolicyManifest(ArmResource options, DataPolicyManifestData data) : this(options, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DataPolicyManifest"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataPolicyManifest(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DataPolicyManifest(ArmResource options, ResourceIdentifier id) : this(options.ArmClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DataPolicyManifest"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
+        /// <param name="client"> The client options to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataPolicyManifest(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal DataPolicyManifest(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

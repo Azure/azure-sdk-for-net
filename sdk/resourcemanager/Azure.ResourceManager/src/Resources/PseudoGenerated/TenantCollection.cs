@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="TenantCollection"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
-        internal TenantCollection(ClientContext clientContext)
-            : base(clientContext)
+        /// <param name="client"></param>
+        internal TenantCollection(ArmClient client)
+            : base(client)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Tenant.ResourceType, out var version);
-            _restClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Tenant.ResourceType, out var version);
+            _restClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, version);
         }
 
         /// <summary> Gets the tenants for your account. </summary>

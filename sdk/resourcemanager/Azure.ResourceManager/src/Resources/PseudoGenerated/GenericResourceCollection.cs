@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceCollection"/> class.
         /// </summary>
-        /// <param name="clientContext"> The client context to use. </param>
+        /// <param name="client"> The client context to use. </param>
         /// <param name="id"> The id for the subscription that owns this collection. </param>
-        internal GenericResourceCollection(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
+        internal GenericResourceCollection(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
             ResourceIdentifier subscription = Id.GetSubscriptionResourceIdentifier();
             _providerCollection = new ProviderCollection(this, subscription);
-            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, subscription?.SubscriptionId ?? Guid.Empty.ToString(), BaseUri);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, subscription?.SubscriptionId ?? Guid.Empty.ToString(), BaseUri);
         }
 
         /// <summary>

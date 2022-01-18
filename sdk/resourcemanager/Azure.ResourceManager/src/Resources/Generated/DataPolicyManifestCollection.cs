@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DataPolicyManifestCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroup"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the resource group to use. </param>
-        internal ResourceGroup(ClientContext options, ResourceIdentifier id)
-            : base(options, id)
+        internal ResourceGroup(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
+            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Resources
         internal ResourceGroup(ArmResource operations, ResourceGroupData resource)
             : base(operations, resource.Id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
-            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
+            _genericRestClient ??= new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
             _data = resource;
             HasData = true;
 #if DEBUG
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
+            return func(ArmClient.BaseUri, ArmClient.Credential, new ArmClientOptions(), ArmClient.Pipeline);
         }
     }
 }

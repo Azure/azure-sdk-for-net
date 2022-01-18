@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="PredefinedTagCollection"/> class.
         /// </summary>
-        /// <param name="clientContext">Current client context. </param>
+        /// <param name="client"> Current client context. </param>
         /// <param name="parentId"> The parent subscription id. </param>
-        internal PredefinedTagCollection(ClientContext clientContext, ResourceIdentifier parentId)
-            : base(clientContext, parentId)
+        internal PredefinedTagCollection(ArmClient client, ResourceIdentifier parentId)
+            : base(client, parentId)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(TagResource.ResourceType, out var version);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(TagResource.ResourceType, out var version);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

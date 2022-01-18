@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        internal Provider(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
+        internal Provider(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Resources
         {
             _data = providerData;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

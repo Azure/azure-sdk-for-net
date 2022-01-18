@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="PredefinedTag"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
+        /// <param name="client"></param>
         /// <param name="id"> The id of the subscription. </param>
-        internal PredefinedTag(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
+        internal PredefinedTag(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
         }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Resources
         {
             _data = data;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
         }
 
         /// <summary>

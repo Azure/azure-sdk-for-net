@@ -40,27 +40,20 @@ namespace Azure.ResourceManager.Resources
         {
             _data = tenantData;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version);
-            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Provider.ResourceType, out var version);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Guid.Empty.ToString(), BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Subscription"/> class.
-        /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        internal Tenant(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
-            : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.Root)
+        internal Tenant(ArmClient armClient)
+            : base(armClient, ResourceIdentifier.Root)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version);
-            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Provider.ResourceType, out var version);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Guid.Empty.ToString(), BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -106,7 +99,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
+            return func(BaseUri, ArmClient.Credential, new ArmClientOptions(), Pipeline);
         }
 
         /// <summary> Gets all resource providers for a subscription. </summary>

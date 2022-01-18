@@ -37,33 +37,33 @@ namespace Azure.ResourceManager.Resources
         {
             _data = resource;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
         }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Feature"/> class.
-            /// </summary>
-            /// <param name="options"> The client parameters to use in these operations. </param>
-            /// <param name="id"> The id of the resource group to use. </param>
-            internal Feature(ClientContext options, ResourceIdentifier id)
-            : base(options, id)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Feature"/> class.
+        /// </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The id of the resource group to use. </param>
+        internal Feature(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
         }
 
-            /// <summary>
-            /// Gets the resource type definition for a ResourceType.
-            /// </summary>
+        /// <summary>
+        /// Gets the resource type definition for a ResourceType.
+        /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/features";
 
         /// <summary>

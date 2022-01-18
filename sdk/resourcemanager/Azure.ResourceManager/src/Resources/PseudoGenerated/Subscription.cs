@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="Subscription"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
+        /// <param name="client"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subscription(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
+        internal Subscription(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
-            ClientOptions.TryGetApiVersion(Feature.ResourceType, out version);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, version);
+            ArmClient.TryGetApiVersion(Feature.ResourceType, out version);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Resources
         {
             _data = subscriptionData;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out var version);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
-            ClientOptions.TryGetApiVersion(Feature.ResourceType, out version);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", typeof(ArmClientOptions).Assembly, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, version);
+            ArmClient.TryGetApiVersion(Feature.ResourceType, out version);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
+            return func(BaseUri, ArmClient.Credential, new ArmClientOptions(), Pipeline);
         }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The tags collection. </returns>
         public virtual PredefinedTagCollection GetPredefinedTags()
         {
-            return new PredefinedTagCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+            return new PredefinedTagCollection(ArmClient, Id);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> GenericResource collection. </returns>
         public virtual GenericResourceCollection GetGenericResources()
         {
-            return new GenericResourceCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+            return new GenericResourceCollection(ArmClient, Id);
         }
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
