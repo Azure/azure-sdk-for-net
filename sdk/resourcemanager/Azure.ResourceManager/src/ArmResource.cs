@@ -34,65 +34,40 @@ namespace Azure.ResourceManager.Core
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         protected ArmResource(ArmResource parentOperations, ResourceIdentifier id)
-            : this(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri, parentOperations.Pipeline), id)
+            : this(parentOperations.ArmClient, id)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class.
         /// </summary>
-        /// <param name="clientOptions"></param>
-        /// <param name="credential"></param>
-        /// <param name="uri"></param>
-        /// <param name="pipeline"></param>
+        /// <param name="armClient"> The <see cref="ArmClient"/> this resource client should be created from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ArmResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id)
-            : this(new ClientContext(clientOptions, credential, uri, pipeline), id)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmResource"/> class.
-        /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ArmResource(ClientContext clientContext, ResourceIdentifier id)
+        protected internal ArmResource(ArmClient armClient, ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            ClientOptions = clientContext.ClientOptions;
+            ArmClient = armClient;
             Id = id;
-            Credential = clientContext.Credential;
-            BaseUri = clientContext.BaseUri;
-            Pipeline = clientContext.Pipeline;
         }
 
-        private Tenant Tenant => _tenant ??= new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
+        private Tenant Tenant => _tenant ??= new Tenant(ArmClient);
+
+        /// <summary>
+        /// Gets the <see cref="ArmClient"/> this resource client was created from.
+        /// </summary>
+        protected internal virtual ArmClient ArmClient { get; }
+
+        internal DiagnosticsOptions DiagnosticOptions => ArmClient.DiagnosticOptions;
+
+        internal HttpPipeline Pipeline => ArmClient.Pipeline;
+
+        internal Uri BaseUri => ArmClient.BaseUri;
 
         /// <summary>
         /// Gets the resource identifier.
         /// </summary>
         public virtual ResourceIdentifier Id { get; }
-
-        /// <summary>
-        /// Gets the Azure Resource Manager client options.
-        /// </summary>
-        protected internal virtual ArmClientOptions ClientOptions { get; private set; }
-
-        /// <summary>
-        /// Gets the Azure credential.
-        /// </summary>
-        protected internal virtual TokenCredential Credential { get; private set; }
-
-        /// <summary>
-        /// Gets the base URI of the service.
-        /// </summary>
-        protected internal virtual Uri BaseUri { get; private set; }
-
-        /// <summary>
-        /// Gets the HTTP pipeline.
-        /// </summary>
-        protected internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
         /// Gets the TagResourceOperations.

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -101,41 +102,68 @@ namespace Azure.ResourceManager
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
 
-            Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
             options ??= new ArmClientOptions();
             if (options.Diagnostics.IsTelemetryEnabled)
                 options.AddPolicy(new MgmtTelemetryPolicy(this, options), HttpPipelinePosition.PerRetry);
-            Pipeline = ManagementPipelineBuilder.Build(Credential, options.Scope, options);
+            Pipeline = ManagementPipelineBuilder.Build(credential, options.Scope, options);
+            DiagnosticOptions = options.Diagnostics;
 
-            ClientOptions = options.Clone();
+            CopyApiVersionOverrides(options);
 
-            _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
+            _tenant = new Tenant(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
-                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
+                new Subscription(this, ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
+        }
+
+        private void CopyApiVersionOverrides(ArmClientOptions options)
+        {
+            foreach (var keyValuePair in options.ResourceApiVersionOverrides)
+            {
+                ApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
+                if (!ResourceApiVersions.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
+                {
+                    apiVersionCache = new Dictionary<string, string>();
+                    ResourceApiVersions.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
+                }
+                apiVersionCache.Add(keyValuePair.Key.Type, keyValuePair.Value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the api version override if it has been set for the current client options.
+        /// </summary>
+        /// <param name="resourceType"> The resource type to get the version for. </param>
+        /// <param name="apiVersion"> The api version to variable to set. </param>
+        public bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
+        {
+            return ApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
         }
 
         private Subscription _defaultSubscription;
 
-        /// <summary>
-        /// Gets the Azure Resource Manager client options.
-        /// </summary>
-        protected virtual ArmClientOptions ClientOptions { get; private set; }
+        internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+
+        internal ConcurrentDictionary<string, string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();
 
         /// <summary>
-        /// Gets the Azure credential.
+        /// Gets the diagnostic options used for this client.
         /// </summary>
-        protected virtual TokenCredential Credential { get; private set; }
+        protected internal virtual DiagnosticsOptions DiagnosticOptions { get; }
+
+        internal virtual TokenCredential Credential { get; private set; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        protected virtual Uri BaseUri { get; private set; }
+        protected internal virtual Uri BaseUri { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
         /// </summary>
-        protected virtual HttpPipeline Pipeline { get; private set; }
+        protected internal virtual HttpPipeline Pipeline { get; private set; }
 
         /// <summary>
         /// Gets the Azure subscriptions.
@@ -149,7 +177,7 @@ namespace Azure.ResourceManager
         /// <returns> Tenant collection. </returns>
         public virtual TenantCollection GetTenants()
         {
-            return new TenantCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+            return new TenantCollection(this);
         }
 
         /// <summary>
@@ -160,7 +188,7 @@ namespace Azure.ResourceManager
         public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
             ResourceGroup.ValidateResourceId(id);
-            return new ResourceGroup(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new ResourceGroup(this, id);
         }
 
         /// <summary>
@@ -171,7 +199,7 @@ namespace Azure.ResourceManager
         public virtual Subscription GetSubscription(ResourceIdentifier id)
         {
             Subscription.ValidateResourceId(id);
-            return new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new Subscription(this, id);
         }
 
         /// <summary>
@@ -182,7 +210,7 @@ namespace Azure.ResourceManager
         public virtual Feature GetFeature(ResourceIdentifier id)
         {
             Feature.ValidateResourceId(id);
-            return new Feature(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new Feature(this, id);
         }
 
         /// <summary>
@@ -193,7 +221,7 @@ namespace Azure.ResourceManager
         public virtual Provider GetProvider(ResourceIdentifier id)
         {
             Provider.ValidateResourceId(id);
-            return new Provider(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new Provider(this, id);
         }
 
         /// <summary>
@@ -203,7 +231,7 @@ namespace Azure.ResourceManager
         /// <returns> Resource operations of the PredefinedTag. </returns>
         public virtual PredefinedTag GetPreDefinedTag(ResourceIdentifier id)
         {
-            return new PredefinedTag(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new PredefinedTag(this, id);
         }
 
         /// <summary>
@@ -214,7 +242,7 @@ namespace Azure.ResourceManager
         public virtual Subscription GetDefaultSubscription(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            using var scope = new ClientDiagnostics("Azure.ResourceManager", typeof(ArmClient).Assembly, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
             scope.Start();
             try
             {
@@ -251,7 +279,7 @@ namespace Azure.ResourceManager
         public virtual async Task<Subscription> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            using var scope = new ClientDiagnostics("Azure.ResourceManager", typeof(ArmClient).Assembly, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
             scope.Start();
             try
             {
@@ -290,7 +318,7 @@ namespace Azure.ResourceManager
         [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
+            return func(BaseUri, Credential, new ArmClientOptions(), Pipeline);
         }
 
         /// <summary>

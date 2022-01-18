@@ -16,7 +16,7 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
-        private IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+        internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
         internal ConcurrentDictionary<string, string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();

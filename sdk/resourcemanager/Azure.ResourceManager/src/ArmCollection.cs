@@ -20,33 +20,16 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmCollection"/> class.
+        /// Initializes a new instance of the <see cref="ArmCollection"/> class for mocking.
         /// </summary>
-        /// <param name="clientContext"></param>
-        internal ArmCollection(ClientContext clientContext)
-            : base(clientContext, ResourceIdentifier.Root)
+        /// <param name="client"> The client context to use. </param>
+        protected internal ArmCollection(ArmClient client)
+            : base(client, ResourceIdentifier.Root)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmCollection"/> class.
-        /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ArmCollection(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmCollection"/> class.
-        /// </summary>
-        /// <param name="options"> The options to use. </param>
-        /// <param name="credential"> The credential to use. </param>
-        /// <param name="baseUri"> The base uri to use. </param>
-        /// <param name="pipeline"> The http pipeline policy to use. </param>
-        protected ArmCollection(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
-            : this(new ClientContext(options, credential, baseUri, pipeline))
+        internal ArmCollection(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
         }
 
@@ -55,7 +38,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ArmCollection(ArmResource parent)
-            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), parent.Id)
+            : base(parent.ArmClient, parent.Id)
         {
             Parent = parent;
         }

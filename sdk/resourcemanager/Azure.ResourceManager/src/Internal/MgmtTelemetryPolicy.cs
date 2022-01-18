@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Core
 
         public MgmtTelemetryPolicy(object source, ClientOptions options)
         {
-            _defaultHeader = HttpMessageUtilities.GetUserAgentName(source, options);
+            _defaultHeader = HttpMessageUtilities.GetUserAgentName(source, options.Diagnostics.ApplicationId);
         }
 
         public override void OnSendingRequest(HttpMessage message)

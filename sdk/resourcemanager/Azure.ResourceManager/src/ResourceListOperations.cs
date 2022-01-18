@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Core
 
         private static GenericResourceCollection GetGenericResourceCollection(ArmResource resourceOperations)
         {
-            return new GenericResourceCollection(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), resourceOperations.Id);
+            return new GenericResourceCollection(resourceOperations.ArmClient, resourceOperations.Id);
         }
 
         private static AsyncPageable<GenericResource> ListAtContextInternalAsync(
