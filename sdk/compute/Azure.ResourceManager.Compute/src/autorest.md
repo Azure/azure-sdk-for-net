@@ -61,6 +61,9 @@ directive:
   - rename-model:
       from: VirtualMachineScaleSetVM
       to: VirtualMachineScaleSetVm
+  - rename-model:
+      from: VirtualMachineScaleSetVMExtension
+      to: VirtualMachineScaleSetVmExtension
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"
