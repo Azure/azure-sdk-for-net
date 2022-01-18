@@ -15,7 +15,7 @@ $commitid = $inputJson.headSha
 Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
 
 $packageName = Get-ResourceProviderFromReadme $readmeFile
-$sdkPath =  (Join-Path $PSScriptRoot .. ..)
+$sdkPath =  (Join-Path $PSScriptRoot .. .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
 
