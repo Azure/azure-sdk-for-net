@@ -21,11 +21,23 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Initialize().ConfigureAwait(false).GetAwaiter().GetResult();
+                await Initialize().ConfigureAwait(false);
+            }
+        }
+
+        [TearDown]
+        public async Task CleanupVaults()
+        {
+            var deletedVaults = Subscription.GetDeletedVaultsAsync().ToEnumerableAsync().Result;
+            Assert.NotNull(deletedVaults);
+
+            foreach (var v in deletedVaults)
+            {
+                await v.PurgeDeletedAsync(true);
             }
         }
 
@@ -113,29 +125,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            await rawRetrievedVault.Value.DeleteAsync(true);
+            var deleteVault = await rawRetrievedVault.Value.DeleteAsync(true);
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await VaultCollection.GetAsync(VaultName);
             });
-        }
-
-        [Ignore("This SoftDelete parameter should be deprecated")]
-        [Test]
-        public async Task CreateKeyVaultDisableSoftDelete()
-        {
-            this.AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
-            this.VaultProperties.EnableSoftDelete = false;
-
-            var parameters = new VaultCreateOrUpdateParameters("westeurope", VaultProperties);
-            parameters.Tags.InitializeFrom(Tags);
-            var vault = await VaultCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
-            var vaultValue = vault.Value;
-
-            Assert.False(vaultValue.Data.Properties.EnableSoftDelete);
-
-            await vaultValue.DeleteAsync(true);
         }
 
         [Test]
@@ -206,7 +201,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             List<Vault> vaultList = new List<Vault>();
             for (int i = 0; i < n; i++)
             {
-                string vaultName = Recording.GenerateAssetName("sdktestvault");
+                string vaultName = Recording.GenerateAssetName("sdktest-vault-");
                 var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
                 parameters.Tags.InitializeFrom(Tags);
                 var createdVault = await VaultCollection.CreateOrUpdateAsync(true, vaultName, parameters).ConfigureAwait(false);

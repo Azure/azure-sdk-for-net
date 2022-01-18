@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Initialize().ConfigureAwait(false).GetAwaiter().GetResult();
+                await Initialize().ConfigureAwait(false);
             }
         }
 
@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [RecordedTest]
         public async Task ManagedHsmCreateUpdateDelete()
         {
-            Location = "southcentralus";
             var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
@@ -156,9 +155,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             List<string> resourceIds = new List<string>();
             List<ManagedHsm> vaultList = new List<ManagedHsm>();
-            Location = "westus";
 
-            string vaultName = Recording.GenerateAssetName("sdktestvault");
+            string vaultName = Recording.GenerateAssetName("sdktest-vault-");
             var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
@@ -196,7 +194,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [RecordedTest]
         public async Task ManagedHsmRecoverDeletedVault()
         {
-            Location = "westus";
             var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
