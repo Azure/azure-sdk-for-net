@@ -338,13 +338,10 @@ namespace Azure.ResourceManager.Tests
         public void ValidateMgmtTelemetry()
         {
             var options = new ArmClientOptions();
-            var pipeline = ManagementPipelineBuilder.Build(new MockCredential(), new Uri("http://foo.com"), options);
-            Assert.IsNull(GetPolicyFromPipeline(pipeline, nameof(MgmtTelemetryPolicy)));
-
+            options.Diagnostics.IsTelemetryEnabled = true;
             var client = GetArmClient(options);
             Assert.IsNotNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
 
-            options = new ArmClientOptions();
             options.Diagnostics.IsTelemetryEnabled = false;
             client = GetArmClient(options);
             Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));

@@ -104,9 +104,16 @@ namespace Azure.ResourceManager
 
             BaseUri = baseUri ?? new Uri(DefaultUri);
             options ??= new ArmClientOptions();
+
             if (options.Diagnostics.IsTelemetryEnabled)
-                options.AddPolicy(new MgmtTelemetryPolicy(this, options), HttpPipelinePosition.PerRetry);
-            Pipeline = ManagementPipelineBuilder.Build(credential, options.Scope, options);
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Scope), new MgmtTelemetryPolicy(this, options));
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Scope));
+            }
+
             DiagnosticOptions = options.Diagnostics;
 
             CopyApiVersionOverrides(options);
