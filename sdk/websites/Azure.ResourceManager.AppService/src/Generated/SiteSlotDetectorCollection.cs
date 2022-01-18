@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotDetectorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteSlotDetector.ResourceType, out string apiVersion);
+            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _diagnosticsRestClient.GetSiteDetectorResponseSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDetector(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _diagnosticsRestClient.GetSiteDetectorResponseSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotDetector(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteDetectorResponsesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -261,7 +263,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteDetectorResponsesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,7 +289,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteDetectorResponsesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -302,7 +304,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteDetectorResponsesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _domainsRestClient = new DomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _domainsRestClient = new DomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceDomain(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _domainsRestClient = new DomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _domainsRestClient = new DomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceDomain(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _domainsRestClient = new DomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _domainsRestClient = new DomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -188,17 +191,17 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// OperationId: Domains_Delete
         /// <summary> Description for Delete a domain. </summary>
-        /// <param name="forceHardDeleteDomain"> Specify &lt;code&gt;true&lt;/code&gt; to delete the domain immediately. The default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24 hours. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="forceHardDeleteDomain"> Specify &lt;code&gt;true&lt;/code&gt; to delete the domain immediately. The default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24 hours. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DomainDeleteOperation> DeleteAsync(bool waitForCompletion, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
+        public async virtual Task<AppServiceDomainDeleteOperation> DeleteAsync(bool waitForCompletion, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AppServiceDomain.Delete");
             scope.Start();
             try
             {
                 var response = await _domainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, cancellationToken).ConfigureAwait(false);
-                var operation = new DomainDeleteOperation(response);
+                var operation = new AppServiceDomainDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,19 +217,19 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// OperationId: Domains_Delete
         /// <summary> Description for Delete a domain. </summary>
-        /// <param name="forceHardDeleteDomain"> Specify &lt;code&gt;true&lt;/code&gt; to delete the domain immediately. The default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24 hours. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="forceHardDeleteDomain"> Specify &lt;code&gt;true&lt;/code&gt; to delete the domain immediately. The default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24 hours. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DomainDeleteOperation Delete(bool waitForCompletion, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
+        public virtual AppServiceDomainDeleteOperation Delete(bool waitForCompletion, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AppServiceDomain.Delete");
             scope.Start();
             try
             {
                 var response = _domainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, cancellationToken);
-                var operation = new DomainDeleteOperation(response);
+                var operation = new AppServiceDomainDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteDomainOwnershipIdentifier(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteDomainOwnershipIdentifier(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -190,14 +193,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a domain ownership identifier for a web app. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppDeleteDomainOwnershipIdentifierOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteDomainOwnershipIdentifierDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteDomainOwnershipIdentifier.Delete");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.DeleteDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppDeleteDomainOwnershipIdentifierOperation(response);
+                var operation = new SiteDomainOwnershipIdentifierDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,16 +218,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a domain ownership identifier for a web app. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppDeleteDomainOwnershipIdentifierOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual SiteDomainOwnershipIdentifierDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteDomainOwnershipIdentifier.Delete");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.DeleteDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebAppDeleteDomainOwnershipIdentifierOperation(response);
+                var operation = new SiteDomainOwnershipIdentifierDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

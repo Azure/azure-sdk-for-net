@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentRecommendationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentRecommendation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentRecommendation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

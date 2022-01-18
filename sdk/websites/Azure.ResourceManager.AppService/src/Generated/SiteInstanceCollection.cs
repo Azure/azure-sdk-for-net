@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteInstanceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteInstance.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstance(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteInstance(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListInstanceIdentifiers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListInstanceIdentifiersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListInstanceIdentifiersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListInstanceIdentifiersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteBackup(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteBackup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -190,14 +193,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a backup of an app by its ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppDeleteBackupOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteBackupDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteBackup.Delete");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.DeleteBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppDeleteBackupOperation(response);
+                var operation = new SiteBackupDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,16 +218,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a backup of an app by its ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppDeleteBackupOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual SiteBackupDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteBackup.Delete");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.DeleteBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebAppDeleteBackupOperation(response);
+                var operation = new SiteBackupDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -294,11 +297,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// OperationId: WebApps_Restore
         /// <summary> Description for Restores a specific backup to another app (or deployment slot, if specified). </summary>
-        /// <param name="request"> Information on restore request . </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<WebAppRestoreOperation> RestoreAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteBackupRestoreOperation> RestoreAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -310,7 +313,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppRestoreOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response);
+                var operation = new SiteBackupRestoreOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -326,11 +329,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// OperationId: WebApps_Restore
         /// <summary> Description for Restores a specific backup to another app (or deployment slot, if specified). </summary>
-        /// <param name="request"> Information on restore request . </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual WebAppRestoreOperation Restore(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual SiteBackupRestoreOperation Restore(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -342,9 +345,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken);
-                var operation = new WebAppRestoreOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response);
+                var operation = new SiteBackupRestoreOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
